@@ -1,4 +1,4 @@
-<img src="https://personaplus.vercel.app/hero.png">
+<img src="https://personaplus.vercel.app/banner.png">
 <h1 align="center">PersonaPlus</h1>
 <h2 align="center">Dale un PLUS a tu persona</h2>
 
