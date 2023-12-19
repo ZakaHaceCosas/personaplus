@@ -6,15 +6,15 @@ export default function BottomBar() {
         <View style={styles.bottombar}>
             <View style={styles.tile}>
                 <Image></Image>
-                <Text>asfas</Text>
+                <Text>Home</Text>
             </View>
             <View style={styles.tile}>
                 <Image></Image>
-                <Text>asfas</Text>
+                <Text>Panel</Text>
             </View>
             <View style={styles.tile}>
                 <Image></Image>
-                <Text>asfas</Text>
+                <Text>My profile</Text>
             </View>
         </View>
     )
@@ -31,11 +31,10 @@ const styles = StyleSheet.create({
         paddingBottom: '20px',
         paddingLeft: '50px',
         paddingRight: '50px',
-        backgroundColor: '#ffffff10',
+        backgroundColor: '#16191E',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backdropFilter: 'blur(40px)'
     }
 })

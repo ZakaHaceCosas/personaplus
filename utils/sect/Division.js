@@ -41,7 +41,6 @@ export default function Division({ type, status, average }) {
       style={styles.bgwrapper}
     >
       <View style={styles.division}>
-        <Image style={styles.image}></Image>
         <View style={styles.flex}>
           <Text style={{ ...styles.type, color: typeColor }}>{typeText}</Text>
           <Text style={styles.status}>{statusText}</Text>
@@ -54,7 +53,7 @@ export default function Division({ type, status, average }) {
 
 const styles = StyleSheet.create({
   bgwrapper: {
-    width: 'calc(100vw - 20px)',
+    width: '100%',
   },
   division: {
     width: '100%',
@@ -92,9 +91,5 @@ const styles = StyleSheet.create({
     fontSize: '8px',
     fontStyle: 'normal',
     lineHeight: '8px',
-  },
-  image: {
-    width: '60px',
-    height: '60px'
   }
 });

@@ -24,13 +24,8 @@ export default function Section({ label, slabel, icon, children }) {
 const styles = StyleSheet.create({
   section: {
     backgroundColor: '#1A1A1A',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.5,
-    shadowRadius: 20,
-    // elevation: 5,
     display: 'flex',
-    width: '100%',
+    width: 'calc(100% - 20px)',
     flexDirection: 'column',
     alignItems: 'flex-start',
   },

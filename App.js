@@ -34,32 +34,12 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar
         backgroundColor="#0F0F0F"
-        barStyle="light-content"
+        barStyle="dark-content"
       />
       <View style={styles.body}>
         
         <Text style={styles.header}>Hi, Zaka!</Text>
         
-        <Section label='YOUR HEALTH' slabel='Regular' icon='hand-with-heart'>
-
-          <Division type={'POSITIVE'} status={'DOING_ENOUGH_EXERCISE'} average='crico'></Division>          
-      
-          <Division type={'NEGATIVE'} status='oscar' average='crico'></Division>          
-      
-          <Division type='pepe' status='oscar' average='crico'></Division>          
-
-        </Section>
-
-        <Section label='YOUR HEALTH' slabel='Regular' icon='hand-with-heart'>
-
-          <Division type={'POSITIVE'} status={'DOING_ENOUGH_EXERCISE'} average='crico'></Division>          
-      
-          <Division type={'NEGATIVE'} status='oscar' average='crico'></Division>          
-      
-          <Division type='pepe' status='oscar' average='crico'></Division>          
-
-        </Section>
-
         <Section label='YOUR HEALTH' slabel='Regular' icon='hand-with-heart'>
 
           <Division type={'POSITIVE'} status={'DOING_ENOUGH_EXERCISE'} average='crico'></Division>          
@@ -83,8 +63,8 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#191919',
-    alignItems: 'center',
+    backgroundColor: '#030508',
+    alignItems: 'start',
     justifyContent: 'center',
     width: '100%',
     height: '100%',
@@ -94,17 +74,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter-Regular',
   },
   body: {
-    flex: 1,
+    display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
     justifyContent: 'start',
-    padding: '10px',
-    gap: '10px',
+    padding: '20px',
+    gap: '20px',
   },
   header: {
     fontFamily: 'Inter-Bold',
-    fontSize: 30,
-    lineHeight: 30,
+    fontSize: 40,
+    lineHeight: 40,
     color: 'white',
   }
 });
