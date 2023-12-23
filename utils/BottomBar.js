@@ -1,20 +1,22 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { Home28Filled, Board28Filled, Person28Filled } from '@fluentui/react-native-icons'
 
-export default function BottomBar() {
-    return(
+export default function BottomBar({ active }) {
+    return (
+        // use active="Home", "Panel", or "MyProfile" to highlight
         <View style={styles.bottombar}>
             <View style={styles.tile}>
-                <Image></Image>
-                <Text>Home</Text>
+                <Home28Filled style={[styles.color, active === 'Home' && styles.colorActive]} />
+                <Text style={[styles.color, active === 'Home' && styles.colorActive]}>Home</Text>
             </View>
             <View style={styles.tile}>
-                <Image></Image>
-                <Text>Panel</Text>
+                <Board28Filled style={[styles.color, active === 'Panel' && styles.colorActive]} />
+                <Text style={[styles.color, active === 'Panel' && styles.colorActive]}>Panel</Text>
             </View>
             <View style={styles.tile}>
-                <Image></Image>
-                <Text>My profile</Text>
+                <Person28Filled style={[styles.color, active === 'MyProfile' && styles.colorActive]} />
+                <Text style={[styles.color, active === 'MyProfile' && styles.colorActive]}>My profile</Text>
             </View>
         </View>
     )
@@ -29,12 +31,25 @@ const styles = StyleSheet.create({
         right: 0,
         paddingTop: '20px',
         paddingBottom: '20px',
-        paddingLeft: '50px',
-        paddingRight: '50px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
         backgroundColor: '#16191E',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+    },
+    tile: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '5px',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    color: {
+        color: '#8A8C8E'
+    },
+    colorActive: {
+        color: '#FFF'
     }
 })
