@@ -40,7 +40,7 @@ export default function App() {
         
         <Text style={styles.header}>Hi, Zaka!</Text>
         
-        <Section label='YOUR HEALTH' slabel='Regular' icon='hand-with-heart'>
+        <Section label='YOUR HEALTH' slabel='Regular' icon='growth'>
 
           <Division type={'POSITIVE'} status={'DOING_ENOUGH_EXERCISE'} average='crico'></Division>          
       
@@ -50,7 +50,19 @@ export default function App() {
 
         </Section>
 
-        <BottomBar>
+        <Section label='YOUR HEALTH' slabel='Regular' icon='health'>
+
+          {/*a*/}
+
+        </Section>
+
+        <Section label='YOUR HEALTH' slabel='Regular' icon='more'>
+
+          {/*a*/}        
+
+        </Section>
+
+        <BottomBar active='Home'>
 
         </BottomBar>
 
