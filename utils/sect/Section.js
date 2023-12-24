@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'column',
     alignItems: 'flex-start',
-    borderRadius: '10px',
+    borderRadius: 10,
     overflow: 'hidden'
   },
   flex: {
@@ -43,14 +43,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'start',
-    padding: '10px',
-    gap: '10px',
+    padding: 10,
+    gap: 10,
     width: '100%'
   },
   label: {
     color: '#dddddd',
     fontFamily: 'Inter-Bold',
-    textTransform: 'upercase',
+    textTransform: 'uppercase',
   },
   icon: {
     color: '#dddddd'
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   children: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '0px',
+    gap: 0,
     width: '100%'
   }
 });

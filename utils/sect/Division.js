@@ -2,20 +2,17 @@ import React from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 
 export default function Division({ type, status, average }) {
-  let typeText, typeColor, statusText, backgroundImageSrc;
+  let labelText, typeColor, statusText, backgroundImageSrc;
 
   switch (type) {
     default:
-      typeText = 'NORMAL';
       typeColor = '#FFF';
       backgroundImageSrc = require('../../assets/imgs/normal_grad.png');
       break;
     case 'NEGATIVE':
-      typeText = 'NEGATIVE';
       typeColor = '#FF9B32';
       backgroundImageSrc = require('../../assets/imgs/negative_grad.png');
       break;
-    
     }
 
   switch (status) {
@@ -39,7 +36,7 @@ export default function Division({ type, status, average }) {
     >
       <View style={styles.division}>
         <View style={styles.flex}>
-          <Text style={{ ...styles.type, color: typeColor }}>{typeText}</Text>
+          <Text style={{ ...styles.type, color: typeColor }}>{labelText}</Text>
           <Text style={styles.status}>{statusText}</Text>
           <Text style={styles.average}>{average}</Text>
         </View>
@@ -57,37 +54,37 @@ const styles = StyleSheet.create({
     color: 'black',
     display: 'flex',
     flexDirection: 'row',
-    gap: '10px',
-    padding: '10px',
+    gap: 10,
+    padding: 10,
   },
   flex: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'start',
     justifyContent: 'center',
-    gap: '10px',
+    gap: 10,
     width: '100%'
   },
   type: {
     color: '#32FF80',
     fontFamily: 'Inter-Regular',
-    fontSize: '10px',
+    fontSize: 10,
     fontStyle: 'normal',
     textTransform: 'uppercase',
-    lineHeight: '10px',
+    lineHeight: 10,
   },
   status: {
     color: 'white',
     fontFamily: 'Inter-Bold',
-    fontSize: '16px',
+    fontSize: 16,
     fontStyle: 'normal',
-    lineHeight: '14px',
+    lineHeight: 14,
   },
   average: {
     color: '#AAA',
     fontFamily: 'Inter-Regular',
-    fontSize: '8px',
+    fontSize: 8,
     fontStyle: 'normal',
-    lineHeight: '8px',
+    lineHeight: 8,
   }
 });
