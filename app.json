@@ -26,11 +26,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "extra": {
-      "eas": {
-        "projectId": "1b3c615f-33f4-4463-9bc5-e80c737d524e"
-      }
-    },
     "owner": "zakahacecosas"
   }
 }
