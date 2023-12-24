@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
       alignItems: 'flex-start',
       justifyContent: 'start',
-      padding: '20px',
-      gap: '20px',
+      padding: 20,
+      gap: 20,
     },
     header: {
       fontFamily: 'Inter-Bold',
