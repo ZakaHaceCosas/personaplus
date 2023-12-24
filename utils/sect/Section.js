@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { ArrowSprint20Filled, Question20Filled, Food20Filled, MoreCircle20Filled } from '@fluentui/react-native-icons';
+import { ArrowSprint20Filled, Question20Filled, Food20Filled, MoreCircle20Filled, Pulse20Filled, HeartPulse20Filled, ArrowUp20Filled, Games20Regular, Group20Filled } from '@fluentui/react-native-icons';
 
-export default function Section({ label, slabel, icon, children }) {
+export default function Section({ label, icon, children }) {
   let IconComponent;
 
   if (icon === "growth") {
-    IconComponent = ArrowSprint20Filled;
+    IconComponent = Group20Filled;
   } else if (icon === "health") {
-    IconComponent = Food20Filled;
+    IconComponent = HeartPulse20Filled;
   } else if (icon === "more") {
     IconComponent = MoreCircle20Filled
   } else {
@@ -20,8 +20,6 @@ export default function Section({ label, slabel, icon, children }) {
       <View style={styles.flex}>
         <IconComponent style={styles.icon}/>
         <Text style={styles.label}>{label}</Text>
-        <Text style={styles.label}>·</Text>
-        <Text style={styles.slabel}>{slabel}</Text>
       </View>
       <View style={styles.children}>
         {children}
@@ -32,28 +30,27 @@ export default function Section({ label, slabel, icon, children }) {
 
 const styles = StyleSheet.create({
   section: {
-    backgroundColor: '#1A1A1A',
+    backgroundColor: '#0C0F14',
     display: 'flex',
-    width: 'calc(100% - 20px)',
+    width: '100%',
     flexDirection: 'column',
     alignItems: 'flex-start',
+    borderRadius: '10px',
+    overflow: 'hidden'
   },
   flex: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'start',
     padding: '10px',
-    gap: '10px'
+    gap: '10px',
+    width: '100%'
   },
   label: {
     color: '#dddddd',
     fontFamily: 'Inter-Bold',
     textTransform: 'upercase',
-  },
-  slabel: {
-    color: '#dddddd',
-    fontFamily: 'Inter-Regular'
   },
   icon: {
     color: '#dddddd'
@@ -61,6 +58,7 @@ const styles = StyleSheet.create({
   children: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '10px'
+    gap: '0px',
+    width: '100%'
   }
 });

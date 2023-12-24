@@ -1,24 +1,21 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 
 export default function Division({ type, status, average }) {
   let typeText, typeColor, statusText, backgroundImageSrc;
 
   switch (type) {
-    case 'POSITIVE':
-      typeText = 'POSITIVE';
-      typeColor = '#32FF80';
-      backgroundImageSrc = require('../../assets/imgs/positive_grad.png');
+    default:
+      typeText = 'NORMAL';
+      typeColor = '#FFF';
+      backgroundImageSrc = require('../../assets/imgs/normal_grad.png');
       break;
     case 'NEGATIVE':
       typeText = 'NEGATIVE';
       typeColor = '#FF9B32';
       backgroundImageSrc = require('../../assets/imgs/negative_grad.png');
       break;
-    default:
-      typeText = 'NORMAL';
-      typeColor = '#FFF';
-      backgroundImageSrc = require('../../assets/imgs/normal_grad.png');
+    
     }
 
   switch (status) {
@@ -68,7 +65,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'start',
     justifyContent: 'center',
-    gap: '10px'
+    gap: '10px',
+    width: '100%'
   },
   type: {
     color: '#32FF80',
