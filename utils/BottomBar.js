@@ -23,7 +23,7 @@ export default function BottomBar({ active, changePage }) {
 
 const styles = StyleSheet.create({
   bottombar: {
-    position: 'fixed',
+    position: 'absolute',
     width: '100vw',
     bottom: 0,
     left: 0,
