@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'flex-start',
     borderRadius: 10,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    marginBottom: 20
   },
   flex: {
     display: 'flex',
