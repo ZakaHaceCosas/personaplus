@@ -38,7 +38,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="#030508" barStyle="light-content" />
+      <StatusBar barStyle="light-content" />
 
       {activePage === 'Home' && <Home />}
       {activePage === 'Panel' && <Panel />}
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     height: '100vh',
-    overflow: 'scroll'
+    overflow: 'scroll',
+    paddingTop: 20
   },
 });
