@@ -47,3 +47,5 @@ El primer módulo, en términos de funcionalidad, se divide en dos submódulos.
 	1.	El usuario tendrá a su disposición un conteo del tiempo invertido en cada aplicación y de la cantidad de notificaciones que recibe de cada una, mas un contador de desbloqueos de la pantalla, para que el usuario sepa con exactitud que uso hace del dispositivo y como lo usa.
 	2.	Podrá añadir temporizadores a las aplicaciones, para que se bloqueen tanto la aplicación como sus notificaciones al agotar su tiempo (siendo desbloqueables si el usuario lo desea, pero teniendo eso (el hecho de exceder sus límites) en cuenta a la hora de calcular las estadísticas).
 	3.	También, si lo desea, podrá añadir un temporizador al propio teléfono, el cual al agotarse bloqueará todas las aplicaciones (excepto las importantes, evidentemente) y sus notificaciones.
+
+Hasta aquí (nota mental para acabar la documentación)
