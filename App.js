@@ -56,9 +56,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#030508',
     alignItems: 'start',
     justifyContent: 'center',
-    width: '100%',
+    width: '100vw',
     height: '100vh',
-    overflow: 'scroll',
-    paddingTop: 20
+    overflow: 'scroll'
   },
 });

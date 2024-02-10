@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { Food24Filled, Shield24Filled, Broom24Filled, Question24Filled } from '@fluentui/react-native-icons';
 
-export default function BasicDivision({ labelc, headert, status, children }) {
+export default function BasicDivision({ labelc, headert, status, i, children, slabelc }) {
     let bgImgSrc = require('../../assets/imgs/Bg.Normal.png');
-    let headerc
 
     switch (status) {
         default:
@@ -25,25 +25,28 @@ export default function BasicDivision({ labelc, headert, status, children }) {
             break;
     }
 
-    switch (headert) {
-        default:
-            headerc = 'UNKNOWN';
-            break;
-        case 'DAILYHEALTHOBJ':
-            headerc = 'DAILY HEALTH OBJECTIVE';
-            break;
-        case 'BUSTEDDAILYHEALTHOBJ':
-            headerc = 'DAILY HEALTH OBJECTIVE - COMPLETED';
-            break;
+    let IComponent;
+
+    if (i === "food") {
+        IComponent = Food24Filled;
+    } else if (i === "shield") {
+        IComponent = Shield24Filled;
+    } else if (i === "clean") { // casi me da por llamar "woman" a esta variable XD
+        IComponent = Broom24Filled;
+    } else {
+        IComponent = Question24Filled;
     }
 
     return (
         <ImageBackground source={bgImgSrc} style={styles.bgwrapper}>
             <View style={styles.mainview}>
-                <Text style={styles.header}>{headerc}</Text>
-                <Text style={styles.label}>{labelc}</Text>
-                <View style={styles.btnwrap}>
-                    {children}
+                <IComponent style={styles.i}></IComponent>
+                <View style={styles.txtview}>
+                    <Text style={styles.label}>{labelc}</Text>
+                    <Text style={styles.slabel}>{slabelc}</Text>
+                    <View style={styles.btnwrap}>
+                        {children}
+                    </View>
                 </View>
             </View>
         </ImageBackground>
@@ -58,27 +61,39 @@ const styles = StyleSheet.create({
         padding: 20,
         fontFamily: 'Inter-Regular',
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'row',
         gap: 10
     },
-    header: {
-        fontFamily: 'Inter-Bold',
-        color: '#FFF',
-        fontSize: 11,
-        fontStyle: 'normal',
-        lineHeight: 11
+    txtview: {
+        fontFamily: 'Inter-Regular',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        gap: 5
     },
     label: {
         fontFamily: 'Inter-Bold',
         color: '#FFF',
-        fontSize: 21,
+        fontSize: 30,
         fontStyle: 'normal',
-        lineHeight: 21    
+        lineHeight: 30
+    },
+    slabel: {
+        fontFamily: 'Inter-Regular',
+        color: '#C8C8C8',
+        fontSize: 12,
+        fontStyle: 'normal',
+        lineHeight: 15    
     },
     btnwrap: {
         display: 'flex',
         flexDirection: 'row',
         gap: 10,
         flexWrap: 'wrap'
+    },
+    i: {
+        width: 60,
+        height: 60,
+        color: 'white'
     }
 })

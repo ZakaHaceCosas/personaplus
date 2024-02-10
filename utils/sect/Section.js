@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { ArrowSprint20Filled, Question20Filled, Food20Filled, MoreCircle20Filled, Pulse20Filled, HeartPulse20Filled, ArrowUp20Filled, Games20Regular, Group20Filled } from '@fluentui/react-native-icons';
+import { Question20Filled, MoreCircle20Filled, HeartPulse20Filled, CalendarDay20Filled } from '@fluentui/react-native-icons';
 
 export default function Section({ label, icon, children }) {
   let IconComponent;
 
   if (icon === "growth") {
-    IconComponent = Group20Filled;
+    IconComponent = CalendarDay20Filled;
   } else if (icon === "health") {
     IconComponent = HeartPulse20Filled;
   } else if (icon === "more") {
@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     borderRadius: 10,
     overflow: 'hidden',
-    marginBottom: 20
+    marginBottom: 20,
+    width: '100%'
   },
   flex: {
     display: 'flex',
