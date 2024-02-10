@@ -1,67 +1,43 @@
-import React, {useEffect, useState, useCallback} from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import Division from '../sect/Division';
+import React from 'react';
+import { StyleSheet, Text, ScrollView } from 'react-native';
 import Section from '../sect/Section';
 import BasicDivision from '../sect/BasicDivision';
+import Btn from '../Btn';
+import IconedDivision from '../sect/IconedDivision';
 
 export default function Home() {
     return (
-    <ScrollView style={styles.body}>
+    <ScrollView
+      style={styles.body}
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
+      android={{ scrollbars: 'none' }}
+    >
         
         <Text style={styles.header}>Hi, username!</Text>
         <Text style={styles.sheader}>This is your summary for today</Text>
 
         <Section label='YOUR DAILY OBJECTIVES' icon='growth'>
 
-          <BasicDivision labelc='Lorem ipsum'>
+          <BasicDivision labelc='To run for 10 minutes' status='NORMAL' headert='DAILYHEALTHOBJ'>
+            <Btn kind='REGULAR' text='LETS GO!'/>
+            <Btn kind='GOOD' text='ALREADY DONE IT'/>
+            <Btn kind='BAD' text='I FORGOT...'/>
+          </BasicDivision>
+
+          <BasicDivision labelc='To do 10 series of 5 lifts of 1 kilos each' status='GOOD' headert='BUSTEDDAILYHEALTHOBJ'>
           </BasicDivision>
 
         </Section>
 
         <Section label='YOUR WEEKLY SUMMARY' icon='health'>       
-
+          
+          <IconedDivision labelc='PRUEBA' headert='FOOD' slabelc='hola mundo'>
+          </IconedDivision>
+        
         </Section>
 
         <Section label='MORE' icon='more'>
-
-          <Division
-            type="NEGATIVE"
-            status="DOING_TOOMUCH_EXERCISE"
-            labelText="Etiqueta Personalizada"
-            statusText="¡Cuidado con el exceso de ejercicio!"
-            showButtons={false}
-            showIcon={false}
-          />
-
-          <Division
-            type="DEFAULT"
-            status="DOING_ENOUGH_EXERCISE"
-            labelText="Otra Etiqueta"
-            statusText="¡Estás haciendo suficiente ejercicio, genial!"
-            showButtons={true}
-            button1Text="Botón 1"
-            button1Color="#3498db"
-            button2Text="Botón 2"
-            button2Color="#2ecc71"
-            button3Text="Botón 3"
-            button3Color="#e74c3c"
-            showIcon={false}
-          />
-
-          <Division
-            type="NEGATIVE"
-            status="DOING_NOTENOUGH_EXERCISE"
-            labelText="Etiqueta Personalizada"
-            statusText="¡Necesitas hacer más ejercicio!"
-            showButtons={true}
-            button1Text="Acción 1"
-            button1Color="#e67e22"
-            button2Text="Acción 2"
-            button2Color="#9b59b6"
-            button3Text="Acción 3"
-            button3Color="#34495e"
-            showIcon={true}
-          />
 
         </Section>
 
@@ -80,7 +56,7 @@ const styles = StyleSheet.create({
       padding: 20,
       gap: 20,
       width: '100%',
-      height: '100%',
+      height: '100vh',
       overflow: 'scroll'
     },
     header: {

@@ -1,5 +1,10 @@
-// this requires redoing
-// esto requiere rehacerlo
+// FILE DEPRECATED
+// ARCHIVO DEPRECADO
+
+// DO *NOT* USE DIVISION.JS
+// USE THE NEW MODULES
+
+
 import React from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 
