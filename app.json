@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "personaplus",
+    "name": "Persona Plus",
     "slug": "personaplus",
-    "version": "1.0.0",
+    "version": "0.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
