@@ -18,8 +18,6 @@ Aún se halla en una fase muy temprana del desarrollo (recién se creó como pro
 	- El usuario todas las noches marcaría que objetivos (creados por el mismo) ha cumplido el día de hoy y cuales no, creando así un resumen que le permita entender que progresos está haciendo, en que va mejor y en que debería aplicarse más para mejorar su estado.
 - Funcionalidades de Bienestar Digital y prevención de la adicción al teléfono móvil.
 	- El usuario podrá ver en que apps pasa más o menos tiempo, de que apps le llegan más o menos notificaciones, y etcétera.
-	- Podrá establecer temporizadores para ciertas apps, los cuales al acabarse impiden acceder a o recibir notificaciones de la app en cuestión hasta las 12pm, cuando se resetea el temporizador.
-		- (Todos los límites son aplicados por el propio usuario y podrá deshabilitarlos en cualquier momento si lo desea).
 - Autocontrol: El usuario se monitorea a si mismo (que come, cuando lo hace, con que frecuencia, visitas al lavabo, frecuencia con la que fuma o bebe (si lo hace)), para ayudarse a autocontrolar sus hábitos (o a abandonarlos directamente si fueran malos hábitos, como la fuma o el consumo de estupefacientes).
 
 Con estas ideas apuntamos a crear una aplicación estrella y de código abierto para ayudar a las personas a mejorar su propia salud.
@@ -48,7 +46,5 @@ El primer módulo, en términos de funcionalidad, se divide en dos submódulos.
 	3. En base a dichos objetivos y registros alimentarios, hacer cálculos con la actividad física realizada por el usuario (de los que la app tenga constancia) para obtener estadísticas y en base a dichas estadísticas mantener al usuario informado de su rendimiento.
 - SALUD PSICOLÓGICA (BIENESTAR DIGITAL)
 	1.	El usuario tendrá a su disposición un conteo del tiempo invertido en cada aplicación y de la cantidad de notificaciones que recibe de cada una, mas un contador de desbloqueos de la pantalla, para que el usuario sepa con exactitud que uso hace del dispositivo y como lo usa.
-	2.	Podrá añadir temporizadores a las aplicaciones, para que se bloqueen tanto la aplicación como sus notificaciones al agotar su tiempo (siendo desbloqueables si el usuario lo desea, pero teniendo eso (el hecho de exceder sus límites) en cuenta a la hora de calcular las estadísticas).
-	3.	También, si lo desea, podrá añadir un temporizador al propio teléfono, el cual al agotarse bloqueará todas las aplicaciones (excepto las importantes, evidentemente) y sus notificaciones.
-
+	
 Hasta aquí (nota mental para acabar la documentación)
