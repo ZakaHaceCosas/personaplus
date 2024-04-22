@@ -1,3 +1,5 @@
+<p>(el proyecto no está muerto, lo dejé de lado para enfocarme en cosas personales, pero volverá, con una nueva base de código reestructurada y mejorada ;]</p>
+
 <img src="https://personaplus.vercel.app/banner.png">
 <h1 align="center">PersonaPlus</h1>
 <h2 align="center">Dale un PLUS a tu persona</h2>
