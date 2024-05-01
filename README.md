@@ -1,4 +1,4 @@
-<img src="https://personaplus.vercel.app/PP_BRAND_BANNER.png">
+<img src="https://personaplus.vercel.app/PP_BANNER.png">
 <h1 align="center">PersonaPlus</h1>
 <div align="center">
   
