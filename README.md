@@ -1,16 +1,16 @@
 > [!WARNING]
 > El proyecto no está abandonado, pero lo dejé de lado por un tiempo para enfocarme en cosas personales. En muy breve volverá, con una nueva base de código reestructurada y mejorada :]. Por favor, no hagas ninguna <i>pull request</i> hasta entonces.
 
-<img src="https://personaplus.vercel.app/banner.png">
+<img src="https://personaplus.vercel.app/PP_BRAND_BANNER.png">
 <h1 align="center">PersonaPlus</h1>
 <div align="center">
   
 [![YouTube Video Views](https://img.shields.io/youtube/views/p1K5YXo8CAE?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=p1K5YXo8CAE)
 ![GitHub last commit](https://img.shields.io/github/last-commit/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github)
 ![GitHub repo size](https://img.shields.io/github/repo-size/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github)
-<!--![Lines of code](https://img.shields.io/tokei/lines/github/ZakaHaceCosas/personaplus?style=for-the-badge&logo=visualstudiocode)-->
 ![GitHub Repo stars](https://img.shields.io/github/stars/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github)
 ![GitHub followers](https://img.shields.io/github/followers/ZakaHaceCosas?style=for-the-badge&logo=github)
+<!--![Lines of code](https://img.shields.io/tokei/lines/github/ZakaHaceCosas/personaplus?style=for-the-badge&logo=visualstudiocode)-->
 </div>
 <h2 align="center">Dale un PLUS a tu persona</h2>
 

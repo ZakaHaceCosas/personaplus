@@ -1,0 +1,21 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/android": true
+    },
+    "editor.fontSize": 15,
+    "editor.wordWrap": "on",
+    "editor.smoothScrolling": true,
+    "editor.cursorSmoothCaretAnimation": "on",
+    "workbench.list.smoothScrolling": true,
+    "terminal.integrated.smoothScrolling": true,
+    "editor.cursorBlinking": "expand",
+    "redhat.telemetry.enabled": false,
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 5000,
+    "editor.fontFamily": "'Roboto Mono', Consolas, 'Courier New', monospace",
+    "editor.fontWeight": 400,
+    "editor.fontLigatures": true,
+    // roboto mono = favorit
+}
