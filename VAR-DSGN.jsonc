@@ -1,0 +1,43 @@
+{
+    "colors": {
+        "MAIN": {
+            "APP": "#0E1013", // The very background of the app
+            "SECTION": "#14171C", // The background of sections
+            "DIVISION": "#202328", // LINEAR GRADIENT (direction: top > bottom). Default background of divisions.
+            "FOOTER": {
+                "BACKGROUND": "#16191E", // For the bottom navigation
+                "FOOTERUNS": "#8A8C8E", // Non-selected
+                "FOOTERSEL": "#FFFFFF" // Selected
+            }
+        },
+        "LBLS": {
+            // most of the time they are either #FFF or accented
+            // but sometimes we take other colors
+            "SHL": "#DDDDDD", // Used, for example, for the title of sections
+            "SDD": "#C8C8C8", // Small labels giving extra details
+            "TBLH": "#8D8E91" // In a table, the row headers
+        },
+        "GOD":  {
+            "GOD": "#32FF80", // Accent color for branding, also used for positive elements and as an accent in some places
+            "GODSTRK": "#198040" // Color of a btn's stroke when it's GOD colored
+        },
+        "ACE": {
+            "ACE": "#3280FF", // Also used in branding sometimes. Accent color of the app most of the time.
+            "ACESTRK": "#194080", // Again, stroke.
+            "ACESCROLL": "#2A61BB" // Special color, used for sliders
+        },
+        "WOR": {
+            "WOR": "#FF3232", // Color for bad / dangerous things :[
+            "WORSTRK": "#801919"
+        },
+        "HMM": {
+            "HMM": "#FFC832", // Not bad, but not good.
+            "HMMSTRK": "#806419"
+        }
+        // GOD, ACE, and WOR will always use the same structure for gradients
+        // top (the color in 100% opacity) > bottom (the color in 70% opacity)
+        // However these will always be rendered as a PNG instead of an actual gradient,
+        // so the "opacity" won't be visible for the end user, it will feel as the same
+        // color all the time (cause' it is).
+    }
+}
