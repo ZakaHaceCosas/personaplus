@@ -1,6 +1,3 @@
-> [!WARNING]
-> El proyecto no está abandonado, pero lo dejé de lado por un tiempo para enfocarme en cosas personales. En muy breve volverá, con una nueva base de código reestructurada y mejorada :]. Por favor, no hagas ninguna <i>pull request</i> hasta entonces.
-
 <img src="https://personaplus.vercel.app/PP_BRAND_BANNER.png">
 <h1 align="center">PersonaPlus</h1>
 <div align="center">
