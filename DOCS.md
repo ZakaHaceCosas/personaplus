@@ -1,4 +1,4 @@
-![DIAGRAMA](https://personaplus.vercel.app/PP_BRAND_DEVBANNER.png)
+![DIAGRAMA](https://personaplus.vercel.app/PP_DEVBANNER.png)
 <h1 align="center">PersonaPlus</h1>
 <h2 align="center">Dale un PLUS a tu Persona</h2>
 <p align="center">
