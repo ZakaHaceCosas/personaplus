@@ -7,8 +7,6 @@ import { StyleSheet, ScrollView } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { Slot } from 'expo-router';
 import { useFonts } from "expo-font";
-import Foot from "@/components/Foot";
-import { usePathname } from "expo-router"
 
 export default function Layout() {
     const [fontsLoaded, fontError] = useFonts({
@@ -46,14 +44,10 @@ export default function Layout() {
         return null;
     }
 
-    let currentpage: string;
-    currentpage = usePathname();
-
     return (
         <ScrollView style={styles.mainview}>
             <StatusBar style='auto' />
             <Slot></Slot>
-            <Foot page={currentpage}></Foot>
         </ScrollView>
     )
 }
