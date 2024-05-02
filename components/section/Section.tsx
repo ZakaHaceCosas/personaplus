@@ -6,13 +6,24 @@ import { View, StyleSheet } from "react-native";
 import SectionHeader from "./SectionHeader";
 
 // TypeScript, supongo
-interface SectionProps {
+interface DivisionProps {
     kind: string;
     children: React.ReactNode;
 }
 
-// Creamos la función del componente
-export default function Section({ kind, children }: SectionProps) {
+// Definimos los estilos
+const styles = StyleSheet.create({
+    container: {
+        display: 'flex',
+        backgroundColor: "#14171C",
+        flexDirection: "column",
+        borderRadius: 15,
+        overflow: "hidden"
+    },
+});
+
+// Creamos la función
+export default function Division({ kind, children }: DivisionProps) {
     let lbl: string;
     let icn: string;
 
@@ -42,13 +53,3 @@ export default function Section({ kind, children }: SectionProps) {
         </View>
     );
 }
-
-// Definimos los estilos usando StyleSheet
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        backgroundColor: "#14171C",
-        flexDirection: "column",
-        borderRadius: 20
-    },
-});

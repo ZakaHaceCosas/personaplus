@@ -8,6 +8,31 @@ interface SectionProps {
     page: string;
 }
 
+// Definimos los estilos
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: "#16191E",
+        display: 'flex',
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingLeft: 40,
+        paddingRight: 40,
+        paddingTop: 30,
+        paddingBottom: 30,
+        // NOTA: No sé por qué, pero VSCode me marca aquí un error. Eso no pasaba con JS. Además, ahora ya no funciona (sin TS si lo hacía). Extraño...
+        // position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0
+    },
+    icon: {
+        width: 40,
+        height: 40
+    }
+});
+
+
 // Creamos la función del componente
 export default function Foot({ page }: SectionProps) {
     const [currentPage, setCurrentPage] = useState<string>(page);
@@ -26,36 +51,14 @@ export default function Foot({ page }: SectionProps) {
             </Link>
             <Link href="/Dash" onPress={() => handlePageChange("/Dash")}>
                 <BeText weight="Bold" size={12} color={currentPage === "/Dash" ? "#FFF" : "#8A8C8E"}>
-                    Board
+                    Dash
                 </BeText>
             </Link>
             <Link href="/Prof" onPress={() => handlePageChange("/Prof")}>
                 <BeText weight="Bold" size={12} color={currentPage === "/Prof" ? "#FFF" : "#8A8C8E"}>
-                    Person
+                    Profile
                 </BeText>
             </Link>
         </View>
     );
 }
-
-// Definimos los estilos usando StyleSheet
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#16191E",
-        display: 'flex',
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingLeft: 40,
-        paddingRight: 40,
-        paddingTop: 30,
-        paddingBottom: 30,
-        bottom: 0,
-        left: 0,
-        right: 0
-    },
-    icon: {
-        width: 40,
-        height: 40
-    }
-});

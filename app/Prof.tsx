@@ -1,10 +1,38 @@
-import React from "react"
-import { View, Text } from "react-native"
+// Dash.tsx
+// Dashboard, where you setup your path to success.
 
+import React from "react"
+import { View, ScrollView, StyleSheet } from 'react-native';
+import BeText from "@/components/Text";
+import Foot from "@/components/Foot";
+import { usePathname } from "expo-router"
+
+// Creamos los estilos
+const styles = StyleSheet.create({
+    mainview: {
+        padding: 20,
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    epicspacingdiv: {
+        height: 20,
+        width: 1
+    }
+})
+
+// Creamos la función
 export default function Prof() {
+    let currentpage: string;
+    currentpage = usePathname();
+
     return (
-        <View>
-            <Text>suscribete si ves esto</Text>
-        </View>
+        <ScrollView>
+            <View style={styles.mainview}>
+                <BeText weight="Bold" size={40}>Profile</BeText>
+                <BeText weight="Regular" size={20}>Nice to meet you</BeText>
+                <BeText weight="BlackItalic" size={51} color="#FF3232">https://youtube.com/@ZakaHaceCosas<br></br>pls pls porfa porfa XD</BeText>
+            </View>
+            <Foot page={currentpage}></Foot>
+        </ScrollView>
     )
 }
