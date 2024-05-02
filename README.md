@@ -9,7 +9,8 @@
 ![GitHub followers](https://img.shields.io/github/followers/ZakaHaceCosas?style=for-the-badge&logo=github)
 <!--![Lines of code](https://img.shields.io/tokei/lines/github/ZakaHaceCosas/personaplus?style=for-the-badge&logo=visualstudiocode)-->
 </div>
-<h2 align="center">Dale un PLUS a tu persona</h2>
+<h2 align="center">DATE UN PLUS</h2>
+<h3 align="center"><i>GIVE YOURSELF A PLUS</i></h3>
 
 PersonaPlus es un proyecto independiente que apunta a crear una app (con React Native & Expo) que ayude a los usuarios a cuidar de su salud, dieta, y bienestar digital.
 
