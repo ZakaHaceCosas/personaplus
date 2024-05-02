@@ -29,20 +29,24 @@ Con estas ideas apuntamos a crear una aplicación estrella, gratuita y de códig
 
 ## 1. El *stack* tecnológico
 Se usarán las siguientes tecnologías para llevar a cabo el desarrollo de la aplicación.
-//TODO DESDE AQUÍ
-![DIAGRAMA](https://personaplus.vercel.app/stack_del_proyecto.png)
+![DIAGRAMA](https://personaplus.vercel.app/DEV-stack.png)
 
 ## 2. Funcionamiento: La aplicación
-La aplicación está basada en Expo.
+La aplicación está basada en React Native con Expo.
 La app se divide en dos módulos, el de salud y el antivirus, cómo se puede apreciar en este otro diagrama.
-###### (El segundo módulo (antivirus) se implementará más adelante)
+###### (El segundo módulo (antivirus) se implementará más adelante (por eso está desenfocado))
 
-![DIAGRAMA](https://personaplus.vercel.app/org_esquema_app.png)
+![DIAGRAMA](https://personaplus.vercel.app/DEV-org-esquema-app.png)
 
 El primer módulo, en términos de funcionalidad, se divide en dos submódulos.
 -	SALUD FÍSICA
-	1. Ofrecer al usuario la capacidad de crear objetivos diarios, que él mismo indicará antes de la media noche el haber cumplido dicho objetivo o no (no indicarlo = no lo ha cumplido). Ejemplos de objetivos serían "Correr durante 10 minutos", "Correr 15 kilómetros", "Hacer x flexiones al día", y similares.
+	1. Ofrecer al usuario la capacidad de crear objetivos ACTIVOS o PASIVOS
+		
+		1.1 **ACTIVOS**: Objetivos diarios que él mismo indicará antes de la media noche el haber cumplido dicho objetivo o no (no indicarlo = no lo ha cumplido). Ejemplos de objetivos activos serían "Correr durante 10 minutos", "Correr 15 kilómetros", "Hacer x flexiones al día", y similares. Pueden ser más genéricas ("Correr 5 minutos"), o más específicas ("Correr 10 kilometros en 20 minutos con 2 descansos", por ejemplo).
+
+		1.2 **PASIVOS**: Se les puede llamar "metas", ya que es lo que son en realidad. El usuario no indica si los ha cumplido o no, si no que la propia app lo determina según la información que recibe por parte del usuario. Ejemplos de objetivos pasivos serían "No ingerir más de 3500 kcal diarias", "Cumplir mi objetivo de correr 15 días seguidos", "No usar el móvil más de 3 horas al día", y similares.
 	2. El usuario también podrá controlar su dieta, estableciendo a que horas desayuna, come, o cena, para recibir una notificación a cada hora como se ve en el siguiente diagrama*.
+	// TODO DESDE AQUÍ
 	3. Además, a la noche (cuando se le pregunte por todos sus objetivos en general), también se le preguntará, entre otras cosas, si ha estado "picando entre horas", para obtener estadísticas más precisas.
 	4. En base a dichos objetivos y registros alimentarios, la app cálculos con la actividad física realizada por el usuario (de los que la app tenga constancia) para obtener estadísticas y en base a dichas estadísticas mantener al usuario informado de su rendimiento**.
 
@@ -56,6 +60,12 @@ El primer módulo, en términos de funcionalidad, se divide en dos submódulos.
 	
 ## 3. Programando PersonaPlus
 Estas son las indicaciones básicas para programar, desde nombres de variables hasta prácticas recomendadas.
+
+### > TRABAJANDO CON EL PROYECTO
+
+Necesitarás instalar (obviamente) `Git` y `Node.js` en tu sistema, y de ahí, instalar `Expo CLI`, con el cual interactuarás vía `npx expo <comando>`. Probablemente trabajas desde VSCode, así que recomendamos también la [extensión oficial](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools).
+
+La mayor parte del tiempo solo usarás `npx expo start` (para iniciar el proyecto (debes estar en la raíz)), a veces con el arg. `--clear` (para limpiar la caché), y `npx expo install <opcionalmente-un-paquete>` para instalar paquetes de Expo. `npx expo install` y `npm install` instalarán todas las dependencias nada más hayas clonado el repositorio. `npx expo install --check` y `--fix` pueden arreglar dependencias rotas.
 
 ### > LAS "PRE-VARIABLES"
 En el *root* del proyecto hay archivos `VAR-algo.jsonc` (JSON con comentarios).
@@ -82,15 +92,16 @@ PersonaPlus está organizado de una forma concreta. En caso de que te veas crean
 	Text.tsx
 	/ section
 		Section.tsx
-	// Componentes reutilizados, nombrados por las primeras 3 o 4 letras del nombre en inglés
-	// Por ejemplo, si hicieras un componente llamado "Imagen", lo llamarías Img.tsx
+	// Componentes reutilizados, nombrados, preferiblemente pero no necesariamente por las primeras 3 o 4 letras del nombre en inglés
+	// Por ejemplo, si hicieras un componente llamado "Imagen", lo llamarías Img.tsx. Section podría ser Sect.tsx (aunque no lo es XD). Entiendes la idea.
 |
 / app
-	Home.tsx
+	_layout.tsx // Nombre que no sigue la estructura, debido a que Expo requiere que el nombre sea así
+	index.tsx // Lo mismo
 	Dash.tsx
 	Prof.tsx
 	Sess.tsx
-	// Cada página, nombrada por las primeras 4 letras del nombre en ingles
+	// Cada página, nombrada (a poder ser) por las primeras 4 letras del nombre en ingles
 	// EJ. "Panel de control" > "Dashboard" > "Dash.tsx"
 ```
 
