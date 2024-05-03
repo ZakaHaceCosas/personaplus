@@ -34,10 +34,5 @@
             "HMM": "#FFC832", // Not bad, but not good.
             "HMMSTRK": "#806419"
         }
-        // GOD, ACE, and WOR will always use the same structure for gradients
-        // top (the color in 100% opacity) > bottom (the color in 70% opacity)
-        // However these will always be rendered as a PNG instead of an actual gradient,
-        // so the "opacity" won't be visible for the end user, it will feel as the same
-        // color all the time (cause' it is).
     }
 }
