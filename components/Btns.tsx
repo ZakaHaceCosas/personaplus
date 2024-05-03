@@ -41,8 +41,8 @@ export default function Btn({kind, text, onclick}: BtnsProps) {
             break;
         // if unknown, gray
         default:
-            strkclr = "#8A8C8E";
-            bkgrclr = "#DDDDDD";
+            strkclr = "#999999";
+            bkgrclr = "#CCCCCC";
             textclr = "#000000";
             break;
     }
