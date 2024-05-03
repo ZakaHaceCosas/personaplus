@@ -2,7 +2,7 @@
 // Sección
 
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import * as Native from "react-native";
 import SectionHeader from "./SectionHeader";
 
 // TypeScript, supongo
@@ -12,7 +12,7 @@ interface DivisionProps {
 }
 
 // Definimos los estilos
-const styles = StyleSheet.create({
+const styles = Native.StyleSheet.create({
     container: {
         display: 'flex',
         backgroundColor: "#14171C",
@@ -47,9 +47,9 @@ export default function Division({ kind, children }: DivisionProps) {
     }
 
     return (
-        <View style={styles.container}>
+        <Native.View style={styles.container}>
             <SectionHeader label={lbl} icon={icn}></SectionHeader>
             {children}
-        </View>
+        </Native.View>
     );
 }

@@ -3,7 +3,8 @@
 
 import BeText from "@/components/Text";
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import * as Native from "react-native";
+import GapView from "@/components/GapView";
 
 // TypeScript, supongo
 interface DivisionProps {
@@ -17,7 +18,7 @@ interface DivisionProps {
 }
 
 // Definimos los estilos
-const styles = StyleSheet.create({
+const styles = Native.StyleSheet.create({
     container: {
         display: 'flex',
         backgroundColor: "#202328",
@@ -38,19 +39,27 @@ export default function Division({ status, iconName, preheader, header, subheade
     }
 
     return (
-        <View style={styles.container}>
-            <View>
+        <Native.View style={styles.container}>
+            <Native.View>
                 {/*<Icon></Icon>*/}
-                <View>
-                    <View>
-                        <BeText weight="Bold" size={22} color="#FFF">
+                <Native.View>
+                    <Native.View>
+                        <BeText align="normal" weight="Bold" size={10} color="#FFF">
+                            {preheader}
+                        </BeText>
+                        <GapView height={10}/>
+                        <BeText align="normal" weight="Bold" size={22} color="#FFF">
                             {header}
                         </BeText>
-                        <BeText weight="Regular" size={12} color="#C8C8C8">{subheader}</BeText>
+                        <GapView height={10}/>
+                        <BeText align="normal" weight="Regular" size={12} color="#C8C8C8">
+                            {subheader}
+                        </BeText>
+                        <GapView height={10}/>
                         {children}
-                    </View>
-                </View>
-            </View>
-        </View>
+                    </Native.View>
+                </Native.View>
+            </Native.View>
+        </Native.View>
     );
 }

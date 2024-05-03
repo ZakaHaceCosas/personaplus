@@ -2,13 +2,15 @@
 // Dashboard, where you setup your path to success.
 
 import React from "react"
-import { View, ScrollView, StyleSheet } from 'react-native';
+import * as Native from 'react-native';
 import BeText from "@/components/Text";
 import Foot from "@/components/Foot";
 import { usePathname } from "expo-router"
+import Section from "@/components/section/Section";
+import Division from "@/components/section/division/Division";
 
 // Creamos los estilos
-const styles = StyleSheet.create({
+const styles = Native.StyleSheet.create({
     mainview: {
         padding: 20,
         display: 'flex',
@@ -26,12 +28,12 @@ export default function Dash() {
     currentpage = usePathname();
 
     return (
-        <ScrollView>
-            <View style={styles.mainview}>
-                <BeText weight="Bold" size={40}>Dashboard</BeText>
-                <BeText weight="Regular" size={20}>Lets set up your path to success</BeText>
-            </View>
+        <Native.ScrollView>
+            <Native.View style={styles.mainview}>
+                <BeText align="normal" weight="Bold" size={40}>Dashboard</BeText>
+                <BeText align="normal" weight="Regular" size={20}>Lets set up your path to success</BeText>
+            </Native.View>
             <Foot page={currentpage}></Foot>
-        </ScrollView>
+        </Native.ScrollView>
     )
 }
