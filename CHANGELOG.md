@@ -11,16 +11,20 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - Cuando todas las funciones principales / básicas estén implementadas y testeadas, se pasará a la 1.0.0-R5.
 - Si se está en X.X.9, pero se siguen lanzado actualizaciones que deberían sumar al 9, se añadirá una cifra (p ej. 0.0.91-R5).
 
+# 0.0.1-R5-b2
+- Changed the code style used for imports.
+- AsyncStorage! + username, which is preserved in the AS. It can be edited aswell.
+
 # 0.0.1-R5-b1
-- Fix `Foot.tsx` (more or less)
-- Started works with the Divisions
+- Fix `Foot.tsx` (more or less).
+- Started works with the Divisions.
 
 # 0.0.1-R5
 - Start over, with TypeScript this time.
 - Barely anything achieved (it literally errors at `start`, lol). Will look onto that.
 
 # 0.0.1-R4
-(This was a failed attempt, not all the listed changes were achieved)
+**(This was a failed attempt, not all the listed changes were achieved)**
 - Attempt of refactor of the codebase.
     - All code that was not function has been rewritten.
     - New variable naming system.

@@ -3,12 +3,21 @@
 
 import React, { useEffect } from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, ScrollView } from 'react-native';
+import * as Native from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { Slot } from 'expo-router';
 import { useFonts } from "expo-font";
 
+// Definimos los estilos
+const styles = Native.StyleSheet.create({
+    mainview: {
+        backgroundColor: "#0E1013"
+    }
+})
+
+// Definimos la función
 export default function Layout() {
+    // BeVietnamPro, nuestra tipografía (no es nuestra, pero la usamos xd)
     const [fontsLoaded, fontError] = useFonts({
         'BeVietnamPro-Black': require('../fonts/BeVietnamPro-Black.ttf'),
         'BeVietnamPro-BlackItalic': require('../fonts/BeVietnamPro-BlackItalic.ttf'),
@@ -29,7 +38,8 @@ export default function Layout() {
         'BeVietnamPro-Thin': require('../fonts/BeVietnamPro-Thin.ttf'),
         'BeVietnamPro-ThinItalic': require('../fonts/BeVietnamPro-ThinItalic.ttf')
     });
-      
+
+    // Cargamos las fuentes
     useEffect(() => {
         const onLayoutRootView = async () => {
             if (fontsLoaded || fontError) {
@@ -39,21 +49,16 @@ export default function Layout() {
 
         onLayoutRootView();
     }, [fontsLoaded, fontError]);
-    
+
     if (!fontsLoaded && !fontError) {
         return null;
     }
 
+    // Creamos el layout de la aplicación
     return (
-        <ScrollView style={styles.mainview}>
+        <Native.ScrollView style={styles.mainview}>
             <StatusBar style='auto' />
             <Slot></Slot>
-        </ScrollView>
+        </Native.ScrollView>
     )
 }
-
-const styles = StyleSheet.create({
-    mainview: {
-        backgroundColor: "#0E1013"
-    }
-})

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import * as Native from "react-native";
 import { Link } from "expo-router";
 import BeText from "./Text";
 
@@ -9,7 +9,7 @@ interface SectionProps {
 }
 
 // Definimos los estilos
-const styles = StyleSheet.create({
+const styles = Native.StyleSheet.create({
     container: {
         backgroundColor: "#16191E",
         display: 'flex',
@@ -43,22 +43,22 @@ export default function Foot({ page }: SectionProps) {
     };
 
     return (
-        <View style={styles.container}>
+        <Native.View style={styles.container}>
             <Link href="/" onPress={() => handlePageChange("/")}>
-                <BeText weight="Bold" size={12} color={currentPage === "/" ? "#FFF" : "#8A8C8E"}>
+                <BeText align="normal" weight="Bold" size={12} color={currentPage === "/" ? "#FFF" : "#8A8C8E"}>
                     Home
                 </BeText>
             </Link>
             <Link href="/Dash" onPress={() => handlePageChange("/Dash")}>
-                <BeText weight="Bold" size={12} color={currentPage === "/Dash" ? "#FFF" : "#8A8C8E"}>
+                <BeText align="normal" weight="Bold" size={12} color={currentPage === "/Dash" ? "#FFF" : "#8A8C8E"}>
                     Dash
                 </BeText>
             </Link>
             <Link href="/Prof" onPress={() => handlePageChange("/Prof")}>
-                <BeText weight="Bold" size={12} color={currentPage === "/Prof" ? "#FFF" : "#8A8C8E"}>
+                <BeText align="normal" weight="Bold" size={12} color={currentPage === "/Prof" ? "#FFF" : "#8A8C8E"}>
                     Profile
                 </BeText>
             </Link>
-        </View>
+        </Native.View>
     );
 }
