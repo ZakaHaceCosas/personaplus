@@ -13,7 +13,8 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 # 0.0.1-R5-b3
 - Very small changes
-- Created Welc.tsx for the welcome page
+- Created Welc.tsx for the welcome page and made some work
+- Created Input element
 
 # 0.0.1-R5-b2
 - Changed the code style used for imports.
