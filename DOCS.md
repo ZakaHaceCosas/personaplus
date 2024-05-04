@@ -1,14 +1,12 @@
+> [!WARNING]
+> **DOCUMENTACIÓN INCOMPLETA**
+
 ![DIAGRAMA](https://personaplus.vercel.app/PP_BANNER_DEV.png)
 <h1 align="center">PersonaPlus</h1>
 <h2 align="center">Dale un PLUS a tu Persona</h2>
 <p align="center">
 DOCUMENTACIÓN DE LA BASE DE CÓDIGO
 </p>
-
-###### BASE DE CÓDIGO R4
-
-> [!WARNING]
-> **DOCUMENTACIÓN INCOMPLETA**
 
 ## 0. ¿Qué es PersonaPlus?
 ###### (Este punto es orientativo y no dirijido al código como tal, se puede omitir)
@@ -28,13 +26,10 @@ Aún se halla en una fase muy temprana del desarrollo, pero apunta a traer las s
 Con estas ideas apuntamos a crear una aplicación estrella, gratuita y de código abierto, para ayudar a las personas a mejorar su propia salud.
 
 ## 1. El *stack* tecnológico
-Se usarán las siguientes tecnologías para llevar a cabo el desarrollo de la aplicación.
-![DIAGRAMA](https://personaplus.vercel.app/DEV-stack.png)
+La aplicación está desarrollada con **React Native 0.73**, **Expo SDK 50.0.17**, y programada en TypeScript.
 
 ## 2. Funcionamiento: La aplicación
-La aplicación está basada en React Native con Expo.
-La app se divide en dos módulos, el de salud y el antivirus, cómo se puede apreciar en este otro diagrama.
-###### (El segundo módulo (antivirus) se implementará más adelante (por eso está desenfocado))
+La aplicación se divide en tres páginas, el Inicio, el Panel, y el Perfil.
 
 ![DIAGRAMA](https://personaplus.vercel.app/DEV-org-esquema-app.png)
 
@@ -105,5 +100,41 @@ PersonaPlus está organizado de una forma concreta. En caso de que te veas crean
 	// EJ. "Panel de control" > "Dashboard" > "Dash.tsx"
 ```
 
+### > CÓMO REDACTAR CÓDIGO APROPIADO
+
+Por el bien de todos, ¡el código se tiene que entender! Sigue estas prácticas:
+
+#### 1. SIEMPRE EL MISMO ORDEN
+
+IMPORT - INTERFACE - STYLE - *FUNCTION
+
+Siempre el mismo orden, primero importamos, luego definimos la interfaz (los *types*), después, si procede, los estilos, y por último la función principal (ésta siempre sera la última. Si hace falta colocar otra función fuera de esta misma, que sea justo antes).
+
+```tsx
+// ruta/al/Modulo.tsx
+// Breve descripción de que hace
+
+import React from 'react';
+
+interface ModuloProps {
+	variable: string;
+}
+
+const styles
+
+export default function Modulo() {
+	return (
+		<Text>Un módulo bien hecho</Text>
+	)
+}
+```
+
+#### 2. IMPORTA CORRECTAMENTE
+
+Para evitar tener importaciones muy largas, cuando sea necesario utiliza `import * as <Nombre> from <importacion>`.
+> **Siempre** se importa React Native de este modo, con el nombre "Native".
+
+Ten en cuenta que cuando programes, esto llevará a que en vez de escribir, por ejemplo, `<View>`, escribas `<Native.View>`.
+
 > [!WARNING]
-> Por hacer / To do
+> Aún hay que acabar esta documentación
