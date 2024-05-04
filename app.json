@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "PersonaPlus",
-    "slug": "Persona-Plus",
-    "scheme": "persona-plus",
+    "slug": "PersonaPlus",
+    "scheme": "personaplus",
     "description": "Give yourself a PLUS",
     "owner": "zakahacecosas",
     "version": "0.0.1-R5",
