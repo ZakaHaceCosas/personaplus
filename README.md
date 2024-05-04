@@ -16,6 +16,18 @@ PersonaPlus es un proyecto independiente que apunta a crear una app (con React N
 
 Este repositorio contendrá todo el código fuente del proyecto, para mantener la transparencia y permitir a la comunidad contribuir (si lo desea) al desarrollo de la aplicación.
 
+<h2>Contribuyendo</h2>
+
+Puedes ver la documentación completa [aquí](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md), pero en resumen:
+
+```bash
+git clone https://github.com/ZakaHaceCosas/personaplus.git
+
+cd personaplus
+
+npx expo start
+```
+
 <h3 align="center">Mientras trabajo en ello, sígueme</h3>
 <div align="center">
   
