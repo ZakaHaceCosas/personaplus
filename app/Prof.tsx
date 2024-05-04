@@ -40,7 +40,7 @@ export default function Prof() {
             if (olduname !== uname) {
                 await AsyncStorage.setItem('uname', uname);
             } else {
-                // nothing.
+                console.error("Can't change the username to something that already is the username")
             }
         } catch (e) {
             console.error(e);

@@ -10,13 +10,15 @@ interface BtnsProps {
     kind: string;
     text: string;
     onclick: any;
+    width?: string;
 }
 
 // Creamos la funcion
-export default function Btn({kind, text, onclick}: BtnsProps) {
+export default function Btn({kind, text, onclick, width}: BtnsProps) {
     let strkclr: string; // StrokeColor / Color del borde
     let bkgrclr: string; // BackgroundColor / Color del fondo
     let textclr: string; // TextColor / Color del texto
+    let btnwdth: string; // ButtonWidth / Tamaño horizontal del botón
 
     switch (kind) {
         case "ACE":
@@ -46,9 +48,20 @@ export default function Btn({kind, text, onclick}: BtnsProps) {
             textclr = "#000000";
             break;
     }
-    
+
+    switch (width) {
+        case "auto":
+            btnwdth = "auto";
+            break;
+        case "fill":
+            btnwdth = "100%";
+            break;
+        default:
+            btnwdth = "auto";
+            break;
+    }
     return (
-        <Native.Pressable onPress={onclick} style={{ paddingTop: 14, paddingBottom: 14, paddingLeft: 28, paddingRight: 28, borderRadius: 10, borderColor: strkclr, backgroundColor: bkgrclr, borderWidth: 4 }}>
+        <Native.Pressable onPress={onclick} style={{ paddingTop: 14, paddingBottom: 14, paddingLeft: 28, paddingRight: 28, borderRadius: 10, borderColor: strkclr, backgroundColor: bkgrclr, borderWidth: 4, width: btnwdth }}>
             <BeText weight="Bold" size={14} color={textclr} align="cent">{text}</BeText>
         </Native.Pressable>
     )
