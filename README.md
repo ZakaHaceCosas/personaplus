@@ -3,9 +3,9 @@
 <div align="center">
   
 [![YouTube Video Views](https://img.shields.io/youtube/views/X2Kq7aG23sA?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=X2Kq7aG23sA)
-![GitHub last commit](https://img.shields.io/github/last-commit/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github)
+![GitHub last commit](https://img.shields.io/github/last-commit/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github&color=black)
 ![GitHub repo size](https://img.shields.io/github/repo-size/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github)
-![GitHub Repo stars](https://img.shields.io/github/stars/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github)
+![GitHub Repo stars](https://img.shields.io/github/stars/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github&color=orange)
 ![GitHub followers](https://img.shields.io/github/followers/ZakaHaceCosas?style=for-the-badge&logo=github)
 <!--![Lines of code](https://img.shields.io/tokei/lines/github/ZakaHaceCosas/personaplus?style=for-the-badge&logo=visualstudiocode)-->
 </div>
@@ -16,9 +16,9 @@ PersonaPlus es un proyecto independiente que apunta a crear una app (con React N
 
 Este repositorio contendrá todo el código fuente del proyecto, para mantener la transparencia y permitir a la comunidad contribuir (si lo desea) al desarrollo de la aplicación.
 
-<h2>Contribuyendo</h2>
+<h2>¿Cómo contribuir?</h2>
 
-Puedes ver la documentación completa [aquí](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md), pero en resumen:
+Puedes ver la documentación completa [aquí](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md#3-programando-personaplus), pero en resumen:
 
 ```bash
 git clone https://github.com/ZakaHaceCosas/personaplus.git
