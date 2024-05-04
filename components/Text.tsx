@@ -9,12 +9,13 @@ interface BeTextProps {
     size: number;
     weight: string;
     color?: string;
+    onTap?: any;
     align: string;
     children: React.ReactNode;
 }
 
 // Creamos la función
-export default function BeText({ size, weight, children, color, align }: BeTextProps) {
+export default function BeText({ size, weight, children, color, align, onTap }: BeTextProps) {
     // weight (Bold, ExtraBold, Light, Regular, Medium)...
     // para itálica, añadir Italic (BoldItalic)
     const font: string = "BeVietnamPro-" + weight;
@@ -50,9 +51,17 @@ export default function BeText({ size, weight, children, color, align }: BeTextP
         textAlign: txtalgn // Ignora el error, funciona correctamente. Será que VSCode no reconoce lo que pasa aquí (al menos en mi maquina marca error aquí).
     };
 
-    return (
-        <Native.Text style={textStyle}>
-            {children}
-        </Native.Text>
-    );
+    if (onTap) {
+        return (
+            <Native.Text style={textStyle} onPress={onTap}>
+                {children}
+            </Native.Text>
+        );
+    } else {
+        return (
+            <Native.Text style={textStyle}>
+                {children}
+            </Native.Text>
+        );
+    }
 }
