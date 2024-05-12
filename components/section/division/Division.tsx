@@ -23,7 +23,8 @@ const styles = Native.StyleSheet.create({
         display: 'flex',
         backgroundColor: "#202328",
         flexDirection: "row",
-        padding: 20
+        padding: 20,
+        width: "100%"
     },
 });
 
@@ -40,9 +41,9 @@ export default function Division({ status, iconName, preheader, header, subheade
 
     return (
         <Native.View style={styles.container}>
-            <Native.View>
+            <Native.View style={{ width: "100%" }}>
                 {/*<Icon></Icon>*/}
-                <Native.View>
+                <Native.View style={{ width: "100%" }}>
                     <Native.View>
                         <BeText align="normal" weight="Bold" size={10} color="#FFF">
                             {preheader}
@@ -56,7 +57,9 @@ export default function Division({ status, iconName, preheader, header, subheade
                             {subheader}
                         </BeText>
                         <GapView height={10}/>
-                        {children}
+                        <Native.View style={{ display: "flex", flexDirection: "row", flex: 1, width: "100%", gap: 15 }}>
+                            {children}
+                        </Native.View>
                     </Native.View>
                 </Native.View>
             </Native.View>

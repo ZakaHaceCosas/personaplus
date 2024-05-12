@@ -9,9 +9,15 @@ import Foot from "@/components/Foot";
 import { usePathname } from "expo-router"
 import Division from "@/components/section/division/Division";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Btn from "@/components/Btns";
+import GapView from "@/components/GapView";
 
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
+    containerview: {
+        width: "100vw",
+        height: "100vh"
+    },
     mainview: {
         padding: 20,
         display: 'flex',
@@ -46,20 +52,42 @@ export default function Home() {
     currentpage = usePathname();
 
     return (
-        <Native.ScrollView>
-            <Native.View style={styles.mainview}>
+        <Native.View style={styles.containerview}>
+            <Native.ScrollView style={styles.mainview}>
                 <BeText align="normal" weight="Bold" size={40}>Hello, {username}!</BeText>
                 <BeText align="normal" weight="Regular" size={20}>
                     This is your summary for today
                 </BeText>
-                <Native.View style={styles.epicspacingdiv}></Native.View> {/* oye, ¿por qué no? */}
+                <GapView height={20}/> {/* oye, ¿por qué no? */}
                 <Section kind="OBJS">
                     <Division preheader="OBJECTIVE" header="RUNNING" subheader="For 12 minutes" iconName={null} status="REGULAR">
-                        <BeText align="normal" weight="BoldItalic" size={12} color="#FF3232">Botones aquí</BeText>
+                        <Btn text="Let's do it now!" kind="ACE" width="fill" onclick={null}/>
+                        <Btn text="Done it" kind="GOD" width="fill" onclick={null}/>
                     </Division>
                 </Section>
-            </Native.View>
+                <GapView height={20}/>
+                <Section kind="OBJS">
+                    <Division preheader="OBJECTIVE" header="RUNNING" subheader="For 12 minutes" iconName={null} status="REGULAR">
+                        <Btn text="Let's do it now!" kind="ACE" width="fill" onclick={null}/>
+                        <Btn text="Done it" kind="GOD" width="fill" onclick={null}/>
+                    </Division>
+                </Section>
+                <GapView height={20}/>
+                <Section kind="OBJS">
+                    <Division preheader="OBJECTIVE" header="RUNNING" subheader="For 12 minutes" iconName={null} status="REGULAR">
+                        <Btn text="Let's do it now!" kind="ACE" width="fill" onclick={null}/>
+                        <Btn text="Done it" kind="GOD" width="fill" onclick={null}/>
+                    </Division>
+                </Section>
+                <GapView height={20}/>
+                <Section kind="OBJS">
+                    <Division preheader="OBJECTIVE" header="RUNNING" subheader="For 12 minutes" iconName={null} status="REGULAR">
+                        <Btn text="Let's do it now!" kind="ACE" width="fill" onclick={null}/>
+                        <Btn text="Done it" kind="GOD" width="fill" onclick={null}/>
+                    </Division>
+                </Section>
+            </Native.ScrollView>
             <Foot page={currentpage}></Foot>
-        </Native.ScrollView>
+        </Native.View>
     )
 }
