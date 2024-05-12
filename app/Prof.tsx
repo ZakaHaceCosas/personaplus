@@ -62,8 +62,8 @@ export default function Prof() {
                             onChangeText={handleUnameTxtChange}
                             value={uname}
                             style={[{ backgroundColor: "white", borderRadius: 10, padding: 10, borderWidth: 2, borderColor: "#000" }]}
-                        ></Native.TextInput>
-                        <Btn kind={null} onclick={handleUnameBtnClick} text="A"/>
+                        />
+                        <Btn kind="ACE" onclick={handleUnameBtnClick} text="Save username"/>
                     </Division>
                 </Section>
             </Native.View>

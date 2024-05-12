@@ -27,13 +27,13 @@ export default function Btn({kind, text, onclick, width}: BtnsProps) {
             textclr = "#FFFFFF";
             break;
         case "GOD":
-            strkclr = "#32FF80";
-            bkgrclr = "#198040";
+            strkclr = "#198040";
+            bkgrclr = "#32FF80";
             textclr = "#000000";
             break;
         case "WOR":
-            strkclr = "#FF3232";
-            bkgrclr = "#801919";
+            strkclr = "#801919";
+            bkgrclr = "#FF3232";
             textclr = "#FFFFFF";
             break;
         case "HMM":
@@ -61,7 +61,7 @@ export default function Btn({kind, text, onclick, width}: BtnsProps) {
             break;
     }
     return (
-        <Native.Pressable onPress={onclick} style={{ paddingTop: 14, paddingBottom: 14, paddingLeft: 28, paddingRight: 28, borderRadius: 10, borderColor: strkclr, backgroundColor: bkgrclr, borderWidth: 4, width: btnwdth }}>
+        <Native.Pressable onPress={onclick} style={{ paddingTop: 14, paddingBottom: 14, paddingLeft: 28, paddingRight: 28, borderRadius: 10, borderColor: strkclr, backgroundColor: bkgrclr, borderWidth: 4, width: btnwdth, flex: 1 }}>
             <BeText weight="Bold" size={14} color={textclr} align="cent">{text}</BeText>
         </Native.Pressable>
     )

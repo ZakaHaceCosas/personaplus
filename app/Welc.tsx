@@ -76,7 +76,7 @@ export default function WelcomePage() {
                         We only ask for the data we do need for the app to function. No data is sent outside of this device, ever. <BeText align="normal" weight="Regular" size={20} color="#3280FF" onTap={learnMore}>Learn more</BeText>.
                     </BeText>
                     <GapView height={20} />
-                    <Input kind="text" text="Input 1"></Input>
+                    <Input kind="text" text="Input 1" placeholder="Input 1" isReadOnly={false}></Input>
                     <Native.View style={styles.flexbtns}>
                         <Btn kind="UNKNOWN" onclick={goback} text="Go back" width="fill"/>
                         <Btn kind="ACE" onclick={gonext} text="Continue" width="fill"/>

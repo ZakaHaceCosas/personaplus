@@ -21,7 +21,8 @@ const styles = Native.StyleSheet.create({
         paddingTop: 30,
         paddingBottom: 30,
         // NOTA: No sé por qué, pero VSCode me marca aquí un error. Eso no pasaba con JS. Además, ahora ya no funciona (sin TS si lo hacía). Extraño...
-        // position: "fixed",
+        position: "absolute",
+        zIndex: 99,
         bottom: 0,
         left: 0,
         right: 0
