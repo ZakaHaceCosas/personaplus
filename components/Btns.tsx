@@ -61,6 +61,7 @@ export default function Btn({kind, text, onclick, width}: BtnsProps) {
             break;
     }
     return (
+        // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
         <Native.Pressable onPress={onclick} style={{ paddingTop: 14, paddingBottom: 14, paddingLeft: 28, paddingRight: 28, borderRadius: 10, borderColor: strkclr, backgroundColor: bkgrclr, borderWidth: 4, width: btnwdth, flex: 1 }}>
             <BeText weight="Bold" size={14} color={textclr} align="cent">{text}</BeText>
         </Native.Pressable>

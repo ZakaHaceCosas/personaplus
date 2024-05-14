@@ -1,6 +1,7 @@
 <h1 align="center">PersonaPlus</h1>
 
-[![YouTube Video Views](https://img.shields.io/youtube/views/X2Kq7aG23sA?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=X2Kq7aG23sA)
+<!--Se destacará el vídeo más reciente, a menos que alguno explote o algo así-->
+[![YouTube Video Views](https://img.shields.io/youtube/views/H2_0d-hLiMw?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=H2_0d-hLiMw)
 ![GitHub last commit](https://img.shields.io/github/last-commit/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github&color=black)
 ![GitHub repo size](https://img.shields.io/github/repo-size/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github)
 ![GitHub Repo stars](https://img.shields.io/github/stars/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github&color=orange)

@@ -10,6 +10,7 @@ import Section from "@/components/section/Section";
 import Division from "@/components/section/division/Division";
 import Btn from "@/components/Btns";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Nomore from "@/components/Nomore";
 
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
@@ -66,6 +67,7 @@ export default function Prof() {
                         <Btn kind="ACE" onclick={handleUnameBtnClick} text="Save username"/>
                     </Division>
                 </Section>
+                <Nomore />
             </Native.View>
             <Foot page={currentpage}></Foot>
         </Native.ScrollView>
