@@ -58,7 +58,7 @@ export default function Layout() {
     return (
         <Native.ScrollView style={styles.mainview}>
             <StatusBar style='auto' />
-            <Slot></Slot>
+            <Slot />
         </Native.ScrollView>
     )
 }

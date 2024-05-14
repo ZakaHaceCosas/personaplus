@@ -1,24 +1,23 @@
-// Btns.tsx
-// Buttons, botones, elementos presionables, ENTIDADES INTERACTIVAS UTILIZABLES POR MEDIO DE CLICS / TOCAMIENTOS DE LA PANTALLA xd
+// Noti.tsx
+// Notificaciones, para alertar al usuario de cosas que pasan
 
 import React from "react";
 import * as Native from "react-native";
 import BeText from "./Text";
+import GapView from "./GapView";
 
 // TypeScript, supongo
-interface BtnsProps {
-    kind: string;
-    text: string;
-    onclick: any;
-    width?: string;
+interface NotiProps {
+    kind: string; // Tipo (color)
+    title: string; // Título de la notificación
+    text: string; // Texto de la misma
 }
 
 // Creamos la funcion
-export default function Btn({kind, text, onclick, width}: BtnsProps) {
+export default function Noti({kind, title, text}: NotiProps) {
     let strkclr: string; // StrokeColor / Color del borde
     let bkgrclr: string; // BackgroundColor / Color del fondo
     let textclr: string; // TextColor / Color del texto
-    let btnwdth: string; // ButtonWidth / Tamaño horizontal del botón
 
     switch (kind) {
         case "ACE":
@@ -49,21 +48,12 @@ export default function Btn({kind, text, onclick, width}: BtnsProps) {
             break;
     }
 
-    switch (width) {
-        case "auto":
-            btnwdth = "auto";
-            break;
-        case "fill":
-            btnwdth = "100%";
-            break;
-        default:
-            btnwdth = "auto";
-            break;
-    }
     return (
         // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
-        <Native.Pressable onPress={onclick} style={{ paddingTop: 14, paddingBottom: 14, paddingLeft: 28, paddingRight: 28, borderRadius: 10, borderColor: strkclr, backgroundColor: bkgrclr, borderWidth: 4, width: btnwdth, flex: 1 }}>
-            <BeText weight="Bold" size={14} color={textclr} align="cent">{text}</BeText>
-        </Native.Pressable>
+        <Native.View style={{ padding: 14, borderRadius: 10, borderColor: strkclr, backgroundColor: bkgrclr, borderWidth: 4, width: "calc(100vw - 80px)", flex: 1, position: "fixed", zIndex: 999, bottom: 100, left: 20, right: 20 }}>
+            <BeText weight="SemiBold" size={12} color={textclr} align="normal">{title}</BeText>
+            <GapView height={2}/>
+            <BeText weight="Bold" size={22} color={textclr} align="normal">{text}</BeText>
+        </Native.View>
     )
 }

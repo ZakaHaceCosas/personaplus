@@ -11,6 +11,8 @@ import Division from "@/components/section/division/Division";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Btn from "@/components/Btns";
 import GapView from "@/components/GapView";
+import Noti from "@/components/Noti";
+import Nomore from "@/components/Nomore";
 
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
@@ -33,15 +35,32 @@ const styles = Native.StyleSheet.create({
 export default function Home() {
     // Por defecto
     const [username, setUname] = React.useState<string>("Unknown");
+    const [notiProps, setNotiProps] = React.useState<{ kind: string, title: string, text: string } | null>(null);
+
+    const showNotification = (kind: string, titl: string, text: any) => {
+      setNotiProps({
+        kind: kind,
+        title: titl,
+        text: text
+      });
+
+      // Para que la notificación dure 7.5 segundos
+      setTimeout(() => {
+        setNotiProps(null);
+      }, 7500);
+    };
+
     React.useEffect(() => {
         const fetchUsername = async () => {
             try {
-                const uname: any = await AsyncStorage.getItem('uname');
+                const uname: string | null = await AsyncStorage.getItem('uname');
                 if (uname) {
+                    showNotification("GOD", "Everything ok!", "Username fetched!")
                     setUname(uname);
                 }
             } catch (e) {
-                console.error(e);
+                //console.error(e)
+                showNotification("WOR", "Dev error", e)
             }
         };
 
@@ -53,6 +72,7 @@ export default function Home() {
 
     return (
         <Native.View style={styles.containerview}>
+            {notiProps && <Noti kind={notiProps.kind} title={notiProps.title} text={notiProps.text} />}
             <Native.ScrollView style={styles.mainview}>
                 <BeText align="normal" weight="Bold" size={40}>Hello, {username}!</BeText>
                 <BeText align="normal" weight="Regular" size={20}>
@@ -65,27 +85,7 @@ export default function Home() {
                         <Btn text="Done it" kind="GOD" width="fill" onclick={null}/>
                     </Division>
                 </Section>
-                <GapView height={20}/>
-                <Section kind="OBJS">
-                    <Division preheader="OBJECTIVE" header="RUNNING" subheader="For 12 minutes" iconName={null} status="REGULAR">
-                        <Btn text="Let's do it now!" kind="ACE" width="fill" onclick={null}/>
-                        <Btn text="Done it" kind="GOD" width="fill" onclick={null}/>
-                    </Division>
-                </Section>
-                <GapView height={20}/>
-                <Section kind="OBJS">
-                    <Division preheader="OBJECTIVE" header="RUNNING" subheader="For 12 minutes" iconName={null} status="REGULAR">
-                        <Btn text="Let's do it now!" kind="ACE" width="fill" onclick={null}/>
-                        <Btn text="Done it" kind="GOD" width="fill" onclick={null}/>
-                    </Division>
-                </Section>
-                <GapView height={20}/>
-                <Section kind="OBJS">
-                    <Division preheader="OBJECTIVE" header="RUNNING" subheader="For 12 minutes" iconName={null} status="REGULAR">
-                        <Btn text="Let's do it now!" kind="ACE" width="fill" onclick={null}/>
-                        <Btn text="Done it" kind="GOD" width="fill" onclick={null}/>
-                    </Division>
-                </Section>
+                <Nomore />
             </Native.ScrollView>
             <Foot page={currentpage}></Foot>
         </Native.View>

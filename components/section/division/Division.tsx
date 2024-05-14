@@ -10,7 +10,7 @@ import GapView from "@/components/GapView";
 interface DivisionProps {
     status: string; // Estado. No se usa por ahora. Definiría el color de fondo.
     // hasIcon: boolean; // ¿Tiene un icono?
-    iconName: string; // Si lo tiene, ¿Cuál es?
+    iconName: string | null; // Si lo tiene, ¿Cuál es?
     preheader: string; // Título
     header: string; // Texto grande
     subheader: string; // El texto pequeño

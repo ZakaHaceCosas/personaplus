@@ -11,6 +11,11 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - Cuando todas las funciones principales / básicas estén implementadas y testeadas, se pasará a la 1.0.0-R5.
 - Si se está en X.X.9, pero se siguen lanzado actualizaciones que deberían sumar al 9, se añadirá una cifra (p ej. 0.0.91-R5).
 
+# 0.0.1-R5-b4
+- Visual improvments
+- Creation of Notification and Nomore component
+- Some changes to error handling in `index.tsx` (replaced `console.error` with in-interface logs, will roll out to all files on next commit)
+
 # 0.0.1-R5-b3
 - Very small changes
 - Created Welc.tsx for the welcome page and made some work
