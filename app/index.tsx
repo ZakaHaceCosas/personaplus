@@ -1,7 +1,7 @@
 // index.tsx
 // Welcome to PersonaPlus, my friend!
 
-import React, { StrictMode } from "react"
+import React from "react"
 import * as Native from 'react-native';
 import BeText from "@/components/Text";
 import Section from "@/components/section/Section";
