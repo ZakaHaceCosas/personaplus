@@ -11,6 +11,12 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - Cuando todas las funciones principales / básicas estén implementadas y testeadas, se pasará a la 1.0.0-R5.
 - Si se está en X.X.9, pero se siguen lanzado actualizaciones que deberían sumar al 9, se añadirá una cifra (p ej. 0.0.91-R5).
 
+- PD: Los logs serán en inglés, siempre.
+
+# 0.0.1-R5-b6
+- Fixed some errors
+- Removed the custom `Input.tsx` component, will reuse proped default `Native.Input`.
+
 # 0.0.1-R5-b5
 - Changes to how `width`s and `height`s are passed to avoid VSC errors.
 

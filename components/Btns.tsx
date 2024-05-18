@@ -70,8 +70,11 @@ export default function Btn({kind, text, onclick, width, height}: BtnsProps) {
         case "fill":
             btnhght = "100%";
             break;
+        case "default": // Por si acaso
+            btnhght = 55;
+            break;
         default:
-            btnhght = 40;
+            btnhght = 55;
             break;
     }
 
@@ -88,6 +91,9 @@ export default function Btn({kind, text, onclick, width, height}: BtnsProps) {
             borderWidth: 4,
             width: btnwdth as Native.DimensionValue,
             height: btnhght as Native.DimensionValue,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             flex: 1}}>
             <BeText weight="Bold" size={14} color={textclr} align="cent">{text}</BeText>
         </Native.Pressable>
