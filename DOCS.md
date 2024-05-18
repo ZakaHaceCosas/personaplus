@@ -42,6 +42,7 @@ El primer módulo, en términos de funcionalidad, se divide en dos submódulos.
 		1.2 **PASIVOS**: Se les puede llamar "metas", ya que es lo que son en realidad. El usuario no indica si los ha cumplido o no, si no que la propia app lo determina según la información que recibe por parte del usuario. Ejemplos de objetivos pasivos serían "No ingerir más de 3500 kcal diarias", "Cumplir mi objetivo de correr 15 días seguidos", "No usar el móvil más de 3 horas al día", y similares.
 > [!WARNING]
 > A partir de aquí, la doc. está deprecada
+
 	2. El usuario también podrá controlar su dieta, estableciendo a que horas desayuna, come, o cena, para recibir una notificación a cada hora como se ve en el siguiente diagrama*.
 	3. Además, a la noche (cuando se le pregunte por todos sus objetivos en general), también se le preguntará, entre otras cosas, si ha estado "picando entre horas", para obtener estadísticas más precisas.
 	4. En base a dichos objetivos y registros alimentarios, la app cálculos con la actividad física realizada por el usuario (de los que la app tenga constancia) para obtener estadísticas y en base a dichas estadísticas mantener al usuario informado de su rendimiento**.
