@@ -1,7 +1,7 @@
 // index.tsx
 // Welcome to PersonaPlus, my friend!
 
-import React from "react"
+import React, { StrictMode } from "react"
 import * as Native from 'react-native';
 import BeText from "@/components/Text";
 import Section from "@/components/section/Section";
@@ -17,17 +17,13 @@ import Nomore from "@/components/Nomore";
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
-        width: "100vw",
-        height: "100vh"
+        width: "100vw" as Native.DimensionValue,
+        height: "100vh" as Native.DimensionValue
     },
     mainview: {
         padding: 20,
         display: 'flex',
         flexDirection: 'column',
-    },
-    epicspacingdiv: {
-        height: 20,
-        width: 1
     }
 })
 

@@ -50,7 +50,19 @@ export default function Noti({kind, title, text}: NotiProps) {
 
     return (
         // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
-        <Native.View style={{ padding: 14, borderRadius: 10, borderColor: strkclr, backgroundColor: bkgrclr, borderWidth: 4, width: "calc(100vw - 80px)", flex: 1, position: "fixed", zIndex: 999, bottom: 100, left: 20, right: 20 }}>
+        <Native.View style={{
+            padding: 14,
+            borderRadius: 10,
+            borderColor: strkclr,
+            backgroundColor: bkgrclr,
+            borderWidth: 4,
+            width: "calc(100vw - 80px)" as Native.DimensionValue,
+            flex: 1,
+            position: "fixed",
+            zIndex: 999,
+            bottom: 100,
+            left: 20,
+            right: 20 }}>
             <BeText weight="SemiBold" size={12} color={textclr} align="normal">{title}</BeText>
             <GapView height={2}/>
             <BeText weight="Bold" size={22} color={textclr} align="normal">{text}</BeText>

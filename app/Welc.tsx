@@ -11,8 +11,8 @@ import * as Native from "react-native";
 // Definimos los estilos
 const styles = Native.StyleSheet.create({
     defview: {
-        width: "100vw", // Ignora el error, funciona correctamente. Cosas de TypeScript.
-        height: "100vh", // Ignora el error, funciona correctamente. Cosas de TypeScript.
+        width: "100vw" as Native.DimensionValue, // Ignora el error, funciona correctamente. Cosas de TypeScript.
+        height: "100vh" as Native.DimensionValue, // Ignora el error, funciona correctamente. Cosas de TypeScript.
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
@@ -23,7 +23,7 @@ const styles = Native.StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         gap: 15,
-        width: "calc(50% - 5px)"
+        width: "calc(50% - 5px)" as Native.DimensionValue
     }
 })
 
@@ -62,7 +62,7 @@ export default function WelcomePage() {
                         We're proud to see you want to give yourself a plus.
                     </BeText>
                     <GapView height={20} />
-                    <Btn kind="ACE" onclick={gonext} text="Let's go!" width="fill"/>
+                    <Btn kind="ACE" onclick={gonext} text="Let's go!" width="fill" height={40}/>
                 </React.Fragment>
             )}
 
