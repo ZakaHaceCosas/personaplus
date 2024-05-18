@@ -39,7 +39,7 @@ npx expo start
 
 ¡Aparcado! En la interfaz, clica `w` para ver una demo rápida en tu navegador, o clica `a` para abrirla en un emulador Android (requiere Android Studio).
 
-Para escribir código consistente, puedes ver la documentación completa [aquí](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md#3-programando-personaplus).
+Para escribir código consistente, puedes ver la documentación (in)completa [aquí](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md#3-programando-personaplus).
 
 <h2>Mientras trabajo en ello, sígueme</h2>
 
