@@ -11,14 +11,16 @@ interface BtnsProps {
     text: string;
     onclick: any;
     width?: string;
+    height?: string | number;
 }
 
 // Creamos la funcion
-export default function Btn({kind, text, onclick, width}: BtnsProps) {
+export default function Btn({kind, text, onclick, width, height}: BtnsProps) {
     let strkclr: string; // StrokeColor / Color del borde
     let bkgrclr: string; // BackgroundColor / Color del fondo
     let textclr: string; // TextColor / Color del texto
     let btnwdth: string; // ButtonWidth / Tamaño horizontal del botón
+    let btnhght: string | number; // ButtonHeight / Tamaño vertical del botón
 
     switch (kind) {
         case "ACE":
@@ -60,9 +62,33 @@ export default function Btn({kind, text, onclick, width}: BtnsProps) {
             btnwdth = "auto";
             break;
     }
+
+    switch (height) {
+        case "auto":
+            btnhght = "auto";
+            break;
+        case "fill":
+            btnhght = "100%";
+            break;
+        default:
+            btnhght = 40;
+            break;
+    }
+
     return (
         // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
-        <Native.Pressable onPress={onclick} style={{ paddingTop: 14, paddingBottom: 14, paddingLeft: 28, paddingRight: 28, borderRadius: 10, borderColor: strkclr, backgroundColor: bkgrclr, borderWidth: 4, width: btnwdth, flex: 1 }}>
+        <Native.Pressable onPress={onclick} style={{
+            paddingTop: 14,
+            paddingBottom: 14,
+            paddingLeft: 28,
+            paddingRight: 28,
+            borderRadius: 10,
+            borderColor: strkclr,
+            backgroundColor: bkgrclr,
+            borderWidth: 4,
+            width: btnwdth as Native.DimensionValue,
+            height: btnhght as Native.DimensionValue,
+            flex: 1}}>
             <BeText weight="Bold" size={14} color={textclr} align="cent">{text}</BeText>
         </Native.Pressable>
     )
