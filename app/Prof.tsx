@@ -54,11 +54,11 @@ export default function Prof() {
                 <BeText align="normal" weight="Bold" size={40}>Profile</BeText>
                 <BeText align="normal" weight="Regular" size={20}>Nice to meet you</BeText>
                 <Section kind="REGULAR">
-                    <Division status="REGULAR" iconName={null} preheader="USERNAME TEST" header="ENTER YOUR USERNAME" subheader="You need a username, comrade">
+                    <Division status="REGULAR" iconName={null} preheader="PROFILE" header="Setup a username" subheader="You need a username, comrade">
                         <Native.TextInput
                             readOnly={false}
                             maxLength={40}
-                            placeholder="username here"
+                            placeholder="Your username here"
                             placeholderTextColor="#C8C8C8"
                             onChangeText={handleUnameTxtChange}
                             value={uname}
