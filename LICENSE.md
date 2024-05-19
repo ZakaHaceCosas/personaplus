@@ -1,1 +1,1 @@
-a.
+Licenciatura en bellas artes.
