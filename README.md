@@ -11,13 +11,15 @@
 <h2>DATE UN PLUS</h2>
 <h3><i>GIVE YOURSELF A PLUS</i></h3>
 
-PersonaPlus es un proyecto independiente que apunta a crear una app (con React Native & Expo) que ayude a los usuarios a cuidar de su salud, dieta, y bienestar digital.
+PersonaPlus es un proyecto independiente que apunta a crear una app (con React Native & Expo) que ayude a los usuarios a cuidar de su salud, dieta, y bienestar digital. A ***darse más***, como nos gusta decir.
 
-Este repositorio contendrá todo el código fuente del proyecto, para mantener la transparencia y permitir a la comunidad contribuir (si lo desea) al desarrollo de la aplicación.
+<h2>Funciones</h2>
+
+~~Ninguna porque la app no está acabada~~
 
 <h2>¿Cómo contribuir?</h2>
 
-Para instalar PersonaPlus (bueno, su código fuente en todo caso), sigue estos pasos:
+Para contribuir, empieza por instalar PersonaPlus (bueno, su código fuente en todo caso), siguiendo estos pasos:
 
 1. Clona este repositorio:
 ```bash
@@ -39,8 +41,10 @@ npx expo start
 
 ¡Aparcado! En la interfaz, clica `w` para ver una demo rápida en tu navegador, o clica `a` para abrirla en un emulador Android (requiere Android Studio).
 
-Para escribir código consistente, puedes ver la documentación (in)completa [aquí](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md#3-programando-personaplus).
+Puedes ver la documentación completa de como programar para el proyecto [aquí](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md#3-programando-personaplus).
 
-<h2>Mientras trabajo en ello, sígueme</h2>
+<h2>Sígueme y únete al club de los que quieren darse más :]</h2>
 
 [![YouTube button](https://img.shields.io/badge/YouTube-ZakaHaceCosas-red?style=for-the-badge&logo=youtube)](https://youtube.com/@ZakaHaceCosas)
+
+[![Discord button](https://img.shields.io/badge/Discord-Servidor_de_Discord-blue?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/invite/euVHrr46c6)
