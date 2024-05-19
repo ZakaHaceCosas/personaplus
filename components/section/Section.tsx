@@ -48,7 +48,7 @@ export default function Division({ kind, children }: DivisionProps) {
 
     return (
         <Native.View style={styles.container}>
-            <SectionHeader label={lbl} icon={icn}></SectionHeader>
+            <SectionHeader label={lbl} icon={icn} />
             {children}
         </Native.View>
     );

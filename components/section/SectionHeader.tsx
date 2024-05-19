@@ -45,11 +45,6 @@ export default function SectionHeader({ icon, label }: SectionProps) {
 
     return (
         <Native.View style={styles.mainview}>
-            {/*
-            {i === "OBJS" && <CalendarDayFilled />}
-            {i === "POBJS" && <CalendarDayFilled />}
-            {i === "HYAD" && <HeartPulseFilled />}
-            {i === "IDK" && <QuestionFilled />*/}
             <BeText align="normal" weight="Bold" size={12} color="#DDDDDD">{label}</BeText>
         </Native.View>
     );

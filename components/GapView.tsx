@@ -12,6 +12,6 @@ interface GapViewProps {
 // Creamos la funcion con estilos en línea
 export default function GapView({height}: GapViewProps) {
     return (
-        <Native.View style={{ height: height }}></Native.View>
+        <Native.View style={{ height: height }} />
     )
 }
