@@ -13,6 +13,14 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - PD: Los logs serán en inglés, siempre.
 
+# 0.0.1-R5-b7
+- Added `position` attribute to Notis.
+- Updated `/prof` (profile page) to the new, correct layout.
+- Replaced `console.log` and `console.error` with Notis in `/prof`.
+- Updated the documentation. While still unfinished, it's now in a state where it's usable as if it was.
+- Added React's `StrictMode`.
+- Organised some components and made the code a little cleaner.
+
 # 0.0.1-R5-b6
 - Fixed some errors
 - Removed the custom `Input.tsx` component, will reuse proped default `Native.Input`.

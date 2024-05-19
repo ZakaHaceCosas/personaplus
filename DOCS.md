@@ -1,16 +1,14 @@
-> [!WARNING]
-> **DOCUMENTACIÓN INCOMPLETA**
-
 ![DIAGRAMA](https://personaplus.vercel.app/PP_BANNER_DEV.png)
 <h1 align="center">PersonaPlus</h1>
 <h2 align="center">Dale un PLUS a tu Persona</h2>
 <p align="center">
 DOCUMENTACIÓN DE LA BASE DE CÓDIGO
 </p>
+<h6 align="center">(sujeta a cambios)</h6>
 
 ## 0. ¿Qué es PersonaPlus?
 ###### (Este punto es orientativo y no dirijido al código como tal, se puede omitir)
-PersonaPlus es una aplicación de salud y bienestar digital (con planes para implementar también protección antivirus), desarrollada en React Native y Expo.
+PersonaPlus es una aplicación de salud y bienestar digital, desarrollada en React Native y Expo.
 
 Aún se halla en una fase muy temprana del desarrollo, pero apunta a traer las siguientes funcionalidades:
 - Sistema basado en "Objetivos".
@@ -27,35 +25,8 @@ Con estas ideas apuntamos a crear una aplicación estrella, gratuita y de códig
 
 ## 1. El *stack* tecnológico
 La aplicación está desarrollada con **React Native 0.73**, **Expo SDK 50.0.17**, y programada en TypeScript.
-
-## 2. Funcionamiento: La aplicación
-La aplicación se divide en tres páginas, el Inicio, el Panel, y el Perfil.
-
-![DIAGRAMA](https://personaplus.vercel.app/DEV-org-esquema-app.png)
-
-El primer módulo, en términos de funcionalidad, se divide en dos submódulos.
--	SALUD FÍSICA
-	1. Ofrecer al usuario la capacidad de crear objetivos ACTIVOS o PASIVOS
-		
-		1.1 **ACTIVOS**: Objetivos diarios que él mismo indicará antes de la media noche el haber cumplido dicho objetivo o no (no indicarlo = no lo ha cumplido). Ejemplos de objetivos activos serían "Correr durante 10 minutos", "Correr 15 kilómetros", "Hacer x flexiones al día", y similares. Pueden ser más genéricas ("Correr 5 minutos"), o más específicas ("Correr 10 kilometros en 20 minutos con 2 descansos", por ejemplo).
-
-		1.2 **PASIVOS**: Se les puede llamar "metas", ya que es lo que son en realidad. El usuario no indica si los ha cumplido o no, si no que la propia app lo determina según la información que recibe por parte del usuario. Ejemplos de objetivos pasivos serían "No ingerir más de 3500 kcal diarias", "Cumplir mi objetivo de correr 15 días seguidos", "No usar el móvil más de 3 horas al día", y similares.
-> [!WARNING]
-> A partir de aquí, la doc. está deprecada
-
-	2. El usuario también podrá controlar su dieta, estableciendo a que horas desayuna, come, o cena, para recibir una notificación a cada hora como se ve en el siguiente diagrama*.
-	3. Además, a la noche (cuando se le pregunte por todos sus objetivos en general), también se le preguntará, entre otras cosas, si ha estado "picando entre horas", para obtener estadísticas más precisas.
-	4. En base a dichos objetivos y registros alimentarios, la app cálculos con la actividad física realizada por el usuario (de los que la app tenga constancia) para obtener estadísticas y en base a dichas estadísticas mantener al usuario informado de su rendimiento**.
-
-(*Diagrama)
-![DIAGRAMA](https://personaplus.vercel.app/func_salud1_dieta.png)
-
-(**La definición de que números son "buenos" o "malos" se hará en base a datos médicos, aunque la app siempre recordará que no está hecha por ningún hospital ni es 100% precisa.)
-
-- SALUD PSICOLÓGICA (aka BIENESTAR DIGITAL)
-	1.	El usuario tendrá a su disposición un conteo del tiempo invertido en cada aplicación y de la cantidad de notificaciones que recibe de cada una, mas un contador de desbloqueos de la pantalla, para que el usuario sepa con exactitud que uso hace del dispositivo y como lo usa.
 	
-## 3. Programando PersonaPlus
+## 2. Programando PersonaPlus
 Estas son las indicaciones básicas para programar, desde nombres de variables hasta prácticas recomendadas.
 
 ### > TRABAJANDO CON EL PROYECTO
@@ -122,7 +93,12 @@ interface ModuloProps {
 	variable: string;
 }
 
-const styles
+const styles = Native.StyleSheet.create({
+	item: {
+		padding: 10,
+		color: "#FFF"
+	}
+})
 
 export default function Modulo() {
 	return (
@@ -137,6 +113,59 @@ Para evitar tener importaciones muy largas, cuando sea necesario utiliza `import
 > **Siempre** se importa React Native de este modo, con el nombre "Native".
 
 Ten en cuenta que cuando programes, esto llevará a que en vez de escribir, por ejemplo, `<View>`, escribas `<Native.View>`.
+
+#### 3. NOMBRA CLARAMENTE LAS VARIABLES
+
+Utiliza el nombre completo en inglés de lo que sea que busques crear, o, a poder ser y siempre que sea comprensible, una acortación a cuatro letras. Tampoco hagas nombres *demasiado* descriptivos.
+
+```tsx
+// Mal.
+const w = "100vw"
+const t = "Bold"
+const a = "center"
+
+// Bien.
+const widt = "100vh"
+const text = "Bold"
+const algn = "center"
+
+// También bien.
+const width = "100vh"
+const text = "Bold"
+const align = "center"
+
+// No tan bien. Podrías usar "align", estandar y más fácil.
+const alignment = "center"
+
+```
+
+#### 4. HAZ USO DEL TIPEADO
+
+Estás trabajando con TypeScript, así que recuerda usar Types. No vaya a ser que acabes asignando valores ilógicos a una variable...
+
+Cuando se trate de la función principal de un componente, haz uso de una Interfaz.
+
+```tsx
+import React from 'react';
+import BeText from *;
+
+const mivariable: string = "String :D";
+
+interface miComponenteProps {
+	param: string; // Comentario explicando el param
+	param2: number; // Comentario explicando el param2
+}
+
+export default function miComponente({ param, param2 }: miComponenteProps) {
+	return (
+		<BeText>{param} + {" "} + {param2}</BeText>
+	)
+}
+```
+
+#### 5. ELIMINA LOS *ERRORES TONTOS*
+
+Por alguna razón, el tipeado de TS da error cuando, por ejemplo, tratas de asignar "100vw" a `width` vía StyleSheet. Cuando eso pase, añade en la línea anterior un salto y un `// @ts-ignore`, y aparcado.
 
 > [!WARNING]
 > Aún hay que acabar esta documentación

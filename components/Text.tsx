@@ -48,7 +48,8 @@ export default function BeText({ size, weight, children, color, align, onTap }: 
         fontSize: size,
         lineHeight: thelineheight,
         color: txtcolor,
-        textAlign: txtalgn // Si da error, ignora el error, funciona correctamente. Será que VSCode no reconoce lo que pasa aquí (al menos en mi maquina marca error aquí).
+        // @ts-ignore
+        textAlign: txtalgn
     };
 
     if (onTap) {
