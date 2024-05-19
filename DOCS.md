@@ -35,6 +35,8 @@ Necesitarás instalar (obviamente) `Git` y `Node.js` en tu sistema, y de ahí, i
 
 La mayor parte del tiempo solo usarás `npx expo start` (para iniciar el proyecto (debes estar en la raíz)), a veces con el arg. `--clear` (para limpiar la caché), y `npx expo install <opcionalmente-un-paquete>` para instalar paquetes de Expo. `npx expo install` y `npm install` instalarán todas las dependencias nada más hayas clonado el repositorio. `npx expo install --check` y `--fix` pueden arreglar dependencias rotas.
 
+No intentes generar un APK vía Expo EAS (en teoría podrías hacerlo con `expo-cli`, debido a la presencia del `projectId` en `app.json`. Pero no lo hagas).
+
 ### > LAS "PRE-VARIABLES"
 En el *root* del proyecto hay archivos `VAR-algo.jsonc` (JSON con comentarios).
 Estos incluyen las "variables" que no se pueden incorporar como variables reales (p ej., variables de CSS).
