@@ -13,6 +13,9 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - PD: Los logs serán en inglés, siempre.
 
+# 0.0.1-R5-b8
+- Changes to different root files (`.env`, `package.json`, etc...) to setup Expo EAS.
+
 # 0.0.1-R5-b7
 - Added `position` attribute to Notis.
 - Updated `/prof` (profile page) to the new, correct layout.
