@@ -15,8 +15,6 @@ PersonaPlus es un proyecto independiente que apunta a crear una app (con React N
 
 <h2>Funciones planeadas</h2>
 
-![stats](https://github-readme-stats.vercel.app/api?username=ZakaHaceCosas&show_icons=true&theme=dark)
-
 - [ ] Registro de usuarios
     - [ ] Datos básicos
     - [ ] Personalización
