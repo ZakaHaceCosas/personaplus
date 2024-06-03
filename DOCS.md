@@ -24,8 +24,8 @@ Aún se halla en una fase muy temprana del desarrollo, pero apunta a traer las s
 Con estas ideas apuntamos a crear una aplicación estrella, gratuita y de código abierto, para ayudar a las personas a mejorar su propia salud.
 
 ## 1. El *stack* tecnológico
-La aplicación está desarrollada con **React Native 0.73**, **Expo SDK 50.0.17**, y programada en TypeScript.
-	
+La aplicación está desarrollada con **React Native 0.73.6**, **Expo SDK 50.0.19**, y programada en TypeScript.
+
 ## 2. Programando PersonaPlus
 Estas son las indicaciones básicas para programar, desde nombres de variables hasta prácticas recomendadas.
 
@@ -35,11 +35,11 @@ Necesitarás instalar (obviamente) `Git` y `Node.js` en tu sistema, y de ahí, i
 
 La mayor parte del tiempo solo usarás `npx expo start` (para iniciar el proyecto (debes estar en la raíz)), a veces con el arg. `--clear` (para limpiar la caché), y `npx expo install <opcionalmente-un-paquete>` para instalar paquetes de Expo. `npx expo install` y `npm install` instalarán todas las dependencias nada más hayas clonado el repositorio. `npx expo install --check` y `--fix` pueden arreglar dependencias rotas.
 
-No intentes generar un APK vía Expo EAS (en teoría podrías hacerlo con `expo-cli`, debido a la presencia del `projectId` en `app.json`. Pero no lo hagas).
-
 ### > LAS "PRE-VARIABLES"
 En el *root* del proyecto hay archivos `VAR-algo.jsonc` (JSON con comentarios).
 Estos incluyen las "variables" que no se pueden incorporar como variables reales (p ej., variables de CSS).
+
+Actualmente sólo hay una, `VAR-DSGN.jsonc`, con la paleta de colores de la app.
 
 ### > ESTRUCTURA DE ARCHIVOS
 PersonaPlus está organizado de una forma concreta. En caso de que te veas creando un archivo nuevo, que no desorganice el sistema de archivos.
@@ -83,28 +83,33 @@ Por el bien de todos, ¡el código se tiene que entender! Sigue estas prácticas
 
 IMPORT - INTERFACE - STYLE - *FUNCTION
 
-Siempre el mismo orden, primero importamos, luego definimos la interfaz (los *types*), después, si procede, los estilos, y por último la función principal (ésta siempre sera la última. Si hace falta colocar otra función fuera de esta misma, que sea justo antes).
+Siempre el mismo orden, primero importamos, luego definimos la interfaz (los tipos), después, si procede, los estilos, y por último la función principal (ésta siempre sera la última. Si hace falta colocar otra función fuera de esta misma, que sea justo antes).
 
 ```tsx
 // ruta/al/Modulo.tsx
 // Breve descripción de que hace
 
-import React from 'react';
+import * as React from 'react';
+import * as Native from 'react-native';
 
 interface ModuloProps {
 	variable: string;
 }
 
 const styles = Native.StyleSheet.create({
-	item: {
+	mainview: {
 		padding: 10,
-		color: "#FFF"
+		backgroundColor: "#FFF"
 	}
 })
 
 export default function Modulo() {
 	return (
-		<Text>Un módulo bien hecho</Text>
+		<Native.View style={styles.mainview}>
+			<BeText align="normal" weight="Bold" size={20} color="#000">
+				Un módulo bien hecho
+			</BeText>
+		</Native.View>
 	)
 }
 ```
@@ -112,7 +117,7 @@ export default function Modulo() {
 #### 2. IMPORTA CORRECTAMENTE
 
 Para evitar tener importaciones muy largas, cuando sea necesario utiliza `import * as <Nombre> from <importacion>`.
-> **Siempre** se importa React Native de este modo, con el nombre "Native".
+> **Siempre** se importa React Native de este modo, con el nombre "Native", al igual que React con el nombre "React".
 
 Ten en cuenta que cuando programes, esto llevará a que en vez de escribir, por ejemplo, `<View>`, escribas `<Native.View>`.
 
@@ -126,30 +131,30 @@ const w = "100vw"
 const t = "Bold"
 const a = "center"
 
-// Bien.
+// Bien. Recomendable.
 const widt = "100vh"
 const text = "Bold"
 const algn = "center"
 
-// También bien.
+// También bien. Funciona.
 const width = "100vh"
 const text = "Bold"
 const align = "center"
 
 // No tan bien. Podrías usar "align", estandar y más fácil.
 const alignment = "center"
-
 ```
 
 #### 4. HAZ USO DEL TIPEADO
 
-Estás trabajando con TypeScript, así que recuerda usar Types. No vaya a ser que acabes asignando valores ilógicos a una variable...
+Estás trabajando con TypeScript, así que recuerda usar tipos. No vaya a ser que acabes asignando valores ilógicos a una variable...
 
 Cuando se trate de la función principal de un componente, haz uso de una Interfaz.
 
 ```tsx
-import React from 'react';
-import BeText from *;
+import * as React from 'react';
+import * as Native from 'react-native';
+import BeText from "@/components/Text";
 
 const mivariable: string = "String :D";
 
@@ -167,7 +172,23 @@ export default function miComponente({ param, param2 }: miComponenteProps) {
 
 #### 5. ELIMINA LOS *ERRORES TONTOS*
 
-Por alguna razón, el tipeado de TS da error cuando, por ejemplo, tratas de asignar "100vw" a `width` vía StyleSheet. Cuando eso pase, añade en la línea anterior un salto y un `// @ts-ignore`, y aparcado.
+Por alguna razón, el tipeado de TS da error cuando, por ejemplo, tratas de asignar "100vw" a `width` vía StyleSheet. Cuando eso pase, usa estas correcciones (si no hay ninguna para tu "error", añade en la línea anterior un salto y un `// @ts-ignore`, y aparcado).
 
-> [!WARNING]
-> Aún hay que acabar esta documentación
+##### `width`y `height` dando guerra.
+
+¿No puedes asignar "100vw" a `width`?
+```tsx
+width: "100vw" // Error: Type '"100vw"' is not assignable to type 'DimensionValue | undefined'.
+```
+Utiliza `DimensionValue`
+```tsx
+width: "100vw" as Native.DimensionValue // Perfecto.
+```
+
+## Versionado
+
+Actualmente se usa un versionado muy simple, cuando cambies algo suma 1 a la `b` (*build*) en el archivo `CHANGELOG.md` y describe que cambios o mejoras hiciste.
+
+## Licencia
+
+Este proyecto está licenciado bajo los términos de la Licencia Apache 2.0, véase `LICENSE.md`.

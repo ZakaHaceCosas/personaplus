@@ -13,6 +13,44 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - PD: Los logs serán en inglés, siempre.
 
+# 0.0.1-R5-b9 (commit 69 XD)
+<!--me encantaría dejar aquí anotado que la mejor commit hasta el momento coincide con el rebrand y con la commit 69 XD, no se porque sencillamente lo anoto-->
+- **Updated Expo:** From ~~50.0.17~~ to **50.0.19**
+- Fixed dependencies.
+- Fixed the `adaptive-icon` syntax.
+- Fixed the dashboard's layout.
+- Uploaded all the app icons.
+- Created custom switch element `Swap.tsx`.
+
+> [!WARNING]
+> **KNOWN ERROR**: Swap not working correctly.
+
+- Added icons to the app.
+
+> [!NOTE]
+> **KNWON ISSUE:** For some reason, I didn't managed to make Microsoft's Fluent Icons React package work, so I used Material Design Icons instead, via Expo's `@expo/vectoricons`
+
+- Now the documentation is fully usable, can be considered "done". *Of course, it is still subject to changes at any time.*
+- Licensed under Apache 2.0.
+- Added input colors to `VAR-DSGN.jsonc`.
+- Updated all files to follow the documentation's requested code guidelines.
+- Fully formatted the code + added formatting on save.
+- Changed many `.vscode` settings.
+- General changes and improvements to the Homepage (`/`).
+- Made some progress in the dashboard (`/Dash`). Implemented `Notis` and *fixed* obj fetching. (Still looking forward to implementing obj creation).
+
+> [!WARNING]
+> **KNOWN ERROR**: Still doesn't access them 100% correctly.
+
+- Fixed errors with the Profile (`/Prof`) page. Added a "current username is ..." text to the username change menu.
+- A lot of progress with the Welcome screen (`/Welc`). First page is complete, plus added (non-tested) data saving.
+- Now `GapView` also has a `width` argument.
+- Made changes to types in different components.
+- Additional progress.
+
+> [!WARNING]
+> **OTHER KNOWN ERRORS**: Console spamming "Unexpected text node:  . A text node cannot be a child of a <View>.". I am trying to find were that comes from.
+
 # 0.0.1-R5-b8
 - Changes to different root files (`.env`, `package.json`, etc...) to setup Expo EAS.
 
@@ -32,9 +70,9 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - Changes to how `width`s and `height`s are passed to avoid VSC errors.
 
 # 0.0.1-R5-b4
-- Visual improvments
+- Visual improvements
 - Creation of Notification and Nomore component
-- Some changes to error handling in `index.tsx` (replaced `console.error` with in-interface logs, will roll out to all files on next commit)
+- Some changes to error handling in `index.tsx` (replaced `console.error` with in-interface logs, will roll out to all files on next commits)
 
 # 0.0.1-R5-b3
 - Very small changes

@@ -10,12 +10,21 @@ interface BeTextProps {
     weight: string;
     color?: string;
     onTap?: any;
-    align: string;
+    align?: string;
     children: React.ReactNode;
+    url?: boolean;
 }
 
 // Creamos la función
-export default function BeText({ size, weight, children, color, align, onTap }: BeTextProps) {
+export default function BeText({
+    size,
+    weight,
+    children,
+    color,
+    align,
+    onTap,
+    url,
+}: BeTextProps) {
     // weight (Bold, ExtraBold, Light, Regular, Medium)...
     // para itálica, añadir Italic (BoldItalic)
     const font: string = "BeVietnamPro-" + weight;
@@ -23,7 +32,8 @@ export default function BeText({ size, weight, children, color, align, onTap }: 
     const thelineheight: number = size;
     // color del texto. si no especificas uno, por defecto es blanco (ya que la aplicación es de fondo negro)
     const txtcolor: string = color || "#FFF";
-    let txtalgn: string | undefined;
+    let txtalgn: string = align || "normal";
+    let txtdeco: string;
 
     switch (align) {
         case "cent":
@@ -39,7 +49,19 @@ export default function BeText({ size, weight, children, color, align, onTap }: 
             txtalgn = "right";
             break;
         default:
-            txtalgn = undefined;
+            txtalgn = "left";
+            break;
+    }
+
+    switch (url) {
+        case true:
+            txtdeco = "underline";
+            break;
+        case false:
+            txtdeco = "none";
+            break;
+        default:
+            txtdeco = "none";
             break;
     }
 
@@ -49,7 +71,11 @@ export default function BeText({ size, weight, children, color, align, onTap }: 
         lineHeight: thelineheight,
         color: txtcolor,
         // @ts-ignore
-        textAlign: txtalgn
+        textAlign: txtalgn,
+        // @ts-ignore
+        textDecorationLine: txtdeco,
+        textDecorationColor: txtcolor,
+        textDecorationStyle: "solid",
     };
 
     if (onTap) {
@@ -59,10 +85,6 @@ export default function BeText({ size, weight, children, color, align, onTap }: 
             </Native.Text>
         );
     } else {
-        return (
-            <Native.Text style={textStyle}>
-                {children}
-            </Native.Text>
-        );
+        return <Native.Text style={textStyle}>{children}</Native.Text>;
     }
 }

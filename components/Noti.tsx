@@ -6,18 +6,16 @@ import * as Native from "react-native";
 import BeText from "./Text";
 import GapView from "./GapView";
 
-
-
 // TypeScript, supongo
 interface NotiProps {
     kind: string; // Tipo (color)
-    title: string; // Título de la notificación
-    text: string; // Texto de la misma
+    title: any; // Título de la notificación
+    text: any; // Texto de la misma
     post?: any; // Posicionamiento
 }
 
 // Creamos la funcion
-export default function Noti({kind, title, text, post}: NotiProps) {
+export default function Noti({ kind, title, text, post }: NotiProps) {
     let strkclr: string; // StrokeColor / Color del borde
     let bkgrclr: string; // BackgroundColor / Color del fondo
     let textclr: string; // TextColor / Color del texto
@@ -72,24 +70,30 @@ export default function Noti({kind, title, text, post}: NotiProps) {
 
     return (
         // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
+        <Native.View
             // @ts-ignore
-            <Native.View style={{
+            style={{
                 padding: 14,
                 borderRadius: 10,
                 borderColor: strkclr,
                 backgroundColor: bkgrclr,
                 borderWidth: 4,
-                width: "calc(100vw - 80px)" as Native.DimensionValue,
+                width: "calc(100vw - 40px)" as Native.DimensionValue,
                 flex: 1,
                 position: ntipost,
                 zIndex: 999,
                 bottom: 100,
                 left: 20,
-                right: 20
-            }}>
-            <BeText weight="SemiBold" size={12} color={textclr} align="normal">{title}</BeText>
-            <GapView height={2}/>
-            <BeText weight="Bold" size={22} color={textclr} align="normal">{text}</BeText>
+                right: 20,
+            }}
+        >
+            <BeText weight="SemiBold" size={12} color={textclr} align="normal">
+                {String(title)}
+            </BeText>
+            <GapView height={2} />
+            <BeText weight="Bold" size={22} color={textclr} align="normal">
+                {String(text)}
+            </BeText>
         </Native.View>
-    )
+    );
 }

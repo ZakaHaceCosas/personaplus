@@ -14,11 +14,11 @@ interface DivisionProps {
 // Definimos los estilos
 const styles = Native.StyleSheet.create({
     container: {
-        display: 'flex',
+        display: "flex",
         backgroundColor: "#14171C",
         flexDirection: "column",
         borderRadius: 15,
-        overflow: "hidden"
+        overflow: "hidden",
     },
 });
 
@@ -39,6 +39,14 @@ export default function Division({ kind, children }: DivisionProps) {
         case "HYAD":
             lbl = "HOW YOU ARE DOING";
             icn = "HYAD";
+            break;
+        case "IDK":
+            lbl = "UNKNOWN";
+            icn = "IDK";
+            break;
+        case "SETS":
+            lbl = "SETTINGS";
+            icn = "SETS";
             break;
         default:
             lbl = "UNKNOWN";
