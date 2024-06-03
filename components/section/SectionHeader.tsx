@@ -1,9 +1,11 @@
 // section/SectionHeader.tsx
 // Encabezado de Sección
 
-import React from "react";
+import * as React from "react";
 import * as Native from "react-native";
 import BeText from "../Text";
+import Ionicons from "@expo/vector-icons/MaterialIcons";
+import GapView from "../GapView";
 
 // TypeScript, supongo
 interface SectionProps {
@@ -14,15 +16,15 @@ interface SectionProps {
 // Definimos la hoja de estilos
 const styles = Native.StyleSheet.create({
     mainview: {
-        display: 'flex',
-        flexDirection: 'row',
+        display: "flex",
+        flexDirection: "row",
         padding: 15,
-        alignItems: 'center'
+        alignItems: "center",
     },
     items: {
-        color: "#DDDDDD"
-    }
-})
+        color: "#DDDDDD",
+    },
+});
 
 // Creamos la función
 export default function SectionHeader({ icon, label }: SectionProps) {
@@ -30,22 +32,32 @@ export default function SectionHeader({ icon, label }: SectionProps) {
     // Ya que habrá una cantidad definida de secciones, utilizamos switch y creamos diferentes casos, uno para cada sección dentro de la app.
     switch (icon) {
         case "OBJS":
-            i = "OBJS";
+            i = "timer";
             break;
         case "POBJS":
-            i = "POBJS"; // Se cambiará cuando se me ocurra algo que pegue
+            i = "calendar-today";
             break;
         case "HYAD":
-            i = "HYAD";
+            i = "space-dashboard";
+            break;
+        case "SETS":
+            i = "settings";
             break;
         default:
-            i = "IDK";
+            i = "question-mark";
             break;
     }
 
     return (
         <Native.View style={styles.mainview}>
-            <BeText align="normal" weight="Bold" size={12} color="#DDDDDD">{label}</BeText>
+            {i && (
+                // @ts-ignore
+                <Ionicons name={i} size={15} color="#DDDDDD" />
+            )}
+            <GapView width={10} />
+            <BeText align="normal" weight="Bold" size={12} color="#DDDDDD">
+                {label}
+            </BeText>
         </Native.View>
     );
 }

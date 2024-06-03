@@ -3,11 +3,16 @@
         "MAIN": {
             "APP": "#0E1013", // The very background of the app
             "SECTION": "#14171C", // The background of sections
-            "DIVISION": "#202328", // LINEAR GRADIENT (direction: top > bottom). Default background of divisions.
+            "DIVISION": "#202328", // Default background of divisions.
             "FOOTER": {
                 "BACKGROUND": "#16191E", // For the bottom navigation
                 "FOOTERUNS": "#8A8C8E", // Non-selected
                 "FOOTERSEL": "#FFFFFF" // Selected
+            },
+            "INPUT": {
+                "BACKGROUND": "#2A2D32", // Input background.
+                "PLACEHOLDER": "#949698", // Input placeholder.
+                "INPUTSTRK": "#3E4146" // Input stroke / border.
             }
         },
         "LBLS": {

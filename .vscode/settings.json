@@ -2,9 +2,14 @@
     "java.configuration.updateBuildConfiguration": "interactive",
     "files.exclude": {
         "**/node_modules": true,
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
         "**/android": true
     },
-    "editor.fontSize": 15,
+    "editor.fontSize": 13,
     "editor.wordWrap": "on",
     "editor.smoothScrolling": true,
     "editor.cursorSmoothCaretAnimation": "on",
@@ -12,10 +17,47 @@
     "terminal.integrated.smoothScrolling": true,
     "editor.cursorBlinking": "expand",
     "redhat.telemetry.enabled": false,
-    "files.autoSave": "afterDelay",
-    "files.autoSaveDelay": 5000,
+    "files.autoSave": "onFocusChange",
     "editor.fontFamily": "'Roboto Mono', Consolas, 'Courier New', monospace",
     "editor.fontWeight": 400,
     "editor.fontLigatures": true,
-    // roboto mono = favorit
+    "window.zoomLevel": -0.5,
+    "editor.formatOnSave": true,
+    "editor.detectIndentation": false,
+    "editor.tabSize": 4,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "editor.insertSpaces": true,
+    "editor.minimap.enabled": true,
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "explorer.confirmDelete": true,
+    "[javascript]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+    "[typescript]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+    "[typescriptreact]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+    "[json]": {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true
+    },
+    "prettier.tabWidth": 4,
+    "[markdown]": {
+        "editor.unicodeHighlight.ambiguousCharacters": true,
+        "editor.unicodeHighlight.invisibleCharacters": false,
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+            "comments": "on",
+            "strings": "on",
+            "other": "on"
+        },
+        "editor.formatOnSave": false
+    }
 }

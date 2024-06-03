@@ -1,7 +1,7 @@
 // Btns.tsx
 // Buttons, botones, elementos presionables, ENTIDADES INTERACTIVAS UTILIZABLES POR MEDIO DE CLICS / TOCAMIENTOS DE LA PANTALLA xd
 
-import React from "react";
+import * as React from "react";
 import * as Native from "react-native";
 import BeText from "./Text";
 
@@ -15,7 +15,7 @@ interface BtnsProps {
 }
 
 // Creamos la funcion
-export default function Btn({kind, text, onclick, width, height}: BtnsProps) {
+export default function Btn({ kind, text, onclick, width, height }: BtnsProps) {
     let strkclr: string; // StrokeColor / Color del borde
     let bkgrclr: string; // BackgroundColor / Color del fondo
     let textclr: string; // TextColor / Color del texto
@@ -80,22 +80,28 @@ export default function Btn({kind, text, onclick, width, height}: BtnsProps) {
 
     return (
         // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
-        <Native.Pressable onPress={onclick} style={{
-            paddingTop: 14,
-            paddingBottom: 14,
-            paddingLeft: 28,
-            paddingRight: 28,
-            borderRadius: 10,
-            borderColor: strkclr,
-            backgroundColor: bkgrclr,
-            borderWidth: 4,
-            width: btnwdth as Native.DimensionValue,
-            height: btnhght as Native.DimensionValue,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flex: 1}}>
-            <BeText weight="Bold" size={14} color={textclr} align="cent">{text}</BeText>
+        <Native.Pressable
+            onPress={onclick}
+            style={{
+                paddingTop: 14,
+                paddingBottom: 14,
+                paddingLeft: 28,
+                paddingRight: 28,
+                borderRadius: 10,
+                borderColor: strkclr,
+                backgroundColor: bkgrclr,
+                borderWidth: 4,
+                width: btnwdth as Native.DimensionValue,
+                height: btnhght as Native.DimensionValue,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flex: 1,
+            }}
+        >
+            <BeText weight="Bold" size={14} color={textclr} align="cent">
+                {text}
+            </BeText>
         </Native.Pressable>
-    )
+    );
 }

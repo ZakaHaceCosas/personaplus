@@ -1,7 +1,7 @@
 // Nomore.tsx
 // No more, nada más, se acabó, it ended...
 
-import React from "react";
+import * as React from "react";
 import * as Native from "react-native";
 import BeText from "./Text";
 
@@ -9,10 +9,9 @@ import BeText from "./Text";
 const styles = Native.StyleSheet.create({
     container: {
         height: 120,
-        paddingTop: 20
-    }
+        paddingTop: 20,
+    },
 });
-
 
 // Creamos la función del componente
 export default function Nomore() {

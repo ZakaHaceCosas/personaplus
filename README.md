@@ -1,6 +1,6 @@
 <h1 align="center">PersonaPlus</h1>
 
-<!--Se destacará el vídeo más reciente, a menos que alguno explote o algo así-->
+<!--Se destacará el vídeo que a mi me parezca :v-->
 [![YouTube Video Views](https://img.shields.io/youtube/views/H2_0d-hLiMw?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=H2_0d-hLiMw)
 ![GitHub last commit](https://img.shields.io/github/last-commit/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github&color=black)
 ![GitHub repo size](https://img.shields.io/github/repo-size/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github)
@@ -13,9 +13,45 @@
 
 PersonaPlus es un proyecto independiente que apunta a crear una app (con React Native & Expo) que ayude a los usuarios a cuidar de su salud, dieta, y bienestar digital. A ***darse más***, como nos gusta decir.
 
-<h2>Funciones</h2>
+<h2>Funciones planeadas</h2>
 
-~~Ninguna porque la app no está acabada~~
+![stats](https://github-readme-stats.vercel.app/api?username=ZakaHaceCosas&show_icons=true&theme=dark)
+
+- [ ] Registro de usuarios
+    - [ ] Datos básicos
+    - [ ] Personalización
+        - [ ] Metas
+        - [ ] Condiciones médicas
+        - [ ] Otros
+    - [ ] Hora de pensar
+- [ ] Objetivos en general
+    - [ ] Creación
+    - [ ] Edición
+    - [ ] Eliminación
+    - [ ] Generación vía asistente
+        - [ ] Objetivos activos
+            - [ ] Marcar como completado
+            - [ ] Sesiones
+                - [ ] Funcionalidad básica
+                - [ ] Sesiones múltiples
+                - [ ] Ayuda
+                - [ ] Reproductor (música integrada)
+                - [ ] Sesiones avanzadas
+                    - [ ] Mapas (GPS)
+                    - [ ] Medidor de kcal quemadas
+                    - [ ] Estadísticas avanzadas
+        - [ ] Objetivos pasivos
+- [ ] Registro / Base de datos
+    - [ ] Generación de estadísticas
+        - [ ] Estadísticas precisas (datos médicos)
+    - [ ] Generación de informes
+    - [ ] Consejos
+    - [ ] Hora de pensar
+        - [ ] Notificación
+        - [ ] Formulario funcional
+- [ ] Misceláneos
+    - [ ] Temas para la aplicación (claro, oscuro, etc...)
+    - [ ] Múltiples idiomas (Castellano, Inglés...)
 
 <h2>¿Cómo contribuir?</h2>
 

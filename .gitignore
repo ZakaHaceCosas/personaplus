@@ -35,5 +35,5 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
-# extra
-HIDDEN
+# Zaka
+*.try.*
