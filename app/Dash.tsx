@@ -13,6 +13,48 @@ import Nomore from "@/components/Nomore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Btn from "@/components/Btns";
 
+// TypeScript, supongo
+interface Frequency {
+    mon: boolean;
+    tue: boolean;
+    wed: boolean;
+    thu: boolean;
+    fri: boolean;
+    sat: boolean;
+    sun: boolean;
+}
+
+interface Rests {
+    amount: number;
+    duration: number;
+}
+
+interface General {
+    freq: Frequency;
+    repeat: number;
+    rests: Rests;
+}
+
+interface ExtraItem {
+    icon: string;
+    value: string;
+}
+
+interface Extra {
+    [key: string]: ExtraItem;
+}
+
+interface Data {
+    general: General;
+    extra?: Extra; // Extra puede estar presente o no
+}
+
+interface Objective {
+    id: string;
+    name: string;
+    data: Data;
+}
+
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
@@ -32,6 +74,9 @@ const styles = Native.StyleSheet.create({
 
 // Creamos la función
 export default function Dash() {
+    const [objs, setObjs] = React.useState<{ [key: string]: Objective } | null>(
+        null
+    );
     const [notiProps, setNotiProps] = React.useState<{
         kind: string;
         title: string;
@@ -58,42 +103,81 @@ export default function Dash() {
         }, 7500);
     };
 
-    let objectives: any;
-
     React.useEffect(() => {
-        const fetchObjs = async () => {
-            const objs: string | null = await AsyncStorage.getItem("objs");
-            if (objs) {
-                objectives = JSON.parse(objs);
-                showNotification(
-                    "GOD",
-                    "Everything ok!",
-                    "Objs fetched!",
-                    "static"
-                );
-                return objs;
-            } else {
-                await AsyncStorage.setItem("objs", "null");
-                showNotification("WOR", "Dev error", "Error", "static");
-                return 1;
+        const fetchObjectives = async () => {
+            try {
+                const storedObjs = await AsyncStorage.getItem("objs");
+                if (storedObjs) {
+                    setObjs(JSON.parse(storedObjs));
+                    console.log("OBJS fetched");
+                } else {
+                    await AsyncStorage.setItem("objs", JSON.stringify({}));
+                    console.error("Could not get OBJS fetched");
+                    setObjs({});
+                }
+            } catch (e) {
+                console.error("Could not get OBJS fetched: " + e);
             }
         };
 
-        fetchObjs();
+        fetchObjectives();
     }, []);
 
-    console.log("OBJS: " + objectives);
-    const createObj = (): void => {};
-    // TypeScript, supongo
-    interface objEventProps {
-        id: string;
-    }
-    function startSess({ id }: objEventProps) {
-        console.log("START ID " + id);
-    }
-    function done({ id }: objEventProps) {
-        console.log("START ID " + id);
-    }
+    const createObj = (): void => {
+        Router.router.navigate("Crea");
+    };
+
+    const editObj = (id: string): void => {
+        console.log(id);
+    };
+
+    const deleteObj = async (id: string): Promise<void> => {
+        try {
+            // Confirmar la eliminación
+            Native.Alert.alert(
+                "Eliminar objeto",
+                "¿Estás seguro de que deseas eliminar este objeto?",
+                [
+                    {
+                        text: "Cancelar",
+                        onPress: () => console.log("Cancelado"),
+                        style: "cancel",
+                    },
+                    {
+                        text: "Sí",
+                        onPress: async () => {
+                            try {
+                                // Obtener los objetos del AsyncStorage
+                                const jsonObjs =
+                                    (await AsyncStorage.getItem("objs")) ??
+                                    "[]";
+                                const objs: Objective[] = JSON.parse(jsonObjs);
+
+                                // Filtrar los objetos para eliminar el que coincida con el ID dado
+                                const updatedObjs = objs.filter(
+                                    (obj) => obj.id !== id
+                                );
+
+                                // Guardar los objetos actualizados en AsyncStorage
+                                await AsyncStorage.setItem(
+                                    "objs",
+                                    JSON.stringify(updatedObjs)
+                                );
+                                console.log("Objeto eliminado correctamente.");
+                            } catch (error) {
+                                console.error(
+                                    "Error al eliminar el objeto:",
+                                    error
+                                );
+                            }
+                        },
+                    },
+                ]
+            );
+        } catch (error) {
+            console.error("Error al confirmar la eliminación:", error);
+        }
+    };
 
     let currentpage: string;
     currentpage = Router.usePathname();
@@ -109,26 +193,41 @@ export default function Dash() {
                 </BeText>
                 <GapView height={20} /> {/* oye, ¿por qué no?*/}
                 <Section kind="OBJS">
-                    {objectives ? (
-                        Object.keys(objectives).map((key, index) => {
-                            const obj = objectives[key];
+                    {objs && Object.keys(objs).length > 0 ? (
+                        Object.keys(objs).map((key) => {
+                            const obj = objs[key];
+                            if (!obj.data) {
+                                console.error(
+                                    `Data is undefined for objective with id: ${obj.id}`
+                                );
+                                return null;
+                            }
+
+                            let desc: string =
+                                "Rests: " +
+                                String(obj.data.general.rests.amount) +
+                                ", Repeats: " +
+                                String(obj.data.general.repeat) +
+                                ", Rest duration: " +
+                                String(obj.data.general.rests.duration) +
+                                " minutes.";
                             return (
                                 <Division
-                                    key={index}
+                                    key={key}
                                     status="REGULAR"
                                     preheader="ACTIVE OBJECTIVE"
                                     header={obj.name}
-                                    subheader={obj.desc}
+                                    subheader={desc}
                                 >
                                     <Btn
                                         kind="ACE"
-                                        onclick={startSess(obj.id)}
-                                        text="Let's do it!"
+                                        onclick={() => editObj(obj.id)}
+                                        text="Edit"
                                     />
                                     <Btn
-                                        kind="GOD"
-                                        onclick={done(obj.id)}
-                                        text="Already done it!"
+                                        kind="WOR"
+                                        onclick={() => deleteObj(obj.id)}
+                                        text="Remove"
                                     />
                                 </Division>
                             );
@@ -156,7 +255,7 @@ export default function Dash() {
                             <Btn
                                 width="fill"
                                 kind="ACE"
-                                text="Let's do it!"
+                                text="Let's go!"
                                 onclick={createObj}
                             />
                         </Native.View>

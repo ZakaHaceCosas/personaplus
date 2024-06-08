@@ -14,6 +14,13 @@ import GapView from "@/components/GapView";
 import Noti from "@/components/Noti";
 import Nomore from "@/components/Nomore";
 
+// TypeScript, supongo
+interface Objective {
+    name: string;
+    desc: string;
+    done: boolean;
+}
+
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
@@ -35,7 +42,9 @@ const styles = Native.StyleSheet.create({
 export default function Home() {
     // Por defecto
     const [username, setUname] = React.useState<string>("Unknown");
-    const [objs, fetchObjs] = React.useState();
+    const [objs, setObjs] = React.useState<{ [key: string]: Objective } | null>(
+        null
+    );
     const [notiProps, setNotiProps] = React.useState<{
         kind: string;
         title: string;
@@ -86,35 +95,31 @@ export default function Home() {
         fetchUsername();
     }, []);
 
-    let objectives: any;
-
     React.useEffect(() => {
-        const fetchObjs = async () => {
-            const objs: string | null = await AsyncStorage.getItem("objs");
-            if (objs) {
-                objectives = objs;
-                showNotification(
-                    "GOD",
-                    "Everything ok!",
-                    "Objs fetched!",
-                    "static"
-                );
-                return objs;
-            } else {
-                await AsyncStorage.setItem("objs", "null");
-                showNotification("WOR", "Dev error", "Error", "static");
-                return 1;
+        const fetchObjectives = async () => {
+            try {
+                const storedObjs = await AsyncStorage.getItem("objs");
+                if (storedObjs) {
+                    setObjs(JSON.parse(storedObjs));
+                    console.log("OBJS fetched");
+                } else {
+                    await AsyncStorage.setItem("objs", JSON.stringify({}));
+                    console.error("Could not get OBJS fetched");
+                    setObjs({});
+                }
+            } catch (e) {
+                console.error("Could not get OBJS fetched: " + e);
             }
         };
 
-        fetchObjs();
+        fetchObjectives();
     }, []);
 
     let currentpage: string;
     currentpage = Router.usePathname();
 
     const createObj = (): void => {
-        console.log("create obj");
+        Router.router.navigate("Crea");
     };
 
     return (
@@ -128,21 +133,26 @@ export default function Home() {
                 </BeText>
                 <GapView height={20} /> {/* oye, ¿por qué no?*/}
                 <Section kind="OBJS">
-                    {objectives ? (
-                        Object.keys(objectives).map((key, index) => {
-                            const obj = objectives[key];
+                    {objs && Object.keys(objs).length > 0 ? (
+                        Object.keys(objs).map((key) => {
+                            const obj = objs[key];
                             return (
                                 <Division
-                                    key={index}
+                                    key={key}
                                     status="REGULAR"
                                     preheader="ACTIVE OBJECTIVE"
                                     header={obj.name}
                                     subheader={obj.desc}
                                 >
                                     <Btn
-                                        kind="REGULAR"
+                                        kind="ACE"
                                         onclick={() => {}}
-                                        text="HOLA"
+                                        text="Let's go!"
+                                    />
+                                    <Btn
+                                        kind="GOD"
+                                        onclick={() => {}}
+                                        text="Already done it"
                                     />
                                 </Division>
                             );
@@ -170,7 +180,7 @@ export default function Home() {
                             <Btn
                                 width="fill"
                                 kind="ACE"
-                                text="Let's do it!"
+                                text="Let's go!"
                                 onclick={createObj}
                             />
                         </Native.View>
