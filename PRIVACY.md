@@ -1,3 +1,4 @@
+<!-- MANTENER EN HTML -->
 > [!WARNING]
 > **NOTA: Al ser una aplicación que NO ESTÁ ACABADA, esto es susceptible a cambios. Esto es solo un boceto.**
 
