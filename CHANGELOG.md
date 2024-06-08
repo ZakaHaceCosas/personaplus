@@ -17,7 +17,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 ## 0.0.1-R5-b10
 
-- Finally, created objectives get displayed.
+- Finally, created objectives get displayed. (*Unfinished, commits oriented to finishing this won't version bump.*)
 
 ## 0.0.1-R5-b9 (commit 69 XD)
 <!--me encantaría dejar aquí anotado que la mejor commit hasta el momento coincide con el rebrand y con la commit 69 XD, no se porque sencillamente lo anoto-->
