@@ -17,10 +17,24 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 ## 0.0.1-R5-b10
 
-- Finally, created objectives get displayed. (*Unfinished, commits oriented to finishing this won't version bump.*)
+- Finally, created objectives get displayed **correctly**.
+- Added an objective creation page.
+- Added the [Expo Go badge](https://github.com/expo/expo?tab=readme-ov-file#-badges) to the README.
+- Updated `obj`'s structure to make it simpler. Removed many type interfaces as they're not needed anymore.
+- Made some styling updates.
 
-## 0.0.1-R5-b9 (commit 69 XD)
-<!--me encantaría dejar aquí anotado que la mejor commit hasta el momento coincide con el rebrand y con la commit 69 XD, no se porque sencillamente lo anoto-->
+> [!WARNING]
+> **KNOWN ERRORS**
+>
+> _New errors_: None 😎
+>
+> _Still not fixed from older dev versions_:
+> `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`".
+
+## 0.0.1-R5-b9
+
+> Me encantaría dejar aquí anotado que la mejor commit hasta el momento coincide con el rebrand y con la commit 69 XD, no se el porqué, pero sencillamente lo anoto
+
 - **Updated Expo:** From ~~50.0.17~~ to **50.0.19**
 - Fixed dependencies.
 - Fixed the `adaptive-icon` syntax.
@@ -34,16 +48,16 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - Added icons to the app.
 
 > [!NOTE]
-> **KNWON ISSUE:** For some reason, I didn't managed to make Microsoft's Fluent Icons React package work, so I used Material Design Icons instead, via Expo's `@expo/vectoricons`
+> **KNWON ISSUE:** For some reason, I didn't managed to make Microsoft's Fluent Icons (the ones used in the UI design) React package work, so I used Material Design Icons instead, via Expo's `@expo/vectoricons`
 
-- Now the documentation is fully usable, can be considered "done". *Of course, it is still subject to changes at any time.*
+- Now the documentation is fully usable, can be considered "done". _Of course, it is still subject to changes at any time._
 - Licensed under Apache 2.0.
 - Added input colors to `VAR-DSGN.jsonc`.
 - Updated all files to follow the documentation's requested code guidelines.
 - Fully formatted the code + added formatting on save.
 - Changed many `.vscode` settings.
 - General changes and improvements to the Homepage (`/`).
-- Made some progress in the dashboard (`/Dash`). Implemented `Notis` and *fixed* obj fetching. (Still looking forward to implementing obj creation).
+- Made some progress in the dashboard (`/Dash`). Implemented `Notis` and _fixed_ obj fetching. (Still looking forward to implementing obj creation).
 
 > [!WARNING]
 > **KNOWN ERROR**: Still doesn't access them 100% correctly.
@@ -117,7 +131,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
   - Created `metro.config.js`.
   - Created `.vscode/`.
 - Removal of every single in-app gradient, in favour of plain colors.
-- Implemented `AsyncStorage` to store *OBJS* data.
+- Implemented `AsyncStorage` to store _OBJS_ data.
 - Rewritten the documentation `DOCS.md`.
 - Added versioning (`CHANGELOG.md` (this file)).
 - Created a better, more complete `README`.

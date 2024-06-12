@@ -85,6 +85,8 @@ npx expo start
 
 ¡Aparcado! En la interfaz, clica `w` para ver una demo rápida en tu navegador, o clica `a` para abrirla en un emulador Android (requiere Android Studio).
 
+[![Prúebala en Android de inmediato con Expo Go](https://img.shields.io/badge/Runs%20with%20Expo%20Go-000.svg?style=flat-square&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.dev/client)
+
 Puedes ver la documentación completa de como programar para el proyecto [aquí](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md#3-programando-personaplus).
 
 ## Sígueme y únete al club de los que quieren darse más :]

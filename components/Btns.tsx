@@ -44,10 +44,18 @@ export default function Btn({ kind, text, onclick, width, height }: BtnsProps) {
             textclr = "#000000";
             break;
         // if unknown, gray
-        default:
+        /*default:
             strkclr = "#999999";
             bkgrclr = "#CCCCCC";
             textclr = "#000000";
+            break;*/
+        // i think this will look better - if unknown, dark
+        // codenamed "INPUT" in VAR-DSGN
+        // note: using white instead of #949698 for text color since it's a button and should be legible
+        default:
+            strkclr = "#3E4146";
+            bkgrclr = "#2A2D32";
+            textclr = "#FFF";
             break;
     }
 
@@ -99,7 +107,7 @@ export default function Btn({ kind, text, onclick, width, height }: BtnsProps) {
                 flex: 1,
             }}
         >
-            <BeText weight="Bold" size={14} color={textclr} align="cent">
+            <BeText weight="Medium" size={14} color={textclr} align="cent">
                 {text}
             </BeText>
         </Native.Pressable>
