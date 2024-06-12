@@ -38,8 +38,8 @@ export default function Noti({ kind, title, text, post }: NotiProps) {
             textclr = "#FFFFFF";
             break;
         case "HMM":
-            strkclr = "#FFC832";
-            bkgrclr = "#806419";
+            strkclr = "#806419";
+            bkgrclr = "#FFC832";
             textclr = "#000000";
             break;
         // if unknown, gray
@@ -61,7 +61,7 @@ export default function Noti({ kind, title, text, post }: NotiProps) {
             ntipost = "absolute";
             break;
         case "static":
-            ntipost = "statitc";
+            ntipost = "static";
             break;
         default:
             ntipost = "static";

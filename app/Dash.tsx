@@ -14,45 +14,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Btn from "@/components/Btns";
 
 // TypeScript, supongo
-interface Frequency {
-    mon: boolean;
-    tue: boolean;
-    wed: boolean;
-    thu: boolean;
-    fri: boolean;
-    sat: boolean;
-    sun: boolean;
-}
-
-interface Rests {
-    amount: number;
-    duration: number;
-}
-
-interface General {
-    freq: Frequency;
-    repeat: number;
-    rests: Rests;
-}
-
-interface ExtraItem {
-    icon: string;
-    value: string;
-}
-
-interface Extra {
-    [key: string]: ExtraItem;
-}
-
-interface Data {
-    general: General;
-    extra?: Extra; // Extra puede estar presente o no
-}
-
 interface Objective {
-    id: string;
-    name: string;
-    data: Data;
+    exercise: string;
+    days: boolean[];
+    duration: number;
+    repetitions: number;
+    rests: number;
+    restDuration: number;
+    id: number;
 }
 
 // Creamos los estilos
@@ -127,11 +96,11 @@ export default function Dash() {
         Router.router.navigate("Crea");
     };
 
-    const editObj = (id: string): void => {
+    const editObj = (id: number): void => {
         console.log(id);
     };
 
-    const deleteObj = async (id: string): Promise<void> => {
+    const deleteObj = async (id: number): Promise<void> => {
         try {
             // Confirmar la eliminación
             Native.Alert.alert(
@@ -196,8 +165,9 @@ export default function Dash() {
                     {objs && Object.keys(objs).length > 0 ? (
                         Object.keys(objs).map((key) => {
                             const obj = objs[key];
-                            if (!obj.data) {
+                            if (!obj) {
                                 console.error(
+                                    // @ts-ignore
                                     `Data is undefined for objective with id: ${obj.id}`
                                 );
                                 return null;
@@ -205,31 +175,47 @@ export default function Dash() {
 
                             let desc: string =
                                 "Rests: " +
-                                String(obj.data.general.rests.amount) +
+                                String(obj.rests) +
                                 ", Repeats: " +
-                                String(obj.data.general.repeat) +
+                                String(obj.repetitions) +
                                 ", Rest duration: " +
-                                String(obj.data.general.rests.duration) +
+                                String(obj.restDuration) +
                                 " minutes.";
                             return (
-                                <Division
-                                    key={key}
-                                    status="REGULAR"
-                                    preheader="ACTIVE OBJECTIVE"
-                                    header={obj.name}
-                                    subheader={desc}
-                                >
-                                    <Btn
-                                        kind="ACE"
-                                        onclick={() => editObj(obj.id)}
-                                        text="Edit"
-                                    />
-                                    <Btn
-                                        kind="WOR"
-                                        onclick={() => deleteObj(obj.id)}
-                                        text="Remove"
-                                    />
-                                </Division>
+                                <Native.View>
+                                    <Division
+                                        key={obj.id}
+                                        status="REGULAR"
+                                        preheader="ACTIVE OBJECTIVE"
+                                        header={obj.exercise}
+                                        subheader={desc}
+                                    >
+                                        <Btn
+                                            kind="ACE"
+                                            onclick={() => editObj(obj.id)}
+                                            text="Edit"
+                                        />
+                                        <Btn
+                                            kind="WOR"
+                                            onclick={() => deleteObj(obj.id)}
+                                            text="Remove"
+                                        />
+                                    </Division>
+                                    <Native.View
+                                        style={{
+                                            paddingLeft: 20,
+                                            paddingRight: 20,
+                                            paddingBottom: 20,
+                                        }}
+                                    >
+                                        <Btn
+                                            width="fill"
+                                            kind="GOD"
+                                            text="Create active objective"
+                                            onclick={createObj}
+                                        />
+                                    </Native.View>
+                                </Native.View>
                             );
                         })
                     ) : (

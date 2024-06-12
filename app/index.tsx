@@ -16,9 +16,13 @@ import Nomore from "@/components/Nomore";
 
 // TypeScript, supongo
 interface Objective {
-    name: string;
-    desc: string;
-    done: boolean;
+    exercise: string;
+    days: boolean[];
+    duration: number;
+    repetitions: number;
+    rests: number;
+    restDuration: number;
+    id: number;
 }
 
 // Creamos los estilos
@@ -138,11 +142,12 @@ export default function Home() {
                             const obj = objs[key];
                             return (
                                 <Division
-                                    key={key}
+                                    key={obj.id}
                                     status="REGULAR"
                                     preheader="ACTIVE OBJECTIVE"
-                                    header={obj.name}
-                                    subheader={obj.desc}
+                                    header={obj.exercise}
+                                    subheader=""
+                                    // subheader={obj.description}
                                 >
                                     <Btn
                                         kind="ACE"

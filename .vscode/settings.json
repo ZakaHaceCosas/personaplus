@@ -58,6 +58,6 @@
             "strings": "on",
             "other": "on"
         },
-        "editor.formatOnSave": false
+        "editor.formatOnSave": true
     }
 }
