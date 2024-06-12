@@ -312,6 +312,8 @@ export default function WelcomePage() {
                 </React.Fragment>
             )}
             {currentTab === 3 && (
+                // TO DO !!!!!!!!!
+                // zaka no seas vago, trabaja XD
                 <React.Fragment>
                     <BeText align="normal" weight="Bold" size={40}>
                         What is your main objective?
