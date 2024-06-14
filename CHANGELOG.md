@@ -26,12 +26,15 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
   - Not going home when an obj is created.
 
 > [!WARNING]
-> **KNOWN ERRORS**
 >
-> _New errors_:
+> ### **KNOWN ERRORS - Latest**
+>
+> _**New errors**_:
+>
 > For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. Don't know it's origin & only happens sometimes, making it hard to replicate. Will look onto it.
 >
-> _Still not fixed from older dev versions_:
+> _**Still not fixed from older dev versions**_:
+>
 > `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`".
 
 ## 0.0.1-R5-b10
@@ -43,11 +46,14 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - Made some styling updates.
 
 > [!WARNING]
-> **KNOWN ERRORS**
 >
-> _New errors_: None 😎
+> ### **KNOWN ERRORS - b10**
 >
-> _Still not fixed from older dev versions_:
+> _**New errors**_:
+> None 😎
+>
+> _**Still not fixed from older dev versions**_:
+>
 > `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`".
 
 ## 0.0.1-R5-b9
