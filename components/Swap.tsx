@@ -18,20 +18,11 @@ interface BeSwapProps {
     id: string; // Para identificar cada BeSwap
     options: Option[]; // Opciones
     value?: string | any; // Para establecer el valor programáticamente (tipo "any" porque puede ser una variable)
+    order?: string;
     onValueChange?: (value: string) => void; // Para obtener el valor seleccionado
 }
 
 const styles = Native.StyleSheet.create({
-    container: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: "100%",
-    },
-    sub: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        width: "calc(50% + 2.5px)" as Native.DimensionValue,
-    },
     optionButton: {
         paddingTop: 14,
         paddingBottom: 14,
@@ -57,6 +48,7 @@ export default function BeSwap({
     id,
     options,
     value,
+    order,
     onValueChange,
 }: BeSwapProps) {
     const defaultOption = options.find((option) => option.default);
@@ -86,10 +78,36 @@ export default function BeSwap({
         }
     };
 
+    let orderString: "row" | "column" | "row-reverse" | "column-reverse" =
+        "row";
+
+    if (order === "horizontal") {
+        orderString = "column";
+    } else if (order === "vertical") {
+        orderString = "row";
+    }
+
     return (
-        <Native.View style={styles.container} key={id}>
+        <Native.View
+            style={{
+                flexDirection: orderString,
+                justifyContent: "space-between",
+                width: "100%",
+            }}
+            key={id}
+        >
             {options.map((option, index) => (
-                <Native.View style={styles.sub} key={`${id}-${index}`}>
+                <Native.View
+                    style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        width:
+                            orderString === "row"
+                                ? ("calc(50% + 2.5px)" as Native.DimensionValue)
+                                : ("calc(100% + 2.5px)" as Native.DimensionValue),
+                    }}
+                    key={`${id}-${index}`}
+                >
                     <Native.Pressable
                         style={[
                             styles.optionButton,
@@ -101,7 +119,12 @@ export default function BeSwap({
                             {option.label}
                         </BeText>
                     </Native.Pressable>
-                    <GapView key={`${id}-${index}-gap`} width={10} />
+                    {orderString === "row" && (
+                        <GapView key={`${id}-${index}-gap`} width={10} />
+                    )}
+                    {orderString === "column" && (
+                        <GapView key={`${id}-${index}-gap`} height={10} />
+                    )}
                 </Native.View>
             ))}
         </Native.View>
