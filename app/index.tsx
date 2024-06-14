@@ -126,6 +126,36 @@ export default function Home() {
         Router.router.navigate("Crea");
     };
 
+    const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean | null>(
+        null
+    );
+
+    // comprobación para ver si es la primera vez que abre la app - si lo es, redirige a /Welc
+    React.useEffect(() => {
+        const checkFirstLaunch = async () => {
+            try {
+                const value = await AsyncStorage.getItem("hasLaunched");
+                if (value === null || !value) {
+                    await AsyncStorage.setItem("hasLaunched", "true");
+                    setIsFirstLaunch(true);
+                } else {
+                    setIsFirstLaunch(false);
+                }
+            } catch (e) {
+                console.error("Error checking if app has launched before: ", e);
+            }
+        };
+        checkFirstLaunch();
+    }, []);
+
+    if (isFirstLaunch === null) {
+        return null;
+    }
+
+    if (isFirstLaunch) {
+        Router.router.push("/Welc");
+    }
+
     return (
         <Native.View style={styles.containerview}>
             <Native.ScrollView style={styles.mainview}>

@@ -101,51 +101,7 @@ export default function Dash() {
     };
 
     const deleteObj = async (id: number): Promise<void> => {
-        try {
-            // Confirmar la eliminación
-            Native.Alert.alert(
-                "Eliminar objeto",
-                "¿Estás seguro de que deseas eliminar este objeto?",
-                [
-                    {
-                        text: "Cancelar",
-                        onPress: () => console.log("Cancelado"),
-                        style: "cancel",
-                    },
-                    {
-                        text: "Sí",
-                        onPress: async () => {
-                            try {
-                                // Obtener los objetos del AsyncStorage
-                                const jsonObjs =
-                                    (await AsyncStorage.getItem("objs")) ??
-                                    "[]";
-                                const objs: Objective[] = JSON.parse(jsonObjs);
-
-                                // Filtrar los objetos para eliminar el que coincida con el ID dado
-                                const updatedObjs = objs.filter(
-                                    (obj) => obj.id !== id
-                                );
-
-                                // Guardar los objetos actualizados en AsyncStorage
-                                await AsyncStorage.setItem(
-                                    "objs",
-                                    JSON.stringify(updatedObjs)
-                                );
-                                console.log("Objeto eliminado correctamente.");
-                            } catch (error) {
-                                console.error(
-                                    "Error al eliminar el objeto:",
-                                    error
-                                );
-                            }
-                        },
-                    },
-                ]
-            );
-        } catch (error) {
-            console.error("Error al confirmar la eliminación:", error);
-        }
+        console.log(id);
     };
 
     let currentpage: string;
@@ -182,9 +138,8 @@ export default function Dash() {
                                 String(obj.restDuration) +
                                 " minutes.";
                             return (
-                                <Native.View>
+                                <Native.View key={obj.id}>
                                     <Division
-                                        key={obj.id}
                                         status="REGULAR"
                                         preheader="ACTIVE OBJECTIVE"
                                         header={obj.exercise}
@@ -201,20 +156,6 @@ export default function Dash() {
                                             text="Remove"
                                         />
                                     </Division>
-                                    <Native.View
-                                        style={{
-                                            paddingLeft: 20,
-                                            paddingRight: 20,
-                                            paddingBottom: 20,
-                                        }}
-                                    >
-                                        <Btn
-                                            width="fill"
-                                            kind="GOD"
-                                            text="Create active objective"
-                                            onclick={createObj}
-                                        />
-                                    </Native.View>
                                 </Native.View>
                             );
                         })
@@ -242,6 +183,20 @@ export default function Dash() {
                                 width="fill"
                                 kind="ACE"
                                 text="Let's go!"
+                                onclick={createObj}
+                            />
+                        </Native.View>
+                    )}
+                    {objs && Object.keys(objs).length > 0 && (
+                        <Native.View
+                            style={{
+                                padding: 20,
+                            }}
+                        >
+                            <Btn
+                                width="fill"
+                                kind="GOD"
+                                text="Create active objective"
                                 onclick={createObj}
                             />
                         </Native.View>

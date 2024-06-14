@@ -52,7 +52,16 @@ export default function WelcomePage() {
     ];
     const inputRefs = React.useRef<Native.TextInput[]>([]);
     const easteregg: number = Math.floor(Math.random() * 69000) + 1;
-
+    const [focuspointValue, setFocuspointValue] = React.useState<string | null>(
+        null
+    );
+    const handleFocuspointChange = (value: string) => {
+        setFocuspointValue(value);
+    };
+    const focuspointoptions = [
+        { value: "male", label: "Male", default: true },
+        { value: "female", label: "Female", default: false },
+    ];
     const focusNextField = (index: number): void => {
         if (inputRefs.current[index + 1]) {
             inputRefs.current[index + 1].focus();
@@ -333,155 +342,14 @@ export default function WelcomePage() {
                         Choose only one option. You can change it any time.
                     </BeText>
                     <GapView height={20} />
-                    <Native.TextInput
-                        placeholder="Username (doesn't have to be your real name)"
-                        value={formData.username}
-                        readOnly={false}
-                        placeholderTextColor="#949698"
-                        style={[
-                            {
-                                backgroundColor: "#2A2D32",
-                                borderRadius: 10,
-                                padding: 15,
-                                borderWidth: 4,
-                                borderColor: "#3E4146",
-                                width: "100%",
-                                color: "white",
-                                // @ts-ignore
-                                outline: "none",
-                                fontFamily: "BeVietnamPro-Regular",
-                            },
-                        ]}
-                        autoCorrect={false}
-                        multiline={false}
-                        maxLength={40}
-                        textAlign="left"
-                        fontFamily="BeVietnamPro-Regular"
-                        textContentType="username"
-                        key="usernameinput"
-                        enterKeyHint="next"
-                        onChangeText={(text) => handleChange("username", text)}
-                        onSubmitEditing={() => focusNextField(0)}
-                        ref={(ref) => ref && (inputRefs.current[0] = ref)}
+                    <BeSwap
+                        id="focuspointswap"
+                        key="focuspointswap"
+                        options={focuspointoptions}
+                        value={focuspointValue}
+                        order="horizontal"
+                        onValueChange={handleFocuspointChange}
                     />
-                    <GapView height={15} />
-                    <Native.TextInput
-                        placeholder="Height (cm)"
-                        value={formData.height}
-                        readOnly={false}
-                        placeholderTextColor="#949698"
-                        style={[
-                            {
-                                backgroundColor: "#2A2D32",
-                                borderRadius: 10,
-                                padding: 15,
-                                borderWidth: 4,
-                                borderColor: "#3E4146",
-                                width: "100%",
-                                color: "white",
-                                // @ts-ignore
-                                outline: "none",
-                                fontFamily: "BeVietnamPro-Regular",
-                            },
-                        ]}
-                        autoCorrect={false}
-                        multiline={false}
-                        maxLength={6}
-                        textAlign="left"
-                        fontFamily="BeVietnamPro-Regular"
-                        textContentType="none"
-                        inputMode="numeric"
-                        key="heightinput"
-                        enterKeyHint="next"
-                        onChangeText={(text) => handleChange("height", text)}
-                        onSubmitEditing={() => focusNextField(1)}
-                        ref={(ref) => ref && (inputRefs.current[1] = ref)}
-                    />
-                    <GapView height={15} />
-                    <Native.TextInput
-                        placeholder="Weight (kg)"
-                        value={formData.weight}
-                        readOnly={false}
-                        placeholderTextColor="#949698"
-                        style={[
-                            {
-                                backgroundColor: "#2A2D32",
-                                borderRadius: 10,
-                                padding: 15,
-                                borderWidth: 4,
-                                borderColor: "#3E4146",
-                                width: "100%",
-                                color: "white",
-                                // @ts-ignore
-                                outline: "none",
-                                fontFamily: "BeVietnamPro-Regular",
-                            },
-                        ]}
-                        autoCorrect={false}
-                        multiline={false}
-                        maxLength={6}
-                        textAlign="left"
-                        fontFamily="BeVietnamPro-Regular"
-                        textContentType="none"
-                        inputMode="numeric"
-                        key="weightinput"
-                        enterKeyHint="next"
-                        onChangeText={(text) => handleChange("weight", text)}
-                        onSubmitEditing={() => focusNextField(2)}
-                        ref={(ref) => ref && (inputRefs.current[2] = ref)}
-                    />
-                    <GapView height={15} />
-                    <Native.TextInput
-                        placeholder="Age (years)"
-                        value={formData.age}
-                        readOnly={false}
-                        placeholderTextColor="#949698"
-                        style={[
-                            {
-                                backgroundColor: "#2A2D32",
-                                borderRadius: 10,
-                                padding: 15,
-                                borderWidth: 4,
-                                borderColor: "#3E4146",
-                                width: "100%",
-                                color: "white",
-                                // @ts-ignore
-                                outline: "none",
-                                fontFamily: "BeVietnamPro-Regular",
-                            },
-                        ]}
-                        autoCorrect={false}
-                        multiline={false}
-                        maxLength={3}
-                        textAlign="left"
-                        fontFamily="BeVietnamPro-Regular"
-                        textContentType="none"
-                        inputMode="numeric"
-                        key="ageinput"
-                        enterKeyHint="done"
-                        onChangeText={(text) => handleChange("age", text)}
-                        onSubmitEditing={gonext}
-                        ref={(ref) => ref && (inputRefs.current[3] = ref)}
-                    />
-                    <GapView height={15} />
-                    {easteregg !== 1 && (
-                        <BeSwap
-                            id="genderswap"
-                            key="genderswap"
-                            options={genderoptions}
-                            value={genderValue}
-                            onValueChange={handleGenderChange}
-                        />
-                    )}
-                    {easteregg === 1 && (
-                        <BeSwap
-                            id="genderswap"
-                            key="genderswap"
-                            options={progenderoptions}
-                            value={genderValue}
-                            onValueChange={handleGenderChange}
-                        />
-                    )}
                     <GapView height={15} />
                     <Native.View style={styles.flexbtns}>
                         <Btn

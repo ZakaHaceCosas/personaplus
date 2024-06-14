@@ -15,6 +15,25 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - PD: Los logs serán en inglés, siempre.
 
+## 0.0.1-R5-b11
+
+- Fixed the `key` prop not being used properly in `Dash.tsx`.
+- Fixed the "Create active objective" button being spammed on the UI when there _are_ created objectives.
+- Added a new First launch check on the `index.tsx` page. Will redirect to `/Welc` (welcome screen) if `hasLaunched` item does not exist in LocalStorage. Also, it gets created so you dont get redirected each time you open PersonaPlus, only on the first launch.
+- Updated the `Swap` component, now supports new optional property `order` which is equivalent to _`flex-direction`_.
+- Fixed errors with the `Crea.tsx` page:
+  - Not creating objs.
+  - Not going home when an obj is created.
+
+> [!WARNING]
+> **KNOWN ERRORS**
+>
+> _New errors_:
+> For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. Don't know it's origin & only happens sometimes, making it hard to replicate. Will look onto it.
+>
+> _Still not fixed from older dev versions_:
+> `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`".
+
 ## 0.0.1-R5-b10
 
 - Finally, created objectives get displayed **correctly**.

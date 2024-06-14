@@ -122,7 +122,7 @@ export default function Form({ onSubmit }: FormProps) {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const formData: FormData = {
             exercise,
             days,
@@ -131,7 +131,13 @@ export default function Form({ onSubmit }: FormProps) {
             rests,
             restDuration,
         };
-        processData(formData);
+
+        try {
+            await processData(formData); // procesa
+            Router.router.push("/"); // vuelve a casa DESPUES de procesar
+        } catch (e) {
+            console.error("error creating obj:", e);
+        }
     };
 
     const processData = async (formData: FormData) => {
@@ -140,46 +146,34 @@ export default function Form({ onSubmit }: FormProps) {
             const storedObjs: string | null = await AsyncStorage.getItem(
                 "objs"
             );
+            let objs: object[] = [];
+
             if (storedObjs !== null) {
-                const ids = JSON.parse(storedObjs).filter(
-                    (item: any) => !("id" in item)
-                );
-                const generateNewId = (): number => {
-                    let newId = Math.floor(Math.random() * 1000) + 1;
-                    while (ids.includes(newId)) {
-                        newId = Math.floor(Math.random() * 1000) + 1;
-                    }
-                    return newId;
-                };
-                const newId = generateNewId();
-                const objs: object[] = storedObjs ? JSON.parse(storedObjs) : [];
-                const finalObj = { ...newObj, id: newId };
-                const finalObjs: object[] = [...objs, finalObj];
-                await AsyncStorage.setItem("objs", JSON.stringify(finalObjs));
-            } else {
-                const storedObjs: any = await AsyncStorage.setItem(
-                    "objs",
-                    "[]"
-                );
-                const ids = JSON.parse(storedObjs).filter(
-                    (item: any) => !("id" in item)
-                );
-                const generateNewId = (): number => {
-                    let newId = Math.floor(Math.random() * 1000) + 1;
-                    while (ids.includes(newId)) {
-                        newId = Math.floor(Math.random() * 1000) + 1;
-                    }
-                    return newId;
-                };
-                const newId = generateNewId();
-                const objs: object[] = storedObjs ? JSON.parse(storedObjs) : [];
-                const finalObj = { ...newObj, id: newId };
-                const finalObjs: object[] = [...objs, finalObj];
-                await AsyncStorage.setItem("objs", JSON.stringify(finalObjs));
-                console.error("OBJS is null - error");
+                const parsedObjs = JSON.parse(storedObjs);
+                if (Array.isArray(parsedObjs)) {
+                    objs = parsedObjs;
+                }
             }
-        } catch (error) {
-            console.error("Error storing data:", error);
+
+            const ids = objs
+                .filter((item: any) => !("id" in item))
+                .map((item: any) => item.id);
+
+            const generateNewId = (): number => {
+                let newId = Math.floor(Math.random() * 1000) + 1;
+                while (ids.includes(newId)) {
+                    newId = Math.floor(Math.random() * 1000) + 1;
+                }
+                return newId;
+            };
+
+            const newId = generateNewId();
+            const finalObj = { ...newObj, id: newId };
+            const finalObjs: object[] = [...objs, finalObj];
+
+            await AsyncStorage.setItem("objs", JSON.stringify(finalObjs));
+        } catch (e) {
+            console.error("Error storing data:", e);
         }
     };
 
