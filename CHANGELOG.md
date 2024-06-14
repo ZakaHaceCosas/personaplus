@@ -58,7 +58,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 ## 0.0.1-R5-b9
 
-> Me encantaría dejar aquí anotado que la mejor commit hasta el momento coincide con el rebrand y con la commit 69 XD, no se el porqué, pero sencillamente lo anoto
+<!--Me encantaría dejar aquí anotado que la mejor commit hasta el momento coincide con el rebrand y con la commit 69 XD, no se el porqué, pero sencillamente lo anoto-->
 
 - **Updated Expo:** From ~~50.0.17~~ to **50.0.19**
 - Fixed dependencies.
