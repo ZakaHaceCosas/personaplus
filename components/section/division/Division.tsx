@@ -63,7 +63,7 @@ export default function Division({
                         <BeText
                             align="normal"
                             weight="Bold"
-                            size={22}
+                            size={25}
                             color="#FFF"
                         >
                             {header}

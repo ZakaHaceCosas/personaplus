@@ -23,6 +23,7 @@ interface Objective {
     rests: number;
     restDuration: number;
     id: number;
+    wasDone: boolean;
 }
 
 // Creamos los estilos
@@ -130,6 +131,35 @@ export default function Home() {
         Router.router.navigate("Sess?id=" + id);
     };
 
+    const doObj = (id: number): void => {
+        const updateObj = async (id: number) => {
+            try {
+                const storedObjs = await AsyncStorage.getItem("objs");
+                if (storedObjs) {
+                    const parsedObjs = JSON.parse(storedObjs);
+                    const updatedObjs = parsedObjs.map((obj: any) => {
+                        if (obj.id === id) {
+                            return { ...obj, wasDone: true };
+                        }
+                        return obj;
+                    });
+                    await AsyncStorage.setItem(
+                        "objs",
+                        JSON.stringify(updatedObjs)
+                    );
+                    console.log("OBJS updated and saved!");
+                } else {
+                    console.error("Could not get OBJS fetched!");
+                }
+            } catch (e) {
+                console.error("Could not get OBJS fetched: " + e);
+            }
+        };
+
+        updateObj(id);
+        Router.router.navigate("/");
+    };
+
     const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean | null>(
         null
     );
@@ -160,6 +190,8 @@ export default function Home() {
         Router.router.push("/Welc");
     }
 
+    const randomDoneAllMsg: number = Math.floor(Math.random() * 3) + 1;
+
     return (
         <Native.View style={styles.containerview}>
             <Native.ScrollView style={styles.mainview}>
@@ -172,30 +204,91 @@ export default function Home() {
                 <GapView height={20} /> {/* oye, ¿por qué no?*/}
                 <Section kind="OBJS">
                     {objs && Object.keys(objs).length > 0 ? (
-                        Object.keys(objs).map((key) => {
-                            const obj = objs[key];
-                            return (
-                                <Division
-                                    key={obj.id}
-                                    status="REGULAR"
-                                    preheader="ACTIVE OBJECTIVE"
-                                    header={obj.exercise}
-                                    subheader=""
-                                    // subheader={obj.description}
+                        Object.keys(objs).every((key) => objs[key].wasDone) ? (
+                            <Native.View
+                                style={{
+                                    padding: 20,
+                                    flex: 1,
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                <BeText
+                                    align="cent"
+                                    size={30}
+                                    color="#FFF"
+                                    weight="Bold"
                                 >
-                                    <Btn
-                                        kind="ACE"
-                                        onclick={() => startObj(obj.id)}
-                                        text="Let's go!"
-                                    />
-                                    <Btn
-                                        kind="GOD"
-                                        onclick={() => {}}
-                                        text="Already done it"
-                                    />
-                                </Division>
-                            );
-                        })
+                                    You've done everything!
+                                </BeText>
+                                <GapView height={10} />
+                                {randomDoneAllMsg === 1 && (
+                                    <BeText
+                                        align="cent"
+                                        size={15}
+                                        color="#FFF"
+                                        weight="Regular"
+                                    >
+                                        Feel proud of yourself, don't you?
+                                    </BeText>
+                                )}
+                                {randomDoneAllMsg === 2 && (
+                                    <BeText
+                                        align="cent"
+                                        size={15}
+                                        color="#FFF"
+                                        weight="Regular"
+                                    >
+                                        That's right, you've completed ALL of
+                                        your objectives for today. "Giving
+                                        yourself a PLUS" seems to be worth it,
+                                        right?
+                                    </BeText>
+                                )}
+                                {randomDoneAllMsg === 3 && (
+                                    <BeText
+                                        align="cent"
+                                        size={15}
+                                        color="#FFF"
+                                        weight="Regular"
+                                    >
+                                        You did all what you planned on
+                                        PersonaPlus for today. Now plan
+                                        something else and make this day even
+                                        more worth it!
+                                    </BeText>
+                                )}
+                            </Native.View>
+                        ) : (
+                            Object.keys(objs).map((key) => {
+                                const obj = objs[key];
+                                if (!obj.wasDone) {
+                                    return (
+                                        <Division
+                                            key={obj.id}
+                                            status="REGULAR"
+                                            preheader="ACTIVE OBJECTIVE"
+                                            header={obj.exercise}
+                                            subheader=""
+                                            // subheader={obj.description}
+                                        >
+                                            <Btn
+                                                kind="ACE"
+                                                onclick={() => startObj(obj.id)}
+                                                text="Let's go!"
+                                            />
+                                            <Btn
+                                                kind="GOD"
+                                                onclick={() => doObj(obj.id)}
+                                                text="Already done it"
+                                            />
+                                        </Division>
+                                    );
+                                }
+                            })
+                        )
                     ) : (
                         <Native.View
                             style={{

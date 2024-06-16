@@ -25,12 +25,12 @@ PersonaPlus es un proyecto independiente que apunta a crear una app (con React N
     - [ ] Otros
   - [ ] Hora de pensar
 - [ ] Objetivos en general
-  - [ ] Creación
+  - [X] Creación
   - [ ] Edición
   - [ ] Eliminación
   - [ ] Generación vía asistente
     - [ ] Objetivos activos
-      - [ ] Marcar como completado
+      - [X] Marcar como completado
       - [ ] Sesiones
         - [ ] Funcionalidad básica
         - [ ] Sesiones múltiples
