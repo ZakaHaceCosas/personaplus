@@ -15,6 +15,10 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - PD: Los logs serán en inglés, siempre.
 
+## 0.0.1-R5-b13
+
+- Now you can mark an objective as done.
+
 ## 0.0.1-R5-b12
 
 - Created `Sess.tsx`, page for live sessions. Still not done.
