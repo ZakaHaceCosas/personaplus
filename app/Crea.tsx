@@ -168,7 +168,7 @@ export default function Form({ onSubmit }: FormProps) {
             };
 
             const newId = generateNewId();
-            const finalObj = { ...newObj, id: newId };
+            const finalObj = { ...newObj, id: newId, wasDone: false };
             const finalObjs: object[] = [...objs, finalObj];
 
             await AsyncStorage.setItem("objs", JSON.stringify(finalObjs));
