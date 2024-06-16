@@ -54,9 +54,7 @@ export default function Sess() {
               .filter((item) => typeof item.id === "number") // buscar ids
               .map((item) => item.id.toString()) // array-ing ids
               .join(", ") // unir ids
-        : "no ids found (see Sess.tsx:52-59)";
-
-    console.log(idsString);
+        : "no ids found (see Sess.tsx:52-57)";
 
     const start = () => {
         console.log("start");
