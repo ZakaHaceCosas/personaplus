@@ -17,7 +17,8 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 ## 0.0.1-R5-b12
 
-- Created `Sess.tsx`, page for live sessions.
+- Created `Sess.tsx`, page for live sessions. Still not done.
+- Made very small changes to code documentation and applied them code-wide.
 
 ## 0.0.1-R5-b11
 
