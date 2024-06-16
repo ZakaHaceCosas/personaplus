@@ -49,11 +49,34 @@ export default function Sess() {
         ? objs.find((obj) => obj.id.toString() === id)
         : null;
 
+    const idsString = objs
+        ? objs
+              .filter((item: any) => !("id" in item)) // buscar ids
+              .map((item: any) => item.id) // array-ing ids
+              .join(", ") // unir ids
+        : "no ids found (see Sess.tsx:52-59)";
+
+    console.log(idsString);
+
+    const start = () => {
+        console.log("start");
+    };
+
     return (
-        <Native.View>
-            <BeText weight="Regular" size={15}>
+        <Native.View
+            style={{
+                backgroundColor: "#0E1013",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100vw" as Native.DimensionValue,
+                height: "100vh" as Native.DimensionValue,
+            }}
+        >
+            {/*<BeText weight="Regular" size={15}>
                 currently selected obj: {id}
-            </BeText>
+            </BeText>*/}
             {selectedObj ? (
                 <Native.View>
                     <BeText weight="Regular" size={15}>
@@ -85,9 +108,35 @@ export default function Sess() {
                     </BeText>
                 </Native.View>
             ) : (
-                <BeText weight="Regular" size={15}>
-                    No object found
-                </BeText>
+                <Native.View>
+                    <BeText
+                        align="cent"
+                        weight="BlackItalic"
+                        size={45}
+                        color="#FF0000"
+                    >
+                        ERROR
+                    </BeText>
+                    <BeText align="cent" weight="Bold" size={25}>
+                        Did not find the selected objective in the database.
+                    </BeText>
+                    <Native.View
+                        style={{
+                            margin: 10,
+                            borderRadius: 10,
+                            padding: 10,
+                            backgroundColor: "#FFC832",
+                        }}
+                    >
+                        <BeText weight="Regular" size={12} color="#000">
+                            Developer info: id: {id}, objs were fetched:{" "}
+                            {objs && "true"}
+                            {!objs && "false"}, selectedObj exists:{" "}
+                            {selectedObj && "true"}
+                            {!selectedObj && "false"}, all objs: {idsString}
+                        </BeText>
+                    </Native.View>
+                </Native.View>
             )}
         </Native.View>
     );
