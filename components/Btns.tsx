@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import * as Native from "react-native";
-import BeText from "./Text";
+import BeText from "@/components/Text";
 
 // TypeScript, supongo
 interface BtnsProps {
