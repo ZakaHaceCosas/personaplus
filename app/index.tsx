@@ -126,6 +126,10 @@ export default function Home() {
         Router.router.navigate("Crea");
     };
 
+    const startObj = (id: number): void => {
+        Router.router.navigate("Sess?id=" + id);
+    };
+
     const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean | null>(
         null
     );
@@ -181,7 +185,7 @@ export default function Home() {
                                 >
                                     <Btn
                                         kind="ACE"
-                                        onclick={() => {}}
+                                        onclick={() => startObj(obj.id)}
                                         text="Let's go!"
                                     />
                                     <Btn
