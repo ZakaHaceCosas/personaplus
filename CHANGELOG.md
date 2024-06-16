@@ -20,6 +20,9 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - Created `Sess.tsx`, page for live sessions. Still not done.
 - Made very small changes to code documentation and applied them code-wide.
 
+> [!NOTE]
+> KNOWN ERRORS remain the same as on `b11`
+
 ## 0.0.1-R5-b11
 
 - Fixed the `key` prop not being used properly in `Dash.tsx`.
