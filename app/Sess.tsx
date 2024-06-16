@@ -51,8 +51,8 @@ export default function Sess() {
 
     const idsString = objs
         ? objs
-              .filter((item: any) => !("id" in item)) // buscar ids
-              .map((item: any) => item.id) // array-ing ids
+              .filter((item) => typeof item.id === "number") // buscar ids
+              .map((item) => item.id.toString()) // array-ing ids
               .join(", ") // unir ids
         : "no ids found (see Sess.tsx:52-59)";
 
