@@ -3,8 +3,8 @@
 
 import React from "react";
 import * as Native from "react-native";
-import BeText from "./Text";
-import GapView from "./GapView";
+import BeText from "@/components/Text";
+import GapView from "@/components/GapView";
 
 // TypeScript, supongo
 interface NotiProps {

@@ -126,7 +126,14 @@ export default function Modulo() {
 Para evitar tener importaciones muy largas, cuando sea necesario utiliza `import * as <Nombre> from <importacion>`.
 > **Siempre** se importa React Native de este modo, con el nombre "Native", al igual que React con el nombre "React".
 
-Ten en cuenta que cuando programes, esto llevará a que en vez de escribir, por ejemplo, `<View>`, escribas `<Native.View>`.
+Ten en cuenta que cuando programes, esto llevará a que en vez de escribir, por ejemplo, `<View>`, escribas `<Native.View>`, o `React.useEffect` en vez de `useEffect`. Esto se hace para mantener unas importaciones limpias y consistentes.
+
+Además, para los componentes propios, utiliza `@` en vez de `./`. E.J.:
+
+```tsx
+import BeText from '@/components/Text'; // bien
+import BeText from './components/Text'; // no bien
+```
 
 #### 3. NOMBRA CLARAMENTE LAS VARIABLES
 

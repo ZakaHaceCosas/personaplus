@@ -3,7 +3,7 @@
 
 import React from "react";
 import * as Native from "react-native";
-import SectionHeader from "./SectionHeader";
+import SectionHeader from "@/components/section/SectionHeader";
 
 // TypeScript, supongo
 interface DivisionProps {
