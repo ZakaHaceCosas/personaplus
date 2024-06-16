@@ -6,6 +6,8 @@ import * as Native from "react-native";
 import * as Router from "expo-router";
 import BeText from "@/components/Text";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Ionicons from "@expo/vector-icons/MaterialIcons";
+import GapView from "@/components/GapView";
 
 // TypeScript, supongo.
 interface Objective {
@@ -60,6 +62,31 @@ export default function Sess() {
         console.log("start");
     };
 
+    let selectedObjSustantivizedName: string = "Unknown";
+
+    if (selectedObj) {
+        switch (selectedObj.exercise) {
+            case "Meditation":
+                selectedObjSustantivizedName = "Meditating";
+                break;
+            case "Push Up":
+                selectedObjSustantivizedName = "Doing push ups";
+                break;
+            case "Lifting":
+                selectedObjSustantivizedName = "Lifting weights";
+                break;
+            case "Running":
+                selectedObjSustantivizedName = "Running";
+                break;
+            case "Walking":
+                selectedObjSustantivizedName = "Walking";
+                break;
+            default:
+                selectedObjSustantivizedName = "Doing something"; // instead of just throwing "Unknown" or "null" or an empty string... DO SOMETHING :]
+                break;
+        }
+    }
+
     return (
         <Native.View
             style={{
@@ -76,10 +103,82 @@ export default function Sess() {
                 currently selected obj: {id}
             </BeText>*/}
             {selectedObj ? (
-                <Native.View>
-                    <BeText weight="Regular" size={15}>
-                        Exercise: {selectedObj.exercise}
-                    </BeText>
+                <Native.View
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        width: "calc(100vw - 40px)" as Native.DimensionValue,
+                    }}
+                >
+                    <Native.View
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            padding: 20,
+                            backgroundColor: "#14171C",
+                            borderRadius: 15,
+                            alignItems: "center",
+                            justifyContent: "flex-start",
+                            width: "100%",
+                        }}
+                    >
+                        {
+                            // deberia ser otro icono, pero no hay manera de que funcionen los MS Fluent Icons con React al parecer :[
+                        }
+                        <Ionicons name="play-arrow" size={20} color="#DDDDDD" />
+                        <GapView width={10} />
+                        <BeText size={15} weight="Bold" color="#DDDDDD">
+                            IN A SESSION!
+                        </BeText>
+                    </Native.View>
+                    <GapView height={20} />
+                    <Native.View
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            padding: 20,
+                            backgroundColor: "#14171C",
+                            borderRadius: 15,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "100%",
+                        }}
+                    >
+                        <BeText weight="Regular" size={12} align="center">
+                            CURRENT OBJECTIVE
+                        </BeText>
+                        <GapView height={10} />
+                        <BeText weight="Bold" size={25} align="center">
+                            {selectedObjSustantivizedName} for{" "}
+                            {selectedObj.duration} minute
+                            {selectedObj.duration > 1 && "s"}
+                        </BeText>
+                        <GapView height={10} />
+                        <Native.View
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <Ionicons name="loop" size={15} color="#FFF" />
+                            <GapView width={5} />
+                            <BeText weight="Regular" size={15}>
+                                {selectedObj.repetitions === 0
+                                    ? "None"
+                                    : `${selectedObj.repetitions} repetitions`}
+                            </BeText>
+                            <GapView width={15} />
+                            <Ionicons name="snooze" size={15} color="#FFF" />
+                            <GapView width={5} />
+                            <BeText weight="Regular" size={15}>
+                                {selectedObj.rests === 0
+                                    ? "None"
+                                    : `${selectedObj.rests} rests (${selectedObj.restDuration} minutes each)`}
+                            </BeText>
+                        </Native.View>
+                    </Native.View>
                     <BeText weight="Regular" size={15}>
                         Days:{" "}
                         {selectedObj.days
