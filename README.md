@@ -1,14 +1,22 @@
-# PersonaPlus
+![PersonaPlus banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER.png)
+
+<h1 align="center">PersonaPlus</h1>
+
+<div align="center">
 
 <!--Se destacará el vídeo que a mi me parezca :v-->
 [![YouTube Video Views](https://img.shields.io/youtube/views/H2_0d-hLiMw?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=H2_0d-hLiMw)
 ![GitHub last commit](https://img.shields.io/github/last-commit/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github&color=black)
-![GitHub repo size](https://img.shields.io/github/repo-size/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github)
+![GitHub Repo size](https://img.shields.io/github/repo-size/ZakaHaceCosas/personaplus?style=for-the-badge&logo=visualstudiocode)
 ![GitHub Repo stars](https://img.shields.io/github/stars/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github&color=orange)
 ![GitHub followers](https://img.shields.io/github/followers/ZakaHaceCosas?style=for-the-badge&logo=github)
+![Created at](https://img.shields.io/github/created-at/ZakaHaceCosas/personaplus?style=for-the-badge&color=white&logo=github)
+![GitHub License](https://img.shields.io/github/license/zakahacecosas/personaplus?style=for-the-badge&color=%23d52e35)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fpersonaplus.vercel.app&up_message=WORKING%20%3A%5D&up_color=%2332FF80&down_message=NOT%20WORKING%20%3A%5B&down_color=%23FF3232&style=for-the-badge)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/zakahacecosas/personaplus?style=for-the-badge&labelColor=%23000&color=%23fff)
 
-![PersonaPlus banner](https://personaplus.vercel.app/PP_BANNER.png)
-<!--![Lines of code](https://img.shields.io/tokei/lines/github/ZakaHaceCosas/personaplus?style=for-the-badge&logo=visualstudiocode)-->
+</div>
+
 ## DATE UN PLUS
 
 ### *GIVE YOURSELF A PLUS*
