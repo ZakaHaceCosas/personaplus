@@ -27,6 +27,7 @@ interface Objective {
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
+        paddingTop: 20,
         width: "100vw" as Native.DimensionValue,
         height: "100vh" as Native.DimensionValue,
     },
@@ -34,10 +35,8 @@ const styles = Native.StyleSheet.create({
         padding: 20,
         display: "flex",
         flexDirection: "column",
-    },
-    notiview: {
-        display: "flex",
-        flexDirection: "column",
+        width: "100vw" as Native.DimensionValue,
+        height: "100vh" as Native.DimensionValue,
     },
 });
 
@@ -46,31 +45,6 @@ export default function Dash() {
     const [objs, setObjs] = React.useState<{ [key: string]: Objective } | null>(
         null
     );
-    const [notiProps, setNotiProps] = React.useState<{
-        kind: string;
-        title: string;
-        text: string;
-        post: string | null;
-    } | null>(null);
-
-    const showNotification = (
-        kind: string,
-        titl: string,
-        text: any,
-        post: string | null
-    ) => {
-        setNotiProps({
-            kind: kind,
-            title: titl,
-            text: String(text),
-            post: post,
-        });
-
-        // Para que la notificación dure 7.5 segundos
-        setTimeout(() => {
-            setNotiProps(null);
-        }, 7500);
-    };
 
     React.useEffect(() => {
         const fetchObjectives = async () => {
@@ -78,14 +52,32 @@ export default function Dash() {
                 const storedObjs = await AsyncStorage.getItem("objs");
                 if (storedObjs) {
                     setObjs(JSON.parse(storedObjs));
-                    console.log("OBJS fetched");
+                    console.log(
+                        "%cGOD%cAll is ok%c Objectives (OBJS) fetched and parsed!",
+                        "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "color: #30FF97;"
+                    );
                 } else {
                     await AsyncStorage.setItem("objs", JSON.stringify({}));
-                    console.error("Could not get OBJS fetched");
                     setObjs({});
+                    console.log(
+                        "%cWOR%cDev error%c Could not get objectives (OBJS) fetched! Setting them to an empty array ( {} )",
+                        "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "color: #FFD700;"
+                    );
                 }
             } catch (e) {
-                console.error("Could not get OBJS fetched: " + e);
+                let log =
+                    "Could not get objectives (OBJS) fetched due to error: " +
+                    e;
+                console.log(
+                    "%cWOR%cDev error%c " + log,
+                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "color: #FFD700;"
+                );
             }
         };
 
@@ -116,15 +108,18 @@ export default function Dash() {
                 <BeText align="normal" weight="Regular" size={20}>
                     Lets set up your path to success
                 </BeText>
-                <GapView height={20} /> {/* oye, ¿por qué no?*/}
+                <GapView height={20} />
                 <Section kind="OBJS">
                     {objs && Object.keys(objs).length > 0 ? (
                         Object.keys(objs).map((key) => {
                             const obj = objs[key];
                             if (!obj) {
-                                console.error(
-                                    // @ts-ignore
-                                    `Data is undefined for objective with id: ${obj.id}`
+                                let log = `Data is undefined for objective with key: ${key}`;
+                                console.log(
+                                    "%cWOR%cDev error%c " + log,
+                                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                                    "color: #FFD700;"
                                 );
                                 return null;
                             }
@@ -171,7 +166,7 @@ export default function Dash() {
                             }}
                         >
                             <BeText
-                                align="cent"
+                                align="center"
                                 size={30}
                                 color="#FFF"
                                 weight="Bold"

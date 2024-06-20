@@ -44,6 +44,7 @@ const config: ExpoConfig.ExpoConfig = {
         bundler: "metro"
     },
     plugins: [
+        "expo-build-properties",
         [
             "expo-font",
             {

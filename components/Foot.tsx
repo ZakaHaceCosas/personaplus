@@ -7,31 +7,11 @@ import GapView from "@/components/GapView";
 
 // TypeScript, supongo
 interface SectionProps {
-    page: string;
+    page: string; // en que página ( /welc, /, /prof, está ahora)
 }
 
 // Definimos los estilos
 const styles = Native.StyleSheet.create({
-    container: {
-        backgroundColor: "#16191E",
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingLeft: 30,
-        paddingRight: 30,
-        paddingTop: 20,
-        paddingBottom: 20,
-        position: "absolute",
-        zIndex: 99,
-        bottom: 0,
-        left: 0,
-        right: 0,
-    },
-    icon: {
-        width: 40,
-        height: 40,
-    },
     touchme: {
         display: "flex",
         flexDirection: "column",
@@ -50,66 +30,92 @@ export default function Foot({ page }: SectionProps) {
     };
 
     return (
-        <Native.View style={styles.container}>
-            <Router.Link
-                href="/"
-                onPress={() => handlePageChange("/")}
-                style={styles.touchme}
-            >
-                <Ionicons
-                    name="home"
-                    size={25}
-                    color={currentPage === "/" ? "#FFF" : "#8A8C8E"}
-                />
-                <GapView height={5} />
-                <BeText
-                    align="normal"
-                    weight="Bold"
-                    size={12}
-                    color={currentPage === "/" ? "#FFF" : "#8A8C8E"}
-                >
-                    Home
-                </BeText>
+        // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
+        // Aunque no los usamos en "touchme" ya que este se repite varias veces.
+        <Native.View
+            style={{
+                backgroundColor: "#16191E",
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                paddingLeft: 30,
+                paddingRight: 30,
+                paddingTop: 20,
+                paddingBottom: 20,
+                position: "absolute",
+                height: 90,
+                zIndex: 99,
+                bottom: 0,
+                left: 0,
+                right: 0,
+            }}
+        >
+            <Router.Link href="/" onPress={() => handlePageChange("/")}>
+                <Native.View style={styles.touchme}>
+                    <Native.View>
+                        <Ionicons
+                            name="home"
+                            size={25}
+                            color={currentPage === "/" ? "#FFF" : "#8A8C8E"}
+                        />
+                    </Native.View>
+                    <GapView height={5} />
+                    <Native.View>
+                        <BeText
+                            align="normal"
+                            weight="Bold"
+                            size={12}
+                            color={currentPage === "/" ? "#FFF" : "#8A8C8E"}
+                        >
+                            Home
+                        </BeText>
+                    </Native.View>
+                </Native.View>
             </Router.Link>
-            <Router.Link
-                href="/Dash"
-                onPress={() => handlePageChange("/Dash")}
-                style={styles.touchme}
-            >
-                <Ionicons
-                    name="dashboard"
-                    size={25}
-                    color={currentPage === "/Dash" ? "#FFF" : "#8A8C8E"}
-                />
-                <GapView height={5} />
-                <BeText
-                    align="normal"
-                    weight="Bold"
-                    size={12}
-                    color={currentPage === "/Dash" ? "#FFF" : "#8A8C8E"}
-                >
-                    Dash
-                </BeText>
+            <Router.Link href="/Dash" onPress={() => handlePageChange("/Dash")}>
+                <Native.View style={styles.touchme}>
+                    <Native.View>
+                        <Ionicons
+                            name="dashboard"
+                            size={25}
+                            color={currentPage === "/Dash" ? "#FFF" : "#8A8C8E"}
+                        />
+                    </Native.View>
+                    <GapView height={5} />
+                    <Native.View>
+                        <BeText
+                            align="normal"
+                            weight="Bold"
+                            size={12}
+                            color={currentPage === "/Dash" ? "#FFF" : "#8A8C8E"}
+                        >
+                            Dash
+                        </BeText>
+                    </Native.View>
+                </Native.View>
             </Router.Link>
-            <Router.Link
-                href="/Prof"
-                onPress={() => handlePageChange("/Prof")}
-                style={styles.touchme}
-            >
-                <Ionicons
-                    name="person"
-                    size={25}
-                    color={currentPage === "/Prof" ? "#FFF" : "#8A8C8E"}
-                />
-                <GapView height={5} />
-                <BeText
-                    align="normal"
-                    weight="Bold"
-                    size={12}
-                    color={currentPage === "/Prof" ? "#FFF" : "#8A8C8E"}
-                >
-                    Profile
-                </BeText>
+            <Router.Link href="/Prof" onPress={() => handlePageChange("/Prof")}>
+                <Native.View style={styles.touchme}>
+                    <Native.View>
+                        <Ionicons
+                            name="person"
+                            size={25}
+                            color={currentPage === "/Prof" ? "#FFF" : "#8A8C8E"}
+                        />
+                    </Native.View>
+                    <GapView height={5} />
+                    <Native.View>
+                        <BeText
+                            align="normal"
+                            weight="Bold"
+                            size={12}
+                            color={currentPage === "/Prof" ? "#FFF" : "#8A8C8E"}
+                        >
+                            Profile
+                        </BeText>
+                    </Native.View>
+                </Native.View>
             </Router.Link>
         </Native.View>
     );

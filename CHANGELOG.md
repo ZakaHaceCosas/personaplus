@@ -15,9 +15,51 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - PD: Los logs serán en inglés, siempre.
 
+## 0.0.1-R5-b14
+
+Important:
+
+### Updated Expo from SDK 50 to SDK 51
+
+- **Updated Expo:** From ~~50.0.19~~ to **51.0.14**
+- **Updated React Native:** From ~~0.73~~ to **0.74.2**
+- Updated all the dependencies to match the new SDK and RN versions.
+- Added an empty return to font loading on `_layout.tsx`, to avoid issues.
+- Made *several* UI (both style and layout) changes.
+- Removed the usage of `Noti` for dev logging. Plus, finally made console logs consistent across all the code.
+- Fixed username input using numerical and not text keyboard on mobile.
+- Added a few comments to the code to explain stuff better.
+- Added ESLINT and Prettier config files.
+- Small extra changes.
+
+> [!NOTE]
+>
+> ### **FIXED ERRORS**
+>
+> `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`". *The error was a stupid inline comment, LOL.*
+> **And thanks to this fix, app was finally properly tested on mobile!**
+>
+> [!WARNING]
+>
+> ### **KNOWN ERRORS - Latest**
+>
+> ***New errors***:
+>
+> None.
+>
+> ***Still not fixed from older dev versions***:
+>
+> `b11:` For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. Don't know it's origin & only happens sometimes, making it hard to replicate. Will look onto it.
+
+**Note:**
+> Now that it was finally possible to test on mobile, a LOT of visual issues were found. Will be adressed progressively.
+
 ## 0.0.1-R5-b13
 
 - Now you can mark an objective as done.
+
+> [!NOTE]
+> KNOWN ERRORS remain the same as on `b11`
 
 ## 0.0.1-R5-b12
 
@@ -30,22 +72,22 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 ## 0.0.1-R5-b11
 
 - Fixed the `key` prop not being used properly in `Dash.tsx`.
-- Fixed the "Create active objective" button being spammed on the UI when there _are_ created objectives.
+- Fixed the "Create active objective" button being spammed on the UI when there *are* created objectives.
 - Added a new First launch check on the `index.tsx` page. Will redirect to `/Welc` (welcome screen) if `hasLaunched` item does not exist in LocalStorage. Also, it gets created so you dont get redirected each time you open PersonaPlus, only on the first launch.
-- Updated the `Swap` component, now supports new optional property `order` which is equivalent to _`flex-direction`_.
+- Updated the `Swap` component, now supports new optional property `order` which is equivalent to *`flex-direction`*.
 - Fixed errors with the `Crea.tsx` page:
   - Not creating objs.
   - Not going home when an obj is created.
 
 > [!WARNING]
 >
-> ### **KNOWN ERRORS - Latest**
+> ### **KNOWN ERRORS - b11**
 >
-> _**New errors**_:
+> ***New errors***:
 >
 > For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. Don't know it's origin & only happens sometimes, making it hard to replicate. Will look onto it.
 >
-> _**Still not fixed from older dev versions**_:
+> ***Still not fixed from older dev versions***:
 >
 > `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`".
 
@@ -61,10 +103,10 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 >
 > ### **KNOWN ERRORS - b10**
 >
-> _**New errors**_:
+> ***New errors***:
 > None 😎
 >
-> _**Still not fixed from older dev versions**_:
+> ***Still not fixed from older dev versions***:
 >
 > `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`".
 
@@ -87,14 +129,14 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 > [!NOTE]
 > **KNWON ISSUE:** For some reason, I didn't managed to make Microsoft's Fluent Icons (the ones used in the UI design) React package work, so I used Material Design Icons instead, via Expo's `@expo/vectoricons`
 
-- Now the documentation is fully usable, can be considered "done". _Of course, it is still subject to changes at any time._
+- Now the documentation is fully usable, can be considered "done". *Of course, it is still subject to changes at any time.*
 - Licensed under Apache 2.0.
 - Added input colors to `VAR-DSGN.jsonc`.
 - Updated all files to follow the documentation's requested code guidelines.
 - Fully formatted the code + added formatting on save.
 - Changed many `.vscode` settings.
 - General changes and improvements to the Homepage (`/`).
-- Made some progress in the dashboard (`/Dash`). Implemented `Notis` and _fixed_ obj fetching. (Still looking forward to implementing obj creation).
+- Made some progress in the dashboard (`/Dash`). Implemented `Notis` and *fixed* obj fetching. (Still looking forward to implementing obj creation).
 
 > [!WARNING]
 > **KNOWN ERROR**: Still doesn't access them 100% correctly.
@@ -168,7 +210,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
   - Created `metro.config.js`.
   - Created `.vscode/`.
 - Removal of every single in-app gradient, in favour of plain colors.
-- Implemented `AsyncStorage` to store _OBJS_ data.
+- Implemented `AsyncStorage` to store *OBJS* data.
 - Rewritten the documentation `DOCS.md`.
 - Added versioning (`CHANGELOG.md` (this file)).
 - Created a better, more complete `README`.

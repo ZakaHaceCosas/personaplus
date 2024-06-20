@@ -6,13 +6,14 @@ import * as Native from "react-native";
 
 // TypeScript, supongo
 interface BeTextProps {
-    size: number;
-    weight: string;
-    color?: string;
-    onTap?: any;
-    align?: string;
-    children: React.ReactNode;
-    url?: boolean;
+    size: number; // Tamaño de letra en px
+    weight: string; // Intensidad de la tipografía (Regular, Bold, ExtraBold, Light, Regular, Medium), etc...
+    // para itálica, añadir Italic (p ej. "BoldItalic") al weight.
+    color?: string; // Color del texto - default: blanco (ya que el fondo es negro)
+    onTap?: any; // Si se proporciona, el texto actuará como un botón / enlace y hará algo
+    align?: string; // Alineación del texto
+    children: React.ReactNode; // Texto en sí, dentro del tag <BeText>
+    url?: boolean; // Si es verdadero el texto se estilizará como un enlace externo - default: false
 }
 
 // Creamos la función
@@ -25,18 +26,15 @@ export default function BeText({
     onTap,
     url,
 }: BeTextProps) {
-    // weight (Bold, ExtraBold, Light, Regular, Medium)...
-    // para itálica, añadir Italic (BoldItalic)
     const font: string = "BeVietnamPro-" + weight;
-    // altura de línea = tamaño de fuente :]
+    // La altura de línea es igual al tamaño de letra
     const thelineheight: number = size;
-    // color del texto. si no especificas uno, por defecto es blanco (ya que la aplicación es de fondo negro)
     const txtcolor: string = color || "#FFF";
     let txtalgn: string = align || "normal";
     let txtdeco: string;
 
     switch (align) {
-        case "cent":
+        case "center":
             txtalgn = "center";
             break;
         case "normal":
@@ -45,7 +43,7 @@ export default function BeText({
         case "left":
             txtalgn = "left";
             break;
-        case "rigt":
+        case "right":
             txtalgn = "right";
             break;
         default:

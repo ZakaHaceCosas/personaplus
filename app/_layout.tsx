@@ -48,6 +48,10 @@ export default function Layout() {
         };
 
         onLayoutRootView();
+
+        return () => {
+            // se deja vacio
+        };
     }, [fontsLoaded, fontError]);
 
     if (!fontsLoaded && !fontError) {

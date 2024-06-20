@@ -17,7 +17,7 @@ const styles = Native.StyleSheet.create({
 export default function Nomore() {
     return (
         <Native.View style={styles.container}>
-            <BeText align="cent" weight="Regular" size={15} color="#C8C8C8">
+            <BeText align="center" weight="Regular" size={15} color="#C8C8C8">
                 Nothing more to see
             </BeText>
         </Native.View>

@@ -10,7 +10,7 @@ interface GapViewProps {
     width?: number; // Tamaño horizontal.
 }
 
-// Creamos la funcion con estilos en línea
+// Creamos la funcion
 export default function GapView({ height, width }: GapViewProps) {
     return <Native.View style={{ height: height, width: width }} />;
 }
