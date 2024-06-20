@@ -38,7 +38,7 @@ Important:
 >
 > `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`". *The error was a stupid inline comment, LOL.*
 > **And thanks to this fix, app was finally properly tested on mobile!**
->
+
 > [!WARNING]
 >
 > ### **KNOWN ERRORS - Latest**
