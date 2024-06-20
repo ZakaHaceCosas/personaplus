@@ -11,12 +11,12 @@ import Division from "@/components/section/division/Division";
 import Btn from "@/components/Btns";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Nomore from "@/components/Nomore";
-import Noti from "@/components/Noti";
 import GapView from "@/components/GapView";
 
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
+        paddingTop: 20,
         width: "100vw" as Native.DimensionValue,
         height: "100vh" as Native.DimensionValue,
     },
@@ -24,10 +24,8 @@ const styles = Native.StyleSheet.create({
         padding: 20,
         display: "flex",
         flexDirection: "column",
-    },
-    notiview: {
-        display: "flex",
-        flexDirection: "column",
+        width: "100vw" as Native.DimensionValue,
+        height: "100vh" as Native.DimensionValue,
     },
     flexyview: {
         display: "flex",
@@ -43,56 +41,39 @@ export default function Prof() {
     const handleUnameTxtChange = (txt: string) => {
         setUname(txt);
     };
-    const [notiProps, setNotiProps] = React.useState<{
-        kind: string;
-        title: string;
-        text: string;
-        post: string | null;
-    } | null>(null);
-
-    const showNotification = (
-        kind: string,
-        titl: string,
-        text: any,
-        post: string | null
-    ) => {
-        setNotiProps({
-            kind: kind,
-            title: titl,
-            text: String(text),
-            post: post,
-        });
-
-        // Para que la notificación dure 7.5 segundos
-        setTimeout(() => {
-            setNotiProps(null);
-        }, 7500);
-    };
 
     const handleUnameBtnClick = async () => {
         try {
             const olduname: string | null = await AsyncStorage.getItem("uname");
             if (olduname !== uname) {
                 await AsyncStorage.setItem("uname", uname);
-                showNotification(
-                    "GOD",
-                    "Everything ok!",
-                    `Changed your username to ${uname}`,
-                    "static"
+                let log = `Changed your username to ${uname}`;
+                console.log(
+                    "%cGOD%cAll is ok%c " + log,
+                    "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "color: #30FF97;"
                 );
                 setTimeout(() => {
                     Router.router.replace("/");
-                }, 1000);
+                }, 25);
             } else {
-                showNotification(
-                    "WOR",
-                    "Error!",
-                    `Your username is already ${uname}! Can't change it to that`,
-                    "static"
+                let log = `Your username is already ${uname}! Can't change it to that`;
+                console.log(
+                    "%cWOR%cDev error%c " + log,
+                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "color: #FFD700;"
                 );
             }
         } catch (e) {
-            showNotification("WOR", "Error!", e, "static");
+            let log = "Could not handleUnameBtnClick() due to error: " + e;
+            console.log(
+                "%cWOR%cDev error%c " + log,
+                "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                "color: #FFD700;"
+            );
         }
     };
 
@@ -102,27 +83,32 @@ export default function Prof() {
     React.useEffect(() => {
         const fetchUsername = async () => {
             try {
-                const uname: string | null = await AsyncStorage.getItem(
-                    "uname"
-                );
+                const uname: string | null =
+                    await AsyncStorage.getItem("uname");
                 if (uname) {
-                    showNotification(
-                        "GOD",
-                        "Everything ok!",
-                        "Username fetched!",
-                        "static"
-                    );
                     setUsername(uname);
+                    console.log(
+                        "%cGOD%cAll is ok%c Username (uname) fetched!",
+                        "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "color: #30FF97;"
+                    );
                 } else {
-                    showNotification(
-                        "WOR",
-                        "Dev error",
-                        "Username error!",
-                        "static"
+                    console.log(
+                        "%cWOR%cDev error%c Username could not be fetched due to an error!",
+                        "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "color: #FFD700;"
                     );
                 }
             } catch (e) {
-                showNotification("WOR", "Error!", e, "static");
+                let log = "Could not fetch username (uname) due to error: " + e;
+                console.log(
+                    "%cWOR%cDev error%c " + log,
+                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "color: #FFD700;"
+                );
             }
         };
 
@@ -130,7 +116,7 @@ export default function Prof() {
     }, []);
 
     let sh =
-        "You need a good username, comrade. You can change it whenever you want. Your current username is '" +
+        "You can change your username whenever you want. Your current username is '" +
         username +
         "'";
 
@@ -142,7 +128,7 @@ export default function Prof() {
                         Profile
                     </BeText>
                     <BeText align="normal" weight="Regular" size={20}>
-                        Nice to meet you
+                        Nice to meet you!
                     </BeText>
                     <GapView height={20} />
                     <Section kind="SETS">
@@ -150,7 +136,7 @@ export default function Prof() {
                             status="REGULAR"
                             iconName={null}
                             preheader="PROFILE"
-                            header="Change your username"
+                            header="Set your username"
                             subheader={sh}
                         >
                             <Native.View style={styles.flexyview}>
@@ -178,7 +164,7 @@ export default function Prof() {
                                     textAlign="left"
                                     fontFamily="BeVietnamPro-Regular"
                                     textContentType="none"
-                                    inputMode="numeric"
+                                    inputMode="text"
                                     key="ageinput"
                                     enterKeyHint="done"
                                     onChangeText={handleUnameTxtChange}
@@ -195,16 +181,6 @@ export default function Prof() {
                     <Nomore />
                 </Native.View>
             </Native.ScrollView>
-            <Native.View style={styles.notiview}>
-                {notiProps && (
-                    <Noti
-                        kind={notiProps.kind}
-                        title={notiProps.title}
-                        text={notiProps.text}
-                        post={notiProps.post}
-                    />
-                )}
-            </Native.View>
             <Foot page={currentpage}></Foot>
         </Native.View>
     );

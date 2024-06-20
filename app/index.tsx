@@ -11,7 +11,6 @@ import Division from "@/components/section/division/Division";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Btn from "@/components/Btns";
 import GapView from "@/components/GapView";
-import Noti from "@/components/Noti";
 import Nomore from "@/components/Nomore";
 
 // TypeScript, supongo
@@ -29,6 +28,7 @@ interface Objective {
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
+        paddingTop: 20,
         width: "100vw" as Native.DimensionValue,
         height: "100vh" as Native.DimensionValue,
     },
@@ -36,10 +36,8 @@ const styles = Native.StyleSheet.create({
         padding: 20,
         display: "flex",
         flexDirection: "column",
-    },
-    notiview: {
-        display: "flex",
-        flexDirection: "column",
+        width: "100vw" as Native.DimensionValue,
+        height: "100vh" as Native.DimensionValue,
     },
 });
 
@@ -50,49 +48,24 @@ export default function Home() {
     const [objs, setObjs] = React.useState<{ [key: string]: Objective } | null>(
         null
     );
-    const [notiProps, setNotiProps] = React.useState<{
-        kind: string;
-        title: string;
-        text: string;
-        post: string | null;
-    } | null>(null);
-
-    const showNotification = (
-        kind: string,
-        titl: string,
-        text: any,
-        post: string | null
-    ) => {
-        setNotiProps({
-            kind: kind,
-            title: titl,
-            text: String(text),
-            post: post,
-        });
-
-        // Para que la notificación dure 7.5 segundos
-        setTimeout(() => {
-            setNotiProps(null);
-        }, 7500);
-    };
 
     React.useEffect(() => {
         const fetchUsername = async () => {
             const uname: string | null = await AsyncStorage.getItem("uname");
             if (uname) {
-                showNotification(
-                    "GOD",
-                    "Everything ok!",
-                    "Username fetched!",
-                    "static"
+                console.log(
+                    "%cGOD%cAll is ok%c Username fetched!",
+                    "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "color: #30FF97;"
                 );
                 setUname(uname);
             } else {
-                showNotification(
-                    "WOR",
-                    "Dev error",
-                    "Username error!",
-                    "static"
+                console.log(
+                    "%cWOR%cDev error%c Username error!",
+                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "color: #FFD700;"
                 );
             }
         };
@@ -106,14 +79,32 @@ export default function Home() {
                 const storedObjs = await AsyncStorage.getItem("objs");
                 if (storedObjs) {
                     setObjs(JSON.parse(storedObjs));
-                    console.log("OBJS fetched");
+                    console.log(
+                        "%cGOD%cAll is ok%c Objectives (OBJS) fetched and parsed!",
+                        "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "color: #30FF97;"
+                    );
                 } else {
                     await AsyncStorage.setItem("objs", JSON.stringify({}));
-                    console.error("Could not get OBJS fetched");
                     setObjs({});
+                    console.log(
+                        "%cWOR%cDev error%c Could not get objectives (OBJS) fetched! Setting them to an empty array ( {} )",
+                        "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "color: #FFD700;"
+                    );
                 }
             } catch (e) {
-                console.error("Could not get OBJS fetched: " + e);
+                let log =
+                    "Could not get objectives (OBJS) fetched due to error: " +
+                    e;
+                console.log(
+                    "%cWOR%cDev error%c " + log,
+                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "color: #FFD700;"
+                );
             }
         };
 
@@ -147,12 +138,30 @@ export default function Home() {
                         "objs",
                         JSON.stringify(updatedObjs)
                     );
-                    console.log("OBJS updated and saved!");
+                    console.log(
+                        "%cGOD%cAll is ok%c Objectives (OBJS) updated and saved successfully!",
+                        "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "color: #30FF97;"
+                    );
                 } else {
-                    console.error("Could not get OBJS fetched!");
+                    console.log(
+                        "%cWOR%cDev error%c Could not get objectives (OBJS) fetched!",
+                        "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                        "color: #FFD700;"
+                    );
                 }
             } catch (e) {
-                console.error("Could not get OBJS fetched: " + e);
+                let log =
+                    "Could not get objectives (OBJS) fetched due to error: " +
+                    e;
+                console.log(
+                    "%cWOR%cDev error%c " + log,
+                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "color: #FFD700;"
+                );
             }
         };
 
@@ -164,7 +173,7 @@ export default function Home() {
         null
     );
 
-    // comprobación para ver si es la primera vez que abre la app - si lo es, redirige a /Welc
+    // Comprobación para ver si es la primera vez que abre la app - si lo es, redirige a /Welc
     React.useEffect(() => {
         const checkFirstLaunch = async () => {
             try {
@@ -176,7 +185,13 @@ export default function Home() {
                     setIsFirstLaunch(false);
                 }
             } catch (e) {
-                console.error("Error checking if app has launched before: ", e);
+                let log = "Got an error checking if app launched before: " + e;
+                console.log(
+                    "%cWOR%cDev error%c " + log,
+                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "color: #FFD700;"
+                );
             }
         };
         checkFirstLaunch();
@@ -201,7 +216,7 @@ export default function Home() {
                 <BeText align="normal" weight="Regular" size={20}>
                     This is your summary for today
                 </BeText>
-                <GapView height={20} /> {/* oye, ¿por qué no?*/}
+                <GapView height={20} />
                 <Section kind="OBJS">
                     {objs && Object.keys(objs).length > 0 ? (
                         Object.keys(objs).every((key) => objs[key].wasDone) ? (
@@ -216,7 +231,7 @@ export default function Home() {
                                 }}
                             >
                                 <BeText
-                                    align="cent"
+                                    align="center"
                                     size={30}
                                     color="#FFF"
                                     weight="Bold"
@@ -226,7 +241,7 @@ export default function Home() {
                                 <GapView height={10} />
                                 {randomDoneAllMsg === 1 && (
                                     <BeText
-                                        align="cent"
+                                        align="center"
                                         size={15}
                                         color="#FFF"
                                         weight="Regular"
@@ -236,7 +251,7 @@ export default function Home() {
                                 )}
                                 {randomDoneAllMsg === 2 && (
                                     <BeText
-                                        align="cent"
+                                        align="center"
                                         size={15}
                                         color="#FFF"
                                         weight="Regular"
@@ -249,7 +264,7 @@ export default function Home() {
                                 )}
                                 {randomDoneAllMsg === 3 && (
                                     <BeText
-                                        align="cent"
+                                        align="center"
                                         size={15}
                                         color="#FFF"
                                         weight="Regular"
@@ -272,7 +287,6 @@ export default function Home() {
                                             preheader="ACTIVE OBJECTIVE"
                                             header={obj.exercise}
                                             subheader=""
-                                            // subheader={obj.description}
                                         >
                                             <Btn
                                                 kind="ACE"
@@ -301,7 +315,7 @@ export default function Home() {
                             }}
                         >
                             <BeText
-                                align="cent"
+                                align="center"
                                 size={30}
                                 color="#FFF"
                                 weight="Bold"
@@ -320,16 +334,6 @@ export default function Home() {
                 </Section>
                 <Nomore />
             </Native.ScrollView>
-            <Native.View style={styles.notiview}>
-                {notiProps && (
-                    <Noti
-                        kind={notiProps.kind}
-                        title={notiProps.title}
-                        text={notiProps.text}
-                        post={notiProps.post}
-                    />
-                )}
-            </Native.View>
             <Foot page={currentpage} />
         </Native.View>
     );

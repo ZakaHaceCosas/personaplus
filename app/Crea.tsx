@@ -28,6 +28,7 @@ interface FormData {
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
+        paddingTop: 20,
         width: "100vw" as Native.DimensionValue,
         height: "100vh" as Native.DimensionValue,
     },
@@ -35,6 +36,8 @@ const styles = Native.StyleSheet.create({
         padding: 20,
         display: "flex",
         flexDirection: "column",
+        width: "100vw" as Native.DimensionValue,
+        height: "100vh" as Native.DimensionValue,
     },
     picker: {
         padding: 12,
@@ -50,6 +53,10 @@ const styles = Native.StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         flexWrap: "wrap",
+        gap: 0,
+        rowGap: 0,
+        columnGap: 0,
+        maxHeight: 40,
     },
     flexyday: {
         display: "flex",
@@ -143,9 +150,8 @@ export default function Form({ onSubmit }: FormProps) {
     const processData = async (formData: FormData) => {
         try {
             const newObj: object = formData;
-            const storedObjs: string | null = await AsyncStorage.getItem(
-                "objs"
-            );
+            const storedObjs: string | null =
+                await AsyncStorage.getItem("objs");
             let objs: object[] = [];
 
             if (storedObjs !== null) {
@@ -221,18 +227,18 @@ export default function Form({ onSubmit }: FormProps) {
                                 index === 0
                                     ? "monday"
                                     : index === 1
-                                    ? "tuesday"
-                                    : index === 2
-                                    ? "wednesday"
-                                    : index === 3
-                                    ? "thursday"
-                                    : index === 4
-                                    ? "friday"
-                                    : index === 5
-                                    ? "saturday"
-                                    : index === 6
-                                    ? "sunday"
-                                    : day;
+                                      ? "tuesday"
+                                      : index === 2
+                                        ? "wednesday"
+                                        : index === 3
+                                          ? "thursday"
+                                          : index === 4
+                                            ? "friday"
+                                            : index === 5
+                                              ? "saturday"
+                                              : index === 6
+                                                ? "sunday"
+                                                : day;
                             return (
                                 <Native.View
                                     key={index}
@@ -298,7 +304,7 @@ export default function Form({ onSubmit }: FormProps) {
                             size={15}
                             color="#FFF"
                             weight="Regular"
-                            align="cent"
+                            align="center"
                         >
                             Duration:
                         </BeText>
@@ -306,7 +312,7 @@ export default function Form({ onSubmit }: FormProps) {
                             size={30}
                             color="#FFF"
                             weight="Bold"
-                            align="cent"
+                            align="center"
                         >
                             {duration} MINUTES
                         </BeText>
@@ -337,7 +343,7 @@ export default function Form({ onSubmit }: FormProps) {
                             size={15}
                             color="#FFF"
                             weight="Regular"
-                            align="cent"
+                            align="center"
                         >
                             Repetitions:
                         </BeText>
@@ -345,7 +351,7 @@ export default function Form({ onSubmit }: FormProps) {
                             size={30}
                             color="#FFF"
                             weight="Bold"
-                            align="cent"
+                            align="center"
                         >
                             {repetitions} REPETITIONS
                         </BeText>
@@ -389,14 +395,14 @@ export default function Form({ onSubmit }: FormProps) {
                             size={15}
                             color="#FFF"
                             weight="Regular"
-                            align="cent"
+                            align="center"
                         >
                             Rests:
                         </BeText>
 
                         <BeText
                             size={30}
-                            align="cent"
+                            align="center"
                             color="#FFF"
                             weight="Bold"
                         >
@@ -429,7 +435,7 @@ export default function Form({ onSubmit }: FormProps) {
                                 size={15}
                                 color="#FFF"
                                 weight="Regular"
-                                align="cent"
+                                align="center"
                             >
                                 Duration:
                             </BeText>
@@ -437,7 +443,7 @@ export default function Form({ onSubmit }: FormProps) {
                                 size={30}
                                 color="#FFF"
                                 weight="Bold"
-                                align="cent"
+                                align="center"
                             >
                                 {restDuration} MINUTES
                             </BeText>

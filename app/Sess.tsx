@@ -48,19 +48,15 @@ export default function Sess() {
     }, []);
 
     const selectedObj = objs
-        ? objs.find((obj) => obj.id.toString() === id)
+        ? objs.find(obj => obj.id.toString() === id)
         : null;
 
     const idsString = objs
         ? objs
-              .filter((item) => typeof item.id === "number") // buscar ids
-              .map((item) => item.id.toString()) // array-ing ids
+              .filter(item => typeof item.id === "number") // buscar ids
+              .map(item => item.id.toString()) // array-ing ids
               .join(", ") // unir ids
         : "no ids found (see Sess.tsx:52-57)";
-
-    const start = () => {
-        console.log("start");
-    };
 
     let selectedObjSustantivizedName: string = "Unknown";
 
@@ -207,14 +203,14 @@ export default function Sess() {
             ) : (
                 <Native.View>
                     <BeText
-                        align="cent"
+                        align="center"
                         weight="BlackItalic"
                         size={45}
                         color="#FF0000"
                     >
                         ERROR
                     </BeText>
-                    <BeText align="cent" weight="Bold" size={25}>
+                    <BeText align="center" weight="Bold" size={25}>
                         Did not find the selected objective in the database.
                     </BeText>
                     <Native.View

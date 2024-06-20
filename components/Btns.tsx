@@ -107,8 +107,8 @@ export default function Btn({ kind, text, onclick, width, height }: BtnsProps) {
                 flex: 1,
             }}
         >
-            <BeText weight="Medium" size={14} color={textclr} align="cent">
-                {text}
+            <BeText weight="Medium" size={14} color={textclr} align="center">
+                {String(text)} {/* convertir a string, por si acaso */}
             </BeText>
         </Native.Pressable>
     );
