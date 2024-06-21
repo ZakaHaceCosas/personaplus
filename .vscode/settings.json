@@ -48,6 +48,7 @@
         "editor.insertSpaces": true
     },
     "prettier.tabWidth": 4,
+    "prettier.bracketSpacing": true,
     "[markdown]": {
         "editor.unicodeHighlight.ambiguousCharacters": true,
         "editor.unicodeHighlight.invisibleCharacters": false,

@@ -15,11 +15,35 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - PD: Los logs serán en inglés, siempre.
 
+## 0.0.1-R5-b15
+
+- Made several UI changes to improve the looks on end user mobile devices. There's still work to do, but good progress was made.
+- Made adjustments to the ESLINT config.
+- Other changes to the logic used to structure and render some components to ensure they look good.
+- Added a few extra comments to the code to explain some stuff better.
+- Made a few changes like replacing some `let` with `const` to match the requirements of Prettier and ESLint.
+
+> [!NOTE]
+>
+> ### **FIXED ERRORS - Latest**
+>
+> None
+
+> [!WARNING]
+>
+> ### **KNOWN ERRORS - Latest**
+>
+> ***New errors***:
+>
+> `b15`: For some reason, the `objs`' name is not being displayed on mobile devices on Expo Go. No clue what the source is, will look onto that.
+>
+> ***Still not fixed from older dev versions***:
+>
+> `b11:` For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. Don't know it's origin & only happens sometimes, making it hard to replicate. Will look onto it.
+
 ## 0.0.1-R5-b14
 
-Important:
-
-### Updated Expo from SDK 50 to SDK 51
+### Updated Expo from SDK 50 to SDK 51 🎉
 
 - **Updated Expo:** From ~~50.0.19~~ to **51.0.14**
 - **Updated React Native:** From ~~0.73~~ to **0.74.2**
@@ -34,14 +58,14 @@ Important:
 
 > [!NOTE]
 >
-> ### **FIXED ERRORS**
+> ### **FIXED ERRORS - b14**
 >
 > `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`". *The error was a stupid inline comment, LOL.*
 > **And thanks to this fix, app was finally properly tested on mobile!**
 
 > [!WARNING]
 >
-> ### **KNOWN ERRORS - Latest**
+> ### **KNOWN ERRORS - b14**
 >
 > ***New errors***:
 >
