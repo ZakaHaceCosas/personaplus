@@ -12,15 +12,25 @@ interface BtnsProps {
     onclick: any;
     width?: string;
     height?: string | number;
+    style?: string;
 }
 
 // Creamos la funcion
-export default function Btn({ kind, text, onclick, width, height }: BtnsProps) {
+export default function Btn({
+    kind,
+    text,
+    onclick,
+    width,
+    height,
+    style,
+}: BtnsProps) {
     let strkclr: string; // StrokeColor / Color del borde
     let bkgrclr: string; // BackgroundColor / Color del fondo
     let textclr: string; // TextColor / Color del texto
-    let btnwdth: string; // ButtonWidth / Tamaño horizontal del botón
+    let btnwdth: string | number; // ButtonWidth / Tamaño horizontal del botón
     let btnhght: string | number; // ButtonHeight / Tamaño vertical del botón
+    let btnpdsm: number; // ButtonPaddingSmall / Relleno / espaciado interior vertical (pequeño) del botón
+    let btnpdbg: number; // ButtonPaddingBig / Relleno / espaciado interior horizontal (grande) del botón
 
     switch (kind) {
         case "ACE":
@@ -43,15 +53,6 @@ export default function Btn({ kind, text, onclick, width, height }: BtnsProps) {
             bkgrclr = "#806419";
             textclr = "#000000";
             break;
-        // if unknown, gray
-        /*default:
-            strkclr = "#999999";
-            bkgrclr = "#CCCCCC";
-            textclr = "#000000";
-            break;*/
-        // i think this will look better - if unknown, dark
-        // codenamed "INPUT" in VAR-DSGN
-        // note: using white instead of #949698 for text color since it's a button and should be legible
         default:
             strkclr = "#3E4146";
             bkgrclr = "#2A2D32";
@@ -86,15 +87,40 @@ export default function Btn({ kind, text, onclick, width, height }: BtnsProps) {
             break;
     }
 
+    switch (style) {
+        case "normal":
+            /*
+            btnpdsm = 14;
+            btnpdbg = 28;
+            */
+            btnpdsm = 0;
+            btnpdbg = 0;
+            break;
+        case "box":
+            btnpdsm = 0;
+            btnpdbg = 15;
+            btnwdth = 50;
+            btnhght = 50;
+            break;
+        default:
+            /*
+            btnpdsm = 14;
+            btnpdbg = 28;
+            */
+            btnpdsm = 0;
+            btnpdbg = 0;
+            break;
+    }
+
+    // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
     return (
-        // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
         <Native.Pressable
             onPress={onclick}
             style={{
-                paddingTop: 14,
-                paddingBottom: 14,
-                paddingLeft: 28,
-                paddingRight: 28,
+                paddingTop: btnpdsm as Native.DimensionValue,
+                paddingBottom: btnpdsm as Native.DimensionValue,
+                paddingLeft: btnpdbg as Native.DimensionValue,
+                paddingRight: btnpdbg as Native.DimensionValue,
                 borderRadius: 10,
                 borderColor: strkclr,
                 backgroundColor: bkgrclr,
@@ -108,7 +134,7 @@ export default function Btn({ kind, text, onclick, width, height }: BtnsProps) {
             }}
         >
             <BeText weight="Medium" size={14} color={textclr} align="center">
-                {String(text)} {/* convertir a string, por si acaso */}
+                {String(text)}
             </BeText>
         </Native.Pressable>
     );

@@ -47,7 +47,7 @@ export default function Prof() {
             const olduname: string | null = await AsyncStorage.getItem("uname");
             if (olduname !== uname) {
                 await AsyncStorage.setItem("uname", uname);
-                let log = `Changed your username to ${uname}`;
+                const log = `Changed your username to ${uname}`;
                 console.log(
                     "%cGOD%cAll is ok%c " + log,
                     "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
@@ -58,7 +58,7 @@ export default function Prof() {
                     Router.router.replace("/");
                 }, 25);
             } else {
-                let log = `Your username is already ${uname}! Can't change it to that`;
+                const log = `Your username is already ${uname}! Can't change it to that`;
                 console.log(
                     "%cWOR%cDev error%c " + log,
                     "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
@@ -67,7 +67,7 @@ export default function Prof() {
                 );
             }
         } catch (e) {
-            let log = "Could not handleUnameBtnClick() due to error: " + e;
+            const log = "Could not handleUnameBtnClick() due to error: " + e;
             console.log(
                 "%cWOR%cDev error%c " + log,
                 "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
@@ -77,8 +77,7 @@ export default function Prof() {
         }
     };
 
-    let currentpage: string;
-    currentpage = Router.usePathname();
+    const currentpage: string = Router.usePathname();
 
     React.useEffect(() => {
         const fetchUsername = async () => {
@@ -102,7 +101,8 @@ export default function Prof() {
                     );
                 }
             } catch (e) {
-                let log = "Could not fetch username (uname) due to error: " + e;
+                const log =
+                    "Could not fetch username (uname) due to error: " + e;
                 console.log(
                     "%cWOR%cDev error%c " + log,
                     "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
@@ -115,7 +115,7 @@ export default function Prof() {
         fetchUsername();
     }, []);
 
-    let sh =
+    const sh =
         "You can change your username whenever you want. Your current username is '" +
         username +
         "'";
@@ -148,12 +148,14 @@ export default function Prof() {
                                         {
                                             backgroundColor: "#2A2D32",
                                             borderRadius: 10,
-                                            padding: 15,
+                                            padding: 10,
+                                            paddingLeft: 20,
+                                            paddingRight: 20,
                                             borderWidth: 4,
                                             borderColor: "#3E4146",
                                             width: "100%",
                                             color: "white",
-                                            // @ts-ignore
+                                            // @ts-expect-error: For some reason appears as "non existing type", but it does work properly.
                                             outline: "none",
                                             fontFamily: "BeVietnamPro-Regular",
                                         },
