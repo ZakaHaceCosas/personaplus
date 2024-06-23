@@ -17,17 +17,18 @@ interface Option {
 interface BeSwapProps {
     id: string; // Para identificar cada BeSwap
     options: Option[]; // Opciones
-    value?: string | any; // Para establecer el valor programáticamente (tipo "any" porque puede ser una variable)
+    value?: string | number | null; // Para establecer el valor programáticamente
+    // (reemplazado tipo "any" con number y null para mas seguridad)
     order?: string;
     onValueChange?: (value: string) => void; // Para obtener el valor seleccionado
 }
 
 const styles = Native.StyleSheet.create({
     optionButton: {
-        paddingTop: 14,
-        paddingBottom: 14,
-        paddingLeft: 28,
-        paddingRight: 28,
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingRight: 15,
+        paddingLeft: 15,
         borderRadius: 10,
         borderWidth: 4,
         borderColor: "#3E4146",
@@ -51,17 +52,17 @@ export default function BeSwap({
     order,
     onValueChange,
 }: BeSwapProps) {
-    const defaultOption = options.find((option) => option.default);
+    const defaultOption = options.find(option => option.default);
     const [selectedOption, setSelectedOption] = React.useState<Option | null>(
         value
-            ? options.find((option) => option.value === value) || null
+            ? options.find(option => option.value === value) || null
             : defaultOption || null
     );
 
     React.useEffect(() => {
         if (value) {
             const newSelectedOption = options.find(
-                (option) => option.value === value
+                option => option.value === value
             );
             if (newSelectedOption) {
                 setSelectedOption(newSelectedOption);
@@ -98,30 +99,42 @@ export default function BeSwap({
         >
             {options.map((option, index) => (
                 <Native.View
+                    key={`${id}-${index}`}
                     style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
                         width:
                             orderString === "row"
                                 ? ("calc(50% + 2.5px)" as Native.DimensionValue)
                                 : ("calc(100% + 2.5px)" as Native.DimensionValue),
                     }}
-                    key={`${id}-${index}`}
                 >
-                    <Native.Pressable
-                        style={[
-                            styles.optionButton,
-                            selectedOption === option && styles.selectedButton,
-                        ]}
-                        onPress={() => handleOptionPress(option)}
+                    <Native.View
+                        style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                        }}
                     >
-                        <BeText size={14} align="center" weight="Bold">
-                            {option.label}
-                        </BeText>
-                    </Native.Pressable>
-                    {orderString === "row" && (
-                        <GapView key={`${id}-${index}-gap`} width={10} />
-                    )}
+                        <Native.Pressable
+                            style={[
+                                styles.optionButton,
+                                selectedOption === option &&
+                                    styles.selectedButton,
+                            ]}
+                            onPress={() => handleOptionPress(option)}
+                        >
+                            <BeText
+                                size={15}
+                                align={
+                                    orderString === "row" ? "center" : "normal"
+                                }
+                                weight="SemiBold"
+                            >
+                                {option.label}
+                            </BeText>
+                        </Native.Pressable>
+                        {orderString === "row" && (
+                            <GapView key={`${id}-${index}-gap`} width={10} />
+                        )}
+                    </Native.View>
                     {orderString === "column" && (
                         <GapView key={`${id}-${index}-gap`} height={10} />
                     )}

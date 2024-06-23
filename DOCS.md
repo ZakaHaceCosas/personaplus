@@ -8,7 +8,7 @@ DOCUMENTACIÓN DE LA BASE DE CÓDIGO
 
 ## 0. ¿Qué es PersonaPlus?
 
-> (Este punto es orientativo y no dirijido al código como tal, se puede omitir)
+> (Este punto es orientativo y no dirijido al código como tal, se puede [omitir](#1-el-stack-tecnológico))
 
 PersonaPlus es una aplicación de salud y bienestar digital, desarrollada en React Native y Expo.
 
@@ -28,7 +28,21 @@ Con estas ideas apuntamos a crear una aplicación estrella, gratuita y de códig
 
 ## 1. El *stack* tecnológico
 
-La aplicación está desarrollada con **React Native 0.73.6**, **Expo SDK 50.0.19**, y programada en TypeScript.
+La aplicación está desarrollada con **React Native 0.74.2**, **Expo SDK 51.0.14**, y programada en TypeScript.
+
+<div align="center">
+
+[![reactnative](https://img.shields.io/badge/React-Native-57c4dc?style=for-the-badge&logo=react&logoColor=black&labelColor=white)](https://reactnative.dev)
+[![expo](https://img.shields.io/badge/Expo-000?style=for-the-badge&logo=expo&logoColor=black&labelColor=white)](https://expo.dev)
+[![ts](https://img.shields.io/badge/TypeScript-2d79c7?style=for-the-badge&logo=typescript&logoColor=2d79c7&labelColor=white)](https://www.npmjs.com/package/typescript)
+</div>
+<div align="center">
+
+[![git](https://img.shields.io/badge/Git-fb4f28?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/downloads)
+[![node](https://img.shields.io/badge/NodeJS-417e38?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/en/download/package-manager)
+[![expocli](https://img.shields.io/badge/NPM-Expo_CLI-black?style=for-the-badge&labelColor=cb0000&logo=npm)](https://www.npmjs.com/package/@expo/cli)
+[![expotools](https://img.shields.io/badge/VSCode-Expo_Tools-black?style=for-the-badge&labelColor=0066b8&logo=visualstudiocode)](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools)
+</div>
 
 ## 2. Programando PersonaPlus
 
@@ -36,8 +50,7 @@ Estas son las indicaciones básicas para programar, desde nombres de variables h
 
 ### > TRABAJANDO CON EL PROYECTO
 
-Necesitarás instalar (obviamente) `Git` y `Node.js` en tu sistema, y de ahí, instalar `Expo CLI`, con el cual interactuarás vía `npx expo <comando>`. Probablemente trabajas desde VSCode, así que recomendamos también la [extensión oficial](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools).
-
+Necesitarás instalar (obviamente) `Git` y `Node.js` en tu sistema, y de ahí, instalar `Expo CLI`, con el cual interactuarás vía `npx expo <comando>`. Probablemente trabajas desde VSCode, así que recomendamos también la [extensión oficial de Expo Tools](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools).
 La mayor parte del tiempo solo usarás `npx expo start` (para iniciar el proyecto (debes estar en la raíz)), a veces con el arg. `--clear` (para limpiar la caché), y `npx expo install <opcionalmente-un-paquete>` para instalar paquetes de Expo. `npx expo install` y `npm install` instalarán todas las dependencias nada más hayas clonado el repositorio. `npx expo install --check` y `--fix` pueden arreglar dependencias rotas.
 
 ### > LAS "PRE-VARIABLES"

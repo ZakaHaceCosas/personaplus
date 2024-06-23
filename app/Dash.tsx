@@ -22,21 +22,22 @@ interface Objective {
     rests: number;
     restDuration: number;
     id: number;
+    wasDone: boolean;
 }
 
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
-        paddingTop: 20,
         width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        height: "100vw" as Native.DimensionValue,
     },
     mainview: {
         padding: 20,
         display: "flex",
         flexDirection: "column",
         width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        height: "100vw" as Native.DimensionValue,
+        overflow: "scroll",
     },
 });
 
@@ -69,7 +70,7 @@ export default function Dash() {
                     );
                 }
             } catch (e) {
-                let log =
+                const log =
                     "Could not get objectives (OBJS) fetched due to error: " +
                     e;
                 console.log(
@@ -96,11 +97,11 @@ export default function Dash() {
         console.log(id);
     };
 
-    let currentpage: string;
-    currentpage = Router.usePathname();
+    const currentpage: string = Router.usePathname();
 
     return (
         <Native.View style={styles.containerview}>
+            <Foot page={currentpage}></Foot>
             <Native.ScrollView style={styles.mainview}>
                 <BeText align="normal" weight="Bold" size={40}>
                     Dashboard
@@ -111,10 +112,10 @@ export default function Dash() {
                 <GapView height={20} />
                 <Section kind="OBJS">
                     {objs && Object.keys(objs).length > 0 ? (
-                        Object.keys(objs).map((key) => {
+                        Object.keys(objs).map(key => {
                             const obj = objs[key];
                             if (!obj) {
-                                let log = `Data is undefined for objective with key: ${key}`;
+                                const log = `Data is undefined for objective with key: ${key}`;
                                 console.log(
                                     "%cWOR%cDev error%c " + log,
                                     "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
@@ -124,7 +125,7 @@ export default function Dash() {
                                 return null;
                             }
 
-                            let desc: string =
+                            const desc: string =
                                 "Rests: " +
                                 String(obj.rests) +
                                 ", Repeats: " +
@@ -171,7 +172,7 @@ export default function Dash() {
                                 color="#FFF"
                                 weight="Bold"
                             >
-                                You don't have any objective. Create one now!
+                                You dont have any objective. Create one now!
                             </BeText>
                             <GapView height={15} />
                             <Btn
@@ -199,7 +200,6 @@ export default function Dash() {
                 </Section>
                 <Nomore />
             </Native.ScrollView>
-            <Foot page={currentpage}></Foot>
         </Native.View>
     );
 }

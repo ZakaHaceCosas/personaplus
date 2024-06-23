@@ -9,9 +9,9 @@ import GapView from "@/components/GapView";
 // TypeScript, supongo
 interface NotiProps {
     kind: string; // Tipo (color)
-    title: any; // Título de la notificación
-    text: any; // Texto de la misma
-    stext?: any; // De haberlo, subtexto de la misma
+    title: string; // Título de la notificación
+    text: string; // Texto de la misma
+    stext?: string; // De haberlo, subtexto de la misma
     post?: string; // Posicionamiento
 }
 
@@ -26,7 +26,6 @@ export default function Noti({
     let strokeColor: string; // StrokeColor / Color del borde
     let backgroundColor: string; // BackgroundColor / Color del fondo
     let textColor: string; // TextColor / Color del texto
-    let notiPosition: string; // NotiPosition / Posicionamiento CSS
 
     switch (kind) {
         case "ACE":
@@ -59,7 +58,7 @@ export default function Noti({
     // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
     return (
         <Native.View
-            // @ts-ignore
+            // @ts-expect-error: "Unnasignable types"
             style={{
                 padding: 15,
                 borderRadius: 10,

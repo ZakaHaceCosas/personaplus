@@ -8,6 +8,7 @@ import BeSwap from "@/components/Swap";
 import Btn from "@/components/Btns";
 import GapView from "@/components/GapView";
 import BeText from "@/components/Text";
+import { Picker as Select } from "@react-native-picker/picker";
 
 // Definimos los estilos
 const styles = Native.StyleSheet.create({
@@ -25,6 +26,15 @@ const styles = Native.StyleSheet.create({
         flexDirection: "row",
         gap: 15,
         width: "calc(100% - 5px)" as Native.DimensionValue,
+    },
+    picker: {
+        padding: 12,
+        width: "100%",
+        backgroundColor: "#2A2D32",
+        borderColor: "#3E4146",
+        borderWidth: 2,
+        borderRadius: 10,
+        color: "#FFF",
     },
 });
 
@@ -59,8 +69,47 @@ export default function WelcomePage() {
         setFocuspointValue(value);
     };
     const focuspointoptions = [
-        { value: "male", label: "Male", default: true },
-        { value: "female", label: "Female", default: false },
+        {
+            value: "exercising",
+            label: "My focus is exercising, I need to start moving my body ASAP!",
+            default: true,
+        },
+        {
+            value: "eating",
+            label: "My focus is my diet, I know I need to take control over what I eat.",
+            default: false,
+        },
+        {
+            value: "wellbeing",
+            label: "My focus is my digital welfare & mental health. That addiction to my phone has to stop, somehow.",
+            default: false,
+        },
+        // both options here equal no priority
+        // then why create two options?
+        // if user says he doesnt know, no focus will be used and he'll see the assistant feature (when it gets developed lol)
+        // if user says he has everything as a priority, no focus will be used and he'll be free to do whatever by himself
+        {
+            value: "noprior",
+            label: "Everything is a top priority for me!",
+            default: false,
+        },
+        {
+            value: "nopriorwithassist",
+            label: "Don't know / Can't decide on one",
+            default: false,
+        },
+    ];
+    const [sleep, setSleep] = React.useState("");
+    const sleeps = [
+        "3 hours or less",
+        "4 hours",
+        "5 hours",
+        "6 hours",
+        "7 hours",
+        "8 hours",
+        "9 hours",
+        "10 hours",
+        "More than 10 hours",
     ];
     const focusNextField = (index: number): void => {
         if (inputRefs.current[index + 1]) {
@@ -69,15 +118,15 @@ export default function WelcomePage() {
     };
 
     const gonext = () => {
-        if (currentTab > 0 && currentTab < 3) {
+        if (currentTab > 0 && currentTab < 4) {
             // Update number whenever you add a new tab.
-            setTab((prevPage) => prevPage + 1);
+            setTab(prevPage => prevPage + 1);
         } else {
             Router.router.replace("/");
         }
     };
     const goback = () => {
-        setTab((prevPage) => prevPage - 1);
+        setTab(prevPage => prevPage - 1);
     };
 
     const learnMore = async () => {
@@ -93,7 +142,7 @@ export default function WelcomePage() {
     };
 
     const handleChange = (name: string, value: string) => {
-        setFormData((prevData) => ({
+        setFormData(prevData => ({
             ...prevData,
             [name]: value,
         }));
@@ -117,7 +166,7 @@ export default function WelcomePage() {
                     </BeText>
                     <GapView height={10} />
                     <BeText align="normal" weight="Regular" size={20}>
-                        We're proud to see you want to give yourself a plus.
+                        Were proud to see you want to give yourself a plus.
                     </BeText>
                     <GapView height={20} />
                     <Native.View style={styles.flexbtns}>
@@ -168,7 +217,7 @@ export default function WelcomePage() {
                                 borderColor: "#3E4146",
                                 width: "100%",
                                 color: "white",
-                                // @ts-ignore
+                                // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                                 outline: "none",
                                 fontFamily: "BeVietnamPro-Regular",
                             },
@@ -181,9 +230,9 @@ export default function WelcomePage() {
                         textContentType="username"
                         key="usernameinput"
                         enterKeyHint="next"
-                        onChangeText={(text) => handleChange("username", text)}
+                        onChangeText={text => handleChange("username", text)}
                         onSubmitEditing={() => focusNextField(0)}
-                        ref={(ref) => ref && (inputRefs.current[0] = ref)}
+                        ref={ref => ref && (inputRefs.current[0] = ref)}
                     />
                     <GapView height={15} />
                     <Native.TextInput
@@ -200,7 +249,7 @@ export default function WelcomePage() {
                                 borderColor: "#3E4146",
                                 width: "100%",
                                 color: "white",
-                                // @ts-ignore
+                                // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                                 outline: "none",
                                 fontFamily: "BeVietnamPro-Regular",
                             },
@@ -214,9 +263,9 @@ export default function WelcomePage() {
                         inputMode="numeric"
                         key="heightinput"
                         enterKeyHint="next"
-                        onChangeText={(text) => handleChange("height", text)}
+                        onChangeText={text => handleChange("height", text)}
                         onSubmitEditing={() => focusNextField(1)}
-                        ref={(ref) => ref && (inputRefs.current[1] = ref)}
+                        ref={ref => ref && (inputRefs.current[1] = ref)}
                     />
                     <GapView height={15} />
                     <Native.TextInput
@@ -233,7 +282,7 @@ export default function WelcomePage() {
                                 borderColor: "#3E4146",
                                 width: "100%",
                                 color: "white",
-                                // @ts-ignore
+                                // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                                 outline: "none",
                                 fontFamily: "BeVietnamPro-Regular",
                             },
@@ -247,9 +296,9 @@ export default function WelcomePage() {
                         inputMode="numeric"
                         key="weightinput"
                         enterKeyHint="next"
-                        onChangeText={(text) => handleChange("weight", text)}
+                        onChangeText={text => handleChange("weight", text)}
                         onSubmitEditing={() => focusNextField(2)}
-                        ref={(ref) => ref && (inputRefs.current[2] = ref)}
+                        ref={ref => ref && (inputRefs.current[2] = ref)}
                     />
                     <GapView height={15} />
                     <Native.TextInput
@@ -266,7 +315,7 @@ export default function WelcomePage() {
                                 borderColor: "#3E4146",
                                 width: "100%",
                                 color: "white",
-                                // @ts-ignore
+                                // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                                 outline: "none",
                                 fontFamily: "BeVietnamPro-Regular",
                             },
@@ -280,9 +329,9 @@ export default function WelcomePage() {
                         inputMode="numeric"
                         key="ageinput"
                         enterKeyHint="done"
-                        onChangeText={(text) => handleChange("age", text)}
+                        onChangeText={text => handleChange("age", text)}
                         onSubmitEditing={gonext}
-                        ref={(ref) => ref && (inputRefs.current[3] = ref)}
+                        ref={ref => ref && (inputRefs.current[3] = ref)}
                     />
                     <GapView height={15} />
                     {easteregg !== 1 && (
@@ -306,7 +355,7 @@ export default function WelcomePage() {
                     <GapView height={15} />
                     <Native.View style={styles.flexbtns}>
                         <Btn
-                            kind="UNKNOWN"
+                            kind="DEFAULT"
                             onclick={goback}
                             text="Go back"
                             width="fill"
@@ -320,9 +369,8 @@ export default function WelcomePage() {
                     </Native.View>
                 </React.Fragment>
             )}
+
             {currentTab === 3 && (
-                // TO DO !!!!!!!!!
-                // zaka no seas vago, trabaja XD
                 <React.Fragment>
                     <BeText align="normal" weight="Bold" size={40}>
                         What is your main objective?
@@ -353,7 +401,50 @@ export default function WelcomePage() {
                     <GapView height={15} />
                     <Native.View style={styles.flexbtns}>
                         <Btn
-                            kind="UNKNOWN"
+                            kind="DEFAULT"
+                            onclick={goback}
+                            text="Go back"
+                            width="fill"
+                        />
+                        <Btn
+                            kind="ACE"
+                            onclick={gonext}
+                            text="Continue"
+                            width="fill"
+                        />
+                    </Native.View>
+                </React.Fragment>
+            )}
+
+            {currentTab === 4 && (
+                <React.Fragment>
+                    <BeText align="normal" weight="Bold" size={40}>
+                        Tell us about your habits
+                    </BeText>
+                    <GapView height={10} />
+                    <BeText align="normal" weight="Regular" size={20}>
+                        Understanding your life will help us help you improve
+                        it.
+                    </BeText>
+                    <GapView height={20} />
+                    <Select
+                        selectedValue={sleep}
+                        onValueChange={itemValue => setSleep(itemValue)}
+                        style={styles.picker}
+                        mode="dropdown"
+                    >
+                        {sleeps.map(sleep => (
+                            <Select.Item
+                                key={sleep}
+                                label={sleep}
+                                value={sleep}
+                            />
+                        ))}
+                    </Select>
+                    <GapView height={15} />
+                    <Native.View style={styles.flexbtns}>
+                        <Btn
+                            kind="DEFAULT"
                             onclick={goback}
                             text="Go back"
                             width="fill"

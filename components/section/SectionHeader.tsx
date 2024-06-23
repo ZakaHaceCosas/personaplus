@@ -50,9 +50,21 @@ export default function SectionHeader({ icon, label }: SectionProps) {
 
     return (
         <Native.View style={styles.mainview}>
-            {i && (
-                // @ts-ignore
-                <Ionicons name={i} size={15} color="#DDDDDD" />
+            {/* Replaced name={i} with this longer but simpler code due to a type error */}
+            {i === "question-mark" && (
+                <Ionicons name="question-mark" size={15} color="#DDDDDD" />
+            )}
+            {i === "settings" && (
+                <Ionicons name="settings" size={15} color="#DDDDDD" />
+            )}
+            {i === "space-dashboard" && (
+                <Ionicons name="space-dashboard" size={15} color="#DDDDDD" />
+            )}
+            {i === "calendar-today" && (
+                <Ionicons name="calendar-today" size={15} color="#DDDDDD" />
+            )}
+            {i === "timer" && (
+                <Ionicons name="timer" size={15} color="#DDDDDD" />
             )}
             <GapView width={10} />
             <BeText align="normal" weight="Bold" size={12} color="#DDDDDD">

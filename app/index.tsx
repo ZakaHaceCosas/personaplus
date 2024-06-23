@@ -12,6 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Btn from "@/components/Btns";
 import GapView from "@/components/GapView";
 import Nomore from "@/components/Nomore";
+import { testLog } from "@/app/Dev";
 
 // TypeScript, supongo
 interface Objective {
@@ -28,16 +29,16 @@ interface Objective {
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
-        paddingTop: 20,
         width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        height: "100vw" as Native.DimensionValue,
     },
     mainview: {
         padding: 20,
         display: "flex",
         flexDirection: "column",
         width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        height: "100vw" as Native.DimensionValue,
+        overflow: "scroll",
     },
 });
 
@@ -53,6 +54,7 @@ export default function Home() {
         const fetchUsername = async () => {
             const uname: string | null = await AsyncStorage.getItem("uname");
             if (uname) {
+                testLog("Username fetched!", "log");
                 console.log(
                     "%cGOD%cAll is ok%c Username fetched!",
                     "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
@@ -61,6 +63,7 @@ export default function Home() {
                 );
                 setUname(uname);
             } else {
+                testLog("Username error!", "error");
                 console.log(
                     "%cWOR%cDev error%c Username error!",
                     "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
@@ -96,7 +99,7 @@ export default function Home() {
                     );
                 }
             } catch (e) {
-                let log =
+                const log =
                     "Could not get objectives (OBJS) fetched due to error: " +
                     e;
                 console.log(
@@ -111,8 +114,7 @@ export default function Home() {
         fetchObjectives();
     }, []);
 
-    let currentpage: string;
-    currentpage = Router.usePathname();
+    const currentpage: string = Router.usePathname();
 
     const createObj = (): void => {
         Router.router.navigate("Crea");
@@ -128,7 +130,7 @@ export default function Home() {
                 const storedObjs = await AsyncStorage.getItem("objs");
                 if (storedObjs) {
                     const parsedObjs = JSON.parse(storedObjs);
-                    const updatedObjs = parsedObjs.map((obj: any) => {
+                    const updatedObjs = parsedObjs.map((obj: Objective) => {
                         if (obj.id === id) {
                             return { ...obj, wasDone: true };
                         }
@@ -153,7 +155,7 @@ export default function Home() {
                     );
                 }
             } catch (e) {
-                let log =
+                const log =
                     "Could not get objectives (OBJS) fetched due to error: " +
                     e;
                 console.log(
@@ -166,7 +168,6 @@ export default function Home() {
         };
 
         updateObj(id);
-        Router.router.navigate("/");
     };
 
     const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean | null>(
@@ -185,7 +186,8 @@ export default function Home() {
                     setIsFirstLaunch(false);
                 }
             } catch (e) {
-                let log = "Got an error checking if app launched before: " + e;
+                const log =
+                    "Got an error checking if app launched before: " + e;
                 console.log(
                     "%cWOR%cDev error%c " + log,
                     "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
@@ -205,10 +207,11 @@ export default function Home() {
         Router.router.push("/Welc");
     }
 
-    const randomDoneAllMsg: number = Math.floor(Math.random() * 3) + 1;
+    const randomDoneAllMsg: number = Math.floor(Math.random() * 4) + 1;
 
     return (
         <Native.View style={styles.containerview}>
+            <Foot page={currentpage} />
             <Native.ScrollView style={styles.mainview}>
                 <BeText align="normal" weight="Bold" size={40}>
                     Hello, {username}!
@@ -219,7 +222,7 @@ export default function Home() {
                 <GapView height={20} />
                 <Section kind="OBJS">
                     {objs && Object.keys(objs).length > 0 ? (
-                        Object.keys(objs).every((key) => objs[key].wasDone) ? (
+                        Object.keys(objs).every(key => objs[key].wasDone) ? (
                             <Native.View
                                 style={{
                                     padding: 20,
@@ -236,7 +239,7 @@ export default function Home() {
                                     color="#FFF"
                                     weight="Bold"
                                 >
-                                    You've done everything!
+                                    You have done everything!
                                 </BeText>
                                 <GapView height={10} />
                                 {randomDoneAllMsg === 1 && (
@@ -246,7 +249,7 @@ export default function Home() {
                                         color="#FFF"
                                         weight="Regular"
                                     >
-                                        Feel proud of yourself, don't you?
+                                        Feel proud of yourself, dont you?
                                     </BeText>
                                 )}
                                 {randomDoneAllMsg === 2 && (
@@ -256,10 +259,8 @@ export default function Home() {
                                         color="#FFF"
                                         weight="Regular"
                                     >
-                                        That's right, you've completed ALL of
-                                        your objectives for today. "Giving
-                                        yourself a PLUS" seems to be worth it,
-                                        right?
+                                        That is right, you have completed ALL of
+                                        your objectives for today.
                                     </BeText>
                                 )}
                                 {randomDoneAllMsg === 3 && (
@@ -269,15 +270,24 @@ export default function Home() {
                                         color="#FFF"
                                         weight="Regular"
                                     >
-                                        You did all what you planned on
-                                        PersonaPlus for today. Now plan
-                                        something else and make this day even
-                                        more worth it!
+                                        Now plan something else and make this
+                                        day even more productive!
+                                    </BeText>
+                                )}
+                                {randomDoneAllMsg === 4 && (
+                                    <BeText
+                                        align="center"
+                                        size={15}
+                                        color="#FFF"
+                                        weight="Regular"
+                                    >
+                                        {'"'}Giving yourself a PLUS{'"'} seems
+                                        to be worth it, right?
                                     </BeText>
                                 )}
                             </Native.View>
                         ) : (
-                            Object.keys(objs).map((key) => {
+                            Object.keys(objs).map(key => {
                                 const obj = objs[key];
                                 if (!obj.wasDone) {
                                     return (
@@ -320,7 +330,7 @@ export default function Home() {
                                 color="#FFF"
                                 weight="Bold"
                             >
-                                You don't have any objective. Create one now!
+                                You do not have any objective. Create one now!
                             </BeText>
                             <GapView height={15} />
                             <Btn
@@ -334,7 +344,6 @@ export default function Home() {
                 </Section>
                 <Nomore />
             </Native.ScrollView>
-            <Foot page={currentpage} />
         </Native.View>
     );
 }
