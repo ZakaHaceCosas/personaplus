@@ -78,13 +78,15 @@ npm install
 npx expo install --fix
 ```
 
+(*Si no tienes Expo CLI, te ofrecerá instalarlo*)
+
 ### 5. Inicia la aplicación utilizando Expo CLI
 
 ```bash
 npx expo start
 ```
 
-Ya estás listo. Realiza tus cambios en el código. Asegúrate de seguir las [convenciones de codificación del proyecto (la documentación)](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md).
+¡Aparcado! En la interfaz, clica `w` para ver una demo rápida en tu navegador, o clica `a` para abrirla en un emulador Android (requiere Android Studio). Ya estás listo para programar. Realiza tus cambios en el código. Asegúrate de seguir las [convenciones de codificación del proyecto (la documentación)](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md).
 
 Prueba tus cambios para asegurarte de que no rompen nada. Para ello, puedes usar el servidor local (que ya has iniciado con `expo start`), o para pruebas más precisas de como se verá en dispositivos móviles, utiliza Expo Go.
 
