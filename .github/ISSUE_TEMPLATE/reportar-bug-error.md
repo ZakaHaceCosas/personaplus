@@ -12,6 +12,7 @@ Una explicación breve y concisa de lo que pasa.
 
 **Cómo reproducir**
 Pasos a seguir para encontrarse con el error
+
 1. Ve a '...'
 2. Clica en '....'
 3. Desliza hasta '....'
@@ -26,13 +27,15 @@ A poder ser, añade algún pantallazo / captura de pantalla, para ayudar a que e
 **¿Estabas probando en navegador web, Expo Go, o desde el APK?**
 
 **Escritorio (en caso de probar con navegador web) (por favor rellena la siguiente información):**
- - Navegador: [ej. Firefox]
- - Versión del navegador: [ej. 127.0.1]
+
+- Navegador: [ej. Firefox]
+- Versión del navegador: [ej. 127.0.1]
 
 **Dispositivo (en caso de probar con Expo Go o APK) (por favor rellena la siguiente información):**
- - Dispositivo: [ej. Samsung Galaxy S8]
- - Sistema operativo: [ej. Android 10 bajo One UI 4]
- - Versión de PersonaPlus: [ej. b15]
+
+- Dispositivo: [ej. Samsung Galaxy S8]
+- Sistema operativo: [ej. Android 10 bajo One UI 4]
+- Versión de PersonaPlus: [ej. 65]
 
 **Contexto extra (opcional)**
 Añade algún comentario más, más contexto, o algo más que quieras añadir.
