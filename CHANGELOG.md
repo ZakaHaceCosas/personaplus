@@ -15,13 +15,25 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - PD: Los logs serán en inglés, siempre.
 
+## 0.0.1-R5-b16
+
+- Made more changes to match the requirements of ESLint.
+- Made a lof of UI and design changes to improve the looks on mobile - *this lead to things looking bad on desktop -* ***it's not a problem, as the only target devices are phones.***
+- Made a peculiar change ;] - moved the bottom navigation bar to the top.
+- Added a "Dev" tab designed to help during testing, specially on mobile. Has shortcuts for things that can be done from desktop but not mobile, like clearing `OBJS`.
+- Created a function `testLog` designed specifically to make "console logs" for this tab, as sometimes regular `console.log` calls don't appear on the console's replica for the Dev tab.
+- Made some progress with the apps' content.
+- Made some improvements to types and other aspects of the codebase.
+- Updated `DOCS.md`, `README.md`, and `CONTRIBUTING.md` so that they look a bit more professional.
+- Other small changes and improvements.
+
 ## 0.0.1-R5-b15
 
 - Made several UI changes to improve the looks on end user mobile devices. There's still work to do, but good progress was made.
 - Made adjustments to the ESLINT config.
 - Other changes to the logic used to structure and render some components to ensure they look good.
 - Added a few extra comments to the code to explain some stuff better.
-- Made a few changes like replacing some `let` with `const` to match the requirements of Prettier and ESLint.
+- Made a few changes like replacing some `let` with `const` to match the requirements of ESLint.
 
 > [!NOTE]
 >

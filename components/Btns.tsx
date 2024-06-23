@@ -7,9 +7,9 @@ import BeText from "@/components/Text";
 
 // TypeScript, supongo
 interface BtnsProps {
-    kind: string;
+    kind: "ACE" | "GOD" | "WOR" | "DEFAULT" | "HMM";
     text: string;
-    onclick: any;
+    onclick: () => void;
     width?: string;
     height?: string | number;
     style?: string;
@@ -49,8 +49,9 @@ export default function Btn({
             textclr = "#FFFFFF";
             break;
         case "HMM":
-            strkclr = "#FFC832";
-            bkgrclr = "#806419";
+            // no se si tengo esquizofrenia, pero te juro que esto lo corregi antes
+            strkclr = "#806419";
+            bkgrclr = "#FFC832";
             textclr = "#000000";
             break;
         default:

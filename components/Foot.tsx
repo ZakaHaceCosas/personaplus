@@ -41,16 +41,40 @@ export default function Foot({ page }: SectionProps) {
                 justifyContent: "space-between",
                 paddingLeft: 30,
                 paddingRight: 30,
-                paddingTop: 20,
+                paddingTop: 40,
                 paddingBottom: 20,
-                position: "absolute",
-                height: 90,
                 zIndex: 99,
-                bottom: 0,
                 left: 0,
                 right: 0,
+                bottom: 0,
             }}
         >
+            <Router.Link href="/Dev" onPress={() => handlePageChange("/Dev")}>
+                <Native.View style={styles.touchme}>
+                    <Native.View>
+                        <Ionicons
+                            name="code"
+                            size={25}
+                            color={
+                                currentPage === "/Dev" ? "#3280FF" : "#8A8C8E"
+                            }
+                        />
+                    </Native.View>
+                    <GapView height={5} />
+                    <Native.View>
+                        <BeText
+                            align="normal"
+                            weight="Bold"
+                            size={12}
+                            color={
+                                currentPage === "/Dev" ? "#3280FF" : "#8A8C8E"
+                            }
+                        >
+                            Dev
+                        </BeText>
+                    </Native.View>
+                </Native.View>
+            </Router.Link>
             <Router.Link href="/" onPress={() => handlePageChange("/")}>
                 <Native.View style={styles.touchme}>
                     <Native.View>

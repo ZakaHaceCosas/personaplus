@@ -25,6 +25,17 @@ interface FormData {
     restDuration: number;
 }
 
+interface Objective {
+    exercise: string;
+    days: boolean[];
+    duration: number;
+    repetitions: number;
+    rests: number;
+    restDuration: number;
+    id: number;
+    wasDone: boolean;
+}
+
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
@@ -58,7 +69,7 @@ const styles = Native.StyleSheet.create({
 });
 
 export default function Form({ onSubmit }: FormProps) {
-    let biglblsz: number = 25;
+    const biglblsz: number = 25;
     const [exercise, setExercise] = React.useState("");
     const exercises = [
         "Push Up",
@@ -144,18 +155,18 @@ export default function Form({ onSubmit }: FormProps) {
             const newObj: object = formData;
             const storedObjs: string | null =
                 await AsyncStorage.getItem("objs");
-            let objs: object[] = [];
+            let objs: Objective[] = [];
 
             if (storedObjs !== null) {
                 const parsedObjs = JSON.parse(storedObjs);
                 if (Array.isArray(parsedObjs)) {
-                    objs = parsedObjs;
+                    objs = parsedObjs as Objective[];
                 }
             }
 
             const ids = objs
-                .filter((item: any) => !("id" in item))
-                .map((item: any) => item.id);
+                .filter((item: Objective) => !("id" in item))
+                .map((item: Objective) => item.id);
 
             const generateNewId = (): number => {
                 let newId = Math.floor(Math.random() * 1000) + 1;
@@ -183,7 +194,7 @@ export default function Form({ onSubmit }: FormProps) {
         <Native.View style={styles.containerview}>
             <Native.ScrollView style={styles.mainview}>
                 <BeText align="normal" weight="Bold" size={40}>
-                    Let's do it!
+                    Lets do it!
                 </BeText>
                 <BeText align="normal" weight="Regular" size={20}>
                     Create a new objective now!

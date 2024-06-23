@@ -16,16 +16,16 @@ import GapView from "@/components/GapView";
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
-        paddingTop: 20,
         width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        height: "100vw" as Native.DimensionValue,
     },
     mainview: {
         padding: 20,
         display: "flex",
         flexDirection: "column",
         width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        height: "100vw" as Native.DimensionValue,
+        overflow: "scroll",
     },
     flexyview: {
         display: "flex",
@@ -122,6 +122,7 @@ export default function Prof() {
 
     return (
         <Native.View style={styles.containerview}>
+            <Foot page={currentpage}></Foot>
             <Native.ScrollView>
                 <Native.View style={styles.mainview}>
                     <BeText align="normal" weight="Bold" size={40}>
@@ -155,7 +156,7 @@ export default function Prof() {
                                             borderColor: "#3E4146",
                                             width: "100%",
                                             color: "white",
-                                            // @ts-expect-error: For some reason appears as "non existing type", but it does work properly.
+                                            // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                                             outline: "none",
                                             fontFamily: "BeVietnamPro-Regular",
                                         },
@@ -183,7 +184,6 @@ export default function Prof() {
                     <Nomore />
                 </Native.View>
             </Native.ScrollView>
-            <Foot page={currentpage}></Foot>
         </Native.View>
     );
 }

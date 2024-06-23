@@ -18,6 +18,7 @@ interface Objective {
     rests: number;
     restDuration: number;
     id: number;
+    wasDone: boolean;
 }
 
 export default function Sess() {

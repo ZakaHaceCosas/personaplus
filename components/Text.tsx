@@ -10,7 +10,7 @@ interface BeTextProps {
     weight: string; // Intensidad de la tipografía (Regular, Bold, ExtraBold, Light, Regular, Medium), etc...
     // para itálica, añadir Italic (p ej. "BoldItalic") al weight.
     color?: string; // Color del texto - default: blanco (ya que el fondo es negro)
-    onTap?: any; // Si se proporciona, el texto actuará como un botón / enlace y hará algo
+    onTap?: () => void; // Si se proporciona, el texto actuará como un botón / enlace y hará algo
     align?: string; // Alineación del texto
     children: React.ReactNode; // Texto en sí, dentro del tag <BeText>
     url?: boolean; // Si es verdadero el texto se estilizará como un enlace externo - default: false
@@ -68,9 +68,9 @@ export default function BeText({
         fontSize: size,
         lineHeight: thelineheight,
         color: txtcolor,
-        // @ts-ignore
+        // @ts-expect-error: Type error
         textAlign: txtalgn,
-        // @ts-ignore
+        // @ts-expect-error: Type error
         textDecorationLine: txtdeco,
         textDecorationColor: txtcolor,
         textDecorationStyle: "solid",
