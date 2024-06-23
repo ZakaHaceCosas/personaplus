@@ -10,6 +10,7 @@
         "**/android": true
     },
     "editor.fontSize": 13,
+    "editor.fontVariations": true,
     "editor.wordWrap": "on",
     "editor.smoothScrolling": true,
     "editor.cursorSmoothCaretAnimation": "on",
@@ -60,5 +61,5 @@
             "other": "on"
         },
         "editor.formatOnSave": true
-    }
+    },
 }
