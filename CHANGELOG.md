@@ -40,15 +40,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 >
 > ### **KNOWN ERRORS - Latest**
 >
-> ***New errors***:
->
-> None.
->
-> ***Still not fixed from older dev versions***:
->
-> None.
->
-> No known errors at the moment!
+> **No known errors at the moment! 🎉**
 
 ## 0.0.1-R5-b16
 
