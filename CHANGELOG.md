@@ -23,7 +23,10 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - Fixed app not refreshing when marked an OBJ as done.
 - Improved some types.
 - Fixed some visual mistakes. *Particullary, for some reason using `vertical` `order` on `<BeSwap>` caused a really hard to explain visual bug on the Welcome ("`/Welc`") screen. It was "fixed" by changing the order prop to `horizontal`.*
-- Small changes and a few performance improvements.
+- Added React & PersonaPlus versions to the Dev interface.
+- Made Dev interface opt-in, via `useDevTools` item in AsyncStorage.
+  - You can opt-in (or opt-out) again via the Profile tab ("`/Prof`").
+- Other small changes and a few performance improvements.
 
 > [!NOTE]
 >
