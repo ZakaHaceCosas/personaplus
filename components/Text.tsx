@@ -7,11 +7,28 @@ import * as Native from "react-native";
 // TypeScript, supongo
 interface BeTextProps {
     size: number; // Tamaño de letra en px
-    weight: string; // Intensidad de la tipografía (Regular, Bold, ExtraBold, Light, Regular, Medium), etc...
-    // para itálica, añadir Italic (p ej. "BoldItalic") al weight.
+    weight:
+        | "Light"
+        | "LightItalic"
+        | "ExtraLight"
+        | "ExtraLightItalic"
+        | "Thin"
+        | "ThinItalic"
+        | "Regular"
+        | "Italic"
+        | "Medium"
+        | "MediumItalic"
+        | "SemiBold"
+        | "SemiBoldItalic"
+        | "Bold"
+        | "BoldItalic"
+        | "ExtraBold"
+        | "ExtraBoldItalic"
+        | "Black"
+        | "BlackItalic"; // Intensidad de la tipografía
     color?: string; // Color del texto - default: blanco (ya que el fondo es negro)
     onTap?: () => void; // Si se proporciona, el texto actuará como un botón / enlace y hará algo
-    align?: string; // Alineación del texto
+    align?: "center" | "normal" | "left" | "right"; // Alineación del texto
     children: React.ReactNode; // Texto en sí, dentro del tag <BeText>
     url?: boolean; // Si es verdadero el texto se estilizará como un enlace externo - default: false
 }

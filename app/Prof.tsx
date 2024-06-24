@@ -147,6 +147,13 @@ export default function Prof() {
         checkForDev();
     }, []);
 
+    const [isUnamechangeVisible, setIsUnamechangeVisible] =
+        React.useState<boolean>(false);
+
+    const toggleUnamechangeVisibility = () => {
+        setIsUnamechangeVisible(!isUnamechangeVisible);
+    };
+
     return (
         <Native.View style={styles.containerview}>
             <Foot page={currentpage}></Foot>
@@ -156,58 +163,102 @@ export default function Prof() {
                         Profile
                     </BeText>
                     <BeText align="normal" weight="Regular" size={20}>
-                        Nice to meet you!
+                        Nice to meet you, {username}!
                     </BeText>
                     <GapView height={20} />
-                    <Section kind="SETS">
-                        <Division
-                            status="REGULAR"
-                            iconName={null}
-                            preheader="PROFILE"
-                            header="Set your username"
-                            subheader={sh}
-                        >
+                    <Section kind="PROF">
+                        <Division header={username}>
                             <Native.View style={styles.flexyview}>
-                                <Native.TextInput
-                                    placeholder="Enter a new username"
-                                    readOnly={false}
-                                    placeholderTextColor="#949698"
-                                    style={[
-                                        {
-                                            backgroundColor: "#2A2D32",
-                                            borderRadius: 10,
-                                            padding: 10,
-                                            paddingLeft: 20,
-                                            paddingRight: 20,
-                                            borderWidth: 4,
-                                            borderColor: "#3E4146",
-                                            width: "100%",
-                                            color: "white",
-                                            // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
-                                            outline: "none",
-                                            fontFamily: "BeVietnamPro-Regular",
-                                        },
-                                    ]}
-                                    autoCorrect={false}
-                                    multiline={false}
-                                    maxLength={40}
-                                    textAlign="left"
-                                    fontFamily="BeVietnamPro-Regular"
-                                    textContentType="none"
-                                    inputMode="text"
-                                    key="ageinput"
-                                    enterKeyHint="done"
-                                    onChangeText={handleUnameTxtChange}
-                                />
+                                <BeText
+                                    align="normal"
+                                    color="#FFF"
+                                    weight="Regular"
+                                    size={15}
+                                >
+                                    Soon you will see here all your data.
+                                    {/* Gender: {gender} */}
+                                </BeText>
                                 <GapView height={10} />
-                                <Btn
-                                    kind="ACE"
-                                    onclick={handleUnameBtnClick}
-                                    text="Save username"
-                                />
+                                {!isUnamechangeVisible && (
+                                    <Btn
+                                        kind="ACE"
+                                        onclick={toggleUnamechangeVisibility}
+                                        text="Change my username"
+                                    />
+                                )}
                             </Native.View>
                         </Division>
                     </Section>
+                    <GapView height={20} />
+                    {isUnamechangeVisible && (
+                        <Section kind="SETS">
+                            <Division
+                                status="REGULAR"
+                                iconName={null}
+                                preheader="PROFILE"
+                                header="Set your username"
+                                subheader={sh}
+                            >
+                                <Native.View style={styles.flexyview}>
+                                    <Native.TextInput
+                                        placeholder="Enter a new username"
+                                        readOnly={false}
+                                        placeholderTextColor="#949698"
+                                        style={[
+                                            {
+                                                backgroundColor: "#2A2D32",
+                                                borderRadius: 10,
+                                                padding: 10,
+                                                paddingLeft: 20,
+                                                paddingRight: 20,
+                                                borderWidth: 4,
+                                                borderColor: "#3E4146",
+                                                width: "100%",
+                                                color: "white",
+                                                // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
+                                                outline: "none",
+                                                fontFamily:
+                                                    "BeVietnamPro-Regular",
+                                            },
+                                        ]}
+                                        autoCorrect={false}
+                                        multiline={false}
+                                        maxLength={40}
+                                        textAlign="left"
+                                        fontFamily="BeVietnamPro-Regular"
+                                        textContentType="none"
+                                        inputMode="text"
+                                        key="ageinput"
+                                        enterKeyHint="done"
+                                        onChangeText={handleUnameTxtChange}
+                                    />
+                                    <GapView height={10} />
+                                    <Native.View
+                                        style={{
+                                            display: "flex",
+                                            flex: 1,
+                                            flexDirection: "row",
+                                        }}
+                                    >
+                                        <Btn
+                                            kind="ACE"
+                                            onclick={handleUnameBtnClick}
+                                            text="Save username"
+                                            width="fill"
+                                        />
+                                        <GapView width={10} />
+                                        <Btn
+                                            kind="DEFAULT"
+                                            onclick={
+                                                toggleUnamechangeVisibility
+                                            }
+                                            text="Cancel"
+                                        />
+                                    </Native.View>
+                                </Native.View>
+                            </Division>
+                        </Section>
+                    )}
                     <GapView height={20} />
                     <Section kind="DEV">
                         <Division
