@@ -9,6 +9,8 @@ import BeText from "@/components/Text";
 import GapView from "@/components/GapView";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Btn from "@/components/Btns";
+import { version as ReactVersion } from "react";
+import { version as PersonaPlusVersion } from "@/package.json";
 
 // TypeScript, supongo
 interface Objective {
@@ -242,6 +244,18 @@ export default function ConsoleLogger() {
                     text="Clear all"
                     kind="WOR"
                 />
+                <GapView height={20} />
+                <BeText align="normal" weight="Bold" size={20}>
+                    Versions
+                </BeText>
+                <GapView height={5} />
+                <BeText align="normal" weight="Regular" size={15}>
+                    React: {ReactVersion}
+                </BeText>
+                <GapView height={5} />
+                <BeText align="normal" weight="Regular" size={15}>
+                    PersonaPlus: {PersonaPlusVersion}
+                </BeText>
                 <GapView height={20} />
                 <BeText align="normal" weight="Bold" size={20}>
                     OBJS

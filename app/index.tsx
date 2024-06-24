@@ -182,6 +182,7 @@ export default function Home() {
                 const value = await AsyncStorage.getItem("hasLaunched");
                 if (value === null || !value) {
                     await AsyncStorage.setItem("hasLaunched", "true");
+                    await AsyncStorage.setItem("useDevTools", "false"); // primera vez, lo guarda
                     setIsFirstLaunch(true);
                 } else {
                     setIsFirstLaunch(false);

@@ -44,6 +44,9 @@ export default function SectionHeader({ icon, label }: SectionProps) {
         case "SETS":
             i = "settings";
             break;
+        case "DEV":
+            i = "dev";
+            break;
         default:
             i = "question-mark";
             break;
@@ -67,6 +70,7 @@ export default function SectionHeader({ icon, label }: SectionProps) {
             {i === "timer" && (
                 <Ionicons name="timer" size={15} color="#DDDDDD" />
             )}
+            {i === "dev" && <Ionicons name="code" size={15} color="#DDDDDD" />}
             <GapView width={10} />
             <BeText align="normal" weight="Bold" size={12} color="#DDDDDD">
                 {label}
