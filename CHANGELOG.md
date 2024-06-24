@@ -35,7 +35,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 >
 > `b11:` For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. **This was fixed by adding a placeholder invalid option, forcing the user to choose an option so `setExercise` gets called.**
 > `b15`: For some reason, the `objs`' name is not being displayed on mobile devices on Expo Go. **Fixing the error above also fixed this.**
-
+---
 > [!NOTE]
 >
 > ### **KNOWN ERRORS - Latest**
@@ -75,7 +75,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 > ### **FIXED ERRORS - b15**
 >
 > None
-
+---
 > [!WARNING]
 >
 > ### **KNOWN ERRORS - b15**
@@ -109,7 +109,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 >
 > `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`". *The error was a stupid inline comment, LOL.*
 > **And thanks to this fix, app was finally properly tested on mobile!**
-
+---
 > [!WARNING]
 >
 > ### **KNOWN ERRORS - b14**

@@ -36,13 +36,6 @@ La aplicación está desarrollada con **React Native 0.74.2**, **Expo SDK 51.0.1
 [![expo](https://img.shields.io/badge/Expo-000?style=for-the-badge&logo=expo&logoColor=black&labelColor=white)](https://expo.dev)
 [![ts](https://img.shields.io/badge/TypeScript-2d79c7?style=for-the-badge&logo=typescript&logoColor=2d79c7&labelColor=white)](https://www.npmjs.com/package/typescript)
 </div>
-<div align="center">
-
-[![git](https://img.shields.io/badge/Git-fb4f28?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/downloads)
-[![node](https://img.shields.io/badge/NodeJS-417e38?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/en/download/package-manager)
-[![expocli](https://img.shields.io/badge/NPM-Expo_CLI-black?style=for-the-badge&labelColor=cb0000&logo=npm)](https://www.npmjs.com/package/@expo/cli)
-[![expotools](https://img.shields.io/badge/VSCode-Expo_Tools-black?style=for-the-badge&labelColor=0066b8&logo=visualstudiocode)](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools)
-</div>
 
 ## 2. Programando PersonaPlus
 
@@ -51,7 +44,26 @@ Estas son las indicaciones básicas para programar, desde nombres de variables h
 ### > TRABAJANDO CON EL PROYECTO
 
 Necesitarás instalar (obviamente) `Git` y `Node.js` en tu sistema, y de ahí, instalar `Expo CLI`, con el cual interactuarás vía `npx expo <comando>`. Probablemente trabajas desde VSCode, así que recomendamos también la [extensión oficial de Expo Tools](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools).
+<div align="center">
+
+[![git](https://img.shields.io/badge/Git-fb4f28?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/downloads)
+[![node](https://img.shields.io/badge/NodeJS-417e38?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/en/download/package-manager)
+[![expocli](https://img.shields.io/badge/NPM-Expo_CLI-black?style=for-the-badge&labelColor=cb0000&logo=npm)](https://www.npmjs.com/package/@expo/cli)
+[![expotools](https://img.shields.io/badge/VSCode-Expo_Tools-black?style=for-the-badge&labelColor=0066b8&logo=visualstudiocode)](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools)
+</div>
+
 La mayor parte del tiempo solo usarás `npx expo start` (para iniciar el proyecto (debes estar en la raíz)), a veces con el arg. `--clear` (para limpiar la caché), y `npx expo install <opcionalmente-un-paquete>` para instalar paquetes de Expo. `npx expo install` y `npm install` instalarán todas las dependencias nada más hayas clonado el repositorio. `npx expo install --check` y `--fix` pueden arreglar dependencias rotas.
+
+> [!TIP]
+> Es ***muy*** recomendable que instales en tu teléfono **Expo Go** y lo utilices para probar la app. Ofrece una vista previa más realista de como se verá la app en Android. De hecho, si pruebas en PC verás errores visuales que en el móvil no se ven, derivados precisamente del hecho de que el código está optimizado pensado sólo en Android.
+---
+
+[![Runs with Expo Go](https://img.shields.io/badge/Runs_with_Expo_Go-SDK_51-000.svg?style=for-the-badge&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.dev/client)
+
+---
+>
+> [!NOTE]
+> Aún así no dejes el PC de lado, te será útil probar ahí, sobre todo si necesitas ver algún log de consola. Aunque existe *Dev interface* dentro de la app, no captura bien todo lo que va a la consola.
 
 ### > LAS "PRE-VARIABLES"
 
