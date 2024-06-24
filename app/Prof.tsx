@@ -12,6 +12,7 @@ import Btn from "@/components/Btns";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Nomore from "@/components/Nomore";
 import GapView from "@/components/GapView";
+import { testLog } from "./Dev";
 
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
@@ -154,6 +155,32 @@ export default function Prof() {
         setIsUnamechangeVisible(!isUnamechangeVisible);
     };
 
+    const enableDevInterface = async function () {
+        try {
+            await AsyncStorage.setItem("useDevTools", "true");
+            testLog("ENABLED DEV INTERFACE", "log");
+            Router.router.navigate("/");
+        } catch (e) {
+            const log = "ERROR ENABLING DEV INTERFACE: " + e;
+            testLog(log, "error");
+            console.error(log);
+            Router.router.navigate("/Dev"); // lol. if cant enable, at least go to page with logs to see the error.
+        }
+    };
+
+    const disableDevInterface = async function () {
+        try {
+            await AsyncStorage.setItem("useDevTools", "false");
+            testLog("DISABLED DEV INTERFACE", "log");
+            Router.router.navigate("/");
+        } catch (e) {
+            const log = "ERROR DISABLING DEV INTERFACE: " + e;
+            testLog(log, "error");
+            console.error(log);
+            Router.router.navigate("/Dev"); // lol. if cant disable, at least go to page with logs to see the error.
+        }
+    };
+
     return (
         <Native.View style={styles.containerview}>
             <Foot page={currentpage}></Foot>
@@ -279,16 +306,27 @@ export default function Prof() {
                                     for this user.
                                 </BeText>
                                 <GapView height={10} />
+                                <BeText
+                                    align="normal"
+                                    weight="Regular"
+                                    color="#FFC832"
+                                    size={15}
+                                >
+                                    {
+                                        "Note: If an error ocurred 'enabling' or 'disabling' it, you will actually be redirected there - this is because it's always enabled, but you don't have the button to access it to avoid messing up with you. If the button takes you to Dev Interface instead of Home, check the logs to see what happened, and if possible, open an issue on GitHub. Thanks!"
+                                    }
+                                </BeText>
+                                <GapView height={10} />
                                 {wantsDev === false ? (
                                     <Btn
                                         kind="HMM"
-                                        onclick={() => {}}
+                                        onclick={enableDevInterface}
                                         text="Enable Dev interface"
                                     />
                                 ) : (
                                     <Btn
                                         kind="HMM"
-                                        onclick={() => {}}
+                                        onclick={disableDevInterface}
                                         text="Disable Dev interface"
                                     />
                                 )}
