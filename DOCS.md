@@ -229,7 +229,7 @@ width: "100vw" as Native.DimensionValue // Perfecto.
 
 #### 6. MANTEN EL FORMATO
 
-Recuerda mantener un código uniforme, organizado, usando siempre puntos y coma, tabulación apropiada, entre otros. **Si usas Visual Studio Code, gracias a la configuración de `.vscode/settings.json`, cuando guardes un archivo se auto-formateará, así que esto es fácil :]**.
+Recuerda mantener un código uniforme, organizado, usando siempre puntos y coma, tabulación apropiada, entre otros. Además, asegurate de [evitar las entidades sin escapar (`eslint/no-unescaped-entities`)](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unescaped-entities.md#disallow-unescaped-html-entities-from-appearing-in-markup-reactno-unescaped-entities).**Si usas Visual Studio Code, gracias a la configuración de`.vscode/settings.json`, cuando guardes un archivo se auto-formateará, así que esto es fácil :]**.
 
 ## Versionado
 

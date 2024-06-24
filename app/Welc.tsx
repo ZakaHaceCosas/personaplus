@@ -26,7 +26,6 @@ const styles = Native.StyleSheet.create({
         justifyContent: "center",
         padding: 40,
         flex: 1,
-        backgroundColor: "#FF0000",
     },
     flexbtns: {
         display: "flex",
@@ -193,13 +192,12 @@ export default function WelcomePage() {
                 {currentTab === 2 && (
                     <React.Fragment>
                         <BeText align="normal" weight="Bold" size={40}>
-                            Tell us a bit about yourself
+                            Tell us about yourself
                         </BeText>
                         <GapView height={10} />
                         <BeText align="normal" weight="Regular" size={20}>
-                            We only ask for the data we do need for the app to
-                            function. No data is sent outside of this device,
-                            ever.{" "}
+                            We only ask for the data we need for the app to
+                            work. No data is sent outside of this device, ever.{" "}
                             <BeText
                                 url={true}
                                 align="normal"

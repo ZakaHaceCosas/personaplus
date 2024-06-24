@@ -95,8 +95,6 @@ export default function Dash() {
     };
 
     const deleteObj = async (id: number): Promise<void> => {
-        console.log(id);
-        console.log(objs);
         try {
             const jsonValue = await AsyncStorage.getItem("objs");
             if (jsonValue != null) {
@@ -116,6 +114,7 @@ export default function Dash() {
                     "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
                     "color: #30FF97;"
                 );
+                Router.router.replace("/");
             } else {
                 const log: string = `No OBJS found - no way to delete.`;
                 testLog(`No OBJS found - no way to delete.`, "warn");
@@ -136,7 +135,6 @@ export default function Dash() {
                 "color: #FFD700;"
             );
         }
-        Router.router.replace("/Dash");
     };
 
     const currentpage: string = Router.usePathname();
@@ -149,7 +147,7 @@ export default function Dash() {
                     Dashboard
                 </BeText>
                 <BeText align="normal" weight="Regular" size={20}>
-                    Lets set up your path to success
+                    Let&apos;s set up your path to success
                 </BeText>
                 <GapView height={20} />
                 <Section kind="OBJS">
@@ -214,7 +212,8 @@ export default function Dash() {
                                 color="#FFF"
                                 weight="Bold"
                             >
-                                You dont have any objective. Create one now!
+                                You don&apos;t have any objectives. Create one
+                                now!
                             </BeText>
                             <GapView height={15} />
                             <Btn
