@@ -13,7 +13,7 @@ interface DivisionProps {
     iconName?: string | null; // Si lo tiene, ¿Cuál es?
     preheader?: string; // Título
     header: string; // Texto grande
-    subheader: string; // El texto pequeño
+    subheader?: string; // El texto pequeño, de haberlo
     children: React.ReactNode; // Los hijos (botones, básicamente)
 }
 
@@ -68,15 +68,17 @@ export default function Division({
                         >
                             {header}
                         </BeText>
-                        <GapView height={10} />
-                        <BeText
-                            align="normal"
-                            weight="Regular"
-                            size={12}
-                            color="#C8C8C8"
-                        >
-                            {subheader}
-                        </BeText>
+                        {subheader && <GapView height={10} />}
+                        {subheader && (
+                            <BeText
+                                align="normal"
+                                weight="Regular"
+                                size={12}
+                                color="#C8C8C8"
+                            >
+                                {subheader}
+                            </BeText>
+                        )}
                         <GapView height={10} />
                         <Native.View
                             style={{
