@@ -1,8 +1,8 @@
 # PersonaPlus
 
-![DIAGRAMA](https://personaplus.vercel.app/PP_BANNER_DEV.png)
+![Banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER_DEV.png)
 
-## Dale un PLUS a tu Persona
+## Dale un PLUS a tu Persona <!-- dato curioso, este eslogan lo dejo a proposito, es el OG -->
 
 DOCUMENTACIÓN DE LA BASE DE CÓDIGO
 
