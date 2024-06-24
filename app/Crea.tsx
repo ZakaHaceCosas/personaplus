@@ -50,15 +50,6 @@ const styles = Native.StyleSheet.create({
         width: "100vw" as Native.DimensionValue,
         height: "100vh" as Native.DimensionValue,
     },
-    picker: {
-        padding: 12,
-        width: "100%",
-        backgroundColor: "#2A2D32",
-        borderColor: "#3E4146",
-        borderWidth: 2,
-        borderRadius: 10,
-        color: "#FFF",
-    },
     flexydays: {
         display: "flex",
         flexDirection: "row",
@@ -208,9 +199,22 @@ export default function Form({ onSubmit }: FormProps) {
                     <Select
                         selectedValue={exercise}
                         onValueChange={itemValue => setExercise(itemValue)}
-                        style={styles.picker}
+                        style={{
+                            padding: 12,
+                            width: "100%",
+                            backgroundColor: "#2A2D32",
+                            borderColor: "#3E4146",
+                            borderWidth: 2,
+                            borderRadius: 10,
+                            color: exercise ? "#FFF" : "#999",
+                        }}
                         mode="dropdown"
                     >
+                        <Select.Item
+                            label="Choose an option"
+                            value=""
+                            color="#999"
+                        />
                         {exercises.map(exercise => (
                             <Select.Item
                                 key={exercise}
@@ -312,7 +316,7 @@ export default function Form({ onSubmit }: FormProps) {
                             weight="Bold"
                             align="center"
                         >
-                            {duration} MINUTES
+                            {duration} {duration === 1 ? "MINUTE" : "MINUTES"}
                         </BeText>
                     </Native.View>
 
@@ -353,7 +357,8 @@ export default function Form({ onSubmit }: FormProps) {
                             weight="Bold"
                             align="center"
                         >
-                            {repetitions} REPETITIONS
+                            {repetitions}{" "}
+                            {repetitions === 1 ? "REPETITION" : "REPETITIONS"}
                         </BeText>
                     </Native.View>
                     <Btn
@@ -435,7 +440,8 @@ export default function Form({ onSubmit }: FormProps) {
                                 weight="Bold"
                                 align="center"
                             >
-                                {restDuration} MINUTES
+                                {restDuration}{" "}
+                                {restDuration === 1 ? "MINUTE" : "MINUTES"}
                             </BeText>
                         </Native.View>
                         <Btn
@@ -450,7 +456,7 @@ export default function Form({ onSubmit }: FormProps) {
                     style={{
                         flex: 1,
                         flexDirection: "column",
-                        marginTop: repetitions * duration < 300 ? 0 : 20,
+                        marginTop: repetitions * duration > 300 ? 20 : 0, // lo he cambiado para que sea lógico
                     }}
                 >
                     {repetitions * duration > 300 && (
@@ -472,11 +478,22 @@ export default function Form({ onSubmit }: FormProps) {
                             marginTop: 20,
                         }}
                     >
-                        <Btn
-                            kind="ACE"
-                            onclick={handleSubmit}
-                            text="Save it!"
-                        />
+                        {!(
+                            !exercise ||
+                            exercise.trim() === "" ||
+                            duration === 0
+                        ) && (
+                            <Btn
+                                kind="ACE"
+                                onclick={handleSubmit}
+                                text="Save it!"
+                            />
+                        )}
+                        {(!exercise ||
+                            exercise.trim() === "" ||
+                            duration === 0) && (
+                            <Btn kind="HMM" onclick={() => {}} text="..." />
+                        )}
                         <GapView width={20} />
                         <Btn kind="DEFAULT" onclick={getOut} text="Nevermind" />
                     </Native.View>

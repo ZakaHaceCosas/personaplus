@@ -20,6 +20,7 @@ const styles = Native.StyleSheet.create({
         flexDirection: "row",
         padding: 15,
         alignItems: "center",
+        justifyContent: "flex-start",
     },
     items: {
         color: "#DDDDDD",

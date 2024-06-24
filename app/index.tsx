@@ -146,6 +146,7 @@ export default function Home() {
                         "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
                         "color: #30FF97;"
                     );
+                    Router.router.replace("/");
                 } else {
                     console.log(
                         "%cWOR%cDev error%c Could not get objectives (OBJS) fetched!",

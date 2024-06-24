@@ -19,7 +19,7 @@ interface BeSwapProps {
     options: Option[]; // Opciones
     value?: string | number | null; // Para establecer el valor programáticamente
     // (reemplazado tipo "any" con number y null para mas seguridad)
-    order?: string;
+    order: "horizontal" | "vertical"; // Basicamente, flex row o flex column? Orden horizontal o vertical?
     onValueChange?: (value: string) => void; // Para obtener el valor seleccionado
 }
 

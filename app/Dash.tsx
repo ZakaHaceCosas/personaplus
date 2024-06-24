@@ -12,6 +12,7 @@ import GapView from "@/components/GapView";
 import Nomore from "@/components/Nomore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Btn from "@/components/Btns";
+import { testLog } from "./Dev";
 
 // TypeScript, supongo
 interface Objective {
@@ -95,6 +96,47 @@ export default function Dash() {
 
     const deleteObj = async (id: number): Promise<void> => {
         console.log(id);
+        console.log(objs);
+        try {
+            const jsonValue = await AsyncStorage.getItem("objs");
+            if (jsonValue != null) {
+                let objs: Objective[] = JSON.parse(jsonValue);
+
+                objs = objs.filter(entry => entry.id !== id);
+
+                await AsyncStorage.setItem("objs", JSON.stringify(objs));
+                const log: string = `OBJ (Objective) with ID ${id} has been removed.`;
+                testLog(
+                    `OBJ (Objective) with ID ${id} has been removed.`,
+                    "log"
+                );
+                console.log(
+                    "%cGOD%cAll is ok%c " + log,
+                    "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "color: #30FF97;"
+                );
+            } else {
+                const log: string = `No OBJS found - no way to delete.`;
+                testLog(`No OBJS found - no way to delete.`, "warn");
+                console.log(
+                    "%cHMM%cDev warning%c " + log,
+                    "font-weight: bold; background: #FFC832; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "color: #FFC832;"
+                );
+            }
+        } catch (e) {
+            const log: string = `Error removing OBJ, got the following: ${e}`;
+            testLog(`Error removing OBJ, got the following: ${e}`, "warn");
+            console.log(
+                "%cWOR%cDev error%c " + log,
+                "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                "color: #FFD700;"
+            );
+        }
+        Router.router.replace("/Dash");
     };
 
     const currentpage: string = Router.usePathname();

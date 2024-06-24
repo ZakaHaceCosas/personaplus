@@ -41,7 +41,7 @@ export default function Foot({ page }: SectionProps) {
                 justifyContent: "space-between",
                 paddingLeft: 30,
                 paddingRight: 30,
-                paddingTop: 40,
+                paddingTop: 45,
                 paddingBottom: 20,
                 zIndex: 99,
                 left: 0,

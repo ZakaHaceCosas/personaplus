@@ -15,6 +15,37 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - PD: Los logs serán en inglés, siempre.
 
+## 0.0.1-R5-b17
+
+- Fixed a few typos, like "1 MINUTES".
+- Fixed a bug where OBJS got saved without an exercise name. Also, while not a bug, this fix also fixed you being able to store an objective that lasted for 0 minutes (imposible to do).
+- Added a function to remove an OBJ from the Dashboard (`/Dash`).
+- Fixed app not refreshing when marked an OBJ as done.
+- Improved some types.
+- Fixed some visual mistakes. *Particullary, for some reason using `vertical` `order` on `<BeSwap>` caused a really hard to explain visual bug on the Welcome ("`/Welc`") screen. It was "fixed" by changing the order prop to `horizontal`.*
+- Small changes and a few performance improvements.
+
+> [!NOTE]
+>
+> ### **FIXED ERRORS - Latest**
+>
+> `b11:` For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. **This was fixed by adding a placeholder invalid option, forcing the user to choose an option so `setExercise` gets called.**
+> `b15`: For some reason, the `objs`' name is not being displayed on mobile devices on Expo Go. **Fixing the error above also fixed this.**
+
+> [!NOTE]
+>
+> ### **KNOWN ERRORS - Latest**
+>
+> ***New errors***:
+>
+> None.
+>
+> ***Still not fixed from older dev versions***:
+>
+> None.
+>
+> No known errors at the moment!
+
 ## 0.0.1-R5-b16
 
 - Made more changes to match the requirements of ESLint.
