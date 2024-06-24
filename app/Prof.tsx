@@ -120,6 +120,33 @@ export default function Prof() {
         username +
         "'";
 
+    const [wantsDev, setWantsDev] = React.useState<boolean | null>(null);
+
+    // Busca si quiere usar Dev interface
+    React.useEffect(() => {
+        const checkForDev = async () => {
+            try {
+                const useDev = await AsyncStorage.getItem("useDevTools");
+                if (useDev === "true") {
+                    setWantsDev(true);
+                } else {
+                    setWantsDev(false);
+                }
+            } catch (e) {
+                const log =
+                    "Got an error checking if the user wants to use Dev interface: " +
+                    e;
+                console.log(
+                    "%cWOR%cDev error%c " + log,
+                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "color: #FFD700;"
+                );
+            }
+        };
+        checkForDev();
+    }, []);
+
     return (
         <Native.View style={styles.containerview}>
             <Foot page={currentpage}></Foot>
@@ -178,6 +205,42 @@ export default function Prof() {
                                     onclick={handleUnameBtnClick}
                                     text="Save username"
                                 />
+                            </Native.View>
+                        </Division>
+                    </Section>
+                    <GapView height={20} />
+                    <Section kind="DEV">
+                        <Division
+                            status="REGULAR"
+                            iconName={null}
+                            preheader="DEV INTERFACE"
+                            header="Use Dev Interface?"
+                            subheader="Dev Interface is an extra tab in the top navigation that will take you to a menu with advanced info & options for developers. Very useful if you are testing this app for dev / contributing purposes."
+                        >
+                            <Native.View style={styles.flexyview}>
+                                <BeText
+                                    align="normal"
+                                    weight="Regular"
+                                    size={15}
+                                >
+                                    Dev interface is{" "}
+                                    {wantsDev === true ? "enabled" : "disabled"}{" "}
+                                    for this user.
+                                </BeText>
+                                <GapView height={10} />
+                                {wantsDev === false ? (
+                                    <Btn
+                                        kind="HMM"
+                                        onclick={() => {}}
+                                        text="Enable Dev interface"
+                                    />
+                                ) : (
+                                    <Btn
+                                        kind="HMM"
+                                        onclick={() => {}}
+                                        text="Disable Dev interface"
+                                    />
+                                )}
                             </Native.View>
                         </Division>
                     </Section>

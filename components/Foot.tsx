@@ -4,6 +4,7 @@ import * as Router from "expo-router";
 import BeText from "@/components/Text";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // TypeScript, supongo
 interface SectionProps {
@@ -23,11 +24,37 @@ const styles = Native.StyleSheet.create({
 // Creamos la función del componente
 export default function Foot({ page }: SectionProps) {
     const [currentPage, setCurrentPage] = React.useState<string>(page);
-
     // Define la función para manejar el cambio de página
     const handlePageChange = (newPage: string) => {
         setCurrentPage(newPage);
     };
+
+    const [wantsDev, setWantsDev] = React.useState<boolean | null>(null);
+
+    // Busca si quiere usar Dev interface
+    React.useEffect(() => {
+        const checkForDev = async () => {
+            try {
+                const useDev = await AsyncStorage.getItem("useDevTools");
+                if (useDev === "true") {
+                    setWantsDev(true);
+                } else {
+                    setWantsDev(false);
+                }
+            } catch (e) {
+                const log =
+                    "Got an error checking if the user wants to use Dev interface: " +
+                    e;
+                console.log(
+                    "%cWOR%cDev error%c " + log,
+                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
+                    "color: #FFD700;"
+                );
+            }
+        };
+        checkForDev();
+    }, []);
 
     return (
         // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
@@ -49,32 +76,41 @@ export default function Foot({ page }: SectionProps) {
                 bottom: 0,
             }}
         >
-            <Router.Link href="/Dev" onPress={() => handlePageChange("/Dev")}>
-                <Native.View style={styles.touchme}>
-                    <Native.View>
-                        <Ionicons
-                            name="code"
-                            size={25}
-                            color={
-                                currentPage === "/Dev" ? "#3280FF" : "#8A8C8E"
-                            }
-                        />
+            {wantsDev && (
+                <Router.Link
+                    href="/Dev"
+                    onPress={() => handlePageChange("/Dev")}
+                >
+                    <Native.View style={styles.touchme}>
+                        <Native.View>
+                            <Ionicons
+                                name="code"
+                                size={25}
+                                color={
+                                    currentPage === "/Dev"
+                                        ? "#3280FF"
+                                        : "#8A8C8E"
+                                }
+                            />
+                        </Native.View>
+                        <GapView height={5} />
+                        <Native.View>
+                            <BeText
+                                align="normal"
+                                weight="Bold"
+                                size={12}
+                                color={
+                                    currentPage === "/Dev"
+                                        ? "#3280FF"
+                                        : "#8A8C8E"
+                                }
+                            >
+                                Dev
+                            </BeText>
+                        </Native.View>
                     </Native.View>
-                    <GapView height={5} />
-                    <Native.View>
-                        <BeText
-                            align="normal"
-                            weight="Bold"
-                            size={12}
-                            color={
-                                currentPage === "/Dev" ? "#3280FF" : "#8A8C8E"
-                            }
-                        >
-                            Dev
-                        </BeText>
-                    </Native.View>
-                </Native.View>
-            </Router.Link>
+                </Router.Link>
+            )}
             <Router.Link href="/" onPress={() => handlePageChange("/")}>
                 <Native.View style={styles.touchme}>
                     <Native.View>
