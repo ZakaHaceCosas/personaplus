@@ -293,7 +293,7 @@ export default function Prof() {
                             iconName={null}
                             preheader="DEV INTERFACE"
                             header="Use Dev Interface?"
-                            subheader="Dev Interface is an extra tab in the top navigation that will take you to a menu with advanced info & options for developers. Very useful if you are testing this app for dev / contributing purposes."
+                            subheader="Dev Interface is an extra page: a menu with advanced info & options for developers. Very useful if you are testing this app for dev / contributing purposes."
                         >
                             <Native.View style={styles.flexyview}>
                                 <BeText
@@ -312,9 +312,16 @@ export default function Prof() {
                                     color="#FFC832"
                                     size={15}
                                 >
-                                    {
-                                        "Note: If an error ocurred 'enabling' or 'disabling' it, you will actually be redirected there - this is because it's always enabled, but you don't have the button to access it to avoid messing up with you. If the button takes you to Dev Interface instead of Home, check the logs to see what happened, and if possible, open an issue on GitHub. Thanks!"
-                                    }
+                                    Note: If an error ocurred
+                                    &quot;enabling&quot; or
+                                    &quot;disabling&quot; it, you will actually
+                                    be redirected there - this is because
+                                    it&apos;s always enabled, but you don&apos;t
+                                    have the button to access it to avoid
+                                    messing up with you. If the button takes you
+                                    to Dev Interface instead of Home, check the
+                                    logs to see what happened, and if possible,
+                                    open an issue on GitHub. Thanks!
                                 </BeText>
                                 <GapView height={10} />
                                 {wantsDev === false ? (

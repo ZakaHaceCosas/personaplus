@@ -211,6 +211,11 @@ export default function Home() {
 
     const randomDoneAllMsg: number = Math.floor(Math.random() * 4) + 1;
 
+    // Today's date (since React for some reasons thinks it's funny to start weeks on Sunday, this needs to be done)
+    const today = new Date().getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
+    // Adjust today index to match week start (Monday as 0)
+    const adjustedToday = today === 0 ? 6 : today - 1; // Adjust Sunday to index 6, otherwise shift back by one
+
     return (
         <Native.View style={styles.containerview}>
             <Foot page={currentpage} />
@@ -224,12 +229,16 @@ export default function Home() {
                 <GapView height={20} />
                 <Section kind="OBJS">
                     {objs && Object.keys(objs).length > 0 ? (
-                        Object.keys(objs).every(key => objs[key].wasDone) ? (
+                        Object.keys(objs).every(
+                            key =>
+                                objs[key].wasDone ||
+                                !objs[key].days ||
+                                !objs[key].days[adjustedToday]
+                        ) ? (
                             <Native.View
                                 style={{
                                     padding: 20,
                                     flex: 1,
-                                    display: "flex",
                                     flexDirection: "column",
                                     alignItems: "center",
                                     justifyContent: "center",
@@ -241,7 +250,7 @@ export default function Home() {
                                     color="#FFF"
                                     weight="Bold"
                                 >
-                                    You have done everything!
+                                    You&apos;ve done everything!
                                 </BeText>
                                 <GapView height={10} />
                                 {randomDoneAllMsg === 1 && (
@@ -251,7 +260,7 @@ export default function Home() {
                                         color="#FFF"
                                         weight="Regular"
                                     >
-                                        Feel proud of yourself, dont you?
+                                        Feel proud of yourself, don&apos;t you?
                                     </BeText>
                                 )}
                                 {randomDoneAllMsg === 2 && (
@@ -283,7 +292,7 @@ export default function Home() {
                                         color="#FFF"
                                         weight="Regular"
                                     >
-                                        {'"'}Giving yourself a PLUS{'"'} seems
+                                        &quot;Giving yourself a PLUS&quot; seems
                                         to be worth it, right?
                                     </BeText>
                                 )}
@@ -291,14 +300,21 @@ export default function Home() {
                         ) : (
                             Object.keys(objs).map(key => {
                                 const obj = objs[key];
-                                if (!obj.wasDone) {
+                                console.log(
+                                    `OBJ ${obj.id}, days[${adjustedToday}]: ${obj.days[adjustedToday]}`
+                                );
+
+                                if (
+                                    obj &&
+                                    !obj.wasDone &&
+                                    obj.days[adjustedToday]
+                                ) {
                                     return (
                                         <Division
                                             key={obj.id}
                                             status="REGULAR"
                                             preheader="ACTIVE OBJECTIVE"
                                             header={obj.exercise}
-                                            subheader=""
                                         >
                                             <Btn
                                                 kind="ACE"
@@ -313,6 +329,7 @@ export default function Home() {
                                         </Division>
                                     );
                                 }
+                                return null;
                             })
                         )
                     ) : (
@@ -320,7 +337,6 @@ export default function Home() {
                             style={{
                                 padding: 20,
                                 flex: 1,
-                                display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
                                 justifyContent: "center",
@@ -332,7 +348,8 @@ export default function Home() {
                                 color="#FFF"
                                 weight="Bold"
                             >
-                                You do not have any objective. Create one now!
+                                You don&apos;t have any objectives. Create one
+                                now!
                             </BeText>
                             <GapView height={15} />
                             <Btn

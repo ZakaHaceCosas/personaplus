@@ -15,6 +15,12 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - PD: Los logs serán en inglés, siempre.
 
+## 0.0.1-R5-b18
+
+- Fixed some typos.
+- Now, objectives won't be shown in your Home if you don't have to do them today.
+- A few other changes.
+
 ## 0.0.1-R5-b17
 
 - Fixed a few typos, like "1 MINUTES".
@@ -136,7 +142,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - Fixed the `key` prop not being used properly in `Dash.tsx`.
 - Fixed the "Create active objective" button being spammed on the UI when there *are* created objectives.
-- Added a new First launch check on the `index.tsx` page. Will redirect to `/Welc` (welcome screen) if `hasLaunched` item does not exist in LocalStorage. Also, it gets created so you dont get redirected each time you open PersonaPlus, only on the first launch.
+- Added a new First launch check on the `index.tsx` page. Will redirect to `/Welc` (welcome screen) if `hasLaunched` item does not exist in LocalStorage. Also, it gets created so you don't get redirected each time you open PersonaPlus, only on the first launch.
 - Updated the `Swap` component, now supports new optional property `order` which is equivalent to *`flex-direction`*.
 - Fixed errors with the `Crea.tsx` page:
   - Not creating objs.

@@ -121,15 +121,29 @@ export default function BeSwap({
                             ]}
                             onPress={() => handleOptionPress(option)}
                         >
-                            <BeText
-                                size={15}
-                                align={
-                                    orderString === "row" ? "center" : "normal"
-                                }
-                                weight="SemiBold"
+                            <Native.View
+                                style={{
+                                    display: "flex",
+                                    flex: 1,
+                                    justifyContent: "center",
+                                    alignItems:
+                                        orderString === "row"
+                                            ? "center"
+                                            : "flex-start",
+                                }}
                             >
-                                {option.label}
-                            </BeText>
+                                <BeText
+                                    size={15}
+                                    align={
+                                        orderString === "row"
+                                            ? "center"
+                                            : "normal"
+                                    }
+                                    weight="SemiBold"
+                                >
+                                    {option.label}
+                                </BeText>
+                            </Native.View>
                         </Native.Pressable>
                         {orderString === "row" && (
                             <GapView key={`${id}-${index}-gap`} width={10} />

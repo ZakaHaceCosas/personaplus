@@ -185,7 +185,7 @@ export default function Form({ onSubmit }: FormProps) {
         <Native.View style={styles.containerview}>
             <Native.ScrollView style={styles.mainview}>
                 <BeText align="normal" weight="Bold" size={40}>
-                    Lets do it!
+                    Let&apos;s do it!
                 </BeText>
                 <BeText align="normal" weight="Regular" size={20}>
                     Create a new objective now!

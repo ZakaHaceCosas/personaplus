@@ -47,7 +47,8 @@
         "react-native-screens": "3.31.1",
         "react-native-web": "~0.19.6",
         "remove-console-msg": "^1.0.4",
-        "semver": "^7.6.2"
+        "semver": "^7.6.2",
+        "expo-notifications": "~0.28.9"
     },
     "devDependencies": {
         "@babel/core": "^7.20.0",
