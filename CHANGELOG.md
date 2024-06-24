@@ -21,8 +21,9 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - Fixed a bug where OBJS got saved without an exercise name. Also, while not a bug, this fix also fixed you being able to store an objective that lasted for 0 minutes (imposible to do).
 - Added a function to remove an OBJ from the Dashboard (`/Dash`).
 - Fixed app not refreshing when marked an OBJ as done.
-- Improved some types.
-- Fixed some visual mistakes. *Particullary, for some reason using `vertical` `order` on `<BeSwap>` caused a really hard to explain visual bug on the Welcome ("`/Welc`") screen. It was "fixed" by changing the order prop to `horizontal`.*
+- Made several improvements to types.
+- Fixed many visual mistakes and improved layouts. *Particullary, for some reason using `vertical` `order` on `<BeSwap>` caused a really hard to explain visual bug on the Welcome ("`/Welc`") screen. It was "fixed" by changing the order prop to `horizontal`.*
+- Improved the flow of username changes.
 - Added React & PersonaPlus versions to the Dev interface.
 - Made Dev interface opt-in, via `useDevTools` item in AsyncStorage.
   - You can opt-in (or opt-out) again via the Profile tab ("`/Prof`").

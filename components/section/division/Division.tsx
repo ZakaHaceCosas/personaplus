@@ -8,7 +8,7 @@ import GapView from "@/components/GapView";
 
 // TypeScript, supongo
 interface DivisionProps {
-    status: string; // Estado. No se usa por ahora. Definiría el color de fondo.
+    status?: string; // Estado. No se usa por ahora. Definiría el color de fondo.
     // hasIcon: boolean; // ¿Tiene un icono?
     iconName?: string | null; // Si lo tiene, ¿Cuál es?
     preheader?: string; // Título
@@ -51,15 +51,17 @@ export default function Division({
             <Native.View style={{ width: "100%" }}>
                 <Native.View style={{ width: "100%" }}>
                     <Native.View>
-                        <BeText
-                            align="normal"
-                            weight="Bold"
-                            size={10}
-                            color="#FFF"
-                        >
-                            {preheader}
-                        </BeText>
-                        <GapView height={10} />
+                        {preheader && (
+                            <BeText
+                                align="normal"
+                                weight="Bold"
+                                size={10}
+                                color="#FFF"
+                            >
+                                {preheader}
+                            </BeText>
+                        )}
+                        {preheader && <GapView height={10} />}
                         <BeText
                             align="normal"
                             weight="Bold"

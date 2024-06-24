@@ -52,6 +52,10 @@ export default function Division({ kind, children }: DivisionProps) {
             lbl = "DEVELOPER OPTIONS";
             icn = "DEV";
             break;
+        case "PROF":
+            lbl = "YOUR PROFILE";
+            icn = "PROF";
+            break;
         default:
             lbl = "UNKNOWN";
             icn = "IDK";

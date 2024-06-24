@@ -10,7 +10,7 @@ interface BtnsProps {
     kind: "ACE" | "GOD" | "WOR" | "DEFAULT" | "HMM";
     text: string;
     onclick: () => void;
-    width?: string;
+    width?: "auto" | "fill";
     height?: string | number;
     style?: string;
 }
@@ -49,10 +49,14 @@ export default function Btn({
             textclr = "#FFFFFF";
             break;
         case "HMM":
-            // no se si tengo esquizofrenia, pero te juro que esto lo corregi antes
             strkclr = "#806419";
             bkgrclr = "#FFC832";
             textclr = "#000000";
+            break;
+        case "DEFAULT":
+            strkclr = "#3E4146";
+            bkgrclr = "#2A2D32";
+            textclr = "#FFF";
             break;
         default:
             strkclr = "#3E4146";
