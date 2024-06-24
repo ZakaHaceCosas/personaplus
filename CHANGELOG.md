@@ -68,13 +68,13 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 > [!NOTE]
 >
-> ### **FIXED ERRORS - Latest**
+> ### **FIXED ERRORS - b15**
 >
 > None
 
 > [!WARNING]
 >
-> ### **KNOWN ERRORS - Latest**
+> ### **KNOWN ERRORS - b15**
 >
 > ***New errors***:
 >
