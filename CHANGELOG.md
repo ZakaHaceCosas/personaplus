@@ -18,6 +18,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 ## 0.0.1-R5-b19
 
 - Renamed most variables to take a more descriptive and easy to understand approach.
+- Decided to set an internal standard for console logging: `termLog` (imported from `DeveloperInterface.tsx`). This will `console.log` and log for Dev interface aswell.
 
 ## 0.0.1-R5-b18
 

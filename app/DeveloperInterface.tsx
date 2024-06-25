@@ -109,28 +109,23 @@ export const testLog = (
 
     // Styled log with prefixes
     let prefix = "";
-    let style = "";
     switch (type) {
         case "success":
             prefix = "GOD";
-            style =
-                "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;";
             break;
         case "error":
             prefix = "ERR";
-            style = "color: #ff0000; font-weight: bold;";
             break;
         case "warn":
             prefix = "WAR";
-            style = "color: #ff9900; font-weight: bold;";
             break;
         default:
             prefix = "LOG";
-            style = "color: #000000; font-weight: bold;";
             break;
     }
 
-    console.log(`%c${prefix} %c${logMessage}`, style, "");
+    const log = prefix + " " + message;
+    console.log(log);
 };
 
 export const termLog = (
@@ -171,7 +166,6 @@ export default function ConsoleLogger() {
 
     React.useEffect(() => {
         setLogs(globalLogs);
-
         console.log = (message: string, ...optionalParams: unknown[]) => {
             const newLog: Log = {
                 message: message.toString(),
@@ -222,32 +216,20 @@ export default function ConsoleLogger() {
                 const storedObjs = await AsyncStorage.getItem("objs");
                 if (storedObjs) {
                     setObjs(JSON.parse(storedObjs));
-                    console.log(
-                        "%cGOD%cAll is ok%c Objectives (OBJS) fetched and parsed!",
-                        "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "color: #30FF97;"
-                    );
+                    termLog("Objectives (OBJS) fetched and parsed!", "success");
                 } else {
                     await AsyncStorage.setItem("objs", JSON.stringify({}));
                     setObjs({});
-                    console.log(
-                        "%cWOR%cDev error%c Could not get objectives (OBJS) fetched! Setting them to an empty array ( {} )",
-                        "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "color: #FFD700;"
+                    termLog(
+                        "Could not get objectives (OBJS) fetched! Setting them to an empty array ( {} )",
+                        "warn"
                     );
                 }
             } catch (e) {
                 const log =
                     "Could not get objectives (OBJS) fetched due to error: " +
                     e;
-                console.log(
-                    "%cWOR%cDev error%c " + log,
-                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "color: #FFD700;"
-                );
+                termLog(log, "error");
             }
         };
 
