@@ -8,7 +8,7 @@ SOURCE: https://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/index.html#Int
 
 interface BMIResponse {
     result: number;
-    subject: {
+    subject?: {
         age: number;
         gender: "male" | "female";
         weight: number;
@@ -18,7 +18,18 @@ interface BMIResponse {
     explanation?: string;
 }
 
-export function calculateBodyMassIndex(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): BMIResponse | number {
+/**
+ * Calculate Body Mass Index (BMI) based on given parameters.
+ * @param age The age of the subject.
+ * @param gender The gender of the subject (either "male" or "female").
+ * @param weight The weight of the subject in kilograms (KG).
+ * @param height The height of the subject in centimeters (CM).
+ * @param provideContext Whether to provide a brief contextualisation about the result.
+ * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
+ * @returns The BMI value if neither provideContext nor provideExplanation are true, otherwise returns a BMIResponse object.
+*/
+
+export function calculateBodyMassIndex(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): BMIResponse {
     // You MUST pass weight as KG (kilograms) and height as CM (centimeters)
     const bmi = weight / ((height / 100) ** 2);
 
@@ -34,25 +45,23 @@ export function calculateBodyMassIndex(age: number, gender: "male" | "female", w
         } else if (bmi > 30) {
             context = "obesity";
         }
-    } else {
+    } else if (age < 0) {
         // Child calculation (to be implemented)
-    }
-
-    if (!provideContext && !provideExplanation) {
-        return bmi;
+    } else {
+        context = "this would be the body mass index the given data. no further context can be provided."
     }
 
     const response: BMIResponse = {
         result: bmi,
-        subject: {
+    };
+
+    if (provideContext) {
+        response.subject = {
             age,
             gender,
             weight,
             height,
-        },
-    };
-
-    if (provideContext) {
+        };
         response.context = context;
     }
 
