@@ -36,7 +36,7 @@ export default function calculateIdealBodyWeight(age: number, gender: "male" | "
     const fifthstep = fourthstep / 2.20462
     const ibw: number = fifthstep
 
-    const context: string | undefined = "this would be the ideal body weight for the given data, based on BMI and BFP."
+    const context: string | undefined = "this would be the ideal body weight for the given data, based on BMI. no further context can be provided."
 
     if (!provideContext && !provideExplanation) {
         return ibw;
