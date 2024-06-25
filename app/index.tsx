@@ -117,7 +117,7 @@ export default function Home() {
     const currentpage: string = Router.usePathname();
 
     const createObj = (): void => {
-        Router.router.navigate("/Crea");
+        Router.router.navigate("/CreateObjective");
     };
 
     const startObj = (id: number): void => {
@@ -175,7 +175,7 @@ export default function Home() {
         null
     );
 
-    // Comprobación para ver si es la primera vez que abre la app - si lo es, redirige a /Welc
+    // Comprobación para ver si es la primera vez que abre la app - si lo es, redirige a /WelcomeScreen
     React.useEffect(() => {
         const checkFirstLaunch = async () => {
             try {

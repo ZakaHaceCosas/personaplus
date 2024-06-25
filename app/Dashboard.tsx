@@ -1,4 +1,4 @@
-// Dash.tsx
+// Dashboard.tsx
 // Dashboard, where you setup your path to success.
 
 import * as React from "react";
@@ -43,7 +43,7 @@ const styles = Native.StyleSheet.create({
 });
 
 // Creamos la función
-export default function Dash() {
+export default function Dashboard() {
     const [objs, setObjs] = React.useState<{ [key: string]: Objective } | null>(
         null
     );
@@ -87,7 +87,7 @@ export default function Dash() {
     }, []);
 
     const createObj = (): void => {
-        Router.router.navigate("Crea");
+        Router.router.navigate("/CreateObjective");
     };
 
     const editObj = (id: number): void => {

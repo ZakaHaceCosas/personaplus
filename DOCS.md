@@ -94,17 +94,15 @@ PersonaPlus está organizado de una forma concreta. En caso de que te veas crean
  Text.tsx
  / section
   Section.tsx
- // Componentes reutilizados, nombrados, preferiblemente pero no necesariamente por las primeras 3 o 4 letras del nombre en inglés
- // Por ejemplo, si hicieras un componente llamado "Imagen", lo llamarías Img.tsx. Section podría ser Sect.tsx (aunque no lo es XD). Entiendes la idea.
 |
 / app
  _layout.tsx // Nombre que no sigue la estructura, debido a que Expo requiere que el nombre sea así
  index.tsx // Lo mismo
- Dash.tsx
- Prof.tsx
- Sess.tsx
- // Cada página, nombrada (a poder ser) por las primeras 4 letras del nombre en ingles
- // EJ. "Panel de control" > "Dashboard" > "Dash.tsx"
+ Dashboard.tsx
+ Profile.tsx
+ Sessions.tsx
+ // Cada página, nombrada con el nombre en ingles
+ // EJ. "Panel de control" > "Dashboard" > "Dashboard.tsx"
 ```
 
 ### > CÓMO REDACTAR CÓDIGO APROPIADO

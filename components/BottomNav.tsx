@@ -8,7 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // TypeScript, supongo
 interface SectionProps {
-    currentLocation: string; // en que página ( /welc, /, /prof, está ahora)
+    currentLocation: string; // en que página ( /WelcomeScreen, /Profile...) está ahora
 }
 
 // Definimos los estilos
@@ -134,13 +134,20 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                     </Native.View>
                 </Native.View>
             </Router.Link>
-            <Router.Link href="/Dash" onPress={() => handlePageChange("/Dash")}>
+            <Router.Link
+                href="/Dashboard"
+                onPress={() => handlePageChange("/Dashboard")}
+            >
                 <Native.View style={styles.touchme}>
                     <Native.View>
                         <Ionicons
                             name="dashboard"
                             size={25}
-                            color={currentPage === "/Dash" ? "#FFF" : "#8A8C8E"}
+                            color={
+                                currentPage === "/Dashboard"
+                                    ? "#FFF"
+                                    : "#8A8C8E"
+                            }
                         />
                     </Native.View>
                     <GapView height={5} />
@@ -150,7 +157,9 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                             fontWeight="Bold"
                             fontSize={12}
                             textColor={
-                                currentPage === "/Dash" ? "#FFF" : "#8A8C8E"
+                                currentPage === "/Dashboard"
+                                    ? "#FFF"
+                                    : "#8A8C8E"
                             }
                         >
                             Dash
@@ -158,13 +167,18 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                     </Native.View>
                 </Native.View>
             </Router.Link>
-            <Router.Link href="/Prof" onPress={() => handlePageChange("/Prof")}>
+            <Router.Link
+                href="/Profile"
+                onPress={() => handlePageChange("/Profile")}
+            >
                 <Native.View style={styles.touchme}>
                     <Native.View>
                         <Ionicons
                             name="person"
                             size={25}
-                            color={currentPage === "/Prof" ? "#FFF" : "#8A8C8E"}
+                            color={
+                                currentPage === "/Profile" ? "#FFF" : "#8A8C8E"
+                            }
                         />
                     </Native.View>
                     <GapView height={5} />
@@ -174,7 +188,7 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                             fontWeight="Bold"
                             fontSize={12}
                             textColor={
-                                currentPage === "/Prof" ? "#FFF" : "#8A8C8E"
+                                currentPage === "/Profile" ? "#FFF" : "#8A8C8E"
                             }
                         >
                             Profile
