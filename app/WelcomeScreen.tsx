@@ -1,4 +1,4 @@
-// Welc.tsx
+// WelcomeScreen.tsx
 // Welcome page
 
 import * as React from "react";

@@ -1,4 +1,4 @@
-// Sess.tsx
+// Sessions.tsx
 // Página para sesiones
 
 import * as React from "react";
@@ -21,7 +21,7 @@ interface Objective {
     wasDone: boolean;
 }
 
-export default function Sess() {
+export default function Sessions() {
     const params = Router.useGlobalSearchParams();
     const { id } = params as { id: string };
     const [objs, setObjs] = React.useState<Objective[] | null>(null);
@@ -57,7 +57,7 @@ export default function Sess() {
               .filter(item => typeof item.id === "number") // buscar ids
               .map(item => item.id.toString()) // array-ing ids
               .join(", ") // unir ids
-        : "no ids found (see Sess.tsx:52-57)";
+        : "no ids found (see Sessions.tsx:52-57)";
 
     let selectedObjSustantivizedName: string = "Unknown";
 

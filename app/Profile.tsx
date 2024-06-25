@@ -1,4 +1,4 @@
-// Prof.tsx
+// Profile.tsx
 // Profile page.
 
 import * as React from "react";
@@ -36,7 +36,7 @@ const styles = Native.StyleSheet.create({
 });
 
 // Creamos la función
-export default function Prof() {
+export default function Profile() {
     const [username, setUsername] = React.useState<string>("Unknown");
     const [uname, setUname] = React.useState("");
     const handleUnameTxtChange = (txt: string) => {
