@@ -8,6 +8,7 @@ import BetterText from "@/components/BetterText";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
+import { termLog } from "./DeveloperInterface";
 
 // TypeScript, supongo.
 interface Objective {
@@ -33,14 +34,21 @@ export default function Sessions() {
                 if (storedObjs) {
                     const parsedObjs: Objective[] = JSON.parse(storedObjs);
                     setObjs(parsedObjs);
-                    console.log("OBJS fetched");
+                    termLog("Objectives (OBJS) fetched", "success");
                 } else {
                     await AsyncStorage.setItem("objs", JSON.stringify([]));
-                    console.error("Could not get OBJS fetched");
+                    termLog(
+                        "Could not get Objectives (OBJS) fetched. Setting them to an empty object.",
+                        "error"
+                    );
                     setObjs([]);
                 }
             } catch (e) {
-                console.error("Could not get OBJS fetched: " + e);
+                const log =
+                    "Could not get Objectives (OBJS) fetched due to error: " +
+                    e +
+                    ". Setting them to an empty object.";
+                termLog(log, "warn");
                 setObjs([]);
             }
         };

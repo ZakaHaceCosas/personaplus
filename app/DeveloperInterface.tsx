@@ -98,6 +98,7 @@ export const testLog = (
 ) => {
     const logMessage = message.toString();
     const timestamp = Date.now();
+    // @ts-expect-error: Assigned an extra "success" type to console.log which is not existing, therefore gives a type error.
     const newLog: Log = { message: logMessage, type, timestamp };
 
     // Add the log to the global logs array
@@ -130,6 +131,39 @@ export const testLog = (
     }
 
     console.log(`%c${prefix} %c${logMessage}`, style, "");
+};
+
+export const termLog = (
+    message: string,
+    type: "log" | "warn" | "error" | "success" = "log"
+) => {
+    let prefix;
+    let style;
+    switch (type) {
+        case "log":
+            prefix = "LOG";
+            style =
+                "font-weight: bold; background: #FFF; color: black; padding: 2px 4px; border-radius: 2px;";
+            break;
+        case "success":
+            prefix = "GOD";
+            style =
+                "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;";
+            break;
+        case "warn":
+            prefix = "WAR";
+            style =
+                "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;";
+            break;
+        case "error":
+            prefix = "ERR";
+            style =
+                "font-weight: bold; background: #FF3232; color: black; padding: 2px 4px; border-radius: 2px;";
+    }
+
+    const log = "%c" + prefix + "%c " + message;
+    console.log(log, style, "background: transparent; color: white;");
+    testLog(message, type);
 };
 
 export default function ConsoleLogger() {
@@ -188,7 +222,6 @@ export default function ConsoleLogger() {
                 const storedObjs = await AsyncStorage.getItem("objs");
                 if (storedObjs) {
                     setObjs(JSON.parse(storedObjs));
-                    testLog("a", "success");
                     console.log(
                         "%cGOD%cAll is ok%c Objectives (OBJS) fetched and parsed!",
                         "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",

@@ -10,6 +10,7 @@ import Button from "@/components/Buttons";
 import * as Router from "expo-router";
 import Notification from "@/components/Notification";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { termLog } from "./DeveloperInterface";
 
 // TypeScript, supongo
 interface FormProps {
@@ -137,7 +138,8 @@ export default function Form({ onSubmit }: FormProps) {
             await processData(formData); // procesa
             Router.router.push("/"); // vuelve a casa DESPUES de procesar
         } catch (e) {
-            console.error("error creating obj:", e);
+            const log = "Could not create an objective, got error: " + e;
+            termLog(log, "error");
         }
     };
 
@@ -173,7 +175,10 @@ export default function Form({ onSubmit }: FormProps) {
 
             await AsyncStorage.setItem("objs", JSON.stringify(finalObjs));
         } catch (e) {
-            console.error("Error storing data:", e);
+            const log =
+                "Got an error storing data while processing data to create an objective: " +
+                e;
+            termLog(log, "error");
         }
     };
 

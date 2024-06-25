@@ -12,7 +12,7 @@ import GapView from "@/components/GapView";
 import Footer from "@/components/Footer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/components/Buttons";
-import { testLog } from "./DeveloperInterface";
+import { termLog } from "./DeveloperInterface";
 
 // TypeScript, supongo
 interface Objective {
@@ -54,32 +54,20 @@ export default function Dashboard() {
                 const storedObjs = await AsyncStorage.getItem("objs");
                 if (storedObjs) {
                     setObjs(JSON.parse(storedObjs));
-                    console.log(
-                        "%cGOD%cAll is ok%c Objectives (OBJS) fetched and parsed!",
-                        "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "color: #30FF97;"
-                    );
+                    termLog("Objectives (OBJS) fetched and parsed!", "success");
                 } else {
                     await AsyncStorage.setItem("objs", JSON.stringify({}));
                     setObjs({});
-                    console.log(
-                        "%cWOR%cDev error%c Could not get objectives (OBJS) fetched! Setting them to an empty array ( {} )",
-                        "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "color: #FFD700;"
+                    termLog(
+                        "Could not get objectives (OBJS) fetched! Setting them to an empty array ( {} )",
+                        "warn"
                     );
                 }
             } catch (e) {
                 const log =
                     "Could not get objectives (OBJS) fetched due to error: " +
                     e;
-                console.log(
-                    "%cWOR%cDev error%c " + log,
-                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "color: #FFD700;"
-                );
+                termLog(log, "error");
             }
         };
 
@@ -104,36 +92,15 @@ export default function Dashboard() {
 
                 await AsyncStorage.setItem("objs", JSON.stringify(objs));
                 const log: string = `OBJ (Objective) with ID ${id} has been removed.`;
-                testLog(
-                    `OBJ (Objective) with ID ${id} has been removed.`,
-                    "log"
-                );
-                console.log(
-                    "%cGOD%cAll is ok%c " + log,
-                    "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "color: #30FF97;"
-                );
+                termLog(log, "success");
                 Router.router.replace("/");
             } else {
                 const log: string = `No OBJS found - no way to delete.`;
-                testLog(`No OBJS found - no way to delete.`, "warn");
-                console.log(
-                    "%cHMM%cDev warning%c " + log,
-                    "font-weight: bold; background: #FFC832; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "color: #FFC832;"
-                );
+                termLog(log, "warn");
             }
         } catch (e) {
             const log: string = `Error removing OBJ, got the following: ${e}`;
-            testLog(`Error removing OBJ, got the following: ${e}`, "warn");
-            console.log(
-                "%cWOR%cDev error%c " + log,
-                "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                "color: #FFD700;"
-            );
+            termLog(log, "error");
         }
     };
 
@@ -160,12 +127,7 @@ export default function Dashboard() {
                             const obj = objs[key];
                             if (!obj) {
                                 const log = `Data is undefined for objective with key: ${key}`;
-                                console.log(
-                                    "%cWOR%cDev error%c " + log,
-                                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                                    "color: #FFD700;"
-                                );
+                                termLog(log, "warn");
                                 return null;
                             }
 

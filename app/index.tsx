@@ -12,7 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/components/Buttons";
 import GapView from "@/components/GapView";
 import Footer from "@/components/Footer";
-import { testLog } from "@/app/DeveloperInterface";
+import { termLog } from "@/app/DeveloperInterface";
 
 // TypeScript, supongo
 interface Objective {
@@ -54,22 +54,10 @@ export default function Home() {
         const fetchUsername = async () => {
             const uname: string | null = await AsyncStorage.getItem("uname");
             if (uname) {
-                testLog("Username fetched!", "log");
-                console.log(
-                    "%cGOD%cAll is ok%c Username fetched!",
-                    "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "color: #30FF97;"
-                );
                 setUname(uname);
+                termLog("Username fetched!", "success");
             } else {
-                testLog("Username error!", "error");
-                console.log(
-                    "%cWOR%cDev error%c Username error!",
-                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "color: #FFD700;"
-                );
+                termLog("Username error!", "error");
             }
         };
 
@@ -82,32 +70,20 @@ export default function Home() {
                 const storedObjs = await AsyncStorage.getItem("objs");
                 if (storedObjs) {
                     setObjs(JSON.parse(storedObjs));
-                    console.log(
-                        "%cGOD%cAll is ok%c Objectives (OBJS) fetched and parsed!",
-                        "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "color: #30FF97;"
-                    );
+                    termLog("Objectives (OBJS) fetched and parsed!", "success");
                 } else {
                     await AsyncStorage.setItem("objs", JSON.stringify({}));
                     setObjs({});
-                    console.log(
-                        "%cWOR%cDev error%c Could not get objectives (OBJS) fetched! Setting them to an empty array ( {} )",
-                        "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "color: #FFD700;"
+                    termLog(
+                        "Could not get objectives (OBJS) fetched! Setting them to an empty array ( {} )",
+                        "warn"
                     );
                 }
             } catch (e) {
                 const log =
                     "Could not get objectives (OBJS) fetched due to error: " +
                     e;
-                console.log(
-                    "%cWOR%cDev error%c " + log,
-                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "color: #FFD700;"
-                );
+                termLog(log, "error");
             }
         };
 
@@ -140,31 +116,22 @@ export default function Home() {
                         "objs",
                         JSON.stringify(updatedObjs)
                     );
-                    console.log(
-                        "%cGOD%cAll is ok%c Objectives (OBJS) updated and saved successfully!",
-                        "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "color: #30FF97;"
+                    termLog(
+                        "Objectives (OBJS) updated and saved successfully!",
+                        "success"
                     );
                     Router.router.replace("/");
                 } else {
-                    console.log(
-                        "%cWOR%cDev error%c Could not get objectives (OBJS) fetched!",
-                        "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "color: #FFD700;"
+                    termLog(
+                        "Could not get objectives (OBJS) fetched!",
+                        "error"
                     );
                 }
             } catch (e) {
                 const log =
                     "Could not get objectives (OBJS) fetched due to error: " +
                     e;
-                console.log(
-                    "%cWOR%cDev error%c " + log,
-                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "color: #FFD700;"
-                );
+                termLog(log, "error");
             }
         };
 
@@ -190,12 +157,7 @@ export default function Home() {
             } catch (e) {
                 const log =
                     "Got an error checking if app launched before: " + e;
-                console.log(
-                    "%cWOR%cDev error%c " + log,
-                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "color: #FFD700;"
-                );
+                termLog(log, "error");
             }
         };
         checkFirstLaunch();
@@ -304,8 +266,9 @@ export default function Home() {
                         ) : (
                             Object.keys(objs).map(key => {
                                 const obj = objs[key];
-                                console.log(
-                                    `OBJ ${obj.id}, days[${adjustedToday}]: ${obj.days[adjustedToday]}`
+                                termLog(
+                                    `OBJ ${obj.id}, days[${adjustedToday}]: ${obj.days[adjustedToday]}`,
+                                    "log"
                                 );
 
                                 if (
