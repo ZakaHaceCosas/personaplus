@@ -1,5 +1,7 @@
-// Dev.tsx
+// DeveloperInterface.tsx
 // Página que muestra ciertos logs de la consola para ayudar al desarrollador
+
+// esto es un autentico fiasco, ya lo arreglaré
 
 import * as React from "react";
 import * as Native from "react-native";
@@ -56,6 +58,12 @@ const styles = Native.StyleSheet.create({
         borderLeftWidth: 2,
         borderLeftColor: "#000000",
     },
+    success: {
+        color: "#28a745",
+        paddingLeft: 10,
+        borderLeftWidth: 2,
+        borderLeftColor: "#28a745",
+    },
     warn: {
         color: "#ff9900",
         paddingLeft: 10,
@@ -86,15 +94,42 @@ const addLogToGlobal = (log: Log) => {
 
 export const testLog = (
     message: string,
-    type: "log" | "warn" | "error" = "log"
+    type: "log" | "warn" | "error" | "success" = "log"
 ) => {
-    const newLog: Log = {
-        message: message.toString(),
-        type,
-        timestamp: Date.now(),
-    };
+    const logMessage = message.toString();
+    const timestamp = Date.now();
+    const newLog: Log = { message: logMessage, type, timestamp };
+
+    // Add the log to the global logs array
     addLogToGlobal(newLog);
-    console[type](message);
+
+    // Log with the appropriate console method
+    console[type === "success" ? "log" : type](logMessage);
+
+    // Styled log with prefixes
+    let prefix = "";
+    let style = "";
+    switch (type) {
+        case "success":
+            prefix = "GOD";
+            style =
+                "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;";
+            break;
+        case "error":
+            prefix = "ERR";
+            style = "color: #ff0000; font-weight: bold;";
+            break;
+        case "warn":
+            prefix = "WAR";
+            style = "color: #ff9900; font-weight: bold;";
+            break;
+        default:
+            prefix = "LOG";
+            style = "color: #000000; font-weight: bold;";
+            break;
+    }
+
+    console.log(`%c${prefix} %c${logMessage}`, style, "");
 };
 
 export default function ConsoleLogger() {
@@ -153,6 +188,7 @@ export default function ConsoleLogger() {
                 const storedObjs = await AsyncStorage.getItem("objs");
                 if (storedObjs) {
                     setObjs(JSON.parse(storedObjs));
+                    testLog("a", "success");
                     console.log(
                         "%cGOD%cAll is ok%c Objectives (OBJS) fetched and parsed!",
                         "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
