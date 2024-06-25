@@ -77,32 +77,31 @@ Actualmente sólo hay una, `VAR-DSGN.jsonc`, con la paleta de colores de la app.
 PersonaPlus está organizado de una forma concreta. En caso de que te veas creando un archivo nuevo, que no desorganice el sistema de archivos.
 
 ```txt
-> App.tsx
 > VAR-*.jsonc
 > package.json
 (etc...)
 |
 / assets
- adaptative-icon.png
- favicon.png
- (etc...)
+  adaptative-icon.png
+  favicon.png
+  (etc...)
 |
 / fonts
- (...) // Todos los archivos .ttf de "Be Vietnam Pro", la tipografía de la app.
+  (...) // Todos los archivos .ttf de "Be Vietnam Pro", la tipografía de la app.
 |
 / components
- Text.tsx
- / section
-  Section.tsx
+  BetterText.tsx
+  / section
+    Section.tsx
 |
 / app
- _layout.tsx // Nombre que no sigue la estructura, debido a que Expo requiere que el nombre sea así
- index.tsx // Lo mismo
- Dashboard.tsx
- Profile.tsx
- Sessions.tsx
- // Cada página, nombrada con el nombre en ingles
- // EJ. "Panel de control" > "Dashboard" > "Dashboard.tsx"
+  _layout.tsx // Nombre que no sigue la estructura, debido a que Expo requiere que el nombre sea así
+  index.tsx // Lo mismo
+  Dashboard.tsx
+  Profile.tsx
+  Sessions.tsx
+  // Cada página, nombrada con el nombre en ingles
+  // EJ. "Panel de control" > "Dashboard" > "Dashboard.tsx"
 ```
 
 ### > CÓMO REDACTAR CÓDIGO APROPIADO
