@@ -25,23 +25,23 @@ export default function calculateBodyFatPercentage(age: number, gender: "male" |
     const bmi = calculateBodyMassIndex(age, gender, weight, height, false, false);
     let bfp: number;
 
-    if (gender == "male") { // male
-        let firststep = 1.20 * Number(bmi)
-        let secondstep = 0.23 * age
-        let thirdstep = firststep + secondstep
-        let fourthstep = thirdstep - 16.2
+    if (gender === "male") { // male
+        const firststep = 1.20 * Number(bmi)
+        const secondstep = 0.23 * age
+        const thirdstep = firststep + secondstep
+        const fourthstep = thirdstep - 16.2
         bfp = fourthstep
     } else { // female
-        let firststep = 1.20 * Number(bmi)
-        let secondstep = 0.23 * age
-        let thirdstep = firststep + secondstep
-        let fourthstep = thirdstep - 5.4
+        const firststep = 1.20 * Number(bmi)
+        const secondstep = 0.23 * age
+        const thirdstep = firststep + secondstep
+        const fourthstep = thirdstep - 5.4
         bfp = fourthstep
     }
 
     let context: string | undefined;
 
-    if (gender == "male") {
+    if (gender === "male") {
         if (bfp >= 0 || bfp <= 2) {
             context = "extremely low"
         } else if (bfp >= 2 || bfp <= 6) {
