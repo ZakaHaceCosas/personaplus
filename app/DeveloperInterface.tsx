@@ -1,12 +1,11 @@
 // DeveloperInterface.tsx
 // Página que muestra ciertos logs de la consola para ayudar al desarrollador
 
-// esto es un autentico fiasco, ya lo arreglaré
+// aviso: codigo no entendible
 
 import * as React from "react";
 import * as Native from "react-native";
 import * as Router from "expo-router";
-import Footer from "@/components/Footer";
 import BottomNav from "@/components/BottomNav";
 import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
@@ -29,7 +28,7 @@ interface Objective {
 
 interface Log {
     message: string;
-    type: "log" | "warn" | "error";
+    type: "log" | "warn" | "error" | "success";
     timestamp: number;
 }
 
@@ -38,15 +37,15 @@ const styles = Native.StyleSheet.create({
         flex: 1,
         padding: 10,
         backgroundColor: "#f0f0f0",
-        width: "100%" as Native.DimensionValue,
-        height: "100%" as Native.DimensionValue,
+        width: "100vw" as Native.DimensionValue,
+        height: "100vh" as Native.DimensionValue,
     },
     mainview: {
         padding: 20,
         display: "flex",
         flexDirection: "column",
         width: "100vw" as Native.DimensionValue,
-        height: "100vw" as Native.DimensionValue,
+        height: "100vh" as Native.DimensionValue,
         overflow: "scroll",
     },
     logText: {
@@ -78,15 +77,17 @@ const styles = Native.StyleSheet.create({
     },
     containerview: {
         width: "100vw" as Native.DimensionValue,
-        height: "100vw" as Native.DimensionValue,
+        height: "100vh" as Native.DimensionValue,
     },
 });
 
 const globalLogs: Log[] = [];
 
+/*
 const originalConsoleLog = console.log;
 const originalConsoleWarn = console.warn;
 const originalConsoleError = console.error;
+*/
 
 const addLogToGlobal = (log: Log) => {
     globalLogs.push(log);
@@ -98,16 +99,12 @@ export const testLog = (
 ) => {
     const logMessage = message.toString();
     const timestamp = Date.now();
-    // @ts-expect-error: Assigned an extra "success" type to console.log which is not existing, therefore gives a type error.
     const newLog: Log = { message: logMessage, type, timestamp };
 
-    // Add the log to the global logs array
     addLogToGlobal(newLog);
 
-    // Log with the appropriate console method
     console[type === "success" ? "log" : type](logMessage);
 
-    // Styled log with prefixes
     let prefix = "";
     switch (type) {
         case "success":
@@ -165,15 +162,25 @@ export default function ConsoleLogger() {
     const [logs, setLogs] = React.useState<Log[]>([]);
 
     React.useEffect(() => {
-        setLogs(globalLogs);
+        const updateLogs = (newLog: Log) => {
+            /*setLogs(prevLogs => [...prevLogs, newLog]);
+            ;*/
+            addLogToGlobal(newLog);
+            setLogs(prevLogs => [...prevLogs, newLog]);
+            globalLogs.push(newLog);
+        };
+
+        const originalConsoleLog = console.log;
+        const originalConsoleWarn = console.warn;
+        const originalConsoleError = console.error;
+
         console.log = (message: string, ...optionalParams: unknown[]) => {
             const newLog: Log = {
                 message: message.toString(),
                 type: "log",
                 timestamp: Date.now(),
             };
-            addLogToGlobal(newLog);
-            setLogs(prevLogs => [...prevLogs, newLog]);
+            updateLogs(newLog);
             originalConsoleLog(message, ...optionalParams);
         };
 
@@ -183,8 +190,7 @@ export default function ConsoleLogger() {
                 type: "warn",
                 timestamp: Date.now(),
             };
-            addLogToGlobal(newLog);
-            setLogs(prevLogs => [...prevLogs, newLog]);
+            updateLogs(newLog);
             originalConsoleWarn(message, ...optionalParams);
         };
 
@@ -194,8 +200,7 @@ export default function ConsoleLogger() {
                 type: "error",
                 timestamp: Date.now(),
             };
-            addLogToGlobal(newLog);
-            setLogs(prevLogs => [...prevLogs, newLog]);
+            updateLogs(newLog);
             originalConsoleError(message, ...optionalParams);
         };
 
@@ -242,11 +247,11 @@ export default function ConsoleLogger() {
         try {
             await AsyncStorage.setItem("objs", "");
             console.log("DEV CLEARED OBJS");
-            testLog("DEV CLEARED OBJS", "log");
+            termLog("DEV CLEARED OBJS", "log");
             Router.router.navigate("/");
         } catch (e) {
             console.error(e);
-            testLog(String(e), "error");
+            termLog(String(e), "error");
         }
     };
     const devFCclearall = async () => {
@@ -256,10 +261,10 @@ export default function ConsoleLogger() {
             await AsyncStorage.setItem("uname", "");
             Router.router.navigate("/");
             console.log("DEV CLEARED ALL");
-            testLog("DEV CLEARED ALL", "log");
+            termLog("DEV CLEARED ALL", "log");
         } catch (e) {
             console.error(e);
-            testLog(String(e), "error");
+            termLog(String(e), "error");
         }
     };
 
@@ -369,16 +374,6 @@ export default function ConsoleLogger() {
                 </BetterText>
                 <BetterText
                     textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={15}
-                    textColor="#FFC832"
-                >
-                    they may not look properly due to the usage of %c for
-                    desktop / browser logs (but they are still readable so no
-                    problem)
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
                     fontWeight="Italic"
                     fontSize={10}
                 >
@@ -392,16 +387,6 @@ export default function ConsoleLogger() {
                     textColor="#FFC832"
                 >
                     some logs will only be on the desktops terminal, not here
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Italic"
-                    fontSize={10}
-                    textColor="#FFC832"
-                >
-                    puede que no se vean del todo bien al usar %c para los logs
-                    de consola / navegador (pero se siguen leyendo bien asi que
-                    no hay problema)
                 </BetterText>
                 <BetterText
                     textAlign="normal"
@@ -424,7 +409,6 @@ export default function ConsoleLogger() {
                         </Native.Text>
                     ))}
                 </Native.ScrollView>
-                <Footer />
             </Native.ScrollView>
         </Native.View>
     );
