@@ -4,7 +4,7 @@
 import * as React from "react";
 import * as Native from "react-native";
 import * as Router from "expo-router";
-import BeText from "@/components/Text";
+import BetterText from "@/components/BetterText";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
@@ -96,9 +96,9 @@ export default function Sess() {
                 height: "100vh" as Native.DimensionValue,
             }}
         >
-            {/*<BeText weight="Regular" size={15}>
+            {/*<BetterText weight="Regular" size={15}>
                 currently selected obj: {id}
-            </BeText>*/}
+            </BetterText>*/}
             {selectedObj ? (
                 <Native.View
                     style={{
@@ -124,9 +124,13 @@ export default function Sess() {
                         }
                         <Ionicons name="play-arrow" size={20} color="#DDDDDD" />
                         <GapView width={10} />
-                        <BeText size={15} weight="Bold" color="#DDDDDD">
+                        <BetterText
+                            fontSize={15}
+                            fontWeight="Bold"
+                            textColor="#DDDDDD"
+                        >
                             IN A SESSION!
-                        </BeText>
+                        </BetterText>
                     </Native.View>
                     <GapView height={20} />
                     <Native.View
@@ -141,15 +145,23 @@ export default function Sess() {
                             width: "100%",
                         }}
                     >
-                        <BeText weight="Regular" size={12} align="center">
+                        <BetterText
+                            fontWeight="Regular"
+                            fontSize={12}
+                            textAlign="center"
+                        >
                             CURRENT OBJECTIVE
-                        </BeText>
+                        </BetterText>
                         <GapView height={10} />
-                        <BeText weight="Bold" size={25} align="center">
+                        <BetterText
+                            fontWeight="Bold"
+                            fontSize={25}
+                            textAlign="center"
+                        >
                             {selectedObjSustantivizedName} for{" "}
                             {selectedObj.duration} minute
                             {selectedObj.duration > 1 && "s"}
-                        </BeText>
+                        </BetterText>
                         <GapView height={10} />
                         <Native.View
                             style={{
@@ -161,22 +173,22 @@ export default function Sess() {
                         >
                             <Ionicons name="loop" size={15} color="#FFF" />
                             <GapView width={5} />
-                            <BeText weight="Regular" size={15}>
+                            <BetterText fontWeight="Regular" fontSize={15}>
                                 {selectedObj.repetitions === 0
                                     ? "None"
                                     : `${selectedObj.repetitions} repetitions`}
-                            </BeText>
+                            </BetterText>
                             <GapView width={15} />
                             <Ionicons name="snooze" size={15} color="#FFF" />
                             <GapView width={5} />
-                            <BeText weight="Regular" size={15}>
+                            <BetterText fontWeight="Regular" fontSize={15}>
                                 {selectedObj.rests === 0
                                     ? "None"
                                     : `${selectedObj.rests} rests (${selectedObj.restDuration} minutes each)`}
-                            </BeText>
+                            </BetterText>
                         </Native.View>
                     </Native.View>
-                    <BeText weight="Regular" size={15}>
+                    <BetterText fontWeight="Regular" fontSize={15}>
                         Days:{" "}
                         {selectedObj.days
                             .map((day, index) =>
@@ -184,36 +196,40 @@ export default function Sess() {
                             )
                             .filter(Boolean)
                             .join(", ")}
-                    </BeText>
-                    <BeText weight="Regular" size={15}>
+                    </BetterText>
+                    <BetterText fontWeight="Regular" fontSize={15}>
                         Duration: {selectedObj.duration}
-                    </BeText>
-                    <BeText weight="Regular" size={15}>
+                    </BetterText>
+                    <BetterText fontWeight="Regular" fontSize={15}>
                         Repetitions: {selectedObj.repetitions}
-                    </BeText>
-                    <BeText weight="Regular" size={15}>
+                    </BetterText>
+                    <BetterText fontWeight="Regular" fontSize={15}>
                         Rests: {selectedObj.rests}
-                    </BeText>
-                    <BeText weight="Regular" size={15}>
+                    </BetterText>
+                    <BetterText fontWeight="Regular" fontSize={15}>
                         Rest Duration: {selectedObj.restDuration}
-                    </BeText>
-                    <BeText weight="Regular" size={15}>
+                    </BetterText>
+                    <BetterText fontWeight="Regular" fontSize={15}>
                         ID: {selectedObj.id}
-                    </BeText>
+                    </BetterText>
                 </Native.View>
             ) : (
                 <Native.View>
-                    <BeText
-                        align="center"
-                        weight="BlackItalic"
-                        size={45}
-                        color="#FF0000"
+                    <BetterText
+                        textAlign="center"
+                        fontWeight="BlackItalic"
+                        fontSize={45}
+                        textColor="#FF0000"
                     >
                         ERROR
-                    </BeText>
-                    <BeText align="center" weight="Bold" size={25}>
+                    </BetterText>
+                    <BetterText
+                        textAlign="center"
+                        fontWeight="Bold"
+                        fontSize={25}
+                    >
                         Did not find the selected objective in the database.
-                    </BeText>
+                    </BetterText>
                     <Native.View
                         style={{
                             margin: 10,
@@ -222,13 +238,17 @@ export default function Sess() {
                             backgroundColor: "#FFC832",
                         }}
                     >
-                        <BeText weight="Regular" size={12} color="#000">
+                        <BetterText
+                            fontWeight="Regular"
+                            fontSize={12}
+                            textColor="#000"
+                        >
                             Developer info: id: {id}, objs were fetched:{" "}
                             {objs && "true"}
                             {!objs && "false"}, selectedObj exists:{" "}
                             {selectedObj && "true"}
                             {!selectedObj && "false"}, all objs: {idsString}
-                        </BeText>
+                        </BetterText>
                     </Native.View>
                 </Native.View>
             )}

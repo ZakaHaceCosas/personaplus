@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import * as Native from "react-native";
-import BeText from "@/components/Text";
+import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
 
 // TypeScript, supongo
@@ -14,7 +14,7 @@ interface Option {
 }
 
 // TypeScript, supongo
-interface BeSwapProps {
+interface SwapProps {
     id: string; // Para identificar cada BeSwap
     options: Option[]; // Opciones
     value?: string | number | null; // Para establecer el valor programáticamente
@@ -45,13 +45,13 @@ const styles = Native.StyleSheet.create({
     },
 });
 
-export default function BeSwap({
+export default function Swap({
     id,
     options,
     value,
     order,
     onValueChange,
-}: BeSwapProps) {
+}: SwapProps) {
     const defaultOption = options.find(option => option.default);
     const [selectedOption, setSelectedOption] = React.useState<Option | null>(
         value
@@ -132,17 +132,17 @@ export default function BeSwap({
                                             : "flex-start",
                                 }}
                             >
-                                <BeText
-                                    size={15}
-                                    align={
+                                <BetterText
+                                    fontSize={15}
+                                    textAlign={
                                         orderString === "row"
                                             ? "center"
                                             : "normal"
                                     }
-                                    weight="SemiBold"
+                                    fontWeight="SemiBold"
                                 >
                                     {option.label}
-                                </BeText>
+                                </BetterText>
                             </Native.View>
                         </Native.Pressable>
                         {orderString === "row" && (

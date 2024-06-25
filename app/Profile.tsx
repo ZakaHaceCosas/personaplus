@@ -3,16 +3,16 @@
 
 import * as React from "react";
 import * as Native from "react-native";
-import BeText from "@/components/Text";
-import Foot from "@/components/Foot";
+import BetterText from "@/components/BetterText";
+import Footer from "@/components/Footer";
 import * as Router from "expo-router";
 import Section from "@/components/section/Section";
 import Division from "@/components/section/division/Division";
-import Btn from "@/components/Btns";
+import Button from "@/components/Buttons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Nomore from "@/components/Nomore";
+import BottomNav from "@/components/BottomNav";
 import GapView from "@/components/GapView";
-import { testLog } from "./Dev";
+import { testLog } from "./DeveloperInterface";
 
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
@@ -164,7 +164,7 @@ export default function Prof() {
             const log = "ERROR ENABLING DEV INTERFACE: " + e;
             testLog(log, "error");
             console.error(log);
-            Router.router.navigate("/Dev"); // lol. if cant enable, at least go to page with logs to see the error.
+            Router.router.navigate("/DeveloperInterface"); // lol. if cant enable, at least go to page with logs to see the error.
         }
     };
 
@@ -177,40 +177,48 @@ export default function Prof() {
             const log = "ERROR DISABLING DEV INTERFACE: " + e;
             testLog(log, "error");
             console.error(log);
-            Router.router.navigate("/Dev"); // lol. if cant disable, at least go to page with logs to see the error.
+            Router.router.navigate("/DeveloperInterface"); // lol. if cant disable, at least go to page with logs to see the error.
         }
     };
 
     return (
         <Native.View style={styles.containerview}>
-            <Foot page={currentpage}></Foot>
+            <BottomNav currentLocation={currentpage} />
             <Native.ScrollView>
                 <Native.View style={styles.mainview}>
-                    <BeText align="normal" weight="Bold" size={40}>
+                    <BetterText
+                        textAlign="normal"
+                        fontWeight="Bold"
+                        fontSize={40}
+                    >
                         Profile
-                    </BeText>
-                    <BeText align="normal" weight="Regular" size={20}>
+                    </BetterText>
+                    <BetterText
+                        textAlign="normal"
+                        fontWeight="Regular"
+                        fontSize={20}
+                    >
                         Nice to meet you, {username}!
-                    </BeText>
+                    </BetterText>
                     <GapView height={20} />
-                    <Section kind="PROF">
+                    <Section kind="Profile">
                         <Division header={username}>
                             <Native.View style={styles.flexyview}>
-                                <BeText
-                                    align="normal"
-                                    color="#FFF"
-                                    weight="Regular"
-                                    size={15}
+                                <BetterText
+                                    textAlign="normal"
+                                    textColor="#FFF"
+                                    fontWeight="Regular"
+                                    fontSize={15}
                                 >
                                     Soon you will see here all your data.
                                     {/* Gender: {gender} */}
-                                </BeText>
+                                </BetterText>
                                 <GapView height={10} />
                                 {!isUnamechangeVisible && (
-                                    <Btn
-                                        kind="ACE"
-                                        onclick={toggleUnamechangeVisibility}
-                                        text="Change my username"
+                                    <Button
+                                        style="ACE"
+                                        action={toggleUnamechangeVisibility}
+                                        buttonText="Change my username"
                                     />
                                 )}
                             </Native.View>
@@ -218,7 +226,7 @@ export default function Prof() {
                     </Section>
                     <GapView height={20} />
                     {isUnamechangeVisible && (
-                        <Section kind="SETS">
+                        <Section kind="Settings">
                             <Division
                                 status="REGULAR"
                                 iconName={null}
@@ -267,19 +275,17 @@ export default function Prof() {
                                             flexDirection: "row",
                                         }}
                                     >
-                                        <Btn
-                                            kind="ACE"
-                                            onclick={handleUnameBtnClick}
-                                            text="Save username"
+                                        <Button
+                                            style="ACE"
+                                            action={handleUnameBtnClick}
+                                            buttonText="Save username"
                                             width="fill"
                                         />
                                         <GapView width={10} />
-                                        <Btn
-                                            kind="DEFAULT"
-                                            onclick={
-                                                toggleUnamechangeVisibility
-                                            }
-                                            text="Cancel"
+                                        <Button
+                                            style="DEFAULT"
+                                            action={toggleUnamechangeVisibility}
+                                            buttonText="Cancel"
                                         />
                                     </Native.View>
                                 </Native.View>
@@ -287,7 +293,7 @@ export default function Prof() {
                         </Section>
                     )}
                     <GapView height={20} />
-                    <Section kind="DEV">
+                    <Section kind="Developer">
                         <Division
                             status="REGULAR"
                             iconName={null}
@@ -296,21 +302,21 @@ export default function Prof() {
                             subheader="Dev Interface is an extra page: a menu with advanced info & options for developers. Very useful if you are testing this app for dev / contributing purposes."
                         >
                             <Native.View style={styles.flexyview}>
-                                <BeText
-                                    align="normal"
-                                    weight="Regular"
-                                    size={15}
+                                <BetterText
+                                    textAlign="normal"
+                                    fontWeight="Regular"
+                                    fontSize={15}
                                 >
                                     Dev interface is{" "}
                                     {wantsDev === true ? "enabled" : "disabled"}{" "}
                                     for this user.
-                                </BeText>
+                                </BetterText>
                                 <GapView height={10} />
-                                <BeText
-                                    align="normal"
-                                    weight="Regular"
-                                    color="#FFC832"
-                                    size={15}
+                                <BetterText
+                                    textAlign="normal"
+                                    fontWeight="Regular"
+                                    textColor="#FFC832"
+                                    fontSize={15}
                                 >
                                     Note: If an error ocurred
                                     &quot;enabling&quot; or
@@ -322,25 +328,25 @@ export default function Prof() {
                                     to Dev Interface instead of Home, check the
                                     logs to see what happened, and if possible,
                                     open an issue on GitHub. Thanks!
-                                </BeText>
+                                </BetterText>
                                 <GapView height={10} />
                                 {wantsDev === false ? (
-                                    <Btn
-                                        kind="HMM"
-                                        onclick={enableDevInterface}
-                                        text="Enable Dev interface"
+                                    <Button
+                                        style="HMM"
+                                        action={enableDevInterface}
+                                        buttonText="Enable Dev interface"
                                     />
                                 ) : (
-                                    <Btn
-                                        kind="HMM"
-                                        onclick={disableDevInterface}
-                                        text="Disable Dev interface"
+                                    <Button
+                                        style="HMM"
+                                        action={disableDevInterface}
+                                        buttonText="Disable Dev interface"
                                     />
                                 )}
                             </Native.View>
                         </Division>
                     </Section>
-                    <Nomore />
+                    <Footer />
                 </Native.View>
             </Native.ScrollView>
         </Native.View>
