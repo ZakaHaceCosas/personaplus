@@ -1,32 +1,21 @@
 // section/division/Division.tsx
 // División
 
-import BeText from "@/components/Text";
-import React from "react";
+import * as React from "react";
 import * as Native from "react-native";
+import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
 
 // TypeScript, supongo
 interface DivisionProps {
     status?: string; // Estado. No se usa por ahora. Definiría el color de fondo.
-    // hasIcon: boolean; // ¿Tiene un icono?
+    hasIcon?: boolean; // ¿Tiene un icono?
     iconName?: string | null; // Si lo tiene, ¿Cuál es?
     preheader?: string; // Título
     header: string; // Texto grande
     subheader?: string; // El texto pequeño, de haberlo
     children: React.ReactNode; // Los hijos (botones, básicamente)
 }
-
-// Definimos los estilos
-const styles = Native.StyleSheet.create({
-    container: {
-        display: "flex",
-        backgroundColor: "#202328",
-        flexDirection: "row",
-        padding: 20,
-        width: "100%",
-    },
-});
 
 // Creamos la función
 export default function Division({
@@ -47,39 +36,47 @@ export default function Division({
     }
 
     return (
-        <Native.View style={styles.container}>
+        <Native.View
+            style={{
+                display: "flex",
+                backgroundColor: "#202328",
+                flexDirection: "row",
+                padding: 20,
+                width: "100%",
+            }}
+        >
             <Native.View style={{ width: "100%" }}>
                 <Native.View style={{ width: "100%" }}>
                     <Native.View>
                         {preheader && (
-                            <BeText
-                                align="normal"
-                                weight="Bold"
-                                size={10}
-                                color="#FFF"
+                            <BetterText
+                                textAlign="normal"
+                                fontWeight="Bold"
+                                fontSize={10}
+                                textColor="#FFF"
                             >
                                 {preheader}
-                            </BeText>
+                            </BetterText>
                         )}
                         {preheader && <GapView height={10} />}
-                        <BeText
-                            align="normal"
-                            weight="Bold"
-                            size={25}
-                            color="#FFF"
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Bold"
+                            fontSize={25}
+                            textColor="#FFF"
                         >
                             {header}
-                        </BeText>
+                        </BetterText>
                         {subheader && <GapView height={10} />}
                         {subheader && (
-                            <BeText
-                                align="normal"
-                                weight="Regular"
-                                size={12}
-                                color="#C8C8C8"
+                            <BetterText
+                                textAlign="normal"
+                                fontWeight="Regular"
+                                fontSize={12}
+                                textColor="#C8C8C8"
                             >
                                 {subheader}
-                            </BeText>
+                            </BetterText>
                         )}
                         <GapView height={10} />
                         <Native.View

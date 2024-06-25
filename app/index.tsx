@@ -3,16 +3,16 @@
 
 import * as React from "react";
 import * as Native from "react-native";
-import BeText from "@/components/Text";
+import BetterText from "@/components/BetterText";
 import Section from "@/components/section/Section";
-import Foot from "@/components/Foot";
+import BottomNav from "@/components/BottomNav";
 import * as Router from "expo-router";
 import Division from "@/components/section/division/Division";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Btn from "@/components/Btns";
+import Button from "@/components/Buttons";
 import GapView from "@/components/GapView";
-import Nomore from "@/components/Nomore";
-import { testLog } from "@/app/Dev";
+import Footer from "@/components/Footer";
+import { testLog } from "@/app/DeveloperInterface";
 
 // TypeScript, supongo
 interface Objective {
@@ -117,11 +117,11 @@ export default function Home() {
     const currentpage: string = Router.usePathname();
 
     const createObj = (): void => {
-        Router.router.navigate("Crea");
+        Router.router.navigate("/Crea");
     };
 
     const startObj = (id: number): void => {
-        Router.router.navigate("Sess?id=" + id);
+        Router.router.navigate("/Sessions?id=" + id);
     };
 
     const doObj = (id: number): void => {
@@ -206,7 +206,7 @@ export default function Home() {
     }
 
     if (isFirstLaunch) {
-        Router.router.push("/Welc");
+        Router.router.push("/WelcomeScreen");
     }
 
     const randomDoneAllMsg: number = Math.floor(Math.random() * 4) + 1;
@@ -218,16 +218,20 @@ export default function Home() {
 
     return (
         <Native.View style={styles.containerview}>
-            <Foot page={currentpage} />
+            <BottomNav currentLocation={currentpage} />
             <Native.ScrollView style={styles.mainview}>
-                <BeText align="normal" weight="Bold" size={40}>
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={40}>
                     Hello, {username}!
-                </BeText>
-                <BeText align="normal" weight="Regular" size={20}>
+                </BetterText>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={20}
+                >
                     This is your summary for today
-                </BeText>
+                </BetterText>
                 <GapView height={20} />
-                <Section kind="OBJS">
+                <Section kind="Objectives">
                     {objs && Object.keys(objs).length > 0 ? (
                         Object.keys(objs).every(
                             key =>
@@ -244,57 +248,57 @@ export default function Home() {
                                     justifyContent: "center",
                                 }}
                             >
-                                <BeText
-                                    align="center"
-                                    size={30}
-                                    color="#FFF"
-                                    weight="Bold"
+                                <BetterText
+                                    textAlign="center"
+                                    fontSize={30}
+                                    textColor="#FFF"
+                                    fontWeight="Bold"
                                 >
                                     You&apos;ve done everything!
-                                </BeText>
+                                </BetterText>
                                 <GapView height={10} />
                                 {randomDoneAllMsg === 1 && (
-                                    <BeText
-                                        align="center"
-                                        size={15}
-                                        color="#FFF"
-                                        weight="Regular"
+                                    <BetterText
+                                        textAlign="center"
+                                        fontSize={15}
+                                        textColor="#FFF"
+                                        fontWeight="Regular"
                                     >
                                         Feel proud of yourself, don&apos;t you?
-                                    </BeText>
+                                    </BetterText>
                                 )}
                                 {randomDoneAllMsg === 2 && (
-                                    <BeText
-                                        align="center"
-                                        size={15}
-                                        color="#FFF"
-                                        weight="Regular"
+                                    <BetterText
+                                        textAlign="center"
+                                        fontSize={15}
+                                        textColor="#FFF"
+                                        fontWeight="Regular"
                                     >
                                         That is right, you have completed ALL of
                                         your objectives for today.
-                                    </BeText>
+                                    </BetterText>
                                 )}
                                 {randomDoneAllMsg === 3 && (
-                                    <BeText
-                                        align="center"
-                                        size={15}
-                                        color="#FFF"
-                                        weight="Regular"
+                                    <BetterText
+                                        textAlign="center"
+                                        fontSize={15}
+                                        textColor="#FFF"
+                                        fontWeight="Regular"
                                     >
                                         Now plan something else and make this
                                         day even more productive!
-                                    </BeText>
+                                    </BetterText>
                                 )}
                                 {randomDoneAllMsg === 4 && (
-                                    <BeText
-                                        align="center"
-                                        size={15}
-                                        color="#FFF"
-                                        weight="Regular"
+                                    <BetterText
+                                        textAlign="center"
+                                        fontSize={15}
+                                        textColor="#FFF"
+                                        fontWeight="Regular"
                                     >
                                         &quot;Giving yourself a PLUS&quot; seems
                                         to be worth it, right?
-                                    </BeText>
+                                    </BetterText>
                                 )}
                             </Native.View>
                         ) : (
@@ -316,15 +320,15 @@ export default function Home() {
                                             preheader="ACTIVE OBJECTIVE"
                                             header={obj.exercise}
                                         >
-                                            <Btn
-                                                kind="ACE"
-                                                onclick={() => startObj(obj.id)}
-                                                text="Let's go!"
+                                            <Button
+                                                style="ACE"
+                                                action={() => startObj(obj.id)}
+                                                buttonText="Let's go!"
                                             />
-                                            <Btn
-                                                kind="GOD"
-                                                onclick={() => doObj(obj.id)}
-                                                text="Already done it"
+                                            <Button
+                                                style="GOD"
+                                                action={() => doObj(obj.id)}
+                                                buttonText="Already done it"
                                             />
                                         </Division>
                                     );
@@ -342,26 +346,26 @@ export default function Home() {
                                 justifyContent: "center",
                             }}
                         >
-                            <BeText
-                                align="center"
-                                size={30}
-                                color="#FFF"
-                                weight="Bold"
+                            <BetterText
+                                textAlign="center"
+                                fontSize={30}
+                                textColor="#FFF"
+                                fontWeight="Bold"
                             >
                                 You don&apos;t have any objectives. Create one
                                 now!
-                            </BeText>
+                            </BetterText>
                             <GapView height={15} />
-                            <Btn
+                            <Button
                                 width="fill"
-                                kind="ACE"
-                                text="Let's go!"
-                                onclick={createObj}
+                                style="ACE"
+                                buttonText="Let's go!"
+                                action={createObj}
                             />
                         </Native.View>
                     )}
                 </Section>
-                <Nomore />
+                <Footer />
             </Native.ScrollView>
         </Native.View>
     );

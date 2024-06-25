@@ -15,6 +15,10 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - PD: Los logs serán en inglés, siempre.
 
+## 0.0.1-R5-b19
+
+- Renamed most variables to take a more descriptive and easy to understand approach.
+
 ## 0.0.1-R5-b18
 
 - Fixed some typos.

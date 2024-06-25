@@ -1,13 +1,13 @@
-// Text.tsx
+// BetterText.tsx
 // Text, con estilos apropiados y la tipografía Be Vietnam Pro
 
-import React from "react";
+import * as React from "react";
 import * as Native from "react-native";
 
 // TypeScript, supongo
-interface BeTextProps {
-    size: number; // Tamaño de letra en px
-    weight:
+interface BetterTextProps {
+    fontSize: number; // Tamaño de letra en px
+    fontWeight:
         | "Light"
         | "LightItalic"
         | "ExtraLight"
@@ -26,80 +26,75 @@ interface BeTextProps {
         | "ExtraBoldItalic"
         | "Black"
         | "BlackItalic"; // Intensidad de la tipografía
-    color?: string; // Color del texto - default: blanco (ya que el fondo es negro)
+    textColor?: string; // Color del texto - default: blanco (ya que el fondo es negro)
     onTap?: () => void; // Si se proporciona, el texto actuará como un botón / enlace y hará algo
-    align?: "center" | "normal" | "left" | "right"; // Alineación del texto
+    textAlign?: "center" | "normal" | "left" | "right"; // Alineación del texto
     children: React.ReactNode; // Texto en sí, dentro del tag <BeText>
     url?: boolean; // Si es verdadero el texto se estilizará como un enlace externo - default: false
 }
 
 // Creamos la función
-export default function BeText({
-    size,
-    weight,
+export default function BetterText({
+    fontSize,
+    fontWeight,
     children,
-    color,
-    align,
+    textColor,
+    textAlign,
     onTap,
     url,
-}: BeTextProps) {
-    const font: string = "BeVietnamPro-" + weight;
-    // La altura de línea es igual al tamaño de letra
-    const thelineheight: number = size;
-    const txtcolor: string = color || "#FFF";
-    let txtalgn: string = align || "normal";
-    let txtdeco: string;
+}: BetterTextProps) {
+    const font: string = "BeVietnamPro-" + fontWeight; // La altura de línea es igual al tamaño de letra
+    const lineheight: number = fontSize;
+    const color: string = textColor || "#FFF";
+    let textalignment: string = textAlign || "normal";
+    let textdecoration: string;
 
-    switch (align) {
+    switch (textAlign) {
         case "center":
-            txtalgn = "center";
+            textalignment = "center";
             break;
         case "normal":
-            txtalgn = "left";
+            textalignment = "left";
             break;
         case "left":
-            txtalgn = "left";
+            textalignment = "left";
             break;
         case "right":
-            txtalgn = "right";
+            textalignment = "right";
             break;
         default:
-            txtalgn = "left";
+            textalignment = "left";
             break;
     }
 
     switch (url) {
         case true:
-            txtdeco = "underline";
+            textdecoration = "underline";
             break;
         case false:
-            txtdeco = "none";
+            textdecoration = "none";
             break;
         default:
-            txtdeco = "none";
+            textdecoration = "none";
             break;
     }
 
     const textStyle: Native.TextStyle = {
         fontFamily: font,
-        fontSize: size,
-        lineHeight: thelineheight,
-        color: txtcolor,
+        fontSize: fontSize,
+        lineHeight: lineheight,
+        color: color,
         // @ts-expect-error: Type error
-        textAlign: txtalgn,
+        textAlign: textalignment,
         // @ts-expect-error: Type error
-        textDecorationLine: txtdeco,
-        textDecorationColor: txtcolor,
+        textDecorationLine: textdecoration,
+        textDecorationColor: color,
         textDecorationStyle: "solid",
     };
 
-    if (onTap) {
-        return (
-            <Native.Text style={textStyle} onPress={onTap}>
-                {children}
-            </Native.Text>
-        );
-    } else {
-        return <Native.Text style={textStyle}>{children}</Native.Text>;
-    }
+    return (
+        <Native.Text style={textStyle} {...(onTap ? { onPress: onTap } : {})}>
+            {children}
+        </Native.Text>
+    );
 }

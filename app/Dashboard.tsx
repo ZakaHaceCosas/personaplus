@@ -3,16 +3,16 @@
 
 import * as React from "react";
 import * as Native from "react-native";
-import BeText from "@/components/Text";
-import Foot from "@/components/Foot";
+import BetterText from "@/components/BetterText";
+import BottomNav from "@/components/BottomNav";
 import * as Router from "expo-router";
 import Section from "@/components/section/Section";
 import Division from "@/components/section/division/Division";
 import GapView from "@/components/GapView";
-import Nomore from "@/components/Nomore";
+import Footer from "@/components/Footer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Btn from "@/components/Btns";
-import { testLog } from "./Dev";
+import Button from "@/components/Buttons";
+import { testLog } from "./DeveloperInterface";
 
 // TypeScript, supongo
 interface Objective {
@@ -141,16 +141,20 @@ export default function Dash() {
 
     return (
         <Native.View style={styles.containerview}>
-            <Foot page={currentpage}></Foot>
+            <BottomNav currentLocation={currentpage} />
             <Native.ScrollView style={styles.mainview}>
-                <BeText align="normal" weight="Bold" size={40}>
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={40}>
                     Dashboard
-                </BeText>
-                <BeText align="normal" weight="Regular" size={20}>
+                </BetterText>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={20}
+                >
                     Let&apos;s set up your path to success
-                </BeText>
+                </BetterText>
                 <GapView height={20} />
-                <Section kind="OBJS">
+                <Section kind="Objectives">
                     {objs && Object.keys(objs).length > 0 ? (
                         Object.keys(objs).map(key => {
                             const obj = objs[key];
@@ -181,15 +185,15 @@ export default function Dash() {
                                         header={obj.exercise}
                                         subheader={desc}
                                     >
-                                        <Btn
-                                            kind="ACE"
-                                            onclick={() => editObj(obj.id)}
-                                            text="Edit"
+                                        <Button
+                                            style="ACE"
+                                            action={() => editObj(obj.id)}
+                                            buttonText="Edit"
                                         />
-                                        <Btn
-                                            kind="WOR"
-                                            onclick={() => deleteObj(obj.id)}
-                                            text="Remove"
+                                        <Button
+                                            style="WOR"
+                                            action={() => deleteObj(obj.id)}
+                                            buttonText="Remove"
                                         />
                                     </Division>
                                 </Native.View>
@@ -206,21 +210,21 @@ export default function Dash() {
                                 justifyContent: "center",
                             }}
                         >
-                            <BeText
-                                align="center"
-                                size={30}
-                                color="#FFF"
-                                weight="Bold"
+                            <BetterText
+                                textAlign="center"
+                                fontSize={30}
+                                textColor="#FFF"
+                                fontWeight="Bold"
                             >
                                 You don&apos;t have any objectives. Create one
                                 now!
-                            </BeText>
+                            </BetterText>
                             <GapView height={15} />
-                            <Btn
+                            <Button
                                 width="fill"
-                                kind="ACE"
-                                text="Let's go!"
-                                onclick={createObj}
+                                style="ACE"
+                                buttonText="Let's go!"
+                                action={createObj}
                             />
                         </Native.View>
                     )}
@@ -230,16 +234,16 @@ export default function Dash() {
                                 padding: 20,
                             }}
                         >
-                            <Btn
+                            <Button
                                 width="fill"
-                                kind="GOD"
-                                text="Create active objective"
-                                onclick={createObj}
+                                style="GOD"
+                                buttonText="Create active objective"
+                                action={createObj}
                             />
                         </Native.View>
                     )}
                 </Section>
-                <Nomore />
+                <Footer />
             </Native.ScrollView>
         </Native.View>
     );

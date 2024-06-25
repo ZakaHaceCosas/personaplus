@@ -1,14 +1,15 @@
 // Dev.tsx
 // Página que muestra ciertos logs de la consola para ayudar al desarrollador
 
-import Foot from "@/components/Foot";
 import * as React from "react";
 import * as Native from "react-native";
 import * as Router from "expo-router";
-import BeText from "@/components/Text";
+import Footer from "@/components/Footer";
+import BottomNav from "@/components/BottomNav";
+import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Btn from "@/components/Btns";
+import Button from "@/components/Buttons";
 import { version as ReactVersion } from "react";
 import { version as PersonaPlusVersion } from "@/package.json";
 
@@ -213,121 +214,153 @@ export default function ConsoleLogger() {
 
     return (
         <Native.View style={styles.containerview}>
-            <Foot page={currentPage} />
+            <BottomNav currentLocation={currentPage} />
             <Native.ScrollView style={styles.mainview}>
                 <GapView height={20} />
-                <BeText align="normal" weight="Regular" size={35}>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={35}
+                >
                     Dev interface
-                </BeText>
-                <BeText align="normal" weight="Italic" size={15}>
+                </BetterText>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Italic"
+                    fontSize={15}
+                >
                     Interfaz de devs
-                </BeText>
+                </BetterText>
                 <GapView height={20} />
-                <BeText align="normal" weight="Bold" size={20}>
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
                     Options
-                </BeText>
+                </BetterText>
                 <GapView height={5} />
-                <Btn
-                    onclick={() => Router.router.navigate("/Welc")}
-                    text="Go to /Welc (Welcome page)"
-                    kind="ACE"
+                <Button
+                    action={() => Router.router.navigate("/WelcomeScreen")}
+                    buttonText="Go to /Welc (Welcome page)"
+                    style="ACE"
                 />
                 <GapView height={5} />
-                <Btn
-                    onclick={() => devFCclearobjs()}
-                    text="Clear OBJS"
-                    kind="HMM"
+                <Button
+                    action={() => devFCclearobjs()}
+                    buttonText="Clear OBJS"
+                    style="HMM"
                 />
                 <GapView height={5} />
-                <Btn
-                    onclick={() => devFCclearall()}
-                    text="Clear all"
-                    kind="WOR"
+                <Button
+                    action={() => devFCclearall()}
+                    buttonText="Clear all"
+                    style="WOR"
                 />
                 <GapView height={20} />
-                <BeText align="normal" weight="Bold" size={20}>
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
                     Versions
-                </BeText>
+                </BetterText>
                 <GapView height={5} />
-                <BeText align="normal" weight="Regular" size={15}>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={15}
+                >
                     React: {ReactVersion}
-                </BeText>
+                </BetterText>
                 <GapView height={5} />
-                <BeText align="normal" weight="Regular" size={15}>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={15}
+                >
                     PersonaPlus: {PersonaPlusVersion}
-                </BeText>
+                </BetterText>
                 <GapView height={20} />
-                <BeText align="normal" weight="Bold" size={20}>
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
                     OBJS
-                </BeText>
-                <BeText align="normal" weight="Regular" size={15}>
+                </BetterText>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={15}
+                >
                     OBJS = objectives - the base of the app. this is the
                     stringified JSON for the active objectives (OBJS).
-                </BeText>
-                <BeText align="normal" weight="Italic" size={10}>
+                </BetterText>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Italic"
+                    fontSize={10}
+                >
                     OBJS = objetivos - la base de la app. this is the
                     stringified JSON for the active objectives (OBJS).
-                </BeText>
+                </BetterText>
                 <GapView height={20} />
                 <Native.View style={styles.consoleview}>
-                    <BeText
-                        color="#000"
-                        align="normal"
-                        weight="Regular"
-                        size={15}
+                    <BetterText
+                        textColor="#000"
+                        textAlign="normal"
+                        fontWeight="Regular"
+                        fontSize={15}
                     >
                         {JSON.stringify(objs)}
-                    </BeText>
+                    </BetterText>
                 </Native.View>
                 <GapView height={20} />
-                <BeText align="normal" weight="Bold" size={20}>
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
                     Console logs
-                </BeText>
-                <BeText align="normal" weight="Regular" size={15}>
+                </BetterText>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={15}
+                >
                     meant for testing from mobile / Expo Go. From the desktop,
                     use the browsers console
-                </BeText>
-                <BeText
-                    align="normal"
-                    weight="Regular"
-                    size={15}
-                    color="#FFC832"
+                </BetterText>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={15}
+                    textColor="#FFC832"
                 >
                     they may not look properly due to the usage of %c for
                     desktop / browser logs (but they are still readable so no
                     problem)
-                </BeText>
-                <BeText align="normal" weight="Italic" size={10}>
+                </BetterText>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Italic"
+                    fontSize={10}
+                >
                     pensados para el uso desde móvil / Expo Go - en PC usa la
                     consola del navegador
-                </BeText>
-                <BeText
-                    align="normal"
-                    weight="BoldItalic"
-                    size={15}
-                    color="#FFC832"
+                </BetterText>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="BoldItalic"
+                    fontSize={15}
+                    textColor="#FFC832"
                 >
                     some logs will only be on the desktops terminal, not here
-                </BeText>
-                <BeText
-                    align="normal"
-                    weight="Italic"
-                    size={10}
-                    color="#FFC832"
+                </BetterText>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Italic"
+                    fontSize={10}
+                    textColor="#FFC832"
                 >
                     puede que no se vean del todo bien al usar %c para los logs
                     de consola / navegador (pero se siguen leyendo bien asi que
                     no hay problema)
-                </BeText>
-                <BeText
-                    align="normal"
-                    weight="BoldItalic"
-                    size={10}
-                    color="#FFC832"
+                </BetterText>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="BoldItalic"
+                    fontSize={10}
+                    textColor="#FFC832"
                 >
                     algunos logs solo apareceran en la terminal del escritorio,
                     no aquí
-                </BeText>
+                </BetterText>
                 <GapView height={20} />
                 <Native.ScrollView style={styles.consoleview}>
                     {logs.map((log, index) => (
@@ -340,6 +373,7 @@ export default function ConsoleLogger() {
                         </Native.Text>
                     ))}
                 </Native.ScrollView>
+                <Footer />
             </Native.ScrollView>
         </Native.View>
     );

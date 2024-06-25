@@ -1,14 +1,14 @@
 import * as React from "react";
 import * as Native from "react-native";
 import * as Router from "expo-router";
-import BeText from "@/components/Text";
+import BetterText from "@/components/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // TypeScript, supongo
 interface SectionProps {
-    page: string; // en que página ( /welc, /, /prof, está ahora)
+    currentLocation: string; // en que página ( /welc, /, /prof, está ahora)
 }
 
 // Definimos los estilos
@@ -22,8 +22,9 @@ const styles = Native.StyleSheet.create({
 });
 
 // Creamos la función del componente
-export default function Foot({ page }: SectionProps) {
-    const [currentPage, setCurrentPage] = React.useState<string>(page);
+export default function BottomNav({ currentLocation }: SectionProps) {
+    const [currentPage, setCurrentPage] =
+        React.useState<string>(currentLocation);
     // Define la función para manejar el cambio de página
     const handlePageChange = (newPage: string) => {
         setCurrentPage(newPage);
@@ -78,8 +79,8 @@ export default function Foot({ page }: SectionProps) {
         >
             {wantsDev && (
                 <Router.Link
-                    href="/Dev"
-                    onPress={() => handlePageChange("/Dev")}
+                    href="/DeveloperInterface"
+                    onPress={() => handlePageChange("/DeveloperInterface")}
                 >
                     <Native.View style={styles.touchme}>
                         <Native.View>
@@ -87,7 +88,7 @@ export default function Foot({ page }: SectionProps) {
                                 name="code"
                                 size={25}
                                 color={
-                                    currentPage === "/Dev"
+                                    currentPage === "/DeveloperInterface"
                                         ? "#3280FF"
                                         : "#8A8C8E"
                                 }
@@ -95,18 +96,18 @@ export default function Foot({ page }: SectionProps) {
                         </Native.View>
                         <GapView height={5} />
                         <Native.View>
-                            <BeText
-                                align="normal"
-                                weight="Bold"
-                                size={12}
-                                color={
-                                    currentPage === "/Dev"
+                            <BetterText
+                                textAlign="normal"
+                                fontWeight="Bold"
+                                fontSize={12}
+                                textColor={
+                                    currentPage === "/DeveloperInterface"
                                         ? "#3280FF"
                                         : "#8A8C8E"
                                 }
                             >
                                 Dev
-                            </BeText>
+                            </BetterText>
                         </Native.View>
                     </Native.View>
                 </Router.Link>
@@ -122,14 +123,14 @@ export default function Foot({ page }: SectionProps) {
                     </Native.View>
                     <GapView height={5} />
                     <Native.View>
-                        <BeText
-                            align="normal"
-                            weight="Bold"
-                            size={12}
-                            color={currentPage === "/" ? "#FFF" : "#8A8C8E"}
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Bold"
+                            fontSize={12}
+                            textColor={currentPage === "/" ? "#FFF" : "#8A8C8E"}
                         >
                             Home
-                        </BeText>
+                        </BetterText>
                     </Native.View>
                 </Native.View>
             </Router.Link>
@@ -144,14 +145,16 @@ export default function Foot({ page }: SectionProps) {
                     </Native.View>
                     <GapView height={5} />
                     <Native.View>
-                        <BeText
-                            align="normal"
-                            weight="Bold"
-                            size={12}
-                            color={currentPage === "/Dash" ? "#FFF" : "#8A8C8E"}
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Bold"
+                            fontSize={12}
+                            textColor={
+                                currentPage === "/Dash" ? "#FFF" : "#8A8C8E"
+                            }
                         >
                             Dash
-                        </BeText>
+                        </BetterText>
                     </Native.View>
                 </Native.View>
             </Router.Link>
@@ -166,14 +169,16 @@ export default function Foot({ page }: SectionProps) {
                     </Native.View>
                     <GapView height={5} />
                     <Native.View>
-                        <BeText
-                            align="normal"
-                            weight="Bold"
-                            size={12}
-                            color={currentPage === "/Prof" ? "#FFF" : "#8A8C8E"}
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Bold"
+                            fontSize={12}
+                            textColor={
+                                currentPage === "/Prof" ? "#FFF" : "#8A8C8E"
+                            }
                         >
                             Profile
-                        </BeText>
+                        </BetterText>
                     </Native.View>
                 </Native.View>
             </Router.Link>

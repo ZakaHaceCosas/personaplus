@@ -162,26 +162,32 @@ import BeText from './components/Text'; // no bien
 
 #### 3. NOMBRA CLARAMENTE LAS VARIABLES
 
-Utiliza el nombre completo en inglés de lo que sea que busques crear, o, a poder ser y siempre que sea comprensible, una acortación a cuatro letras. Tampoco hagas nombres *demasiado* descriptivos.
+Utiliza el inglés, crea nombres descriptions, comprensibles, y que permitan reconocer con facilidad lo que hace cada cosa. Utiliza capitalización en camello (camel casing).
 
 ```tsx
-// Mal.
+// Muy mal.
 const w = "100vw"
 const t = "Bold"
 const a = "center"
 
-// Bien. Recomendable.
+// Mal.
 const widt = "100vh"
 const text = "Bold"
 const algn = "center"
 
-// También bien. Funciona.
+// Bien. Recomendable.
 const width = "100vh"
 const text = "Bold"
 const align = "center"
 
-// No tan bien. Podrías usar "align", estandar y más fácil.
+// También bien, funciona.
 const alignment = "center"
+
+// No hagas esto.
+const access_objs;
+
+// Haz esto
+const AccessObjs;
 ```
 
 #### 4. HAZ USO DEL TIPEADO

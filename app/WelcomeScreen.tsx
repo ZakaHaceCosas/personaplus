@@ -4,10 +4,10 @@
 import * as React from "react";
 import * as Native from "react-native";
 import * as Router from "expo-router";
-import BeSwap from "@/components/Swap";
-import Btn from "@/components/Btns";
+import Swap from "@/components/Swap";
+import Button from "@/components/Buttons";
 import GapView from "@/components/GapView";
-import BeText from "@/components/Text";
+import BetterText from "@/components/BetterText";
 import { Picker as Select } from "@react-native-picker/picker";
 
 // Definimos los estilos
@@ -160,28 +160,36 @@ export default function WelcomePage() {
             <Native.View style={styles.defview}>
                 {currentTab === 1 && (
                     <React.Fragment>
-                        <BeText align="normal" weight="Bold" size={40}>
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Bold"
+                            fontSize={40}
+                        >
                             Welcome to{" "}
-                            <BeText
-                                align="normal"
-                                weight="ExtraBold"
-                                size={40}
-                                color="#32FF80"
+                            <BetterText
+                                textAlign="normal"
+                                fontWeight="ExtraBold"
+                                fontSize={40}
+                                textColor="#32FF80"
                             >
                                 PersonaPlus
-                            </BeText>
+                            </BetterText>
                             !
-                        </BeText>
+                        </BetterText>
                         <GapView height={10} />
-                        <BeText align="normal" weight="Regular" size={20}>
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Regular"
+                            fontSize={20}
+                        >
                             Were proud to see you want to give yourself a plus.
-                        </BeText>
+                        </BetterText>
                         <GapView height={20} />
                         <Native.View style={styles.flexbtns}>
-                            <Btn
-                                kind="GOD"
-                                onclick={gonext}
-                                text="Let's get started!"
+                            <Button
+                                style="GOD"
+                                action={gonext}
+                                buttonText="Let's get started!"
                                 width="fill"
                                 height={500}
                             />
@@ -191,25 +199,33 @@ export default function WelcomePage() {
 
                 {currentTab === 2 && (
                     <React.Fragment>
-                        <BeText align="normal" weight="Bold" size={40}>
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Bold"
+                            fontSize={40}
+                        >
                             Tell us about yourself
-                        </BeText>
+                        </BetterText>
                         <GapView height={10} />
-                        <BeText align="normal" weight="Regular" size={20}>
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Regular"
+                            fontSize={20}
+                        >
                             We only ask for the data we need for the app to
                             work. No data is sent outside of this device, ever.{" "}
-                            <BeText
+                            <BetterText
                                 url={true}
-                                align="normal"
-                                weight="Regular"
-                                size={20}
-                                color="#3280FF"
+                                textAlign="normal"
+                                fontWeight="Regular"
+                                fontSize={20}
+                                textColor="#3280FF"
                                 onTap={learnMore}
                             >
                                 Learn more
-                            </BeText>
+                            </BetterText>
                             .
-                        </BeText>
+                        </BetterText>
                         <GapView height={20} />
                         <Native.TextInput
                             placeholder="Username (doesn't have to be your real name)"
@@ -224,7 +240,7 @@ export default function WelcomePage() {
                                     borderWidth: 4,
                                     borderColor: "#3E4146",
                                     width: "100%",
-                                    color: "white",
+                                    color: "#FFF",
                                     // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                                     outline: "none",
                                     fontFamily: "BeVietnamPro-Regular",
@@ -258,7 +274,7 @@ export default function WelcomePage() {
                                     borderWidth: 4,
                                     borderColor: "#3E4146",
                                     width: "100%",
-                                    color: "white",
+                                    color: "#FFF",
                                     // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                                     outline: "none",
                                     fontFamily: "BeVietnamPro-Regular",
@@ -291,7 +307,7 @@ export default function WelcomePage() {
                                     borderWidth: 4,
                                     borderColor: "#3E4146",
                                     width: "100%",
-                                    color: "white",
+                                    color: "#FFF",
                                     // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                                     outline: "none",
                                     fontFamily: "BeVietnamPro-Regular",
@@ -324,7 +340,7 @@ export default function WelcomePage() {
                                     borderWidth: 4,
                                     borderColor: "#3E4146",
                                     width: "100%",
-                                    color: "white",
+                                    color: "#FFF",
                                     // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                                     outline: "none",
                                     fontFamily: "BeVietnamPro-Regular",
@@ -345,7 +361,7 @@ export default function WelcomePage() {
                         />
                         <GapView height={15} />
                         {easteregg !== 1 && (
-                            <BeSwap
+                            <Swap
                                 id="genderswap"
                                 key="genderswap"
                                 options={genderoptions}
@@ -355,7 +371,7 @@ export default function WelcomePage() {
                             />
                         )}
                         {easteregg === 1 && (
-                            <BeSwap
+                            <Swap
                                 id="genderswap"
                                 key="genderswap"
                                 options={progenderoptions}
@@ -366,16 +382,16 @@ export default function WelcomePage() {
                         )}
                         <GapView height={15} />
                         <Native.View style={styles.flexbtns}>
-                            <Btn
-                                kind="DEFAULT"
-                                onclick={goback}
-                                text="Go back"
+                            <Button
+                                style="DEFAULT"
+                                action={goback}
+                                buttonText="Go back"
                                 width="fill"
                             />
-                            <Btn
-                                kind="ACE"
-                                onclick={gonext}
-                                text="Continue"
+                            <Button
+                                style="ACE"
+                                action={gonext}
+                                buttonText="Continue"
                                 width="fill"
                             />
                         </Native.View>
@@ -384,25 +400,33 @@ export default function WelcomePage() {
 
                 {currentTab === 3 && (
                     <React.Fragment>
-                        <BeText align="normal" weight="Bold" size={40}>
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Bold"
+                            fontSize={40}
+                        >
                             What is your main objective?
-                        </BeText>
+                        </BetterText>
                         <GapView height={10} />
-                        <BeText align="normal" weight="Regular" size={20}>
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Regular"
+                            fontSize={20}
+                        >
                             We know you want to improve yourself, but, what is
                             your key focus point?
-                        </BeText>
+                        </BetterText>
                         <GapView height={10} />
-                        <BeText
-                            align="normal"
-                            weight="Regular"
-                            size={10}
-                            color="#C8C8C8"
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Regular"
+                            fontSize={10}
+                            textColor="#C8C8C8"
                         >
                             Choose only one option. You can change it any time.
-                        </BeText>
+                        </BetterText>
                         <GapView height={20} />
-                        <BeSwap
+                        <Swap
                             id="focuspointswap"
                             key="focuspointswap"
                             options={focuspointoptions}
@@ -412,16 +436,16 @@ export default function WelcomePage() {
                         />
                         <GapView height={15} />
                         <Native.View style={styles.flexbtns}>
-                            <Btn
-                                kind="DEFAULT"
-                                onclick={goback}
-                                text="Go back"
+                            <Button
+                                style="DEFAULT"
+                                action={goback}
+                                buttonText="Go back"
                                 width="fill"
                             />
-                            <Btn
-                                kind="ACE"
-                                onclick={gonext}
-                                text="Continue"
+                            <Button
+                                style="ACE"
+                                action={gonext}
+                                buttonText="Continue"
                                 width="fill"
                             />
                         </Native.View>
@@ -430,14 +454,22 @@ export default function WelcomePage() {
 
                 {currentTab === 4 && (
                     <React.Fragment>
-                        <BeText align="normal" weight="Bold" size={40}>
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Bold"
+                            fontSize={40}
+                        >
                             Tell us about your habits
-                        </BeText>
+                        </BetterText>
                         <GapView height={10} />
-                        <BeText align="normal" weight="Regular" size={20}>
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Regular"
+                            fontSize={20}
+                        >
                             Understanding your life will help us help you
                             improve it.
-                        </BeText>
+                        </BetterText>
                         <GapView height={20} />
                         <Select
                             selectedValue={sleep}
@@ -455,16 +487,16 @@ export default function WelcomePage() {
                         </Select>
                         <GapView height={15} />
                         <Native.View style={styles.flexbtns}>
-                            <Btn
-                                kind="DEFAULT"
-                                onclick={goback}
-                                text="Go back"
+                            <Button
+                                style="DEFAULT"
+                                action={goback}
+                                buttonText="Go back"
                                 width="fill"
                             />
-                            <Btn
-                                kind="ACE"
-                                onclick={gonext}
-                                text="Continue"
+                            <Button
+                                style="ACE"
+                                action={gonext}
+                                buttonText="Continue"
                                 width="fill"
                             />
                         </Native.View>

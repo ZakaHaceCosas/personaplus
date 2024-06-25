@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import * as Native from "react-native";
-import BeText from "@/components/Text";
+import BetterText from "@/components/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
 
@@ -13,74 +13,75 @@ interface SectionProps {
     label: string;
 }
 
-// Definimos la hoja de estilos
-const styles = Native.StyleSheet.create({
-    mainview: {
-        display: "flex",
-        flexDirection: "row",
-        padding: 15,
-        alignItems: "center",
-        justifyContent: "flex-start",
-    },
-    items: {
-        color: "#DDDDDD",
-    },
-});
-
 // Creamos la función
 export default function SectionHeader({ icon, label }: SectionProps) {
-    let i: string;
+    let headerIcon: string;
     // Ya que habrá una cantidad definida de secciones, utilizamos switch y creamos diferentes casos, uno para cada sección dentro de la app.
     switch (icon) {
         case "OBJS":
-            i = "timer";
+            headerIcon = "timer";
             break;
         case "POBJS":
-            i = "calendar-today";
+            headerIcon = "calendar-today";
             break;
         case "HYAD":
-            i = "space-dashboard";
+            headerIcon = "space-dashboard";
             break;
         case "SETS":
-            i = "settings";
+            headerIcon = "settings";
             break;
         case "DEV":
-            i = "dev";
+            headerIcon = "dev";
             break;
         case "PROF":
-            i = "prof";
+            headerIcon = "prof";
             break;
         default:
-            i = "question-mark";
+            headerIcon = "question-mark";
             break;
     }
 
     return (
-        <Native.View style={styles.mainview}>
+        <Native.View
+            style={{
+                display: "flex",
+                flexDirection: "row",
+                padding: 15,
+                alignItems: "center",
+                justifyContent: "flex-start",
+            }}
+        >
             {/* Replaced name={i} with this longer but simpler code due to a type error */}
-            {i === "question-mark" && (
+            {headerIcon === "question-mark" && (
                 <Ionicons name="question-mark" size={15} color="#DDDDDD" />
             )}
-            {i === "settings" && (
+            {headerIcon === "settings" && (
                 <Ionicons name="settings" size={15} color="#DDDDDD" />
             )}
-            {i === "space-dashboard" && (
+            {headerIcon === "space-dashboard" && (
                 <Ionicons name="space-dashboard" size={15} color="#DDDDDD" />
             )}
-            {i === "calendar-today" && (
+            {headerIcon === "calendar-today" && (
                 <Ionicons name="calendar-today" size={15} color="#DDDDDD" />
             )}
-            {i === "timer" && (
+            {headerIcon === "timer" && (
                 <Ionicons name="timer" size={15} color="#DDDDDD" />
             )}
-            {i === "prof" && (
+            {headerIcon === "prof" && (
                 <Ionicons name="person" size={15} color="#DDDDDD" />
             )}
-            {i === "dev" && <Ionicons name="code" size={15} color="#DDDDDD" />}
+            {headerIcon === "dev" && (
+                <Ionicons name="code" size={15} color="#DDDDDD" />
+            )}
             <GapView width={10} />
-            <BeText align="normal" weight="Bold" size={12} color="#DDDDDD">
-                {label}
-            </BeText>
+            <BetterText
+                textAlign="normal"
+                fontWeight="Bold"
+                fontSize={12}
+                textColor="#DDDDDD"
+            >
+                {String(label)}
+            </BetterText>
         </Native.View>
     );
 }

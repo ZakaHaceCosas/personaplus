@@ -1,9 +1,9 @@
-// Nomore.tsx
+// Footer.tsx
 // No more, nada más, se acabó, it ended...
 
 import * as React from "react";
 import * as Native from "react-native";
-import BeText from "@/components/Text";
+import BeText from "@/components/BetterText";
 
 // Definimos los estilos
 const styles = Native.StyleSheet.create({
@@ -14,10 +14,15 @@ const styles = Native.StyleSheet.create({
 });
 
 // Creamos la función del componente
-export default function Nomore() {
+export default function Footer() {
     return (
         <Native.View style={styles.container}>
-            <BeText align="center" weight="Regular" size={15} color="#C8C8C8">
+            <BeText
+                textAlign="center"
+                fontWeight="Regular"
+                fontSize={15}
+                textColor="#C8C8C8"
+            >
                 Nothing more to see
             </BeText>
         </Native.View>

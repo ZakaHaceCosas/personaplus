@@ -1,70 +1,74 @@
 // section/Section.tsx
 // Sección
 
-import React from "react";
+import * as React from "react";
 import * as Native from "react-native";
 import SectionHeader from "@/components/section/SectionHeader";
 
 // TypeScript, supongo
 interface DivisionProps {
-    kind: string;
+    kind:
+        | "Objectives"
+        | "PassiveObjs"
+        | "HowYouAreDoing"
+        | "Unknown"
+        | "Settings"
+        | "Profile"
+        | "Developer";
     children: React.ReactNode;
 }
 
-// Definimos los estilos
-const styles = Native.StyleSheet.create({
-    container: {
-        display: "flex",
-        backgroundColor: "#14171C",
-        flexDirection: "column",
-        borderRadius: 15,
-        overflow: "hidden",
-    },
-});
-
 // Creamos la función
 export default function Division({ kind, children }: DivisionProps) {
-    let lbl: string;
-    let icn: string;
+    let label: string;
+    let icon: string;
 
     switch (kind) {
-        case "OBJS":
-            lbl = "YOUR ACTIVE OBJECTIVES";
-            icn = "OBJS";
+        case "Objectives":
+            label = "YOUR ACTIVE OBJECTIVES";
+            icon = "OBJS";
             break;
-        case "POBJS":
-            lbl = "YOUR PASSIVE OBJECTIVES";
-            icn = "POBJS";
+        case "PassiveObjs":
+            label = "YOUR PASSIVE OBJECTIVES";
+            icon = "POBJS";
             break;
-        case "HYAD":
-            lbl = "HOW YOU ARE DOING";
-            icn = "HYAD";
+        case "HowYouAreDoing":
+            label = "HOW YOU ARE DOING";
+            icon = "HYAD";
             break;
-        case "IDK":
-            lbl = "UNKNOWN";
-            icn = "IDK";
+        case "Unknown":
+            label = "UNKNOWN";
+            icon = "IDK";
             break;
-        case "SETS":
-            lbl = "SETTINGS";
-            icn = "SETS";
+        case "Settings":
+            label = "SETTINGS";
+            icon = "SETS";
             break;
-        case "DEV":
-            lbl = "DEVELOPER OPTIONS";
-            icn = "DEV";
+        case "Developer":
+            label = "DEVELOPER OPTIONS";
+            icon = "DEV";
             break;
-        case "PROF":
-            lbl = "YOUR PROFILE";
-            icn = "PROF";
+        case "Profile":
+            label = "YOUR PROFILE";
+            icon = "PROF";
             break;
         default:
-            lbl = "UNKNOWN";
-            icn = "IDK";
+            label = "UNKNOWN";
+            icon = "IDK";
             break;
     }
 
     return (
-        <Native.View style={styles.container}>
-            <SectionHeader label={lbl} icon={icn} />
+        <Native.View
+            style={{
+                display: "flex",
+                backgroundColor: "#14171C",
+                flexDirection: "column",
+                borderRadius: 15,
+                overflow: "hidden",
+            }}
+        >
+            <SectionHeader label={label} icon={icon} />
             {children}
         </Native.View>
     );

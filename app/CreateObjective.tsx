@@ -3,12 +3,12 @@
 
 import * as React from "react";
 import * as Native from "react-native";
-import BeText from "@/components/Text";
+import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
 import { Picker as Select } from "@react-native-picker/picker";
-import Btn from "@/components/Btns";
+import Button from "@/components/Buttons";
 import * as Router from "expo-router";
-import Noti from "@/components/Noti";
+import Notification from "@/components/Notification";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // TypeScript, supongo
@@ -184,17 +184,25 @@ export default function Form({ onSubmit }: FormProps) {
     return (
         <Native.View style={styles.containerview}>
             <Native.ScrollView style={styles.mainview}>
-                <BeText align="normal" weight="Bold" size={40}>
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={40}>
                     Let&apos;s do it!
-                </BeText>
-                <BeText align="normal" weight="Regular" size={20}>
+                </BetterText>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={20}
+                >
                     Create a new objective now!
-                </BeText>
+                </BetterText>
                 <GapView height={20} />
                 <Native.View>
-                    <BeText size={20} color="#FFF" weight="Regular">
+                    <BetterText
+                        fontSize={20}
+                        textColor="#FFF"
+                        fontWeight="Regular"
+                    >
                         What do you want to do?
-                    </BeText>
+                    </BetterText>
                     <GapView height={5} />
                     <Select
                         selectedValue={exercise}
@@ -224,9 +232,13 @@ export default function Form({ onSubmit }: FormProps) {
                         ))}
                     </Select>
                     <GapView height={20} />
-                    <BeText size={20} color="#FFF" weight="Regular">
+                    <BetterText
+                        fontSize={20}
+                        textColor="#FFF"
+                        fontWeight="Regular"
+                    >
                         What days do you want to exercise?
-                    </BeText>
+                    </BetterText>
                     <GapView height={15} />
                     <Native.View style={styles.flexydays}>
                         {days.map((day, index) => {
@@ -272,14 +284,14 @@ export default function Form({ onSubmit }: FormProps) {
                                         style={{ padding: 5 }}
                                         onPress={() => handleChangeDay(index)}
                                     >
-                                        <BeText
-                                            size={15}
-                                            align="center"
-                                            color={day ? "#FFF" : "#949698"}
-                                            weight="Regular"
+                                        <BetterText
+                                            fontSize={15}
+                                            textAlign="center"
+                                            textColor={day ? "#FFF" : "#949698"}
+                                            fontWeight="Regular"
                                         >
                                             {thisday}
-                                        </BeText>
+                                        </BetterText>
                                     </Native.Pressable>
                                 </Native.View>
                             );
@@ -295,36 +307,36 @@ export default function Form({ onSubmit }: FormProps) {
                         justifyContent: "space-between",
                     }}
                 >
-                    <Btn
-                        style="box"
-                        kind="ACE"
-                        onclick={() => handleIncrement("duration")}
-                        text="+"
+                    <Button
+                        layout="box"
+                        style="ACE"
+                        action={() => handleIncrement("duration")}
+                        buttonText="+"
                     />
                     <Native.View style={{ flex: 12 }}>
-                        <BeText
-                            size={15}
-                            color="#FFF"
-                            weight="Regular"
-                            align="center"
+                        <BetterText
+                            fontSize={15}
+                            textColor="#FFF"
+                            fontWeight="Regular"
+                            textAlign="center"
                         >
                             Duration:
-                        </BeText>
-                        <BeText
-                            size={biglblsz}
-                            color="#FFF"
-                            weight="Bold"
-                            align="center"
+                        </BetterText>
+                        <BetterText
+                            fontSize={biglblsz}
+                            textColor="#FFF"
+                            fontWeight="Bold"
+                            textAlign="center"
                         >
                             {duration} {duration === 1 ? "MINUTE" : "MINUTES"}
-                        </BeText>
+                        </BetterText>
                     </Native.View>
 
-                    <Btn
-                        style="box"
-                        kind="ACE"
-                        onclick={() => handleDecrement("duration")}
-                        text="-"
+                    <Button
+                        layout="box"
+                        style="ACE"
+                        action={() => handleDecrement("duration")}
+                        buttonText="-"
                     />
                 </Native.View>
                 <GapView height={15} />
@@ -336,36 +348,36 @@ export default function Form({ onSubmit }: FormProps) {
                         justifyContent: "space-between",
                     }}
                 >
-                    <Btn
-                        style="box"
-                        kind="ACE"
-                        onclick={() => handleIncrement("repetitions")}
-                        text="+"
+                    <Button
+                        layout="box"
+                        style="ACE"
+                        action={() => handleIncrement("repetitions")}
+                        buttonText="+"
                     />
                     <Native.View style={{ flex: 12 }}>
-                        <BeText
-                            size={15}
-                            color="#FFF"
-                            weight="Regular"
-                            align="center"
+                        <BetterText
+                            fontSize={15}
+                            textColor="#FFF"
+                            fontWeight="Regular"
+                            textAlign="center"
                         >
                             Repetitions:
-                        </BeText>
-                        <BeText
-                            size={biglblsz}
-                            color="#FFF"
-                            weight="Bold"
-                            align="center"
+                        </BetterText>
+                        <BetterText
+                            fontSize={biglblsz}
+                            textColor="#FFF"
+                            fontWeight="Bold"
+                            textAlign="center"
                         >
                             {repetitions}{" "}
                             {repetitions === 1 ? "REPETITION" : "REPETITIONS"}
-                        </BeText>
+                        </BetterText>
                     </Native.View>
-                    <Btn
-                        style="box"
-                        kind="ACE"
-                        onclick={() => handleDecrement("repetitions")}
-                        text="-"
+                    <Button
+                        layout="box"
+                        style="ACE"
+                        action={() => handleDecrement("repetitions")}
+                        buttonText="-"
                     />
                 </Native.View>
                 <GapView height={15} />
@@ -377,36 +389,36 @@ export default function Form({ onSubmit }: FormProps) {
                         justifyContent: "space-between",
                     }}
                 >
-                    <Btn
-                        style="box"
-                        kind="ACE"
-                        onclick={() => handleIncrement("rests")}
-                        text="+"
+                    <Button
+                        layout="box"
+                        style="ACE"
+                        action={() => handleIncrement("rests")}
+                        buttonText="+"
                     />
                     <Native.View style={{ flex: 12 }}>
-                        <BeText
-                            size={15}
-                            color="#FFF"
-                            weight="Regular"
-                            align="center"
+                        <BetterText
+                            fontSize={15}
+                            textColor="#FFF"
+                            fontWeight="Regular"
+                            textAlign="center"
                         >
                             Rests:
-                        </BeText>
+                        </BetterText>
 
-                        <BeText
-                            size={biglblsz}
-                            align="center"
-                            color="#FFF"
-                            weight="Bold"
+                        <BetterText
+                            fontSize={biglblsz}
+                            textAlign="center"
+                            textColor="#FFF"
+                            fontWeight="Bold"
                         >
                             {rests} {rests !== 1 ? "RESTS" : "REST"}
-                        </BeText>
+                        </BetterText>
                     </Native.View>
-                    <Btn
-                        style="box"
-                        kind="ACE"
-                        onclick={() => handleDecrement("rests")}
-                        text="-"
+                    <Button
+                        layout="box"
+                        style="ACE"
+                        action={() => handleDecrement("rests")}
+                        buttonText="-"
                     />
                 </Native.View>
                 <GapView height={15} />
@@ -419,36 +431,36 @@ export default function Form({ onSubmit }: FormProps) {
                             justifyContent: "space-between",
                         }}
                     >
-                        <Btn
-                            style="box"
-                            kind="ACE"
-                            onclick={() => handleIncrement("restDuration")}
-                            text="+"
+                        <Button
+                            layout="box"
+                            style="ACE"
+                            action={() => handleIncrement("restDuration")}
+                            buttonText="+"
                         />
                         <Native.View style={{ flex: 12 }}>
-                            <BeText
-                                size={15}
-                                color="#FFF"
-                                weight="Regular"
-                                align="center"
+                            <BetterText
+                                fontSize={15}
+                                textColor="#FFF"
+                                fontWeight="Bold"
+                                textAlign="center"
                             >
                                 Duration:
-                            </BeText>
-                            <BeText
-                                size={biglblsz}
-                                color="#FFF"
-                                weight="Bold"
-                                align="center"
+                            </BetterText>
+                            <BetterText
+                                fontSize={biglblsz}
+                                textColor="#FFF"
+                                fontWeight="Bold"
+                                textAlign="center"
                             >
                                 {restDuration}{" "}
                                 {restDuration === 1 ? "MINUTE" : "MINUTES"}
-                            </BeText>
+                            </BetterText>
                         </Native.View>
-                        <Btn
-                            style="box"
-                            kind="ACE"
-                            onclick={() => handleDecrement("restDuration")}
-                            text="-"
+                        <Button
+                            layout="box"
+                            style="ACE"
+                            action={() => handleDecrement("restDuration")}
+                            buttonText="-"
                         />
                     </Native.View>
                 )}
@@ -462,13 +474,13 @@ export default function Form({ onSubmit }: FormProps) {
                     {repetitions * duration > 300 && (
                         // Lo máximo que me parece coherente son 5 horas seguidas haciendo UN ejercicio - recordemos que puedes tener varios al día
                         // The maximum that makes sense to me it's 5 hours in a row making ONE exercise - remember you can make many each day
-                        <Noti
-                            kind="HMM"
+                        <Notification
+                            style="HMM"
                             title="Are you sure?"
                             text={`Your current choice would equal ${
                                 repetitions * duration
                             } minutes of exercise. Isn't that too much?`}
-                            stext="You can still create your objective, don't worry. We're just warning you, for your own health!"
+                            subtext="You can still create your objective, don't worry. We're just warning you, for your own health!"
                         />
                     )}
                     <Native.View
@@ -483,19 +495,27 @@ export default function Form({ onSubmit }: FormProps) {
                             exercise.trim() === "" ||
                             duration === 0
                         ) && (
-                            <Btn
-                                kind="ACE"
-                                onclick={handleSubmit}
-                                text="Save it!"
+                            <Button
+                                style="ACE"
+                                action={handleSubmit}
+                                buttonText="Save it!"
                             />
                         )}
                         {(!exercise ||
                             exercise.trim() === "" ||
                             duration === 0) && (
-                            <Btn kind="HMM" onclick={() => {}} text="..." />
+                            <Button
+                                style="HMM"
+                                action={() => {}}
+                                buttonText="..."
+                            />
                         )}
                         <GapView width={20} />
-                        <Btn kind="DEFAULT" onclick={getOut} text="Nevermind" />
+                        <Button
+                            style="DEFAULT"
+                            action={getOut}
+                            buttonText="Nevermind"
+                        />
                     </Native.View>
                 </Native.View>
             </Native.ScrollView>
