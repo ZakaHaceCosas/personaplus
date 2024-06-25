@@ -12,7 +12,7 @@ import Button from "@/components/Buttons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BottomNav from "@/components/BottomNav";
 import GapView from "@/components/GapView";
-import { testLog } from "./DeveloperInterface";
+import { termLog, testLog } from "./DeveloperInterface";
 
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
@@ -49,32 +49,17 @@ export default function Profile() {
             if (olduname !== uname) {
                 await AsyncStorage.setItem("uname", uname);
                 const log = `Changed your username to ${uname}`;
-                console.log(
-                    "%cGOD%cAll is ok%c " + log,
-                    "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "color: #30FF97;"
-                );
+                termLog(log, "success");
                 setTimeout(() => {
                     Router.router.replace("/");
                 }, 25);
             } else {
                 const log = `Your username is already ${uname}! Can't change it to that`;
-                console.log(
-                    "%cWOR%cDev error%c " + log,
-                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "color: #FFD700;"
-                );
+                termLog(log, "error");
             }
         } catch (e) {
             const log = "Could not handleUnameBtnClick() due to error: " + e;
-            console.log(
-                "%cWOR%cDev error%c " + log,
-                "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                "color: #FFD700;"
-            );
+            termLog(log, "error");
         }
     };
 
@@ -87,29 +72,17 @@ export default function Profile() {
                     await AsyncStorage.getItem("uname");
                 if (uname) {
                     setUsername(uname);
-                    console.log(
-                        "%cGOD%cAll is ok%c Username (uname) fetched!",
-                        "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "color: #30FF97;"
-                    );
+                    termLog("Username (uname) fetched!", "success");
                 } else {
-                    console.log(
-                        "%cWOR%cDev error%c Username could not be fetched due to an error!",
-                        "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                        "color: #FFD700;"
+                    termLog(
+                        "Username could not be fetched due to an error!",
+                        "error"
                     );
                 }
             } catch (e) {
                 const log =
                     "Could not fetch username (uname) due to error: " + e;
-                console.log(
-                    "%cWOR%cDev error%c " + log,
-                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "color: #FFD700;"
-                );
+                termLog(log, "error");
             }
         };
 
@@ -137,12 +110,7 @@ export default function Profile() {
                 const log =
                     "Got an error checking if the user wants to use Dev interface: " +
                     e;
-                console.log(
-                    "%cWOR%cDev error%c " + log,
-                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "color: #FFD700;"
-                );
+                termLog(log, "warn");
             }
         };
         checkForDev();
@@ -158,12 +126,11 @@ export default function Profile() {
     const enableDevInterface = async function () {
         try {
             await AsyncStorage.setItem("useDevTools", "true");
-            testLog("ENABLED DEV INTERFACE", "log");
+            termLog("ENABLED DEV INTERFACE", "log");
             Router.router.navigate("/");
         } catch (e) {
             const log = "ERROR ENABLING DEV INTERFACE: " + e;
-            testLog(log, "error");
-            console.error(log);
+            termLog(log, "error");
             Router.router.navigate("/DeveloperInterface"); // lol. if cant enable, at least go to page with logs to see the error.
         }
     };
@@ -176,7 +143,6 @@ export default function Profile() {
         } catch (e) {
             const log = "ERROR DISABLING DEV INTERFACE: " + e;
             testLog(log, "error");
-            console.error(log);
             Router.router.navigate("/DeveloperInterface"); // lol. if cant disable, at least go to page with logs to see the error.
         }
     };

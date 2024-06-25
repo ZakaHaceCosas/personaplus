@@ -5,6 +5,7 @@ import BetterText from "@/components/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { termLog } from "@/app/DeveloperInterface";
 
 // TypeScript, supongo
 interface SectionProps {
@@ -46,12 +47,7 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                 const log =
                     "Got an error checking if the user wants to use Dev interface: " +
                     e;
-                console.log(
-                    "%cWOR%cDev error%c " + log,
-                    "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "font-weight: bold; background: white; color: black; padding: 2px 4px; border-radius: 2px;",
-                    "color: #FFD700;"
-                );
+                termLog(log, "error");
             }
         };
         checkForDev();
