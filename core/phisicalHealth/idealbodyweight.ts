@@ -20,7 +20,7 @@ export function getLastUpdate() {
 
 interface IBWResponse {
     result: number;
-    subject: {
+    subject?: {
         age: number;
         gender: "male" | "female";
         weight: number;
@@ -41,7 +41,7 @@ interface IBWResponse {
  * @returns The IBW value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the IBW value.
 */
 
-export default function calculateIdealBodyWeight(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): IBWResponse | number {
+export default function calculateIdealBodyWeight(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): IBWResponse {
     // This is calculated using the BMI method, so the BMI is required.
     /*
     NOTE: ORIGINAL FORMULA IN AMERICAN: IBW [lb] = 5 × BMI + ((BMI ÷ 5) × (height − 60 [in]))
@@ -59,21 +59,17 @@ export default function calculateIdealBodyWeight(age: number, gender: "male" | "
 
     const context: string | undefined = "this would be the ideal body weight for the given data, based on BMI. no further context can be provided."
 
-    if (!provideContext && !provideExplanation) {
-        return ibw;
-    }
-
     const response: IBWResponse = {
         result: ibw,
-        subject: {
+    };
+
+    if (provideContext) {
+        response.subject = {
             age,
             gender,
             weight,
             height,
-        },
-    };
-
-    if (provideContext) {
+        };
         response.context = context;
     }
 

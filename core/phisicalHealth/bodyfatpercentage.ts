@@ -19,7 +19,7 @@ export function getLastUpdate() {
 
 interface BFPResponse {
     result: number;
-    subject: {
+    subject?: {
         age: number;
         gender: "male" | "female";
         weight: number;
@@ -40,7 +40,7 @@ interface BFPResponse {
  * @returns The BFP value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the BFP value.
 */
 
-export default function calculateBodyFatPercentage(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): BFPResponse | number {
+export default function calculateBodyFatPercentage(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): BFPResponse {
     // This is calculated using the BMI method, so the BMI is required.
     const bmi = calculateBodyMassIndex(age, gender, weight, height, false, false);
     let bfp: number;
@@ -91,21 +91,17 @@ export default function calculateBodyFatPercentage(age: number, gender: "male" |
         }
     }
 
-    if (!provideContext && !provideExplanation) {
-        return bfp;
-    }
-
     const response: BFPResponse = {
         result: bfp,
-        subject: {
+    };
+
+    if (provideContext) {
+        response.subject = {
             age,
             gender,
             weight,
             height,
-        },
-    };
-
-    if (provideContext) {
+        };
         response.context = context;
     }
 
