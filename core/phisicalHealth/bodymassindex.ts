@@ -1,10 +1,20 @@
 /*
 CALCULATE BODY MASS INDEX
-
-LAST UPDATED: 25/06/2024
-REFERENCE: Not specified
-SOURCE: https://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/index.html#Interpreted
 */
+
+// LAST UPDATE TO THIS FUNCTION, ITS DATA, ITS CALCULATIONS, OR ANYTHING THAT DOES AFFECT THE RESULT
+// Changes that do not affect the result, like just bug-fixes, performance improvments, code-legibility improvments, or that kind of stuff, do not need to bump the date.
+const UPDATED: string = "26/06/2024";
+// ANY SOURCE THAT HAS BEEN USED TO DEVELOP THE CALCULATIONS / DATA PROVIDED or that BACKS IT UP.
+const SOURCE: string = "https://www.cdc.gov/healthyweight/assessing/bmi/adult_bmi/index.html#Interpreted";
+
+export function getSource() {
+    return SOURCE;
+}
+
+export function getLastUpdate() {
+    return UPDATED;
+}
 
 interface BMIResponse {
     result: number;
@@ -26,10 +36,10 @@ interface BMIResponse {
  * @param height The height of the subject in centimeters (CM).
  * @param provideContext Whether to provide a brief contextualisation about the result.
  * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
- * @returns The BMI value if neither provideContext nor provideExplanation are true, otherwise returns a BMIResponse object.
+ * @returns The BMI value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the BMI value.
 */
 
-export function calculateBodyMassIndex(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): BMIResponse {
+export default function calculateBodyMassIndex(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): BMIResponse {
     // You MUST pass weight as KG (kilograms) and height as CM (centimeters)
     const bmi = weight / ((height / 100) ** 2);
 
@@ -45,8 +55,8 @@ export function calculateBodyMassIndex(age: number, gender: "male" | "female", w
         } else if (bmi > 30) {
             context = "obesity";
         }
-    } else if (age < 0) {
-        // Child calculation (to be implemented)
+    } else if (age >= 0 && age <= 20) {
+        context = "WARNING: calculation for people under 20 years old is not provided"
     } else {
         context = "this would be the body mass index the given data. no further context can be provided."
     }
