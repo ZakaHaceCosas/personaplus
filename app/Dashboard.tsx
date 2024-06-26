@@ -13,7 +13,6 @@ import Footer from "@/components/Footer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/components/Buttons";
 import { termLog } from "./DeveloperInterface";
-import { calculateBodyMassIndex } from "@/core/phisicalHealth/bodymassindex";
 
 // TypeScript, supongo
 interface Objective {
@@ -45,9 +44,6 @@ const styles = Native.StyleSheet.create({
 
 // Creamos la función
 export default function Dashboard() {
-    const bmi = calculateBodyMassIndex(14, "male", 45, 170, true, true);
-    termLog(JSON.stringify(bmi), "log");
-
     const [objs, setObjs] = React.useState<{ [key: string]: Objective } | null>(
         null
     );
@@ -209,38 +205,6 @@ export default function Dashboard() {
                         </Native.View>
                     )}
                 </Section>
-                <Native.View
-                    style={{
-                        padding: 20,
-                        backgroundColor: "#FFF",
-                        borderTopColor: "#F00",
-                        borderTopWidth: 10,
-                    }}
-                >
-                    {bmi.subject && (
-                        <BetterText
-                            fontSize={30}
-                            textAlign="center"
-                            fontWeight="Regular"
-                            textColor="#000"
-                        >
-                            calculo indice de masa corporal: {bmi.result}
-                            {"\n"}edad {bmi.subject.age}
-                            {"\n"}sexo {bmi.subject.gender}
-                            {"\n"}peso en kg {bmi.subject.weight}
-                            {"\n"}alto en cm {bmi.subject.height}
-                            {"\n"}resultado: {bmi.context}
-                        </BetterText>
-                    )}
-                    <BetterText
-                        fontSize={20}
-                        textAlign="center"
-                        fontWeight="Regular"
-                        textColor="#000"
-                    >
-                        {"\n"}explicacion: {bmi.explanation}
-                    </BetterText>
-                </Native.View>
                 <Footer />
             </Native.ScrollView>
         </Native.View>
