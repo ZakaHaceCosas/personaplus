@@ -1,37 +1,49 @@
 # OpenHealthJS
 
-OpenHealthJS (o simplemente _Open Health_) es una biblioteca JavaScript diseñada para realizar cálculos relacionados con la salud y proporcionar información detallada sobre varios aspectos de bienestar personal. Desde el cálculo de diferentes índices y estadísticas hasta la explicación detallada de términos médicos, OpenHealth está pensado para ser una herramienta versátil, educativa, útil, y abierta.
+OpenHealthJS (or simply _OpenHealth_) is a JS library designed to make health realted calculations and to provide detailed info about various aspects related to personal wellbeing. From calculation of different indexes to detailed explanations of medical terms, OpenHealth is designed to be a versatile, educational, useful, and open tool.
 
-Forma parte del proyecto **PersonaPlus** (de hecho, de momento comparten repositorio de GitHub).
+It is part of the **PersonaPlus** project (in fact, at the moment they share GitHub repository).
 
-> Todos los archivos y funciones contienen al principio en un comentario las fuentes de información utilizadas para obtener los datos, fórmulas, y cálculos utilizados.
+> [!NOTE]
+> All functions must (and will) provide a `getSource` function to get all the URL's from the sources used to obtain the data, formulas, and data calculations.
+> For content / text based files, there should be a comment at the top.
 
-## Utilización
+## Usage
+
+> [!TIP]
+> For a full guide onto how to use OpenHealth within PersonaPlus, check [USAGE.md](USAGE.md).
 
 ```tsx
-// 1. haz la importación
-import OpenHealth from "@core/openhealth.ts"
+// 1. make the global import
+import OpenHealth from "@core/openhealth"
 
-// 2. verás que todo está agrupado según el ámbito de la salud al que pertenece
+// 2. youll see everything grouped depending on the health aspect each thing belongs to
 OpenHealth.phisicalHealth
 OpenHealth.mentalHealth
+OpenHealth.performance
+// etc...
 
-// 3. todas las funciones tienen nombres descriptivos, por lo que será muy facil encontrarlas
+// 3. all functions do have descriptive names, so it'll be easy for you to find what you want
 let bmi = OpenHealth.phisicalHealth.calculateBodyMassIndex(30, "male", 170, 40, true, true)
 
-// ya está!
+// provide them with the data needed, and youre done!
+// check DOCS.md for a full manual on each function
 ```
 
-## Documentación
+## Documentation
 
-Aprende [aquí](DOCS.md) a utilizar OpenHealth.
+Learn [aquí](DOCS.md) to use OpenHealth.
 
-## Contribución
+## Contribution
 
-Agradecemos todas las contribuciones, de hecho son necesarias debido a la gran cantidad de aspectos de la salud que hay que cubrir. Siéntente libre de hacer un _fork_ del repositorio cuando quieras, y haz cualquier aporte, grande o pequeño.
+We're really thankfull for all possible contributions, in fact they are needed due to the huge amount of aspects of health that need to be covered. Feel free to fork this repo whenever you want, and make any contribution, wether it's a big or small one.
 
-**Lo único que te pedimos es que si alteras, añades, modificas, o quitas cualquier información, fórmula, o definición médica, añades, aunque sea en un comentario, una referencia a alguna fuente verificable en la que te hayas basado para hacer dicho cambio.** Los cambios que se hagan "porque sí" o sin una justificación válida no podrán ser aceptados. La salud requiere precisión.
+**The only thing we ask you for is that if you alter, add, modify, or remove any info, formula, or medical definition, please add, even if it's just a comment, a reference to any trustable source you based yourself on to make the said change(s).** Changes that are made "because yes" or without a valid explanation cannot be accepted. Health requires accuracy.
 
-## Licencia
+## License
 
-Al igual que PersonaPlus, OpenHealth está bajo la licencia **Apache-2.0**.
+Just as PersonaPlus, OpenHealth is licensed under **Apache-2.0**.
+It's totally free to make usage of OpenHealth, even if it is for commercial purposes, as long as you credit the original project (OpenHealth). _Plus, we recommend you to cite aswell the sources of medical information used by the functions you use, remember you can get them with `getSource()`._
+
+Made with love by ZakaHaceCosas, creator or PersonaPlus :]
+Take care!
