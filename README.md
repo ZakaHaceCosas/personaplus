@@ -1,8 +1,9 @@
-
+<!--markdownlint-disable-next-line-->
 <h1 align="center">PersonaPlus</h1>
 
 ![PersonaPlus banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER.png)
 
+<!--markdownlint-disable-next-line-->
 <div align="center">
 
 <!--Se destacará el vídeo que a mi me parezca :v-->
@@ -70,6 +71,7 @@ Puedes ver la documentación completa de como programar para el proyecto [aquí]
 
 ## Sígueme y únete al club de los que quieren darse más :]
 
+<!--markdownlint-disable-next-line-->
 <div align="center">
 
 [![YouTube button](https://img.shields.io/badge/YouTube-ZakaHaceCosas-red?style=for-the-badge&logo=youtube)](https://youtube.com/@ZakaHaceCosas)
