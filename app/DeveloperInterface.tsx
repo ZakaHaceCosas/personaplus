@@ -294,7 +294,13 @@ export default function ConsoleLogger() {
                 <GapView height={5} />
                 <Button
                     action={() => Router.router.navigate("/WelcomeScreen")}
-                    buttonText="Go to /Welc (Welcome page)"
+                    buttonText="Go to /WelcomeScreen"
+                    style="ACE"
+                />
+                <GapView height={5} />
+                <Button
+                    action={() => Router.router.navigate("/openhealthtest")}
+                    buttonText="Go to /openhealthtest"
                     style="ACE"
                 />
                 <GapView height={5} />
