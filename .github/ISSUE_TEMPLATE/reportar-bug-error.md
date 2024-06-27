@@ -4,7 +4,6 @@ about: "¿Encuentras errores? Repórtalos y ayúdanos a mejorar."
 title: "[BUG] - Escribir título aquí"
 labels: bug
 assignees: ZakaHaceCosas
-
 ---
 
 **Describe el bug**
