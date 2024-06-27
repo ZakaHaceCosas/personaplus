@@ -65,7 +65,7 @@ export default function Sessions() {
               .filter(item => typeof item.id === "number") // buscar ids
               .map(item => item.id.toString()) // array-ing ids
               .join(", ") // unir ids
-        : "no ids found (see Sessions.tsx:52-57)";
+        : "no ids found (see Sessions.tsx:63-68)";
 
     let selectedObjSustantivizedName: string = "Unknown";
 
