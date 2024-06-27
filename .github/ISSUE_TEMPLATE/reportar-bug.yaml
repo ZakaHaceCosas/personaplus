@@ -1,0 +1,61 @@
+name: Reportar un bug/error
+description: "¿Encontraste un error? ¡Repórtalo y ayúdanos a mejorar!"
+title: "[BUG]: "
+labels: ["bug"]
+assignees:
+- ZakaHaceCosas
+body:
+- type: textarea
+    id: what-happened
+    attributes:
+      label: ¿Qué pasó?
+      description: Explica en detalle que fue lo que salió mal
+      placeholder: Explica el error
+    validations:
+      required: true
+- type: textarea
+    id: how-it-happened
+    attributes:
+      label: Pasos para replicar el bug
+      description: Explica en detalle que tuviste que hacer para encontrar el fallo
+      placeholder: ¿Cómo encontraste el bug?
+    validations:
+      required: true
+- type: textarea
+    id: what-didnt-happen
+    attributes:
+      label: Resultado esperado
+      description: Explica que es lo que tendría que haber sucedido en vez del error
+      placeholder: Si hubiera salido bien, ¿qué habría pasado?
+    validations:
+      required: true
+- type: dropdown
+    id: browsers
+    attributes:
+      label: ¿En qué navegador / dispositivo estabas probando?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+        - Android (Expo Go)
+        - Android (Expo Development Server)
+        - iOS (Expo Go)
+        - iOS (Expo Development Server)
+        - Otro...
+    validations:
+      required: true
+- type: textarea
+    id: logs
+    attributes:
+      label: Logs de la consola
+      description: A poder ser, copia y pega aquí cualquier log de error que hubieras visto en la consola. (Se formatea solo, así que tranqui)
+      placeholder: Por ejemplo, "10:52:41 LOG Couldn't get OBJS fetched due to error e", o algo así. Como hayan salido.
+      render: shell
+- type: textarea
+    id: logs
+    attributes:
+      label: Logs de la consola
+      description: A poder ser, copia y pega aquí cualquier log de error que hubieras visto en la consola. (Se formatea solo, así que tranqui)
+      render: shell

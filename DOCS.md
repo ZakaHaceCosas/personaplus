@@ -30,6 +30,7 @@ Con estas ideas apuntamos a crear una aplicación estrella, gratuita y de códig
 
 La aplicación está desarrollada con **React Native 0.74.2**, **Expo SDK 51.0.14**, y programada en TypeScript.
 
+<!--markdownlint-disable-next-line-->
 <div align="center">
 
 [![reactnative](https://img.shields.io/badge/React-Native-57c4dc?style=for-the-badge&logo=react&logoColor=black&labelColor=white)](https://reactnative.dev)
@@ -44,6 +45,8 @@ Estas son las indicaciones básicas para programar, desde nombres de variables h
 ### > TRABAJANDO CON EL PROYECTO
 
 Necesitarás instalar (obviamente) `Git` y `Node.js` en tu sistema, y de ahí, instalar `Expo CLI`, con el cual interactuarás vía `npx expo <comando>`. Probablemente trabajas desde VSCode, así que recomendamos también la [extensión oficial de Expo Tools](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools).
+
+<!--markdownlint-disable-next-line-->
 <div align="center">
 
 [![git](https://img.shields.io/badge/Git-fb4f28?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/downloads)
