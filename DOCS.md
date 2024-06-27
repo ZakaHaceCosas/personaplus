@@ -65,6 +65,23 @@ La mayor parte del tiempo solo usarás `npx expo start` (para iniciar el proyect
 > [!NOTE]
 > Aún así no dejes el PC de lado, te será útil probar ahí, sobre todo si necesitas ver algún log de consola. Aunque existe *Dev interface* dentro de la app, no captura bien todo lo que va a la consola.
 
+### > CONFIGURACIÓN RECOMENDADA DEL EDITOR
+
+Recomendamos utilizar [Microsoft Visual Studio Code](https://code.visualstudio.com/) o [VSCodium](https://vscodium.com/), junto a las siguientes extensiones:
+
+- La ya mencionada [Expo Tools](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools)
+
+Para el formato:
+
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) (si planeas editar algún archivo MarkDown del proyecto)
+
+Otros:
+
+- [JS and TS Nightly](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-next)
+- [npm IntelliSense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense)
+
 ### > LAS "PRE-VARIABLES"
 
 En el *root* del proyecto hay archivos `VAR-algo.jsonc` (JSON con comentarios).
