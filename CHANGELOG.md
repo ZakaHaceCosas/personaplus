@@ -15,6 +15,15 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - PD: Los logs serán en inglés, siempre.
 
+## 0.0.1-R5-b20
+
+- Started working on the logic - as a side project: "OpenHealth".
+
+> [!INFO]
+> **What does that even mean?** See: Basically, the app needs to work with a lot of health data so that it can provide accurate statistics and tips to the end user, so the first idea would be to find a library or something that does provide functions for that stuff. However - I thought it would be a nice idea to try to make our own "health.js" library, and just like that! There's a new directory called `/code` for _the core of the app_, this new library which will allow PersonaPlus to turn all that frontend objectives into actual, worthy data for users to understand themselves, their performance, and their health.
+
+Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`. It's mentioned here only this time, as this is the (huge and) only change of this update.
+
 ## 0.0.1-R5-b19
 
 - Renamed most variables to take a more descriptive and easy to understand approach.
@@ -33,7 +42,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - Added a function to remove an OBJ from the Dashboard (`/Dash`).
 - Fixed app not refreshing when marked an OBJ as done.
 - Made several improvements to types.
-- Fixed many visual mistakes and improved layouts. *Particullary, for some reason using `vertical` `order` on `<BeSwap>` caused a really hard to explain visual bug on the Welcome ("`/Welc`") screen. It was "fixed" by changing the order prop to `horizontal`.*
+- Fixed many visual mistakes and improved layouts. _Particullary, for some reason using `vertical` `order` on `<BeSwap>` caused a really hard to explain visual bug on the Welcome ("`/Welc`") screen. It was "fixed" by changing the order prop to `horizontal`._
 - Improved the flow of username changes.
 - Added React & PersonaPlus versions to the Dev interface.
 - Made Dev interface opt-in, via `useDevTools` item in AsyncStorage.
@@ -56,7 +65,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 ## 0.0.1-R5-b16
 
 - Made more changes to match the requirements of ESLint.
-- Made a lof of UI and design changes to improve the looks on mobile - *this lead to things looking bad on desktop -* ***it's not a problem, as the only target devices are phones.***
+- Made a lof of UI and design changes to improve the looks on mobile - _this lead to things looking bad on desktop -_ _**it's not a problem, as the only target devices are phones.**_
 - Made a peculiar change ;] - moved the bottom navigation bar to the top.
 - Added a "Dev" tab designed to help during testing, specially on mobile. Has shortcuts for things that can be done from desktop but not mobile, like clearing `OBJS`.
 - Created a function `testLog` designed specifically to make "console logs" for this tab, as sometimes regular `console.log` calls don't appear on the console's replica for the Dev tab.
@@ -83,11 +92,11 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 >
 > ### **KNOWN ERRORS - b15**
 >
-> ***New errors***:
+> _**New errors**_:
 >
 > `b15`: For some reason, the `objs`' name is not being displayed on mobile devices on Expo Go. No clue what the source is, will look onto that.
 >
-> ***Still not fixed from older dev versions***:
+> _**Still not fixed from older dev versions**_:
 >
 > `b11:` For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. Don't know it's origin & only happens sometimes, making it hard to replicate. Will look onto it.
 
@@ -99,7 +108,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - **Updated React Native:** From ~~0.73~~ to **0.74.2**
 - Updated all the dependencies to match the new SDK and RN versions.
 - Added an empty return to font loading on `_layout.tsx`, to avoid issues.
-- Made *several* UI (both style and layout) changes.
+- Made _several_ UI (both style and layout) changes.
 - Removed the usage of `Noti` for dev logging. Plus, finally made console logs consistent across all the code.
 - Fixed username input using numerical and not text keyboard on mobile.
 - Added a few comments to the code to explain stuff better.
@@ -110,18 +119,18 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 >
 > ### **FIXED ERRORS - b14**
 >
-> `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`". *The error was a stupid inline comment, LOL.*
+> `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`". _The error was a stupid inline comment, LOL._
 > **And thanks to this fix, app was finally properly tested on mobile!**
 ---
 > [!WARNING]
 >
 > ### **KNOWN ERRORS - b14**
 >
-> ***New errors***:
+> _**New errors**_:
 >
 > None.
 >
-> ***Still not fixed from older dev versions***:
+> _**Still not fixed from older dev versions**_:
 >
 > `b11:` For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. Don't know it's origin & only happens sometimes, making it hard to replicate. Will look onto it.
 
@@ -146,9 +155,9 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 ## 0.0.1-R5-b11
 
 - Fixed the `key` prop not being used properly in `Dash.tsx`.
-- Fixed the "Create active objective" button being spammed on the UI when there *are* created objectives.
+- Fixed the "Create active objective" button being spammed on the UI when there _are_ created objectives.
 - Added a new First launch check on the `index.tsx` page. Will redirect to `/Welc` (welcome screen) if `hasLaunched` item does not exist in LocalStorage. Also, it gets created so you don't get redirected each time you open PersonaPlus, only on the first launch.
-- Updated the `Swap` component, now supports new optional property `order` which is equivalent to *`flex-direction`*.
+- Updated the `Swap` component, now supports new optional property `order` which is equivalent to _`flex-direction`_.
 - Fixed errors with the `Crea.tsx` page:
   - Not creating objs.
   - Not going home when an obj is created.
@@ -157,11 +166,11 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 >
 > ### **KNOWN ERRORS - b11**
 >
-> ***New errors***:
+> _**New errors**_:
 >
 > For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. Don't know it's origin & only happens sometimes, making it hard to replicate. Will look onto it.
 >
-> ***Still not fixed from older dev versions***:
+> _**Still not fixed from older dev versions**_:
 >
 > `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`".
 
@@ -177,10 +186,10 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 >
 > ### **KNOWN ERRORS - b10**
 >
-> ***New errors***:
+> _**New errors**_:
 > None 😎
 >
-> ***Still not fixed from older dev versions***:
+> _**Still not fixed from older dev versions**_:
 >
 > `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`".
 
@@ -203,14 +212,14 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 > [!NOTE]
 > **KNWON ISSUE:** For some reason, I didn't managed to make Microsoft's Fluent Icons (the ones used in the UI design) React package work, so I used Material Design Icons instead, via Expo's `@expo/vectoricons`
 
-- Now the documentation is fully usable, can be considered "done". *Of course, it is still subject to changes at any time.*
+- Now the documentation is fully usable, can be considered "done". _Of course, it is still subject to changes at any time._
 - Licensed under Apache 2.0.
 - Added input colors to `VAR-DSGN.jsonc`.
 - Updated all files to follow the documentation's requested code guidelines.
 - Fully formatted the code + added formatting on save.
 - Changed many `.vscode` settings.
 - General changes and improvements to the Homepage (`/`).
-- Made some progress in the dashboard (`/Dash`). Implemented `Notis` and *fixed* obj fetching. (Still looking forward to implementing obj creation).
+- Made some progress in the dashboard (`/Dash`). Implemented `Notis` and _fixed_ obj fetching. (Still looking forward to implementing obj creation).
 
 > [!WARNING]
 > **KNOWN ERROR**: Still doesn't access them 100% correctly.
@@ -284,7 +293,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
   - Created `metro.config.js`.
   - Created `.vscode/`.
 - Removal of every single in-app gradient, in favour of plain colors.
-- Implemented `AsyncStorage` to store *OBJS* data.
+- Implemented `AsyncStorage` to store _OBJS_ data.
 - Rewritten the documentation `DOCS.md`.
 - Added versioning (`CHANGELOG.md` (this file)).
 - Created a better, more complete `README`.
