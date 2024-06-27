@@ -9,7 +9,7 @@ const config: ExpoConfig.ExpoConfig = {
     scheme: "personaplus",
     description: "Give yourself a PLUS",
     owner: "ZakaHaceCosas",
-    version: "0.0.1-R5-b19",
+    version: "0.0.1-R5-b20",
     orientation: "portrait",
     githubUrl: "https://github.com/ZakaHaceCosas/personaplus",
     icon: "./assets/icon.png",
