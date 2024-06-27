@@ -1,4 +1,4 @@
-// THIS IS THE MAIN FILE, CONTAINS NOTHING BUT ALL THE IMPORT MODULES SO THAT THEY CAN BE ACCESSED VIA import OpenHealth from '<path>¡.
+// THIS IS THE MAIN FILE, CONTAINS NOTHING BUT ALL THE IMPORT MODULES SO THAT THEY CAN BE ACCESSED VIA import OpenHealth from '<path>'.
 // This file is expect to grow a lot in height...
 
 // IMPORT MODULES
@@ -16,6 +16,13 @@ import * as calculateRunningOrWalkingPerformance from './performance/runningPerf
 
 // OPENHEALTH DATA
 // import getSource from './docs';
+
+// DEFINITION
+
+/**
+ * @type {OpenHealth}
+ * @description Main library where everything comes from.
+*/
 
 const OpenHealth = {
     phisicalHealth: {

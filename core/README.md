@@ -1,5 +1,7 @@
 # OpenHealthJS
 
+> También disponible en [Español (Spanish)](README.es.md)
+
 OpenHealthJS (or simply _OpenHealth_) is a JS library designed to make health realted calculations and to provide detailed info about various aspects related to personal wellbeing. From calculation of different indexes to detailed explanations of medical terms, OpenHealth is designed to be a versatile, educational, useful, and open tool.
 
 It is part of the **PersonaPlus** project (in fact, at the moment they share GitHub repository).
