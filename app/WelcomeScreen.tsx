@@ -76,9 +76,14 @@ export default function WelcomePage() {
     };
     const focuspointoptions = [
         {
+            value: "",
+            label: "(Choose an option)",
+            default: true,
+        },
+        {
             value: "exercising",
             label: "My focus is exercising, I need to start moving my body ASAP!",
-            default: true,
+            default: false,
         },
         {
             value: "eating",
@@ -106,6 +111,17 @@ export default function WelcomePage() {
             default: false,
         },
     ];
+    // ESLint prefers constants as this is "never reassigned", but since the form changes I do believe this DOES get reassigned, so I disable ESLint here.
+    // eslint-disable-next-line
+    let isFirstStepDone =
+        !genderValue ||
+        Number(formData.age) > 125 ||
+        genderValue.trim() === "" ||
+        !formData.age ||
+        !formData.username ||
+        formData.username.trim() === "" ||
+        !formData.weight ||
+        !formData.height;
     const [sleep, setSleep] = React.useState("");
     const sleeps = [
         "3 hours or less",
@@ -135,7 +151,7 @@ export default function WelcomePage() {
     const goback = () => {
         setTab(prevPage => prevPage - 1);
     };
-
+    const submit = () => {};
     const learnMore = async () => {
         const url =
             "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md";
@@ -388,12 +404,26 @@ export default function WelcomePage() {
                                 buttonText="Go back"
                                 width="fill"
                             />
-                            <Button
-                                style="ACE"
-                                action={gonext}
-                                buttonText="Continue"
-                                width="fill"
-                            />
+                            {!isFirstStepDone && (
+                                <Button
+                                    style="ACE"
+                                    action={gonext}
+                                    buttonText={"Continue"}
+                                    width="fill"
+                                />
+                            )}
+                            {isFirstStepDone && (
+                                <Button
+                                    style="HMM"
+                                    action={() => {}}
+                                    buttonText={
+                                        !(Number(formData.age) > 125)
+                                            ? "Fill all the required fields"
+                                            : `You are NOT ${formData.age} years old.`
+                                    }
+                                    width="fill"
+                                />
+                            )}
                         </Native.View>
                     </React.Fragment>
                 )}
@@ -442,12 +472,26 @@ export default function WelcomePage() {
                                 buttonText="Go back"
                                 width="fill"
                             />
-                            <Button
-                                style="ACE"
-                                action={gonext}
-                                buttonText="Continue"
-                                width="fill"
-                            />
+                            {!(
+                                !focuspointValue ||
+                                focuspointValue.trim() === ""
+                            ) && (
+                                <Button
+                                    style="ACE"
+                                    action={gonext}
+                                    buttonText="Continue"
+                                    width="fill"
+                                />
+                            )}
+                            {(!focuspointValue ||
+                                focuspointValue.trim() === "") && (
+                                <Button
+                                    style="HMM"
+                                    action={() => {}}
+                                    buttonText="Fill all the required fileds"
+                                    width="fill"
+                                />
+                            )}
                         </Native.View>
                     </React.Fragment>
                 )}
@@ -477,6 +521,11 @@ export default function WelcomePage() {
                             style={styles.picker}
                             mode="dropdown"
                         >
+                            <Select.Item
+                                label="Choose an option"
+                                value=""
+                                color="#999"
+                            />
                             {sleeps.map(sleep => (
                                 <Select.Item
                                     key={sleep}
@@ -493,12 +542,22 @@ export default function WelcomePage() {
                                 buttonText="Go back"
                                 width="fill"
                             />
-                            <Button
-                                style="ACE"
-                                action={gonext}
-                                buttonText="Continue"
-                                width="fill"
-                            />
+                            {!(!sleep || sleep.trim() === "") && (
+                                <Button
+                                    style="ACE"
+                                    action={submit}
+                                    buttonText="Finish!"
+                                    width="fill"
+                                />
+                            )}
+                            {(!sleep || sleep.trim() === "") && (
+                                <Button
+                                    style="HMM"
+                                    action={() => {}}
+                                    buttonText="Fill all the required fileds"
+                                    width="fill"
+                                />
+                            )}
                         </Native.View>
                     </React.Fragment>
                 )}

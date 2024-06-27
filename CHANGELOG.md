@@ -22,7 +22,9 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 > [!INFO]
 > **What does that even mean?** See: Basically, the app needs to work with a lot of health data so that it can provide accurate statistics and tips to the end user, so the first idea would be to find a library or something that does provide functions for that stuff. However - I thought it would be a nice idea to try to make our own "health.js" library, and just like that! There's a new directory called `/code` for _the core of the app_, this new library which will allow PersonaPlus to turn all that frontend objectives into actual, worthy data for users to understand themselves, their performance, and their health.
 
-Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`. It's mentioned here only this time, as this is the (huge and) only change of this update.
+Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`. It's mentioned here only this time, as this is the most important change of this update.
+
+- Added form validation to `/WelcomeScreen` and added placeholder options to arrays to avoid the error of saving empty (`""`) strings when trying to store data.
 
 ## 0.0.1-R5-b19
 
