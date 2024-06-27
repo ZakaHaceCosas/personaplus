@@ -20,8 +20,8 @@ OpenHealth.mentalHealth
 OpenHealth.performance
 // etc...
 
-// 3. todas las funciones tienen nombres descriptivos, por lo que será muy facil encontrarlas
-let bmi = OpenHealth.phisicalHealth.calculateBodyMassIndex(30, "male", 170, 40, true, true)
+// 3. todas las funciones tienen nombres descriptivos (en ingles), por lo que será muy facil encontrarlas
+let bmi = OpenHealth.phisicalHealth.BodyMassIndex.calculate(30, "male", 170, 40, true, true)
 
 // proporciona la información necesaria y ya estás listo!
 // échale un vistazo a DOCS.es.md para un manual completo de lo que hace cada funcion

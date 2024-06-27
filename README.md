@@ -1,6 +1,7 @@
-![PersonaPlus banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER.png)
 
 <h1 align="center">PersonaPlus</h1>
+
+![PersonaPlus banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER.png)
 
 <div align="center">
 
