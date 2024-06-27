@@ -1,6 +1,6 @@
 {
     "name": "personaplus",
-    "version": "0.0.1-R5-b19",
+    "version": "0.0.1-R5-b20",
     "main": "expo-router/entry",
     "scripts": {
         "start": "expo start",

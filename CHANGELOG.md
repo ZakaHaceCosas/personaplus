@@ -25,6 +25,19 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`. It's mentioned here only this time, as this is the most important change of this update.
 
 - Added form validation to `/WelcomeScreen` and added placeholder options to arrays to avoid the error of saving empty (`""`) strings when trying to store data.
+  - **Review required**: Need to add the validation to the Android keyboard's submit button (✔ icon in keyboard).
+- ~~Fixed the Welcome Screen layout not being centered.~~
+
+> [!NOTE]
+>
+> ### **FIXED ERRORS - Latest**
+>
+> **No fixed erros for this update.**
+>
+---
+> [!NOTE]
+>
+> **No known errors at the moment! 🎉**
 
 ## 0.0.1-R5-b19
 
@@ -53,14 +66,14 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 
 > [!NOTE]
 >
-> ### **FIXED ERRORS - Latest**
+> ### **FIXED ERRORS - b17**
 >
 > `b11:` For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. **This was fixed by adding a placeholder invalid option, forcing the user to choose an option so `setExercise` gets called.**
 > `b15`: For some reason, the `objs`' name is not being displayed on mobile devices on Expo Go. **Fixing the error above also fixed this.**
 ---
 > [!NOTE]
 >
-> ### **KNOWN ERRORS - Latest**
+> ### **KNOWN ERRORS - b17**
 >
 > **No known errors at the moment! 🎉**
 
