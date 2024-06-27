@@ -45,7 +45,7 @@ interface BMRResponse {
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
  * @param height The height of the subject in centimeters (CM).
- * @param activness From "poor" to "extreme", how active a person is, being "poor" very little or no exercise, light 1 to 3 days of exercise a week (being one time each day), moderate 3 to 5 days a week, intense 6 or seven days a week, and extreme being very intense exercies and/or more than once a day.
+ * @param activness From "poor" to "extreme", how active the subject is in terms of exercising, being "poor" very little or no exercise, light 1 to 3 days of exercise a week (being one time each day), moderate 3 to 5 days a week, intense 6 or seven days a week, and extreme being very intense exercies and/or more than once a day.
  * @param provideContext Whether to provide a brief contextualisation about the result.
  * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
  * @returns The BMR value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the BMR value.
