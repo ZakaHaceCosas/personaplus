@@ -24,7 +24,7 @@ OpenHealth.performance
 // etc...
 
 // 3. all functions do have descriptive names, so it'll be easy for you to find what you want
-let bmi = OpenHealth.phisicalHealth.calculateBodyMassIndex(30, "male", 170, 40, true, true)
+let bmi = OpenHealth.phisicalHealth.BodyMassIndex.calculate(30, "male", 170, 40, true, true)
 
 // provide them with the data needed, and youre done!
 // check DOCS.md for a full manual on each function

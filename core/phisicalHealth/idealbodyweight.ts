@@ -10,9 +10,19 @@ const UPDATED: string = "26/06/2024";
 // ANY SOURCE THAT HAS BEEN USED TO DEVELOP THE CALCULATIONS / DATA PROVIDED or that BACKS IT UP.
 const SOURCE: string = "https://www.inchcalculator.com/body-fat-calculator/ and https://pubmed.ncbi.nlm.nih.gov/27030535/";
 
+/**
+ * Get all the sources of information used to develop the function, it's data, contents, returns, and etc...
+ * @returns A single string with all the URLs, separated by "and" in case there's more than one - e.g. "https://coolsite.com and https://example.source"
+*/
+
 export function getSource() {
     return SOURCE;
 }
+
+/**
+ * Get the date of the last update made to this function (considering "update" any change to it's sources, calculations, data, results, etc... but not trivial, performance, code cleaning or similar changes.)
+ * @returns A string with the date of the last update, using the DD/MM/YYYY format.
+*/
 
 export function getLastUpdate() {
     return UPDATED;

@@ -6,7 +6,7 @@ import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
 
 export default function openhealthtest() {
-    const bmi = OpenHealth.phisicalHealth.calculateBodyMassIndex(
+    const bmi = OpenHealth.phisicalHealth.BodyMassIndex.calculate(
         21,
         "male",
         85,
@@ -15,9 +15,19 @@ export default function openhealthtest() {
         true
     );
     termLog(JSON.stringify(bmi), "log");
+    const basalloquesea =
+        OpenHealth.phisicalHealth.BasalMetabolicRate.calculate(
+            14,
+            "male",
+            45,
+            170,
+            "light",
+            true,
+            true
+        );
 
     const performance =
-        OpenHealth.performance.calculateRunningOrWalkingPerformance(
+        OpenHealth.performance.RunningOrWalkingPerformance.calculate(
             25,
             "male",
             55,
@@ -96,6 +106,50 @@ export default function openhealthtest() {
                     textColor="#000"
                 >
                     {"\n"}explicacion: {performance.explanation}
+                </BetterText>
+            </Native.View>
+            <GapView height={20} />
+            <Native.View
+                style={{
+                    padding: 20,
+                    backgroundColor: "#FFF",
+                    borderTopColor: "#F00",
+                    borderTopWidth: 10,
+                }}
+            >
+                {basalloquesea.subject && (
+                    <BetterText
+                        fontSize={25}
+                        textAlign="normal"
+                        fontWeight="Regular"
+                        textColor="#000"
+                    >
+                        basal metabolic rate: {basalloquesea.result}
+                        {"\n"}edad {basalloquesea.subject.age}
+                        {"\n"}sexo {basalloquesea.subject.gender}
+                        {"\n"}peso en kg {basalloquesea.subject.weight}
+                        {"\n"}alto en cm {basalloquesea.subject.height}
+                        {"\n"}que tan activo es:{" "}
+                        {basalloquesea.subject.activness}
+                        {"\n"}resultado: {basalloquesea.context}
+                    </BetterText>
+                )}
+                <BetterText
+                    fontSize={20}
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    textColor="#000"
+                >
+                    {"\n"}explicacion: {basalloquesea.explanation}
+                </BetterText>
+                <BetterText
+                    fontSize={20}
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    textColor="#000"
+                >
+                    {"\n"}fuente:{" "}
+                    {OpenHealth.phisicalHealth.BodyMassIndex.getSource()}
                 </BetterText>
             </Native.View>
         </Native.View>

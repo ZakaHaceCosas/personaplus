@@ -8,9 +8,20 @@ const UPDATED: string = "26/06/2024";
 // ANY SOURCE THAT HAS BEEN USED TO DEVELOP THE CALCULATIONS / DATA PROVIDED or that BACKS IT UP.
 const SOURCE: string = "https://downhilltodowntown.com/how-to-calculate-your-caloric-burn-while-running/ and https://scielo.isciii.es/scielo.php?script=sci_arttext&pid=S0212-16112012000400040 and https://eresdeportista.com/salud/como-calcular-calorias-quemadas-ejercicio/ and https://www.topendsports.com/weight-loss/energy-met.htm andhttps://journals.lww.com/acsm-msse/fulltext/2000/09001/compendium_of_physical_activities__an_update_of.9.aspx and https://www.cmu.edu/common-cold-project/measures-by-study/health-practices/physical-activity/index.html";
 
+
+/**
+ * Get all the sources of information used to develop the function, it's data, contents, returns, and etc...
+ * @returns A single string with all the URLs, separated by "and" in case there's more than one - e.g. "https://coolsite.com and https://example.source"
+*/
+
 export function getSource() {
     return SOURCE;
 }
+
+/**
+ * Get the date of the last update made to this function (considering "update" any change to it's sources, calculations, data, results, etc... but not trivial, performance, code cleaning or similar changes.)
+ * @returns A string with the date of the last update, using the DD/MM/YYYY format.
+*/
 
 export function getLastUpdate() {
     return UPDATED;
@@ -43,7 +54,7 @@ interface RUNNING_WALKING_Response {
  * @returns The calories burnt if neither provideContext nor provideExplanation are true, otherwise returns a RUNNING_WALKING_Response object.
 */
 
-export function calculateRunningOrWalkingPerformance(
+export default function calculateRunningOrWalkingPerformance(
     age: number,
     gender: "male" | "female",
     weight: number,
