@@ -41,7 +41,7 @@ Agradecemos todas las contribuciones, de hecho son necesarias debido a la gran c
 
 ## Licencia
 
-Al igual que PersonaPlus, OpenHealth está bajo la licencia **Apache-2.0**.
+Al igual que PersonaPlus, OpenHealth está bajo la licencia **GPL-3.0**.
 Es totalmente gratuito hacer uso de OpenHealth, también para fines comerciales, siempre y cuando acredites al proyecto original (OpenHealth). _Además, es recomendable citar también las fuentes de información médica que utilices, recuerda que puedes obtenerlas con `getSource()`._
 
 Hecho con cariño por ZakaHaceCosas, creador de PersonaPlus.

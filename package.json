@@ -22,7 +22,7 @@
         "email": "project@hostname.com"
     },
     "homepage": "https://github.com/ZakaHaceCosas/personaplus#readme",
-    "license": "Apache-2.0",
+    "license": "GPL-3.0-only",
     "description": "Give yourself a PLUS",
     "repository": "https://github.com/ZakaHaceCosas/personaplus",
     "dependencies": {

@@ -260,4 +260,4 @@ Actualmente se usa un versionado muy simple, cuando cambies algo suma 1 a la `b`
 
 ## Licencia
 
-Este proyecto está licenciado bajo los términos de la Licencia Apache 2.0, véase `LICENSE.md`.
+Este proyecto está licenciado bajo los términos de la Licencia GPL-3.0, véase `LICENSE.md`.
