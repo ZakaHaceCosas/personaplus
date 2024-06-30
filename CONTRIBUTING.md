@@ -118,6 +118,6 @@ Sigue los estándares especificados en la [documentación](https://github.com/Za
 
 ## Licencia
 
-Al contribuir a PersonaPlus, aceptas que tus contribuciones se incluyan a la base de código y se distribuyan bajo la licencia Apache-2.0.
+Al contribuir a PersonaPlus, aceptas que tus contribuciones se incluyan a la base de código y se distribuyan bajo la licencia GPL-3.0, junto con las condiciones que esto implica.
 
 **¡Gracias por tu tiempo y esfuerzo para hacer de PersonaPlus una mejor aplicación para todos!**

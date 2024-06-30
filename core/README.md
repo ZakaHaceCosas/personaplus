@@ -44,7 +44,7 @@ We're really thankfull for all possible contributions, in fact they are needed d
 
 ## License
 
-Just as PersonaPlus, OpenHealth is licensed under **Apache-2.0**.
+Just as PersonaPlus, OpenHealth is licensed under **GPL-3.0**.
 It's totally free to make usage of OpenHealth, even if it is for commercial purposes, as long as you credit the original project (OpenHealth). _Plus, we recommend you to cite aswell the sources of medical information used by the functions you use, remember you can get them with `getSource()`._
 
 Made with love by ZakaHaceCosas, creator or PersonaPlus :]

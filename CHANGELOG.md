@@ -27,6 +27,7 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 - Added form validation to `/WelcomeScreen` and added placeholder options to arrays to avoid the error of saving empty (`""`) strings when trying to store data.
   - **Review required**: Need to add the validation to the Android keyboard's submit button (✔ icon in keyboard).
 - ~~Fixed the Welcome Screen layout not being centered.~~
+- Decided to move from Apache-2.0 to GPL-3.0-only (LICENSE).
 
 > [!NOTE]
 >
