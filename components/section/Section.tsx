@@ -14,6 +14,7 @@ interface DivisionProps {
         | "Unknown"
         | "Settings"
         | "Profile"
+        | "About"
         | "Developer";
     children: React.ReactNode;
 }
@@ -51,6 +52,10 @@ export default function Division({ kind, children }: DivisionProps) {
         case "Profile":
             label = "YOUR PROFILE";
             icon = "PROF";
+            break;
+        case "About":
+            label = "ABOUT";
+            icon = "ABOUT";
             break;
         default:
             label = "UNKNOWN";

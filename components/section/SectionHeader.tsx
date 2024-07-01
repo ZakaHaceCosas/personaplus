@@ -36,6 +36,9 @@ export default function SectionHeader({ icon, label }: SectionProps) {
         case "PROF":
             headerIcon = "prof";
             break;
+        case "ABOUT":
+            headerIcon = "info";
+            break;
         default:
             headerIcon = "question-mark";
             break;
@@ -72,6 +75,9 @@ export default function SectionHeader({ icon, label }: SectionProps) {
             )}
             {headerIcon === "dev" && (
                 <Ionicons name="code" size={15} color="#DDDDDD" />
+            )}
+            {headerIcon === "info" && (
+                <Ionicons name="info" size={15} color="#DDDDDD" />
             )}
             <GapView width={10} />
             <BetterText

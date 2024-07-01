@@ -33,6 +33,8 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 - ~~Fixed the Welcome Screen layout not being centered.~~
 - Decided to move from Apache-2.0 to GPL-3.0-only (LICENSE).
 - Fixed `termLog` making stuff invisible for light mode users.
+- Added a serif fontface (Noto Serif).
+- Added an "About page" (I took the freedom to write a lot, lol), a "License" page, and a "Credits" page. All contributors will get to see their name in there, so go contribute! Just in case we get popular, you know.
 
 > [!NOTE]
 >

@@ -312,6 +312,22 @@ export default function Profile() {
                             </Native.View>
                         </Division>
                     </Section>
+                    <GapView height={20} />
+                    <Section kind="About">
+                        <Division
+                            status="REGULAR"
+                            iconName={null}
+                            preheader="More"
+                            header="About"
+                            subheader="License, credits, and more info about the app."
+                        >
+                            <Button
+                                style="ACE"
+                                action={() => Router.router.navigate("/About")}
+                                buttonText="See about"
+                            />
+                        </Division>
+                    </Section>
                     <Footer />
                 </Native.View>
             </Native.ScrollView>
