@@ -154,7 +154,7 @@ export const termLog = (
     }
 
     const log = "%c" + prefix + "%c " + message;
-    console.log(log, style, "background: transparent; color: white;");
+    console.log(log, style, "background: transparent;");
     testLog(message, type);
 };
 
