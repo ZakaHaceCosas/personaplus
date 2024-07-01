@@ -84,7 +84,7 @@ export default function License() {
                 <GapView height={20} />
                 <BetterText
                 // yes, i spent my time manually formatting the entire GPL 3
-                // (at midnight)
+                // nmv, its midnight ill finish tomorrow
                     fontWeight="Bold"
                     isSerif={true}
                     textColor="#000"
