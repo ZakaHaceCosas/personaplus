@@ -9,10 +9,12 @@ import * as calculateBodyMassIndex from './phisicalHealth/bodymassindex';
 import * as calculateBodyFatPercentage from './phisicalHealth/bodyfatpercentage';
 import * as calculateIdealBodyWeight from './phisicalHealth/idealbodyweight';
 import * as calculateBasalMetabolicRate from './phisicalHealth/basalMetabolicRate';
+import * as getMetabolicEquivalentOfTask from './phisicalHealth/getMetabolicEquivalentOfTask';
 
 // PERFORMANCE
 
 import * as calculateRunningOrWalkingPerformance from './performance/runningPerformance';
+import * as calculateLiftingPerformance from './performance/liftingPerformance'
 
 // OPENHEALTH DATA
 // import getSource from './docs';
@@ -45,6 +47,11 @@ const OpenHealth = {
             calculate: calculateBasalMetabolicRate.default,
             getSource: calculateBasalMetabolicRate.getSource,
             getLastUpdate: calculateBasalMetabolicRate.getLastUpdate
+        },
+        getMetabolicEquivalentOfTask: {
+            calculate: getMetabolicEquivalentOfTask.default,
+            getSource: getMetabolicEquivalentOfTask.getSource,
+            getLastUpdate: getMetabolicEquivalentOfTask.getLastUpdate
         }
     },
     performance: {
@@ -52,10 +59,15 @@ const OpenHealth = {
             calculate: calculateRunningOrWalkingPerformance.default,
             getSource: calculateRunningOrWalkingPerformance.getSource,
             getLastUpdate: calculateRunningOrWalkingPerformance.getLastUpdate
+        },
+        LiftingPerformance: {
+            calculate: calculateLiftingPerformance.default,
+            getSource: calculateLiftingPerformance.getSource,
+            getLastUpdate: calculateLiftingPerformance.getLastUpdate
         }
     },
     openinfo: {
-        // getSource: getSource
+        // This will be done later. It is related to /docs.
     }
 };
 
