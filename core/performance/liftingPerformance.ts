@@ -7,9 +7,10 @@ CALCULATE RUNNING / WALKING PERFORMANCE
 
 // LAST UPDATE TO THIS FUNCTION, ITS DATA, ITS CALCULATIONS, OR ANYTHING THAT DOES AFFECT THE RESULT
 // Changes that do not affect the result, like just bug-fixes, performance improvments, code-legibility improvments, or that kind of stuff, do not need to bump the date.
-const UPDATED: string = "30/06/2024";
+const UPDATED: string = "01/07/2024";
 // ANY SOURCE THAT HAS BEEN USED TO DEVELOP THE CALCULATIONS / DATA PROVIDED or that BACKS IT UP.
-const SOURCE: string = "https://strengthlevel.com/strength-standards/";
+const SOURCE: string = "";
+// Ignore the old code lol - this wasn't the right source: https://strengthlevel.com/strength-standards/
 
 
 /**
@@ -41,7 +42,6 @@ interface LIFTING_Response {
         barweight: number;
         liftweight: number;
         repetitions: number;
-        exercise: "dummbellCurl" // add more here
         // TODO FROM HERE
     };
     context?: string;
