@@ -20,14 +20,19 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - Started working on the logic - as a side project: "OpenHealth".
 
 > [!INFO]
-> **What does that even mean?** See: Basically, the app needs to work with a lot of health data so that it can provide accurate statistics and tips to the end user, so the first idea would be to find a library or something that does provide functions for that stuff. However - I thought it would be a nice idea to try to make our own "health.js" library, and just like that! There's a new directory called `/code` for _the core of the app_, this new library which will allow PersonaPlus to turn all that frontend objectives into actual, worthy data for users to understand themselves, their performance, and their health.
+> **What does that even mean?**
+>
+> See: Basically, the app needs to work with a lot of health data so that it can provide accurate statistics and tips to the end user, so the first idea would be to find a library or something that does provide functions for that stuff.
+> However - I thought it would be a nice idea to try to make our own "health.js" library, and just like that! There's a new directory called `/code` for _the core of the app_, on which I started working and then decided to give a proper name. This new library will allow PersonaPlus to turn all the frontend we've been working on since 2023 into actual, worthy data for users to understand themselves, their performance, and their health.
 
 Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`. It's mentioned here only this time, as this is the most important change of this update.
 
+- Now `/WelcomeScreen` works! Users can now register with basic info.
 - Added form validation to `/WelcomeScreen` and added placeholder options to arrays to avoid the error of saving empty (`""`) strings when trying to store data.
   - **Review required**: Need to add the validation to the Android keyboard's submit button (✔ icon in keyboard).
 - ~~Fixed the Welcome Screen layout not being centered.~~
 - Decided to move from Apache-2.0 to GPL-3.0-only (LICENSE).
+- Fixed `termLog` making stuff invisible for light mode users.
 
 > [!NOTE]
 >

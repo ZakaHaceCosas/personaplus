@@ -9,6 +9,8 @@ import Button from "@/components/Buttons";
 import GapView from "@/components/GapView";
 import BetterText from "@/components/BetterText";
 import { Picker as Select } from "@react-native-picker/picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { termLog } from "./DeveloperInterface";
 
 // Definimos los estilos
 const styles = Native.StyleSheet.create({
@@ -145,7 +147,24 @@ export default function WelcomePage() {
     const goback = () => {
         setTab(prevPage => prevPage - 1);
     };
-    const submit = () => {};
+    const submit = async () => {
+        try {
+            const dataToSave = {
+                ...formData,
+                gender: genderValue,
+                focuspoint: focuspointValue,
+                sleep,
+                easteregg,
+            };
+            await AsyncStorage.setItem("user-data", JSON.stringify(dataToSave));
+            await AsyncStorage.setItem("uname", dataToSave.username);
+            termLog("Profile created!", "success");
+            gonext();
+        } catch (e) {
+            const log = "Error creating profile: " + e;
+            termLog(log, "error");
+        }
+    };
     const learnMore = async () => {
         const url =
             "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md";
