@@ -18,12 +18,12 @@
     "terminal.integrated.smoothScrolling": true,
     "editor.cursorBlinking": "expand",
     "redhat.telemetry.enabled": false,
-    "files.autoSave": "onFocusChange",
+    "files.autoSave": "off",
     "editor.fontFamily": "'JetBrains Mono', 'Roboto Mono', Consolas, 'Courier New', monospace",
     "editor.fontWeight": 400,
     "editor.fontLigatures": true,
     "window.zoomLevel": -0.5,
-    "editor.formatOnSave": true,
+    "editor.formatOnSave": false,
     "editor.detectIndentation": false,
     "editor.tabSize": 4,
     "files.trimTrailingWhitespace": true,
@@ -61,5 +61,8 @@
             "other": "on"
         },
         "editor.formatOnSave": true
+    },
+    "[License.tsx]": {
+        "editor.formatOnSave": false
     }
 }
