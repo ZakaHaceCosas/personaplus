@@ -81,18 +81,41 @@ export default function License() {
                 <BetterText fontSize={15} textColor="#000" fontWeight="Light">
                     Now proceeds the legal text
                 </BetterText>
-                <Native.Text>
-                GNU GENERAL PUBLIC LICENSE
-                       Version 3, 29 June 2007
+                <GapView height={20} />
+                <BetterText
+                // yes, i spent my time manually formatting the entire GPL 3
+                // (at midnight)
+                    fontWeight="Bold"
+                    isSerif={true}
+                    textColor="#000"
+                    textAlign="center"
+                    fontSize={17}
+                >
+                    GNU GENERAL PUBLIC LICENSE{"\n"}
 
- Copyright (C) 2007 Free Software Foundation, Inc. {"https://fsf.org/"}
- Everyone is permitted to copy and distribute verbatim copies
- of this license document, but changing it is not allowed.
-
-                            Preamble
-
+                    <BetterText
+                        fontWeight="Medium"
+                        isSerif={true}
+                        textColor="#000"
+                        textAlign="center"
+                        fontSize={14}
+                    >
+                        Version 3, 29 June 2007
+                    </BetterText>
+                </BetterText>
+                <BetterText textColor="#000" fontWeight="Regular" fontSize={13} textAlign="center" isSerif={true}>
+                    Copyright (C) 2007 Free Software Foundation, Inc. {"https://fsf.org/"}
+                    Everyone is permitted to copy and distribute verbatim copies
+                    of this license document, but changing it is not allowed.
+                </BetterText>
+                <GapView height={20} />
+                <BetterText textColor="#000" fontWeight="Bold" fontSize={13} textAlign="center" isSerif={true}>
+                    Preamble
+                </BetterText>
+<BetterText textColor="#000" fontWeight="Regular" fontSize={13} textAlign="center" isSerif={true}>
   The GNU General Public License is a free, copyleft license for
 software and other kinds of works.
+{"\n\n"}
 
   The licenses for most software and other practical works are designed
 to take away your freedom to share and change the works.  By contrast,
@@ -102,6 +125,7 @@ software for all its users.  We, the Free Software Foundation, use the
 GNU General Public License for most of our software; it applies also to
 any other work released this way by its authors.  You can apply it to
 your programs, too.
+{"\n\n"}
 
   When we speak of free software, we are referring to freedom, not
 price.  Our General Public Licenses are designed to make sure that you
@@ -109,27 +133,32 @@ have the freedom to distribute copies of free software (and charge for
 them if you wish), that you receive source code or can get it if you
 want it, that you can change the software or use pieces of it in new
 free programs, and that you know you can do these things.
+{"\n\n"}
 
   To protect your rights, we need to prevent others from denying you
 these rights or asking you to surrender the rights.  Therefore, you have
 certain responsibilities if you distribute copies of the software, or if
 you modify it: responsibilities to respect the freedom of others.
+{"\n\n"}
 
   For example, if you distribute copies of such a program, whether
 gratis or for a fee, you must pass on to the recipients the same
 freedoms that you received.  You must make sure that they, too, receive
 or can get the source code.  And you must show them these terms so they
 know their rights.
+{"\n\n"}
 
   Developers that use the GNU GPL protect your rights with two steps:
 (1) assert copyright on the software, and (2) offer you this License
 giving you legal permission to copy, distribute and/or modify it.
+{"\n\n"}
 
   For the developers&apos; and authors&apos; protection, the GPL clearly explains
 that there is no warranty for this free software.  For both users&apos; and
 authors&apos; sake, the GPL requires that modified versions be marked as
 changed, so that their problems will not be attributed erroneously to
 authors of previous versions.
+{"\n\n"}
 
   Some devices are designed to deny users access to install or run
 modified versions of the software inside them, although the manufacturer
@@ -141,6 +170,7 @@ have designed this version of the GPL to prohibit the practice for those
 products.  If such problems arise substantially in other domains, we
 stand ready to extend this provision to those domains in future versions
 of the GPL, as needed to protect the freedom of users.
+{"\n\n"}
 
   Finally, every program is threatened constantly by software patents.
 States should not allow patents to restrict development and use of
@@ -148,31 +178,41 @@ software on general-purpose computers, but in those that do, we wish to
 avoid the special danger that patents applied to a free program could
 make it effectively proprietary.  To prevent this, the GPL assures that
 patents cannot be used to render the program non-free.
-
+{"\n\n"}
   The precise terms and conditions for copying, distribution and
 modification follow.
-
-                       TERMS AND CONDITIONS
-
-  0. Definitions.
-
+</BetterText>
+<GapView height={20} />
+<BetterText textColor="#000" fontWeight="Bold" fontSize={13} textAlign="center" isSerif={true}>
+TERMS AND CONDITIONS
+                </BetterText>
+                <GapView height={20} />
+                <BetterText textColor="#000" fontWeight="Bold" fontSize={13} textAlign="center" isSerif={true}>
+                0. Definitions.
+                </BetterText>
+  <BetterText textAlign="center" fontSize={13} textColor="#000" fontWeight="Regular" isSerif={true}>
   &quot;This License&quot; refers to version 3 of the GNU General Public License.
 
+  {"\n\n"}
   &quot;Copyright&quot; also means copyright-like laws that apply to other kinds of
 works, such as semiconductor masks.
 
+{"\n\n"}
   &quot;The Program&quot; refers to any copyrightable work licensed under this
 License.  Each licensee is addressed as &quot;you&quot;.  &quot;Licensees&quot; and
 &quot;recipients&quot; may be individuals or organizations.
 
+{"\n\n"}
   To &quot;modify&quot; a work means to copy from or adapt all or part of the work
 in a fashion requiring copyright permission, other than the making of an
 exact copy.  The resulting work is called a &quot;modified version&quot; of the
 earlier work or a work &quot;based on&quot; the earlier work.
 
+{"\n\n"}
   A &quot;covered work&quot; means either the unmodified Program or a work based
 on the Program.
 
+{"\n\n"}
   To &quot;propagate&quot; a work means to do anything with it that, without
 permission, would make you directly or secondarily liable for
 infringement under applicable copyright law, except executing it on a
@@ -180,10 +220,12 @@ computer or modifying a private copy.  Propagation includes copying,
 distribution (with or without modification), making available to the
 public, and in some countries other activities as well.
 
+{"\n\n"}
   To &quot;convey&quot; a work means any kind of propagation that enables other
 parties to make or receive copies.  Mere interaction with a user through
 a computer network, with no transfer of a copy, is not conveying.
 
+{"\n\n"}
   An interactive user interface displays &quot;Appropriate Legal Notices&quot;
 to the extent that it includes a convenient and prominently visible
 feature that (1) displays an appropriate copyright notice, and (2)
@@ -193,16 +235,22 @@ work under this License, and how to view a copy of this License.  If
 the interface presents a list of user commands or options, such as a
 menu, a prominent item in the list meets this criterion.
 
+{"\n\n"}
+</BetterText>
+<BetterText textAlign="center" fontSize={13} textColor="#000" fontWeight="Bold" isSerif={true}>
   1. Source Code.
-
+</BetterText>
+  <BetterText textAlign="center" fontSize={13} textColor="#000" fontWeight="Regular" isSerif={true}>
   The &quot;source code&quot; for a work means the preferred form of the work
 for making modifications to it.  &quot;Object code&quot; means any non-source
 form of a work.
+{"\n\n"}
 
   A &quot;Standard Interface&quot; means an interface that either is an official
 standard defined by a recognized standards body, or, in the case of
 interfaces specified for a particular programming language, one that
 is widely used among developers working in that language.
+{"\n\n"}
 
   The &quot;System Libraries&quot; of an executable work include anything, other
 than the work as a whole, that (a) is included in the normal form of
@@ -214,6 +262,7 @@ implementation is available to the public in source code form.  A
 (kernel, window system, and so on) of the specific operating system
 (if any) on which the executable work runs, or a compiler used to
 produce the work, or an object code interpreter used to run it.
+{"\n\n"}
 
   The &quot;Corresponding Source&quot; for a work in object code form means all
 the source code needed to generate, install, and (for an executable
@@ -227,15 +276,23 @@ the work, and the source code for shared libraries and dynamically
 linked subprograms that the work is specifically designed to require,
 such as by intimate data communication or control flow between those
 subprograms and other parts of the work.
+{"\n\n"}
 
   The Corresponding Source need not include anything that users
 can regenerate automatically from other parts of the Corresponding
 Source.
+{"\n\n"}
 
   The Corresponding Source for a work in source code form is that
 same work.
+{"\n\n"}
+
+</BetterText>
+<BetterText textAlign="center" fontSize={13} textColor="#000" fontWeight="Bold" isSerif={true}>
 
   2. Basic Permissions.
+</BetterText>
+<BetterText textAlign="center" fontSize={13} textColor="#000" fontWeight="Regular" isSerif={true}>
 
   All rights granted under this License are granted for the term of
 copyright on the Program, and are irrevocable provided the stated
@@ -244,7 +301,7 @@ permission to run the unmodified Program.  The output from running a
 covered work is covered by this License only if the output, given its
 content, constitutes a covered work.  This License acknowledges your
 rights of fair use or other equivalent, as provided by copyright law.
-
+{"\n\n"}
   You may make, run and propagate covered works that you do not
 convey, without conditions so long as your license otherwise remains
 in force.  You may convey covered works to others for the sole purpose
@@ -703,7 +760,7 @@ Program, unless a warranty or assumption of liability accompanies a
 copy of the Program in return for a fee.
 
                      END OF TERMS AND CONDITIONS
-                </Native.Text>
+                     </BetterText>
             </Native.ScrollView>
         </Native.View>
     );
