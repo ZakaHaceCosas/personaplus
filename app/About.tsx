@@ -103,6 +103,12 @@ export default function Home() {
                     style="ACE"
                     action={() => Router.router.navigate("/OpenSourceCredits")}
                 />
+                <GapView height={15} />
+                <Button
+                    buttonText="Privacy policy (external link)"
+                    style="ACE"
+                    action={() => Native.Linking.openURL("https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md")}
+                />
             </Native.ScrollView>
         </Native.View>
     );
