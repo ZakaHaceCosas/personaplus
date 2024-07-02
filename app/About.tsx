@@ -97,7 +97,7 @@ export default function Home() {
                     style="GOD"
                     action={() => Router.router.navigate("/License")}
                 />
-                <GapView height={20} />
+                <GapView height={15} />
                 <Button
                     buttonText="OSS used"
                     style="ACE"

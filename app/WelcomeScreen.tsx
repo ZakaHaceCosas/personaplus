@@ -148,21 +148,23 @@ export default function WelcomePage() {
         setTab(prevPage => prevPage - 1);
     };
     const submit = async () => {
-        try {
-            const dataToSave = {
-                ...formData,
-                gender: genderValue,
-                focuspoint: focuspointValue,
-                sleep,
-                easteregg,
-            };
-            await AsyncStorage.setItem("user-data", JSON.stringify(dataToSave));
-            await AsyncStorage.setItem("uname", dataToSave.username);
-            termLog("Profile created!", "success");
-            gonext();
-        } catch (e) {
-            const log = "Error creating profile: " + e;
-            termLog(log, "error");
+        if (genderValue && focuspointValue && sleep && formData.username && formData.height && formData.weight && formData.height) {
+            try {
+                await AsyncStorage.setItem("uname", formData.username);
+                await AsyncStorage.setItem("height", formData.height);
+                await AsyncStorage.setItem("weight", formData.weight);
+                await AsyncStorage.setItem("age", formData.age);
+                await AsyncStorage.setItem("gender", genderValue);
+                await AsyncStorage.setItem("focuspoint", focuspointValue);
+                await AsyncStorage.setItem("sleep", sleep);
+                termLog("Profile created!", "success");
+                gonext();
+            } catch (e) {
+                const log = "Error creating profile: " + e;
+                termLog(log, "error");
+            }
+        } else {
+            termLog("Error saving user data, some data is missing!", "error")
         }
     };
     const learnMore = async () => {
