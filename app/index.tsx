@@ -30,14 +30,14 @@ interface Objective {
 const styles = Native.StyleSheet.create({
     containerview: {
         width: "100vw" as Native.DimensionValue,
-        height: "100vw" as Native.DimensionValue,
+        height: "100vh" as Native.DimensionValue,
     },
     mainview: {
         padding: 20,
         display: "flex",
         flexDirection: "column",
         width: "100vw" as Native.DimensionValue,
-        height: "100vw" as Native.DimensionValue,
+        height: "100vh" as Native.DimensionValue,
         overflow: "scroll",
     },
 });

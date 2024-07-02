@@ -7,7 +7,7 @@ import * as Router from "expo-router";
 const styles = Native.StyleSheet.create({
     containerview: {
         width: "100vw" as Native.DimensionValue,
-        height: "100vw" as Native.DimensionValue,
+        height: "100vh" as Native.DimensionValue,
     },
     mainview: {
         padding: 20,
@@ -15,7 +15,7 @@ const styles = Native.StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         width: "100vw" as Native.DimensionValue,
-        height: "100vw" as Native.DimensionValue,
+        height: "100vh" as Native.DimensionValue,
         overflow: "scroll",
         backgroundColor: "#FFF", // i dont know why, but i feel a credits section in an app should have its background white
     },
