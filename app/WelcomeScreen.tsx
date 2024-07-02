@@ -167,17 +167,6 @@ export default function WelcomePage() {
             termLog("Error saving user data, some data is missing!", "error")
         }
     };
-    const learnMore = async () => {
-        const url =
-            "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md";
-        const sup = await Native.Linking.canOpenURL(url);
-
-        if (sup) {
-            await Native.Linking.openURL(url);
-        } else {
-            // Error notification.
-        }
-    };
 
     const handleChange = (name: string, value: string) => {
         setFormData(prevData => ({
@@ -250,7 +239,7 @@ export default function WelcomePage() {
                             fontWeight="Regular"
                             fontSize={20}
                             textColor="#3280FF"
-                            onTap={learnMore}
+                            onTap={() => Native.Linking.openURL("https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md")}
                         >
                             Learn more
                         </BetterText>
