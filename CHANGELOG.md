@@ -23,18 +23,23 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 > **What does that even mean?**
 >
 > See: Basically, the app needs to work with a lot of health data so that it can provide accurate statistics and tips to the end user, so the first idea would be to find a library or something that does provide functions for that stuff.
-> However - I thought it would be a nice idea to try to make our own "health.js" library, and just like that! There's a new directory called `/code` for _the core of the app_, on which I started working and then decided to give a proper name. This new library will allow PersonaPlus to turn all the frontend we've been working on since 2023 into actual, worthy data for users to understand themselves, their performance, and their health.
+> However - I thought it would be a nice idea to try to make our own "health.js" library, and just like that! There's a new directory called `/code` for _the core of the app_, on which I started working and then decided to give it's own name, documentation, and stuff. This new library will allow PersonaPlus to turn all the frontend we've been working on since 2023 into actual, worthy data for users to understand themselves, their performance, and their health.
 
 Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`. It's mentioned here only this time, as this is the most important change of this update.
 
 - Now `/WelcomeScreen` works! Users can now register with basic info.
-- Added form validation to `/WelcomeScreen` and added placeholder options to arrays to avoid the error of saving empty (`""`) strings when trying to store data.
-  - **Review required**: Need to add the validation to the Android keyboard's submit button (✔ icon in keyboard).
-- ~~Fixed the Welcome Screen layout not being centered.~~
+  - Fixed the Welcome Screen's layout, now it's centered.
+  - Added form validation to `/WelcomeScreen` and added placeholder options to arrays to avoid the error of saving empty (`""`) strings when trying to store data.
+    - **Review required**: Need to add the validation to the Android keyboard's submit button (✔ icon in keyboard).
 - Decided to move from Apache-2.0 to GPL-3.0-only (LICENSE).
-- Fixed `termLog` making stuff invisible for light mode users.
+- Fixed `termLog` making stuff invisible for light mode users (it was just removing a styling directive).
 - Added a serif fontface (Noto Serif).
 - Added an "About page" (I took the freedom to write a lot, lol), a "License" page, and a "Credits" page. All contributors will get to see their name in there, so go contribute! Just in case we get popular, you know.
+- Updated DOCS and PRIVACY files.
+- Added (for testing purposes) a GitHub form for issues.
+- Corrected some places setting the height to `100vw`.
+- Corrected the types for `termLog` function.
+- Made many changes to `DeveloperInterface` in an attempt to fix it.
 
 > [!NOTE]
 >
