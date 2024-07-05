@@ -98,6 +98,7 @@ export default function BetterText({
         textDecorationLine: textdecoration,
         textDecorationColor: color,
         textDecorationStyle: "solid",
+        padding: 1, // This fixes text not looking properly
     };
 
     return (

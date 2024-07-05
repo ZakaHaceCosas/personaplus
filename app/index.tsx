@@ -13,6 +13,7 @@ import Button from "@/components/Buttons";
 import GapView from "@/components/GapView";
 import Footer from "@/components/Footer";
 import { termLog } from "@/app/DeveloperInterface";
+import * as Notifications from "expo-notifications";
 
 // TypeScript, supongo
 interface Objective {
@@ -44,17 +45,34 @@ const styles = Native.StyleSheet.create({
 
 // Creamos la función
 export default function Home() {
-    // Por defecto
-    const [username, setUname] = React.useState<string>("Unknown");
-    const [objs, setObjs] = React.useState<{ [key: string]: Objective } | null>(
-        null
-    );
+    // Usuario "Unknown" por defecto
+    // Default "Unknown" username
+    const [username, setUsername] = React.useState<string>("Unknown");
+    // Variable principal para acceder a los objetivos activos (o simplemente objetivos)
+    // Main variable to access active objectives (or just objectives)
+    const [objectives, setObjectives] = React.useState<{
+        [key: string]: Objective;
+    } | null>(null);
+
+    // Solicitar permiso para enviar notificaciones del sistema
+    // Request permission to send system notifications
+    const [notificationPerms, requestNotificationPerms] =
+        Notifications.usePermissions();
+    console.log(notificationPerms);
+
+    if (
+        notificationPerms?.granted === false ||
+        notificationPerms?.status !== "granted"
+    ) {
+        requestNotificationPerms();
+    }
 
     React.useEffect(() => {
         const fetchUsername = async () => {
-            const uname: string | null = await AsyncStorage.getItem("uname");
-            if (uname) {
-                setUname(uname);
+            const username: string | null =
+                await AsyncStorage.getItem("username");
+            if (username) {
+                setUsername(username);
                 termLog("Username fetched!", "success");
             } else {
                 termLog("Username error!", "error");
@@ -67,13 +85,14 @@ export default function Home() {
     React.useEffect(() => {
         const fetchObjectives = async () => {
             try {
-                const storedObjs = await AsyncStorage.getItem("objs");
-                if (storedObjs) {
-                    setObjs(JSON.parse(storedObjs));
+                const existingObjectives = await AsyncStorage.getItem("objs");
+                if (existingObjectives) {
+                    setObjectives(JSON.parse(existingObjectives));
+                    // console logs keep reminding you it's called "OBJS" even tho im chaning it to objectives for better readability. just in case.
                     termLog("Objectives (OBJS) fetched and parsed!", "success");
                 } else {
                     await AsyncStorage.setItem("objs", JSON.stringify({}));
-                    setObjs({});
+                    setObjectives({});
                     termLog(
                         "Could not get objectives (OBJS) fetched! Setting them to an empty array ( {} )",
                         "warn"
@@ -92,15 +111,15 @@ export default function Home() {
 
     const currentpage: string = Router.usePathname();
 
-    const createObj = (): void => {
+    const createNewActiveObjective = (): void => {
         Router.router.navigate("/CreateObjective");
     };
 
-    const startObj = (id: number): void => {
+    const startSessionFromObjective = (id: number): void => {
         Router.router.navigate("/Sessions?id=" + id);
     };
 
-    const doObj = (id: number): void => {
+    const markObjectiveAsDone = (id: number): void => {
         const updateObj = async (id: number) => {
             try {
                 const storedObjs = await AsyncStorage.getItem("objs");
@@ -194,12 +213,12 @@ export default function Home() {
                 </BetterText>
                 <GapView height={20} />
                 <Section kind="Objectives">
-                    {objs && Object.keys(objs).length > 0 ? (
-                        Object.keys(objs).every(
+                    {objectives && Object.keys(objectives).length > 0 ? (
+                        Object.keys(objectives).every(
                             key =>
-                                objs[key].wasDone ||
-                                !objs[key].days ||
-                                !objs[key].days[adjustedToday]
+                                objectives[key].wasDone ||
+                                !objectives[key].days ||
+                                !objectives[key].days[adjustedToday]
                         ) ? (
                             <Native.View
                                 style={{
@@ -264,8 +283,8 @@ export default function Home() {
                                 )}
                             </Native.View>
                         ) : (
-                            Object.keys(objs).map(key => {
-                                const obj = objs[key];
+                            Object.keys(objectives).map(key => {
+                                const obj = objectives[key];
                                 termLog(
                                     `OBJ ${obj.id}, days[${adjustedToday}]: ${obj.days[adjustedToday]}`,
                                     "log"
@@ -285,12 +304,18 @@ export default function Home() {
                                         >
                                             <Button
                                                 style="ACE"
-                                                action={() => startObj(obj.id)}
+                                                action={() =>
+                                                    startSessionFromObjective(
+                                                        obj.id
+                                                    )
+                                                }
                                                 buttonText="Let's go!"
                                             />
                                             <Button
                                                 style="GOD"
-                                                action={() => doObj(obj.id)}
+                                                action={() =>
+                                                    markObjectiveAsDone(obj.id)
+                                                }
                                                 buttonText="Already done it"
                                             />
                                         </Division>
@@ -323,7 +348,7 @@ export default function Home() {
                                 width="fill"
                                 style="ACE"
                                 buttonText="Let's go!"
-                                action={createObj}
+                                action={createNewActiveObjective}
                             />
                         </Native.View>
                     )}

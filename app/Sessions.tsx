@@ -9,6 +9,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
 import { termLog } from "./DeveloperInterface";
+// @ts-expect-error: Wants a ".d.ts" file for this:
+import CountDown from "react-native-countdown-component";
+import Button from "@/components/Buttons";
 
 // TypeScript, supongo.
 interface Objective {
@@ -65,7 +68,7 @@ export default function Sessions() {
               .filter(item => typeof item.id === "number") // buscar ids
               .map(item => item.id.toString()) // array-ing ids
               .join(", ") // unir ids
-        : "no ids found (see Sessions.tsx:63-68)";
+        : "no ids found (developers: see Sessions.tsx:63-68 (or close to that point))";
 
     let selectedObjSustantivizedName: string = "Unknown";
 
@@ -92,27 +95,110 @@ export default function Sessions() {
         }
     }
 
+    const [isTimerRunning, setTimerStatus] = React.useState(true);
+
+    const toggleTimerStatus = () => {
+        if (isTimerRunning) {
+            setTimerStatus(false);
+        } else {
+            setTimerStatus(true);
+        }
+    };
+
+    let timerColor;
+    if (isTimerRunning) {
+        timerColor = "#32FF80";
+    } else {
+        timerColor = "#FFC832";
+    }
+
+    const cancel = () => {
+        Native.Alert.alert(
+            "Are you sure?",
+            "You are doing GREAT! Are you sure you want to give up? Your progress will be lost! (You can always start over if you change your mind)",
+            [
+                {
+                    text: "Nevermind",
+                    style: "cancel",
+                },
+                {
+                    text: "Yes, I give up",
+                    style: "destructive",
+                    onPress: () => {
+                        Router.router.navigate("/"); // basically goes home without saving, easy.
+                    },
+                },
+            ],
+            { cancelable: false }
+        );
+    };
+
+    const finish = () => {
+        const updateObj = async (id: number) => {
+            try {
+                const storedObjs = await AsyncStorage.getItem("objs");
+                if (storedObjs) {
+                    const parsedObjs = JSON.parse(storedObjs);
+                    const updatedObjs = parsedObjs.map((obj: Objective) => {
+                        if (obj.id === id) {
+                            return { ...obj, wasDone: true };
+                        }
+                        return obj;
+                    });
+                    await AsyncStorage.setItem(
+                        "objs",
+                        JSON.stringify(updatedObjs)
+                    );
+                    termLog(
+                        "Objectives (OBJS) updated and saved successfully!",
+                        "success"
+                    );
+                    Router.router.replace("/");
+                } else {
+                    termLog(
+                        "Could not get objectives (OBJS) fetched!",
+                        "error"
+                    );
+                }
+            } catch (e) {
+                const log =
+                    "Could not get objectives (OBJS) fetched due to error: " +
+                    e;
+                termLog(log, "error");
+            }
+        };
+
+        if (selectedObj) {
+            updateObj(selectedObj.id);
+        }
+
+        Router.router.navigate("/");
+    };
+
     return (
         <Native.View
             style={{
-                backgroundColor: "#0E1013",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
                 width: "100vw" as Native.DimensionValue,
                 height: "100vh" as Native.DimensionValue,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                justifyContent: "center",
+                padding: 20,
+                flex: 1,
+                backgroundColor: "#0E1013",
             }}
         >
-            {/*<BetterText weight="Regular" size={15}>
-                currently selected obj: {id}
-            </BetterText>*/}
             {selectedObj ? (
                 <Native.View
                     style={{
                         display: "flex",
                         flexDirection: "column",
-                        width: "calc(100vw - 40px)" as Native.DimensionValue,
+                        width: "100%",
+                        height: "100%",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: "50%",
                     }}
                 >
                     <Native.View
@@ -127,9 +213,6 @@ export default function Sessions() {
                             width: "100%",
                         }}
                     >
-                        {
-                            // deberia ser otro icono, pero no hay manera de que funcionen los MS Fluent Icons con React al parecer :[
-                        }
                         <Ionicons name="play-arrow" size={20} color="#DDDDDD" />
                         <GapView width={10} />
                         <BetterText
@@ -196,30 +279,65 @@ export default function Sessions() {
                             </BetterText>
                         </Native.View>
                     </Native.View>
-                    <BetterText fontWeight="Regular" fontSize={15}>
-                        Days:{" "}
-                        {selectedObj.days
-                            .map((day, index) =>
-                                day ? `Day ${index + 1}` : null
-                            )
-                            .filter(Boolean)
-                            .join(", ")}
-                    </BetterText>
-                    <BetterText fontWeight="Regular" fontSize={15}>
-                        Duration: {selectedObj.duration}
-                    </BetterText>
-                    <BetterText fontWeight="Regular" fontSize={15}>
-                        Repetitions: {selectedObj.repetitions}
-                    </BetterText>
-                    <BetterText fontWeight="Regular" fontSize={15}>
-                        Rests: {selectedObj.rests}
-                    </BetterText>
-                    <BetterText fontWeight="Regular" fontSize={15}>
-                        Rest Duration: {selectedObj.restDuration}
-                    </BetterText>
-                    <BetterText fontWeight="Regular" fontSize={15}>
-                        ID: {selectedObj.id}
-                    </BetterText>
+                    <CountDown
+                        id="mainCountdown"
+                        until={selectedObj?.duration * 60}
+                        size={45}
+                        timeToShow={["M", "S"]}
+                        running={isTimerRunning}
+                        style={{ backgroundColor: "transparent" }}
+                        digitStyle={{ backgroundColor: "transparent" }}
+                        digitTxtStyle={{ color: timerColor }}
+                        timeLabelStyle={{ display: "none" }}
+                        onFinish={() => finish()}
+                        onPress={() => toggleTimerStatus()}
+                    />
+                    <Native.View
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            padding: 20,
+                            backgroundColor: "#14171C",
+                            borderRadius: 15,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            width: "100%",
+                        }}
+                    >
+                        <Button
+                            style={isTimerRunning ? "ACE" : "HMM"}
+                            action={toggleTimerStatus}
+                            layout="box"
+                        >
+                            <Ionicons
+                                name={isTimerRunning ? "pause" : "play-arrow"}
+                                size={16}
+                                color={isTimerRunning ? "#FFF" : "#000"}
+                            />
+                        </Button>
+                        <GapView width={10} />
+                        <Button style="GOD" action={finish} layout="box">
+                            <Ionicons name="check" size={16} color="#000" />
+                        </Button>
+                        <GapView width={10} />
+                        <Button
+                            style="HMM"
+                            buttonText="Need help?"
+                            action={() => {}}
+                            layout="normal"
+                            height="default"
+                            width="fill"
+                        />
+                        <GapView width={10} />
+                        <Button
+                            style="WOR"
+                            buttonText="Give up"
+                            action={cancel}
+                            layout="normal"
+                            height="default"
+                            width="fill"
+                        />
+                    </Native.View>
                 </Native.View>
             ) : (
                 <Native.View>

@@ -8,11 +8,12 @@ import BetterText from "@/components/BetterText";
 // TypeScript, supongo
 interface BtnsProps {
     style: "ACE" | "GOD" | "WOR" | "DEFAULT" | "HMM";
-    buttonText: string;
+    buttonText?: string;
     action: () => void;
     width?: "auto" | "fill";
     height?: "auto" | "fill" | "default" | number;
-    layout?: string;
+    layout?: "normal" | "box";
+    children?: React.ReactNode;
 }
 
 // Creamos la funcion
@@ -23,6 +24,7 @@ export default function Button({
     width,
     height,
     layout,
+    children,
 }: BtnsProps) {
     let borderColor: string; // Color del borde
     let backgroundColor: string; // Color del fondo
@@ -31,6 +33,7 @@ export default function Button({
     let buttonHeight: string | number; // Tamaño vertical del botón
     let buttonMinorPadding: number; // Relleno / espaciado interior vertical (pequeño) del botón
     let buttonMajorPadding: number; // Relleno / espaciado interior horizontal (grande) del botón
+    let flexValue: 0 | 1; // Valor de flex, puede ser 0 o 1.
 
     switch (style) {
         case "ACE":
@@ -96,16 +99,20 @@ export default function Button({
         case "normal":
             buttonMinorPadding = 0;
             buttonMajorPadding = 0;
+            buttonHeight = 50;
+            flexValue = 1;
             break;
         case "box":
             buttonMinorPadding = 0;
-            buttonMajorPadding = 15;
+            buttonMajorPadding = 0;
             buttonWidth = 50;
             buttonHeight = 50;
+            flexValue = 0;
             break;
         default:
             buttonMinorPadding = 0;
             buttonMajorPadding = 0;
+            flexValue = 1;
             break;
     }
 
@@ -127,17 +134,20 @@ export default function Button({
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                flex: 1,
+                flex: flexValue,
             }}
         >
-            <BetterText
-                fontWeight="Medium"
-                fontSize={14}
-                textColor={textColor}
-                textAlign="center"
-            >
-                {String(buttonText)}
-            </BetterText>
+            {buttonText && (
+                <BetterText
+                    fontWeight="Medium"
+                    fontSize={14}
+                    textColor={textColor}
+                    textAlign="center"
+                >
+                    {String(buttonText)}
+                </BetterText>
+            )}
+            {children && children}
         </Native.Pressable>
     );
 }

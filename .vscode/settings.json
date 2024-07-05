@@ -9,7 +9,7 @@
         "**/.DS_Store": true,
         "**/android": true
     },
-    "editor.fontSize": 13,
+    "editor.fontSize": 15,
     "editor.fontVariations": true,
     "editor.wordWrap": "on",
     "editor.smoothScrolling": true,
@@ -61,5 +61,5 @@
             "other": "on"
         },
         "editor.formatOnSave": true
-    },
+    }
 }

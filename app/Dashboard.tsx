@@ -74,15 +74,13 @@ export default function Dashboard() {
         fetchObjectives();
     }, []);
 
-    const createObj = (): void => {
+    const createObjective = (): void => {
         Router.router.navigate("/CreateObjective");
     };
 
-    const editObj = (id: number): void => {
-        console.log(id);
-    };
+    //const editObjective = (id: number): void => {console.log(id);};
 
-    const deleteObj = async (id: number): Promise<void> => {
+    const deleteObjective = async (id: number): Promise<void> => {
         try {
             const jsonValue = await AsyncStorage.getItem("objs");
             if (jsonValue != null) {
@@ -147,14 +145,16 @@ export default function Dashboard() {
                                         header={obj.exercise}
                                         subheader={desc}
                                     >
-                                        <Button
+                                        {/* <Button
                                             style="ACE"
-                                            action={() => editObj(obj.id)}
+                                            action={() => editObjective(obj.id)}
                                             buttonText="Edit"
-                                        />
+                                        />*/}
                                         <Button
                                             style="WOR"
-                                            action={() => deleteObj(obj.id)}
+                                            action={() =>
+                                                deleteObjective(obj.id)
+                                            }
                                             buttonText="Remove"
                                         />
                                     </Division>
@@ -186,7 +186,7 @@ export default function Dashboard() {
                                 width="fill"
                                 style="ACE"
                                 buttonText="Let's go!"
-                                action={createObj}
+                                action={createObjective}
                             />
                         </Native.View>
                     )}
@@ -200,7 +200,7 @@ export default function Dashboard() {
                                 width="fill"
                                 style="GOD"
                                 buttonText="Create active objective"
-                                action={createObj}
+                                action={createObjective}
                             />
                         </Native.View>
                     )}

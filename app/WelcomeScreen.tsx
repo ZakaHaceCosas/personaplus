@@ -15,8 +15,8 @@ import { termLog } from "./DeveloperInterface";
 // Definimos los estilos
 const styles = Native.StyleSheet.create({
     mainview: {
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100%",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
@@ -158,7 +158,7 @@ export default function WelcomePage() {
             formData.height
         ) {
             try {
-                await AsyncStorage.setItem("uname", formData.username);
+                await AsyncStorage.setItem("username", formData.username);
                 await AsyncStorage.setItem("height", formData.height);
                 await AsyncStorage.setItem("weight", formData.weight);
                 await AsyncStorage.setItem("age", formData.age);
