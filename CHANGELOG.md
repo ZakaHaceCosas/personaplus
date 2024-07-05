@@ -8,6 +8,7 @@ PRE-APP es donde estamos ahora, cuando las actualizaciones son a un código que 
 
 Cuando la app llegue a un punto en el que es utilizable y se publique el primer APK (probablemente en GitHub Releases), se lanzará como "0.0.1-R5" sin más. A partir de ahí entramos en fase POST-APP:
 
+- Se saltará a 0.1.0-R5 al pasar a POST-APP.
 - Versiones que arreglen bugs, errores, o mejoren el rendimiento, sin hacer cambios, sumarán 1 a 0.0.X-R5.
 - Versiones con cambios, mejoras, o que hagan una diferencia en la app, sumarán a 0.X.0-R5.
 - Cuando todas las funciones principales / básicas estén implementadas y testeadas, se pasará a la 1.0.0-R5.

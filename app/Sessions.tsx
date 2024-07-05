@@ -267,7 +267,9 @@ export default function Sessions() {
                             <BetterText fontWeight="Regular" fontSize={15}>
                                 {selectedObj.repetitions === 0
                                     ? "None"
-                                    : `${selectedObj.repetitions} repetitions`}
+                                    : selectedObj.repetitions === 1
+                                      ? `${selectedObj.repetitions} repetition`
+                                      : `${selectedObj.repetitions} repetitions`}
                             </BetterText>
                             <GapView width={15} />
                             <Ionicons name="snooze" size={15} color="#FFF" />
@@ -275,7 +277,9 @@ export default function Sessions() {
                             <BetterText fontWeight="Regular" fontSize={15}>
                                 {selectedObj.rests === 0
                                     ? "None"
-                                    : `${selectedObj.rests} rests (${selectedObj.restDuration} minutes each)`}
+                                    : selectedObj.rests === 1
+                                      ? `${selectedObj.rests} rest of ${selectedObj.restDuration} minutes`
+                                      : `${selectedObj.rests} rests (${selectedObj.restDuration} minutes each)`}
                             </BetterText>
                         </Native.View>
                     </Native.View>
