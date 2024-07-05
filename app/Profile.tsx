@@ -12,7 +12,7 @@ import Button from "@/components/Buttons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BottomNav from "@/components/BottomNav";
 import GapView from "@/components/GapView";
-import { termLog, testLog } from "./DeveloperInterface";
+import { termLog } from "./DeveloperInterface";
 
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
@@ -138,11 +138,11 @@ export default function Profile() {
     const disableDevInterface = async function () {
         try {
             await AsyncStorage.setItem("useDevTools", "false");
-            testLog("DISABLED DEV INTERFACE", "log");
+            termLog("DISABLED DEV INTERFACE", "log");
             Router.router.navigate("/");
         } catch (e) {
             const log = "ERROR DISABLING DEV INTERFACE: " + e;
-            testLog(log, "error");
+            termLog(log, "error");
             Router.router.navigate("/DeveloperInterface"); // lol. if cant disable, at least go to page with logs to see the error.
         }
     };
