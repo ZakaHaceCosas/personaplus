@@ -23,7 +23,7 @@
     "editor.fontWeight": 400,
     "editor.fontLigatures": true,
     "window.zoomLevel": -0.5,
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": true,
     "editor.detectIndentation": false,
     "editor.tabSize": 4,
     "files.trimTrailingWhitespace": true,
@@ -62,7 +62,4 @@
         },
         "editor.formatOnSave": true
     },
-    "[License.tsx]": {
-        "editor.formatOnSave": false
-    }
 }

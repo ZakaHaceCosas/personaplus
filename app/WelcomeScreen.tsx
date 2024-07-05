@@ -148,7 +148,15 @@ export default function WelcomePage() {
         setTab(prevPage => prevPage - 1);
     };
     const submit = async () => {
-        if (genderValue && focuspointValue && sleep && formData.username && formData.height && formData.weight && formData.height) {
+        if (
+            genderValue &&
+            focuspointValue &&
+            sleep &&
+            formData.username &&
+            formData.height &&
+            formData.weight &&
+            formData.height
+        ) {
             try {
                 await AsyncStorage.setItem("uname", formData.username);
                 await AsyncStorage.setItem("height", formData.height);
@@ -164,7 +172,7 @@ export default function WelcomePage() {
                 termLog(log, "error");
             }
         } else {
-            termLog("Error saving user data, some data is missing!", "error")
+            termLog("Error saving user data, some data is missing!", "error");
         }
     };
 
@@ -239,7 +247,11 @@ export default function WelcomePage() {
                             fontWeight="Regular"
                             fontSize={20}
                             textColor="#3280FF"
-                            onTap={() => Native.Linking.openURL("https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md")}
+                            onTap={() =>
+                                Native.Linking.openURL(
+                                    "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md"
+                                )
+                            }
                         >
                             Learn more
                         </BetterText>

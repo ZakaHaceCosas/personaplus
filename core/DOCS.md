@@ -98,6 +98,7 @@ Now, let's move onto the reference manual: a list of all available functions, ca
 **What's this?**
 
 > The BMR is the rate of energy expenditure per unit time by endothermic animals at rest.
+
 In an easier vocabulary: BMR is used to calculate the ammount of energy the human body spends on a day to stay alive.
 
 **What purpose does the function serve?**
@@ -119,7 +120,9 @@ For extra info about how this should be used within PersonaPlus' scope, see [USA
 **What's this?**
 
 > The MET is the objective measure of the ratio of the rate at which a person expends energy, relative to the mass of that person, while performing some specific physical activity compared to a reference, currently set by convention at an absolute 3.5 mL of oxygen per kg per minute, which is the energy expended when sitting quietly by a reference individual, chosen to be roughly representative of the general population, and thereby suited to epidemiological surveys.
+
 In an easier vocabulary: MET is used to calculate the metabolic work rate of an activity. According to the [Compendium of Physical Activities](https://pacompendium.com/):
+
 > One MET is defined as 1 kcal/kg/hour and is roughly equivalent to the energy cost of sitting quietly.
 
 **What purpose does this function serve?**
