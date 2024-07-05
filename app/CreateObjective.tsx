@@ -8,9 +8,9 @@ import GapView from "@/components/GapView";
 import { Picker as Select } from "@react-native-picker/picker";
 import Button from "@/components/Buttons";
 import * as Router from "expo-router";
-import Notification from "@/components/Notification";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { termLog } from "./DeveloperInterface";
+import Notification from "@/components/Notification";
 
 // TypeScript, supongo
 interface FormProps {
@@ -18,57 +18,77 @@ interface FormProps {
 }
 
 interface FormData {
-    exercise: string;
+    exercise:
+        | "Push Up"
+        | "Lifting"
+        | "Running"
+        | "Walking"
+        | "Meditation"
+        | string;
     days: boolean[];
     duration: number;
     repetitions: number;
     rests: number;
     restDuration: number;
+    extra?: object;
 }
 
-interface Objective {
-    exercise: string;
-    days: boolean[];
-    duration: number;
-    repetitions: number;
-    rests: number;
-    restDuration: number;
-    id: number;
-    wasDone: boolean;
+interface Extra {
+    /* PUSH-UP */
+    amount?: number; // Amount of pushups
+    // hands?: 1 | 2; // Wether they are made with only one hand or two. Commented as lifting uses the exact same value - we can recycle it :]
+    time?: number; // Estimatedly, how much does the user take to make a push-up.
+    /* LIFTING */
+    lifts?: number; // How many lifts
+    liftWeight?: number; // Weight in KG per weight
+    barWeight?: number; // Weight in KG of the bar
+    hands?: number; // You know there are weights that are for one hand and then there are those big weights that require both hands to be lifted cause' they are so long? Depending on what you're using, this specifies the "amount of hands" you're using (basically the total weight of what you're lifting will be multiplied by this)
+    /* RUNNING */
+    speed?: number; // In kilometers per hour, how fast the user wants to run. Of course, estimatedly.
+    /* WALKING */
+    // Nothing for this - just speed, which is already declared.
+    /* MEDITATION */
+    // Nothing for this
 }
 
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
         paddingTop: 20,
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100%",
+        height: "100%",
     },
     mainview: {
         padding: 20,
-        display: "flex",
+        flex: 1,
         flexDirection: "column",
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
     },
     flexydays: {
-        display: "flex",
-        flexDirection: "row",
+        flexDirection: "column",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "flex-start",
         flexWrap: "wrap",
+    },
+    dayContainer: {
+        borderRadius: 10,
+        borderWidth: 4,
+        height: 50,
+        marginBottom: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
+        width: "100%",
     },
 });
 
 export default function Form({ onSubmit }: FormProps) {
-    const biglblsz: number = 25;
-    const [exercise, setExercise] = React.useState("");
+    const [exercise, setExercise] = React.useState<string>("");
     const exercises = [
         "Push Up",
         "Lifting",
         "Running",
         "Walking",
-        "Meditation", // does this count as an exercise? idk. pero ahí está.
+        "Meditation",
     ];
     const [days, setDays] = React.useState<boolean[]>([
         false,
@@ -79,10 +99,45 @@ export default function Form({ onSubmit }: FormProps) {
         false,
         false,
     ]);
-    const [duration, setDuration] = React.useState(0);
-    const [repetitions, setRepetitions] = React.useState(0);
-    const [rests, setRests] = React.useState(0);
-    const [restDuration, setRestDuration] = React.useState(0);
+    const [duration, setDuration] = React.useState<number>(0);
+    const [repetitions, setRepetitions] = React.useState<number>(0);
+    const [rests, setRests] = React.useState<number>(0);
+    const [restDuration, setRestDuration] = React.useState<number>(0);
+    const [amount, setAmount] = React.useState<number>(0);
+    const [barWeight, setBarWeight] = React.useState<number>(0);
+    const [liftWeight, setLiftWeight] = React.useState<number>(0);
+    const [hands, setHands] = React.useState<number>(1);
+    const [lifts, setLifts] = React.useState<number>(0);
+    const [timeToPushUp, setTimeToPushup] = React.useState<number>(0);
+    const [speed, setSpeed] = React.useState<number>(2);
+    const speedOptions = [
+        ["Brisk Walk", "1.6 - 3.2 km/h"],
+        ["Light Jog", "3.2 - 4.0 km/h"],
+        ["Moderate Run", "4.0 - 4.8 km/h"],
+        ["Fast Run", "4.8 - 5.5 km/h"],
+        ["Sprint", "5.5 - 6.4 km/h"],
+        ["Fast Sprint", "6.4 - 8.0 km/h"],
+        ["Running Fast", "8.0 - 9.6 km/h"],
+        ["Very Fast Run", "9.6 - 11.3 km/h"],
+        ["Sprinting", "11.3 - 12.9 km/h"],
+        ["Fast Sprinting", "12.9 - 14.5 km/h"],
+        ["Full Speed Sprinting", "14.5 - 16.1 km/h"],
+        ["Maximum Speed", "more than 16.1 km/h"],
+    ];
+
+    const speedString = speedOptions[speed][0];
+    const exactSpeedString = speedOptions[speed][1];
+
+    // eslint-disable-next-line
+    let extra: Extra = {
+        amount: amount,
+        time: timeToPushUp,
+        lifts: lifts,
+        liftWeight: liftWeight,
+        barWeight: barWeight,
+        hands: hands,
+        speed: speed,
+    };
 
     const handleChangeDay = (index: number) => {
         const newDays = [...days];
@@ -104,6 +159,33 @@ export default function Form({ onSubmit }: FormProps) {
             case "restDuration":
                 setRestDuration(prev => (prev < 5 ? prev + 0.25 : prev));
                 break;
+            case "amount":
+                setAmount(prev => prev + 1);
+                break;
+            case "barWeight":
+                setBarWeight(prev => prev + 0.25);
+                break;
+            case "liftWeight":
+                setLiftWeight(prev => prev + 0.25);
+                break;
+            case "timeToPushup":
+                setTimeToPushup(prev => prev + 0.5);
+                break;
+            case "lifts":
+                setLifts(prev => prev + 1);
+                break;
+            case "hands":
+                setHands(prev => (prev === 1 ? prev + 1 : prev));
+                break;
+            case "speed":
+                setSpeed(prev => {
+                    if (prev >= 0 && prev < 11) {
+                        return prev + 1;
+                    } else {
+                        return prev;
+                    }
+                });
+                break;
         }
     };
 
@@ -119,7 +201,34 @@ export default function Form({ onSubmit }: FormProps) {
                 setRests(prev => (prev > 0 ? prev - 1 : prev));
                 break;
             case "restDuration":
-                setRestDuration(prev => (prev > 0.25 ? prev - 0.25 : prev));
+                setRestDuration(prev => (prev > 0 ? prev - 0.25 : prev));
+                break;
+            case "amount":
+                setAmount(prev => prev - 1);
+                break;
+            case "barWeight":
+                setBarWeight(prev => prev - 0.25);
+                break;
+            case "liftWeight":
+                setLiftWeight(prev => prev - 0.25);
+                break;
+            case "timeToPushup":
+                setTimeToPushup(prev => prev - 0.5);
+                break;
+            case "lifts":
+                setLifts(prev => prev - 1);
+                break;
+            case "hands":
+                setHands(prev => (prev === 2 ? prev - 1 : prev));
+                break;
+            case "speed":
+                setSpeed(prev => {
+                    if (prev > 0 && prev <= 11) {
+                        return prev - 1;
+                    } else {
+                        return prev;
+                    }
+                });
                 break;
         }
     };
@@ -132,11 +241,12 @@ export default function Form({ onSubmit }: FormProps) {
             repetitions,
             rests,
             restDuration,
+            extra,
         };
 
         try {
-            await processData(formData); // procesa
-            Router.router.push("/"); // vuelve a casa DESPUES de procesar
+            await processData(formData);
+            Router.router.push("/");
         } catch (e) {
             const log = "Could not create an objective, got error: " + e;
             termLog(log, "error");
@@ -145,35 +255,42 @@ export default function Form({ onSubmit }: FormProps) {
 
     const processData = async (formData: FormData) => {
         try {
-            const newObj: object = formData;
-            const storedObjs: string | null =
+            const newObjective: object = formData;
+            const storedObjectives: string | null =
                 await AsyncStorage.getItem("objs");
-            let objs: Objective[] = [];
+            let objs: FormData[] = [];
 
-            if (storedObjs !== null) {
-                const parsedObjs = JSON.parse(storedObjs);
+            if (storedObjectives !== null) {
+                const parsedObjs = JSON.parse(storedObjectives);
                 if (Array.isArray(parsedObjs)) {
-                    objs = parsedObjs as Objective[];
+                    objs = parsedObjs;
                 }
             }
 
-            const ids = objs
-                .filter((item: Objective) => !("id" in item))
-                .map((item: Objective) => item.id);
+            const identifiers = objs
+                // disabling eslint due to "any" type getting disliked :[
+                // eslint-disable-next-line
+                .filter((item: any) => item.id)
+                // eslint-disable-next-line
+                .map((item: any) => item.id);
 
             const generateNewId = (): number => {
                 let newId = Math.floor(Math.random() * 1000) + 1;
-                while (ids.includes(newId)) {
+                while (identifiers.includes(newId)) {
                     newId = Math.floor(Math.random() * 1000) + 1;
                 }
                 return newId;
             };
 
             const newId = generateNewId();
-            const finalObj = { ...newObj, id: newId, wasDone: false };
-            const finalObjs: object[] = [...objs, finalObj];
+            const finalObjective = {
+                ...newObjective,
+                id: newId,
+                wasDone: false,
+            };
+            const finalObjectives = [...objs, finalObjective];
 
-            await AsyncStorage.setItem("objs", JSON.stringify(finalObjs));
+            await AsyncStorage.setItem("objs", JSON.stringify(finalObjectives));
         } catch (e) {
             const log =
                 "Got an error storing data while processing data to create an objective: " +
@@ -185,6 +302,88 @@ export default function Form({ onSubmit }: FormProps) {
     const getOut = () => {
         Router.router.push("/");
     };
+
+    let allConditionsAreMet: boolean = false;
+
+    if (
+        exercise.toLowerCase() !== "push up" &&
+        exercise.toLowerCase() !== "running" &&
+        exercise.toLowerCase() !== "lifting"
+    ) {
+        if (
+            duration > 0 &&
+            exercise !== "" &&
+            days &&
+            days.length > 0 &&
+            !days.every(day => day === false)
+        ) {
+            allConditionsAreMet = true;
+        } else {
+            allConditionsAreMet = false;
+        }
+    } else if (exercise.toLowerCase() === "push up") {
+        if (
+            (duration > 0 &&
+                exercise !== "" &&
+                days &&
+                days.length > 0 &&
+                !days.every(day => day === false) &&
+                amount > 0 &&
+                hands === 1 &&
+                timeToPushUp > 0) ||
+            (duration > 0 &&
+                exercise !== "" &&
+                days &&
+                days.length > 0 &&
+                !days.every(day => day === false) &&
+                amount > 0 &&
+                hands === 2 &&
+                timeToPushUp > 0)
+        ) {
+            allConditionsAreMet = true;
+        } else {
+            allConditionsAreMet = false;
+        }
+    } else if (exercise.toLowerCase() === "lifting") {
+        if (
+            (duration > 0 &&
+                exercise !== "" &&
+                days &&
+                days.length > 0 &&
+                !days.every(day => day === false) &&
+                hands === 1 &&
+                liftWeight > 0 &&
+                barWeight > 0 &&
+                lifts > 0) ||
+            (duration > 0 &&
+                exercise !== "" &&
+                days &&
+                days.length > 0 &&
+                !days.every(day => day === false) &&
+                hands === 2 &&
+                liftWeight > 0 &&
+                barWeight > 0 &&
+                lifts > 0)
+        ) {
+            allConditionsAreMet = true;
+        } else {
+            allConditionsAreMet = false;
+        }
+    } else if (exercise.toLowerCase() === "running") {
+        if (
+            duration > 0 &&
+            exercise !== "" &&
+            days &&
+            days.length > 0 &&
+            !days.every(day => day === false) &&
+            speed >= 0 &&
+            speed <= 11
+        ) {
+            allConditionsAreMet = true;
+        } else {
+            allConditionsAreMet = false;
+        }
+    }
 
     return (
         <Native.View style={styles.containerview}>
@@ -228,12 +427,8 @@ export default function Form({ onSubmit }: FormProps) {
                             value=""
                             color="#999"
                         />
-                        {exercises.map(exercise => (
-                            <Select.Item
-                                key={exercise}
-                                label={exercise}
-                                value={exercise}
-                            />
+                        {exercises.map(ex => (
+                            <Select.Item key={ex} label={ex} value={ex} />
                         ))}
                     </Select>
                     <GapView height={20} />
@@ -244,10 +439,18 @@ export default function Form({ onSubmit }: FormProps) {
                     >
                         What days do you want to exercise?
                     </BetterText>
+                    <BetterText
+                        fontSize={10}
+                        textColor="#C8C8C8"
+                        fontWeight="Italic"
+                    >
+                        Tap each day to enable/disable it.{"\n"}Colored days are
+                        enabled, gray ones are disabled.
+                    </BetterText>
                     <GapView height={15} />
                     <Native.View style={styles.flexydays}>
                         {days.map((day, index) => {
-                            const thisday: string | boolean =
+                            const thisday: string =
                                 index === 0
                                     ? "monday"
                                     : index === 1
@@ -260,222 +463,460 @@ export default function Form({ onSubmit }: FormProps) {
                                             ? "friday"
                                             : index === 5
                                               ? "saturday"
-                                              : index === 6
-                                                ? "sunday"
-                                                : day;
+                                              : "sunday";
                             return (
                                 <Native.View
                                     key={index}
                                     style={{
-                                        borderRadius: 10,
+                                        ...styles.dayContainer,
                                         borderColor: day
                                             ? "#194080"
                                             : "#3E4146",
                                         backgroundColor: day
                                             ? "#3280FF"
                                             : "#2A2D32",
-                                        borderWidth: 4,
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        padding: 5,
-                                        marginRight: 5,
-                                        marginBottom: 5,
-                                        /* OK, se ve feo, PERO FUNCIONA Y ES LO QUE IMPORTA */
-                                        /* ALR, looks ugly, BUT IT WORKS AND THATS WHAT MATTERS */
                                     }}
                                 >
                                     <Native.Pressable
-                                        style={{ padding: 5 }}
                                         onPress={() => handleChangeDay(index)}
+                                        style={{
+                                            width: "100%",
+                                            height: "100%",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            flex: 1,
+                                        }}
                                     >
                                         <BetterText
+                                            textColor="#FFF"
                                             fontSize={15}
-                                            textAlign="center"
-                                            textColor={day ? "#FFF" : "#949698"}
-                                            fontWeight="Regular"
+                                            fontWeight="Medium"
                                         >
-                                            {thisday}
+                                            {thisday.toUpperCase()}
                                         </BetterText>
                                     </Native.Pressable>
                                 </Native.View>
                             );
                         })}
                     </Native.View>
-                </Native.View>
-                <GapView height={15} />
-                <Native.View
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                    }}
-                >
-                    <Button
-                        layout="box"
-                        style="ACE"
-                        action={() => handleIncrement("duration")}
-                        buttonText="+"
-                    />
-                    <Native.View style={{ flex: 12 }}>
-                        <BetterText
-                            fontSize={15}
-                            textColor="#FFF"
-                            fontWeight="Regular"
-                            textAlign="center"
-                        >
-                            Duration:
-                        </BetterText>
-                        <BetterText
-                            fontSize={biglblsz}
-                            textColor="#FFF"
-                            fontWeight="Bold"
-                            textAlign="center"
-                        >
-                            {duration} {duration === 1 ? "MINUTE" : "MINUTES"}
-                        </BetterText>
-                    </Native.View>
-
-                    <Button
-                        layout="box"
-                        style="ACE"
-                        action={() => handleDecrement("duration")}
-                        buttonText="-"
-                    />
-                </Native.View>
-                <GapView height={15} />
-                <Native.View
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                    }}
-                >
-                    <Button
-                        layout="box"
-                        style="ACE"
-                        action={() => handleIncrement("repetitions")}
-                        buttonText="+"
-                    />
-                    <Native.View style={{ flex: 12 }}>
-                        <BetterText
-                            fontSize={15}
-                            textColor="#FFF"
-                            fontWeight="Regular"
-                            textAlign="center"
-                        >
-                            Repetitions:
-                        </BetterText>
-                        <BetterText
-                            fontSize={biglblsz}
-                            textColor="#FFF"
-                            fontWeight="Bold"
-                            textAlign="center"
-                        >
-                            {repetitions}{" "}
-                            {repetitions === 1 ? "REPETITION" : "REPETITIONS"}
-                        </BetterText>
-                    </Native.View>
-                    <Button
-                        layout="box"
-                        style="ACE"
-                        action={() => handleDecrement("repetitions")}
-                        buttonText="-"
-                    />
-                </Native.View>
-                <GapView height={15} />
-                <Native.View
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                    }}
-                >
-                    <Button
-                        layout="box"
-                        style="ACE"
-                        action={() => handleIncrement("rests")}
-                        buttonText="+"
-                    />
-                    <Native.View style={{ flex: 12 }}>
-                        <BetterText
-                            fontSize={15}
-                            textColor="#FFF"
-                            fontWeight="Regular"
-                            textAlign="center"
-                        >
-                            Rests:
-                        </BetterText>
-
-                        <BetterText
-                            fontSize={biglblsz}
-                            textAlign="center"
-                            textColor="#FFF"
-                            fontWeight="Bold"
-                        >
-                            {rests} {rests !== 1 ? "RESTS" : "REST"}
-                        </BetterText>
-                    </Native.View>
-                    <Button
-                        layout="box"
-                        style="ACE"
-                        action={() => handleDecrement("rests")}
-                        buttonText="-"
-                    />
-                </Native.View>
-                <GapView height={15} />
-                {rests > 0 && (
-                    <Native.View
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                        }}
-                    >
-                        <Button
-                            layout="box"
-                            style="ACE"
-                            action={() => handleIncrement("restDuration")}
-                            buttonText="+"
-                        />
-                        <Native.View style={{ flex: 12 }}>
+                    <GapView height={20} />
+                    {["duration", "repetitions", "rests"].map(item => (
+                        <Native.View key={item} style={{ marginBottom: 20 }}>
                             <BetterText
-                                fontSize={15}
+                                fontSize={20}
                                 textColor="#FFF"
-                                fontWeight="Bold"
-                                textAlign="center"
+                                fontWeight="Regular"
                             >
-                                Duration:
+                                {item === "duration"
+                                    ? "Duration (minutes)"
+                                    : item === "repetitions"
+                                      ? "Repetitions"
+                                      : "Rests"}
                             </BetterText>
-                            <BetterText
-                                fontSize={biglblsz}
-                                textColor="#FFF"
-                                fontWeight="Bold"
-                                textAlign="center"
+                            <GapView height={15} />
+                            <Native.View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                }}
                             >
-                                {restDuration}{" "}
-                                {restDuration === 1 ? "MINUTE" : "MINUTES"}
-                            </BetterText>
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="-"
+                                    action={() => handleDecrement(item)}
+                                />
+                                <BetterText
+                                    textColor="#FFF"
+                                    fontSize={20}
+                                    fontWeight="Medium"
+                                >
+                                    {item === "duration"
+                                        ? duration
+                                        : item === "repetitions"
+                                          ? repetitions
+                                          : rests}
+                                </BetterText>
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="+"
+                                    action={() => handleIncrement(item)}
+                                />
+                            </Native.View>
                         </Native.View>
-                        <Button
-                            layout="box"
-                            style="ACE"
-                            action={() => handleDecrement("restDuration")}
-                            buttonText="-"
-                        />
-                    </Native.View>
-                )}
-                <Native.View
-                    style={{
-                        flex: 1,
-                        flexDirection: "column",
-                        marginTop: repetitions * duration > 300 ? 20 : 0, // lo he cambiado para que sea lógico
-                    }}
-                >
+                    ))}
+                    {rests !== 0 && (
+                        <Native.View style={{ marginBottom: 20 }}>
+                            <BetterText
+                                fontSize={20}
+                                textColor="#FFF"
+                                fontWeight="Regular"
+                            >
+                                Rest Duration (minutes)
+                            </BetterText>
+                            <GapView height={15} />
+                            <Native.View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                }}
+                            >
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="-"
+                                    action={() =>
+                                        handleDecrement("restDuration")
+                                    }
+                                />
+                                <BetterText
+                                    textColor="#FFF"
+                                    fontSize={20}
+                                    fontWeight="Medium"
+                                >
+                                    {restDuration}
+                                </BetterText>
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="+"
+                                    action={() =>
+                                        handleIncrement("restDuration")
+                                    }
+                                />
+                            </Native.View>
+                        </Native.View>
+                    )}
+                    {exercise.toLowerCase() === "push up" && (
+                        <Native.View style={{ marginBottom: 20 }}>
+                            <BetterText
+                                fontSize={20}
+                                textColor="#FFF"
+                                fontWeight="Regular"
+                            >
+                                How many push-ups?
+                            </BetterText>
+                            <BetterText
+                                fontSize={10}
+                                textColor="#C8C8C8"
+                                fontWeight="Regular"
+                            >
+                                Tip: Balance the duration and number of
+                                push-ups. More push-ups in less time will be
+                                harder but have a greater effect on your body.
+                                Fewer push-ups over more time will provide a
+                                more relaxed and beginner-friendly session.
+                            </BetterText>
+                            <GapView height={15} />
+                            <Native.View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                }}
+                            >
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="-"
+                                    action={() => handleDecrement("amount")}
+                                />
+                                <BetterText
+                                    textColor="#FFF"
+                                    fontSize={20}
+                                    fontWeight="Medium"
+                                >
+                                    {amount}
+                                </BetterText>
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="+"
+                                    action={() => handleIncrement("amount")}
+                                />
+                            </Native.View>
+                        </Native.View>
+                    )}
+                    {exercise.toLowerCase() === "lifting" && (
+                        <Native.View style={{ marginBottom: 20 }}>
+                            <BetterText
+                                fontSize={20}
+                                textColor="#FFF"
+                                fontWeight="Regular"
+                            >
+                                How many lifts will you make?
+                            </BetterText>
+                            <BetterText
+                                fontSize={10}
+                                textColor="#C8C8C8"
+                                fontWeight="Regular"
+                            >
+                                Tip: Balance the duration and number of lifts.
+                                More lifts in less time will be harder but have
+                                a greater effect on your body. Fewer lifts over
+                                more time will provide a more relaxed and
+                                beginner-friendly session.
+                            </BetterText>
+                            <GapView height={15} />
+                            <Native.View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                }}
+                            >
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="-"
+                                    action={() => handleDecrement("lifts")}
+                                />
+                                <BetterText
+                                    textColor="#FFF"
+                                    fontSize={20}
+                                    fontWeight="Medium"
+                                >
+                                    {lifts}
+                                </BetterText>
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="+"
+                                    action={() => handleIncrement("lifts")}
+                                />
+                            </Native.View>
+                        </Native.View>
+                    )}
+                    {exercise.toLowerCase() === "lifting" && (
+                        <Native.View style={{ marginBottom: 20 }}>
+                            <BetterText
+                                fontSize={20}
+                                textColor="#FFF"
+                                fontWeight="Regular"
+                            >
+                                How much does the{" "}
+                                <BetterText
+                                    fontSize={20}
+                                    textColor="#FFF"
+                                    fontWeight="Bold"
+                                >
+                                    lift
+                                </BetterText>{" "}
+                                weight?
+                            </BetterText>
+                            <BetterText
+                                fontSize={10}
+                                textColor="#C8C8C8"
+                                fontWeight="Regular"
+                            >
+                                In kilograms. If you&apos;re not sure: you know
+                                there are two weights or &quot;things that
+                                weigh&quot; on each side of your scale, right?
+                                Enter how much does each one of them weigh
+                                (assuming you know both should weigh the same)
+                            </BetterText>
+                            <GapView height={15} />
+                            <Native.View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                }}
+                            >
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="-"
+                                    action={() => handleDecrement("liftWeight")}
+                                />
+                                <BetterText
+                                    textColor="#FFF"
+                                    fontSize={20}
+                                    fontWeight="Medium"
+                                >
+                                    {liftWeight}
+                                </BetterText>
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="+"
+                                    action={() => handleIncrement("liftWeight")}
+                                />
+                            </Native.View>
+                        </Native.View>
+                    )}
+                    {exercise.toLowerCase() === "lifting" && (
+                        <Native.View style={{ marginBottom: 20 }}>
+                            <BetterText
+                                fontSize={20}
+                                textColor="#FFF"
+                                fontWeight="Regular"
+                            >
+                                How much does the{" "}
+                                <BetterText
+                                    fontSize={20}
+                                    textColor="#FFF"
+                                    fontWeight="Bold"
+                                >
+                                    bar
+                                </BetterText>{" "}
+                                weight?
+                            </BetterText>
+                            <BetterText
+                                fontSize={10}
+                                textColor="#C8C8C8"
+                                fontWeight="Regular"
+                            >
+                                In kilograms.
+                            </BetterText>
+                            <GapView height={15} />
+                            <Native.View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                }}
+                            >
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="-"
+                                    action={() => handleDecrement("barWeight")}
+                                />
+                                <BetterText
+                                    textColor="#FFF"
+                                    fontSize={20}
+                                    fontWeight="Medium"
+                                >
+                                    {barWeight}
+                                </BetterText>
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="+"
+                                    action={() => handleIncrement("barWeight")}
+                                />
+                            </Native.View>
+                        </Native.View>
+                    )}
+                    {exercise.toLowerCase() === "lifting" && (
+                        <Native.View style={{ marginBottom: 20 }}>
+                            <BetterText
+                                fontSize={20}
+                                textColor="#FFF"
+                                fontWeight="Regular"
+                            >
+                                One hand or two?
+                            </BetterText>
+                            <BetterText
+                                fontSize={10}
+                                textColor="#C8C8C8"
+                                fontWeight="Regular"
+                            >
+                                Basically: are you going to workout with 1 scale
+                                or with 2 scales, one on each hand? Deaults to
+                                1.
+                            </BetterText>
+                            <GapView height={15} />
+                            <Native.View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                }}
+                            >
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="-"
+                                    action={() => handleDecrement("hands")}
+                                />
+                                <BetterText
+                                    textColor="#FFF"
+                                    fontSize={20}
+                                    fontWeight="Medium"
+                                >
+                                    {hands}
+                                </BetterText>
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="+"
+                                    action={() => handleIncrement("hands")}
+                                />
+                            </Native.View>
+                        </Native.View>
+                    )}
+                    {exercise.toLowerCase() === "running" && (
+                        <Native.View style={{ marginBottom: 20 }}>
+                            <BetterText
+                                fontSize={20}
+                                textColor="#FFF"
+                                fontWeight="Regular"
+                            >
+                                What speed will you run to?
+                            </BetterText>
+                            <BetterText
+                                fontSize={10}
+                                textColor="#C8C8C8"
+                                fontWeight="Regular"
+                            >
+                                Of course you don&apos;t need to be exact, just
+                                try to estimate it.
+                            </BetterText>
+                            <GapView height={15} />
+                            <Native.View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                }}
+                            >
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="-"
+                                    action={() => handleDecrement("speed")}
+                                />
+                                <Native.View>
+                                    <BetterText
+                                        textColor="#FFF"
+                                        fontSize={20}
+                                        fontWeight="Medium"
+                                        textAlign="center"
+                                    >
+                                        {speedString}
+                                    </BetterText>
+                                    <BetterText
+                                        textColor="#C8C8C8"
+                                        fontSize={10}
+                                        fontWeight="Regular"
+                                        textAlign="center"
+                                    >
+                                        {exactSpeedString}
+                                    </BetterText>
+                                </Native.View>
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="+"
+                                    action={() => handleIncrement("speed")}
+                                />
+                            </Native.View>
+                        </Native.View>
+                    )}
                     {repetitions * duration > 300 && (
                         // Lo máximo que me parece coherente son 5 horas seguidas haciendo UN ejercicio - recordemos que puedes tener varios al día
                         // The maximum that makes sense to me it's 5 hours in a row making ONE exercise - remember you can make many each day
@@ -488,40 +929,43 @@ export default function Form({ onSubmit }: FormProps) {
                             subtext="You can still create your objective, don't worry. We're just warning you, for your own health!"
                         />
                     )}
+                    {repetitions * duration > 300 && <GapView height={20} />}
                     <Native.View
-                        style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            marginTop: 20,
-                        }}
+                        style={{ display: "flex", flexDirection: "row" }}
                     >
-                        {!(
-                            !exercise ||
-                            exercise.trim() === "" ||
-                            duration === 0
-                        ) && (
+                        {allConditionsAreMet ? (
                             <Button
-                                style="ACE"
+                                style="GOD"
+                                buttonText="Create objective"
                                 action={handleSubmit}
-                                buttonText="Save it!"
                             />
-                        )}
-                        {(!exercise ||
-                            exercise.trim() === "" ||
-                            duration === 0) && (
+                        ) : (
                             <Button
                                 style="HMM"
+                                buttonText="Fill all the required items"
                                 action={() => {}}
-                                buttonText="..."
                             />
                         )}
                         <GapView width={20} />
                         <Button
                             style="DEFAULT"
-                            action={getOut}
                             buttonText="Nevermind"
+                            action={getOut}
                         />
                     </Native.View>
+                    <GapView height={10} />
+                    <BetterText
+                        textAlign="center"
+                        fontSize={9}
+                        fontWeight="Italic"
+                        textColor="#C8C8C8"
+                    >
+                        Required: Duration, Exercise, and at least one day of
+                        the week. Specific exercises may have their own extra
+                        required fields: for example &quot;Lifting&quot;
+                        requires you to specify how much weight you&apos;ll be
+                        lifting.
+                    </BetterText>
                 </Native.View>
             </Native.ScrollView>
         </Native.View>
