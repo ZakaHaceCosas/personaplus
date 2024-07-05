@@ -256,10 +256,17 @@ export default function ConsoleLogger() {
     };
     const devFCclearall = async () => {
         try {
-            await AsyncStorage.setItem("objs", "");
+            await AsyncStorage.setItem("useDevTools", "");
             await AsyncStorage.setItem("hasLaunched", "");
-            await AsyncStorage.setItem("uname", "");
-            Router.router.navigate("/");
+            await AsyncStorage.setItem("age", "");
+            await AsyncStorage.setItem("gender", "");
+            await AsyncStorage.setItem("height", "");
+            await AsyncStorage.setItem("weight", "");
+            await AsyncStorage.setItem("focuspoint", "");
+            await AsyncStorage.setItem("objs", "");
+            await AsyncStorage.setItem("username", "");
+            await AsyncStorage.setItem("sleep", "");
+            Router.router.navigate("/WelcomeScreen");
             console.log("DEV CLEARED ALL");
             termLog("DEV CLEARED ALL", "log");
         } catch (e) {

@@ -26,7 +26,7 @@ export default function License() {
         <Native.View style={styles.containerview}>
             <Native.ScrollView style={styles.mainview}>
                 <BetterText
-                    fontSize={25}
+                    fontSize={20}
                     fontWeight="Light"
                     textColor="#000"
                     onTap={() => Router.router.navigate("/About")}
@@ -46,11 +46,11 @@ export default function License() {
                     SPDX: GPL-3.0-only
                 </BetterText>
                 <GapView height={10} />
-                <BetterText fontSize={25} textColor="#000" fontWeight="Regular">
+                <BetterText fontSize={15} textColor="#000" fontWeight="Regular">
                     Copyright (C) 2024 ZakaHaceCosas
                 </BetterText>
-                <GapView height={40} />
-                <BetterText fontSize={25} textColor="#000" fontWeight="Regular">
+                <GapView height={20} />
+                <BetterText fontSize={20} textColor="#000" fontWeight="Regular">
                     This program is free software: you can redistribute it
                     and/or modify it under the terms of the GNU General Public
                     License as published by the Free Software Foundation, either
@@ -63,7 +63,7 @@ export default function License() {
                     GNU General Public License along with this program. If not,
                     see{" "}
                     <BetterText
-                        fontSize={25}
+                        fontSize={20}
                         textColor="#3280FF"
                         fontWeight="Regular"
                         url={true}
@@ -77,9 +77,9 @@ export default function License() {
                     </BetterText>
                     .
                 </BetterText>
-                <GapView height={40} />
+                <GapView height={20} />
                 <BetterText fontSize={15} textColor="#000" fontWeight="Light">
-                    Now proceeds the legal text
+                    Below is the legal text
                 </BetterText>
                 <GapView height={20} />
                 <BetterText

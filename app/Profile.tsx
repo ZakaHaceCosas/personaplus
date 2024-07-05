@@ -38,6 +38,10 @@ const styles = Native.StyleSheet.create({
 // Creamos la función
 export default function Profile() {
     const [username, setUsername] = React.useState<string>("Unknown");
+    const [gender, setGender] = React.useState<string>("Unknown");
+    const [age, setAge] = React.useState<string>("Unknown");
+    const [height, setHeight] = React.useState<string>("Unknown");
+    const [weight, setWeight] = React.useState<string>("Unknown");
     const [uname, setUname] = React.useState("");
     const handleUnameTxtChange = (txt: string) => {
         setUname(txt);
@@ -45,9 +49,10 @@ export default function Profile() {
 
     const handleUnameBtnClick = async () => {
         try {
-            const olduname: string | null = await AsyncStorage.getItem("uname");
+            const olduname: string | null =
+                await AsyncStorage.getItem("username");
             if (olduname !== uname) {
-                await AsyncStorage.setItem("uname", uname);
+                await AsyncStorage.setItem("username", uname);
                 const log = `Changed your username to ${uname}`;
                 termLog(log, "success");
                 setTimeout(() => {
@@ -69,7 +74,7 @@ export default function Profile() {
         const fetchUsername = async () => {
             try {
                 const uname: string | null =
-                    await AsyncStorage.getItem("uname");
+                    await AsyncStorage.getItem("username");
                 if (uname) {
                     setUsername(uname);
                     termLog("Username (uname) fetched!", "success");
@@ -89,10 +94,96 @@ export default function Profile() {
         fetchUsername();
     }, []);
 
-    const sh =
-        "You can change your username whenever you want. Your current username is '" +
-        username +
-        "'";
+    React.useEffect(() => {
+        const fetchGender = async () => {
+            try {
+                const gender: string | null =
+                    await AsyncStorage.getItem("gender");
+                if (gender) {
+                    setGender(gender);
+                    termLog("Gender fetched!", "success");
+                } else {
+                    termLog(
+                        "Gender could not be fetched due to an error!",
+                        "error"
+                    );
+                }
+            } catch (e) {
+                const log = "Could not fetch gender due to error: " + e;
+                termLog(log, "error");
+            }
+        };
+
+        fetchGender();
+    }, []);
+
+    React.useEffect(() => {
+        const fetchAge = async () => {
+            try {
+                const age: string | null = await AsyncStorage.getItem("age");
+                if (age) {
+                    setAge(age);
+                    termLog("Age fetched!", "success");
+                } else {
+                    termLog(
+                        "Age could not be fetched due to an error!",
+                        "error"
+                    );
+                }
+            } catch (e) {
+                const log = "Could not fetch age due to error: " + e;
+                termLog(log, "error");
+            }
+        };
+
+        fetchAge();
+    }, []);
+
+    React.useEffect(() => {
+        const fetchHeight = async () => {
+            try {
+                const height: string | null =
+                    await AsyncStorage.getItem("height");
+                if (height) {
+                    setHeight(height);
+                    termLog("height fetched!", "success");
+                } else {
+                    termLog(
+                        "height could not be fetched due to an error!",
+                        "error"
+                    );
+                }
+            } catch (e) {
+                const log = "Could not fetch height due to error: " + e;
+                termLog(log, "error");
+            }
+        };
+
+        fetchHeight();
+    }, []);
+
+    React.useEffect(() => {
+        const fetchWeight = async () => {
+            try {
+                const weight: string | null =
+                    await AsyncStorage.getItem("weight");
+                if (weight) {
+                    setWeight(weight);
+                    termLog("weight fetched!", "success");
+                } else {
+                    termLog(
+                        "weight could not be fetched due to an error!",
+                        "error"
+                    );
+                }
+            } catch (e) {
+                const log = "Could not fetch weight due to error: " + e;
+                termLog(log, "error");
+            }
+        };
+
+        fetchWeight();
+    }, []);
 
     const [wantsDev, setWantsDev] = React.useState<boolean | null>(null);
 
@@ -176,8 +267,32 @@ export default function Profile() {
                                     fontWeight="Regular"
                                     fontSize={15}
                                 >
-                                    Soon you will see here all your data.
-                                    {/* Gender: {gender} */}
+                                    Gender: {String(gender)}
+                                </BetterText>
+                                <BetterText
+                                    textAlign="normal"
+                                    textColor="#FFF"
+                                    fontWeight="Regular"
+                                    fontSize={15}
+                                >
+                                    Age: {String(age)} years old
+                                </BetterText>
+                                <BetterText
+                                    textAlign="normal"
+                                    textColor="#FFF"
+                                    fontWeight="Regular"
+                                    fontSize={15}
+                                >
+                                    Height: {String(height)} cm
+                                </BetterText>
+
+                                <BetterText
+                                    textAlign="normal"
+                                    textColor="#FFF"
+                                    fontWeight="Regular"
+                                    fontSize={15}
+                                >
+                                    Weight: {String(weight)} kg
                                 </BetterText>
                                 <GapView height={10} />
                                 {!isUnamechangeVisible && (
@@ -198,7 +313,6 @@ export default function Profile() {
                                 iconName={null}
                                 preheader="PROFILE"
                                 header="Set your username"
-                                subheader={sh}
                             >
                                 <Native.View style={styles.flexyview}>
                                     <Native.TextInput
@@ -259,13 +373,29 @@ export default function Profile() {
                         </Section>
                     )}
                     <GapView height={20} />
+                    <Section kind="About">
+                        <Division
+                            status="REGULAR"
+                            iconName={null}
+                            preheader="More"
+                            header="About"
+                            subheader="License, credits, and more info about the app."
+                        >
+                            <Button
+                                style="ACE"
+                                action={() => Router.router.navigate("/About")}
+                                buttonText="See about"
+                            />
+                        </Division>
+                    </Section>
+                    <GapView height={20} />
                     <Section kind="Developer">
                         <Division
                             status="REGULAR"
                             iconName={null}
                             preheader="DEV INTERFACE"
                             header="Use Dev Interface?"
-                            subheader="Dev Interface is an extra page: a menu with advanced info & options for developers. Very useful if you are testing this app for dev / contributing purposes."
+                            subheader="Enables advanced developer info for testing and contributions."
                         >
                             <Native.View style={styles.flexyview}>
                                 <BetterText
@@ -274,11 +404,19 @@ export default function Profile() {
                                     fontSize={15}
                                 >
                                     Dev interface is{" "}
-                                    {wantsDev === true ? "enabled" : "disabled"}{" "}
-                                    for this user.
+                                    <BetterText
+                                        textAlign="normal"
+                                        fontWeight="Bold"
+                                        fontSize={15}
+                                    >
+                                        {wantsDev === true
+                                            ? "enabled"
+                                            : "disabled"}
+                                    </BetterText>
+                                    .
                                 </BetterText>
                                 <GapView height={10} />
-                                <BetterText
+                                {/* <BetterText
                                     textAlign="normal"
                                     fontWeight="Regular"
                                     textColor="#FFC832"
@@ -286,15 +424,15 @@ export default function Profile() {
                                 >
                                     Note: If an error ocurred
                                     &quot;enabling&quot; or
-                                    &quot;disabling&quot; it, you will actually
-                                    be redirected there - this is because
-                                    it&apos;s always enabled, but you don&apos;t
-                                    have the button to access it to avoid
-                                    messing up with you. If the button takes you
-                                    to Dev Interface instead of Home, check the
-                                    logs to see what happened, and if possible,
-                                    open an issue on GitHub. Thanks!
-                                </BetterText>
+                                    &quot;disabling&quot; Dev Interface,
+                                    you&apos;ll be redirected there - this is
+                                    because Dev Interface is always enabled, but
+                                    you don&apos;t have the button to access it
+                                    to avoid messing up with you. If the button
+                                    takes you to Dev Interface instead of Home,
+                                    check the logs to see what happened, and if
+                                    possible, open an issue on GitHub. Thanks!
+                                </BetterText>*/}
                                 <GapView height={10} />
                                 {wantsDev === false ? (
                                     <Button
@@ -310,22 +448,6 @@ export default function Profile() {
                                     />
                                 )}
                             </Native.View>
-                        </Division>
-                    </Section>
-                    <GapView height={20} />
-                    <Section kind="About">
-                        <Division
-                            status="REGULAR"
-                            iconName={null}
-                            preheader="More"
-                            header="About"
-                            subheader="License, credits, and more info about the app."
-                        >
-                            <Button
-                                style="ACE"
-                                action={() => Router.router.navigate("/About")}
-                                buttonText="See about"
-                            />
                         </Division>
                     </Section>
                     <Footer />

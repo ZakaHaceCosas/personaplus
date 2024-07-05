@@ -31,15 +31,27 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
   - Fixed the Welcome Screen's layout, now it's centered.
   - Added form validation to `/WelcomeScreen` and added placeholder options to arrays to avoid the error of saving empty (`""`) strings when trying to store data.
     - **Review required**: Need to add the validation to the Android keyboard's submit button (✔ icon in keyboard).
+  - Now user data gets saved! Basic data like height, age, and more.
+    - Updated the "Clear all" button from Dev Interface to match the new schema.
+- Now `Sessions` work! (more or less)
+  - Layout was fixed, now it looks (almost) as it should (not perfectly, but now it's usable).
+  - It has a correctly setup timer depending on the objective.
+  - You can give up or skip / mark as done.
+  - You can pause by both clicking the pause button or the timer itself.
+- Now the `/Profile` page displays all of the user's data.
 - Decided to move from Apache-2.0 to GPL-3.0-only (LICENSE).
+- Made many changes to `DeveloperInterface` in an attempt to fix it.
 - Fixed `termLog` making stuff invisible for light mode users (it was just removing a styling directive).
+- Corrected the types for `termLog` function.
 - Added a serif fontface (Noto Serif).
-- Added an "About page" (I took the freedom to write a lot, lol), a "License" page, and a "Credits" page. All contributors will get to see their name in there, so go contribute! Just in case we get popular, you know.
+- Added an "About page" (I took the freedom to write a lot\*, lol), a "License" page, and a "Credits" page. All contributors will get to see their name in there, so go contribute! Just in case we get popular, you know.
 - Updated DOCS and PRIVACY files.
 - Added (for testing purposes) a GitHub form for issues.
+- Renamed many more functions and variables to make the code even easier to read.
 - Corrected some places setting the height to `100vw`.
-- Corrected the types for `termLog` function.
-- Made many changes to `DeveloperInterface` in an attempt to fix it.
+- \*Rewrote many things to save up on screen space.
+- Fixed Text looking a bit "cutted" by adding a really small padding to it (1px).
+- Fixed types and fixed the button's layout.
 
 > [!NOTE]
 >

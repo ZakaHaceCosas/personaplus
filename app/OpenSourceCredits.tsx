@@ -5,16 +5,18 @@ import GapView from "@/components/GapView";
 import * as Router from "expo-router";
 
 interface OpenSourceLibrary {
-    name: string;
-    license: string;
-    description: string;
-    url: string;
+    name: string; // Name of the library / package / whatever (bare username if no name found)
+    author: string; // Author name, gathered from their GitHub profile, or the license file, or wherever a clear author can be found
+    license: string; // License used
+    description: string; // Description provided by the author
+    url: string; // URL to GitHub or NPMJS.org (unless there's a significant URL to provide, like react.dev)
 }
 
 // Don't add all the libraries, e.g. the 23193211-whatever Expo libraries can be put togheter into "Expo".
 const libraries: OpenSourceLibrary[] = [
     {
         name: "React",
+        author: "Facebook",
         license: "MIT License",
         description: "The library for web and native user interfaces.",
         url: "https://react.dev/",
@@ -22,12 +24,14 @@ const libraries: OpenSourceLibrary[] = [
     {
         name: "React Native",
         license: "MIT License",
+        author: "Facebook",
         description:
             "A framework for building native applications using React.",
         url: "https://reactnative.dev/",
     },
     {
         name: "Expo",
+        author: "the Expo team",
         license: "MIT License",
         description:
             "An open-source framework for making universal native apps with React. Expo runs on Android, iOS, and the web.",
@@ -35,6 +39,7 @@ const libraries: OpenSourceLibrary[] = [
     },
     {
         name: "Async Storage",
+        author: "Facebook",
         license: "MIT License",
         description:
             "An asynchronous, persistent, key-value storage system for React Native.",
@@ -42,6 +47,7 @@ const libraries: OpenSourceLibrary[] = [
     },
     {
         name: "React Native Picker",
+        author: "Facebook",
         license: "MIT License",
         description:
             "Picker is a cross-platform UI component for selecting an item from a list of options.",
@@ -49,6 +55,7 @@ const libraries: OpenSourceLibrary[] = [
     },
     {
         name: "React Native Animatable",
+        author: "Joel Arvidsson",
         license: "MIT License",
         description:
             "Standard set of easy to use animations and declarative transitions for React Native.",
@@ -56,10 +63,18 @@ const libraries: OpenSourceLibrary[] = [
     },
     {
         name: "Remove Console Msg",
+        author: "akshayjani99",
         license: "MIT License",
         description:
             "A package with the ability to remove all the console.* statement from your code.",
         url: "https://www.npmjs.com/package/remove-console-msg",
+    },
+    {
+        name: "React Native Countdown Component",
+        author: "Talal Majali",
+        license: "MIT License",
+        description: "React Native CountDown.",
+        url: "https://github.com/talalmajali/react-native-countdown-component",
     },
 ];
 
@@ -85,7 +100,7 @@ export default function OpenSourceCredits() {
         <Native.View style={styles.containerview}>
             <Native.ScrollView style={styles.mainview}>
                 <BetterText
-                    fontSize={25}
+                    fontSize={20}
                     fontWeight="Light"
                     textColor="#000"
                     onTap={() => Router.router.navigate("/About")}
@@ -113,10 +128,24 @@ export default function OpenSourceCredits() {
                         </BetterText>
                         <BetterText
                             textColor="#333"
-                            fontWeight="Italic"
-                            fontSize={15}
+                            fontWeight="Regular"
+                            fontSize={14}
                         >
                             {library.license}
+                        </BetterText>
+                        <BetterText
+                            textColor="#555"
+                            fontWeight="Light"
+                            fontSize={14}
+                        >
+                            Made by{" "}
+                            <BetterText
+                                textColor="#555"
+                                fontWeight="SemiBold"
+                                fontSize={14}
+                            >
+                                {library.author}
+                            </BetterText>
                         </BetterText>
                         <GapView height={10} />
                         <BetterText

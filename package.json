@@ -36,6 +36,7 @@
         "expo-dev-client": "~4.0.18",
         "expo-font": "~12.0.7",
         "expo-linking": "~6.3.1",
+        "expo-notifications": "~0.28.9",
         "expo-router": "~3.5.16",
         "expo-splash-screen": "~0.27.5",
         "expo-status-bar": "~1.12.1",
@@ -43,12 +44,12 @@
         "react-dom": "18.2.0",
         "react-native": "0.74.2",
         "react-native-animatable": "^1.4.0",
+        "react-native-countdown-component": "^2.7.1",
         "react-native-safe-area-context": "4.10.1",
         "react-native-screens": "3.31.1",
         "react-native-web": "~0.19.6",
         "remove-console-msg": "^1.0.4",
-        "semver": "^7.6.2",
-        "expo-notifications": "~0.28.9"
+        "semver": "^7.6.2"
     },
     "devDependencies": {
         "@babel/core": "^7.20.0",
