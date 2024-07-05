@@ -39,6 +39,10 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
   - It has a correctly setup timer depending on the objective.
   - You can give up or skip / mark as done.
   - You can pause by both clicking the pause button or the timer itself.
+- Now objective creations works great!
+  - The layout now looks much cleaner
+  - Successfully implemented extra properties for objectives, such as push-up amount, weight to lift, running speed...
+  - Overall improvements and additions, like tips.
 - Now the `/Profile` page displays all of the user's data.
 - Decided to move from Apache-2.0 to GPL-3.0-only (LICENSE).
 - Made many changes to `DeveloperInterface` in an attempt to fix it.
