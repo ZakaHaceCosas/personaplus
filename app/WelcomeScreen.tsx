@@ -130,6 +130,24 @@ export default function WelcomePage() {
         "10 hours",
         "More than 10 hours",
     ];
+    const [howActiveTheUserIs, setHowActiveTheUserIs] = React.useState("");
+    const activnessOptions = [
+        "Poorly active (almost no exercise)",
+        "A bit active (1 or 2 days of light exercise)",
+        "Active (3 to 5 days of exercise)",
+        "Intensely active (more than 5 days of exercise, and/or intense exercises)",
+        "Very active (exercise every day, even more than once a day, and/or pretty intense exercises)",
+    ];
+    const [timeToPushUp, setTimeToPushUp] = React.useState("");
+    const pushUpOptions = [
+        "One second (incredible)...",
+        "About 2-3 seconds",
+        "About 3-5 seconds",
+        "About 5-7 seconds",
+        "About 7-10 seconds",
+        "More than 10 second",
+        "I don't know / I never do push ups",
+    ];
     const focusNextField = (index: number): void => {
         if (inputRefs.current[index + 1]) {
             inputRefs.current[index + 1].focus();
@@ -165,6 +183,8 @@ export default function WelcomePage() {
                 await AsyncStorage.setItem("gender", genderValue);
                 await AsyncStorage.setItem("focuspoint", focuspointValue);
                 await AsyncStorage.setItem("sleep", sleep);
+                await AsyncStorage.setItem("activness", howActiveTheUserIs);
+                await AsyncStorage.setItem("pushupTime", timeToPushUp);
                 termLog("Profile created!", "success");
                 gonext();
             } catch (e) {
@@ -527,6 +547,15 @@ export default function WelcomePage() {
                         it.
                     </BetterText>
                     <GapView height={20} />
+                    <BetterText
+                        textAlign="normal"
+                        fontWeight="Regular"
+                        fontSize={15}
+                    >
+                        How much do you sleep each night? Doesn&apos;t need to
+                        be exact.
+                    </BetterText>
+                    <GapView height={20} />
                     <Select
                         selectedValue={sleep}
                         onValueChange={itemValue => setSleep(itemValue)}
@@ -546,6 +575,58 @@ export default function WelcomePage() {
                             />
                         ))}
                     </Select>
+                    <GapView height={20} />
+                    <BetterText
+                        textAlign="normal"
+                        fontWeight="Regular"
+                        fontSize={15}
+                    >
+                        How active are you? This means, with what frequency do
+                        you perform exercise or other phisical activities?
+                        Doesn&apos;t need to be exact.
+                    </BetterText>
+                    <GapView height={20} />
+                    <Select
+                        selectedValue={howActiveTheUserIs}
+                        onValueChange={itemValue =>
+                            setHowActiveTheUserIs(itemValue)
+                        }
+                        style={styles.picker}
+                        mode="dropdown"
+                    >
+                        <Select.Item
+                            label="Choose an option"
+                            value=""
+                            color="#999"
+                        />
+                        {activnessOptions.map(option => (
+                            <Select.Item
+                                key={option}
+                                label={option}
+                                value={option}
+                            />
+                        ))}
+                    </Select>
+                    <GapView height={20} />
+                    <Select
+                        selectedValue={timeToPushUp}
+                        onValueChange={itemValue => setTimeToPushUp(itemValue)}
+                        style={styles.picker}
+                        mode="dropdown"
+                    >
+                        <Select.Item
+                            label="Choose an option"
+                            value=""
+                            color="#999"
+                        />
+                        {pushUpOptions.map(option => (
+                            <Select.Item
+                                key={option}
+                                label={option}
+                                value={option}
+                            />
+                        ))}
+                    </Select>
                     <GapView height={15} />
                     <Native.View style={styles.flexbtns}>
                         <Button
@@ -554,19 +635,23 @@ export default function WelcomePage() {
                             buttonText="Go back"
                             width="fill"
                         />
-                        {!(!sleep || sleep.trim() === "") && (
-                            <Button
-                                style="ACE"
-                                action={submit}
-                                buttonText="Finish!"
-                                width="fill"
-                            />
-                        )}
-                        {(!sleep || sleep.trim() === "") && (
+                        {!sleep ||
+                        sleep.trim() === "" ||
+                        !timeToPushUp ||
+                        timeToPushUp.trim() === "" ||
+                        !howActiveTheUserIs ||
+                        howActiveTheUserIs.trim() === "" ? (
                             <Button
                                 style="HMM"
                                 action={() => {}}
                                 buttonText="Fill all the required fileds"
+                                width="fill"
+                            />
+                        ) : (
+                            <Button
+                                style="ACE"
+                                action={submit}
+                                buttonText="Finish!"
                                 width="fill"
                             />
                         )}
