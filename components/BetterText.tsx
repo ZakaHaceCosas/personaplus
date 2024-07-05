@@ -45,11 +45,11 @@ export default function BetterText({
     isSerif,
     url,
 }: BetterTextProps) {
-    let fontprefix: string = "BeVietnamPro-"
+    let fontprefix: string = "BeVietnamPro-";
     if (isSerif === true) {
-        fontprefix = "NotoSerif-"
+        fontprefix = "NotoSerif-";
     } else {
-        fontprefix = "BeVietnamPro-"
+        fontprefix = "BeVietnamPro-";
     }
     const font: string = fontprefix + fontWeight;
     const lineheight: number = fontSize; // La altura de línea es igual al tamaño de letra

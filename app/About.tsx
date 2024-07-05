@@ -107,7 +107,11 @@ export default function Home() {
                 <Button
                     buttonText="Privacy policy (external link)"
                     style="ACE"
-                    action={() => Native.Linking.openURL("https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md")}
+                    action={() =>
+                        Native.Linking.openURL(
+                            "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md"
+                        )
+                    }
                 />
             </Native.ScrollView>
         </Native.View>
