@@ -8,7 +8,7 @@ const config: ExpoConfig.ExpoConfig = {
     slug: "PersonaPlus",
     scheme: "personaplus",
     description: "Give yourself a PLUS",
-    owner: "ZakaHaceCosas",
+    owner: "zakahacecosas",
     version: "0.0.1-R5-b20",
     orientation: "portrait",
     githubUrl: "https://github.com/ZakaHaceCosas/personaplus",
