@@ -52,7 +52,7 @@ export default function BetterText({
         fontprefix = "BeVietnamPro-";
     }
     const font: string = fontprefix + fontWeight;
-    const lineheight: number = fontSize; // La altura de línea es igual al tamaño de letra
+    const lineheight: number = fontSize + 0.5; // La altura de línea es igual al tamaño de letra (+ 0.5 para arreglar el texto viendose "recortado")
     const color: string = textColor || "#FFF"; // Si el color no se especifica, es blanco
     let textalignment: string = textAlign || "normal"; // Si el alineamiento no se especifica, es normal (izquierda)
     let textdecoration: string;
@@ -98,7 +98,7 @@ export default function BetterText({
         textDecorationLine: textdecoration,
         textDecorationColor: color,
         textDecorationStyle: "solid",
-        padding: 1, // This fixes text not looking properly
+        padding: 1.25, // This fixes text not looking properly
     };
 
     return (

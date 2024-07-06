@@ -4,8 +4,6 @@ import * as Router from "expo-router";
 import BetterText from "@/components/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { termLog } from "@/app/DeveloperInterface";
 
 // TypeScript, supongo
 interface SectionProps {
@@ -31,28 +29,6 @@ export default function BottomNav({ currentLocation }: SectionProps) {
         setCurrentPage(newPage);
     };
 
-    const [wantsDev, setWantsDev] = React.useState<boolean | null>(null);
-
-    // Busca si quiere usar Dev interface
-    React.useEffect(() => {
-        const checkForDev = async () => {
-            try {
-                const useDev = await AsyncStorage.getItem("useDevTools");
-                if (useDev === "true") {
-                    setWantsDev(true);
-                } else {
-                    setWantsDev(false);
-                }
-            } catch (e) {
-                const log =
-                    "Got an error checking if the user wants to use Dev interface: " +
-                    e;
-                termLog(log, "error");
-            }
-        };
-        checkForDev();
-    }, []);
-
     return (
         // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
         // Aunque no los usamos en "touchme" ya que este se repite varias veces.
@@ -73,41 +49,6 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                 bottom: 0,
             }}
         >
-            {wantsDev && (
-                <Router.Link
-                    href="/DeveloperInterface"
-                    onPress={() => handlePageChange("/DeveloperInterface")}
-                >
-                    <Native.View style={styles.touchme}>
-                        <Native.View>
-                            <Ionicons
-                                name="code"
-                                size={25}
-                                color={
-                                    currentPage === "/DeveloperInterface"
-                                        ? "#3280FF"
-                                        : "#8A8C8E"
-                                }
-                            />
-                        </Native.View>
-                        <GapView height={5} />
-                        <Native.View>
-                            <BetterText
-                                textAlign="normal"
-                                fontWeight="Bold"
-                                fontSize={12}
-                                textColor={
-                                    currentPage === "/DeveloperInterface"
-                                        ? "#3280FF"
-                                        : "#8A8C8E"
-                                }
-                            >
-                                Dev
-                            </BetterText>
-                        </Native.View>
-                    </Native.View>
-                </Router.Link>
-            )}
             <Router.Link href="/" onPress={() => handlePageChange("/")}>
                 <Native.View style={styles.touchme}>
                     <Native.View>

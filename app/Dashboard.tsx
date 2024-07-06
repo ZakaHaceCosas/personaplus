@@ -89,9 +89,11 @@ export default function Dashboard() {
                 objs = objs.filter(entry => entry.id !== id);
 
                 await AsyncStorage.setItem("objs", JSON.stringify(objs));
-                const log: string = `OBJ (Objective) with ID ${id} has been removed.`;
-                termLog(log, "success");
-                Router.router.replace("/");
+                Native.ToastAndroid.show(
+                    "Deleted objective " + id + " successfully!",
+                    Native.ToastAndroid.SHORT
+                );
+                Router.router.replace("/Dashboard");
             } else {
                 const log: string = `No OBJS found - no way to delete.`;
                 termLog(log, "warn");
@@ -145,11 +147,6 @@ export default function Dashboard() {
                                         header={obj.exercise}
                                         subheader={desc}
                                     >
-                                        {/* <Button
-                                            style="ACE"
-                                            action={() => editObjective(obj.id)}
-                                            buttonText="Edit"
-                                        />*/}
                                         <Button
                                             style="WOR"
                                             action={() =>

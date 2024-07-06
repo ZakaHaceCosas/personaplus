@@ -106,7 +106,7 @@ export default function Form({ onSubmit }: FormProps) {
     const [amount, setAmount] = React.useState<number>(0);
     const [barWeight, setBarWeight] = React.useState<number>(0);
     const [liftWeight, setLiftWeight] = React.useState<number>(0);
-    const [hands, setHands] = React.useState<number>(1);
+    const [hands, setHands] = React.useState<number>(2);
     const [lifts, setLifts] = React.useState<number>(0);
     const [timeToPushUp, setTimeToPushup] = React.useState<number>(0);
     const [speed, setSpeed] = React.useState<number>(2);
@@ -246,7 +246,11 @@ export default function Form({ onSubmit }: FormProps) {
 
         try {
             await processData(formData);
-            Router.router.push("/");
+            Native.ToastAndroid.show(
+                "Created your objective successfully!",
+                Native.ToastAndroid.SHORT
+            );
+            Router.router.push("/Dashboard");
         } catch (e) {
             const log = "Could not create an objective, got error: " + e;
             termLog(log, "error");
@@ -323,22 +327,14 @@ export default function Form({ onSubmit }: FormProps) {
         }
     } else if (exercise.toLowerCase() === "push up") {
         if (
-            (duration > 0 &&
-                exercise !== "" &&
-                days &&
-                days.length > 0 &&
-                !days.every(day => day === false) &&
-                amount > 0 &&
-                hands === 1 &&
-                timeToPushUp > 0) ||
-            (duration > 0 &&
-                exercise !== "" &&
-                days &&
-                days.length > 0 &&
-                !days.every(day => day === false) &&
-                amount > 0 &&
-                hands === 2 &&
-                timeToPushUp > 0)
+            duration > 0 &&
+            exercise !== "" &&
+            days &&
+            days.length > 0 &&
+            !days.every(day => day === false) &&
+            amount > 0 &&
+            // timeToPushUp > 0 &&
+            (hands === 1 || hands === 2)
         ) {
             allConditionsAreMet = true;
         } else {
@@ -825,7 +821,56 @@ export default function Form({ onSubmit }: FormProps) {
                             >
                                 Basically: are you going to workout with 1 scale
                                 or with 2 scales, one on each hand? Deaults to
-                                1.
+                                two.
+                            </BetterText>
+                            <GapView height={15} />
+                            <Native.View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    width: "100%",
+                                }}
+                            >
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="-"
+                                    action={() => handleDecrement("hands")}
+                                />
+                                <BetterText
+                                    textColor="#FFF"
+                                    fontSize={20}
+                                    fontWeight="Medium"
+                                >
+                                    {hands}
+                                </BetterText>
+                                <Button
+                                    layout="box"
+                                    style="ACE"
+                                    buttonText="+"
+                                    action={() => handleIncrement("hands")}
+                                />
+                            </Native.View>
+                        </Native.View>
+                    )}
+                    {exercise.toLowerCase() === "push up" && (
+                        <Native.View style={{ marginBottom: 20 }}>
+                            <BetterText
+                                fontSize={20}
+                                textColor="#FFF"
+                                fontWeight="Regular"
+                            >
+                                One hand or two?
+                            </BetterText>
+                            <BetterText
+                                fontSize={10}
+                                textColor="#C8C8C8"
+                                fontWeight="Regular"
+                            >
+                                Basically: are you going to push-up yourself
+                                using both hands (normal) or just one of them
+                                (advanced)? Defaults to two.
                             </BetterText>
                             <GapView height={15} />
                             <Native.View

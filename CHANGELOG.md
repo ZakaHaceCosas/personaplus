@@ -37,7 +37,7 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 - Now `Sessions` work! (more or less)
   - Layout was fixed, now it looks (almost) as it should (not perfectly, but now it's usable).
   - It has a correctly setup timer depending on the objective.
-  - You can give up or skip / mark as done.
+  - You can give up or skip / mark as done (_known errors_).
   - You can pause by both clicking the pause button or the timer itself.
 - Now objective creations works great!
   - The layout now looks much cleaner

@@ -155,16 +155,17 @@ export default function WelcomePage() {
     };
 
     const gonext = () => {
-        if (currentTab > 0 && currentTab < 4) {
-            // Update number whenever you add a new tab.
+        if (currentTab > 0 && currentTab <= 3) {
             setTab(prevPage => prevPage + 1);
         } else {
-            Router.router.replace("/");
+            Router.router.navigate("/");
         }
     };
+
     const goback = () => {
         setTab(prevPage => prevPage - 1);
     };
+
     const submit = async () => {
         if (
             genderValue &&
@@ -185,8 +186,10 @@ export default function WelcomePage() {
                 await AsyncStorage.setItem("sleep", sleep);
                 await AsyncStorage.setItem("activness", howActiveTheUserIs);
                 await AsyncStorage.setItem("pushupTime", timeToPushUp);
-                termLog("Profile created!", "success");
-                gonext();
+                await AsyncStorage.setItem("hasLaunched", "true");
+                await AsyncStorage.setItem("objs", "{}");
+                await AsyncStorage.setItem("useDevTools", "false");
+                Router.router.navigate("/");
             } catch (e) {
                 const log = "Error creating profile: " + e;
                 termLog(log, "error");
@@ -311,7 +314,7 @@ export default function WelcomePage() {
                     />
                     <GapView height={15} />
                     <Native.TextInput
-                        placeholder="Height (cm)"
+                        placeholder="Height (cm) (don't add decimals)"
                         value={formData.height}
                         readOnly={false}
                         placeholderTextColor="#949698"
@@ -331,7 +334,7 @@ export default function WelcomePage() {
                         ]}
                         autoCorrect={false}
                         multiline={false}
-                        maxLength={6}
+                        maxLength={3}
                         textAlign="left"
                         fontFamily="BeVietnamPro-Regular"
                         textContentType="none"
@@ -344,7 +347,7 @@ export default function WelcomePage() {
                     />
                     <GapView height={15} />
                     <Native.TextInput
-                        placeholder="Weight (kg)"
+                        placeholder="Weight (kg) (don't add decimals)"
                         value={formData.weight}
                         readOnly={false}
                         placeholderTextColor="#949698"
@@ -364,7 +367,7 @@ export default function WelcomePage() {
                         ]}
                         autoCorrect={false}
                         multiline={false}
-                        maxLength={6}
+                        maxLength={3}
                         textAlign="left"
                         fontFamily="BeVietnamPro-Regular"
                         textContentType="none"
@@ -405,7 +408,7 @@ export default function WelcomePage() {
                         key="ageinput"
                         enterKeyHint="done"
                         onChangeText={text => handleChange("age", text)}
-                        onSubmitEditing={gonext}
+                        onSubmitEditing={() => {}}
                         ref={ref => ref && (inputRefs.current[3] = ref)}
                     />
                     <GapView height={15} />
@@ -607,6 +610,13 @@ export default function WelcomePage() {
                             />
                         ))}
                     </Select>
+                    <BetterText
+                        textAlign="normal"
+                        fontWeight="Regular"
+                        fontSize={15}
+                    >
+                        Have you ever done a push-up? How long does it take you?
+                    </BetterText>
                     <GapView height={20} />
                     <Select
                         selectedValue={timeToPushUp}

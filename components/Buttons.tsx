@@ -12,7 +12,7 @@ interface BtnsProps {
     action: () => void;
     width?: "auto" | "fill";
     height?: "auto" | "fill" | "default" | number;
-    layout?: "normal" | "box";
+    layout?: "normal" | "box" | "fixed";
     children?: React.ReactNode;
 }
 
@@ -106,6 +106,12 @@ export default function Button({
             buttonMinorPadding = 0;
             buttonMajorPadding = 0;
             buttonWidth = 50;
+            buttonHeight = 50;
+            flexValue = 0;
+            break;
+        case "fixed":
+            buttonMinorPadding = 0;
+            buttonMajorPadding = 0;
             buttonHeight = 50;
             flexValue = 0;
             break;

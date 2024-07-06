@@ -168,7 +168,6 @@ export default function Home() {
                 const value = await AsyncStorage.getItem("hasLaunched");
                 if (value === null || !value) {
                     await AsyncStorage.setItem("hasLaunched", "true");
-                    await AsyncStorage.setItem("useDevTools", "false"); // primera vez, lo guarda
                     setIsFirstLaunch(true);
                 } else {
                     setIsFirstLaunch(false);
@@ -190,7 +189,33 @@ export default function Home() {
         Router.router.push("/WelcomeScreen");
     }
 
-    const randomDoneAllMsg: number = Math.floor(Math.random() * 4) + 1;
+    // i got creative :]
+    // commits / PRs that add more stuff will of course be taken into account
+    const allDoneMessages = [
+        "Feel proud of yourself, don't you?",
+        "That is right, you have completed ALL of your objectives for today.",
+        "Now plan something else and make this day even more productive!",
+        '"Giving yourself a PLUS" seems to be worth it, right?',
+        "Take a moment to celebrate your accomplishments!",
+        "All tasks checked off! Well done, keep up the momentum.",
+        "Another productive day in the books. Great job!",
+        "Mission accomplished! What's next on your list?",
+        "mission passed, + respect",
+        "Seriously. You did it.",
+        "Not enough? You can go to your dashboard and add something else.",
+        "Who could tell a phone app could help you get so much done?",
+        "while (motivated) do\nGiveYourselfAPlus()",
+        "You're defo on ur prime",
+        "add objective -> acomplish it -> feel good -> repeat",
+        "bro finally got out his cave", // lmao
+        "Enough for today. More tomorrow!",
+        "For today; objectives due tomorrow aren't shown ;)",
+    ];
+
+    const randomMessageIndex = Math.floor(
+        Math.random() * allDoneMessages.length
+    );
+    const randomMessageForAllDone = allDoneMessages[randomMessageIndex];
 
     // Today's date (since React for some reasons thinks it's funny to start weeks on Sunday, this needs to be done)
     const today = new Date().getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
@@ -238,49 +263,14 @@ export default function Home() {
                                     You&apos;ve done everything!
                                 </BetterText>
                                 <GapView height={10} />
-                                {randomDoneAllMsg === 1 && (
-                                    <BetterText
-                                        textAlign="center"
-                                        fontSize={15}
-                                        textColor="#FFF"
-                                        fontWeight="Regular"
-                                    >
-                                        Feel proud of yourself, don&apos;t you?
-                                    </BetterText>
-                                )}
-                                {randomDoneAllMsg === 2 && (
-                                    <BetterText
-                                        textAlign="center"
-                                        fontSize={15}
-                                        textColor="#FFF"
-                                        fontWeight="Regular"
-                                    >
-                                        That is right, you have completed ALL of
-                                        your objectives for today.
-                                    </BetterText>
-                                )}
-                                {randomDoneAllMsg === 3 && (
-                                    <BetterText
-                                        textAlign="center"
-                                        fontSize={15}
-                                        textColor="#FFF"
-                                        fontWeight="Regular"
-                                    >
-                                        Now plan something else and make this
-                                        day even more productive!
-                                    </BetterText>
-                                )}
-                                {randomDoneAllMsg === 4 && (
-                                    <BetterText
-                                        textAlign="center"
-                                        fontSize={15}
-                                        textColor="#FFF"
-                                        fontWeight="Regular"
-                                    >
-                                        &quot;Giving yourself a PLUS&quot; seems
-                                        to be worth it, right?
-                                    </BetterText>
-                                )}
+                                <BetterText
+                                    textAlign="center"
+                                    fontSize={15}
+                                    textColor="#FFF"
+                                    fontWeight="Regular"
+                                >
+                                    {randomMessageForAllDone}
+                                </BetterText>
                             </Native.View>
                         ) : (
                             Object.keys(objectives).map(key => {
