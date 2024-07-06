@@ -28,35 +28,46 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`. It's mentioned here only this time, as this is the most important change of this update.
 
-- Now `/WelcomeScreen` works! Users can now register with basic info.
-  - Fixed the Welcome Screen's layout, now it's centered.
-  - Added form validation to `/WelcomeScreen` and added placeholder options to arrays to avoid the error of saving empty (`""`) strings when trying to store data.
-    - **Review required**: Need to add the validation to the Android keyboard's submit button (✔ icon in keyboard).
-  - Now user data gets saved! Basic data like height, age, and more.
-    - Updated the "Clear all" button from Dev Interface to match the new schema.
+- Now `/WelcomeScreen` works! Users can register with basic info.
+  - Fixed the Welcome Screen layout; it is now centered.
+  - Added form validation to `/WelcomeScreen` and placeholder options to arrays to avoid saving empty (`""`) strings.
+    - ~~**Review required**: Need to add validation to the Android keyboard's submit button (✔ icon in keyboard).~~ _This was fixed in later commits._
+  - User data is now saved! Basic data like height, age, and more.
+    - Updated the "Clear all" button in the Dev Interface to match the new schema.
+    - Data previously saved in `index.tsx` (`hasLaunched`, `objs`, and `useDevTools`) now gets saved here.
+  - Changed the character limit for `height` and `weight` from 6 to 3.
+  - Fixed multiple errors where clicking "Finish" redirected to the beginning instead of the home page.
 - Now `Sessions` work! (more or less)
-  - Layout was fixed, now it looks (almost) as it should (not perfectly, but now it's usable).
-  - It has a correctly setup timer depending on the objective.
-  - You can give up or skip / mark as done (_known errors_).
-  - You can pause by both clicking the pause button or the timer itself.
-- Now objective creations works great!
-  - The layout now looks much cleaner
-  - Successfully implemented extra properties for objectives, such as push-up amount, weight to lift, running speed...
+  - Fixed layout; it now looks (almost) as it should (not perfect, but usable).
+  - Timer is correctly set up depending on the objective.
+  - You can give up, skip, or mark as done (_known errors_).
+  - You can pause by clicking either the pause button or the timer itself.
+  - Added a Help menu with a small text to explain what you should be doing.
+- Now objective creation works great!
+  - The layout looks much cleaner.
+  - Successfully implemented extra properties for objectives, such as push-up amount, weight to lift, running speed, etc.
   - Overall improvements and additions, like tips.
-- Now the `/Profile` page displays all of the user's data.
-- Decided to move from Apache-2.0 to GPL-3.0-only (LICENSE).
-- Made many changes to `DeveloperInterface` in an attempt to fix it.
-- Fixed `termLog` making stuff invisible for light mode users (it was just removing a styling directive).
-- Corrected the types for `termLog` function.
-- Added a serif fontface (Noto Serif).
-- Added an "About page" (I took the freedom to write a lot\*, lol), a "License" page, and a "Credits" page. All contributors will get to see their name in there, so go contribute! Just in case we get popular, you know.
+- Made many updates to the `/Profile` page as well.
+  - The `/Profile` page now displays all of the user's data.
+  - Added an option to check for updates from GitHub releases.
+  - Improved Dev Interface navigation flow.
+  - Added an option to start over the app without needing to use the Dev Interface.
+- Moved from Apache-2.0 to GPL-3.0-only (LICENSE).
+- Made many changes to `DeveloperInterface` to attempt to fix it.
+- Fixed `termLog` making content invisible for light mode users (it was just removing a styling directive).
+- Corrected the types for the `termLog` function.
+- Added a serif font face (Noto Serif).
+- Added an "About" page (I took the freedom to write a lot\*, lol), a "License" page, and a "Credits" page. All contributors will see their name there, so go contribute! Just in case we get popular, you know.
 - Updated DOCS and PRIVACY files.
 - Added (for testing purposes) a GitHub form for issues.
-- Renamed many more functions and variables to make the code even easier to read.
+- Renamed many functions and variables to make the code easier to read.
 - Corrected some places setting the height to `100vw`.
-- \*Rewrote many things to save up on screen space.
-- Fixed Text looking a bit "cutted" by adding a really small padding to it (1px).
-- Fixed types and fixed the button's layout.
+- \*Rewrote many things to save screen space.
+- Fixed text looking a bit "cut off" by adding small padding and slightly increasing line height.
+- Removed the Dev Interface from the "bottom" (top) navigation.
+- Removed some redundant comments.
+- Fixed types, fixed the button layout, and added a new layout option (fixed).
+- Updated the way random sentences for all objectives being completed work (and added many new sentences).
 
 > [!NOTE]
 >
