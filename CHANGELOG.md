@@ -29,7 +29,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`. It's mentioned here only this time, as this is the most important change of this update.
 
 - Now `/WelcomeScreen` works! Users can register with basic info.
-  - Fixed the Welcome Screen layout; it is now centered.
+  - ~~Fixed the Welcome Screen layout; it is now centered.~~ _Nope._
   - Added form validation to `/WelcomeScreen` and placeholder options to arrays to avoid saving empty (`""`) strings.
     - ~~**Review required**: Need to add validation to the Android keyboard's submit button (✔ icon in keyboard).~~ _This was fixed in later commits._
   - User data is now saved! Basic data like height, age, and more.
