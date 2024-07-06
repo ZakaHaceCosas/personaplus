@@ -84,6 +84,8 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 ---
 > [!NOTE]
 >
+> ### **KNOWN ERRORS - Latest**
+>
 > - Wrong Welcome Screen layout (not centered).
 > - Sessions crash when the user finishes early (clicks the ✔ button). It appears to be related to how `Extra` data is displayed.
 
