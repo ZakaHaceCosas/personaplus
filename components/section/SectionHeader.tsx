@@ -54,7 +54,6 @@ export default function SectionHeader({ icon, label }: SectionProps) {
                 justifyContent: "flex-start",
             }}
         >
-            {/* Replaced name={i} with this longer but simpler code due to a type error */}
             {headerIcon === "question-mark" && (
                 <Ionicons name="question-mark" size={15} color="#DDDDDD" />
             )}

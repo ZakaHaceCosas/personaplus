@@ -14,6 +14,90 @@ import BottomNav from "@/components/BottomNav";
 import GapView from "@/components/GapView";
 import { termLog } from "./DeveloperInterface";
 
+// TypeScript interface para el release
+interface Release {
+    tag_name: string;
+    prerelease: boolean;
+    assets: { browser_download_url: string; name: string }[];
+    html_url: string;
+}
+
+// Versión actual de la aplicación
+const currentVersion = "0.0.1-R5-b20";
+
+// Función asincrónica para comprobar actualizaciones
+const checkForUpdates = async () => {
+    try {
+        const response = await fetch(
+            "https://api.github.com/repos/ZakaHaceCosas/personaplus/releases"
+        );
+        if (!response.ok) {
+            throw new Error(
+                `Failed to fetch releases (status ${response.status})`
+            );
+        }
+        const releases: Release[] = await response.json();
+
+        // Ordenar releases por fecha descendente y obtener la más reciente
+        const latestRelease = releases.sort(
+            (a, b) =>
+                new Date(b.tag_name).getTime() - new Date(a.tag_name).getTime()
+        )[0];
+
+        if (latestRelease) {
+            const latestVersion = latestRelease.tag_name;
+            console.log(`Latest version: ${latestVersion}`);
+
+            if (latestVersion !== currentVersion) {
+                Native.Alert.alert(
+                    "Update Available",
+                    `A new version (${latestVersion}) is available. Please update PersonaPlus to the latest version.\n\n"Update" will redirect you to the download page of the latest APK.\n\n"See changelog" will take you to the GitHub release page.`,
+                    [
+                        {
+                            text: "Update",
+                            style: "default",
+                            onPress: () =>
+                                Native.Linking.openURL(
+                                    latestRelease.assets.length > 0
+                                        ? latestRelease.assets[0]
+                                              .browser_download_url
+                                        : ""
+                                ),
+                        },
+                        {
+                            text: "See changelog",
+                            onPress: () =>
+                                Native.Linking.openURL(
+                                    latestRelease.html_url || ""
+                                ),
+                        },
+                        {
+                            text: "Cancel",
+                            onPress: () => {},
+                        },
+                    ]
+                );
+            } else {
+                Native.ToastAndroid.show(
+                    "You are up to date!",
+                    Native.ToastAndroid.SHORT
+                );
+            }
+        } else {
+            Native.ToastAndroid.show(
+                "Couldn't check for updates. You're (probably) up to date.",
+                Native.ToastAndroid.SHORT
+            );
+        }
+    } catch (error) {
+        console.error("Error checking for update:", error);
+        Native.ToastAndroid.show(
+            "Failed to check for updates. Please try again later.",
+            Native.ToastAndroid.SHORT
+        );
+    }
+};
+
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
@@ -217,25 +301,55 @@ export default function Profile() {
     const enableDevInterface = async function () {
         try {
             await AsyncStorage.setItem("useDevTools", "true");
-            termLog("ENABLED DEV INTERFACE", "log");
-            Router.router.navigate("/");
+            Router.router.navigate("/DeveloperInterface");
         } catch (e) {
             const log = "ERROR ENABLING DEV INTERFACE: " + e;
             termLog(log, "error");
-            Router.router.navigate("/DeveloperInterface"); // lol. if cant enable, at least go to page with logs to see the error.
         }
     };
 
     const disableDevInterface = async function () {
         try {
             await AsyncStorage.setItem("useDevTools", "false");
-            termLog("DISABLED DEV INTERFACE", "log");
             Router.router.navigate("/");
         } catch (e) {
             const log = "ERROR DISABLING DEV INTERFACE: " + e;
             termLog(log, "error");
-            Router.router.navigate("/DeveloperInterface"); // lol. if cant disable, at least go to page with logs to see the error.
         }
+    };
+
+    const deleteAll = async () => {
+        try {
+            await AsyncStorage.multiRemove([
+                "useDevTools",
+                "hasLaunched",
+                "age",
+                "gender",
+                "height",
+                "weight",
+                "focuspoint",
+                "objs",
+                "username",
+                "sleep",
+            ]);
+            Router.router.navigate("/WelcomeScreen");
+            console.log("DEV CLEARED ALL");
+            termLog("DEV CLEARED ALL", "log");
+        } catch (e) {
+            console.error(e);
+            termLog(String(e), "error");
+        }
+    };
+
+    const startOver = () => {
+        Native.Alert.alert(
+            "Are you sure?",
+            "Again: THERE - IS - NO - WAY - BACK.",
+            [
+                { text: "Go ahead", style: "destructive", onPress: deleteAll },
+                { text: "Nevermind", style: "default", onPress: () => {} },
+            ]
+        );
     };
 
     return (
@@ -377,7 +491,6 @@ export default function Profile() {
                         <Division
                             status="REGULAR"
                             iconName={null}
-                            preheader="More"
                             header="About"
                             subheader="License, credits, and more info about the app."
                         >
@@ -385,6 +498,18 @@ export default function Profile() {
                                 style="ACE"
                                 action={() => Router.router.navigate("/About")}
                                 buttonText="See about"
+                            />
+                        </Division>
+                        <Division
+                            status="REGULAR"
+                            iconName={null}
+                            header="Check for updates"
+                            subheader="You are currently using 0.0.1-R5-b20."
+                        >
+                            <Button
+                                style="ACE"
+                                action={checkForUpdates}
+                                buttonText="Check for updates"
                             />
                         </Division>
                     </Section>
@@ -416,24 +541,6 @@ export default function Profile() {
                                     .
                                 </BetterText>
                                 <GapView height={10} />
-                                {/* <BetterText
-                                    textAlign="normal"
-                                    fontWeight="Regular"
-                                    textColor="#FFC832"
-                                    fontSize={15}
-                                >
-                                    Note: If an error ocurred
-                                    &quot;enabling&quot; or
-                                    &quot;disabling&quot; Dev Interface,
-                                    you&apos;ll be redirected there - this is
-                                    because Dev Interface is always enabled, but
-                                    you don&apos;t have the button to access it
-                                    to avoid messing up with you. If the button
-                                    takes you to Dev Interface instead of Home,
-                                    check the logs to see what happened, and if
-                                    possible, open an issue on GitHub. Thanks!
-                                </BetterText>*/}
-                                <GapView height={10} />
                                 {wantsDev === false ? (
                                     <Button
                                         style="HMM"
@@ -448,6 +555,19 @@ export default function Profile() {
                                     />
                                 )}
                             </Native.View>
+                        </Division>
+                        <Division
+                            status="REGULAR"
+                            iconName={null}
+                            preheader="DANGER ZONE"
+                            header="Start over"
+                            subheader="Deletes ALL data (profile, objectives, stats...) from the app. There's no way to undo this or to recover your data. Not recommended, unless you're using PersonaPlus for testing purposes."
+                        >
+                            <Button
+                                style="WOR"
+                                action={startOver}
+                                buttonText="Start over"
+                            />
                         </Division>
                     </Section>
                     <Footer />

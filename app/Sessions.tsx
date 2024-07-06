@@ -14,6 +14,16 @@ import CountDown from "react-native-countdown-component";
 import Button from "@/components/Buttons";
 
 // TypeScript, supongo.
+interface Extra {
+    amount?: number;
+    time?: number;
+    lifts?: number;
+    liftWeight?: number;
+    barWeight?: number;
+    hands?: number;
+    speed?: number;
+}
+
 interface Objective {
     exercise: string;
     days: boolean[];
@@ -23,6 +33,7 @@ interface Objective {
     restDuration: number;
     id: number;
     wasDone: boolean;
+    extra: Extra;
 }
 
 export default function Sessions() {
@@ -48,7 +59,7 @@ export default function Sessions() {
                 }
             } catch (e) {
                 const log =
-                    "Could not get Objectives (OBJS) fetched due to error: " +
+                    "Could not get Objectives (OBJS) fetched due to error (1): " +
                     e +
                     ". Setting them to an empty object.";
                 termLog(log, "warn");
@@ -97,11 +108,15 @@ export default function Sessions() {
 
     const [isTimerRunning, setTimerStatus] = React.useState(true);
 
-    const toggleTimerStatus = () => {
-        if (isTimerRunning) {
-            setTimerStatus(false);
+    const toggleTimerStatus = (manualTarget?: boolean) => {
+        if (manualTarget) {
+            setTimerStatus(manualTarget);
         } else {
-            setTimerStatus(true);
+            if (isTimerRunning) {
+                setTimerStatus(false);
+            } else {
+                setTimerStatus(true);
+            }
         }
     };
 
@@ -133,7 +148,7 @@ export default function Sessions() {
         );
     };
 
-    const finish = () => {
+    const finish = async () => {
         const updateObj = async (id: number) => {
             try {
                 const storedObjs = await AsyncStorage.getItem("objs");
@@ -153,7 +168,7 @@ export default function Sessions() {
                         "Objectives (OBJS) updated and saved successfully!",
                         "success"
                     );
-                    Router.router.replace("/");
+                    Router.router.navigate("/");
                 } else {
                     termLog(
                         "Could not get objectives (OBJS) fetched!",
@@ -162,8 +177,7 @@ export default function Sessions() {
                 }
             } catch (e) {
                 const log =
-                    "Could not get objectives (OBJS) fetched due to error: " +
-                    e;
+                    "Could not update objectives (OBJS) due to error: " + e;
                 termLog(log, "error");
             }
         };
@@ -171,9 +185,31 @@ export default function Sessions() {
         if (selectedObj) {
             updateObj(selectedObj.id);
         }
-
-        Router.router.navigate("/");
     };
+
+    const [isUserCheckingHelp, toggleHelp] = React.useState(false);
+
+    const toggleHelpMenu = () => {
+        toggleHelp(prev => !prev);
+        if (isUserCheckingHelp === false) {
+            toggleTimerStatus(false);
+        } else {
+            toggleTimerStatus(true);
+        }
+    };
+
+    let helpText: string = "Help!";
+
+    switch (selectedObj?.exercise.toLowerCase()) {
+        case "push up":
+            helpText =
+                "To do a regular push-up, begin in a plank position with your hands slightly wider than shoulder-width apart. Lower your body by bending your elbows until your chest nearly touches the floor, then push back up to the starting position. Keep your core engaged throughout for stability. Start with a comfortable number of repetitions and gradually increase as you build strength.\n\nTo do a one handed push-up, begin in a plank position with one hand centered beneath your shoulder and the other behind your back. Lower your body by bending your elbow until your chest nearly touches the floor, then push back up. Keep your core tight and maintain balance throughout the movement. Start with a few reps on each side and progress as your strength improves.";
+            break;
+        case "lifting":
+            helpText =
+                "Distribute evenly the weights between both hands. For example, if your objective is to lift 6kg, put 3kg to each weight (as you'll lift two weights, one for each hand).\n\nWithout dropping it, extend your arm vertically, and start moving it up and down, making your elbow go from a 90º angle to a 45º angle and then again to a 90º one (that would count as one lift).\n\nKeep going until you do all the lifts specified (or the timer runs out)!";
+            break;
+    }
 
     return (
         <Native.View
@@ -187,6 +223,7 @@ export default function Sessions() {
                 padding: 20,
                 flex: 1,
                 backgroundColor: "#0E1013",
+                overflow: "visible",
             }}
         >
             {selectedObj ? (
@@ -282,6 +319,88 @@ export default function Sessions() {
                                       : `${selectedObj.rests} rests (${selectedObj.restDuration} minutes each)`}
                             </BetterText>
                         </Native.View>
+                        <Native.View
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "center",
+                            }}
+                        >
+                            {selectedObj.exercise.toLowerCase() ===
+                                "lifting" && (
+                                <Native.View
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        marginTop: 10,
+                                    }}
+                                >
+                                    <Ionicons
+                                        name="keyboard-double-arrow-down"
+                                        size={15}
+                                        color="#FFF"
+                                    />
+                                    <GapView width={5} />
+                                    <BetterText
+                                        fontWeight="Regular"
+                                        textColor="#FFF"
+                                        fontSize={15}
+                                    >
+                                        {selectedObj?.extra?.barWeight !==
+                                            undefined &&
+                                        selectedObj?.extra?.liftWeight !==
+                                            undefined &&
+                                        selectedObj.extra.hands !== undefined
+                                            ? String(
+                                                  selectedObj.extra.barWeight +
+                                                      selectedObj.extra
+                                                          .liftWeight *
+                                                          selectedObj.extra
+                                                              .hands
+                                              )
+                                            : "N/A"}
+                                        kg
+                                    </BetterText>
+                                    <GapView width={10} />
+                                    <Ionicons
+                                        name="change-circle"
+                                        size={15}
+                                        color="#FFF"
+                                    />
+                                    <GapView width={5} />
+                                    <BetterText
+                                        fontWeight="Regular"
+                                        textColor="#FFF"
+                                        fontSize={15}
+                                    >
+                                        {selectedObj?.extra?.lifts !== undefined
+                                            ? String(selectedObj.extra.lifts)
+                                            : "N/A"}{" "}
+                                        lifts
+                                    </BetterText>{" "}
+                                    <GapView width={10} />
+                                    <Ionicons
+                                        name="front-hand"
+                                        size={15}
+                                        color="#FFF"
+                                    />
+                                    <GapView width={5} />
+                                    <BetterText
+                                        fontWeight="Regular"
+                                        textColor="#FFF"
+                                        fontSize={15}
+                                    >
+                                        {selectedObj?.extra?.hands !== undefined
+                                            ? String(selectedObj.extra.hands)
+                                            : "N/A"}{" "}
+                                        hand
+                                    </BetterText>
+                                </Native.View>
+                            )}
+                        </Native.View>
                     </Native.View>
                     <CountDown
                         id="mainCountdown"
@@ -326,8 +445,8 @@ export default function Sessions() {
                         <GapView width={10} />
                         <Button
                             style="HMM"
-                            buttonText="Need help?"
-                            action={() => {}}
+                            buttonText="Help?"
+                            action={() => toggleHelpMenu()}
                             layout="normal"
                             height="default"
                             width="fill"
@@ -373,13 +492,59 @@ export default function Sessions() {
                             fontSize={12}
                             textColor="#000"
                         >
-                            Developer info: id: {id}, objs were fetched:{" "}
-                            {objs && "true"}
-                            {!objs && "false"}, selectedObj exists:{" "}
+                            Developer info: id: {id}, selectedObj exists:{" "}
                             {selectedObj && "true"}
                             {!selectedObj && "false"}, all objs: {idsString}
                         </BetterText>
                     </Native.View>
+                </Native.View>
+            )}
+            {isUserCheckingHelp && (
+                <Native.View
+                    style={{
+                        backgroundColor: "#14171C",
+                        position: "absolute",
+                        top: "20%",
+                        left: 10,
+                        right: 10,
+                        bottom: 20,
+                        overflow: "visible",
+                        padding: 20,
+                        borderRadius: 20,
+                        shadowOpacity: 1,
+                        shadowColor: "#000",
+                        shadowOffset: { width: 15, height: 5 },
+                        shadowRadius: 10,
+                        elevation: 16,
+                        borderColor: "#26282b",
+                        borderWidth: 4,
+                        zIndex: 999,
+                    }}
+                >
+                    <BetterText fontSize={18} fontWeight="Regular">
+                        Help with {selectedObj?.exercise}
+                    </BetterText>
+                    <BetterText fontSize={14} fontWeight="Light">
+                        {helpText}
+                    </BetterText>
+                    <GapView height={10} />
+                    <Button
+                        layout="fixed"
+                        height="default"
+                        style="ACE"
+                        buttonText="Got it"
+                        action={toggleHelpMenu}
+                    />
+                    <GapView height={10} />
+                    <BetterText
+                        fontSize={10}
+                        fontWeight="Light"
+                        textColor="#C8C8C8"
+                        textAlign="center"
+                    >
+                        Psst... Don&apos;t worry, the timer has been paused so
+                        you can read!
+                    </BetterText>
                 </Native.View>
             )}
         </Native.View>
