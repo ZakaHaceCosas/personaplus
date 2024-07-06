@@ -28,9 +28,9 @@ PersonaPlus es un proyecto independiente que apunta a crear una app (con React N
 ## Funciones planeadas
 
 - [ ] Registro de usuarios
-  - [ ] Datos básicos
+  - [X] Datos básicos
   - [ ] Personalización
-    - [ ] Metas
+    - [X] Metas
     - [ ] Condiciones médicas
     - [ ] Otros
   - [ ] Hora de pensar
@@ -39,7 +39,7 @@ PersonaPlus es un proyecto independiente que apunta a crear una app (con React N
     - [ ] Objetivos activos
       - [X] Marcar como completado
       - [ ] Sesiones
-        - [ ] Funcionalidad básica
+        - [X] Funcionalidad básica
         - [ ] Sesiones múltiples
         - [ ] Ayuda
         - [ ] Reproductor (música integrada)
@@ -49,7 +49,7 @@ PersonaPlus es un proyecto independiente que apunta a crear una app (con React N
           - [ ] Estadísticas avanzadas
     - [ ] Objetivos pasivos
   - [ ] Edición
-  - [ ] Eliminación
+  - [X] Eliminación
   - [ ] Generación vía asistente
 - [ ] Registro / Base de datos
   - [ ] Generación de estadísticas

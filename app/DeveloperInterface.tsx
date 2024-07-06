@@ -1,8 +1,6 @@
 // DeveloperInterface.tsx
 // Página que muestra ciertos logs de la consola para ayudar al desarrollador
 
-// aviso: codigo no entendible
-
 import * as React from "react";
 import * as Native from "react-native";
 import * as Router from "expo-router";
@@ -37,15 +35,13 @@ const styles = Native.StyleSheet.create({
         flex: 1,
         padding: 10,
         backgroundColor: "#f0f0f0",
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100%",
+        height: "100%",
     },
     mainview: {
         padding: 20,
-        display: "flex",
+        flex: 1,
         flexDirection: "column",
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
         overflow: "scroll",
     },
     logText: {
@@ -76,18 +72,12 @@ const styles = Native.StyleSheet.create({
         borderLeftColor: "#ff0000",
     },
     containerview: {
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100%",
+        height: "100%",
     },
 });
 
 const globalLogs: Log[] = [];
-
-/*
-const originalConsoleLog = console.log;
-const originalConsoleWarn = console.warn;
-const originalConsoleError = console.error;
-*/
 
 const addLogToGlobal = (log: Log) => {
     globalLogs.push(log);
@@ -105,69 +95,46 @@ export const testLog = (
 
     console[type === "success" ? "log" : type](logMessage);
 
-    let prefix = "";
-    switch (type) {
-        case "success":
-            prefix = "GOD";
-            break;
-        case "error":
-            prefix = "ERR";
-            break;
-        case "warn":
-            prefix = "WAR";
-            break;
-        default:
-            prefix = "LOG";
-            break;
-    }
+    const prefix = {
+        success: "GOD",
+        error: "ERR",
+        warn: "WAR",
+        log: "LOG",
+    }[type];
 
-    const log = prefix + " " + message;
-    console.log(log);
+    console.log(`${prefix} ${message}`);
 };
 
 export const termLog = (
     message: string,
     type: "log" | "warn" | "error" | "success" = "log"
 ) => {
-    let prefix;
-    let style;
-    switch (type) {
-        case "log":
-            prefix = "LOG";
-            style =
-                "font-weight: bold; background: #FFF; color: black; padding: 2px 4px; border-radius: 2px;";
-            break;
-        case "success":
-            prefix = "GOD";
-            style =
-                "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;";
-            break;
-        case "warn":
-            prefix = "WAR";
-            style =
-                "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;";
-            break;
-        case "error":
-            prefix = "ERR";
-            style =
-                "font-weight: bold; background: #FF3232; color: black; padding: 2px 4px; border-radius: 2px;";
-    }
+    const styles = {
+        log: "font-weight: bold; background: #FFF; color: black; padding: 2px 4px; border-radius: 2px;",
+        success:
+            "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
+        warn: "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
+        error: "font-weight: bold; background: #FF3232; color: black; padding: 2px 4px; border-radius: 2px;",
+    }[type];
 
-    const log = "%c" + prefix + "%c " + message;
-    console.log(log, style, "background: transparent;");
+    const prefix = {
+        log: "LOG",
+        success: "GOD",
+        warn: "WAR",
+        error: "ERR",
+    }[type];
+
+    console.log(`%c${prefix}%c ${message}`, styles, "background: transparent;");
     testLog(message, type);
 };
 
-export default function ConsoleLogger() {
+export default function DeveloperInterface() {
     const [logs, setLogs] = React.useState<Log[]>([]);
 
     React.useEffect(() => {
         const updateLogs = (newLog: Log) => {
-            /*setLogs(prevLogs => [...prevLogs, newLog]);
-            ;*/
-            addLogToGlobal(newLog);
             setLogs(prevLogs => [...prevLogs, newLog]);
-            globalLogs.push(newLog);
+            addLogToGlobal(newLog);
         };
 
         const originalConsoleLog = console.log;
@@ -231,9 +198,7 @@ export default function ConsoleLogger() {
                     );
                 }
             } catch (e) {
-                const log =
-                    "Could not get objectives (OBJS) fetched due to error: " +
-                    e;
+                const log = `Could not get objectives (OBJS) fetched due to error: ${e}`;
                 termLog(log, "error");
             }
         };
@@ -254,18 +219,21 @@ export default function ConsoleLogger() {
             termLog(String(e), "error");
         }
     };
+
     const devFCclearall = async () => {
         try {
-            await AsyncStorage.setItem("useDevTools", "");
-            await AsyncStorage.setItem("hasLaunched", "");
-            await AsyncStorage.setItem("age", "");
-            await AsyncStorage.setItem("gender", "");
-            await AsyncStorage.setItem("height", "");
-            await AsyncStorage.setItem("weight", "");
-            await AsyncStorage.setItem("focuspoint", "");
-            await AsyncStorage.setItem("objs", "");
-            await AsyncStorage.setItem("username", "");
-            await AsyncStorage.setItem("sleep", "");
+            await AsyncStorage.multiRemove([
+                "useDevTools",
+                "hasLaunched",
+                "age",
+                "gender",
+                "height",
+                "weight",
+                "focuspoint",
+                "objs",
+                "username",
+                "sleep",
+            ]);
             Router.router.navigate("/WelcomeScreen");
             console.log("DEV CLEARED ALL");
             termLog("DEV CLEARED ALL", "log");
@@ -301,73 +269,37 @@ export default function ConsoleLogger() {
                 <GapView height={5} />
                 <Button
                     action={() => Router.router.navigate("/WelcomeScreen")}
-                    buttonText="Go to /WelcomeScreen"
+                    buttonText="Go to Welcome Screen"
                     style="ACE"
                 />
                 <GapView height={5} />
                 <Button
                     action={() => Router.router.navigate("/openhealthtest")}
-                    buttonText="Go to /openhealthtest"
+                    buttonText="Go to Open Health test page"
                     style="ACE"
                 />
                 <GapView height={5} />
                 <Button
-                    action={() => devFCclearobjs()}
-                    buttonText="Clear OBJS"
+                    action={devFCclearobjs}
+                    buttonText="CLEAR OBJECTIVES"
                     style="HMM"
                 />
                 <GapView height={5} />
                 <Button
-                    action={() => devFCclearall()}
-                    buttonText="Clear all"
+                    action={devFCclearall}
+                    buttonText="CLEAR ALL (Reset app, basically)"
                     style="WOR"
                 />
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
-                    Versions
+                    Logs
                 </BetterText>
                 <GapView height={5} />
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={15}
-                >
-                    React: {ReactVersion}
-                </BetterText>
-                <GapView height={5} />
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={15}
-                >
-                    PersonaPlus: {PersonaPlusVersion}
-                </BetterText>
-                <GapView height={20} />
-                <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
-                    OBJS
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={15}
-                >
-                    OBJS = objectives - the base of the app. this is the
-                    stringified JSON for the active objectives (OBJS).
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Italic"
-                    fontSize={10}
-                >
-                    OBJS = objetivos - la base de la app. this is the
-                    stringified JSON for the active objectives (OBJS).
-                </BetterText>
-                <GapView height={20} />
                 <Native.View style={styles.consoleview}>
                     <BetterText
+                        fontWeight="Regular"
                         textColor="#000"
                         textAlign="normal"
-                        fontWeight="Regular"
                         fontSize={15}
                     >
                         {JSON.stringify(objs)}
@@ -375,53 +307,26 @@ export default function ConsoleLogger() {
                 </Native.View>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
-                    Console logs
+                    Logs
                 </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={15}
-                >
-                    meant for testing from mobile / Expo Go. From the desktop,
-                    use the browsers console
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Italic"
-                    fontSize={10}
-                >
-                    pensados para el uso desde móvil / Expo Go - en PC usa la
-                    consola del navegador
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="BoldItalic"
-                    fontSize={15}
-                    textColor="#FFC832"
-                >
-                    some logs will only be on the desktops terminal, not here
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="BoldItalic"
-                    fontSize={10}
-                    textColor="#FFC832"
-                >
-                    algunos logs solo apareceran en la terminal del escritorio,
-                    no aquí
-                </BetterText>
-                <GapView height={20} />
-                <Native.ScrollView style={styles.consoleview}>
+                <GapView height={5} />
+                <Native.View style={styles.consoleview}>
                     {logs.map((log, index) => (
                         <Native.Text
                             key={index}
                             style={[styles.logText, styles[log.type]]}
                         >
-                            {new Date(log.timestamp).toLocaleTimeString()} -{" "}
-                            {log.message}
+                            [{new Date(log.timestamp).toLocaleTimeString()}] (
+                            {log.type.toUpperCase()}) {log.message}
                         </Native.Text>
                     ))}
-                </Native.ScrollView>
+                </Native.View>
+                <GapView height={10} />
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={12}>
+                    Running React Native v{ReactVersion} and PersonaPlus v
+                    {PersonaPlusVersion}
+                </BetterText>
+                <GapView height={80} />
             </Native.ScrollView>
         </Native.View>
     );
