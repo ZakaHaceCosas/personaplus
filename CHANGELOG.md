@@ -73,12 +73,19 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 >
 > ### **FIXED ERRORS - Latest**
 >
-> **No fixed erros for this update.**
+> - Fixed WelcomeScreen redirecting to the beginning again instead of the homepage on submit.
+>
+> > - This was caused by different required items (like `hasLaunched`) not being created on time.
+>
+> - Fixed the ✔ button in the numeric keyboard on the Welcome Screen allowing the user to skip steps.
+> - Fixed many visual errors
+> - Fixed types
 >
 ---
 > [!NOTE]
 >
-> **No known errors at the moment! 🎉**
+> - Wrong Welcome Screen layout (not centered).
+> - Sessions crash when the user finishes early (clicks the ✔ button). It appears to be related to how `Extra` data is displayed.
 
 ## 0.0.1-R5-b19
 
