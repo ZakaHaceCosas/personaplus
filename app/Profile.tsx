@@ -78,23 +78,29 @@ const checkForUpdates = async () => {
                     ]
                 );
             } else {
+                if (Native.Platform.OS === "android") {
+                    Native.ToastAndroid.show(
+                        "You are up to date!",
+                        Native.ToastAndroid.SHORT
+                    );
+                }
+            }
+        } else {
+            if (Native.Platform.OS === "android") {
                 Native.ToastAndroid.show(
-                    "You are up to date!",
+                    "Couldn't check for updates. You're (probably) up to date.",
                     Native.ToastAndroid.SHORT
                 );
             }
-        } else {
-            Native.ToastAndroid.show(
-                "Couldn't check for updates. You're (probably) up to date.",
-                Native.ToastAndroid.SHORT
-            );
         }
     } catch (error) {
         console.error("Error checking for update:", error);
-        Native.ToastAndroid.show(
-            "Failed to check for updates. Please try again later.",
-            Native.ToastAndroid.SHORT
-        );
+        if (Native.Platform.OS === "android") {
+            Native.ToastAndroid.show(
+                "Failed to check for updates. Please try again later (or manually check the repo).",
+                Native.ToastAndroid.SHORT
+            );
+        }
     }
 };
 
@@ -500,18 +506,20 @@ export default function Profile() {
                                 buttonText="See about"
                             />
                         </Division>
-                        <Division
-                            status="REGULAR"
-                            iconName={null}
-                            header="Check for updates"
-                            subheader="You are currently using 0.0.1-R5-b20."
-                        >
-                            <Button
-                                style="ACE"
-                                action={checkForUpdates}
-                                buttonText="Check for updates"
-                            />
-                        </Division>
+                        {Native.Platform.OS === "android" && (
+                            <Division
+                                status="REGULAR"
+                                iconName={null}
+                                header="Check for updates"
+                                subheader="You are currently using 0.0.1-R5-b20."
+                            >
+                                <Button
+                                    style="ACE"
+                                    action={checkForUpdates}
+                                    buttonText="Check for updates"
+                                />
+                            </Division>
+                        )}
                     </Section>
                     <GapView height={20} />
                     <Section kind="Developer">

@@ -89,10 +89,12 @@ export default function Dashboard() {
                 objs = objs.filter(entry => entry.id !== id);
 
                 await AsyncStorage.setItem("objs", JSON.stringify(objs));
-                Native.ToastAndroid.show(
-                    "Deleted objective " + id + " successfully!",
-                    Native.ToastAndroid.SHORT
-                );
+                if (Native.Platform.OS === "android") {
+                    Native.ToastAndroid.show(
+                        "Deleted objective " + id + " successfully!",
+                        Native.ToastAndroid.SHORT
+                    );
+                }
                 Router.router.replace("/Dashboard");
             } else {
                 const log: string = `No OBJS found - no way to delete.`;

@@ -246,10 +246,12 @@ export default function Form({ onSubmit }: FormProps) {
 
         try {
             await processData(formData);
-            Native.ToastAndroid.show(
-                "Created your objective successfully!",
-                Native.ToastAndroid.SHORT
-            );
+            if (Native.Platform.OS === "android") {
+                Native.ToastAndroid.show(
+                    "Created your objective successfully!",
+                    Native.ToastAndroid.SHORT
+                );
+            }
             Router.router.push("/Dashboard");
         } catch (e) {
             const log = "Could not create an objective, got error: " + e;
