@@ -9,8 +9,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
 import { termLog } from "./DeveloperInterface";
-// @ts-expect-error: Wants a ".d.ts" file for this:
-import CountDown from "react-native-countdown-component";
+//// @ts-expect-error: Wants a ".d.ts" file for this:
+// import CountDown from "react-native-countdown-component";
+import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import Button from "@/components/Buttons";
 
 // TypeScript, supongo.
@@ -209,6 +210,21 @@ export default function Sessions() {
             helpText =
                 "Distribute evenly the weights between both hands. For example, if your objective is to lift 6kg, put 3kg to each weight (as you'll lift two weights, one for each hand).\n\nWithout dropping it, extend your arm vertically, and start moving it up and down, making your elbow go from a 90º angle to a 45º angle and then again to a 90º one (that would count as one lift).\n\nKeep going until you do all the lifts specified (or the timer runs out)!";
             break;
+        case "running":
+            helpText =
+                "To start running, ensure you have comfortable running shoes and attire. Begin with a warm-up by walking briskly for 5-10 minutes to prepare your muscles. Start running at a pace that feels comfortable, and maintain a steady breathing pattern. Focus on keeping a good posture and staying relaxed. If you're a beginner, alternate between running and walking in intervals. Gradually increase your running time as your endurance improves. Cool down by walking for a few minutes and then stretching.";
+            break;
+        case "meditation":
+            helpText =
+                "Find a quiet and comfortable place to sit or lie down. Close your eyes and take a few deep breaths, focusing on the sensation of the air entering and leaving your body. Begin to observe your thoughts and feelings without judgment, letting them come and go naturally. You can focus on your breath, a mantra, or simply the present moment. If your mind wanders, gently bring your attention back to your focal point. Start with a few minutes and gradually extend your meditation time as you become more comfortable with the practice.";
+            break;
+        case "walking":
+            helpText =
+                "Wear comfortable shoes and clothing suitable for the weather. Begin by walking at a natural pace, allowing your arms to swing naturally at your sides. Focus on maintaining a good posture, with your back straight and your head up. You can vary your speed, incorporating brisk walking intervals to increase your heart rate. Walking can be done almost anywhere, so choose a route you enjoy. Aim for at least 30 minutes of walking per session, and gradually increase your duration and intensity as you build stamina.";
+            break;
+        default:
+            helpText = "Error loading help text.";
+            break;
     }
 
     return (
@@ -402,19 +418,34 @@ export default function Sessions() {
                             )}
                         </Native.View>
                     </Native.View>
-                    <CountDown
-                        id="mainCountdown"
-                        until={selectedObj?.duration * 60}
-                        size={45}
-                        timeToShow={["M", "S"]}
-                        running={isTimerRunning}
-                        style={{ backgroundColor: "transparent" }}
-                        digitStyle={{ backgroundColor: "transparent" }}
-                        digitTxtStyle={{ color: timerColor }}
-                        timeLabelStyle={{ display: "none" }}
-                        onFinish={() => finish()}
-                        onPress={() => toggleTimerStatus()}
-                    />
+                    <GapView height={20} />
+                    <CountdownCircleTimer
+                        duration={selectedObj?.duration * 60}
+                        size={160}
+                        isPlaying={isTimerRunning}
+                        colors={["#32FF80", "#3280FF"]}
+                        colorsTime={[15, 5]}
+                        isSmoothColorTransition={false}
+                        // onComplete={() => finish()}
+                        // onPress={() => toggleTimerStatus()}
+                        isGrowing={true}
+                        trailColor="#202328"
+                        strokeLinecap="round"
+                        trailStrokeWidth={10}
+                        strokeWidth={15}
+                    >
+                        {({ remainingTime }) => (
+                            <BetterText
+                                fontSize={30}
+                                fontWeight="Bold"
+                                textAlign="center"
+                                textColor={timerColor}
+                            >
+                                {remainingTime}
+                            </BetterText>
+                        )}
+                    </CountdownCircleTimer>
+                    <GapView height={20} />
                     <Native.View
                         style={{
                             display: "flex",
