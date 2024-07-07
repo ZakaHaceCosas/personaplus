@@ -70,11 +70,12 @@ const libraries: OpenSourceLibrary[] = [
         url: "https://www.npmjs.com/package/remove-console-msg",
     },
     {
-        name: "React Native Countdown Component",
-        author: "Talal Majali",
+        name: "React Native Countdown Circle Timer",
+        author: "Vasil Dimitrov",
         license: "MIT License",
-        description: "React Native CountDown.",
-        url: "https://github.com/talalmajali/react-native-countdown-component",
+        description:
+            "Lightweight React/React Native countdown timer component with color and progress animation based on SVG.",
+        url: "https://github.com/vydimitrov/react-countdown-circle-timer/",
     },
 ];
 

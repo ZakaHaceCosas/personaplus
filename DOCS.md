@@ -234,11 +234,9 @@ export default function miComponente({ param, param2 }: miComponenteProps) {
 
 #### 5. ELIMINA LOS *ERRORES TONTOS*
 
-Por alguna razón, el tipeado de TS da error cuando, por ejemplo, tratas de asignar "100vw" a `width` vía StyleSheet. Cuando eso pase, usa estas correcciones (si no hay ninguna para tu "error", añade en la línea anterior un salto y un `// @ts-ignore`, y aparcado).
-
 ##### `width`y `height` dando guerra
 
-¿No puedes asignar "100vw" a `width`?
+Por alguna razón, el tipeado de TS da error cuando, por ejemplo, tratas de asignar "100vw" a `width` vía StyleSheet.
 
 ```tsx
 width: "100vw" // Error: Type '"100vw"' is not assignable to type 'DimensionValue | undefined'.
@@ -249,6 +247,28 @@ Utiliza `DimensionValue`
 ```tsx
 width: "100vw" as Native.DimensionValue // Perfecto.
 ```
+
+##### `Unable to resolve "./elements/Polygon" from
+
+¿Error al buscar "Polygon"?
+
+Por alguna razón, la libreria `react-native-countdown-circle-timer` da este error:
+
+```bash
+Android Bundling failed 884ms C:\Users\Zaka\PersonaPlus-R5\personaplus\node_modules\expo-router\entry.js (1142 modules)
+Unable to resolve "./elements/Polygon" from "node_modules\react-native-svg\src\ReactNativeSVG.ts"
+```
+
+Lo que recomiendo hacer es abrir el archivo (`node_modules\react-native-svg\src\ReactNativeSVG.ts`), buscar "Polygon" y comentar `//` todas las lineas que lo mencionen. Hacer eso dará el mismo error con otro archivo:
+
+```bash
+Android Bundling failed 10727ms C:\Users\Zaka\PersonaPlus-R5\personaplus\node_modules\expo-router\entry.js (1224 modules)
+Unable to resolve "./elements/Polygon" from "node_modules\react-native-svg\src\xml.tsx"
+```
+
+Repite el proceso con ese otro archivo, y ahora si debería funcionar. De momento no veo otra alternativa, de hecho cambié `react-native-countdown-component` por `react-native-countdown-circle-timer` solo por un problema de compatibilidad, ya que por ir iba perfecto - pero daba un error por usar React Native de mala manera / manera anticuada y no era viable, crasheaba la app.
+
+Tienes que arreglarlo manualmente ya que (obviamente y como sabrás) `node_modules/` no se puede sincronizar con GitHub (si puede pero es una idea estúpida subir todo eso a Git y ya lo sabes), así que tendrás que manipularlo por tu cuenta para testear en móvil (o no testear la página Sessions/).
 
 #### 6. MANTEN EL FORMATO
 
