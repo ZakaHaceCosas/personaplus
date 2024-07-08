@@ -56,37 +56,24 @@ export default function Layout() {
         "NotoSerif-Thin": require("../fonts/NotoSerif-Thin.ttf"),
         "NotoSerif-ThinItalic": require("../fonts/NotoSerif-ThinItalic.ttf"),
     });
-    const [appReady, setAppReady] = React.useState(false);
 
     // Cargamos las fuentes
     React.useEffect(() => {
-        const initializeApp = async () => {
-            try {
-                // Esperar a que se carguen las fuentes
-                if (fontsLoaded && !fontError) {
-                    // Después de cargarlas, añadimos 2 segundos para asegurar que cargue todo
-                    await new Promise(resolve => setTimeout(resolve, 2000));
-
-                    // Ocultar la pantalla de inicio
-                    await SplashScreen.hideAsync();
-
-                    // Marcar la aplicación como lista para renderizar, una vez haya pasado todo
-                    setAppReady(true);
-                }
-            } catch (error) {
-                console.error("Error during app initialization: ", error);
+        const onLayoutRootView = async () => {
+            if (fontsLoaded || fontError) {
+                await SplashScreen.hideAsync();
             }
         };
 
-        initializeApp();
+        onLayoutRootView();
 
         return () => {
             // se deja vacio
         };
     }, [fontsLoaded, fontError]);
 
-    if (!appReady) {
-        return null; // Mientras la aplicación se está inicializando, no se renderiza nada
+    if (!fontsLoaded && !fontError) {
+        return null;
     }
 
     return (
