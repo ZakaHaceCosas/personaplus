@@ -13,7 +13,8 @@ import Button from "@/components/Buttons";
 import GapView from "@/components/GapView";
 import Footer from "@/components/Footer";
 import { termLog } from "@/app/DeveloperInterface";
-import useNotification from "@/components/hooks/useNotification";
+// import useNotification from "@/components/hooks/useNotification";
+import * as Notification from "expo-notifications";
 
 // TypeScript, supongo
 interface Objective {
@@ -43,26 +44,67 @@ const styles = Native.StyleSheet.create({
     },
 });
 
-// eslint-disable-next-line
-async function sendPushNotification(expoPushToken: any) {
-    const message = {
-        to: expoPushToken,
-        sound: "default",
-        title: "TEST",
-        body: "Test notification",
-        data: { someData: "goes here" },
-    };
-
-    await fetch("https://exp.host/--/api/v2/push/send", {
-        method: "POST",
-        headers: {
-            Accept: "application/json",
-            "Accept-encoding": "gzip, deflate",
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(message),
-    });
+interface NotificationIdentifier {
+    identifier: string;
 }
+
+const scheduledNotifications: NotificationIdentifier[] = [];
+
+const scheduleRandomNotifications = async () => {
+    const notificationMessages = [
+        "You know you got stuff to do!",
+        "Daily objective means DAILY objective - go and do it!",
+        "Time to give yourself a plus!",
+        "You said you wanted to give yourself a plus - get up!",
+        "The only difference between us and a regular task list? We're way more fun to check!",
+        "I'm like your mom: I won't stop till' you make it.",
+        "Give yourself a plus before, mute your phone after.",
+        "The only notification that doesn't make you waste time.",
+        "No, not another TikTok notification this time. Move your body!",
+        "They're called 'objectives' for a reason: you have to accomplish them!",
+        "No, I won't stop sending notifications until you stop ignoring your path to success",
+        "Trust me, you'll feel better later.",
+        "Just one more session pls, love u <3",
+        "You downloaded this app for a reason. Don't give it up.",
+        "It's that time again!",
+    ];
+
+    const randomDelay = () => Math.floor(Math.random() * 30) * 1000; // 0 to 0.5 minutes between each notification - FOR TESTING PURPOSES, MUST BE CHANGED TO SOMETHING REASONABLE (like one hour)
+
+    for (let i = 0; i < 2; i++) {
+        const randomMessage =
+            notificationMessages[
+                Math.floor(Math.random() * notificationMessages.length)
+            ];
+        const trigger = {
+            hour: Math.floor(Math.random() * 6) + 15,
+            minute: Math.floor(Math.random() * 60),
+            repeats: true,
+        };
+
+        const identifier = await Notification.scheduleNotificationAsync({
+            content: {
+                title: "Pending PersonaPlus objectives!",
+                body: randomMessage,
+            },
+            trigger,
+        });
+
+        // Store the notification identifier
+        scheduledNotifications.push({ identifier });
+
+        await new Promise(resolve => setTimeout(resolve, randomDelay()));
+    }
+};
+
+// Function to cancel scheduled notifications
+const cancelScheduledNotifications = async () => {
+    for (const { identifier } of scheduledNotifications) {
+        await Notification.cancelScheduledNotificationAsync(identifier);
+    }
+    // Clear the list of scheduled notifications
+    scheduledNotifications.length = 0;
+};
 
 // Creamos la función
 export default function Home() {
@@ -75,7 +117,57 @@ export default function Home() {
         [key: string]: Objective;
     } | null>(null);
     // Notifications
-    const expoPushToken = useNotification();
+    // const expoPushToken = useNotification();
+
+    // Programa notificaciones random
+    // The idea is that if you still have undone objectives for today, you get one of these notifications randomly. The app keeps going until you do it all.
+    // Took the freedom to write a lot, lol.
+    /*
+    const scheduleRandomNotifications = async () => {
+        const notificationMessages = [
+            "You know you got stuff to do!",
+            "Daily objective means DAILY objective - go and do it!",
+            "Time to give yourself a plus!",
+            "You said you wanted to give yourself a plus - get up!",
+            "The only difference between us and a regular task list? We're way more fun to check!",
+            "I'm like your mom: I won't stop till' you make it.",
+            "Give yourself a plus before, mute your phone after.",
+            "The only notification that doesn't make you waste time.",
+            "No, not another TikTok notification this time. Move your body!", // i love this one ngl
+            "They're called 'objectives' for a reason: you have to accomplish them!",
+            "No, I won't stop sending notifications until you stop ignoring your path to success", // (because this code is supposed to send many notifications daily)
+            "Trust me, you'll feel better later.",
+            "just one more session pls, love u <3",
+            "You downloaded this app for a reason. Don't give it up.",
+            "It's that time again!",
+        ];
+
+        const randomDelay = () => Math.floor(Math.random() * 30) * 1000; // 0 to 0.5 minutes between each notification - FOR TESTING PURPOSES, MUST BE CHANGED TO SOMETHING REASONABLE (like one hour)
+
+        for (let i = 0; i < 2; i++) {
+            const randomMessage =
+                notificationMessages[
+                    Math.floor(Math.random() * notificationMessages.length)
+                ];
+            const trigger = {
+                hour: Math.floor(Math.random() * 6) + 15,
+                minute: Math.floor(Math.random() * 60),
+                repeats: true,
+            };
+
+            await Notification.scheduleNotificationAsync({
+                content: {
+                    title: "Pending PersonaPlus objectives!",
+                    body: randomMessage,
+                },
+                trigger,
+            });
+
+            await new Promise(resolve => setTimeout(resolve, randomDelay()));
+        }
+    };
+    */
+    // This function is defined here, but used later
 
     React.useEffect(() => {
         const fetchUsername = async () => {
@@ -232,16 +324,26 @@ export default function Home() {
     // Adjust today index to match week start (Monday as 0)
     const adjustedToday = today === 0 ? 6 : today - 1; // Adjust Sunday to index 6, otherwise shift back by one
 
+    if (objectives && Object.keys(objectives).length > 0) {
+        const allObjectivesHandled = Object.keys(objectives).every(key => {
+            const objective = objectives[key];
+            return (
+                objective.wasDone ||
+                !objective.days ||
+                !objective.days[adjustedToday]
+            );
+        });
+
+        if (!allObjectivesHandled) {
+            scheduleRandomNotifications();
+        } else {
+            cancelScheduledNotifications();
+        }
+    }
+
     return (
         <Native.View style={styles.containerview}>
             <BottomNav currentLocation={currentpage} />
-            <Button
-                style="ACE"
-                buttonText="test noti"
-                action={async () => {
-                    await sendPushNotification(expoPushToken);
-                }}
-            />
             <Native.ScrollView style={styles.mainview}>
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={40}>
                     Hello, {username}!
