@@ -126,7 +126,7 @@ export default function calculateRunningOrWalkingPerformance(
             height,
             time,
         };
-        response.context = "The context provides additional details about the subject's profile and exercise parameters.";
+        response.context = "The context provides additional details about the subject's profile and exercise parameters."; // I DONT REMEMBER WRITING IT LIKE THIS will rewrite asap
     }
 
     if (provideExplanation) {
