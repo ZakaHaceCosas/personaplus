@@ -186,6 +186,10 @@ export default function Sessions() {
         }
     };
 
+    const doFinish = () => {
+        finish();
+    };
+
     const [isUserCheckingHelp, toggleHelp] = React.useState(false);
 
     const toggleHelpMenu = () => {
@@ -335,7 +339,6 @@ export default function Sessions() {
                         </Native.View>
                         <Native.View
                             style={{
-                                display: "flex",
                                 flexDirection: "row",
                                 alignItems: "center",
                                 justifyContent: "center",
@@ -345,7 +348,6 @@ export default function Sessions() {
                                 "lifting" && (
                                 <Native.View
                                     style={{
-                                        display: "flex",
                                         flexDirection: "row",
                                         alignItems: "center",
                                         justifyContent: "center",
@@ -375,7 +377,7 @@ export default function Sessions() {
                                                           selectedObj.extra
                                                               .hands
                                               )
-                                            : "N/A"}
+                                            : "N/A"}{" "}
                                         kg
                                     </BetterText>
                                     <GapView width={10} />
@@ -394,7 +396,7 @@ export default function Sessions() {
                                             ? String(selectedObj.extra.lifts)
                                             : "N/A"}{" "}
                                         lifts
-                                    </BetterText>{" "}
+                                    </BetterText>
                                     <GapView width={10} />
                                     <Ionicons
                                         name="front-hand"
@@ -424,7 +426,7 @@ export default function Sessions() {
                         colors={["#32FF80", "#3280FF"]}
                         colorsTime={[15, 5]}
                         isSmoothColorTransition={false}
-                        // onComplete={() => finish()}
+                        onComplete={doFinish}
                         // onPress={() => toggleTimerStatus()}
                         // ^^^^^^^ this doesnt exit here
                         isGrowing={true}

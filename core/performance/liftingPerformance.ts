@@ -13,7 +13,6 @@ const UPDATED: string = "01/07/2024";
 // ANY SOURCE THAT HAS BEEN USED TO DEVELOP THE CALCULATIONS / DATA PROVIDED or that BACKS IT UP.
 const SOURCE: string = ""; // NEED TO PROVIDE SOURCE
 
-
 /**
  * Get all the sources of information used to develop the function, it's data, contents, returns, and etc...
  * @returns A single string with all the URLs, separated by "and" in case there's more than one - e.g. "https://coolsite.com and https://example.source"
