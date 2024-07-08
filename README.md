@@ -21,11 +21,23 @@
 
 ## DATE UN PLUS
 
-### *GIVE YOURSELF A PLUS*
+PersonaPlus es una app de código abierto en React Native y Expo para ayudar a los usuarios a cuidar de su salud, dieta, y bienestar digital. A ***darse más***, como nos gusta decir.
 
-PersonaPlus es un proyecto independiente que apunta a crear una app (con React Native & Expo) que ayude a los usuarios a cuidar de su salud, dieta, y bienestar digital. A ***darse más***, como nos gusta decir.
+Este repositorio actua de *monorepo*, pues aloja también otro proyecto, la libreria propia que he hecho para realizar cálculos estadísticos con datos del usuario para obtener información y estadísticas sobre la salud y el rendimiento del usuario.
+
+## Descargar la app
+
+Puedes probarla descargando alguna *Pre-Release* desde la [página de lanzamientos del repositorio](https://github.com/ZakaHaceCosas/personaplus/releases). Eso sí, **no hay versiones estables** - quiero decir, la app no está acabada y las versiones publicadas son para que los primeros usuarios vayan probando la app y reportando errores.
+
+Que no te sorprenda encontrar fallos, o que varias funciones prometidas aún no están implementadas. Además, la app sólo está disponible en inglés (de momento).
+
+### Testing
+
+De momento PersonaPlus está en su primera fase, *codename* "PRE-APP". Ni Beta, ni Alpha, mucho anterior. Es muy inestable y presenta varios errores conocidos. Si encuentras alguna falla, por favor, [repórtala aquí (página "Issues" del repositorio)](https://github.com/ZakaHaceCosas/personaplus/issues). ¡Cada aporte ayuda a que la app sea mejor!
 
 ## Funciones planeadas
+
+PersonaPlus es una app en un estado muy temprano, muchas funciones aún están por hacer y algunas tomarán mucho tiempo en empezar a implementarse. Además, esta lista está sujeta a cambios, según voy mejorando las ideas (o quitando alguna, que no suele pasar, pero puede).
 
 - [ ] Registro de usuarios
   - [X] Datos básicos
@@ -41,7 +53,7 @@ PersonaPlus es un proyecto independiente que apunta a crear una app (con React N
       - [ ] Sesiones
         - [X] Funcionalidad básica
         - [ ] Sesiones múltiples
-        - [ ] Ayuda
+        - [X] Ayuda
         - [ ] Reproductor (música integrada)
         - [ ] Sesiones avanzadas
           - [ ] Mapas (GPS)
@@ -62,14 +74,36 @@ PersonaPlus es un proyecto independiente que apunta a crear una app (con React N
 - [ ] Misceláneos
   - [ ] Temas para la aplicación (claro, oscuro, etc...)
   - [ ] Múltiples idiomas (Castellano, Inglés...)
+  - [ ] Recordatorios
 
 ## ¿Cómo contribuir?
 
-Para contribuir, empieza por instalar PersonaPlus (bueno, su código fuente en todo caso), sigue los pasos en [CONTRIBUTING.md](https://github.com/ZakaHaceCosas/personaplus/blob/main/CONTRIBUTING.md).
+Fácil, clona el repositorio (`git clone https://github.com/ZakaHaceCosas/personaplus.git`) y ponte a programar.
 
-Puedes ver la documentación completa de como programar para el proyecto [aquí](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md#3-programando-personaplus).
+Cualquier contribución es bienvenida. Házlo a tu manera, aunque te agradecería que siguieras las [PAUTAS DE CONTRIBUCIÓN](https://github.com/ZakaHaceCosas/personaplus/blob/main/CONTRIBUTING.md) y la [DOCUMENTACIÓN](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md#3-programando-personaplus).
 
-## Sígueme y únete al club de los que quieren darse más :]
+## Licencia y créditos
+
+### Licencia
+
+PersonaPlus está licenciada bajo la licencia GPL-3.0-only. En resumen: puedes utilizar la aplicación para cualquier propósito, examinar, descargar, reutilizar, modificar y redistribuir el código fuente y las versiones modificadas libremente. Sin embargo, cualquier redistribución o modificación debe ser bajo la misma licencia GPL-3.0-only. Esto significa que tu redistribución debe ser de código abierto, incluir un acceso claro al código fuente y proporcionar créditos tanto al creador original como a cualquier otro contribuidor bajo GPL-3.0 u otras licencias que requieran atribución.
+
+Asegúrate de que cualquier software de terceros utilizado que esté bajo diferentes licencias (como MIT) también se maneje adecuadamente según sus términos específicos.
+
+### Créditos
+
+Gracias a todo este maravilloso software libre, PersonaPlus es posible. ¡Gracias!
+
+[React](https://react.dev/)
+[React Native](https://reactnative.dev/)
+[Expo](https://expo.dev/)
+[Async Storage](https://react-native-async-storage.github.io/async-storage/)
+[React Native Picker](https://github.com/react-native-picker/picker)
+[React Native Animatable](https://github.com/oblador/react-native-animatable)
+[Remove Console Msg](https://www.npmjs.com/package/remove-console-msg)
+[React Native Countdown Circle Timer](https://github.com/vydimitrov/react-countdown-circle-timer/)
+
+## Únete al club de los que quieren darse más :]
 
 <!--markdownlint-disable-next-line-->
 <div align="center">
