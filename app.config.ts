@@ -40,7 +40,8 @@ const config: ExpoConfig.ExpoConfig = {
         package: "com.zakahacecosas.personaplus",
         permissions: [
             "android.permission.SCHEDULE_EXACT_ALARM",
-            "android.permission.POST_NOTIFICATIONS"
+            "android.permission.POST_NOTIFICATIONS",
+            "android.permission.RECEIVE_BOOT_COMPLETED"
         ]
     },
     web: {
