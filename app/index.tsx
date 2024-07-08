@@ -69,7 +69,12 @@ const scheduleRandomNotifications = async () => {
         "It's that time again!",
     ];
 
-    const randomDelay = () => Math.floor(Math.random() * 30) * 1000; // 0 to 0.5 minutes between each notification - FOR TESTING PURPOSES, MUST BE CHANGED TO SOMETHING REASONABLE (like one hour)
+    // const randomDelay = () => Math.floor(Math.random() * 30) * 1000;
+    const randomDelay = () => (Math.floor(Math.random() * 1800) + 1800) * 1000;
+    // for testing: uncomment 1st and comment 2nd line
+    // for production: the opposite (comment 1st and uncomment 2nd line)
+    // 1st one is a random interval of 0-29 seconds between random notification
+    // 2nd one is also a random interval, but of 30-60 minutes, so it's not annoying for the end user
 
     for (let i = 0; i < 2; i++) {
         const randomMessage =
@@ -77,7 +82,7 @@ const scheduleRandomNotifications = async () => {
                 Math.floor(Math.random() * notificationMessages.length)
             ];
         const trigger = {
-            hour: Math.floor(Math.random() * 6) + 15,
+            hour: Math.floor(Math.random() * 12) + 11,
             minute: Math.floor(Math.random() * 60),
             repeats: true,
         };
@@ -94,6 +99,8 @@ const scheduleRandomNotifications = async () => {
         scheduledNotifications.push({ identifier });
 
         await new Promise(resolve => setTimeout(resolve, randomDelay()));
+        console.log(scheduledNotifications);
+        console.log("Scheduled Notis ENABLED");
     }
 };
 
@@ -102,8 +109,10 @@ const cancelScheduledNotifications = async () => {
     for (const { identifier } of scheduledNotifications) {
         await Notification.cancelScheduledNotificationAsync(identifier);
     }
-    // Clear the list of scheduled notifications
+
     scheduledNotifications.length = 0;
+    console.log(scheduledNotifications);
+    console.log("Scheduled Notis DISABLED");
 };
 
 // Creamos la función
@@ -461,6 +470,27 @@ export default function Home() {
                             />
                         </Native.View>
                     )}
+                </Section>
+                <GapView height={20} />
+                <Section kind="HowYouAreDoing">
+                    <GapView height={20} />
+                    <BetterText
+                        fontWeight="Regular"
+                        textColor="#32FF80"
+                        fontSize={25}
+                        textAlign="center"
+                    >
+                        Coming soon!
+                    </BetterText>
+                    <GapView height={10} />
+                    <Division header="This is a WIP section!">
+                        <BetterText fontWeight="Regular" fontSize={15}>
+                            PersonaPlus is still a work-in-progress app.{"\n\n"}
+                            On later updates you&apos;ll be able to see here
+                            many stats and helpful info. Be sure to check for
+                            updates every few weeks!
+                        </BetterText>
+                    </Division>
                 </Section>
                 <Footer />
             </Native.ScrollView>

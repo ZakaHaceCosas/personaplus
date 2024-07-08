@@ -11,7 +11,7 @@
     },
     "editor.fontSize": 15,
     "editor.fontVariations": true,
-    "editor.wordWrap": "on",
+    "editor.wordWrap": "off",
     "editor.smoothScrolling": true,
     "editor.cursorSmoothCaretAnimation": "on",
     "workbench.list.smoothScrolling": true,

@@ -42,9 +42,42 @@ export default function Home() {
                     {"<"} Go back
                 </BetterText>
                 <GapView height={20} />
-                <BetterText textAlign="normal" fontWeight="Bold" fontSize={30}>
-                    About PersonaPlus
-                </BetterText>
+                <Native.View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                    }}
+                >
+                    <BetterText
+                        textAlign="normal"
+                        fontWeight="Bold"
+                        fontSize={30}
+                    >
+                        PersonaPlus
+                    </BetterText>
+                    <GapView width={10} />
+                    <Native.View
+                        style={{
+                            paddingTop: 7.5,
+                            paddingBottom: 7.5,
+                            paddingLeft: 15,
+                            paddingRight: 15,
+                            backgroundColor: "#32FF80",
+                            borderRadius: 10,
+                        }}
+                    >
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Bold"
+                            fontSize={18}
+                            textColor="#0E1013"
+                        >
+                            ALPHA
+                        </BetterText>
+                    </Native.View>
+                </Native.View>
                 <GapView height={20} />
                 <Section kind="About">
                     <Division

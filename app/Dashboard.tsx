@@ -133,21 +133,35 @@ export default function Dashboard() {
                                 return null;
                             }
 
-                            const desc: string =
-                                "Rests: " +
+                            let descriptionDraft: string =
+                                "Duration: " +
+                                String(obj.duration) +
+                                " minutes. " +
                                 String(obj.rests) +
-                                ", Repeats: " +
+                                " rests and " +
                                 String(obj.repetitions) +
-                                ", Rest duration: " +
-                                String(obj.restDuration) +
-                                " minutes.";
+                                " repetitions.";
+                            if (obj?.rests > 0) {
+                                descriptionDraft =
+                                    descriptionDraft +
+                                    " Rest duration: " +
+                                    String(obj.restDuration) +
+                                    " minutes.";
+                            }
+
+                            const description: string =
+                                descriptionDraft +
+                                "\nID (just for the app): " +
+                                String(obj.id) +
+                                ".";
+
                             return (
                                 <Native.View key={obj.id}>
                                     <Division
                                         status="REGULAR"
                                         preheader="ACTIVE OBJECTIVE"
                                         header={obj.exercise}
-                                        subheader={desc}
+                                        subheader={description}
                                     >
                                         <Button
                                             style="WOR"

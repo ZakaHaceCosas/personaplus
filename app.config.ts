@@ -21,8 +21,9 @@ const config: ExpoConfig.ExpoConfig = {
     },
     notification: {
         color: "#32FF80",
-        androidMode: "collapse",
-        androidCollapsedTitle: "Hey! #{unread_notifications} PersonaPlus notifications!"
+        androidMode: "default",
+        icon: "./assets/notification-icon.png",
+        androidCollapsedTitle: "#{unread_notifications} PersonaPlus notifications"
     },
     assetBundlePatterns: [
         "**/*"
