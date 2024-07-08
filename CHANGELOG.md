@@ -68,6 +68,8 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 - Removed some redundant comments.
 - Fixed types, fixed the button layout, and added a new layout option (fixed).
 - Updated the way random sentences for all objectives being completed work (and added many new sentences).
+- Added active objective reminders - if you have daily objectives for today that you haven't done yet, between 3pm and 8pm you'll receive a few notifications with random messages reminding you to do your stuff.
+  - **NOTE:** _**Timer is currently setup to 1 notification each 30 seconds (for testing purposes of course), will change it on production.**_
 
 > [!NOTE]
 >
