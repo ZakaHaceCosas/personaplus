@@ -51,7 +51,7 @@ const checkForUpdates = async () => {
             if (latestVersion !== currentVersion) {
                 Native.Alert.alert(
                     "Update Available",
-                    `A new version (${latestVersion}) is available. Please update PersonaPlus to the latest version.\n\n"Update" will redirect you to the download page of the latest APK.\n\n"See changelog" will take you to the GitHub release page.`,
+                    `A new version (${latestVersion}) is available. Please update PersonaPlus to the latest version.\n\n"Update" will redirect you to the download page of the latest APK.\n\n"See changelog" will take you to the GitHub release page to see a summary of what's new.`,
                     [
                         {
                             text: "Update",
