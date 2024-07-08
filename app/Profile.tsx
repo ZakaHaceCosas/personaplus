@@ -553,14 +553,31 @@ export default function Profile() {
                                     <Button
                                         style="HMM"
                                         action={enableDevInterface}
-                                        buttonText="Enable Dev interface"
+                                        buttonText="Enable Dev Interface"
                                     />
                                 ) : (
-                                    <Button
-                                        style="HMM"
-                                        action={disableDevInterface}
-                                        buttonText="Disable Dev interface"
-                                    />
+                                    <Native.View
+                                        style={{
+                                            display: "flex",
+                                            flexDirection: "row",
+                                        }}
+                                    >
+                                        <Button
+                                            style="HMM"
+                                            action={disableDevInterface}
+                                            buttonText="Disable Dev Interface"
+                                        />
+                                        <GapView width={10} />
+                                        <Button
+                                            style="DEFAULT"
+                                            action={() =>
+                                                Router.router.navigate(
+                                                    "/DeveloperInterface"
+                                                )
+                                            }
+                                            buttonText="Navigate to Dev Interface"
+                                        />
+                                    </Native.View>
                                 )}
                             </Native.View>
                         </Division>

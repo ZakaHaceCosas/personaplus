@@ -9,8 +9,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
 import { termLog } from "./DeveloperInterface";
-//// @ts-expect-error: Wants a ".d.ts" file for this:
-// import CountDown from "react-native-countdown-component";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import Button from "@/components/Buttons";
 
@@ -428,6 +426,7 @@ export default function Sessions() {
                         isSmoothColorTransition={false}
                         // onComplete={() => finish()}
                         // onPress={() => toggleTimerStatus()}
+                        // ^^^^^^^ this doesnt exit here
                         isGrowing={true}
                         trailColor="#202328"
                         strokeLinecap="round"

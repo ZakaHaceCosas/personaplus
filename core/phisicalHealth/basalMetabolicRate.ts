@@ -65,24 +65,7 @@ export default function calculateBasalMetabolicRate(age: number, gender: "male" 
     }
     const bmr: number = sixthstep;
 
-    let context: string | undefined;
-
-    if (activness === "poor") {
-        const calc: number = bmr * 1.2;
-        context = "The basal metabolic rate would be " + bmr + " and, taking into account the specified level of activness is " + activness + ", the recommended daily calorical ingest would be of " + calc;
-    } else if (activness === "light") {
-        const calc: number = bmr * 1.375;
-        context = "The basal metabolic rate would be " + bmr + " and, taking into account the specified level of activness is " + activness + ", the recommended daily calorical ingest would be of " + calc;
-    } else if (activness === "moderate") {
-        const calc: number = bmr * 1.55;
-        context = "The basal metabolic rate would be " + bmr + " and, taking into account the specified level of activness is " + activness + ", the recommended daily calorical ingest would be of " + calc;
-    } else if (activness === "intense") {
-        const calc: number = bmr * 1.725;
-        context = "The basal metabolic rate would be " + bmr + " and, taking into account the specified level of activness is " + activness + ", the recommended daily calorical ingest would be of " + calc;
-    } else { // extreme
-        const calc: number = bmr * 1.9;
-        context = "The basal metabolic rate would be " + bmr + " and, taking into account the specified level of activness is " + activness + ", the recommended daily calorical ingest would be of " + calc;
-    }
+    const context: string | undefined = "The basal metabolic rate would be " + bmr + ".";
 
     const response: BMRResponse = {
         result: bmr,
@@ -100,7 +83,7 @@ export default function calculateBasalMetabolicRate(age: number, gender: "male" 
     }
 
     if (provideExplanation) {
-        response.explanation = "not done.";
+        response.explanation = "The BMR (Basal Metabolic Rate) is the rate of energy expenditure per unit time by endothermic animals at rest. It is used to approximate how much energy (in calories) the human body requires to stay alive on a daily basis. This value is necessary to calculate the TDEE (Total Daily Energy Expenditure), which provides a more precise estimation of the daily energy requirement by taking into account the individual's level of physical activity.";
     }
 
     return response;
