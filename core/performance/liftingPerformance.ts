@@ -1,6 +1,8 @@
 // NOT DONE YET!!!!
 // zaka no seas vago y trabaja
 
+import OpenHealth from "../openhealth";
+
 /*
 CALCULATE RUNNING / WALKING PERFORMANCE
 */
@@ -9,8 +11,7 @@ CALCULATE RUNNING / WALKING PERFORMANCE
 // Changes that do not affect the result, like just bug-fixes, performance improvments, code-legibility improvments, or that kind of stuff, do not need to bump the date.
 const UPDATED: string = "01/07/2024";
 // ANY SOURCE THAT HAS BEEN USED TO DEVELOP THE CALCULATIONS / DATA PROVIDED or that BACKS IT UP.
-const SOURCE: string = "";
-// Ignore the old code lol - this wasn't the right source: https://strengthlevel.com/strength-standards/
+const SOURCE: string = ""; // NEED TO PROVIDE SOURCE
 
 
 /**
@@ -41,8 +42,8 @@ interface LIFTING_Response {
         time: number;
         barweight: number;
         liftweight: number;
+        scales: number,
         repetitions: number;
-        // TODO FROM HERE
     };
     context?: string;
     explanation?: string;
@@ -54,65 +55,46 @@ interface LIFTING_Response {
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
  * @param height The height of the subject in centimeters (CM).
- * @param speed The speed in KM/h the subject was running to.
  * @param time The duration in HOURS of the exercise performed by the subject.
  * @param provideContext Whether to provide a brief contextualization about the result.
  * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
  * @returns The calories burnt if neither provideContext nor provideExplanation are true, otherwise returns a LIFTING_Response object.
 */
 
-export default function calculateRunningOrWalkingPerformance(
+export default function calculateLiftingPerformance(
     age: number,
     gender: "male" | "female",
     weight: number,
     height: number,
-    speed: number,
     time: number,
+    barweight: number,
+    liftweight: number,
+    scales: number,
+    repetitions: number,
     provideContext?: boolean,
     provideExplanation?: boolean
 ): LIFTING_Response {
-    let mets: number | null; // MET - Metabolic Equivalent of Task
+    // Get the Metabolic Equivalent of Task for this
+    const calculateMET = (w: number, onerm: number, p: number, a: number, g: "male" | "female", r: number, t: number): number => {
+        const GENDER_COEFFICIENT = g === "male" ? 1 : 0.85;
+        const AGE_ADJUSTMENT = 1 / (1 + 0.01 * (a - 22));
+        const BASE_MET = 5.0;
 
-    // Assign METs based on speed in km/h
-    if (speed > 1.6092 && speed < 3.2181) {
-        mets = 2;
-    } else if (speed >= 3.2181 && speed <= 4.023) {
-        mets = 2.5;
-    } else if (speed > 4.023 && speed <= 4.8276) {
-        mets = 3.5;
-    } else if (speed > 4.8276 && speed <= 5.51) {
-        mets = 4;
-    } else if (speed > 5.51 && speed <= 6.44) {
-        mets = 5;
-    } else if (speed > 6.44 && speed <= 8.05) {
-        mets = 6;
-    } else if (speed > 8.05 && speed <= 9.65) {
-        mets = 8;
-    } else if (speed > 9.65 && speed <= 11.27) {
-        mets = 10;
-    } else if (speed > 11.27 && speed <= 12.87) {
-        mets = 11;
-    } else if (speed > 12.87 && speed <= 14.48) {
-        mets = 11.5;
-    } else if (speed > 14.48 && speed <= 16.09) {
-        mets = 12.5;
-    } else if (speed > 16.09) {
-        mets = 16;
-    } else {
-        mets = null;
-    }
+        return (BASE_MET * (w / onerm) * r * AGE_ADJUSTMENT * GENDER_COEFFICIENT) * t / 60;
+    };
 
-    // Constant factor for calories burnt calculation
+    const weightLifted = (barweight + (2 * liftweight)) * scales;
+    const OneRepMaxObject = OpenHealth.physicalHealth.OneRepetitionMax.calculate(weightLifted, repetitions, true, false, false);
+
+    const oneRepMax = OneRepMaxObject.result;
+
+    // eslint-disable-next-line
+    // @ts-ignore
+    const metabolicEquivOfTask = calculateMET(weightLifted, oneRepMax, OneRepMaxObject.percentage, age, gender, repetitions, time);
+
     const caloriesBurntPerKgPerHour = 0.075 * 4.3;
 
-    // Calculate calories burnt
-    let caloriesBurnt: number
-
-    if (mets) {
-        caloriesBurnt = mets * caloriesBurntPerKgPerHour * weight * time;
-    } else {
-        caloriesBurnt = 0 // if mets is not calculable, it returns 0.
-    }
+    const caloriesBurnt = metabolicEquivOfTask * caloriesBurntPerKgPerHour * weight * time;
 
     const response: LIFTING_Response = {
         result: caloriesBurnt,
@@ -125,6 +107,10 @@ export default function calculateRunningOrWalkingPerformance(
             weight,
             height,
             time,
+            barweight,
+            liftweight,
+            scales,
+            repetitions
         };
         response.context = "The context provides additional details about the subject's profile and exercise parameters."; // I DONT REMEMBER WRITING IT LIKE THIS will rewrite asap
     }

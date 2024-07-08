@@ -7,7 +7,7 @@ import GapView from "@/components/GapView";
 import BottomNav from "@/components/BottomNav";
 
 export default function openhealthtest() {
-    const bmi = OpenHealth.phisicalHealth.BodyMassIndex.calculate(
+    const bmi = OpenHealth.physicalHealth.BodyMassIndex.calculate(
         21,
         "male",
         85,
@@ -17,7 +17,7 @@ export default function openhealthtest() {
     );
     termLog(JSON.stringify(bmi), "log");
     const basalloquesea =
-        OpenHealth.phisicalHealth.BasalMetabolicRate.calculate(
+        OpenHealth.physicalHealth.BasalMetabolicRate.calculate(
             14,
             "male",
             45,
@@ -151,7 +151,7 @@ export default function openhealthtest() {
                     textColor="#000"
                 >
                     {"\n"}fuente:{" "}
-                    {OpenHealth.phisicalHealth.BodyMassIndex.getSource()}
+                    {OpenHealth.physicalHealth.BodyMassIndex.getSource()}
                 </BetterText>
             </Native.View>
         </Native.View>

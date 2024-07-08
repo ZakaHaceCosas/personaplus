@@ -54,7 +54,7 @@ interface TDEEResponse {
 */
 
 export default function calculateBasalMetabolicRate(age: number, gender: "male" | "female", weight: number, height: number, activness: "poor" | "light" | "moderate" | "intense" | "extreme", provideContext?: boolean, provideExplanation?: boolean): TDEEResponse {
-    const bmrsource = OpenHealth.phisicalHealth.BasalMetabolicRate.calculate(age, gender, weight, height, activness, true, true)
+    const bmrsource = OpenHealth.physicalHealth.BasalMetabolicRate.calculate(age, gender, weight, height, activness, true, true)
 
     const bmr = bmrsource.result
 
