@@ -17,7 +17,7 @@ const styles = Native.StyleSheet.create({
 
 // Definimos la función
 export default function Layout() {
-    // BeVietnamPro, nuestra tipografía (no es nuestra, pero la usamos xd)
+    // BeVietnamPro y NotoSerif, nuestras tipografías (no son nuestras, pero las usamos xd)
     const [fontsLoaded, fontError] = useFonts({
         "BeVietnamPro-Black": require("../fonts/BeVietnamPro-Black.ttf"),
         "BeVietnamPro-BlackItalic": require("../fonts/BeVietnamPro-BlackItalic.ttf"),
@@ -56,27 +56,39 @@ export default function Layout() {
         "NotoSerif-Thin": require("../fonts/NotoSerif-Thin.ttf"),
         "NotoSerif-ThinItalic": require("../fonts/NotoSerif-ThinItalic.ttf"),
     });
+    const [appReady, setAppReady] = React.useState(false);
 
     // Cargamos las fuentes
     React.useEffect(() => {
-        const onLayoutRootView = async () => {
-            if (fontsLoaded || fontError) {
-                await SplashScreen.hideAsync();
+        const initializeApp = async () => {
+            try {
+                // Esperar a que se carguen las fuentes
+                if (fontsLoaded && !fontError) {
+                    // Después de cargarlas, añadimos 2 segundos para asegurar que cargue todo
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+
+                    // Ocultar la pantalla de inicio
+                    await SplashScreen.hideAsync();
+
+                    // Marcar la aplicación como lista para renderizar, una vez haya pasado todo
+                    setAppReady(true);
+                }
+            } catch (error) {
+                console.error("Error during app initialization: ", error);
             }
         };
 
-        onLayoutRootView();
+        initializeApp();
 
         return () => {
             // se deja vacio
         };
     }, [fontsLoaded, fontError]);
 
-    if (!fontsLoaded && !fontError) {
-        return null;
+    if (!appReady) {
+        return null; // Mientras la aplicación se está inicializando, no se renderiza nada
     }
 
-    // Creamos el layout de la aplicación
     return (
         <Native.ScrollView style={styles.mainview}>
             <StatusBar style="auto" />
