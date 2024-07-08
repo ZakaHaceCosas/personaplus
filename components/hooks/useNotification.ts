@@ -52,7 +52,11 @@ const useNotification = () => {
     const [expoPushToken, setExpoPushToken] = React.useState('');
 
     React.useEffect(() => {
-        registerForPushNotificationsAsync().then(token => setExpoPushToken(token.data));
+        registerForPushNotificationsAsync().then(token => {
+            if (token) {
+                setExpoPushToken(token.data);
+            }
+        });
     }, []);
 
     return expoPushToken
