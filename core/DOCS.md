@@ -16,7 +16,7 @@ import OpenHealth from "openhealth"
 From there, you have different categories to access functions, like the following:
 
 ```tsx
-OpenHealth.phisicalHealth // phisical health related features
+OpenHealth.physicalHealth // phisical health related features
 OpenHealth.mentalHealth // mental health related features
 ...
 ```
@@ -25,7 +25,7 @@ Currently, these are all the categories available:
 
 | CATEGORY | EXPLANATION |
 | -------- | ----------- |
-| `phisicalHealth` | Phisical health related functions and calculations. |
+| `physicalHealth` | Phisical health related functions and calculations. |
 | `mentalHealth` | Mental health related functions and calculations. (Not implemented yet) |
 | `performance` | Sport & activity performance related functions and calculations. |
 
@@ -34,9 +34,9 @@ Currently, these are all the categories available:
 Each function is different, but they all follow a standard:
 
 ```tsx
-OpenHealth.phisicalHealth.BodyMassIndex.calculate({params});
-OpenHealth.phisicalHealth.BodyMassIndex.getSource();
-OpenHealth.phisicalHealth.BodyMassIndex.getLastUpdated();
+OpenHealth.physicalHealth.BodyMassIndex.calculate({params});
+OpenHealth.physicalHealth.BodyMassIndex.getSource();
+OpenHealth.physicalHealth.BodyMassIndex.getLastUpdated();
 ```
 
 ***`Calculate`*** is the most important thing, where you pass **all the arguments required by the calculation function to work**, plus **two extra booleans:** `provideContext` and `provideExplanation`. It can ask for data like the weight, height, age, or gender of the subject, among others.
@@ -91,7 +91,7 @@ Now, let's move onto the reference manual: a list of all available functions, ca
 <!--markdownlint-disable-next-line-->
 # OpenHealth reference manual
 
-`OpenHealth.phisicalHealth`
+`OpenHealth.physicalHealth`
 
 ## basalMetabolicRate.`calculate()`
 
@@ -157,4 +157,4 @@ Each `intensity` value is associated to a fixed, approximated MET value, as seen
 | `intense` | football | 10.3 |
 | `pretty_intense` | rope jumping, 84/min | 10.5 |
 | `very_intense` | rope jumping, 100/min | 11.0 |
-| `really_intensep` | jogging, 10.9 km/h | 11.2 |
+| `really_intense` | jogging, 10.9 km/h | 11.2 |

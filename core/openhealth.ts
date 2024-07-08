@@ -5,11 +5,12 @@
 
 // PHISICAL HEALTH
 
-import * as calculateBodyMassIndex from './phisicalHealth/bodymassindex';
-import * as calculateBodyFatPercentage from './phisicalHealth/bodyfatpercentage';
-import * as calculateIdealBodyWeight from './phisicalHealth/idealbodyweight';
-import * as calculateBasalMetabolicRate from './phisicalHealth/basalMetabolicRate';
-import * as getMetabolicEquivalentOfTask from './phisicalHealth/getMetabolicEquivalentOfTask';
+import * as calculateBodyMassIndex from './physicalHealth/bodymassindex';
+import * as calculateBodyFatPercentage from './physicalHealth/bodyfatpercentage';
+import * as calculateIdealBodyWeight from './physicalHealth/idealbodyweight';
+import * as calculateBasalMetabolicRate from './physicalHealth/basalMetabolicRate';
+import * as getMetabolicEquivalentOfTask from './physicalHealth/getMetabolicEquivalentOfTask';
+import * as oneRepetitionMax from './physicalHealth/oneRepMax';
 
 // PERFORMANCE
 
@@ -27,7 +28,7 @@ import * as calculateLiftingPerformance from './performance/liftingPerformance'
 */
 
 const OpenHealth = {
-    phisicalHealth: {
+    physicalHealth: {
         BodyMassIndex: {
             calculate: calculateBodyMassIndex.default,
             getSource: calculateBodyMassIndex.getSource,
@@ -52,6 +53,11 @@ const OpenHealth = {
             calculate: getMetabolicEquivalentOfTask.default,
             getSource: getMetabolicEquivalentOfTask.getSource,
             getLastUpdate: getMetabolicEquivalentOfTask.getLastUpdate
+        },
+        OneRepetitionMax: {
+            calculate: oneRepetitionMax.default,
+            getSource: oneRepetitionMax.getSource,
+            getLastUpdated: oneRepetitionMax.getLastUpdate
         }
     },
     performance: {

@@ -17,13 +17,13 @@ Forma parte del proyecto **PersonaPlus** (de hecho, de momento comparten reposit
 import OpenHealth from "@core/openhealth.ts"
 
 // 2. verás que todo está agrupado según el ámbito de la salud al que pertenece
-OpenHealth.phisicalHealth
+OpenHealth.physicalHealth
 OpenHealth.mentalHealth
 OpenHealth.performance
 // etc...
 
 // 3. todas las funciones tienen nombres descriptivos (en ingles), por lo que será muy facil encontrarlas
-let bmi = OpenHealth.phisicalHealth.BodyMassIndex.calculate(30, "male", 170, 40, true, true)
+let bmi = OpenHealth.physicalHealth.BodyMassIndex.calculate(30, "male", 170, 40, true, true)
 
 // proporciona la información necesaria y ya estás listo!
 // échale un vistazo a DOCS.es.md para un manual completo de lo que hace cada funcion
