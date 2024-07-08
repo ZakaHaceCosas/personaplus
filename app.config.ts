@@ -37,7 +37,11 @@ const config: ExpoConfig.ExpoConfig = {
             backgroundColor: "#0E1013"
         },
         allowBackup: false,
-        package: "com.zakahacecosas.personaplus"
+        package: "com.zakahacecosas.personaplus",
+        permissions: [
+            "android.permission.SCHEDULE_EXACT_ALARM",
+            "android.permission.POST_NOTIFICATIONS"
+        ]
     },
     web: {
         favicon: "./assets/favicon.png",
@@ -88,7 +92,15 @@ const config: ExpoConfig.ExpoConfig = {
                 ]
             }
         ],
-        "expo-router"
+        "expo-router",
+        [
+            "expo-notifications",
+            {
+                "icon": "./assets/notification-icon.png",
+                "color": "#32FF80",
+                "defaultChannel": "default"
+            }
+        ]
     ],
     extra: {
         router: {

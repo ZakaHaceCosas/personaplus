@@ -13,7 +13,7 @@ import Button from "@/components/Buttons";
 import GapView from "@/components/GapView";
 import Footer from "@/components/Footer";
 import { termLog } from "@/app/DeveloperInterface";
-import * as Notifications from "expo-notifications";
+import useNotification from "@/components/hooks/useNotification";
 
 // TypeScript, supongo
 interface Objective {
@@ -43,6 +43,27 @@ const styles = Native.StyleSheet.create({
     },
 });
 
+// eslint-disable-next-line
+async function sendPushNotification(expoPushToken: any) {
+    const message = {
+        to: expoPushToken,
+        sound: "default",
+        title: "TEST",
+        body: "Test notification",
+        data: { someData: "goes here" },
+    };
+
+    await fetch("https://exp.host/--/api/v2/push/send", {
+        method: "POST",
+        headers: {
+            Accept: "application/json",
+            "Accept-encoding": "gzip, deflate",
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(message),
+    });
+}
+
 // Creamos la función
 export default function Home() {
     // Usuario "Unknown" por defecto
@@ -53,19 +74,8 @@ export default function Home() {
     const [objectives, setObjectives] = React.useState<{
         [key: string]: Objective;
     } | null>(null);
-
-    // Solicitar permiso para enviar notificaciones del sistema
-    // Request permission to send system notifications
-    const [notificationPerms, requestNotificationPerms] =
-        Notifications.usePermissions();
-    console.log(notificationPerms);
-
-    if (
-        notificationPerms?.granted === false ||
-        notificationPerms?.status !== "granted"
-    ) {
-        requestNotificationPerms();
-    }
+    // Notifications
+    const expoPushToken = useNotification();
 
     React.useEffect(() => {
         const fetchUsername = async () => {
@@ -225,6 +235,13 @@ export default function Home() {
     return (
         <Native.View style={styles.containerview}>
             <BottomNav currentLocation={currentpage} />
+            <Button
+                style="ACE"
+                buttonText="test noti"
+                action={async () => {
+                    await sendPushNotification(expoPushToken);
+                }}
+            />
             <Native.ScrollView style={styles.mainview}>
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={40}>
                     Hello, {username}!
