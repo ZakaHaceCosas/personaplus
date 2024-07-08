@@ -42,6 +42,7 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
   - Timer is correctly set up depending on the objective.
   - You can give up, skip, or mark as done (_known errors_).
   - You can pause by clicking either the pause button or the timer itself.
+  - You can see details, like how many lifts you have to do or what speed you should run to.
   - Added a Help menu with a small text to explain what you should be doing.
 - Now objective creation works great!
   - The layout looks much cleaner.
@@ -68,8 +69,9 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 - Removed some redundant comments.
 - Fixed types, fixed the button layout, and added a new layout option (fixed).
 - Updated the way random sentences for all objectives being completed work (and added many new sentences).
-- Added active objective reminders - if you have daily objectives for today that you haven't done yet, between 3pm and 8pm you'll receive a few notifications with random messages reminding you to do your stuff.
-  - **NOTE:** _**Timer is currently setup to 1 notification each 30 seconds (for testing purposes of course), will change it on production.**_
+- Added active objective reminders - if you have daily objectives for today that you haven't done yet, you'll receive a few notifications with random messages reminding you to do your stuff.
+- Added a few reminders that the app is currently an unfinished WIP.
+- a
 
 > [!NOTE]
 >

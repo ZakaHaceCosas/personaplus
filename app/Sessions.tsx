@@ -229,6 +229,21 @@ export default function Sessions() {
             break;
     }
 
+    const speedOptions: [string, string][] = [
+        ["Brisk Walk", "1.6 - 3.2 km/h"],
+        ["Light Jog", "3.2 - 4.0 km/h"],
+        ["Moderate Run", "4.0 - 4.8 km/h"],
+        ["Fast Run", "4.8 - 5.5 km/h"],
+        ["Sprint", "5.5 - 6.4 km/h"],
+        ["Fast Sprint", "6.4 - 8.0 km/h"],
+        ["Running Fast", "8.0 - 9.6 km/h"],
+        ["Very Fast Run", "9.6 - 11.3 km/h"],
+        ["Sprinting", "11.3 - 12.9 km/h"],
+        ["Fast Sprinting", "12.9 - 14.5 km/h"],
+        ["Full Speed Sprinting", "14.5 - 16.1 km/h"],
+        ["Maximum Speed", "more than 16.1 km/h"],
+    ];
+
     return (
         <Native.View
             style={{
@@ -253,7 +268,7 @@ export default function Sessions() {
                         height: "100%",
                         alignItems: "center",
                         justifyContent: "center",
-                        marginTop: "50%",
+                        marginTop: "37.5%",
                     }}
                 >
                     <Native.View
@@ -333,8 +348,8 @@ export default function Sessions() {
                                 {selectedObj.rests === 0
                                     ? "None"
                                     : selectedObj.rests === 1
-                                      ? `${selectedObj.rests} rest of ${selectedObj.restDuration} minutes`
-                                      : `${selectedObj.rests} rests (${selectedObj.restDuration} minutes each)`}
+                                      ? `${selectedObj.rests} rest of ${selectedObj.restDuration} mins`
+                                      : `${selectedObj.rests} rests (${selectedObj.restDuration} mins)`}
                             </BetterText>
                         </Native.View>
                         <Native.View
@@ -416,6 +431,94 @@ export default function Sessions() {
                                     </BetterText>
                                 </Native.View>
                             )}
+                            {selectedObj.exercise.toLowerCase() ===
+                                "running" && (
+                                <Native.View
+                                    style={{
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        marginTop: 10,
+                                    }}
+                                >
+                                    <Ionicons
+                                        name="speed"
+                                        size={15}
+                                        color="#FFF"
+                                    />
+                                    <GapView width={5} />
+                                    <BetterText
+                                        fontWeight="Regular"
+                                        textColor="#FFF"
+                                        fontSize={15}
+                                    >
+                                        <BetterText
+                                            fontWeight="Regular"
+                                            textColor="#FFF"
+                                            fontSize={15}
+                                        >
+                                            {selectedObj.extra.speed !==
+                                                undefined &&
+                                            selectedObj.extra.speed >= 0 &&
+                                            selectedObj.extra.speed <
+                                                speedOptions.length
+                                                ? String(
+                                                      speedOptions[
+                                                          selectedObj.extra
+                                                              .speed
+                                                      ][1]
+                                                  )
+                                                : "N/A"}
+                                        </BetterText>
+                                    </BetterText>
+                                </Native.View>
+                            )}
+                            {selectedObj.exercise.toLowerCase() ===
+                                "push up" && (
+                                <Native.View
+                                    style={{
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        marginTop: 10,
+                                    }}
+                                >
+                                    <Ionicons
+                                        name="repeat"
+                                        size={15}
+                                        color="#FFF"
+                                    />
+                                    <GapView width={5} />
+                                    <BetterText
+                                        fontWeight="Regular"
+                                        textColor="#FFF"
+                                        fontSize={15}
+                                    >
+                                        {selectedObj?.extra?.amount !==
+                                        undefined
+                                            ? String(selectedObj.extra.amount)
+                                            : "N/A"}{" "}
+                                        push-ups
+                                    </BetterText>
+                                    <GapView width={10} />
+                                    <Ionicons
+                                        name="front-hand"
+                                        size={15}
+                                        color="#FFF"
+                                    />
+                                    <GapView width={5} />
+                                    <BetterText
+                                        fontWeight="Regular"
+                                        textColor="#FFF"
+                                        fontSize={15}
+                                    >
+                                        {selectedObj?.extra?.hands !== undefined
+                                            ? String(selectedObj.extra.hands)
+                                            : "N/A"}{" "}
+                                        hand
+                                    </BetterText>
+                                </Native.View>
+                            )}
                         </Native.View>
                     </Native.View>
                     <GapView height={20} />
@@ -423,7 +526,10 @@ export default function Sessions() {
                         duration={selectedObj?.duration * 60}
                         size={160}
                         isPlaying={isTimerRunning}
-                        colors={["#32FF80", "#3280FF"]}
+                        colors={[
+                            timerColor === "#32FF80" ? "#32FF80" : "#FFC832",
+                            timerColor === "#32FF80" ? "#32FF80" : "#FFC832",
+                        ]}
                         colorsTime={[15, 5]}
                         isSmoothColorTransition={false}
                         onComplete={doFinish}
@@ -461,7 +567,7 @@ export default function Sessions() {
                     >
                         <Button
                             style={isTimerRunning ? "ACE" : "HMM"}
-                            action={toggleTimerStatus}
+                            action={() => setTimerStatus(prev => !prev)}
                             layout="box"
                         >
                             <Ionicons

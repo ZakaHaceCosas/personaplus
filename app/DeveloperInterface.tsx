@@ -260,7 +260,8 @@ export default function DeveloperInterface() {
                     fontWeight="Italic"
                     fontSize={15}
                 >
-                    Interfaz de devs
+                    Note: Currently many things here are broken / don&apos;t
+                    work properly. Will look onto that.
                 </BetterText>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
