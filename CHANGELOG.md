@@ -73,6 +73,8 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 - Updated the way random sentences for all objectives being completed work (and added many new sentences).
 - Added active objective reminders - if you have daily objectives for today that you haven't done yet, you'll receive a few notifications with random messages reminding you to do your stuff.
 - Added a few reminders that the app is currently an unfinished WIP.
+- Added loading screens so the app looks cleaner (before you saw the placeholders for a few seconds, with a not-so-good looking "appear animation").
+- Worth noting: Made some parts of the source code way cleaner, thanks to these loaders and other things like function merging and usage of `AsyncStorage.multiGet` or `AsyncStorage.clear`.
 
 > [!NOTE]
 >

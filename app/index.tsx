@@ -18,13 +18,22 @@ import * as Notification from "expo-notifications";
 
 // TypeScript, supongo
 interface Objective {
-    exercise: string;
     days: boolean[];
     duration: number;
-    repetitions: number;
-    rests: number;
-    restDuration: number;
+    exercise: string;
+    extra: {
+        amount: number;
+        barWeight: number;
+        hands: number;
+        liftWeight: number;
+        lifts: number;
+        speed: number;
+        time: number;
+    };
     id: number;
+    repetitions: number;
+    restDuration: number;
+    rests: number;
     wasDone: boolean;
 }
 
@@ -117,110 +126,49 @@ const cancelScheduledNotifications = async () => {
 
 // Creamos la función
 export default function Home() {
-    // Usuario "Unknown" por defecto
-    // Default "Unknown" username
+    const [loading, setLoading] = React.useState(true);
+    const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean | null>(
+        null
+    );
     const [username, setUsername] = React.useState<string>("Unknown");
-    // Variable principal para acceder a los objetivos activos (o simplemente objetivos)
-    // Main variable to access active objectives (or just objectives)
     const [objectives, setObjectives] = React.useState<{
         [key: string]: Objective;
     } | null>(null);
-    // Notifications
-    // const expoPushToken = useNotification();
-
-    // Programa notificaciones random
-    // The idea is that if you still have undone objectives for today, you get one of these notifications randomly. The app keeps going until you do it all.
-    // Took the freedom to write a lot, lol.
-    /*
-    const scheduleRandomNotifications = async () => {
-        const notificationMessages = [
-            "You know you got stuff to do!",
-            "Daily objective means DAILY objective - go and do it!",
-            "Time to give yourself a plus!",
-            "You said you wanted to give yourself a plus - get up!",
-            "The only difference between us and a regular task list? We're way more fun to check!",
-            "I'm like your mom: I won't stop till' you make it.",
-            "Give yourself a plus before, mute your phone after.",
-            "The only notification that doesn't make you waste time.",
-            "No, not another TikTok notification this time. Move your body!", // i love this one ngl
-            "They're called 'objectives' for a reason: you have to accomplish them!",
-            "No, I won't stop sending notifications until you stop ignoring your path to success", // (because this code is supposed to send many notifications daily)
-            "Trust me, you'll feel better later.",
-            "just one more session pls, love u <3",
-            "You downloaded this app for a reason. Don't give it up.",
-            "It's that time again!",
-        ];
-
-        const randomDelay = () => Math.floor(Math.random() * 30) * 1000; // 0 to 0.5 minutes between each notification - FOR TESTING PURPOSES, MUST BE CHANGED TO SOMETHING REASONABLE (like one hour)
-
-        for (let i = 0; i < 2; i++) {
-            const randomMessage =
-                notificationMessages[
-                    Math.floor(Math.random() * notificationMessages.length)
-                ];
-            const trigger = {
-                hour: Math.floor(Math.random() * 6) + 15,
-                minute: Math.floor(Math.random() * 60),
-                repeats: true,
-            };
-
-            await Notification.scheduleNotificationAsync({
-                content: {
-                    title: "Pending PersonaPlus objectives!",
-                    body: randomMessage,
-                },
-                trigger,
-            });
-
-            await new Promise(resolve => setTimeout(resolve, randomDelay()));
-        }
-    };
-    */
-    // This function is defined here, but used later
 
     React.useEffect(() => {
-        const fetchUsername = async () => {
-            const username: string | null =
-                await AsyncStorage.getItem("username");
-            if (username) {
-                setUsername(username);
-                termLog("Username fetched!", "success");
-            } else {
-                termLog("Username error!", "error");
-            }
-        };
-
-        fetchUsername();
-    }, []);
-
-    React.useEffect(() => {
-        const fetchObjectives = async () => {
-            try {
-                const existingObjectives = await AsyncStorage.getItem("objs");
-                if (existingObjectives) {
-                    setObjectives(JSON.parse(existingObjectives));
-                    // console logs keep reminding you it's called "OBJS" even tho im chaning it to objectives for better readability. just in case.
-                    termLog("Objectives (OBJS) fetched and parsed!", "success");
+        const multiFetch = async () => {
+            const items = await AsyncStorage.multiGet([
+                "username",
+                "objs",
+                "hasLaunched",
+            ]);
+            if (items) {
+                setUsername(String(items[0][1]));
+                setObjectives(JSON.parse(String(items[1][1])));
+                const hasLaunchedValue = items[2][1];
+                if (hasLaunchedValue === null || !hasLaunchedValue) {
+                    await AsyncStorage.setItem("hasLaunched", "true");
+                    setIsFirstLaunch(true);
                 } else {
-                    await AsyncStorage.setItem("objs", JSON.stringify({}));
-                    setObjectives({});
-                    termLog(
-                        "Could not get objectives (OBJS) fetched! Setting them to an empty array ( {} )",
-                        "warn"
-                    );
+                    setIsFirstLaunch(false);
                 }
-            } catch (e) {
-                const log =
-                    "Could not get objectives (OBJS) fetched due to error: " +
-                    e;
-                termLog(log, "error");
+                setLoading(false);
+            } else {
+                termLog("Fetch error!", "error");
+                setUsername("Unknown");
+                setObjectives(JSON.parse("{}"));
+                setLoading(false);
             }
         };
 
-        fetchObjectives();
+        multiFetch();
     }, []);
 
     const currentpage: string = Router.usePathname();
+
+    if (isFirstLaunch) {
+        Router.router.push("/WelcomeScreen");
+    }
 
     const createNewActiveObjective = (): void => {
         Router.router.navigate("/CreateObjective");
@@ -230,75 +178,42 @@ export default function Home() {
         Router.router.navigate("/Sessions?id=" + id);
     };
 
-    const markObjectiveAsDone = (id: number): void => {
-        const updateObj = async (id: number) => {
-            try {
-                const storedObjs = await AsyncStorage.getItem("objs");
-                if (storedObjs) {
-                    const parsedObjs = JSON.parse(storedObjs);
-                    const updatedObjs = parsedObjs.map((obj: Objective) => {
-                        if (obj.id === id) {
-                            return { ...obj, wasDone: true };
-                        }
-                        return obj;
-                    });
+    console.log(objectives);
+
+    const markObjectiveAsDone = async (id: number): Promise<void> => {
+        try {
+            if (objectives !== null) {
+                const updatedObjectives = { ...objectives };
+
+                if (updatedObjectives[id.toString()]) {
+                    updatedObjectives[id.toString()] = {
+                        ...updatedObjectives[id.toString()],
+                        wasDone: true,
+                    };
+
                     await AsyncStorage.setItem(
                         "objs",
-                        JSON.stringify(updatedObjs)
+                        JSON.stringify(updatedObjectives)
                     );
+
+                    setObjectives(updatedObjectives);
+
                     termLog(
                         "Objectives (OBJS) updated and saved successfully!",
                         "success"
                     );
                     Router.router.replace("/");
                 } else {
-                    termLog(
-                        "Could not get objectives (OBJS) fetched!",
-                        "error"
-                    );
+                    termLog(`Objective with id ${id} not found!`, "error");
                 }
-            } catch (e) {
-                const log =
-                    "Could not get objectives (OBJS) fetched due to error: " +
-                    e;
-                termLog(log, "error");
+            } else {
+                termLog("Could not get objectives (OBJS) fetched!", "error");
             }
-        };
-
-        updateObj(id);
+        } catch (e) {
+            const log = `Could not update objectives (OBJS) due to error: ${e}`;
+            termLog(log, "error");
+        }
     };
-
-    const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean | null>(
-        null
-    );
-
-    // Comprobación para ver si es la primera vez que abre la app - si lo es, redirige a /WelcomeScreen
-    React.useEffect(() => {
-        const checkFirstLaunch = async () => {
-            try {
-                const value = await AsyncStorage.getItem("hasLaunched");
-                if (value === null || !value) {
-                    await AsyncStorage.setItem("hasLaunched", "true");
-                    setIsFirstLaunch(true);
-                } else {
-                    setIsFirstLaunch(false);
-                }
-            } catch (e) {
-                const log =
-                    "Got an error checking if app launched before: " + e;
-                termLog(log, "error");
-            }
-        };
-        checkFirstLaunch();
-    }, []);
-
-    if (isFirstLaunch === null) {
-        return null;
-    }
-
-    if (isFirstLaunch) {
-        Router.router.push("/WelcomeScreen");
-    }
 
     // i got creative :]
     // commits / PRs that add more stuff will of course be taken into account
@@ -352,6 +267,26 @@ export default function Home() {
                 cancelScheduledNotifications();
             }
         }
+    }
+
+    if (loading) {
+        return (
+            <Native.View style={styles.containerview}>
+                <BottomNav currentLocation={currentpage} />
+                <Native.ScrollView>
+                    <Native.View style={styles.mainview}>
+                        <BetterText
+                            fontWeight="Regular"
+                            fontSize={15}
+                            textAlign="center"
+                            textColor="#C8C8C8"
+                        >
+                            Loading...
+                        </BetterText>
+                    </Native.View>
+                </Native.ScrollView>
+            </Native.View>
+        );
     }
 
     return (
