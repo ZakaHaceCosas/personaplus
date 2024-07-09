@@ -13,26 +13,24 @@ import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import Button from "@/components/Buttons";
 
 // TypeScript, supongo.
-interface Extra {
-    amount?: number;
-    time?: number;
-    lifts?: number;
-    liftWeight?: number;
-    barWeight?: number;
-    hands?: number;
-    speed?: number;
-}
-
 interface Objective {
-    exercise: string;
     days: boolean[];
     duration: number;
-    repetitions: number;
-    rests: number;
-    restDuration: number;
+    exercise: string;
+    extra: {
+        amount: number;
+        barWeight: number;
+        hands: number;
+        liftWeight: number;
+        lifts: number;
+        speed: number;
+        time: number;
+    };
     id: number;
+    repetitions: number;
+    restDuration: number;
+    rests: number;
     wasDone: boolean;
-    extra: Extra;
 }
 
 // Estilos
@@ -55,54 +53,60 @@ const styles = Native.StyleSheet.create({
 });
 
 export default function Sessions() {
-    // Loading state
     const [loading, setLoading] = React.useState<boolean>(true);
     const { id } = Router.useGlobalSearchParams() as { id: string };
-    const [objectives, setObjectives] = React.useState<Objective[] | null>(
-        null
-    );
-    const [reactError, setReactError] = React.useState<string>("");
+    const [objectives, setObjectives] = React.useState<{
+        [key: string]: Objective;
+    } | null>(null);
 
     React.useEffect(() => {
         const fetchObjectives = async () => {
             try {
-                const storedObjectives = await AsyncStorage.getItem("objs");
-                if (storedObjectives) {
-                    try {
-                        const parsedObjectives: Objective[] =
-                            JSON.parse(storedObjectives);
-                        setObjectives(parsedObjectives);
-                        termLog("Objectives (OBJS) fetched", "success");
-                        setLoading(false);
-                    } catch (e) {
-                        termLog(
-                            "Error parsing objectives (OBJS): " + e,
-                            "error"
-                        );
-                        setReactError(String(e));
-                        setLoading(false);
+                const allObjectives = await AsyncStorage.getItem("objs");
+                if (allObjectives) {
+                    let parsedObjectives;
+                    if (typeof allObjectives === "string") {
+                        parsedObjectives = JSON.parse(allObjectives);
+                    } else {
+                        parsedObjectives = allObjectives;
                     }
-                } else {
-                    termLog(
-                        "No objectives (OBJS) found. Setting to empty array.",
-                        "error"
+                    setObjectives(parsedObjectives);
+                    setObjectives(
+                        // eslint-disable-next-line
+                        // @ts-ignore
+                        parsedObjectives.reduce((acc, obj) => {
+                            acc[obj.id.toString()] = obj;
+                            return acc;
+                        }, {})
                     );
-                    setReactError("Not storedObjectives.");
-                    setObjectives([]);
+                    setLoading(false);
+                } else {
+                    termLog("Fetch error! Data not found.", "error");
+                    setObjectives(null);
                     setLoading(false);
                 }
             } catch (e) {
-                termLog("Error fetching objectives (OBJS): " + e, "warn");
-                setReactError(String(e));
-                setLoading(false);
+                termLog("Fetch error! " + e, "error");
             }
         };
 
         fetchObjectives();
     }, []);
 
-    const currentObjective =
-        objectives?.find(obj => obj.id.toString() === id.toString()) ?? null;
+    React.useEffect(() => {
+        termLog("Objectives: " + objectives, "log");
+        termLog("Objectives state: " + JSON.stringify(objectives), "log");
+        termLog("Current ID: " + id, "log");
+    }, [objectives, id]);
+
+    const currentObjective = objectives ? objectives[id] : null;
+
+    React.useEffect(() => {
+        termLog(
+            "Current Objective: " + JSON.stringify(currentObjective),
+            "log"
+        );
+    }, [currentObjective]);
 
     React.useEffect(() => {
         setLoading(false); // sets as loaded
@@ -223,14 +227,12 @@ export default function Sessions() {
                             "Error parsing objectives (OBJS) for update: " + e,
                             "error"
                         );
-                        setReactError(String(e));
                     }
                 } else {
                     termLog("No objectives (OBJS) found!", "error");
                 }
             } catch (e) {
                 termLog("Error updating objectives (OBJS): " + e, "error");
-                setReactError(String(e));
             }
         };
 
@@ -319,439 +321,388 @@ export default function Sessions() {
         );
     }
 
-    if (!loading && currentObjective === null && reactError !== null) {
+    if (!currentObjective)
         return (
-            <Native.View style={{ padding: 20 }}>
-                <GapView
-                    height={Native.Dimensions.get("screen").height / 2 - 70}
-                />
-                <BetterText
-                    textAlign="center"
-                    fontWeight="SemiBold"
-                    fontSize={50}
-                    textColor="#FF3232"
-                >
-                    Oh no!
-                </BetterText>
-                <BetterText
-                    textAlign="center"
-                    fontWeight="Medium"
-                    fontSize={15}
-                >
-                    There was an error loading this objective (the specified ID
-                    ({id}) wasn&apos;t found). Sorry!{" "}
-                    <BetterText
-                        onTap={() => Router.router.navigate("/")}
-                        url={true}
-                        textColor="#3280FF"
-                        fontSize={15}
-                        fontWeight="Regular"
-                    >
-                        Go home.
-                    </BetterText>
-                </BetterText>
-                <BetterText
-                    fontSize={10}
-                    textColor="#FFC832"
-                    fontWeight="Light"
-                    textAlign="center"
-                >
-                    React error (if provided): {reactError}
+            <Native.View>
+                <BetterText fontSize={20} fontWeight="Regular">
+                    Error
                 </BetterText>
             </Native.View>
         );
-    }
 
-    if (currentObjective && !loading) {
-        return (
+    return (
+        <Native.View
+            style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                justifyContent: "center",
+                padding: 20,
+                flex: 1,
+                backgroundColor: "#0E1013",
+                overflow: "visible",
+            }}
+        >
             <Native.View
                 style={{
-                    width: "100%",
-                    height: "100%",
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: "flex-start",
+                    width: "100%",
+                    height: "100%",
+                    alignItems: "center",
                     justifyContent: "center",
-                    padding: 20,
-                    flex: 1,
-                    backgroundColor: "#0E1013",
-                    overflow: "visible",
+                    marginTop: "37.5%",
                 }}
             >
                 <Native.View
                     style={{
                         display: "flex",
-                        flexDirection: "column",
-                        width: "100%",
-                        height: "100%",
+                        flexDirection: "row",
+                        padding: 20,
+                        backgroundColor: "#14171C",
+                        borderRadius: 15,
                         alignItems: "center",
-                        justifyContent: "center",
-                        marginTop: "37.5%",
+                        justifyContent: "flex-start",
+                        width: "100%",
                     }}
                 >
+                    <Ionicons name="play-arrow" size={20} color="#DDDDDD" />
+                    <GapView width={10} />
+                    <BetterText
+                        fontSize={15}
+                        fontWeight="Bold"
+                        textColor="#DDDDDD"
+                    >
+                        IN A SESSION!
+                    </BetterText>
+                </Native.View>
+                <GapView height={20} />
+                <Native.View
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        padding: 20,
+                        backgroundColor: "#14171C",
+                        borderRadius: 15,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "100%",
+                    }}
+                >
+                    <BetterText
+                        fontWeight="Regular"
+                        fontSize={12}
+                        textAlign="center"
+                    >
+                        CURRENT OBJECTIVE
+                    </BetterText>
+                    <GapView height={10} />
+                    <BetterText
+                        fontWeight="Bold"
+                        fontSize={25}
+                        textAlign="center"
+                    >
+                        {currentObjectiveSustantivizedName} for{" "}
+                        {currentObjective.duration} minute
+                        {currentObjective.duration > 1 && "s"}
+                    </BetterText>
+                    <GapView height={10} />
                     <Native.View
                         style={{
                             display: "flex",
                             flexDirection: "row",
-                            padding: 20,
-                            backgroundColor: "#14171C",
-                            borderRadius: 15,
-                            alignItems: "center",
-                            justifyContent: "flex-start",
-                            width: "100%",
-                        }}
-                    >
-                        <Ionicons name="play-arrow" size={20} color="#DDDDDD" />
-                        <GapView width={10} />
-                        <BetterText
-                            fontSize={15}
-                            fontWeight="Bold"
-                            textColor="#DDDDDD"
-                        >
-                            IN A SESSION!
-                        </BetterText>
-                    </Native.View>
-                    <GapView height={20} />
-                    <Native.View
-                        style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            padding: 20,
-                            backgroundColor: "#14171C",
-                            borderRadius: 15,
                             alignItems: "center",
                             justifyContent: "center",
-                            width: "100%",
                         }}
                     >
-                        <BetterText
-                            fontWeight="Regular"
-                            fontSize={12}
-                            textAlign="center"
-                        >
-                            CURRENT OBJECTIVE
+                        <Ionicons name="loop" size={15} color="#FFF" />
+                        <GapView width={5} />
+                        <BetterText fontWeight="Regular" fontSize={15}>
+                            {currentObjective.repetitions === 0
+                                ? "None"
+                                : currentObjective.repetitions === 1
+                                  ? `${currentObjective.repetitions} repetition`
+                                  : `${currentObjective.repetitions} repetitions`}
                         </BetterText>
-                        <GapView height={10} />
-                        <BetterText
-                            fontWeight="Bold"
-                            fontSize={25}
-                            textAlign="center"
-                        >
-                            {currentObjectiveSustantivizedName} for{" "}
-                            {currentObjective.duration} minute
-                            {currentObjective.duration > 1 && "s"}
+                        <GapView width={15} />
+                        <Ionicons name="snooze" size={15} color="#FFF" />
+                        <GapView width={5} />
+                        <BetterText fontWeight="Regular" fontSize={15}>
+                            {currentObjective.rests === 0
+                                ? "None"
+                                : currentObjective.rests === 1
+                                  ? `${currentObjective.rests} rest of ${currentObjective.restDuration} mins`
+                                  : `${currentObjective.rests} rests (${currentObjective.restDuration} mins)`}
                         </BetterText>
-                        <GapView height={10} />
-                        <Native.View
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                        >
-                            <Ionicons name="loop" size={15} color="#FFF" />
-                            <GapView width={5} />
-                            <BetterText fontWeight="Regular" fontSize={15}>
-                                {currentObjective.repetitions === 0
-                                    ? "None"
-                                    : currentObjective.repetitions === 1
-                                      ? `${currentObjective.repetitions} repetition`
-                                      : `${currentObjective.repetitions} repetitions`}
-                            </BetterText>
-                            <GapView width={15} />
-                            <Ionicons name="snooze" size={15} color="#FFF" />
-                            <GapView width={5} />
-                            <BetterText fontWeight="Regular" fontSize={15}>
-                                {currentObjective.rests === 0
-                                    ? "None"
-                                    : currentObjective.rests === 1
-                                      ? `${currentObjective.rests} rest of ${currentObjective.restDuration} mins`
-                                      : `${currentObjective.rests} rests (${currentObjective.restDuration} mins)`}
-                            </BetterText>
-                        </Native.View>
-                        <Native.View
-                            style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                        >
-                            {currentObjective.exercise.toLowerCase() ===
-                                "lifting" && (
-                                <Native.View
-                                    style={{
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        marginTop: 10,
-                                    }}
-                                >
-                                    <Ionicons
-                                        name="keyboard-double-arrow-down"
-                                        size={15}
-                                        color="#FFF"
-                                    />
-                                    <GapView width={5} />
-                                    <BetterText
-                                        fontWeight="Regular"
-                                        textColor="#FFF"
-                                        fontSize={15}
-                                    >
-                                        {currentObjective?.extra?.barWeight !==
-                                            undefined &&
-                                        currentObjective?.extra?.liftWeight !==
-                                            undefined &&
-                                        currentObjective.extra.hands !==
-                                            undefined
-                                            ? String(
-                                                  currentObjective.extra
-                                                      .barWeight +
-                                                      currentObjective.extra
-                                                          .liftWeight *
-                                                          currentObjective.extra
-                                                              .hands
-                                              )
-                                            : "N/A"}{" "}
-                                        kg
-                                    </BetterText>
-                                    <GapView width={10} />
-                                    <Ionicons
-                                        name="change-circle"
-                                        size={15}
-                                        color="#FFF"
-                                    />
-                                    <GapView width={5} />
-                                    <BetterText
-                                        fontWeight="Regular"
-                                        textColor="#FFF"
-                                        fontSize={15}
-                                    >
-                                        {currentObjective?.extra?.lifts !==
-                                        undefined
-                                            ? String(
-                                                  currentObjective.extra.lifts
-                                              )
-                                            : "N/A"}{" "}
-                                        lifts
-                                    </BetterText>
-                                    <GapView width={10} />
-                                    <Ionicons
-                                        name="front-hand"
-                                        size={15}
-                                        color="#FFF"
-                                    />
-                                    <GapView width={5} />
-                                    <BetterText
-                                        fontWeight="Regular"
-                                        textColor="#FFF"
-                                        fontSize={15}
-                                    >
-                                        {currentObjective?.extra?.hands !==
-                                        undefined
-                                            ? String(
-                                                  currentObjective.extra.hands
-                                              )
-                                            : "N/A"}{" "}
-                                        hand
-                                    </BetterText>
-                                </Native.View>
-                            )}
-                            {currentObjective.exercise.toLowerCase() ===
-                                "running" && (
-                                <Native.View
-                                    style={{
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        marginTop: 10,
-                                    }}
-                                >
-                                    <Ionicons
-                                        name="speed"
-                                        size={15}
-                                        color="#FFF"
-                                    />
-                                    <GapView width={5} />
-                                    <BetterText
-                                        fontWeight="Regular"
-                                        textColor="#FFF"
-                                        fontSize={15}
-                                    >
-                                        {currentObjective.extra.speed !==
-                                            undefined &&
-                                        currentObjective.extra.speed >= 0 &&
-                                        currentObjective.extra.speed <
-                                            speedOptions.length
-                                            ? String(
-                                                  speedOptions[
-                                                      currentObjective.extra
-                                                          .speed
-                                                  ][1]
-                                              )
-                                            : "N/A"}
-                                    </BetterText>
-                                </Native.View>
-                            )}
-                            {currentObjective.exercise.toLowerCase() ===
-                                "push up" && (
-                                <Native.View
-                                    style={{
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        marginTop: 10,
-                                    }}
-                                >
-                                    <Ionicons
-                                        name="repeat"
-                                        size={15}
-                                        color="#FFF"
-                                    />
-                                    <GapView width={5} />
-                                    <BetterText
-                                        fontWeight="Regular"
-                                        textColor="#FFF"
-                                        fontSize={15}
-                                    >
-                                        {currentObjective?.extra?.amount !==
-                                        undefined
-                                            ? String(
-                                                  currentObjective.extra.amount
-                                              )
-                                            : "N/A"}{" "}
-                                        push-ups
-                                    </BetterText>
-                                    <GapView width={10} />
-                                    <Ionicons
-                                        name="front-hand"
-                                        size={15}
-                                        color="#FFF"
-                                    />
-                                    <GapView width={5} />
-                                    <BetterText
-                                        fontWeight="Regular"
-                                        textColor="#FFF"
-                                        fontSize={15}
-                                    >
-                                        {currentObjective?.extra?.hands !==
-                                        undefined
-                                            ? String(
-                                                  currentObjective.extra.hands
-                                              )
-                                            : "N/A"}{" "}
-                                        hand
-                                    </BetterText>
-                                </Native.View>
-                            )}
-                        </Native.View>
                     </Native.View>
-                    <GapView height={20} />
-                    <CountdownCircleTimer
-                        duration={currentObjective?.duration * 60}
-                        size={160}
-                        isPlaying={isTimerRunning}
-                        colors={[
-                            timerColor === "#32FF80" ? "#32FF80" : "#FFC832",
-                            timerColor === "#32FF80" ? "#32FF80" : "#FFC832",
-                        ]}
-                        colorsTime={[15, 5]}
-                        isSmoothColorTransition={false}
-                        onComplete={doFinish}
-                        isGrowing={true}
-                        trailColor="#202328"
-                        strokeLinecap="round"
-                        trailStrokeWidth={10}
-                        strokeWidth={15}
+                    <Native.View
+                        style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
                     >
-                        {({ remainingTime }) => (
-                            <BetterText
-                                fontSize={30}
-                                fontWeight="Bold"
-                                textAlign="center"
-                                textColor={timerColor}
+                        {currentObjective.exercise.toLowerCase() ===
+                            "lifting" && (
+                            <Native.View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    marginTop: 10,
+                                }}
                             >
-                                {remainingTime}
-                            </BetterText>
+                                <Ionicons
+                                    name="keyboard-double-arrow-down"
+                                    size={15}
+                                    color="#FFF"
+                                />
+                                <GapView width={5} />
+                                <BetterText
+                                    fontWeight="Regular"
+                                    textColor="#FFF"
+                                    fontSize={15}
+                                >
+                                    {currentObjective?.extra?.barWeight !==
+                                        undefined &&
+                                    currentObjective?.extra?.liftWeight !==
+                                        undefined &&
+                                    currentObjective.extra.hands !== undefined
+                                        ? String(
+                                              currentObjective.extra.barWeight +
+                                                  currentObjective.extra
+                                                      .liftWeight *
+                                                      currentObjective.extra
+                                                          .hands
+                                          )
+                                        : "N/A"}{" "}
+                                    kg
+                                </BetterText>
+                                <GapView width={10} />
+                                <Ionicons
+                                    name="change-circle"
+                                    size={15}
+                                    color="#FFF"
+                                />
+                                <GapView width={5} />
+                                <BetterText
+                                    fontWeight="Regular"
+                                    textColor="#FFF"
+                                    fontSize={15}
+                                >
+                                    {currentObjective?.extra?.lifts !==
+                                    undefined
+                                        ? String(currentObjective.extra.lifts)
+                                        : "N/A"}{" "}
+                                    lifts
+                                </BetterText>
+                                <GapView width={10} />
+                                <Ionicons
+                                    name="front-hand"
+                                    size={15}
+                                    color="#FFF"
+                                />
+                                <GapView width={5} />
+                                <BetterText
+                                    fontWeight="Regular"
+                                    textColor="#FFF"
+                                    fontSize={15}
+                                >
+                                    {currentObjective?.extra?.hands !==
+                                    undefined
+                                        ? String(currentObjective.extra.hands)
+                                        : "N/A"}{" "}
+                                    hand
+                                </BetterText>
+                            </Native.View>
                         )}
-                    </CountdownCircleTimer>
-                    <GapView height={20} />
-                    <Native.View
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            padding: 20,
-                            backgroundColor: "#14171C",
-                            borderRadius: 15,
-                            alignItems: "center",
-                            justifyContent: "center",
-                            width: "100%",
-                        }}
-                    >
-                        <Button
-                            style={isTimerRunning ? "ACE" : "HMM"}
-                            action={() => setTimerStatus(prev => !prev)}
-                            layout="box"
-                        >
-                            <Ionicons
-                                name={isTimerRunning ? "pause" : "play-arrow"}
-                                size={16}
-                                color={isTimerRunning ? "#FFF" : "#000"}
-                            />
-                        </Button>
-                        <GapView width={10} />
-                        <Button style="GOD" action={finish} layout="box">
-                            <Ionicons name="check" size={16} color="#000" />
-                        </Button>
-                        <GapView width={10} />
-                        <Button
-                            style="HMM"
-                            buttonText="Help?"
-                            action={() => toggleHelpMenu()}
-                            layout="normal"
-                            height="default"
-                            width="fill"
-                        />
-                        <GapView width={10} />
-                        <Button
-                            style="WOR"
-                            buttonText="Give up"
-                            action={cancel}
-                            layout="normal"
-                            height="default"
-                            width="fill"
-                        />
+                        {currentObjective.exercise.toLowerCase() ===
+                            "running" && (
+                            <Native.View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    marginTop: 10,
+                                }}
+                            >
+                                <Ionicons name="speed" size={15} color="#FFF" />
+                                <GapView width={5} />
+                                <BetterText
+                                    fontWeight="Regular"
+                                    textColor="#FFF"
+                                    fontSize={15}
+                                >
+                                    {currentObjective.extra.speed !==
+                                        undefined &&
+                                    currentObjective.extra.speed >= 0 &&
+                                    currentObjective.extra.speed <
+                                        speedOptions.length
+                                        ? String(
+                                              speedOptions[
+                                                  currentObjective.extra.speed
+                                              ][1]
+                                          )
+                                        : "N/A"}
+                                </BetterText>
+                            </Native.View>
+                        )}
+                        {currentObjective.exercise.toLowerCase() ===
+                            "push up" && (
+                            <Native.View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    marginTop: 10,
+                                }}
+                            >
+                                <Ionicons
+                                    name="repeat"
+                                    size={15}
+                                    color="#FFF"
+                                />
+                                <GapView width={5} />
+                                <BetterText
+                                    fontWeight="Regular"
+                                    textColor="#FFF"
+                                    fontSize={15}
+                                >
+                                    {currentObjective?.extra?.amount !==
+                                    undefined
+                                        ? String(currentObjective.extra.amount)
+                                        : "N/A"}{" "}
+                                    push-ups
+                                </BetterText>
+                                <GapView width={10} />
+                                <Ionicons
+                                    name="front-hand"
+                                    size={15}
+                                    color="#FFF"
+                                />
+                                <GapView width={5} />
+                                <BetterText
+                                    fontWeight="Regular"
+                                    textColor="#FFF"
+                                    fontSize={15}
+                                >
+                                    {currentObjective?.extra?.hands !==
+                                    undefined
+                                        ? String(currentObjective.extra.hands)
+                                        : "N/A"}{" "}
+                                    hand
+                                </BetterText>
+                            </Native.View>
+                        )}
                     </Native.View>
                 </Native.View>
-                {isUserCheckingHelp && (
-                    <Native.View style={styles.helpcontainer}>
-                        <BetterText fontSize={18} fontWeight="Regular">
-                            Help with {currentObjectiveSustantivizedName}
-                        </BetterText>
-                        <BetterText fontSize={14} fontWeight="Light">
-                            {helpText}
-                        </BetterText>
-                        <GapView height={10} />
-                        <Button
-                            layout="fixed"
-                            height="default"
-                            style="ACE"
-                            buttonText="Got it"
-                            action={toggleHelpMenu}
-                        />
-                        <GapView height={10} />
+                <GapView height={20} />
+                <CountdownCircleTimer
+                    duration={currentObjective.duration * 60}
+                    size={160}
+                    isPlaying={isTimerRunning}
+                    colors={[
+                        timerColor === "#32FF80" ? "#32FF80" : "#FFC832",
+                        timerColor === "#32FF80" ? "#32FF80" : "#FFC832",
+                    ]}
+                    colorsTime={[15, 5]}
+                    isSmoothColorTransition={false}
+                    onComplete={doFinish}
+                    isGrowing={true}
+                    trailColor="#202328"
+                    strokeLinecap="round"
+                    trailStrokeWidth={10}
+                    strokeWidth={15}
+                >
+                    {({ remainingTime }) => (
                         <BetterText
-                            fontSize={10}
-                            fontWeight="Light"
-                            textColor="#C8C8C8"
+                            fontSize={30}
+                            fontWeight="Bold"
                             textAlign="center"
+                            textColor={timerColor}
                         >
-                            Psst... Don&apos;t worry, the timer has been paused
-                            so you can read!
+                            {remainingTime}
                         </BetterText>
-                    </Native.View>
-                )}
+                    )}
+                </CountdownCircleTimer>
+                <GapView height={20} />
+                <Native.View
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        padding: 20,
+                        backgroundColor: "#14171C",
+                        borderRadius: 15,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        width: "100%",
+                    }}
+                >
+                    <Button
+                        style={isTimerRunning ? "ACE" : "HMM"}
+                        action={() => setTimerStatus(prev => !prev)}
+                        layout="box"
+                    >
+                        <Ionicons
+                            name={isTimerRunning ? "pause" : "play-arrow"}
+                            size={16}
+                            color={isTimerRunning ? "#FFF" : "#000"}
+                        />
+                    </Button>
+                    <GapView width={10} />
+                    <Button style="GOD" action={finish} layout="box">
+                        <Ionicons name="check" size={16} color="#000" />
+                    </Button>
+                    <GapView width={10} />
+                    <Button
+                        style="HMM"
+                        buttonText="Help?"
+                        action={() => toggleHelpMenu()}
+                        layout="normal"
+                        height="default"
+                        width="fill"
+                    />
+                    <GapView width={10} />
+                    <Button
+                        style="WOR"
+                        buttonText="Give up"
+                        action={cancel}
+                        layout="normal"
+                        height="default"
+                        width="fill"
+                    />
+                </Native.View>
             </Native.View>
-        );
-    }
+            {isUserCheckingHelp && (
+                <Native.View style={styles.helpcontainer}>
+                    <BetterText fontSize={18} fontWeight="Regular">
+                        Help with {currentObjectiveSustantivizedName}
+                    </BetterText>
+                    <BetterText fontSize={14} fontWeight="Light">
+                        {helpText}
+                    </BetterText>
+                    <GapView height={10} />
+                    <Button
+                        layout="fixed"
+                        height="default"
+                        style="ACE"
+                        buttonText="Got it"
+                        action={toggleHelpMenu}
+                    />
+                    <GapView height={10} />
+                    <BetterText
+                        fontSize={10}
+                        fontWeight="Light"
+                        textColor="#C8C8C8"
+                        textAlign="center"
+                    >
+                        Psst... Don&apos;t worry, the timer has been paused so
+                        you can read!
+                    </BetterText>
+                </Native.View>
+            )}
+        </Native.View>
+    );
 }
