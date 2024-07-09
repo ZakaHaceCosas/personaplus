@@ -17,7 +17,8 @@ const styles = Native.StyleSheet.create({
         width: "100vw" as Native.DimensionValue,
         height: "100vh" as Native.DimensionValue,
         overflow: "scroll",
-        backgroundColor: "#FFF", // i dont know why, but i feel a credits section in an app should have its background white
+        // backgroundColor: "#FFF",
+        // i dont know why, but i feel a credits section in an app should have its background white (edit: nevermind)
     },
 });
 
@@ -28,29 +29,24 @@ export default function License() {
                 <BetterText
                     fontSize={20}
                     fontWeight="Light"
-                    textColor="#000"
                     onTap={() => Router.router.navigate("/About")}
                 >
                     {"<"} Go back
                 </BetterText>
                 <GapView height={20} />
-                <BetterText
-                    fontSize={30}
-                    textColor="#000"
-                    fontWeight="SemiBold"
-                >
+                <BetterText fontSize={30} fontWeight="SemiBold">
                     PersonaPlus is licensed under the General Public License 3.0
                 </BetterText>
                 <GapView height={10} />
-                <BetterText fontSize={10} textColor="#000" fontWeight="Italic">
+                <BetterText fontSize={10} fontWeight="Italic">
                     SPDX: GPL-3.0-only
                 </BetterText>
                 <GapView height={10} />
-                <BetterText fontSize={15} textColor="#000" fontWeight="Regular">
+                <BetterText fontSize={15} fontWeight="Regular">
                     Copyright (C) 2024 ZakaHaceCosas
                 </BetterText>
                 <GapView height={20} />
-                <BetterText fontSize={20} textColor="#000" fontWeight="Regular">
+                <BetterText fontSize={20} fontWeight="Regular">
                     This program is free software: you can redistribute it
                     and/or modify it under the terms of the GNU General Public
                     License as published by the Free Software Foundation, either
@@ -78,7 +74,7 @@ export default function License() {
                     .
                 </BetterText>
                 <GapView height={20} />
-                <BetterText fontSize={15} textColor="#000" fontWeight="Light">
+                <BetterText fontSize={15} fontWeight="Light">
                     Below is the legal text
                 </BetterText>
                 <GapView height={20} />
@@ -86,7 +82,6 @@ export default function License() {
                     // yes, i spent my time manually formatting the entire GPL 3
                     fontWeight="Bold"
                     isSerif={true}
-                    textColor="#000"
                     textAlign="center"
                     fontSize={17}
                 >
@@ -94,7 +89,6 @@ export default function License() {
                     <BetterText
                         fontWeight="Medium"
                         isSerif={true}
-                        textColor="#000"
                         textAlign="center"
                         fontSize={14}
                     >
@@ -102,7 +96,6 @@ export default function License() {
                     </BetterText>
                 </BetterText>
                 <BetterText
-                    textColor="#000"
                     fontWeight="Regular"
                     fontSize={13}
                     textAlign="normal"
@@ -115,7 +108,6 @@ export default function License() {
                 </BetterText>
                 <GapView height={20} />
                 <BetterText
-                    textColor="#000"
                     fontWeight="Bold"
                     fontSize={13}
                     textAlign="normal"
@@ -124,7 +116,6 @@ export default function License() {
                     Preamble
                 </BetterText>
                 <BetterText
-                    textColor="#000"
                     fontWeight="Regular"
                     fontSize={13}
                     textAlign="normal"
@@ -203,7 +194,6 @@ export default function License() {
                 </BetterText>
                 <GapView height={20} />
                 <BetterText
-                    textColor="#000"
                     fontWeight="Bold"
                     fontSize={13}
                     textAlign="normal"
@@ -213,7 +203,6 @@ export default function License() {
                 </BetterText>
                 <GapView height={20} />
                 <BetterText
-                    textColor="#000"
                     fontWeight="Bold"
                     fontSize={13}
                     textAlign="normal"
@@ -224,7 +213,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -277,7 +265,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -286,7 +273,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -339,7 +325,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -348,7 +333,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -383,7 +367,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -393,7 +376,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -416,7 +398,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -425,7 +406,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -446,7 +426,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -455,7 +434,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -501,7 +479,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -510,7 +487,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -626,7 +602,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -635,7 +610,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -715,7 +689,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -724,7 +697,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -761,7 +733,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -770,7 +741,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -789,7 +759,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -798,7 +767,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -833,7 +801,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -842,7 +809,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -930,7 +896,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -939,7 +904,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -959,7 +923,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -968,7 +931,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -986,7 +948,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -995,7 +956,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -1030,7 +990,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -1039,7 +998,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -1058,7 +1016,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -1067,7 +1024,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >
@@ -1087,7 +1043,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Bold"
                     isSerif={true}
                 >
@@ -1096,7 +1051,6 @@ export default function License() {
                 <BetterText
                     textAlign="normal"
                     fontSize={13}
-                    textColor="#000"
                     fontWeight="Regular"
                     isSerif={true}
                 >

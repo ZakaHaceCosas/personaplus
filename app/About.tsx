@@ -72,7 +72,7 @@ export default function Home() {
                             fontSize={18}
                             textColor="#0E1013"
                         >
-                            ALPHA
+                            PRE-APP
                         </BetterText>
                     </Native.View>
                 </Native.View>
@@ -111,24 +111,38 @@ export default function Home() {
                     />
                     <GapView width={10} />
                     <Button
-                        buttonText="OSS used"
-                        style="ACE"
+                        buttonText="Credits"
+                        style="GOD"
                         action={() =>
                             Router.router.navigate("/OpenSourceCredits")
                         }
                     />
                 </Native.View>
                 <GapView height={10} />
-                <Button
-                    buttonText="Privacy policy (external link)"
-                    style="ACE"
-                    action={() =>
-                        Native.Linking.openURL(
-                            "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md"
-                        )
-                    }
-                />
-                <GapView height={20} />
+                <Native.View
+                    style={{ flex: 1, display: "flex", flexDirection: "row" }}
+                >
+                    <Button
+                        buttonText="Privacy policy"
+                        style="ACE"
+                        action={() =>
+                            Native.Linking.openURL(
+                                "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md"
+                            )
+                        }
+                    />
+                    <GapView width={10} />
+                    <Button
+                        buttonText="Open Source"
+                        style="ACE"
+                        action={() =>
+                            Native.Linking.openURL(
+                                "https://github.com/ZakaHaceCosas/personaplus"
+                            )
+                        }
+                    />
+                </Native.View>
+                <GapView height={15} />
                 <BetterText
                     textAlign="center"
                     fontWeight="Bold"
@@ -136,6 +150,17 @@ export default function Home() {
                     textColor="#32FF80"
                 >
                     Give yourself a plus!
+                </BetterText>
+                <GapView height={5} />
+                <BetterText
+                    textAlign="center"
+                    fontWeight="Italic"
+                    fontSize={12}
+                >
+                    Psst... You&apos;re currently in the &quot;pre-app&quot;
+                    stage - the earliest early versions of the app! Thanks for
+                    being part of the testing version, it means a lot.
+                    Don&apos;t forget to report any issues you find!
                 </BetterText>
             </Native.ScrollView>
         </Native.View>
