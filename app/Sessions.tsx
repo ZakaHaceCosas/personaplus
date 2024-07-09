@@ -53,7 +53,7 @@ const styles = Native.StyleSheet.create({
 });
 
 export default function Sessions() {
-    const [loading, setLoading] = React.useState<boolean>(true);
+    // const [loading, setLoading] = React.useState<boolean>(true);
     const { id } = Router.useGlobalSearchParams() as { id: string };
     const [objectives, setObjectives] = React.useState<{
         [key: string]: Objective;
@@ -79,14 +79,17 @@ export default function Sessions() {
                             return acc;
                         }, {})
                     );
-                    setLoading(false);
+                    // setLoading(false);
                 } else {
-                    termLog("Fetch error! Data not found.", "error");
+                    termLog(
+                        "LOG 1 (:84) - Fetch error! Data not found.",
+                        "error"
+                    );
                     setObjectives(null);
-                    setLoading(false);
+                    // setLoading(false);
                 }
             } catch (e) {
-                termLog("Fetch error! " + e, "error");
+                termLog("LOG 2 (:89) - Fetch error! " + e, "error");
             }
         };
 
@@ -94,23 +97,27 @@ export default function Sessions() {
     }, []);
 
     React.useEffect(() => {
-        termLog("Objectives: " + objectives, "log");
-        termLog("Objectives state: " + JSON.stringify(objectives), "log");
-        termLog("Current ID: " + id, "log");
+        termLog("LOG 3 (:97) - Objectives: " + objectives, "log");
+        termLog(
+            "LOG 4 (:98) - Objectives state: " + JSON.stringify(objectives),
+            "log"
+        );
+        termLog("LOG 5 (:99) - Current ID: " + id, "log");
     }, [objectives, id]);
 
     const currentObjective = objectives ? objectives[id] : null;
 
     React.useEffect(() => {
         termLog(
-            "Current Objective: " + JSON.stringify(currentObjective),
+            "LOG 6 (:106) - Current Objective: " +
+                JSON.stringify(currentObjective),
             "log"
         );
     }, [currentObjective]);
 
-    React.useEffect(() => {
+    /* React.useEffect(() => {
         setLoading(false); // sets as loaded
-    }, [currentObjective]);
+    }, [currentObjective]); */
 
     let currentObjectiveSustantivizedName: string = "Doing something"; // Default value
 
@@ -200,19 +207,34 @@ export default function Sessions() {
 
                 if (storedObjs) {
                     try {
-                        const parsedObjs: Objective[] = JSON.parse(storedObjs);
-                        const updatedObjs = parsedObjs.map((obj: Objective) => {
-                            if (obj.id === id) {
-                                return { ...obj, wasDone: true };
-                            }
-                            return obj;
-                        });
+                        console.log(
+                            "storedObjs BEFORE 2ND JSON.PARSE",
+                            storedObjs
+                        );
+                        const parsedObjs: { [key: string]: Objective } =
+                            JSON.parse(storedObjs);
+                        console.log(
+                            "parsedObjs BEFORE 2ND JSON.PARSE",
+                            parsedObjs
+                        );
+                        const updatedObjs = { ...parsedObjs };
+                        console.log(
+                            "updatedObjs BEFORE 2ND JSON.PARSE",
+                            updatedObjs
+                        );
+
+                        if (updatedObjs[id.toString()]) {
+                            updatedObjs[id.toString()] = {
+                                ...updatedObjs[id.toString()],
+                                wasDone: true,
+                            };
+                        }
                         await AsyncStorage.setItem(
                             "objs",
                             JSON.stringify(updatedObjs)
                         );
                         termLog(
-                            "Objectives (OBJS) updated and saved successfully!",
+                            "LOG 7 (:215) - Objectives (OBJS) updated and saved successfully!",
                             "success"
                         );
                         Router.router.navigate("/");
@@ -224,15 +246,22 @@ export default function Sessions() {
                         }
                     } catch (e) {
                         termLog(
-                            "Error parsing objectives (OBJS) for update: " + e,
+                            "LOG 8 (:227) - Error parsing objectives (OBJS) for update: " +
+                                e,
                             "error"
                         );
                     }
                 } else {
-                    termLog("No objectives (OBJS) found!", "error");
+                    termLog(
+                        "LOG 9 (:232) - No objectives (OBJS) found!",
+                        "error"
+                    );
                 }
             } catch (e) {
-                termLog("Error updating objectives (OBJS): " + e, "error");
+                termLog(
+                    "LOG 10 (:256) - Error updating objectives (OBJS): " + e,
+                    "error"
+                );
             }
         };
 
@@ -295,6 +324,7 @@ export default function Sessions() {
         ["Maximum Speed", "more than 16.1 km/h"],
     ];
 
+    /*
     if (loading) {
         return (
             <Native.View
@@ -320,6 +350,7 @@ export default function Sessions() {
             </Native.View>
         );
     }
+    */
 
     if (!currentObjective)
         return (
