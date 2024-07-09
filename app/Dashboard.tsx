@@ -16,13 +16,22 @@ import { termLog } from "./DeveloperInterface";
 
 // TypeScript, supongo
 interface Objective {
-    exercise: string;
     days: boolean[];
     duration: number;
-    repetitions: number;
-    rests: number;
-    restDuration: number;
+    exercise: string;
+    extra: {
+        amount: number;
+        barWeight: number;
+        hands: number;
+        liftWeight: number;
+        lifts: number;
+        speed: number;
+        time: number;
+    };
     id: number;
+    repetitions: number;
+    restDuration: number;
+    rests: number;
     wasDone: boolean;
 }
 
@@ -44,20 +53,22 @@ const styles = Native.StyleSheet.create({
 
 // Creamos la función
 export default function Dashboard() {
-    const [objs, setObjs] = React.useState<{ [key: string]: Objective } | null>(
-        null
-    );
+    const [loading, setLoading] = React.useState(true);
+    const [objectives, setObjectives] = React.useState<{
+        [key: string]: Objective;
+    } | null>(null);
 
     React.useEffect(() => {
         const fetchObjectives = async () => {
             try {
-                const storedObjs = await AsyncStorage.getItem("objs");
-                if (storedObjs) {
-                    setObjs(JSON.parse(storedObjs));
+                const storedObjectives = await AsyncStorage.getItem("objs");
+                if (storedObjectives) {
+                    setObjectives(JSON.parse(storedObjectives));
                     termLog("Objectives (OBJS) fetched and parsed!", "success");
+                    setLoading(false);
                 } else {
                     await AsyncStorage.setItem("objs", JSON.stringify({}));
-                    setObjs({});
+                    setObjectives({});
                     termLog(
                         "Could not get objectives (OBJS) fetched! Setting them to an empty array ( {} )",
                         "warn"
@@ -68,45 +79,80 @@ export default function Dashboard() {
                     "Could not get objectives (OBJS) fetched due to error: " +
                     e;
                 termLog(log, "error");
+                if (Native.Platform.OS === "android") {
+                    Native.ToastAndroid.show(
+                        `Got a React error loading your objectives - ${e}`,
+                        Native.ToastAndroid.LONG
+                    );
+                }
             }
         };
 
         fetchObjectives();
     }, []);
 
-    const createObjective = (): void => {
-        Router.router.navigate("/CreateObjective");
-    };
-
-    //const editObjective = (id: number): void => {console.log(id);};
-
     const deleteObjective = async (id: number): Promise<void> => {
         try {
-            const jsonValue = await AsyncStorage.getItem("objs");
-            if (jsonValue != null) {
-                let objs: Objective[] = JSON.parse(jsonValue);
+            if (objectives !== null) {
+                const updatedObjectives: { [key: string]: Objective } = {};
+                Object.keys(objectives).forEach(key => {
+                    const obj = objectives[key];
+                    if (obj.id !== id) {
+                        updatedObjectives[key] = obj;
+                    }
+                });
+                await AsyncStorage.setItem(
+                    "objs",
+                    JSON.stringify(updatedObjectives)
+                );
 
-                objs = objs.filter(entry => entry.id !== id);
-
-                await AsyncStorage.setItem("objs", JSON.stringify(objs));
                 if (Native.Platform.OS === "android") {
                     Native.ToastAndroid.show(
-                        "Deleted objective " + id + " successfully!",
+                        `Deleted objective ${id} successfully!`,
                         Native.ToastAndroid.SHORT
                     );
                 }
+                setObjectives(updatedObjectives);
                 Router.router.replace("/Dashboard");
             } else {
-                const log: string = `No OBJS found - no way to delete.`;
-                termLog(log, "warn");
+                termLog(
+                    "No objectives (OBJS) found - no way to delete.",
+                    "warn"
+                );
             }
         } catch (e) {
-            const log: string = `Error removing OBJ, got the following: ${e}`;
+            const log = `Error removing objective, got the following: ${e}`;
             termLog(log, "error");
+            if (Native.Platform.OS === "android") {
+                Native.ToastAndroid.show(
+                    `Got a React error deleting objective ${id} - ${e}`,
+                    Native.ToastAndroid.LONG
+                );
+            }
         }
     };
 
     const currentpage: string = Router.usePathname();
+
+    if (loading) {
+        return (
+            <Native.View style={styles.containerview}>
+                <BottomNav currentLocation={currentpage} />
+                <Native.ScrollView>
+                    <Native.View style={styles.mainview}>
+                        <BetterText
+                            fontWeight="Regular"
+                            fontSize={15}
+                            textAlign="center"
+                            textColor="#C8C8C8"
+                        >
+                            Loading...
+                        </BetterText>
+                    </Native.View>
+                </Native.ScrollView>
+            </Native.View>
+        );
+    }
 
     return (
         <Native.View style={styles.containerview}>
@@ -124,10 +170,10 @@ export default function Dashboard() {
                 </BetterText>
                 <GapView height={20} />
                 <Section kind="Objectives">
-                    {objs && Object.keys(objs).length > 0 ? (
-                        Object.keys(objs).map(key => {
-                            const obj = objs[key];
-                            if (!obj) {
+                    {objectives && Object.keys(objectives).length > 0 ? (
+                        Object.keys(objectives).map(key => {
+                            const objective = objectives[key];
+                            if (!objective) {
                                 const log = `Data is undefined for objective with key: ${key}`;
                                 termLog(log, "warn");
                                 return null;
@@ -135,38 +181,38 @@ export default function Dashboard() {
 
                             let descriptionDraft: string =
                                 "Duration: " +
-                                String(obj.duration) +
+                                String(objective.duration) +
                                 " minutes. " +
-                                String(obj.rests) +
+                                String(objective.rests) +
                                 " rests and " +
-                                String(obj.repetitions) +
+                                String(objective.repetitions) +
                                 " repetitions.";
-                            if (obj?.rests > 0) {
+                            if (objective?.rests > 0) {
                                 descriptionDraft =
                                     descriptionDraft +
                                     " Rest duration: " +
-                                    String(obj.restDuration) +
+                                    String(objective.restDuration) +
                                     " minutes.";
                             }
 
                             const description: string =
                                 descriptionDraft +
                                 "\nID (just for the app): " +
-                                String(obj.id) +
+                                String(objective.id) +
                                 ".";
 
                             return (
-                                <Native.View key={obj.id}>
+                                <Native.View key={objective.id}>
                                     <Division
                                         status="REGULAR"
                                         preheader="ACTIVE OBJECTIVE"
-                                        header={obj.exercise}
+                                        header={objective.exercise}
                                         subheader={description}
                                     >
                                         <Button
                                             style="WOR"
                                             action={() =>
-                                                deleteObjective(obj.id)
+                                                deleteObjective(objective.id)
                                             }
                                             buttonText="Remove"
                                         />
@@ -199,11 +245,13 @@ export default function Dashboard() {
                                 width="fill"
                                 style="ACE"
                                 buttonText="Let's go!"
-                                action={createObjective}
+                                action={() =>
+                                    Router.router.navigate("/CreateObjective")
+                                }
                             />
                         </Native.View>
                     )}
-                    {objs && Object.keys(objs).length > 0 && (
+                    {objectives && Object.keys(objectives).length > 0 && (
                         <Native.View
                             style={{
                                 padding: 20,
@@ -213,7 +261,9 @@ export default function Dashboard() {
                                 width="fill"
                                 style="GOD"
                                 buttonText="Create active objective"
-                                action={createObjective}
+                                action={() =>
+                                    Router.router.navigate("/CreateObjective")
+                                }
                             />
                         </Native.View>
                     )}

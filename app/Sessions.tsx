@@ -35,26 +35,53 @@ interface Objective {
     extra: Extra;
 }
 
+// Estilos
+const styles = Native.StyleSheet.create({
+    helpcontainer: {
+        backgroundColor: "#14171C",
+        position: "absolute",
+        top: "20%",
+        left: 10,
+        right: 10,
+        bottom: 20,
+        overflow: "visible",
+        padding: 20,
+        borderRadius: 20,
+        shadowOpacity: 1,
+        shadowColor: "#000",
+        shadowOffset: { width: 15, height: 5 },
+        shadowRadius: 10,
+        elevation: 16,
+        borderColor: "#26282b",
+        borderWidth: 4,
+        zIndex: 999,
+    },
+});
+
 export default function Sessions() {
-    const params = Router.useGlobalSearchParams();
-    const { id } = params as { id: string };
-    const [objs, setObjs] = React.useState<Objective[] | null>(null);
+    // Loading state
+    const [loading, setLoading] = React.useState<boolean>(true);
+
+    const { id } = Router.useGlobalSearchParams() as { id: string };
+    const [objectives, setObjectives] = React.useState<Objective[] | null>(
+        null
+    );
 
     React.useEffect(() => {
         const fetchObjectives = async () => {
             try {
-                const storedObjs = await AsyncStorage.getItem("objs");
-                if (storedObjs) {
-                    const parsedObjs: Objective[] = JSON.parse(storedObjs);
-                    setObjs(parsedObjs);
+                const storedObjectives = await AsyncStorage.getItem("objs");
+                if (storedObjectives) {
+                    const parsedObjectives: Objective[] =
+                        JSON.parse(storedObjectives);
+                    setObjectives(parsedObjectives);
                     termLog("Objectives (OBJS) fetched", "success");
                 } else {
-                    await AsyncStorage.setItem("objs", JSON.stringify([]));
                     termLog(
                         "Could not get Objectives (OBJS) fetched. Setting them to an empty object.",
                         "error"
                     );
-                    setObjs([]);
+                    setLoading(false);
                 }
             } catch (e) {
                 const log =
@@ -62,45 +89,44 @@ export default function Sessions() {
                     e +
                     ". Setting them to an empty object.";
                 termLog(log, "warn");
-                setObjs([]);
+                setLoading(false);
             }
         };
 
         fetchObjectives();
     }, []);
 
-    const selectedObj = objs
-        ? objs.find(obj => obj.id.toString() === id)
-        : null;
+    const currentObjective =
+        objectives?.find(obj => obj.id.toString() === id.toString()) ?? null;
 
-    const idsString = objs
-        ? objs
-              .filter(item => typeof item.id === "number") // buscar ids
-              .map(item => item.id.toString()) // array-ing ids
-              .join(", ") // unir ids
-        : "no ids found (developers: see Sessions.tsx:63-68 (or close to that point))";
+    React.useEffect(() => {
+        if (currentObjective !== null) {
+            setLoading(false); // sets as loaded => renders objective
+        } else {
+            setLoading(false); // sets as loaded => renders error page
+        }
+    }, [currentObjective]);
 
-    let selectedObjSustantivizedName: string = "Unknown";
+    let currentObjectiveSustantivizedName: string = "Doing something"; // Valor por defecto
 
-    if (selectedObj) {
-        switch (selectedObj.exercise) {
+    if (currentObjective) {
+        switch (currentObjective.exercise) {
             case "Meditation":
-                selectedObjSustantivizedName = "Meditating";
+                currentObjectiveSustantivizedName = "Meditating";
                 break;
             case "Push Up":
-                selectedObjSustantivizedName = "Doing push ups";
+                currentObjectiveSustantivizedName = "Doing push ups";
                 break;
             case "Lifting":
-                selectedObjSustantivizedName = "Lifting weights";
+                currentObjectiveSustantivizedName = "Lifting weights";
                 break;
             case "Running":
-                selectedObjSustantivizedName = "Running";
+                currentObjectiveSustantivizedName = "Running";
                 break;
             case "Walking":
-                selectedObjSustantivizedName = "Walking";
+                currentObjectiveSustantivizedName = "Walking";
                 break;
             default:
-                selectedObjSustantivizedName = "Doing something"; // instead of just throwing "Unknown" or "null" or an empty string... DO SOMETHING :]
                 break;
         }
     }
@@ -108,23 +134,14 @@ export default function Sessions() {
     const [isTimerRunning, setTimerStatus] = React.useState(true);
 
     const toggleTimerStatus = (manualTarget?: boolean) => {
-        if (manualTarget) {
+        if (manualTarget !== undefined) {
             setTimerStatus(manualTarget);
         } else {
-            if (isTimerRunning) {
-                setTimerStatus(false);
-            } else {
-                setTimerStatus(true);
-            }
+            setTimerStatus(prevStatus => !prevStatus);
         }
     };
 
-    let timerColor;
-    if (isTimerRunning) {
-        timerColor = "#32FF80";
-    } else {
-        timerColor = "#FFC832";
-    }
+    const timerColor = isTimerRunning ? "#32FF80" : "#FFC832";
 
     const cancel = () => {
         Native.Alert.alert(
@@ -177,8 +194,9 @@ export default function Sessions() {
         const updateObj = async (id: number) => {
             try {
                 const storedObjs = await AsyncStorage.getItem("objs");
+
                 if (storedObjs) {
-                    const parsedObjs = JSON.parse(storedObjs);
+                    const parsedObjs: Objective[] = JSON.parse(storedObjs);
                     const updatedObjs = parsedObjs.map((obj: Objective) => {
                         if (obj.id === id) {
                             return { ...obj, wasDone: true };
@@ -213,8 +231,8 @@ export default function Sessions() {
             }
         };
 
-        if (selectedObj) {
-            updateObj(selectedObj.id);
+        if (currentObjective) {
+            await updateObj(currentObjective.id);
         }
     };
 
@@ -222,20 +240,16 @@ export default function Sessions() {
         finish();
     };
 
-    const [isUserCheckingHelp, toggleHelp] = React.useState(false);
+    const [isUserCheckingHelp, setIsUserCheckingHelp] = React.useState(false);
 
     const toggleHelpMenu = () => {
-        toggleHelp(prev => !prev);
-        if (isUserCheckingHelp === false) {
-            toggleTimerStatus(false);
-        } else {
-            toggleTimerStatus(true);
-        }
+        setIsUserCheckingHelp(prev => !prev);
+        toggleTimerStatus(!isUserCheckingHelp);
     };
 
     let helpText: string = "Help!";
 
-    switch (selectedObj?.exercise.toLowerCase()) {
+    switch (currentObjective?.exercise.toLowerCase()) {
         case "push up":
             helpText =
                 "To do a regular push-up, begin in a plank position with your hands slightly wider than shoulder-width apart. Lower your body by bending your elbows until your chest nearly touches the floor, then push back up to the starting position. Keep your core engaged throughout for stability. Start with a comfortable number of repetitions and gradually increase as you build strength.\n\nTo do a one handed push-up, begin in a plank position with one hand centered beneath your shoulder and the other behind your back. Lower your body by bending your elbow until your chest nearly touches the floor, then push back up. Keep your core tight and maintain balance throughout the movement. Start with a few reps on each side and progress as your strength improves.";
@@ -276,22 +290,85 @@ export default function Sessions() {
         ["Maximum Speed", "more than 16.1 km/h"],
     ];
 
-    return (
-        <Native.View
-            style={{
-                width: "100vw" as Native.DimensionValue,
-                height: "100vh" as Native.DimensionValue,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                justifyContent: "center",
-                padding: 20,
-                flex: 1,
-                backgroundColor: "#0E1013",
-                overflow: "visible",
-            }}
-        >
-            {selectedObj ? (
+    if (loading) {
+        return (
+            <Native.View
+                style={{
+                    width: "100vw" as Native.DimensionValue,
+                    height: "100vh" as Native.DimensionValue,
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <GapView height={Native.Dimensions.get("screen").height / 2} />
+                <BetterText
+                    textAlign="center"
+                    fontSize={25}
+                    textColor="#32FF80"
+                    fontWeight="Medium"
+                >
+                    Loading...
+                </BetterText>
+            </Native.View>
+        );
+    }
+
+    if (!loading) {
+        if (currentObjective === null) {
+            return (
+                <Native.View style={{ padding: 20 }}>
+                    <GapView
+                        height={Native.Dimensions.get("screen").height / 2 - 70}
+                    />
+                    <BetterText
+                        textAlign="center"
+                        fontWeight="SemiBold"
+                        fontSize={50}
+                        textColor="#FF3232"
+                    >
+                        Oh no!
+                    </BetterText>
+                    <BetterText
+                        textAlign="center"
+                        fontWeight="Medium"
+                        fontSize={15}
+                    >
+                        There was an error loading this objective (the specified
+                        ID ({id}) wasn&apos;t found). Sorry!{" "}
+                        <BetterText
+                            onTap={() => Router.router.navigate("/")}
+                            url={true}
+                            textColor="#3280FF"
+                            fontSize={15}
+                            fontWeight="Regular"
+                        >
+                            Go home.
+                        </BetterText>
+                    </BetterText>
+                </Native.View>
+            );
+        }
+    }
+
+    if (currentObjective && !loading) {
+        return (
+            <Native.View
+                style={{
+                    width: "100vw" as Native.DimensionValue,
+                    height: "100vh" as Native.DimensionValue,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    justifyContent: "center",
+                    padding: 20,
+                    flex: 1,
+                    backgroundColor: "#0E1013",
+                    overflow: "visible",
+                }}
+            >
                 <Native.View
                     style={{
                         display: "flex",
@@ -351,9 +428,9 @@ export default function Sessions() {
                             fontSize={25}
                             textAlign="center"
                         >
-                            {selectedObjSustantivizedName} for{" "}
-                            {selectedObj.duration} minute
-                            {selectedObj.duration > 1 && "s"}
+                            {currentObjectiveSustantivizedName} for{" "}
+                            {currentObjective.duration} minute
+                            {currentObjective.duration > 1 && "s"}
                         </BetterText>
                         <GapView height={10} />
                         <Native.View
@@ -367,21 +444,21 @@ export default function Sessions() {
                             <Ionicons name="loop" size={15} color="#FFF" />
                             <GapView width={5} />
                             <BetterText fontWeight="Regular" fontSize={15}>
-                                {selectedObj.repetitions === 0
+                                {currentObjective.repetitions === 0
                                     ? "None"
-                                    : selectedObj.repetitions === 1
-                                      ? `${selectedObj.repetitions} repetition`
-                                      : `${selectedObj.repetitions} repetitions`}
+                                    : currentObjective.repetitions === 1
+                                      ? `${currentObjective.repetitions} repetition`
+                                      : `${currentObjective.repetitions} repetitions`}
                             </BetterText>
                             <GapView width={15} />
                             <Ionicons name="snooze" size={15} color="#FFF" />
                             <GapView width={5} />
                             <BetterText fontWeight="Regular" fontSize={15}>
-                                {selectedObj.rests === 0
+                                {currentObjective.rests === 0
                                     ? "None"
-                                    : selectedObj.rests === 1
-                                      ? `${selectedObj.rests} rest of ${selectedObj.restDuration} mins`
-                                      : `${selectedObj.rests} rests (${selectedObj.restDuration} mins)`}
+                                    : currentObjective.rests === 1
+                                      ? `${currentObjective.rests} rest of ${currentObjective.restDuration} mins`
+                                      : `${currentObjective.rests} rests (${currentObjective.restDuration} mins)`}
                             </BetterText>
                         </Native.View>
                         <Native.View
@@ -391,7 +468,7 @@ export default function Sessions() {
                                 justifyContent: "center",
                             }}
                         >
-                            {selectedObj.exercise.toLowerCase() ===
+                            {currentObjective.exercise.toLowerCase() ===
                                 "lifting" && (
                                 <Native.View
                                     style={{
@@ -412,16 +489,18 @@ export default function Sessions() {
                                         textColor="#FFF"
                                         fontSize={15}
                                     >
-                                        {selectedObj?.extra?.barWeight !==
+                                        {currentObjective?.extra?.barWeight !==
                                             undefined &&
-                                        selectedObj?.extra?.liftWeight !==
+                                        currentObjective?.extra?.liftWeight !==
                                             undefined &&
-                                        selectedObj.extra.hands !== undefined
+                                        currentObjective.extra.hands !==
+                                            undefined
                                             ? String(
-                                                  selectedObj.extra.barWeight +
-                                                      selectedObj.extra
+                                                  currentObjective.extra
+                                                      .barWeight +
+                                                      currentObjective.extra
                                                           .liftWeight *
-                                                          selectedObj.extra
+                                                          currentObjective.extra
                                                               .hands
                                               )
                                             : "N/A"}{" "}
@@ -439,8 +518,11 @@ export default function Sessions() {
                                         textColor="#FFF"
                                         fontSize={15}
                                     >
-                                        {selectedObj?.extra?.lifts !== undefined
-                                            ? String(selectedObj.extra.lifts)
+                                        {currentObjective?.extra?.lifts !==
+                                        undefined
+                                            ? String(
+                                                  currentObjective.extra.lifts
+                                              )
                                             : "N/A"}{" "}
                                         lifts
                                     </BetterText>
@@ -456,14 +538,17 @@ export default function Sessions() {
                                         textColor="#FFF"
                                         fontSize={15}
                                     >
-                                        {selectedObj?.extra?.hands !== undefined
-                                            ? String(selectedObj.extra.hands)
+                                        {currentObjective?.extra?.hands !==
+                                        undefined
+                                            ? String(
+                                                  currentObjective.extra.hands
+                                              )
                                             : "N/A"}{" "}
                                         hand
                                     </BetterText>
                                 </Native.View>
                             )}
-                            {selectedObj.exercise.toLowerCase() ===
+                            {currentObjective.exercise.toLowerCase() ===
                                 "running" && (
                                 <Native.View
                                     style={{
@@ -489,14 +574,14 @@ export default function Sessions() {
                                             textColor="#FFF"
                                             fontSize={15}
                                         >
-                                            {selectedObj.extra.speed !==
+                                            {currentObjective.extra.speed !==
                                                 undefined &&
-                                            selectedObj.extra.speed >= 0 &&
-                                            selectedObj.extra.speed <
+                                            currentObjective.extra.speed >= 0 &&
+                                            currentObjective.extra.speed <
                                                 speedOptions.length
                                                 ? String(
                                                       speedOptions[
-                                                          selectedObj.extra
+                                                          currentObjective.extra
                                                               .speed
                                                       ][1]
                                                   )
@@ -505,7 +590,7 @@ export default function Sessions() {
                                     </BetterText>
                                 </Native.View>
                             )}
-                            {selectedObj.exercise.toLowerCase() ===
+                            {currentObjective.exercise.toLowerCase() ===
                                 "push up" && (
                                 <Native.View
                                     style={{
@@ -526,9 +611,11 @@ export default function Sessions() {
                                         textColor="#FFF"
                                         fontSize={15}
                                     >
-                                        {selectedObj?.extra?.amount !==
+                                        {currentObjective?.extra?.amount !==
                                         undefined
-                                            ? String(selectedObj.extra.amount)
+                                            ? String(
+                                                  currentObjective.extra.amount
+                                              )
                                             : "N/A"}{" "}
                                         push-ups
                                     </BetterText>
@@ -544,8 +631,11 @@ export default function Sessions() {
                                         textColor="#FFF"
                                         fontSize={15}
                                     >
-                                        {selectedObj?.extra?.hands !== undefined
-                                            ? String(selectedObj.extra.hands)
+                                        {currentObjective?.extra?.hands !==
+                                        undefined
+                                            ? String(
+                                                  currentObjective.extra.hands
+                                              )
                                             : "N/A"}{" "}
                                         hand
                                     </BetterText>
@@ -555,7 +645,7 @@ export default function Sessions() {
                     </Native.View>
                     <GapView height={20} />
                     <CountdownCircleTimer
-                        duration={selectedObj?.duration * 60}
+                        duration={currentObjective?.duration * 60}
                         size={160}
                         isPlaying={isTimerRunning}
                         colors={[
@@ -632,91 +722,35 @@ export default function Sessions() {
                         />
                     </Native.View>
                 </Native.View>
-            ) : (
-                <Native.View>
-                    <BetterText
-                        textAlign="center"
-                        fontWeight="BlackItalic"
-                        fontSize={45}
-                        textColor="#FF0000"
-                    >
-                        ERROR
-                    </BetterText>
-                    <BetterText
-                        textAlign="center"
-                        fontWeight="Bold"
-                        fontSize={25}
-                    >
-                        Did not find the selected objective in the database.
-                    </BetterText>
-                    <Native.View
-                        style={{
-                            margin: 10,
-                            borderRadius: 10,
-                            padding: 10,
-                            backgroundColor: "#FFC832",
-                        }}
-                    >
+                {isUserCheckingHelp && (
+                    <Native.View style={styles.helpcontainer}>
+                        <BetterText fontSize={18} fontWeight="Regular">
+                            Help with {currentObjectiveSustantivizedName}
+                        </BetterText>
+                        <BetterText fontSize={14} fontWeight="Light">
+                            {helpText}
+                        </BetterText>
+                        <GapView height={10} />
+                        <Button
+                            layout="fixed"
+                            height="default"
+                            style="ACE"
+                            buttonText="Got it"
+                            action={toggleHelpMenu}
+                        />
+                        <GapView height={10} />
                         <BetterText
-                            fontWeight="Regular"
-                            fontSize={12}
-                            textColor="#000"
+                            fontSize={10}
+                            fontWeight="Light"
+                            textColor="#C8C8C8"
+                            textAlign="center"
                         >
-                            Developer info: id: {id}, selectedObj exists:{" "}
-                            {selectedObj && "true"}
-                            {!selectedObj && "false"}, all objs: {idsString}
+                            Psst... Don&apos;t worry, the timer has been paused
+                            so you can read!
                         </BetterText>
                     </Native.View>
-                </Native.View>
-            )}
-            {isUserCheckingHelp && (
-                <Native.View
-                    style={{
-                        backgroundColor: "#14171C",
-                        position: "absolute",
-                        top: "20%",
-                        left: 10,
-                        right: 10,
-                        bottom: 20,
-                        overflow: "visible",
-                        padding: 20,
-                        borderRadius: 20,
-                        shadowOpacity: 1,
-                        shadowColor: "#000",
-                        shadowOffset: { width: 15, height: 5 },
-                        shadowRadius: 10,
-                        elevation: 16,
-                        borderColor: "#26282b",
-                        borderWidth: 4,
-                        zIndex: 999,
-                    }}
-                >
-                    <BetterText fontSize={18} fontWeight="Regular">
-                        Help with {selectedObj?.exercise}
-                    </BetterText>
-                    <BetterText fontSize={14} fontWeight="Light">
-                        {helpText}
-                    </BetterText>
-                    <GapView height={10} />
-                    <Button
-                        layout="fixed"
-                        height="default"
-                        style="ACE"
-                        buttonText="Got it"
-                        action={toggleHelpMenu}
-                    />
-                    <GapView height={10} />
-                    <BetterText
-                        fontSize={10}
-                        fontWeight="Light"
-                        textColor="#C8C8C8"
-                        textAlign="center"
-                    >
-                        Psst... Don&apos;t worry, the timer has been paused so
-                        you can read!
-                    </BetterText>
-                </Native.View>
-            )}
-        </Native.View>
-    );
+                )}
+            </Native.View>
+        );
+    }
 }
