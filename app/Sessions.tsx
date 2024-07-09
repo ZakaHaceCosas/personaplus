@@ -47,10 +47,6 @@ const styles = Native.StyleSheet.create({
         overflow: "visible",
         padding: 20,
         borderRadius: 20,
-        shadowOpacity: 1,
-        shadowColor: "#000",
-        shadowOffset: { width: 15, height: 5 },
-        shadowRadius: 10,
         elevation: 16,
         borderColor: "#26282b",
         borderWidth: 4,
@@ -61,34 +57,43 @@ const styles = Native.StyleSheet.create({
 export default function Sessions() {
     // Loading state
     const [loading, setLoading] = React.useState<boolean>(true);
-
     const { id } = Router.useGlobalSearchParams() as { id: string };
     const [objectives, setObjectives] = React.useState<Objective[] | null>(
         null
     );
+    const [reactError, setReactError] = React.useState<string>("");
 
     React.useEffect(() => {
         const fetchObjectives = async () => {
             try {
                 const storedObjectives = await AsyncStorage.getItem("objs");
                 if (storedObjectives) {
-                    const parsedObjectives: Objective[] =
-                        JSON.parse(storedObjectives);
-                    setObjectives(parsedObjectives);
-                    termLog("Objectives (OBJS) fetched", "success");
+                    try {
+                        const parsedObjectives: Objective[] =
+                            JSON.parse(storedObjectives);
+                        setObjectives(parsedObjectives);
+                        termLog("Objectives (OBJS) fetched", "success");
+                        setLoading(false);
+                    } catch (e) {
+                        termLog(
+                            "Error parsing objectives (OBJS): " + e,
+                            "error"
+                        );
+                        setReactError(String(e));
+                        setLoading(false);
+                    }
                 } else {
                     termLog(
-                        "Could not get Objectives (OBJS) fetched. Setting them to an empty object.",
+                        "No objectives (OBJS) found. Setting to empty array.",
                         "error"
                     );
+                    setReactError("Not storedObjectives.");
+                    setObjectives([]);
                     setLoading(false);
                 }
             } catch (e) {
-                const log =
-                    "Could not get Objectives (OBJS) fetched due to error (1): " +
-                    e +
-                    ". Setting them to an empty object.";
-                termLog(log, "warn");
+                termLog("Error fetching objectives (OBJS): " + e, "warn");
+                setReactError(String(e));
                 setLoading(false);
             }
         };
@@ -100,14 +105,10 @@ export default function Sessions() {
         objectives?.find(obj => obj.id.toString() === id.toString()) ?? null;
 
     React.useEffect(() => {
-        if (currentObjective !== null) {
-            setLoading(false); // sets as loaded => renders objective
-        } else {
-            setLoading(false); // sets as loaded => renders error page
-        }
+        setLoading(false); // sets as loaded
     }, [currentObjective]);
 
-    let currentObjectiveSustantivizedName: string = "Doing something"; // Valor por defecto
+    let currentObjectiveSustantivizedName: string = "Doing something"; // Default value
 
     if (currentObjective) {
         switch (currentObjective.exercise) {
@@ -164,8 +165,6 @@ export default function Sessions() {
         );
     };
 
-    // i got creative again :]
-    // commits / PRs that add more stuff will of course be taken into account
     const sessionCompletedMessages = [
         "Well done, bro!",
         "It was fun, wasn't it?",
@@ -196,38 +195,42 @@ export default function Sessions() {
                 const storedObjs = await AsyncStorage.getItem("objs");
 
                 if (storedObjs) {
-                    const parsedObjs: Objective[] = JSON.parse(storedObjs);
-                    const updatedObjs = parsedObjs.map((obj: Objective) => {
-                        if (obj.id === id) {
-                            return { ...obj, wasDone: true };
-                        }
-                        return obj;
-                    });
-                    await AsyncStorage.setItem(
-                        "objs",
-                        JSON.stringify(updatedObjs)
-                    );
-                    termLog(
-                        "Objectives (OBJS) updated and saved successfully!",
-                        "success"
-                    );
-                    Router.router.navigate("/");
-                    if (Native.Platform.OS === "android") {
-                        Native.ToastAndroid.show(
-                            messageForSessionCompleted,
-                            Native.ToastAndroid.LONG
+                    try {
+                        const parsedObjs: Objective[] = JSON.parse(storedObjs);
+                        const updatedObjs = parsedObjs.map((obj: Objective) => {
+                            if (obj.id === id) {
+                                return { ...obj, wasDone: true };
+                            }
+                            return obj;
+                        });
+                        await AsyncStorage.setItem(
+                            "objs",
+                            JSON.stringify(updatedObjs)
                         );
+                        termLog(
+                            "Objectives (OBJS) updated and saved successfully!",
+                            "success"
+                        );
+                        Router.router.navigate("/");
+                        if (Native.Platform.OS === "android") {
+                            Native.ToastAndroid.show(
+                                messageForSessionCompleted,
+                                Native.ToastAndroid.LONG
+                            );
+                        }
+                    } catch (e) {
+                        termLog(
+                            "Error parsing objectives (OBJS) for update: " + e,
+                            "error"
+                        );
+                        setReactError(String(e));
                     }
                 } else {
-                    termLog(
-                        "Could not get objectives (OBJS) fetched!",
-                        "error"
-                    );
+                    termLog("No objectives (OBJS) found!", "error");
                 }
             } catch (e) {
-                const log =
-                    "Could not update objectives (OBJS) due to error: " + e;
-                termLog(log, "error");
+                termLog("Error updating objectives (OBJS): " + e, "error");
+                setReactError(String(e));
             }
         };
 
@@ -316,49 +319,55 @@ export default function Sessions() {
         );
     }
 
-    if (!loading) {
-        if (currentObjective === null) {
-            return (
-                <Native.View style={{ padding: 20 }}>
-                    <GapView
-                        height={Native.Dimensions.get("screen").height / 2 - 70}
-                    />
+    if (!loading && currentObjective === null && reactError !== null) {
+        return (
+            <Native.View style={{ padding: 20 }}>
+                <GapView
+                    height={Native.Dimensions.get("screen").height / 2 - 70}
+                />
+                <BetterText
+                    textAlign="center"
+                    fontWeight="SemiBold"
+                    fontSize={50}
+                    textColor="#FF3232"
+                >
+                    Oh no!
+                </BetterText>
+                <BetterText
+                    textAlign="center"
+                    fontWeight="Medium"
+                    fontSize={15}
+                >
+                    There was an error loading this objective (the specified ID
+                    ({id}) wasn&apos;t found). Sorry!{" "}
                     <BetterText
-                        textAlign="center"
-                        fontWeight="SemiBold"
-                        fontSize={50}
-                        textColor="#FF3232"
-                    >
-                        Oh no!
-                    </BetterText>
-                    <BetterText
-                        textAlign="center"
-                        fontWeight="Medium"
+                        onTap={() => Router.router.navigate("/")}
+                        url={true}
+                        textColor="#3280FF"
                         fontSize={15}
+                        fontWeight="Regular"
                     >
-                        There was an error loading this objective (the specified
-                        ID ({id}) wasn&apos;t found). Sorry!{" "}
-                        <BetterText
-                            onTap={() => Router.router.navigate("/")}
-                            url={true}
-                            textColor="#3280FF"
-                            fontSize={15}
-                            fontWeight="Regular"
-                        >
-                            Go home.
-                        </BetterText>
+                        Go home.
                     </BetterText>
-                </Native.View>
-            );
-        }
+                </BetterText>
+                <BetterText
+                    fontSize={10}
+                    textColor="#FFC832"
+                    fontWeight="Light"
+                    textAlign="center"
+                >
+                    React error (if provided): {reactError}
+                </BetterText>
+            </Native.View>
+        );
     }
 
     if (currentObjective && !loading) {
         return (
             <Native.View
                 style={{
-                    width: "100vw" as Native.DimensionValue,
-                    height: "100vh" as Native.DimensionValue,
+                    width: "100%",
+                    height: "100%",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "flex-start",
@@ -569,24 +578,18 @@ export default function Sessions() {
                                         textColor="#FFF"
                                         fontSize={15}
                                     >
-                                        <BetterText
-                                            fontWeight="Regular"
-                                            textColor="#FFF"
-                                            fontSize={15}
-                                        >
-                                            {currentObjective.extra.speed !==
-                                                undefined &&
-                                            currentObjective.extra.speed >= 0 &&
-                                            currentObjective.extra.speed <
-                                                speedOptions.length
-                                                ? String(
-                                                      speedOptions[
-                                                          currentObjective.extra
-                                                              .speed
-                                                      ][1]
-                                                  )
-                                                : "N/A"}
-                                        </BetterText>
+                                        {currentObjective.extra.speed !==
+                                            undefined &&
+                                        currentObjective.extra.speed >= 0 &&
+                                        currentObjective.extra.speed <
+                                            speedOptions.length
+                                            ? String(
+                                                  speedOptions[
+                                                      currentObjective.extra
+                                                          .speed
+                                                  ][1]
+                                              )
+                                            : "N/A"}
                                     </BetterText>
                                 </Native.View>
                             )}
@@ -655,8 +658,6 @@ export default function Sessions() {
                         colorsTime={[15, 5]}
                         isSmoothColorTransition={false}
                         onComplete={doFinish}
-                        // onPress={() => toggleTimerStatus()}
-                        // ^^^^^^^ this doesnt exit here
                         isGrowing={true}
                         trailColor="#202328"
                         strokeLinecap="round"
