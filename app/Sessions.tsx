@@ -147,6 +147,32 @@ export default function Sessions() {
         );
     };
 
+    // i got creative again :]
+    // commits / PRs that add more stuff will of course be taken into account
+    const sessionCompletedMessages = [
+        "Well done, bro!",
+        "It was fun, wasn't it?",
+        "Bro's actually giving himself a plus, great!",
+        "Loved it!",
+        "Nothing's funnier than giving yourself a plus, right?",
+        "AND HIS NAME HIS JOHN CENA *trumpet plays*", // xD
+        "You gave yourself a plus, now give yourself a break",
+        "Awesome job, keep it up!",
+        "You're on fire!",
+        '"Growing myself, one session at a time"',
+        "Feeling stronger already! Right?",
+        "That was epic!",
+        "You're a rockstar!",
+        "What else can you achieve?",
+        "There's still time for another one ;]",
+    ];
+
+    const sessionCompletedMessagesIndex = Math.floor(
+        Math.random() * sessionCompletedMessages.length
+    );
+    const messageForSessionCompleted =
+        sessionCompletedMessages[sessionCompletedMessagesIndex];
+
     const finish = async () => {
         const updateObj = async (id: number) => {
             try {
@@ -168,6 +194,12 @@ export default function Sessions() {
                         "success"
                     );
                     Router.router.navigate("/");
+                    if (Native.Platform.OS === "android") {
+                        Native.ToastAndroid.show(
+                            messageForSessionCompleted,
+                            Native.ToastAndroid.LONG
+                        );
+                    }
                 } else {
                     termLog(
                         "Could not get objectives (OBJS) fetched!",

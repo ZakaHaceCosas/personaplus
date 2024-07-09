@@ -476,26 +476,32 @@ export default function Home() {
                     )}
                 </Section>
                 <GapView height={20} />
-                <Section kind="HowYouAreDoing">
-                    <GapView height={20} />
-                    <BetterText
-                        fontWeight="Regular"
-                        textColor="#32FF80"
-                        fontSize={25}
-                        textAlign="center"
-                    >
-                        Coming soon!
-                    </BetterText>
-                    <GapView height={10} />
-                    <Division header="This is a WIP section!">
-                        <BetterText fontWeight="Regular" fontSize={15}>
-                            PersonaPlus is still a work-in-progress app.{"\n\n"}
-                            On later updates you&apos;ll be able to see here
-                            many stats and helpful info. Be sure to check for
-                            updates every few weeks!
+                {objectives && Object.keys(objectives).length > 0 && (
+                    <Section kind="HowYouAreDoing">
+                        <GapView height={20} />
+                        <BetterText
+                            fontWeight="Regular"
+                            textColor="#32FF80"
+                            fontSize={25}
+                            textAlign="center"
+                        >
+                            Coming soon!
                         </BetterText>
-                    </Division>
-                </Section>
+                        <Native.View style={{ padding: 20 }}>
+                            <BetterText
+                                fontWeight="Regular"
+                                fontSize={15}
+                                textAlign="center"
+                            >
+                                PersonaPlus is still a work-in-progress app.
+                                {"\n\n"}
+                                On later updates you&apos;ll be able to see here
+                                many stats and helpful info. Be sure to check
+                                for updates every few weeks!
+                            </BetterText>
+                        </Native.View>
+                    </Section>
+                )}
                 <Footer />
             </Native.ScrollView>
         </Native.View>
