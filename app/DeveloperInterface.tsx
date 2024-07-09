@@ -14,13 +14,22 @@ import { version as PersonaPlusVersion } from "@/package.json";
 
 // TypeScript, supongo
 interface Objective {
-    exercise: string;
     days: boolean[];
     duration: number;
-    repetitions: number;
-    rests: number;
-    restDuration: number;
+    exercise: string;
+    extra: {
+        amount: number;
+        barWeight: number;
+        hands: number;
+        liftWeight: number;
+        lifts: number;
+        speed: number;
+        time: number;
+    };
     id: number;
+    repetitions: number;
+    restDuration: number;
+    rests: number;
     wasDone: boolean;
 }
 
@@ -109,7 +118,7 @@ export const termLog = (
     message: string,
     type: "log" | "warn" | "error" | "success" = "log"
 ) => {
-    const styles = {
+    /*const styles = {
         log: "font-weight: bold; background: #FFF; color: black; padding: 2px 4px; border-radius: 2px;",
         success:
             "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
@@ -122,10 +131,11 @@ export const termLog = (
         success: "GOD",
         warn: "WAR",
         error: "ERR",
-    }[type];
+    }[type];*/
 
-    console.log(`%c${prefix}%c ${message}`, styles, "background: transparent;");
-    testLog(message, type);
+    // console.log(`%c${prefix}%c ${message}`, styles, "background: transparent;");
+    // testLog(message, type);
+    console.log(message);
 };
 
 export default function DeveloperInterface() {
