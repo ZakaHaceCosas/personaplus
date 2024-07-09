@@ -13,8 +13,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import BottomNav from "@/components/BottomNav";
 import GapView from "@/components/GapView";
 import { termLog } from "./DeveloperInterface";
+import { version } from "@/package.json";
 
-// TypeScript interface para el release
+// TypeScript, supongo
 interface Release {
     tag_name: string;
     prerelease: boolean;
@@ -22,8 +23,16 @@ interface Release {
     html_url: string;
 }
 
+interface UserData {
+    username: string;
+    gender: string;
+    age: string;
+    height: string;
+    weight: string;
+}
+
 // Versión actual de la aplicación
-const currentVersion = "0.0.1-R5-b20";
+const currentVersion = version;
 
 // Función asincrónica para comprobar actualizaciones
 const checkForUpdates = async () => {
@@ -127,222 +136,100 @@ const styles = Native.StyleSheet.create({
 
 // Creamos la función
 export default function Profile() {
+    // Loading state
+    const [loading, setLoading] = React.useState<boolean>(true);
+
     const [username, setUsername] = React.useState<string>("Unknown");
     const [gender, setGender] = React.useState<string>("Unknown");
     const [age, setAge] = React.useState<string>("Unknown");
     const [height, setHeight] = React.useState<string>("Unknown");
     const [weight, setWeight] = React.useState<string>("Unknown");
-    const [uname, setUname] = React.useState("");
-    const handleUnameTxtChange = (txt: string) => {
-        setUname(txt);
-    };
 
-    const handleUnameBtnClick = async () => {
+    const getMultiple = async (): Promise<UserData> => {
         try {
-            const olduname: string | null =
-                await AsyncStorage.getItem("username");
-            if (olduname !== uname) {
-                await AsyncStorage.setItem("username", uname);
-                const log = `Changed your username to ${uname}`;
-                termLog(log, "success");
-                setTimeout(() => {
-                    Router.router.replace("/");
-                }, 25);
-            } else {
-                const log = `Your username is already ${uname}! Can't change it to that`;
-                termLog(log, "error");
-            }
+            const values = await AsyncStorage.multiGet([
+                "username",
+                "gender",
+                "age",
+                "height",
+                "weight",
+            ]);
+
+            const data: UserData = {
+                username: values[0][1] || "Unknown",
+                gender: values[1][1] || "Unknown",
+                age: values[2][1] || "Unknown",
+                height: values[3][1] || "Unknown",
+                weight: values[4][1] || "Unknown",
+            };
+            return data;
         } catch (e) {
-            const log = "Could not handleUnameBtnClick() due to error: " + e;
-            termLog(log, "error");
+            console.error(e);
+            return {
+                username: "Unknown",
+                gender: "Unknown",
+                age: "Unknown",
+                height: "Unknown",
+                weight: "Unknown",
+            };
         }
     };
 
-    const currentpage: string = Router.usePathname();
-
     React.useEffect(() => {
-        const fetchUsername = async () => {
-            try {
-                const uname: string | null =
-                    await AsyncStorage.getItem("username");
-                if (uname) {
-                    setUsername(uname);
-                    termLog("Username (uname) fetched!", "success");
-                } else {
-                    termLog(
-                        "Username could not be fetched due to an error!",
-                        "error"
-                    );
-                }
-            } catch (e) {
-                const log =
-                    "Could not fetch username (uname) due to error: " + e;
-                termLog(log, "error");
-            }
+        const fetchData = async () => {
+            const userData = await getMultiple();
+            setUsername(userData.username);
+            setGender(userData.gender);
+            setAge(userData.age);
+            setHeight(userData.height);
+            setWeight(userData.weight);
+            setLoading(false);
         };
 
-        fetchUsername();
-    }, []);
-
-    React.useEffect(() => {
-        const fetchGender = async () => {
-            try {
-                const gender: string | null =
-                    await AsyncStorage.getItem("gender");
-                if (gender) {
-                    setGender(gender);
-                    termLog("Gender fetched!", "success");
-                } else {
-                    termLog(
-                        "Gender could not be fetched due to an error!",
-                        "error"
-                    );
-                }
-            } catch (e) {
-                const log = "Could not fetch gender due to error: " + e;
-                termLog(log, "error");
-            }
-        };
-
-        fetchGender();
-    }, []);
-
-    React.useEffect(() => {
-        const fetchAge = async () => {
-            try {
-                const age: string | null = await AsyncStorage.getItem("age");
-                if (age) {
-                    setAge(age);
-                    termLog("Age fetched!", "success");
-                } else {
-                    termLog(
-                        "Age could not be fetched due to an error!",
-                        "error"
-                    );
-                }
-            } catch (e) {
-                const log = "Could not fetch age due to error: " + e;
-                termLog(log, "error");
-            }
-        };
-
-        fetchAge();
-    }, []);
-
-    React.useEffect(() => {
-        const fetchHeight = async () => {
-            try {
-                const height: string | null =
-                    await AsyncStorage.getItem("height");
-                if (height) {
-                    setHeight(height);
-                    termLog("height fetched!", "success");
-                } else {
-                    termLog(
-                        "height could not be fetched due to an error!",
-                        "error"
-                    );
-                }
-            } catch (e) {
-                const log = "Could not fetch height due to error: " + e;
-                termLog(log, "error");
-            }
-        };
-
-        fetchHeight();
-    }, []);
-
-    React.useEffect(() => {
-        const fetchWeight = async () => {
-            try {
-                const weight: string | null =
-                    await AsyncStorage.getItem("weight");
-                if (weight) {
-                    setWeight(weight);
-                    termLog("weight fetched!", "success");
-                } else {
-                    termLog(
-                        "weight could not be fetched due to an error!",
-                        "error"
-                    );
-                }
-            } catch (e) {
-                const log = "Could not fetch weight due to error: " + e;
-                termLog(log, "error");
-            }
-        };
-
-        fetchWeight();
+        fetchData();
     }, []);
 
     const [wantsDev, setWantsDev] = React.useState<boolean | null>(null);
 
-    // Busca si quiere usar Dev interface
     React.useEffect(() => {
         const checkForDev = async () => {
             try {
                 const useDev = await AsyncStorage.getItem("useDevTools");
-                if (useDev === "true") {
-                    setWantsDev(true);
-                } else {
-                    setWantsDev(false);
-                }
+                setWantsDev(useDev === "true");
             } catch (e) {
-                const log =
-                    "Got an error checking if the user wants to use Dev interface: " +
-                    e;
-                termLog(log, "warn");
+                termLog(
+                    `Got an error checking if the user wants to use Dev interface: ${e}`,
+                    "warn"
+                );
             }
         };
         checkForDev();
     }, []);
 
-    const [isUnamechangeVisible, setIsUnamechangeVisible] =
-        React.useState<boolean>(false);
-
-    const toggleUnamechangeVisibility = () => {
-        setIsUnamechangeVisible(!isUnamechangeVisible);
-    };
-
-    const enableDevInterface = async function () {
+    const enableDevInterface = async () => {
         try {
             await AsyncStorage.setItem("useDevTools", "true");
             Router.router.navigate("/DeveloperInterface");
         } catch (e) {
-            const log = "ERROR ENABLING DEV INTERFACE: " + e;
-            termLog(log, "error");
+            termLog(`ERROR ENABLING DEV INTERFACE: ${e}`, "error");
         }
     };
 
-    const disableDevInterface = async function () {
+    const disableDevInterface = async () => {
         try {
             await AsyncStorage.setItem("useDevTools", "false");
             Router.router.navigate("/");
         } catch (e) {
-            const log = "ERROR DISABLING DEV INTERFACE: " + e;
-            termLog(log, "error");
+            termLog(`ERROR DISABLING DEV INTERFACE: ${e}`, "error");
         }
     };
 
     const deleteAll = async () => {
         try {
-            await AsyncStorage.multiRemove([
-                "useDevTools",
-                "hasLaunched",
-                "age",
-                "gender",
-                "height",
-                "weight",
-                "focuspoint",
-                "objs",
-                "username",
-                "sleep",
-            ]);
+            await AsyncStorage.clear();
             Router.router.navigate("/WelcomeScreen");
-            console.log("DEV CLEARED ALL");
             termLog("DEV CLEARED ALL", "log");
         } catch (e) {
-            console.error(e);
             termLog(String(e), "error");
         }
     };
@@ -357,6 +244,28 @@ export default function Profile() {
             ]
         );
     };
+
+    const currentpage: string = Router.usePathname();
+
+    if (loading) {
+        return (
+            <Native.View style={styles.containerview}>
+                <BottomNav currentLocation={currentpage} />
+                <Native.ScrollView>
+                    <Native.View style={styles.mainview}>
+                        <BetterText
+                            fontWeight="Regular"
+                            fontSize={15}
+                            textAlign="center"
+                            textColor="#C8C8C8"
+                        >
+                            Loading...
+                        </BetterText>
+                    </Native.View>
+                </Native.ScrollView>
+            </Native.View>
+        );
+    }
 
     return (
         <Native.View style={styles.containerview}>
@@ -415,83 +324,16 @@ export default function Profile() {
                                     Weight: {String(weight)} kg
                                 </BetterText>
                                 <GapView height={10} />
-                                {!isUnamechangeVisible && (
-                                    <Button
-                                        style="ACE"
-                                        action={toggleUnamechangeVisibility}
-                                        buttonText="Change my username"
-                                    />
-                                )}
+                                <Button
+                                    style="ACE"
+                                    action={() =>
+                                        Router.router.navigate("/UpdateProfile")
+                                    }
+                                    buttonText="Update my profile"
+                                />
                             </Native.View>
                         </Division>
                     </Section>
-                    <GapView height={20} />
-                    {isUnamechangeVisible && (
-                        <Section kind="Settings">
-                            <Division
-                                status="REGULAR"
-                                iconName={null}
-                                preheader="PROFILE"
-                                header="Set your username"
-                            >
-                                <Native.View style={styles.flexyview}>
-                                    <Native.TextInput
-                                        placeholder="Enter a new username"
-                                        readOnly={false}
-                                        placeholderTextColor="#949698"
-                                        style={[
-                                            {
-                                                backgroundColor: "#2A2D32",
-                                                borderRadius: 10,
-                                                padding: 10,
-                                                paddingLeft: 20,
-                                                paddingRight: 20,
-                                                borderWidth: 4,
-                                                borderColor: "#3E4146",
-                                                width: "100%",
-                                                color: "white",
-                                                // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
-                                                outline: "none",
-                                                fontFamily:
-                                                    "BeVietnamPro-Regular",
-                                            },
-                                        ]}
-                                        autoCorrect={false}
-                                        multiline={false}
-                                        maxLength={40}
-                                        textAlign="left"
-                                        fontFamily="BeVietnamPro-Regular"
-                                        textContentType="none"
-                                        inputMode="text"
-                                        key="ageinput"
-                                        enterKeyHint="done"
-                                        onChangeText={handleUnameTxtChange}
-                                    />
-                                    <GapView height={10} />
-                                    <Native.View
-                                        style={{
-                                            display: "flex",
-                                            flex: 1,
-                                            flexDirection: "row",
-                                        }}
-                                    >
-                                        <Button
-                                            style="ACE"
-                                            action={handleUnameBtnClick}
-                                            buttonText="Save username"
-                                            width="fill"
-                                        />
-                                        <GapView width={10} />
-                                        <Button
-                                            style="DEFAULT"
-                                            action={toggleUnamechangeVisibility}
-                                            buttonText="Cancel"
-                                        />
-                                    </Native.View>
-                                </Native.View>
-                            </Division>
-                        </Section>
-                    )}
                     <GapView height={20} />
                     <Section kind="About">
                         <Division

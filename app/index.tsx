@@ -344,9 +344,13 @@ export default function Home() {
         });
 
         if (!allObjectivesHandled) {
-            scheduleRandomNotifications();
+            if (Native.Platform.OS === "android") {
+                scheduleRandomNotifications();
+            }
         } else {
-            cancelScheduledNotifications();
+            if (Native.Platform.OS === "android") {
+                cancelScheduledNotifications();
+            }
         }
     }
 
