@@ -53,6 +53,8 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
   - Added an option to check for updates from GitHub releases.
   - Improved Dev Interface navigation flow.
   - Added an option to start over the app without needing to use the Dev Interface.
+  - Made a huge cleanup in the source code.
+  - Now instead of just changing your username, you can change all of your data in a dedicated page.
 - Moved from Apache-2.0 to GPL-3.0-only (LICENSE).
 - Made many changes to `DeveloperInterface` to attempt to fix it.
 - Fixed `termLog` making content invisible for light mode users (it was just removing a styling directive).
@@ -71,7 +73,6 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 - Updated the way random sentences for all objectives being completed work (and added many new sentences).
 - Added active objective reminders - if you have daily objectives for today that you haven't done yet, you'll receive a few notifications with random messages reminding you to do your stuff.
 - Added a few reminders that the app is currently an unfinished WIP.
-- a
 
 > [!NOTE]
 >

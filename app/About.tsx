@@ -29,8 +29,6 @@ const styles = Native.StyleSheet.create({
 
 // Creamos la función
 export default function Home() {
-    // const currentpage: string = Router.usePathname();
-
     return (
         <Native.View style={styles.containerview}>
             <Native.ScrollView style={styles.mainview}>
