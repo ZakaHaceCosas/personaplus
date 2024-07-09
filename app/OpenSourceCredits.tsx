@@ -92,7 +92,8 @@ const styles = Native.StyleSheet.create({
         width: "100vw" as Native.DimensionValue,
         height: "100vh" as Native.DimensionValue,
         overflow: "scroll",
-        backgroundColor: "#FFF", // i dont know why, but i feel a credits section in an app should have its background white
+        // backgroundColor: "#FFF",
+        // i dont know why, but i feel a credits section in an app should have its background white (edit: nevermind)
     },
 });
 
@@ -103,45 +104,36 @@ export default function OpenSourceCredits() {
                 <BetterText
                     fontSize={20}
                     fontWeight="Light"
-                    textColor="#000"
                     onTap={() => Router.router.navigate("/About")}
                 >
                     {"<"} Go back
                 </BetterText>
                 <GapView height={20} />
-                <BetterText
-                    fontSize={30}
-                    textColor="#000"
-                    fontWeight="SemiBold"
-                >
+                <BetterText fontSize={30} fontWeight="SemiBold">
                     All this open source software helps PersonaPlus be as
                     awesome it is!
                 </BetterText>
                 <GapView height={20} />
                 {libraries.map((library, index) => (
                     <Native.View key={index} style={{ marginBottom: 40 }}>
-                        <BetterText
-                            textColor="#000"
-                            fontWeight="SemiBold"
-                            fontSize={18}
-                        >
+                        <BetterText fontWeight="SemiBold" fontSize={18}>
                             {library.name}
                         </BetterText>
                         <BetterText
-                            textColor="#333"
+                            textColor="#BBB"
                             fontWeight="Regular"
                             fontSize={14}
                         >
                             {library.license}
                         </BetterText>
                         <BetterText
-                            textColor="#555"
+                            textColor="#999"
                             fontWeight="Light"
                             fontSize={14}
                         >
                             Made by{" "}
                             <BetterText
-                                textColor="#555"
+                                textColor="#999"
                                 fontWeight="SemiBold"
                                 fontSize={14}
                             >
@@ -149,11 +141,7 @@ export default function OpenSourceCredits() {
                             </BetterText>
                         </BetterText>
                         <GapView height={10} />
-                        <BetterText
-                            textColor="#000"
-                            fontWeight="Light"
-                            fontSize={15}
-                        >
+                        <BetterText fontWeight="Light" fontSize={15}>
                             {library.description}
                         </BetterText>
                         <GapView height={5} />
