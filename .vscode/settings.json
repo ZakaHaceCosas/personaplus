@@ -9,9 +9,10 @@
         "**/.DS_Store": true,
         "**/android": true
     },
+    "scm.experimental.showHistoryGraph": false,
     "editor.fontSize": 15,
     "editor.fontVariations": true,
-    "editor.wordWrap": "off",
+    "editor.wordWrap": "on",
     "editor.smoothScrolling": true,
     "editor.cursorSmoothCaretAnimation": "on",
     "workbench.list.smoothScrolling": true,
