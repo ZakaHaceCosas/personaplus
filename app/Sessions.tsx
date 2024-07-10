@@ -11,6 +11,24 @@ import GapView from "@/components/GapView";
 import { termLog } from "./DeveloperInterface";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import Button from "@/components/Buttons";
+// Estilos
+const styles = Native.StyleSheet.create({
+    helpcontainer: {
+        backgroundColor: "#14171C",
+        position: "absolute",
+        top: "20%",
+        left: 10,
+        right: 10,
+        bottom: 20,
+        overflow: "visible",
+        padding: 20,
+        borderRadius: 20,
+        elevation: 16,
+        borderColor: "#26282b",
+        borderWidth: 4,
+        zIndex: 999,
+    },
+});
 
 // TypeScript, supongo.
 interface Objective {
@@ -32,25 +50,6 @@ interface Objective {
     rests: number;
     wasDone: boolean;
 }
-
-// Estilos
-const styles = Native.StyleSheet.create({
-    helpcontainer: {
-        backgroundColor: "#14171C",
-        position: "absolute",
-        top: "20%",
-        left: 10,
-        right: 10,
-        bottom: 20,
-        overflow: "visible",
-        padding: 20,
-        borderRadius: 20,
-        elevation: 16,
-        borderColor: "#26282b",
-        borderWidth: 4,
-        zIndex: 999,
-    },
-});
 
 export default function Sessions() {
     const [loading, setLoading] = React.useState<boolean>(true);
@@ -107,10 +106,6 @@ export default function Sessions() {
             "log"
         );
     }, [currentObjective]);
-
-    React.useEffect(() => {
-        setLoading(false); // sets as loaded
-    }, []);
 
     let currentObjectiveSustantivizedName: string = "Doing something"; // Default value
 
