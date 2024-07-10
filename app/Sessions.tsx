@@ -53,43 +53,34 @@ const styles = Native.StyleSheet.create({
 });
 
 export default function Sessions() {
-    // const [loading, setLoading] = React.useState<boolean>(true);
-    const { id } = Router.useGlobalSearchParams() as { id: string };
-    const [objectives, setObjectives] = React.useState<{
-        [key: string]: Objective;
-    } | null>(null);
+    const [loading, setLoading] = React.useState<boolean>(true);
+    const params = Router.useGlobalSearchParams();
+    const { id } = params as { id: string };
+    const [objectives, setObjectives] = React.useState<Objective[] | null>(
+        null
+    );
 
     React.useEffect(() => {
         const fetchObjectives = async () => {
             try {
                 const allObjectives = await AsyncStorage.getItem("objs");
                 if (allObjectives) {
-                    let parsedObjectives;
-                    if (typeof allObjectives === "string") {
-                        parsedObjectives = JSON.parse(allObjectives);
-                    } else {
-                        parsedObjectives = allObjectives;
-                    }
+                    const parsedObjectives: Objective[] =
+                        JSON.parse(allObjectives);
                     setObjectives(parsedObjectives);
-                    setObjectives(
-                        // eslint-disable-next-line
-                        // @ts-ignore
-                        parsedObjectives.reduce((acc, obj) => {
-                            acc[obj.id.toString()] = obj;
-                            return acc;
-                        }, {})
-                    );
-                    // setLoading(false);
+                    setLoading(false);
                 } else {
+                    await AsyncStorage.setItem("objs", JSON.stringify([]));
                     termLog(
-                        "LOG 1 (:84) - Fetch error! Data not found.",
+                        "LOG 1 (:75) - Fetch error! Data not found.",
                         "error"
                     );
-                    setObjectives(null);
-                    // setLoading(false);
+                    setObjectives([]);
+                    setLoading(false);
                 }
             } catch (e) {
-                termLog("LOG 2 (:89) - Fetch error! " + e, "error");
+                termLog("LOG 2 (:82) - Fetch error! " + e, "error");
+                setObjectives([]);
             }
         };
 
@@ -105,7 +96,9 @@ export default function Sessions() {
         termLog("LOG 5 (:99) - Current ID: " + id, "log");
     }, [objectives, id]);
 
-    const currentObjective = objectives ? objectives[id] : null;
+    const currentObjective = objectives
+        ? objectives.find(obj => obj.id.toString() === id)
+        : null;
 
     React.useEffect(() => {
         termLog(
@@ -115,9 +108,9 @@ export default function Sessions() {
         );
     }, [currentObjective]);
 
-    /* React.useEffect(() => {
+    React.useEffect(() => {
         setLoading(false); // sets as loaded
-    }, [currentObjective]); */
+    }, []);
 
     let currentObjectiveSustantivizedName: string = "Doing something"; // Default value
 
@@ -324,7 +317,6 @@ export default function Sessions() {
         ["Maximum Speed", "more than 16.1 km/h"],
     ];
 
-    /*
     if (loading) {
         return (
             <Native.View
@@ -350,9 +342,8 @@ export default function Sessions() {
             </Native.View>
         );
     }
-    */
 
-    if (!currentObjective)
+    if (!currentObjective) {
         return (
             <Native.View>
                 <BetterText fontSize={20} fontWeight="Regular">
@@ -360,6 +351,7 @@ export default function Sessions() {
                 </BetterText>
             </Native.View>
         );
+    }
 
     return (
         <Native.View
