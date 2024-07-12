@@ -5,12 +5,13 @@ import * as React from "react";
 import * as Native from "react-native";
 import * as Router from "expo-router";
 import BetterText from "@/components/BetterText";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
 import { termLog } from "./DeveloperInterface";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import Button from "@/components/Buttons";
+import * as ObjectiveToolkit from "@/components/toolkit/objectives";
 
 // TypeScript, supongo.
 import { Objective } from "@/components/types/Objective";
@@ -37,8 +38,7 @@ const styles = Native.StyleSheet.create({
 export default function Sessions() {
     const [loading, setLoading] = React.useState<boolean>(true);
     const params = Router.useGlobalSearchParams();
-    const id = params as { id: string };
-    const objectiveIdentifier = Number(id);
+    const objectiveIdentifier = params.id ? Number(params.id) : null;
     const [objectives, setObjectives] = React.useState<Objective[] | null>(
         null
     );
@@ -46,27 +46,12 @@ export default function Sessions() {
     React.useEffect(() => {
         const fetchObjectives = async () => {
             try {
-                const allObjectives = await AsyncStorage.getItem("objectives");
-                if (allObjectives) {
-                    const parsedObjectives: Objective[] =
-                        JSON.parse(allObjectives);
-                    setObjectives(parsedObjectives);
-                    setLoading(false);
-                } else {
-                    await AsyncStorage.setItem(
-                        "objectives",
-                        JSON.stringify([])
-                    );
-                    termLog(
-                        "LOG 1 (:75) - Fetch error! Data not found.",
-                        "error"
-                    );
-                    setObjectives([]);
-                    setLoading(false);
-                }
+                const objectives =
+                    await ObjectiveToolkit.fetchObjectives("object");
+                setObjectives(objectives);
+                setLoading(false);
             } catch (e) {
-                termLog("LOG 2 (:82) - Fetch error! " + e, "error");
-                setObjectives([]);
+                termLog("LOG 1 (:53) - Fetch error! " + e, "error");
             }
         };
 
@@ -74,12 +59,12 @@ export default function Sessions() {
     }, []);
 
     React.useEffect(() => {
-        termLog("LOG 3 (:97) - Objectives: " + objectives, "log");
+        termLog("LOG 2 (:63) - Objectives: " + objectives, "log");
         termLog(
-            "LOG 4 (:98) - Objectives state: " + JSON.stringify(objectives),
+            "LOG 3 (:64) - Objectives state: " + JSON.stringify(objectives),
             "log"
         );
-        termLog("LOG 5 (:99) - Current ID: " + objectiveIdentifier, "log");
+        termLog("LOG 4 (:68) - Current ID: " + objectiveIdentifier, "log");
     }, [objectives, objectiveIdentifier]);
 
     const currentObjective = objectives
@@ -178,63 +163,17 @@ export default function Sessions() {
     const finish = async () => {
         const updateObj = async (id: number) => {
             try {
-                const storedObjs = await AsyncStorage.getItem("objectives");
-
-                if (storedObjs) {
-                    try {
-                        console.log(
-                            "storedObjs BEFORE 2ND JSON.PARSE",
-                            storedObjs
-                        );
-                        const parsedObjs: { [key: string]: Objective } =
-                            JSON.parse(storedObjs);
-                        console.log(
-                            "parsedObjs BEFORE 2ND JSON.PARSE",
-                            parsedObjs
-                        );
-                        const updatedObjs = { ...parsedObjs };
-                        console.log(
-                            "updatedObjs BEFORE 2ND JSON.PARSE",
-                            updatedObjs
-                        );
-
-                        if (updatedObjs[id]) {
-                            updatedObjs[id] = {
-                                ...updatedObjs[id],
-                                wasDone: true,
-                            };
-                        }
-                        await AsyncStorage.setItem(
-                            "objectives",
-                            JSON.stringify(updatedObjs)
-                        );
-                        termLog(
-                            "LOG 7 (:215) - Objectives (OBJS) updated and saved successfully!",
-                            "success"
-                        );
-                        Router.router.navigate("/");
-                        if (Native.Platform.OS === "android") {
-                            Native.ToastAndroid.show(
-                                messageForSessionCompleted,
-                                Native.ToastAndroid.LONG
-                            );
-                        }
-                    } catch (e) {
-                        termLog(
-                            "LOG 8 (:227) - Error parsing objectives (OBJS) for update: " +
-                                e,
-                            "error"
-                        );
-                    }
-                } else {
-                    termLog(
-                        "LOG 9 (:232) - No objectives (OBJS) found!",
-                        "error"
+                ObjectiveToolkit.markObjectiveAsDone(id);
+                if (Native.Platform.OS === "android") {
+                    Native.ToastAndroid.show(
+                        messageForSessionCompleted,
+                        Native.ToastAndroid.LONG
                     );
                 }
             } catch (e) {
                 termLog(
-                    "LOG 10 (:256) - Error updating objectives (OBJS): " + e,
+                    "LOG 8 (:176) - Error parsing objectives (OBJS) for update: " +
+                        e,
                     "error"
                 );
             }
@@ -242,6 +181,7 @@ export default function Sessions() {
 
         if (currentObjective) {
             await updateObj(currentObjective.identifier);
+            Router.router.navigate("/");
         }
     };
 

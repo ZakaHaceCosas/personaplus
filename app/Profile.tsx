@@ -226,8 +226,21 @@ export default function Profile() {
 
     const deleteAll = async () => {
         try {
-            await AsyncStorage.clear();
-            Router.router.navigate("/WelcomeScreen");
+            await AsyncStorage.multiRemove([
+                "age",
+                "weight",
+                "height",
+                "username",
+                "useDevTools",
+                "hasLaunched",
+                "sleep",
+                "pushupTime",
+                "gender",
+                "focuspoint",
+                "activness",
+            ]);
+            await AsyncStorage.setItem("objectives", JSON.stringify([]));
+            Router.router.navigate("/");
             termLog("DEV CLEARED ALL", "log");
         } catch (e) {
             termLog(String(e), "error");

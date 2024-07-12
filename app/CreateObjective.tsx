@@ -1,6 +1,6 @@
 // components/Form.tsx
 // Formulario con select, array de toggles, increment/decrement para duration, repetitions, rests y rest duration
-
+// import "react-native-get-random-values";
 import * as React from "react";
 import * as Native from "react-native";
 import BetterText from "@/components/BetterText";
@@ -11,6 +11,8 @@ import * as Router from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { termLog } from "./DeveloperInterface";
 import Notification from "@/components/Notification";
+// import { v4 as uuid } from "uuid";
+// if you wonder what is UUID doing here, well - after a problem with duplicate IDs i wanted to try this as a solution, but I simply don't like to have such a big ID with letters and dashes, would have to redo some types and stuff.
 
 // TypeScript, supongo
 interface FormProps {
@@ -231,13 +233,13 @@ export default function Form({ onSubmit }: FormProps) {
             rests,
             restDuration,
             extra: {
-                amount: amount,
-                lifts: lifts,
-                liftWeight: liftWeight,
-                hands: hands,
+                amount,
+                lifts,
+                liftWeight,
+                hands,
                 time: timeToPushUp,
-                speed: speed,
-                barWeight: barWeight,
+                speed,
+                barWeight,
             },
             wasDone: false,
         };
@@ -248,17 +250,23 @@ export default function Form({ onSubmit }: FormProps) {
             let objs: FormData[] = [];
 
             if (storedObjectives !== null) {
-                const parsedObjs = JSON.parse(storedObjectives);
-                if (Array.isArray(parsedObjs)) {
-                    objs = parsedObjs;
-                }
+                objs = JSON.parse(storedObjectives);
             }
 
-            const newIdentifier = objs.length;
+            const generateObjectiveId = (): number => {
+                return Math.floor(Math.random() * 9000000000) + 1000000000;
+            };
+
+            let newIdentifier: number;
+            do {
+                newIdentifier = generateObjectiveId();
+            } while (objs.some(obj => obj.identifier === newIdentifier));
+
             const finalObjective: FormData = {
                 ...formData,
                 identifier: newIdentifier,
             };
+
             const finalObjectives = [...objs, finalObjective];
 
             await AsyncStorage.setItem(
@@ -272,6 +280,7 @@ export default function Form({ onSubmit }: FormProps) {
                     Native.ToastAndroid.SHORT
                 );
             }
+
             Router.router.push("/Dashboard");
         } catch (e) {
             const log = "Could not create an objective, got error: " + e;

@@ -164,6 +164,11 @@ export default function Dashboard() {
                                     String(objective.restDuration) +
                                     " minutes.";
                             }
+                            descriptionDraft =
+                                descriptionDraft +
+                                (objective?.wasDone === true
+                                    ? "You've done this objective today."
+                                    : "You haven't done this objective today.");
 
                             const description: string =
                                 descriptionDraft +

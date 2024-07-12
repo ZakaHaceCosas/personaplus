@@ -29,7 +29,6 @@ const markObjectiveAsDone = async (identifier: number): Promise<void> => {
             obj.identifier === identifier ? { ...obj, wasDone: true } : obj
         );
         await saveObjectives(updatedObjectives);
-        // only if success
         Router.router.navigate("/")
         if (Native.Platform.OS === "android") {
             Native.ToastAndroid.show(
