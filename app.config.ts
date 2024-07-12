@@ -28,9 +28,6 @@ const config: ExpoConfig.ExpoConfig = {
     assetBundlePatterns: [
         "**/*"
     ],
-    ios: {
-        supportsTablet: true
-    },
     android: {
         adaptiveIcon: {
             foregroundImage: "./assets/adaptive-icon-foreground.png",
@@ -43,11 +40,24 @@ const config: ExpoConfig.ExpoConfig = {
             "android.permission.SCHEDULE_EXACT_ALARM",
             "android.permission.POST_NOTIFICATIONS",
             "android.permission.RECEIVE_BOOT_COMPLETED"
-        ]
+        ],
+        versionCode: 20,
+        backgroundColor: "#0E1013"
     },
     web: {
         favicon: "./assets/favicon.png",
         bundler: "metro"
+    },
+    privacy: "public",
+    androidStatusBar: {
+        barStyle: "light-content",
+        hidden: false,
+        translucent: false,
+        backgroundColor: "#0E1013"
+    },
+    androidNavigationBar: {
+        barStyle: "light-content",
+        backgroundColor: "#0E1013",
     },
     plugins: [
         "expo-build-properties",
