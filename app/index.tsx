@@ -13,29 +13,12 @@ import Button from "@/components/Buttons";
 import GapView from "@/components/GapView";
 import Footer from "@/components/Footer";
 import { termLog } from "@/app/DeveloperInterface";
+import { markObjectiveAsDone } from "@/components/toolkit/objectives";
 // import useNotification from "@/components/hooks/useNotification";
 import * as Notification from "expo-notifications";
 
 // TypeScript, supongo
-interface Objective {
-    days: boolean[];
-    duration: number;
-    exercise: string;
-    extra: {
-        amount: number;
-        barWeight: number;
-        hands: number;
-        liftWeight: number;
-        lifts: number;
-        speed: number;
-        time: number;
-    };
-    id: number;
-    repetitions: number;
-    restDuration: number;
-    rests: number;
-    wasDone: boolean;
-}
+import { Objective } from "@/components/types/Objective";
 
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
@@ -139,7 +122,7 @@ export default function Home() {
         const multiFetch = async () => {
             const items = await AsyncStorage.multiGet([
                 "username",
-                "objs",
+                "objectives",
                 "hasLaunched",
             ]);
             if (items) {
@@ -156,7 +139,7 @@ export default function Home() {
             } else {
                 termLog("Fetch error!", "error");
                 setUsername("Unknown");
-                setObjectives(JSON.parse("{}"));
+                setObjectives(JSON.parse("[]"));
                 setLoading(false);
             }
         };
@@ -179,73 +162,6 @@ export default function Home() {
     };
 
     console.log(objectives);
-
-    const markObjectiveAsDone = async (id: number): Promise<void> => {
-        try {
-            if (objectives !== null) {
-                try {
-                    if (Array.isArray(objectives)) {
-                        const updatedObjectives = [...objectives];
-
-                        const objectiveIndex = updatedObjectives.findIndex(
-                            objective => objective.id === id
-                        );
-
-                        if (objectiveIndex !== -1) {
-                            updatedObjectives[objectiveIndex] = {
-                                ...updatedObjectives[objectiveIndex],
-                                wasDone: true,
-                            };
-
-                            const updatedObjectivesObject =
-                                updatedObjectives.reduce(
-                                    (acc, objective) => {
-                                        acc[objective.id] = objective;
-                                        return acc;
-                                    },
-                                    {} as { [key: number]: Objective }
-                                );
-
-                            try {
-                                await AsyncStorage.setItem(
-                                    "objs",
-                                    JSON.stringify(updatedObjectivesObject)
-                                );
-
-                                setObjectives(updatedObjectivesObject);
-
-                                termLog(
-                                    "Objectives (OBJS) updated and saved successfully!",
-                                    "success"
-                                );
-
-                                Router.router.replace("/");
-                            } catch (e) {
-                                const log = `Could not save objectives (OBJS) to AsyncStorage: ${e}`;
-                                termLog(log, "error");
-                            }
-                        } else {
-                            termLog(
-                                `Objective with id ${id} not found!`,
-                                "error"
-                            );
-                        }
-                    } else {
-                        termLog("Objectives is not an array!", "error");
-                        console.log(objectives);
-                    }
-                } catch (e) {
-                    const log = `Could not process objectives array: ${e}`;
-                    termLog(log, "error");
-                }
-            } else {
-                termLog("Objectives is null!", "error");
-            }
-        } catch (e) {
-            const log = `Could not update objectives (OBJS) due to error: ${e}`;
-            termLog(log, "error");
-        }
-    };
 
     // i got creative :]
     // commits / PRs that add more stuff will of course be taken into account
@@ -375,7 +291,7 @@ export default function Home() {
                             Object.keys(objectives).map(key => {
                                 const obj = objectives[key];
                                 termLog(
-                                    `OBJ ${obj.id}, days[${adjustedToday}]: ${obj.days[adjustedToday]}`,
+                                    `OBJ ${obj.identifier}, days[${adjustedToday}]: ${obj.days[adjustedToday]}`,
                                     "log"
                                 );
 
@@ -386,7 +302,7 @@ export default function Home() {
                                 ) {
                                     return (
                                         <Division
-                                            key={obj.id}
+                                            key={obj.identifier}
                                             status="REGULAR"
                                             preheader="ACTIVE OBJECTIVE"
                                             header={obj.exercise}
@@ -395,7 +311,7 @@ export default function Home() {
                                                 style="ACE"
                                                 action={() =>
                                                     startSessionFromObjective(
-                                                        obj.id
+                                                        obj.identifier
                                                     )
                                                 }
                                                 buttonText="Let's go!"
@@ -403,7 +319,9 @@ export default function Home() {
                                             <Button
                                                 style="GOD"
                                                 action={() =>
-                                                    markObjectiveAsDone(obj.id)
+                                                    markObjectiveAsDone(
+                                                        obj.identifier
+                                                    )
                                                 }
                                                 buttonText="Already done it"
                                             />

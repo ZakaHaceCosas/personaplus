@@ -13,25 +13,7 @@ import { version as ReactVersion } from "react";
 import { version as PersonaPlusVersion } from "@/package.json";
 
 // TypeScript, supongo
-interface Objective {
-    days: boolean[];
-    duration: number;
-    exercise: string;
-    extra: {
-        amount: number;
-        barWeight: number;
-        hands: number;
-        liftWeight: number;
-        lifts: number;
-        speed: number;
-        time: number;
-    };
-    id: number;
-    repetitions: number;
-    restDuration: number;
-    rests: number;
-    wasDone: boolean;
-}
+import { Objective } from "@/components/types/Objective";
 
 interface Log {
     message: string;
@@ -195,15 +177,18 @@ export default function DeveloperInterface() {
     React.useEffect(() => {
         const fetchObjectives = async () => {
             try {
-                const storedObjs = await AsyncStorage.getItem("objs");
+                const storedObjs = await AsyncStorage.getItem("objectives");
                 if (storedObjs) {
                     setObjs(JSON.parse(storedObjs));
                     termLog("Objectives (OBJS) fetched and parsed!", "success");
                 } else {
-                    await AsyncStorage.setItem("objs", JSON.stringify({}));
-                    setObjs({});
+                    await AsyncStorage.setItem(
+                        "objectives",
+                        JSON.stringify([])
+                    );
+                    setObjs(JSON.parse("[]"));
                     termLog(
-                        "Could not get objectives (OBJS) fetched! Setting them to an empty array ( {} )",
+                        "Could not get objectives (OBJS) fetched! Setting them to an empty array ( [] )",
                         "warn"
                     );
                 }
@@ -220,7 +205,7 @@ export default function DeveloperInterface() {
 
     const devFCclearobjs = async () => {
         try {
-            await AsyncStorage.setItem("objs", "");
+            await AsyncStorage.setItem("objectives", "");
             console.log("DEV CLEARED OBJS");
             termLog("DEV CLEARED OBJS", "log");
             Router.router.navigate("/");
@@ -240,7 +225,7 @@ export default function DeveloperInterface() {
                 "height",
                 "weight",
                 "focuspoint",
-                "objs",
+                "objectives",
                 "username",
                 "sleep",
             ]);
