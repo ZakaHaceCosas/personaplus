@@ -15,25 +15,7 @@ import Button from "@/components/Buttons";
 import { termLog } from "./DeveloperInterface";
 
 // TypeScript, supongo
-interface Objective {
-    days: boolean[];
-    duration: number;
-    exercise: string;
-    extra: {
-        amount: number;
-        barWeight: number;
-        hands: number;
-        liftWeight: number;
-        lifts: number;
-        speed: number;
-        time: number;
-    };
-    id: number;
-    repetitions: number;
-    restDuration: number;
-    rests: number;
-    wasDone: boolean;
-}
+import { Objective } from "@/components/types/Objective";
 
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
@@ -61,16 +43,20 @@ export default function Dashboard() {
     React.useEffect(() => {
         const fetchObjectives = async () => {
             try {
-                const storedObjectives = await AsyncStorage.getItem("objs");
+                const storedObjectives =
+                    await AsyncStorage.getItem("objectives");
                 if (storedObjectives) {
                     setObjectives(JSON.parse(storedObjectives));
                     termLog("Objectives (OBJS) fetched and parsed!", "success");
                     setLoading(false);
                 } else {
-                    await AsyncStorage.setItem("objs", JSON.stringify({}));
-                    setObjectives({});
+                    await AsyncStorage.setItem(
+                        "objectives",
+                        JSON.stringify([])
+                    );
+                    setObjectives([]);
                     termLog(
-                        "Could not get objectives (OBJS) fetched! Setting them to an empty array ( {} )",
+                        "Could not get objectives (OBJS) fetched! Setting them to an empty array ( [] )",
                         "warn"
                     );
                 }
@@ -94,15 +80,15 @@ export default function Dashboard() {
     const deleteObjective = async (id: number): Promise<void> => {
         try {
             if (objectives !== null) {
-                const updatedObjectives: { [key: string]: Objective } = {};
+                const updatedObjectives: { [key: string]: Objective } = [];
                 Object.keys(objectives).forEach(key => {
                     const obj = objectives[key];
-                    if (obj.id !== id) {
+                    if (obj.identifier !== id) {
                         updatedObjectives[key] = obj;
                     }
                 });
                 await AsyncStorage.setItem(
-                    "objs",
+                    "objectives",
                     JSON.stringify(updatedObjectives)
                 );
 
@@ -198,11 +184,11 @@ export default function Dashboard() {
                             const description: string =
                                 descriptionDraft +
                                 "\nID (just for the app): " +
-                                String(objective.id) +
+                                String(objective.identifier) +
                                 ".";
 
                             return (
-                                <Native.View key={objective.id}>
+                                <Native.View key={objective.identifier}>
                                     <Division
                                         status="REGULAR"
                                         preheader="ACTIVE OBJECTIVE"
@@ -212,7 +198,9 @@ export default function Dashboard() {
                                         <Button
                                             style="WOR"
                                             action={() =>
-                                                deleteObjective(objective.id)
+                                                deleteObjective(
+                                                    objective.identifier
+                                                )
                                             }
                                             buttonText="Remove"
                                         />

@@ -16,9 +16,15 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - PD: Los logs serán en inglés, siempre.
 
+## 0.0.1-R5-b21
+
+- Fixed a _stupid_ mistake: sometimes THIS `{}` was used as an "array" instead of THIS `[]`, causing problems with objectives and their logic.
+
 ## 0.0.1-R5-b20
 
 - Started working on the logic - as a side project: "OpenHealth".
+- Now objectives' type is global (`components/types/Objective.ts`). Some of the functions related to them have been made global aswell (`components/toolkit/objectives.ts`).
+- Finally (in favour of code-understandability) decided to rename the AsyncStorage item "objs" to "objectives".
 
 > [!INFO]
 > **What does that even mean?**
@@ -78,7 +84,7 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 
 > [!NOTE]
 >
-> ### **FIXED ERRORS - Latest**
+> ### **FIXED ERRORS - b20**
 >
 > - Fixed WelcomeScreen redirecting to the beginning again instead of the homepage on submit.
 >
@@ -92,10 +98,15 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 ---
 > [!NOTE]
 >
-> ### **KNOWN ERRORS - Latest**
+> ### **KNOWN ERRORS - b20**
 >
 > - Wrong Welcome Screen layout (not centered).
 > - Sessions work perfectly on Expo Go, but crash the production APK.
+
+Note:
+
+> [!WARNING]
+> I finally got someone to test the app, and turns out most of the stuff doesn't even work. Working on it.
 
 ## 0.0.1-R5-b19
 

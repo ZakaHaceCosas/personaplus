@@ -11,6 +11,10 @@ import GapView from "@/components/GapView";
 import { termLog } from "./DeveloperInterface";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import Button from "@/components/Buttons";
+
+// TypeScript, supongo.
+import { Objective } from "@/components/types/Objective";
+
 // Estilos
 const styles = Native.StyleSheet.create({
     helpcontainer: {
@@ -30,27 +34,6 @@ const styles = Native.StyleSheet.create({
     },
 });
 
-// TypeScript, supongo.
-interface Objective {
-    days: boolean[];
-    duration: number;
-    exercise: string;
-    extra: {
-        amount: number;
-        barWeight: number;
-        hands: number;
-        liftWeight: number;
-        lifts: number;
-        speed: number;
-        time: number;
-    };
-    id: number;
-    repetitions: number;
-    restDuration: number;
-    rests: number;
-    wasDone: boolean;
-}
-
 export default function Sessions() {
     const [loading, setLoading] = React.useState<boolean>(true);
     const params = Router.useGlobalSearchParams();
@@ -63,14 +46,17 @@ export default function Sessions() {
     React.useEffect(() => {
         const fetchObjectives = async () => {
             try {
-                const allObjectives = await AsyncStorage.getItem("objs");
+                const allObjectives = await AsyncStorage.getItem("objectives");
                 if (allObjectives) {
                     const parsedObjectives: Objective[] =
                         JSON.parse(allObjectives);
                     setObjectives(parsedObjectives);
                     setLoading(false);
                 } else {
-                    await AsyncStorage.setItem("objs", JSON.stringify([]));
+                    await AsyncStorage.setItem(
+                        "objectives",
+                        JSON.stringify([])
+                    );
                     termLog(
                         "LOG 1 (:75) - Fetch error! Data not found.",
                         "error"
@@ -97,7 +83,7 @@ export default function Sessions() {
     }, [objectives, objectiveIdentifier]);
 
     const currentObjective = objectives
-        ? objectives.find(obj => obj.id === objectiveIdentifier)
+        ? objectives.find(obj => obj.identifier === objectiveIdentifier)
         : null;
 
     React.useEffect(() => {
@@ -192,7 +178,7 @@ export default function Sessions() {
     const finish = async () => {
         const updateObj = async (id: number) => {
             try {
-                const storedObjs = await AsyncStorage.getItem("objs");
+                const storedObjs = await AsyncStorage.getItem("objectives");
 
                 if (storedObjs) {
                     try {
@@ -219,7 +205,7 @@ export default function Sessions() {
                             };
                         }
                         await AsyncStorage.setItem(
-                            "objs",
+                            "objectives",
                             JSON.stringify(updatedObjs)
                         );
                         termLog(
@@ -255,7 +241,7 @@ export default function Sessions() {
         };
 
         if (currentObjective) {
-            await updateObj(currentObjective.id);
+            await updateObj(currentObjective.identifier);
         }
     };
 

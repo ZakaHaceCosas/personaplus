@@ -78,7 +78,7 @@ export default function Layout() {
 
     return (
         <Native.ScrollView style={styles.mainview}>
-            <StatusBar style="light" />
+            <StatusBar style="light" animated={true} />
             <Router.Slot />
         </Native.ScrollView>
     );

@@ -18,6 +18,9 @@ interface FormProps {
 }
 
 interface FormData {
+    identifier: number;
+    days: boolean[];
+    duration: number;
     exercise:
         | "Push Up"
         | "Lifting"
@@ -25,30 +28,27 @@ interface FormData {
         | "Walking"
         | "Meditation"
         | string;
-    days: boolean[];
-    duration: number;
+    extra: {
+        /* PUSH-UP */
+        amount: number; // Amount of pushups
+        // hands?: 1 | 2; // Wether they are made with only one hand or two. Commented as lifting uses the exact same value - we can recycle it :]
+        time: number; // Estimatedly, how much does the user take to make a push-up.
+        /* LIFTING */
+        lifts: number; // How many lifts
+        liftWeight: number; // Weight in KG per weight
+        barWeight: number; // Weight in KG of the bar
+        hands: number; // You know there are weights that are for one hand and then there are those big weights that require both hands to be lifted cause' they are so long? Depending on what you're using, this specifies the "amount of hands" you're using (basically the total weight of what you're lifting will be multiplied by this)
+        /* RUNNING */
+        speed: number; // In kilometers per hour, how fast the user wants to run. Of course, estimatedly.
+        /* WALKING */
+        // Nothing for this - just speed, which is already declared.
+        /* MEDITATION */
+        // Nothing for this
+    };
     repetitions: number;
-    rests: number;
     restDuration: number;
-    extra?: object;
-}
-
-interface Extra {
-    /* PUSH-UP */
-    amount?: number; // Amount of pushups
-    // hands?: 1 | 2; // Wether they are made with only one hand or two. Commented as lifting uses the exact same value - we can recycle it :]
-    time?: number; // Estimatedly, how much does the user take to make a push-up.
-    /* LIFTING */
-    lifts?: number; // How many lifts
-    liftWeight?: number; // Weight in KG per weight
-    barWeight?: number; // Weight in KG of the bar
-    hands?: number; // You know there are weights that are for one hand and then there are those big weights that require both hands to be lifted cause' they are so long? Depending on what you're using, this specifies the "amount of hands" you're using (basically the total weight of what you're lifting will be multiplied by this)
-    /* RUNNING */
-    speed?: number; // In kilometers per hour, how fast the user wants to run. Of course, estimatedly.
-    /* WALKING */
-    // Nothing for this - just speed, which is already declared.
-    /* MEDITATION */
-    // Nothing for this
+    rests: number;
+    wasDone: boolean;
 }
 
 // Creamos los estilos
@@ -127,17 +127,6 @@ export default function Form({ onSubmit }: FormProps) {
 
     const speedString = speedOptions[speed][0];
     const exactSpeedString = speedOptions[speed][1];
-
-    // eslint-disable-next-line
-    let extra: Extra = {
-        amount: amount,
-        time: timeToPushUp,
-        lifts: lifts,
-        liftWeight: liftWeight,
-        barWeight: barWeight,
-        hands: hands,
-        speed: speed,
-    };
 
     const handleChangeDay = (index: number) => {
         const newDays = [...days];
@@ -234,36 +223,28 @@ export default function Form({ onSubmit }: FormProps) {
     };
 
     const handleSubmit = async () => {
-        const formData: FormData = {
+        const formData: Omit<FormData, "identifier"> = {
             exercise,
             days,
             duration,
             repetitions,
             rests,
             restDuration,
-            extra,
+            extra: {
+                amount: amount,
+                lifts: lifts,
+                liftWeight: liftWeight,
+                hands: hands,
+                time: timeToPushUp,
+                speed: speed,
+                barWeight: barWeight,
+            },
+            wasDone: false,
         };
 
         try {
-            await processData(formData);
-            if (Native.Platform.OS === "android") {
-                Native.ToastAndroid.show(
-                    "Created your objective successfully!",
-                    Native.ToastAndroid.SHORT
-                );
-            }
-            Router.router.push("/Dashboard");
-        } catch (e) {
-            const log = "Could not create an objective, got error: " + e;
-            termLog(log, "error");
-        }
-    };
-
-    const processData = async (formData: FormData) => {
-        try {
-            const newObjective: object = formData;
             const storedObjectives: string | null =
-                await AsyncStorage.getItem("objs");
+                await AsyncStorage.getItem("objectives");
             let objs: FormData[] = [];
 
             if (storedObjectives !== null) {
@@ -273,34 +254,27 @@ export default function Form({ onSubmit }: FormProps) {
                 }
             }
 
-            const identifiers = objs
-                // disabling eslint due to "any" type getting disliked :[
-                // eslint-disable-next-line
-                .filter((item: any) => item.id)
-                // eslint-disable-next-line
-                .map((item: any) => item.id);
-
-            const generateNewId = (): number => {
-                let newId = Math.floor(Math.random() * 1000) + 1;
-                while (identifiers.includes(newId)) {
-                    newId = Math.floor(Math.random() * 1000) + 1;
-                }
-                return newId;
-            };
-
-            const newId = generateNewId();
-            const finalObjective = {
-                ...newObjective,
-                id: newId,
-                wasDone: false,
+            const newIdentifier = objs.length;
+            const finalObjective: FormData = {
+                ...formData,
+                identifier: newIdentifier,
             };
             const finalObjectives = [...objs, finalObjective];
 
-            await AsyncStorage.setItem("objs", JSON.stringify(finalObjectives));
+            await AsyncStorage.setItem(
+                "objectives",
+                JSON.stringify(finalObjectives)
+            );
+
+            if (Native.Platform.OS === "android") {
+                Native.ToastAndroid.show(
+                    "Created your objective successfully!",
+                    Native.ToastAndroid.SHORT
+                );
+            }
+            Router.router.push("/Dashboard");
         } catch (e) {
-            const log =
-                "Got an error storing data while processing data to create an objective: " +
-                e;
+            const log = "Could not create an objective, got error: " + e;
             termLog(log, "error");
         }
     };
