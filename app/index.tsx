@@ -169,8 +169,8 @@ export default function Home() {
         Router.router.navigate("/CreateObjective");
     };
 
-    const startSessionFromObjective = (id: number): void => {
-        Router.router.navigate("/Sessions?id=" + id);
+    const startSessionFromObjective = (identifier: number): void => {
+        Router.router.navigate("/Sessions?id=" + identifier);
     };
 
     console.log(objectives);
