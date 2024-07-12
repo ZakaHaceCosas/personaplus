@@ -13,7 +13,7 @@ import Button from "@/components/Buttons";
 import GapView from "@/components/GapView";
 import Footer from "@/components/Footer";
 import { termLog } from "@/app/DeveloperInterface";
-import { markObjectiveAsDone } from "@/components/toolkit/objectives";
+import * as ObjectiveToolkit from "@/components/toolkit/objectives";
 // import useNotification from "@/components/hooks/useNotification";
 import * as Notification from "expo-notifications";
 
@@ -148,6 +148,18 @@ export default function Home() {
     }, []);
 
     const currentpage: string = Router.usePathname();
+
+    const handleMarkingObjectiveAsDone = async (identifier: number) => {
+        try {
+            await ObjectiveToolkit.markObjectiveAsDone(identifier);
+            const updatedObjectives =
+                await ObjectiveToolkit.fetchObjectives("object");
+            setObjectives(updatedObjectives);
+        } catch (e) {
+            const log: string = "Got an error updating, " + e;
+            termLog(log, "error");
+        }
+    };
 
     if (isFirstLaunch) {
         Router.router.push("/WelcomeScreen");
@@ -319,7 +331,7 @@ export default function Home() {
                                             <Button
                                                 style="GOD"
                                                 action={() =>
-                                                    markObjectiveAsDone(
+                                                    handleMarkingObjectiveAsDone(
                                                         obj.identifier
                                                     )
                                                 }
