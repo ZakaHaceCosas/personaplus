@@ -366,7 +366,7 @@ export default function Profile() {
                                 status="REGULAR"
                                 iconName={null}
                                 header="Check for updates"
-                                subheader="You are currently using 0.0.1-R5-b20."
+                                subheader="You are currently using 0.0.1-R5-b21."
                             >
                                 <Button
                                     style="ACE"
