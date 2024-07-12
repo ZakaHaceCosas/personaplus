@@ -19,12 +19,19 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 ## 0.0.1-R5-b21
 
 - Fixed a _stupid_ mistake: sometimes THIS `{}` was used as an "array" instead of THIS `[]`, causing problems with objectives and their logic.
+- Updated `app.config.ts` for Android behavior.
+- Updated Expo and added some packages that apparently were required but weren't installed (`expo-system-ui` and `expo-device`). Also added `expo-navigation-bar` to customise the Android navbar's behavior and `uuid` (currently unused).
+- Fixed the status bar not looking properly.
+- Now objectives' type is global (`components/types/Objective.ts`). Some of the functions related to them have been made global aswell (`components/toolkit/objectives.ts`). Types have been updated, by the way.
+  - This leaded to shorter, more readable code.
+- Finally (in favour of code-understandability) decided to rename the AsyncStorage item "objs" to "objectives".
+- Updated the ID system for objectives, now it works properly (and also, uses 10 digits instead of 3).
+- Changed back `AsyncStorage.clear()` with `multiRemove`, mainly because now objectives should be set as `[]` instead of `""` to "clear" them.
+- Now sessions should work properly.
 
 ## 0.0.1-R5-b20
 
 - Started working on the logic - as a side project: "OpenHealth".
-- Now objectives' type is global (`components/types/Objective.ts`). Some of the functions related to them have been made global aswell (`components/toolkit/objectives.ts`).
-- Finally (in favour of code-understandability) decided to rename the AsyncStorage item "objs" to "objectives".
 
 > [!INFO]
 > **What does that even mean?**
