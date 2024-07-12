@@ -183,31 +183,63 @@ export default function Home() {
     const markObjectiveAsDone = async (id: number): Promise<void> => {
         try {
             if (objectives !== null) {
-                const updatedObjectives = { ...objectives };
+                try {
+                    if (Array.isArray(objectives)) {
+                        const updatedObjectives = [...objectives];
 
-                if (updatedObjectives[id.toString()]) {
-                    updatedObjectives[id.toString()] = {
-                        ...updatedObjectives[id.toString()],
-                        wasDone: true,
-                    };
+                        const objectiveIndex = updatedObjectives.findIndex(
+                            objective => objective.id === id
+                        );
 
-                    await AsyncStorage.setItem(
-                        "objs",
-                        JSON.stringify(updatedObjectives)
-                    );
+                        if (objectiveIndex !== -1) {
+                            updatedObjectives[objectiveIndex] = {
+                                ...updatedObjectives[objectiveIndex],
+                                wasDone: true,
+                            };
 
-                    setObjectives(updatedObjectives);
+                            const updatedObjectivesObject =
+                                updatedObjectives.reduce(
+                                    (acc, objective) => {
+                                        acc[objective.id] = objective;
+                                        return acc;
+                                    },
+                                    {} as { [key: number]: Objective }
+                                );
 
-                    termLog(
-                        "Objectives (OBJS) updated and saved successfully!",
-                        "success"
-                    );
-                    Router.router.replace("/");
-                } else {
-                    termLog(`Objective with id ${id} not found!`, "error");
+                            try {
+                                await AsyncStorage.setItem(
+                                    "objs",
+                                    JSON.stringify(updatedObjectivesObject)
+                                );
+
+                                setObjectives(updatedObjectivesObject);
+
+                                termLog(
+                                    "Objectives (OBJS) updated and saved successfully!",
+                                    "success"
+                                );
+
+                                Router.router.replace("/");
+                            } catch (e) {
+                                const log = `Could not save objectives (OBJS) to AsyncStorage: ${e}`;
+                                termLog(log, "error");
+                            }
+                        } else {
+                            termLog(
+                                `Objective with id ${id} not found!`,
+                                "error"
+                            );
+                        }
+                    } else {
+                        termLog("Objectives is not an array!", "error");
+                        console.log(objectives);
+                    }
+                } catch (e) {
+                    const log = `Could not process objectives array: ${e}`;
+                    termLog(log, "error");
                 }
             } else {
-                termLog("Could not get objectives (OBJS) fetched!", "error");
+                termLog("Objectives is null!", "error");
             }
         } catch (e) {
             const log = `Could not update objectives (OBJS) due to error: ${e}`;

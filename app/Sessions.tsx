@@ -54,7 +54,8 @@ interface Objective {
 export default function Sessions() {
     const [loading, setLoading] = React.useState<boolean>(true);
     const params = Router.useGlobalSearchParams();
-    const { id } = params as { id: string };
+    const id = params as { id: string };
+    const objectiveIdentifier = Number(id);
     const [objectives, setObjectives] = React.useState<Objective[] | null>(
         null
     );
@@ -92,11 +93,11 @@ export default function Sessions() {
             "LOG 4 (:98) - Objectives state: " + JSON.stringify(objectives),
             "log"
         );
-        termLog("LOG 5 (:99) - Current ID: " + id, "log");
-    }, [objectives, id]);
+        termLog("LOG 5 (:99) - Current ID: " + objectiveIdentifier, "log");
+    }, [objectives, objectiveIdentifier]);
 
     const currentObjective = objectives
-        ? objectives.find(obj => obj.id.toString() === id)
+        ? objectives.find(obj => obj.id === objectiveIdentifier)
         : null;
 
     React.useEffect(() => {
@@ -211,9 +212,9 @@ export default function Sessions() {
                             updatedObjs
                         );
 
-                        if (updatedObjs[id.toString()]) {
-                            updatedObjs[id.toString()] = {
-                                ...updatedObjs[id.toString()],
+                        if (updatedObjs[id]) {
+                            updatedObjs[id] = {
+                                ...updatedObjs[id],
                                 wasDone: true,
                             };
                         }
