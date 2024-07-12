@@ -13,6 +13,7 @@ import Footer from "@/components/Footer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/components/Buttons";
 import { termLog } from "./DeveloperInterface";
+import * as ObjectiveToolkit from "@/components/toolkit/objectives";
 
 // TypeScript, supongo
 import { Objective } from "@/components/types/Objective";
@@ -54,7 +55,7 @@ export default function Dashboard() {
                         "objectives",
                         JSON.stringify([])
                     );
-                    setObjectives([]);
+                    setObjectives(JSON.parse("[]"));
                     termLog(
                         "Could not get objectives (OBJS) fetched! Setting them to an empty array ( [] )",
                         "warn"
@@ -77,41 +78,24 @@ export default function Dashboard() {
         fetchObjectives();
     }, []);
 
-    const deleteObjective = async (id: number): Promise<void> => {
+    const handleDeleteObjective = async (identifier: number) => {
         try {
-            if (objectives !== null) {
-                const updatedObjectives: { [key: string]: Objective } = [];
-                Object.keys(objectives).forEach(key => {
-                    const obj = objectives[key];
-                    if (obj.identifier !== id) {
-                        updatedObjectives[key] = obj;
-                    }
-                });
-                await AsyncStorage.setItem(
-                    "objectives",
-                    JSON.stringify(updatedObjectives)
-                );
-
-                if (Native.Platform.OS === "android") {
-                    Native.ToastAndroid.show(
-                        `Deleted objective ${id} successfully!`,
-                        Native.ToastAndroid.SHORT
-                    );
-                }
-                setObjectives(updatedObjectives);
-                Router.router.replace("/Dashboard");
-            } else {
-                termLog(
-                    "No objectives (OBJS) found - no way to delete.",
-                    "warn"
+            await ObjectiveToolkit.deleteObjective(identifier);
+            const updatedObjectives =
+                await ObjectiveToolkit.fetchObjectives("object");
+            setObjectives(updatedObjectives);
+            if (Native.Platform.OS === "android") {
+                Native.ToastAndroid.show(
+                    `Deleted objective ${identifier} successfully!`,
+                    Native.ToastAndroid.SHORT
                 );
             }
         } catch (e) {
-            const log = `Error removing objective, got the following: ${e}`;
+            const log: string = "Got an error updating, " + e;
             termLog(log, "error");
             if (Native.Platform.OS === "android") {
                 Native.ToastAndroid.show(
-                    `Got a React error deleting objective ${id} - ${e}`,
+                    `Got a React error deleting objective ${identifier} - ${e}`,
                     Native.ToastAndroid.LONG
                 );
             }
@@ -198,7 +182,7 @@ export default function Dashboard() {
                                         <Button
                                             style="WOR"
                                             action={() =>
-                                                deleteObjective(
+                                                handleDeleteObjective(
                                                     objective.identifier
                                                 )
                                             }
