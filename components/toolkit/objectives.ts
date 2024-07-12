@@ -44,4 +44,29 @@ const markObjectiveAsDone = async (identifier: number): Promise<void> => {
     }
 };
 
-export { deleteObjective, markObjectiveAsDone };
+// Funcion para obtener los objetivos tanto como cadena como como arreglo
+// eslint-disable-next-line
+const fetchObjectives = async (wayToGetThem: "object" | "string"): Promise<any> => {
+    try {
+        const objectives = await getObjectives();
+        let response: null | object | string = null;
+
+        if (objectives !== null) {
+            if (wayToGetThem === "object") {
+                response = objectives;
+            } else if (wayToGetThem === "string") {
+                response = JSON.stringify(objectives);
+            } else {
+                termLog("Invalid value for parameter wayToGetThem", "error");
+            }
+        }
+
+        return response;
+    } catch (e) {
+        const log: string = "Got an error fetching objectives! " + e;
+        termLog(log, "error");
+    }
+};
+
+
+export { deleteObjective, markObjectiveAsDone, fetchObjectives };
