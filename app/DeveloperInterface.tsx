@@ -12,6 +12,7 @@ import Button from "@/components/Buttons";
 import { version as ReactVersion } from "react";
 import { version as PersonaPlusVersion } from "@/package.json";
 import * as ObjectiveToolkit from "@/components/toolkit/objectives";
+import { isDevelopmentBuild } from "expo-dev-client";
 
 // TypeScript, supongo
 import { Objective } from "@/components/types/Objective";
@@ -69,10 +70,36 @@ interface Log {
     timestamp: number;
 }
 
-const globalLogs: Log[] = [];
+// Función para obtener logs desde AsyncStorage
+const getLogsFromStorage = async (): Promise<Log[]> => {
+    try {
+        const logsString = await AsyncStorage.getItem("globalLogs");
+        if (logsString) {
+            return JSON.parse(logsString);
+        }
+    } catch (error) {
+        console.error("Error fetching logs from AsyncStorage:", error);
+    }
+    return [];
+};
 
-const addLogToGlobal = (log: Log) => {
-    globalLogs.push(log);
+// Función para guardar logs en AsyncStorage
+const saveLogsToStorage = async (logs: Log[]) => {
+    try {
+        await AsyncStorage.setItem("globalLogs", JSON.stringify(logs));
+    } catch (error) {
+        console.error("Error saving logs to AsyncStorage:", error);
+    }
+};
+
+const addLogToGlobal = async (log: Log) => {
+    try {
+        const currentLogs = await getLogsFromStorage();
+        const updatedLogs = [...currentLogs, log];
+        await saveLogsToStorage(updatedLogs);
+    } catch (error) {
+        console.error("Error adding log to AsyncStorage:", error);
+    }
 };
 
 export const termLog = (
@@ -89,9 +116,14 @@ export default function DeveloperInterface() {
     const [logs, setLogs] = React.useState<Log[]>([]);
 
     React.useEffect(() => {
-        const updateLogs = (newLog: Log) => {
+        const fetchLogs = async () => {
+            const fetchedLogs = await getLogsFromStorage();
+            setLogs(fetchedLogs);
+        };
+
+        const updateLogs = async (newLog: Log) => {
             setLogs(prevLogs => [...prevLogs, newLog]);
-            addLogToGlobal(newLog);
+            await addLogToGlobal(newLog);
         };
 
         const originalConsoleLog = console.log;
@@ -127,6 +159,9 @@ export default function DeveloperInterface() {
             updateLogs(newLog);
             originalConsoleError(message, ...optionalParams);
         };
+
+        // Fetch logs on component mount
+        fetchLogs();
 
         return () => {
             console.log = originalConsoleLog;
@@ -166,11 +201,11 @@ export default function DeveloperInterface() {
                 "height",
                 "weight",
                 "focuspoint",
-                "objectives",
                 "username",
                 "sleep",
             ]);
-            Router.router.navigate("/WelcomeScreen");
+            await AsyncStorage.setItem("objectives", JSON.stringify([]));
+            Router.router.navigate("/");
             console.log("DEV CLEARED ALL");
             termLog("DEV CLEARED ALL", "log");
         } catch (e) {
@@ -178,6 +213,31 @@ export default function DeveloperInterface() {
             termLog(String(e), "error");
         }
     };
+
+    const [everything, setEverything] = React.useState<object | null>(null);
+
+    React.useEffect(() => {
+        const fetchAll = async () => {
+            try {
+                const e = await AsyncStorage.multiGet([
+                    "useDevTools",
+                    "hasLaunched",
+                    "age",
+                    "gender",
+                    "height",
+                    "weight",
+                    "focuspoint",
+                    "username",
+                    "sleep",
+                ]);
+                setEverything(e);
+            } catch (e) {
+                termLog("Error fetching all" + e, "error");
+            }
+        };
+
+        fetchAll();
+    }, []);
 
     return (
         <Native.View style={styles.containerview}>
@@ -196,8 +256,9 @@ export default function DeveloperInterface() {
                     fontWeight="Italic"
                     fontSize={15}
                 >
-                    Note: Currently many things here are broken / don&apos;t
-                    work properly. Will look onto that.
+                    {isDevelopmentBuild() === true
+                        ? "Using Development Build"
+                        : "Using a standard release"}
                 </BetterText>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
@@ -229,7 +290,7 @@ export default function DeveloperInterface() {
                 />
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
-                    Logs
+                    Objectives JSON
                 </BetterText>
                 <GapView height={5} />
                 <Native.View style={styles.consoleview}>
@@ -244,6 +305,24 @@ export default function DeveloperInterface() {
                 </Native.View>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
+                    All AsyncStorage items
+                </BetterText>
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={15}>
+                    item,value,otheritem,otheritemvalue...
+                </BetterText>
+                <GapView height={5} />
+                <Native.View style={styles.consoleview}>
+                    <BetterText
+                        fontWeight="Regular"
+                        textColor="#000"
+                        textAlign="normal"
+                        fontSize={15}
+                    >
+                        {String(everything)}
+                    </BetterText>
+                </Native.View>
+                <GapView height={20} />
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
                     Logs
                 </BetterText>
                 <GapView height={5} />
@@ -253,8 +332,9 @@ export default function DeveloperInterface() {
                             key={index}
                             style={[styles.logText, styles[log.type]]}
                         >
-                            [{new Date(log.timestamp).toLocaleTimeString()}] (
-                            {log.type.toUpperCase()}) {log.message}
+                            [{new Date(log.timestamp).toDateString()}{" "}
+                            {new Date(log.timestamp).toLocaleTimeString()}] (
+                            {log.type.toUpperCase()}) {log.message}{" "}
                         </Native.Text>
                     ))}
                 </Native.View>
