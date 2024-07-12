@@ -68,5 +68,16 @@ const fetchObjectives = async (wayToGetThem: "object" | "string"): Promise<any> 
     }
 };
 
+const clearObjectives = async () => {
+    try {
+        const objectives = await getObjectives();
+        if (objectives !== null) {
+            await AsyncStorage.setItem("objectives", JSON.stringify([]));
+        }
+    } catch (e) {
+        const log: string = "Got an error clearing objectives! " + e;
+        termLog(log, "error");
+    }
+};
 
-export { deleteObjective, markObjectiveAsDone, fetchObjectives };
+export { deleteObjective, markObjectiveAsDone, clearObjectives, fetchObjectives };

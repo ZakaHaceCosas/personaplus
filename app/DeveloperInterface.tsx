@@ -11,15 +11,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/components/Buttons";
 import { version as ReactVersion } from "react";
 import { version as PersonaPlusVersion } from "@/package.json";
+import * as ObjectiveToolkit from "@/components/toolkit/objectives";
 
 // TypeScript, supongo
 import { Objective } from "@/components/types/Objective";
-
-interface Log {
-    message: string;
-    type: "log" | "warn" | "error" | "success";
-    timestamp: number;
-}
 
 const styles = Native.StyleSheet.create({
     consoleview: {
@@ -68,56 +63,26 @@ const styles = Native.StyleSheet.create({
     },
 });
 
+interface Log {
+    message: string;
+    type: "log" | "warn" | "error" | "success";
+    timestamp: number;
+}
+
 const globalLogs: Log[] = [];
 
 const addLogToGlobal = (log: Log) => {
     globalLogs.push(log);
 };
 
-export const testLog = (
-    message: string,
-    type: "log" | "warn" | "error" | "success" = "log"
-) => {
-    const logMessage = message.toString();
-    const timestamp = Date.now();
-    const newLog: Log = { message: logMessage, type, timestamp };
-
-    addLogToGlobal(newLog);
-
-    console[type === "success" ? "log" : type](logMessage);
-
-    const prefix = {
-        success: "GOD",
-        error: "ERR",
-        warn: "WAR",
-        log: "LOG",
-    }[type];
-
-    console.log(`${prefix} ${message}`);
-};
-
 export const termLog = (
     message: string,
     type: "log" | "warn" | "error" | "success" = "log"
 ) => {
-    /*const styles = {
-        log: "font-weight: bold; background: #FFF; color: black; padding: 2px 4px; border-radius: 2px;",
-        success:
-            "font-weight: bold; background: #30FF97; color: black; padding: 2px 4px; border-radius: 2px;",
-        warn: "font-weight: bold; background: #FFD700; color: black; padding: 2px 4px; border-radius: 2px;",
-        error: "font-weight: bold; background: #FF3232; color: black; padding: 2px 4px; border-radius: 2px;",
-    }[type];
-
-    const prefix = {
-        log: "LOG",
-        success: "GOD",
-        warn: "WAR",
-        error: "ERR",
-    }[type];*/
-
-    // console.log(`%c${prefix}%c ${message}`, styles, "background: transparent;");
-    // testLog(message, type);
     console.log(message);
+    const timestamp = Date.now();
+    const newLog: Log = { message: message, type, timestamp };
+    addLogToGlobal(newLog);
 };
 
 export default function DeveloperInterface() {
@@ -177,21 +142,9 @@ export default function DeveloperInterface() {
     React.useEffect(() => {
         const fetchObjectives = async () => {
             try {
-                const storedObjs = await AsyncStorage.getItem("objectives");
-                if (storedObjs) {
-                    setObjs(JSON.parse(storedObjs));
-                    termLog("Objectives (OBJS) fetched and parsed!", "success");
-                } else {
-                    await AsyncStorage.setItem(
-                        "objectives",
-                        JSON.stringify([])
-                    );
-                    setObjs(JSON.parse("[]"));
-                    termLog(
-                        "Could not get objectives (OBJS) fetched! Setting them to an empty array ( [] )",
-                        "warn"
-                    );
-                }
+                const objectives =
+                    await ObjectiveToolkit.fetchObjectives("string");
+                setObjs(JSON.parse(objectives));
             } catch (e) {
                 const log = `Could not get objectives (OBJS) fetched due to error: ${e}`;
                 termLog(log, "error");
@@ -203,19 +156,7 @@ export default function DeveloperInterface() {
 
     const currentPage: string = Router.usePathname();
 
-    const devFCclearobjs = async () => {
-        try {
-            await AsyncStorage.setItem("objectives", "");
-            console.log("DEV CLEARED OBJS");
-            termLog("DEV CLEARED OBJS", "log");
-            Router.router.navigate("/");
-        } catch (e) {
-            console.error(e);
-            termLog(String(e), "error");
-        }
-    };
-
-    const devFCclearall = async () => {
+    const devFunctionToClearAll = async () => {
         try {
             await AsyncStorage.multiRemove([
                 "useDevTools",
@@ -276,13 +217,13 @@ export default function DeveloperInterface() {
                 />
                 <GapView height={5} />
                 <Button
-                    action={devFCclearobjs}
+                    action={ObjectiveToolkit.clearObjectives}
                     buttonText="CLEAR OBJECTIVES"
                     style="HMM"
                 />
                 <GapView height={5} />
                 <Button
-                    action={devFCclearall}
+                    action={devFunctionToClearAll}
                     buttonText="CLEAR ALL (Reset app, basically)"
                     style="WOR"
                 />
