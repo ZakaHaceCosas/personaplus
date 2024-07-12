@@ -127,7 +127,11 @@ export default function Home() {
             ]);
             if (items) {
                 setUsername(String(items[0][1]));
-                setObjectives(JSON.parse(String(items[1][1])));
+                if (items[1][1] !== null) {
+                    setObjectives(JSON.parse(String(items[1][1])));
+                } else {
+                    setObjectives(JSON.parse("[]"));
+                }
                 const hasLaunchedValue = items[2][1];
                 if (hasLaunchedValue === null || !hasLaunchedValue) {
                     await AsyncStorage.setItem("hasLaunched", "true");
