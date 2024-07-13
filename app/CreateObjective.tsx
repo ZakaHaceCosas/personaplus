@@ -11,46 +11,13 @@ import * as Router from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { termLog } from "./DeveloperInterface";
 import Notification from "@/components/Notification";
+import { Objective, ObjectiveWithoutId } from "@/components/types/Objective";
 // import { v4 as uuid } from "uuid";
 // if you wonder what is UUID doing here, well - after a problem with duplicate IDs i wanted to try this as a solution, but I simply don't like to have such a big ID with letters and dashes, would have to redo some types and stuff.
 
 // TypeScript, supongo
-interface FormProps {
-    onSubmit: (formData: FormData) => void;
-}
-
-interface FormData {
-    identifier: number;
-    days: boolean[];
-    duration: number;
-    exercise:
-        | "Push Up"
-        | "Lifting"
-        | "Running"
-        | "Walking"
-        | "Meditation"
-        | string;
-    extra: {
-        /* PUSH-UP */
-        amount: number; // Amount of pushups
-        // hands?: 1 | 2; // Wether they are made with only one hand or two. Commented as lifting uses the exact same value - we can recycle it :]
-        time: number; // Estimatedly, how much does the user take to make a push-up.
-        /* LIFTING */
-        lifts: number; // How many lifts
-        liftWeight: number; // Weight in KG per weight
-        barWeight: number; // Weight in KG of the bar
-        hands: number; // You know there are weights that are for one hand and then there are those big weights that require both hands to be lifted cause' they are so long? Depending on what you're using, this specifies the "amount of hands" you're using (basically the total weight of what you're lifting will be multiplied by this)
-        /* RUNNING */
-        speed: number; // In kilometers per hour, how fast the user wants to run. Of course, estimatedly.
-        /* WALKING */
-        // Nothing for this - just speed, which is already declared.
-        /* MEDITATION */
-        // Nothing for this
-    };
-    repetitions: number;
-    restDuration: number;
-    rests: number;
-    wasDone: boolean;
+interface ObjectiveProps {
+    onSubmit: (objectiveData: Objective) => void;
 }
 
 // Creamos los estilos
@@ -83,7 +50,7 @@ const styles = Native.StyleSheet.create({
     },
 });
 
-export default function Form({ onSubmit }: FormProps) {
+export default function Form({ onSubmit }: ObjectiveProps) {
     const [exercise, setExercise] = React.useState<string>("");
     const exercises = [
         "Push Up",
@@ -225,7 +192,7 @@ export default function Form({ onSubmit }: FormProps) {
     };
 
     const handleSubmit = async () => {
-        const formData: Omit<FormData, "identifier"> = {
+        const formData: ObjectiveWithoutId = {
             exercise,
             days,
             duration,
@@ -247,7 +214,7 @@ export default function Form({ onSubmit }: FormProps) {
         try {
             const storedObjectives: string | null =
                 await AsyncStorage.getItem("objectives");
-            let objs: FormData[] = [];
+            let objs: Objective[] = [];
 
             if (storedObjectives !== null) {
                 objs = JSON.parse(storedObjectives);
@@ -262,7 +229,7 @@ export default function Form({ onSubmit }: FormProps) {
                 newIdentifier = generateObjectiveId();
             } while (objs.some(obj => obj.identifier === newIdentifier));
 
-            const finalObjective: FormData = {
+            const finalObjective: Objective = {
                 ...formData,
                 identifier: newIdentifier,
             };
