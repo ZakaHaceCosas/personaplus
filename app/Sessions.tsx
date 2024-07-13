@@ -204,7 +204,7 @@ export default function Sessions() {
 
     const [isUserCheckingHelp, setIsUserCheckingHelp] = React.useState(false);
 
-    const toggleHelpMenu = () => {
+    const toggleHelpMenu = (): void => {
         setIsUserCheckingHelp(prev => !prev);
         toggleTimerStatus(!isUserCheckingHelp);
     };
