@@ -51,9 +51,10 @@ export default function Sessions() {
                 const objectives =
                     await ObjectiveToolkit.fetchObjectives("object");
                 setObjectives(objectives);
-                setLoading(false);
             } catch (e) {
                 termLog("LOG 1 (:53) - Fetch error! " + e, "error");
+            } finally {
+                setLoading(false); //  setLoading() in finally and not try, so in case of error the user doesnt get stuck on a Loading... screen
             }
         };
 
@@ -97,31 +98,29 @@ export default function Sessions() {
 
     let currentObjectiveSustantivizedName: string = "Doing something"; // Default value
 
-    if (currentObjective) {
-        switch (currentObjective.exercise) {
-            case "Meditation":
-                currentObjectiveSustantivizedName = "Meditating";
-                break;
-            case "Push Up":
-                currentObjectiveSustantivizedName = "Doing push ups";
-                break;
-            case "Lifting":
-                currentObjectiveSustantivizedName = "Lifting weights";
-                break;
-            case "Running":
-                currentObjectiveSustantivizedName = "Running";
-                break;
-            case "Walking":
-                currentObjectiveSustantivizedName = "Walking";
-                break;
-            default:
-                break;
-        }
+    switch (currentObjective?.exercise) {
+        case "Meditation":
+            currentObjectiveSustantivizedName = "Meditating";
+            break;
+        case "Push Up":
+            currentObjectiveSustantivizedName = "Doing push ups";
+            break;
+        case "Lifting":
+            currentObjectiveSustantivizedName = "Lifting weights";
+            break;
+        case "Running":
+            currentObjectiveSustantivizedName = "Running";
+            break;
+        case "Walking":
+            currentObjectiveSustantivizedName = "Walking";
+            break;
+        default:
+            break;
     }
 
     const [isTimerRunning, setTimerStatus] = React.useState(true);
 
-    const toggleTimerStatus = (manualTarget?: boolean) => {
+    const toggleTimerStatus = (manualTarget?: boolean): void => {
         if (manualTarget !== undefined) {
             setTimerStatus(manualTarget);
         } else {
@@ -177,15 +176,18 @@ export default function Sessions() {
         sessionCompletedMessages[sessionCompletedMessagesIndex];
 
     const finish = async () => {
-        const updateObj = async (id: number) => {
+        if (currentObjective) {
             try {
-                ObjectiveToolkit.markObjectiveAsDone(id);
+                await ObjectiveToolkit.markObjectiveAsDone(
+                    currentObjective.identifier
+                );
                 if (Native.Platform.OS === "android") {
                     Native.ToastAndroid.show(
                         messageForSessionCompleted,
                         Native.ToastAndroid.LONG
                     );
                 }
+                Router.router.navigate("/");
             } catch (e) {
                 termLog(
                     "LOG 8 (:176) - Error parsing objectives (OBJS) for update: " +
@@ -193,11 +195,6 @@ export default function Sessions() {
                     "error"
                 );
             }
-        };
-
-        if (currentObjective) {
-            await updateObj(currentObjective.identifier);
-            Router.router.navigate("/");
         }
     };
 
