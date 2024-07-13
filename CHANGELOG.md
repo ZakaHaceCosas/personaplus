@@ -19,15 +19,18 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 ## 0.0.1-R5-b21
 
 - Fixed a _stupid_ mistake: sometimes THIS `{}` was used as an "array" instead of THIS `[]`, causing problems with objectives and their logic.
-- Updated `app.config.ts` for Android behavior.
-- Updated Expo and added some packages that apparently were required but weren't installed (`expo-system-ui` and `expo-device`). Also added `expo-navigation-bar` to customise the Android navbar's behavior and `uuid` (currently unused).
+- Updated `app.config.ts` for Android stuff.
+- Updated Expo and added some packages that apparently were required but weren't installed (`expo-system-ui` and `expo-device`). Also added `expo-navigation-bar` to customise the Android navbar's behavior, and `expo-file-system` and `uuid`, which are (currently) unused.
 - Fixed the status bar not looking properly.
 - Now objectives' type is global (`components/types/Objective.ts`). Some of the functions related to them have been made global aswell (`components/toolkit/objectives.ts`). Types have been updated, by the way.
-  - This leaded to shorter, more readable code.
-- Finally (in favour of code-understandability) decided to rename the AsyncStorage item "objs" to "objectives".
+- Finally (in favour of code-understandability) decided to rename the AsyncStorage item used for objectives, from "`objs`" to "`objectives`".
 - Updated the ID system for objectives, now it works properly (and also, uses 10 digits instead of 3).
 - Changed back `AsyncStorage.clear()` with `multiRemove`, mainly because now objectives should be set as `[]` instead of `""` to "clear" them.
-- Now sessions should work properly.
+- Fixed issues in `index.tsx` with how objectives were fetched.
+- Now sessions **should** work properly.
+- Made improvements to code legibility.
+  - Specially thanks to the objective toolkit, many sections of the code are way shorter and easier to read.
+- Actually fixed `termLog()` and Dev interface.
 
 ## 0.0.1-R5-b20
 
