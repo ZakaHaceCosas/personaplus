@@ -21,7 +21,7 @@ const deleteObjective = async (identifier: number): Promise<void> => {
     await saveObjectives(updatedObjectives);
 };
 
-// Función para marcar un objetivo como 'wasDone: true' dado su identificador
+// Función para marcar un objetivo como completado dado su identificador
 const markObjectiveAsDone = async (identifier: number): Promise<void> => {
     try {
         const objectives = await getObjectives();
@@ -79,4 +79,17 @@ const clearObjectives = async () => {
     }
 };
 
-export { deleteObjective, markObjectiveAsDone, clearObjectives, fetchObjectives };
+// Función para obtener un objetivo dado su identificador
+const getObjectiveByIdentifier = async (identifier: number): Promise<Objective | null> => {
+    try {
+        const objectives = await getObjectives();
+        const objective = objectives.find(obj => obj.identifier === identifier);
+        return objective || null;
+    } catch (e) {
+        const log: string = "Got an error fetching the objective by identifier! " + e;
+        termLog(log, "error");
+        return null;
+    }
+};
+
+export { deleteObjective, markObjectiveAsDone, clearObjectives, fetchObjectives, getObjectiveByIdentifier };

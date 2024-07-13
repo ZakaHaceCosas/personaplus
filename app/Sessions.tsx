@@ -42,6 +42,8 @@ export default function Sessions() {
     const [objectives, setObjectives] = React.useState<Objective[] | null>(
         null
     );
+    const [currentObjective, setCurrentObjective] =
+        React.useState<Objective | null>(null);
 
     React.useEffect(() => {
         const fetchObjectives = async () => {
@@ -67,9 +69,23 @@ export default function Sessions() {
         termLog("LOG 4 (:68) - Current ID: " + objectiveIdentifier, "log");
     }, [objectives, objectiveIdentifier]);
 
-    const currentObjective = objectives
-        ? objectives.find(obj => obj.identifier === objectiveIdentifier)
-        : null;
+    React.useEffect(() => {
+        if (objectiveIdentifier !== null) {
+            const fetchCurrentObjective = async () => {
+                try {
+                    const objective =
+                        await ObjectiveToolkit.getObjectiveByIdentifier(
+                            objectiveIdentifier
+                        );
+                    setCurrentObjective(objective);
+                } catch (e) {
+                    termLog("Error fetching current objective: " + e, "error");
+                }
+            };
+
+            fetchCurrentObjective();
+        }
+    }, [objectiveIdentifier]);
 
     React.useEffect(() => {
         termLog(
