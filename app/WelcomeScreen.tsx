@@ -11,6 +11,7 @@ import BetterText from "@/components/BetterText";
 import { Picker as Select } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { termLog } from "./DeveloperInterface";
+import { useTranslation } from "react-i18next";
 
 // Definimos los estilos
 const styles = Native.StyleSheet.create({
@@ -42,6 +43,7 @@ const styles = Native.StyleSheet.create({
 
 // Definimos la función
 export default function WelcomePage() {
+    const { t } = useTranslation();
     const [language, setLanguage] = React.useState<"en" | "es">("en");
     const [currentTab, setTab] = React.useState(1);
     const [formData, setFormData] = React.useState({
@@ -74,7 +76,7 @@ export default function WelcomePage() {
     const focuspointoptions = [
         {
             value: "",
-            label: "(Choose an option)",
+            label: t("globals.select_placeholder"),
             default: true,
         },
         {
@@ -569,7 +571,7 @@ export default function WelcomePage() {
                         mode="dropdown"
                     >
                         <Select.Item
-                            label="Choose an option"
+                            label={t("globals.select_placeholder")}
                             value=""
                             color="#999"
                         />
@@ -601,7 +603,7 @@ export default function WelcomePage() {
                         mode="dropdown"
                     >
                         <Select.Item
-                            label="Choose an option"
+                            label={t("globals.select_placeholder")}
                             value=""
                             color="#999"
                         />
@@ -629,7 +631,7 @@ export default function WelcomePage() {
                         mode="dropdown"
                     >
                         <Select.Item
-                            label="Choose an option"
+                            label={t("globals.select_placeholder")}
                             value=""
                             color="#999"
                         />
@@ -657,7 +659,7 @@ export default function WelcomePage() {
                         mode="dropdown"
                     >
                         <Select.Item
-                            label="Choose an option"
+                            label={t("globals.select_placeholder")}
                             value=""
                             color="#999"
                         />

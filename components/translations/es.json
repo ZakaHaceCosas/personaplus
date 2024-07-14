@@ -118,7 +118,8 @@
         "remove": "Eliminar",
         "coming_soon": "¡Pronto disponible!",
         "enabled": "activado",
-        "disabled": "desactivado"
+        "disabled": "desactivado",
+        "select_placeholder": "Elige una opción"
     },
     "sections": {
         "headers": {
