@@ -7,6 +7,7 @@ import Swap from "@/components/Swap";
 import { termLog } from "./DeveloperInterface";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/components/Buttons";
+import { useTranslation } from "react-i18next";
 
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
@@ -32,6 +33,7 @@ const styles = Native.StyleSheet.create({
 
 // Creamos la función
 export default function UpdateProfile() {
+    const { t } = useTranslation();
     const [formData, setFormData] = React.useState({
         username: "",
         height: "",
@@ -104,7 +106,7 @@ export default function UpdateProfile() {
                     fontWeight="Light"
                     onTap={() => Router.router.navigate("/Profile")}
                 >
-                    {"<"} Go back
+                    {"<"} {t("globals.go_back")}
                 </BetterText>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
@@ -262,7 +264,7 @@ export default function UpdateProfile() {
                     <Button
                         style="DEFAULT"
                         action={() => Router.router.navigate("/Profile")}
-                        buttonText="Go back"
+                        buttonText={t("globals.go_back")}
                         width="fill"
                     />
                     <GapView width={15} />

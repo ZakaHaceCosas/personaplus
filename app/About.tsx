@@ -9,6 +9,7 @@ import * as Router from "expo-router";
 import Division from "@/components/section/division/Division";
 import Button from "@/components/Buttons";
 import GapView from "@/components/GapView";
+import { useTranslation } from "react-i18next";
 
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
@@ -29,6 +30,8 @@ const styles = Native.StyleSheet.create({
 
 // Creamos la función
 export default function Home() {
+    const { t } = useTranslation();
+
     return (
         <Native.View style={styles.containerview}>
             <Native.ScrollView style={styles.mainview}>
@@ -37,7 +40,7 @@ export default function Home() {
                     fontWeight="Light"
                     onTap={() => Router.router.navigate("/Profile")}
                 >
-                    {"<"} Go back
+                    {"<"} {t("globals.go_back")}
                 </BetterText>
                 <GapView height={20} />
                 <Native.View
