@@ -132,7 +132,7 @@ export default function Dashboard() {
         <Native.View style={styles.containerview}>
             <BottomNav currentLocation={currentpage} />
             <Native.ScrollView style={styles.mainview}>
-                <BetterText textAlign="normal" fontWeight="Bold" fontSize={40}>
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
                     {t("page_dashboard.header.label")}
                 </BetterText>
                 <BetterText
