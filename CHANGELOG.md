@@ -27,10 +27,29 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - Updated the ID system for objectives, now it works properly (and also, uses 10 digits instead of 3).
 - Changed back `AsyncStorage.clear()` with `multiRemove`, mainly because now objectives should be set as `[]` instead of `""` to "clear" them.
 - Fixed issues in `index.tsx` with how objectives were fetched.
-- Now sessions **should** work properly.
+- Now sessions work properly.
+  - Also added repetitions.
 - Made improvements to code legibility.
   - Specially thanks to the objective toolkit, many sections of the code are way shorter and easier to read.
 - Actually fixed `termLog()` and Dev interface.
+
+> [!NOTE]
+>
+> ### **FIXED ERRORS - Latest**
+>
+> - Fixed termLog() not making persistent logs for Dev Interface.
+> - Fixed sessions not being able to open.
+> >
+> > - This was fixed by adding the `react-native-svg` dependency.
+> >
+> - Fixed objectives not being stored correctly (`{}` instead of `[]`).
+>
+---
+> [!NOTE]
+>
+> ### **KNOWN ERRORS - Latest**
+>
+> - Wrong Welcome Screen layout (not centered).
 
 ## 0.0.1-R5-b20
 
