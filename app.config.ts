@@ -60,6 +60,7 @@ const config: ExpoConfig.ExpoConfig = {
         backgroundColor: "#0E1013",
     },
     plugins: [
+        "expo-localization",
         "expo-build-properties",
         [
             "expo-font",
