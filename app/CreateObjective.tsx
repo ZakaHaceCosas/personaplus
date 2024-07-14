@@ -383,7 +383,13 @@ export default function Form() {
                             color="#999"
                         />
                         {exercises.map(ex => (
-                            <Select.Item key={ex} label={ex} value={ex} />
+                            <Select.Item
+                                key={ex}
+                                label={t(
+                                    `subpage_create_active_objective.questions.what_to_do_answers.${ex}`
+                                )}
+                                value={ex}
+                            />
                         ))}
                     </Select>
                     <GapView height={20} />
@@ -392,33 +398,46 @@ export default function Form() {
                         textColor="#FFF"
                         fontWeight="Regular"
                     >
-                        What days do you want to exercise?
+                        {t(
+                            "subpage_create_active_objective.questions.when_to_do"
+                        )}
                     </BetterText>
                     <BetterText
                         fontSize={10}
                         textColor="#C8C8C8"
                         fontWeight="Italic"
                     >
-                        Tap each day to enable/disable it.{"\n"}Colored days are
-                        enabled, gray ones are disabled.
+                        {t(
+                            "subpage_create_active_objective.questions.when_to_do_protip"
+                        )}
                     </BetterText>
                     <GapView height={15} />
                     <Native.View style={styles.flexydays}>
                         {days.map((day, index) => {
                             const thisday: string =
                                 index === 0
-                                    ? "monday"
+                                    ? t("globals.days_of_the_week.monday")
                                     : index === 1
-                                      ? "tuesday"
+                                      ? t("globals.days_of_the_week.tuesday")
                                       : index === 2
-                                        ? "wednesday"
+                                        ? t(
+                                              "globals.days_of_the_week.wednesday"
+                                          )
                                         : index === 3
-                                          ? "thursday"
+                                          ? t(
+                                                "globals.days_of_the_week.thursday"
+                                            )
                                           : index === 4
-                                            ? "friday"
+                                            ? t(
+                                                  "globals.days_of_the_week.friday"
+                                              )
                                             : index === 5
-                                              ? "saturday"
-                                              : "sunday";
+                                              ? t(
+                                                    "globals.days_of_the_week.saturday"
+                                                )
+                                              : t(
+                                                    "globals.days_of_the_week.sunday"
+                                                );
                             return (
                                 <Native.View
                                     key={index}
@@ -463,11 +482,9 @@ export default function Form() {
                                 textColor="#FFF"
                                 fontWeight="Regular"
                             >
-                                {item === "duration"
-                                    ? "Duration (minutes)"
-                                    : item === "repetitions"
-                                      ? "Repetitions"
-                                      : "Rests"}
+                                {t(
+                                    `subpage_create_active_objective.questions.toggles_labels.${item}`
+                                )}
                             </BetterText>
                             <GapView height={15} />
                             <Native.View
@@ -511,7 +528,9 @@ export default function Form() {
                                 textColor="#FFF"
                                 fontWeight="Regular"
                             >
-                                Rest Duration (minutes)
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.rest_duration"
+                                )}
                             </BetterText>
                             <GapView height={15} />
                             <Native.View
@@ -555,18 +574,18 @@ export default function Form() {
                                 textColor="#FFF"
                                 fontWeight="Regular"
                             >
-                                How many push-ups?
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.how_many_pushups"
+                                )}
                             </BetterText>
                             <BetterText
                                 fontSize={10}
                                 textColor="#C8C8C8"
                                 fontWeight="Regular"
                             >
-                                Tip: Balance the duration and number of
-                                push-ups. More push-ups in less time will be
-                                harder but have a greater effect on your body.
-                                Fewer push-ups over more time will provide a
-                                more relaxed and beginner-friendly session.
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.how_many_pushups_protip"
+                                )}
                             </BetterText>
                             <GapView height={15} />
                             <Native.View
@@ -606,18 +625,18 @@ export default function Form() {
                                 textColor="#FFF"
                                 fontWeight="Regular"
                             >
-                                How many lifts will you make?
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.how_many_lifts"
+                                )}
                             </BetterText>
                             <BetterText
                                 fontSize={10}
                                 textColor="#C8C8C8"
                                 fontWeight="Regular"
                             >
-                                Tip: Balance the duration and number of lifts.
-                                More lifts in less time will be harder but have
-                                a greater effect on your body. Fewer lifts over
-                                more time will provide a more relaxed and
-                                beginner-friendly session.
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.how_many_lifts_protip"
+                                )}
                             </BetterText>
                             <GapView height={15} />
                             <Native.View
@@ -657,26 +676,18 @@ export default function Form() {
                                 textColor="#FFF"
                                 fontWeight="Regular"
                             >
-                                How much does the{" "}
-                                <BetterText
-                                    fontSize={20}
-                                    textColor="#FFF"
-                                    fontWeight="Bold"
-                                >
-                                    lift
-                                </BetterText>{" "}
-                                weight?
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.how_much_does_the_lift_weight"
+                                )}
                             </BetterText>
                             <BetterText
                                 fontSize={10}
                                 textColor="#C8C8C8"
                                 fontWeight="Regular"
                             >
-                                In kilograms. If you&apos;re not sure: you know
-                                there are two weights or &quot;things that
-                                weigh&quot; on each side of your scale, right?
-                                Enter how much does each one of them weigh
-                                (assuming you know both should weigh the same)
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.how_much_does_the_lift_weight_protip"
+                                )}
                             </BetterText>
                             <GapView height={15} />
                             <Native.View
@@ -716,22 +727,18 @@ export default function Form() {
                                 textColor="#FFF"
                                 fontWeight="Regular"
                             >
-                                How much does the{" "}
-                                <BetterText
-                                    fontSize={20}
-                                    textColor="#FFF"
-                                    fontWeight="Bold"
-                                >
-                                    bar
-                                </BetterText>{" "}
-                                weight?
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.how_much_does_the_bar_weight"
+                                )}
                             </BetterText>
                             <BetterText
                                 fontSize={10}
                                 textColor="#C8C8C8"
                                 fontWeight="Regular"
                             >
-                                In kilograms.
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.how_much_does_the_bar_weight_protip"
+                                )}
                             </BetterText>
                             <GapView height={15} />
                             <Native.View
@@ -771,16 +778,18 @@ export default function Form() {
                                 textColor="#FFF"
                                 fontWeight="Regular"
                             >
-                                One hand or two?
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.amount_of_hands"
+                                )}
                             </BetterText>
                             <BetterText
                                 fontSize={10}
                                 textColor="#C8C8C8"
                                 fontWeight="Regular"
                             >
-                                Basically: are you going to workout with 1 scale
-                                or with 2 scales, one on each hand? Deaults to
-                                two.
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.amount_of_hands_protip_scales"
+                                )}
                             </BetterText>
                             <GapView height={15} />
                             <Native.View
@@ -820,16 +829,18 @@ export default function Form() {
                                 textColor="#FFF"
                                 fontWeight="Regular"
                             >
-                                One hand or two?
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.amount_of_hands"
+                                )}
                             </BetterText>
                             <BetterText
                                 fontSize={10}
                                 textColor="#C8C8C8"
                                 fontWeight="Regular"
                             >
-                                Basically: are you going to push-up yourself
-                                using both hands (normal) or just one of them
-                                (advanced)? Defaults to two.
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.amount_of_hands_protip_pushup"
+                                )}
                             </BetterText>
                             <GapView height={15} />
                             <Native.View
@@ -869,15 +880,18 @@ export default function Form() {
                                 textColor="#FFF"
                                 fontWeight="Regular"
                             >
-                                What speed will you run to?
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.what_speed_youll_run"
+                                )}
                             </BetterText>
                             <BetterText
                                 fontSize={10}
                                 textColor="#C8C8C8"
                                 fontWeight="Regular"
                             >
-                                Of course you don&apos;t need to be exact, just
-                                try to estimate it.
+                                {t(
+                                    "subpage_create_active_objective.questions.toggles_labels.what_speed_youll_run_protip"
+                                )}
                             </BetterText>
                             <GapView height={15} />
                             <Native.View
@@ -926,11 +940,14 @@ export default function Form() {
                         // The maximum that makes sense to me it's 5 hours in a row making ONE exercise - remember you can make many each day
                         <Notification
                             style="HMM"
-                            title="Are you sure?"
-                            text={`Your current choice would equal ${
-                                repetitions * duration
-                            } minutes of exercise. Isn't that too much?`}
-                            subtext="You can still create your objective, don't worry. We're just warning you, for your own health!"
+                            title={t("globals.are_you_sure")}
+                            text={t(
+                                "subpage_create_active_objective.warnings.too_much.text",
+                                { equal: repetitions * duration }
+                            )}
+                            subtext={t(
+                                "subpage_create_active_objective.warnings.too_much.subtext"
+                            )}
                         />
                     )}
                     {repetitions * duration > 300 && <GapView height={20} />}
@@ -940,20 +957,24 @@ export default function Form() {
                         {allConditionsAreMet ? (
                             <Button
                                 style="GOD"
-                                buttonText="Create objective"
+                                buttonText={t(
+                                    "subpage_create_active_objective.buttons.create"
+                                )}
                                 action={handleSubmit}
                             />
                         ) : (
                             <Button
                                 style="HMM"
-                                buttonText="Fill all the required items"
+                                buttonText={t(
+                                    "subpage_create_active_objective.buttons.fill_all_items"
+                                )}
                                 action={() => {}}
                             />
                         )}
                         <GapView width={20} />
                         <Button
                             style="DEFAULT"
-                            buttonText="Nevermind"
+                            buttonText={t("globals.nevermind")}
                             action={getOut}
                         />
                     </Native.View>
@@ -964,11 +985,7 @@ export default function Form() {
                         fontWeight="Italic"
                         textColor="#C8C8C8"
                     >
-                        Required: Duration, Exercise, and at least one day of
-                        the week. Specific exercises may have their own extra
-                        required fields: for example &quot;Lifting&quot;
-                        requires you to specify how much weight you&apos;ll be
-                        lifting.
+                        {t("subpage_create_active_objective.required")}
                     </BetterText>
                 </Native.View>
             </Native.ScrollView>
