@@ -15,6 +15,7 @@ import * as ObjectiveToolkit from "@/components/toolkit/objectives";
 
 // TypeScript, supongo.
 import { Objective } from "@/components/types/Objective";
+import { useTranslation } from "react-i18next";
 
 // Estilos
 const styles = Native.StyleSheet.create({
@@ -36,6 +37,7 @@ const styles = Native.StyleSheet.create({
 });
 
 export default function Sessions() {
+    const { t } = useTranslation();
     const [loading, setLoading] = React.useState<boolean>(true);
     const params = Router.useGlobalSearchParams();
     const objectiveIdentifier = params.id ? Number(params.id) : null;
@@ -140,7 +142,7 @@ export default function Sessions() {
             "You are doing GREAT! Are you sure you want to give up? Your progress will be lost! (You can always start over if you change your mind)",
             [
                 {
-                    text: "Nevermind",
+                    text: t("globals.nevermind"),
                     style: "cancel",
                 },
                 {

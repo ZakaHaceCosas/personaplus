@@ -95,13 +95,45 @@
         "questions": {
             "what_to_do": "What do you want to do?",
             "what_to_do_answers": {
-                "push_up": "Push-ups",
-                "lifting": "Lifting",
-                "running": "Running",
-                "walking": "Walking",
-                "meditation": "Meditation"
+                "Push Up": "Push Up",
+                "Lifting": "Lifting",
+                "Running": "Running",
+                "Walking": "Walking",
+                "Meditation": "Meditation"
+            },
+            "when_to_do": "What days do you want to exercise?",
+            "when_to_do_protip": "Tap each day to enable/disable it.\nColored days are enabled, gray ones are disabled.",
+            "toggles_labels": {
+                "duration": "Duration (minutes)",
+                "repetitions": "Repetitions",
+                "rests": "Rests",
+                "rest_duration": "Rest Duration (minutes)"
+            },
+            "how_many_pushups": "How many push-ups?",
+            "how_many_pushups_protip": "Tip: Balance the duration and number of push-ups. More push-ups in less time will be harder but have a greater effect on your body. Fewer push-ups over more time will provide a more relaxed and beginner-friendly session.",
+            "how_many_lifts": "How many lifts will you make?",
+            "how_many_lifts_protip": "Tip: Balance the duration and number of lifts. More lifts in less time will be harder but have a greater effect on your body. Fewer lifts over more time will provide a more relaxed and beginner-friendly session.",
+            "how_much_does_the_lift_weight": "How much does the lift weight?",
+            "how_much_does_the_lift_weight_protip": "In kilograms. If you're not sure: you know there are two weights or \"things that weigh\" on each side of your scale, right? Enter how much does each one of them weigh (assuming you know both should weigh the same)",
+            "how_much_does_the_bar_weight": "How much does the bar weight?",
+            "how_much_does_the_bar_weight_protip": "In kilograms.",
+            "amount_of_hands": "One hand or two?",
+            "amount_of_hands_protip_scales": "Basically: are you going to workout with 1 scale or with 2 scales, one on each hand? Deaults to two.",
+            "amount_of_hands_protip_pushup": "Basically: are you going to push-up yourself using both hands (normal) or just one of them (advanced)? Defaults to two.",
+            "what_speed_youll_run": "What speed will you run to?",
+            "what_speed_youll_run_protip": "Of course you don&apos;t need to be exact, just try to estimate it."
+        },
+        "warnings": {
+            "too_much": {
+                "text": "Your current choice would equal {{equal}} minutes of exercise. Isn't that too much?",
+                "subtext": "You can still create your objective, don't worry. We're just warning you, for your own health!"
             }
-        }
+        },
+        "buttons": {
+            "create": "Create objective",
+            "fill_all_items": "Fill all the required items"
+        },
+        "required": "Required: Duration, Exercise, and at least one day of the week. Specific exercises may have their own extra required fields: for example \"Lifting\" requires you to specify how much weight you'll be lifting."
     },
     "cool_messages": {
         "all_done": [
@@ -136,7 +168,18 @@
         "enabled": "enabled",
         "disabled": "disabled",
         "select_placeholder": "Choose an option",
-        "go_back": "Go back"
+        "go_back": "Go back",
+        "days_of_the_week": {
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
+            "saturday": "Saturday",
+            "sunday": "Sunday"
+        },
+        "are_you_sure": "Are you sure?",
+        "nevermind": "Nevermind"
     },
     "sections": {
         "headers": {
