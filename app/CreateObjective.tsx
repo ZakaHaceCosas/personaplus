@@ -366,7 +366,7 @@ export default function Form() {
                         mode="dropdown"
                     >
                         <Select.Item
-                            label="Choose an option"
+                            label={t("globals.select_placeholder")}
                             value=""
                             color="#999"
                         />
