@@ -44,6 +44,9 @@ export default function Sessions() {
     );
     const [currentObjective, setCurrentObjective] =
         React.useState<Objective | null>(null);
+    // if you wonder why to variables for the timer's loops, one is to keep account of many times repeat (laps) and other is to set the key (required by circle timer)
+    const [laps, setLaps] = React.useState<number>(0);
+    const [timerKey, setTimerKey] = React.useState<number>(0);
 
     React.useEffect(() => {
         const fetchObjectives = async () => {
@@ -54,7 +57,7 @@ export default function Sessions() {
             } catch (e) {
                 termLog("LOG 1 (:53) - Fetch error! " + e, "error");
             } finally {
-                setLoading(false); //  setLoading() in finally and not try, so in case of error the user doesnt get stuck on a Loading... screen
+                setLoading(false); // setLoading() in finally and not try, so in case of error the user doesnt get stuck on a Loading... screen
             }
         };
 
@@ -79,6 +82,7 @@ export default function Sessions() {
                             objectiveIdentifier
                         );
                     setCurrentObjective(objective);
+                    setLaps(objective?.repetitions || 0); // Ensure laps is set correctly
                 } catch (e) {
                     termLog("Error fetching current objective: " + e, "error");
                 }
@@ -199,7 +203,12 @@ export default function Sessions() {
     };
 
     const doFinish = () => {
-        finish();
+        if (laps !== 0) {
+            setLaps(prev => (prev > 0 ? prev - 1 : 0));
+            setTimerKey(prevKey => prevKey + 1);
+        } else {
+            finish();
+        }
     };
 
     const [isUserCheckingHelp, setIsUserCheckingHelp] = React.useState(false);
@@ -558,6 +567,7 @@ export default function Sessions() {
                 </Native.View>
                 <GapView height={20} />
                 <CountdownCircleTimer
+                    key={timerKey}
                     duration={currentObjective.duration * 60}
                     size={160}
                     isPlaying={isTimerRunning}
