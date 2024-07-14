@@ -77,8 +77,8 @@ const getLogsFromStorage = async (): Promise<Log[]> => {
         if (logsString) {
             return JSON.parse(logsString);
         }
-    } catch (error) {
-        console.error("Error fetching logs from AsyncStorage:", error);
+    } catch (e) {
+        termLog("Error fetching logs from AsyncStorage: " + e, "error");
     }
     return [];
 };
@@ -87,8 +87,8 @@ const getLogsFromStorage = async (): Promise<Log[]> => {
 const saveLogsToStorage = async (logs: Log[]) => {
     try {
         await AsyncStorage.setItem("globalLogs", JSON.stringify(logs));
-    } catch (error) {
-        console.error("Error saving logs to AsyncStorage:", error);
+    } catch (e) {
+        termLog("Error saving logs to AsyncStorage: " + e, "error");
     }
 };
 
@@ -97,8 +97,8 @@ const addLogToGlobal = async (log: Log) => {
         const currentLogs = await getLogsFromStorage();
         const updatedLogs = [...currentLogs, log];
         await saveLogsToStorage(updatedLogs);
-    } catch (error) {
-        console.error("Error adding log to AsyncStorage:", error);
+    } catch (e) {
+        termLog("Error adding log to AsyncStorage: " + e, "error");
     }
 };
 
@@ -181,7 +181,7 @@ export default function DeveloperInterface() {
                     await ObjectiveToolkit.fetchObjectives("string");
                 setObjs(JSON.parse(objectives));
             } catch (e) {
-                const log = `Could not get objectives (OBJS) fetched due to error: ${e}`;
+                const log = `Could not get objectives fetched due to error: ${e}`;
                 termLog(log, "error");
             }
         };
@@ -206,10 +206,8 @@ export default function DeveloperInterface() {
             ]);
             await AsyncStorage.setItem("objectives", JSON.stringify([]));
             Router.router.navigate("/");
-            console.log("DEV CLEARED ALL");
             termLog("DEV CLEARED ALL", "log");
         } catch (e) {
-            console.error(e);
             termLog(String(e), "error");
         }
     };

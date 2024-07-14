@@ -48,7 +48,10 @@ export default function Dashboard() {
                     await AsyncStorage.getItem("objectives");
                 if (storedObjectives) {
                     setObjectives(JSON.parse(storedObjectives));
-                    termLog("Objectives (OBJS) fetched and parsed!", "success");
+                    termLog(
+                        "(DASHBOARD.TSX) Objectives fetched and parsed!",
+                        "success"
+                    );
                     setLoading(false);
                 } else {
                     await AsyncStorage.setItem(
@@ -57,14 +60,13 @@ export default function Dashboard() {
                     );
                     setObjectives(JSON.parse("[]"));
                     termLog(
-                        "Could not get objectives (OBJS) fetched! Setting them to an empty array ( [] )",
+                        "Could not get objectives fetched! Setting them to an empty array ( [] )",
                         "warn"
                     );
                 }
             } catch (e) {
                 const log =
-                    "Could not get objectives (OBJS) fetched due to error: " +
-                    e;
+                    "Could not get objectives fetched due to error: " + e;
                 termLog(log, "error");
                 if (Native.Platform.OS === "android") {
                     Native.ToastAndroid.show(

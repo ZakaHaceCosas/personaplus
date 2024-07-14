@@ -91,8 +91,8 @@ const scheduleRandomNotifications = async () => {
         scheduledNotifications.push({ identifier });
 
         await new Promise(resolve => setTimeout(resolve, randomDelay()));
-        console.log(scheduledNotifications);
-        console.log("Scheduled Notis ENABLED");
+        termLog(String(scheduledNotifications), "log");
+        termLog("Scheduled Notis ENABLED", "log");
     }
 };
 
@@ -103,8 +103,8 @@ const cancelScheduledNotifications = async () => {
     }
 
     scheduledNotifications.length = 0;
-    console.log(scheduledNotifications);
-    console.log("Scheduled Notis DISABLED");
+    termLog(String(scheduledNotifications), "log");
+    termLog("Scheduled Notis DISABLED", "log");
 };
 
 // Creamos la función
@@ -177,7 +177,7 @@ export default function Home() {
         Router.router.navigate("/Sessions?id=" + identifier);
     };
 
-    console.log(objectives);
+    termLog(String(objectives), "log");
 
     // i got creative :]
     // commits / PRs that add more stuff will of course be taken into account
