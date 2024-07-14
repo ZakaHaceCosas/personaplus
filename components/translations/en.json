@@ -29,6 +29,58 @@
         "create_active_objective": "Create active objective",
         "not_any_objective": "You don't have any objectives. Create one now!"
     },
+    "page_profile": {
+        "header": {
+            "label": "Profile",
+            "sublabel": "Nice to meet you, "
+        },
+        "your_profile_division": {
+            "gender": "Gender",
+            "gender_male": "Male",
+            "gender_female": "Female",
+            "age": "Age",
+            "age_suffix": " years old",
+            "height": "Height",
+            "weight": "Weight",
+            "update_button": "Update my profile"
+        },
+        "change_your_language": "Change your language",
+        "about_division": {
+            "header": "About PersonaPlus",
+            "subheader": "License, credits, policies, and more info about the app.",
+            "button": "See about"
+        },
+        "updates": {
+            "header": "Check for updates",
+            "subheader": "You're currently using version {{version}}.",
+            "button": "Check for new updates",
+            "update_flow": {
+                "update_available": "Update available",
+                "update_available_text": "A new version ({{latestVersion}}) is available. Please, update PersonaPlus to the latest version.\n\n\"Update\" will redicert you the latest APK's download page.\n\n\"Changelog\" will take you the release's GitHub page to see a summary of what's new.",
+                "youre_up_to_date": "You're up to date!",
+                "youre_maybe_up_to_date": "Couldn't check the repository. You may or may not be up to date.",
+                "cant_check_if_youre_up_to_date": "Couldn't check if there are new updates. Please, try again later (or manually check the repository)."
+            }
+        },
+        "developer": {
+            "use_dev_interface": "Use Dev Interface?",
+            "description": "Enables access to advanced developer info, useful for testing and contribution purposes.",
+            "status": "Dev Interface is {{status}}.",
+            "button": {
+                "disable": "Disable Dev Interface",
+                "enable": "Enable Dev Interface",
+                "other_button": "Open Dev Interface"
+            }
+        },
+        "danger_zone": {
+            "preheader": "DANGER ZONE",
+            "header": "Start over",
+            "subheader": "Delete ALL data (profile, objectives, stats...) from PersonaPlus. There's no way to undo this or to recover your data. Not recommended, unless you're using PersonaPlus for testing purposes."
+        },
+        "specific_errors": {
+            "lang_react_error": "Got a React error trying to change language!"
+        }
+    },
     "cool_messages": {
         "all_done": [
             "Feel proud of yourself, don't you?",
@@ -58,7 +110,9 @@
         "nothing_more_to_see": "Nothing more to see here",
         "react_error": "Got a React error!",
         "remove": "Remove",
-        "coming_soon": "Coming soon!"
+        "coming_soon": "Coming soon!",
+        "enabled": "enabled",
+        "disabled": "disabled"
     },
     "sections": {
         "headers": {
