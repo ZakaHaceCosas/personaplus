@@ -387,11 +387,11 @@ export default function Sessions() {
                         <Ionicons name="loop" size={15} color="#FFF" />
                         <GapView width={5} />
                         <BetterText fontWeight="Regular" fontSize={15}>
-                            {currentObjective.repetitions === 0
+                            {laps === 0
                                 ? "None"
-                                : currentObjective.repetitions === 1
-                                  ? `${currentObjective.repetitions} repetition`
-                                  : `${currentObjective.repetitions} repetitions`}
+                                : laps === 1
+                                  ? `${laps} repetition`
+                                  : `${laps} repetitions`}
                         </BetterText>
                         <GapView width={15} />
                         <Ionicons name="snooze" size={15} color="#FFF" />

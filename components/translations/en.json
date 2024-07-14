@@ -75,7 +75,13 @@
         "danger_zone": {
             "preheader": "DANGER ZONE",
             "header": "Start over",
-            "subheader": "Delete ALL data (profile, objectives, stats...) from PersonaPlus. There's no way to undo this or to recover your data. Not recommended, unless you're using PersonaPlus for testing purposes."
+            "subheader": "Delete ALL data (profile, objectives, stats...) from PersonaPlus. There's no way to undo this or to recover your data. Not recommended, unless you're using PersonaPlus for testing purposes.",
+            "danger_zone_flow": {
+                "title": "Are you sure?",
+                "subtitle": "Again: THERE - IS - NO - WAY - BACK.",
+                "go_button": "Go ahead",
+                "cancel_button": "Nevermind"
+            }
         },
         "specific_errors": {
             "lang_react_error": "Got a React error trying to change language!"

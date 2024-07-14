@@ -75,7 +75,13 @@
         "danger_zone": {
             "preheader": "ZONA DE PELIGRO",
             "header": "Empezar de cero",
-            "subheader": "Borra TODOS los datos (perfil, objetivo, estadísticas...) de PersonaPlus. No hay forma de deshacer esto o de recuperar tus datos. No recomendado, a menos que estés usando PersonaPlus con fines de testeo."
+            "subheader": "Borra TODOS los datos (perfil, objetivo, estadísticas...) de PersonaPlus. No hay forma de deshacer esto o de recuperar tus datos. No recomendado, a menos que estés usando PersonaPlus con fines de testeo.",
+            "danger_zone_flow": {
+                "title": "¿Estás seguro?",
+                "subtitle": "De nuevo: NO - HAY - VUELTA - ATRÁS.",
+                "go_button": "Adelánte",
+                "cancel_button": "Olvídalo"
+            }
         },
         "specific_errors": {
             "lang_react_error": "¡Se recibió un error de React al tratar de cambiar de idioma!"
