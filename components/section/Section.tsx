@@ -4,6 +4,7 @@
 import * as React from "react";
 import * as Native from "react-native";
 import SectionHeader from "@/components/section/SectionHeader";
+import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo
 interface DivisionProps {
@@ -21,40 +22,41 @@ interface DivisionProps {
 
 // Creamos la función
 export default function Division({ kind, children }: DivisionProps) {
+    const { t } = useTranslation();
     let label: string;
     let icon: string;
 
     switch (kind) {
         case "Objectives":
-            label = "YOUR ACTIVE OBJECTIVES";
+            label = t("sections.headers.your_active_objectives");
             icon = "OBJS";
             break;
         case "PassiveObjs":
-            label = "YOUR PASSIVE OBJECTIVES";
+            label = t("sections.headers.your_passive_objectives");
             icon = "POBJS";
             break;
         case "HowYouAreDoing":
-            label = "HOW YOU ARE DOING";
+            label = t("sections.headers.how_you_are_doing");
             icon = "HYAD";
             break;
         case "Unknown":
-            label = "UNKNOWN";
+            label = t("sections.headers.unknown");
             icon = "IDK";
             break;
         case "Settings":
-            label = "SETTINGS";
+            label = t("sections.headers.settings");
             icon = "SETS";
             break;
         case "Developer":
-            label = "DEVELOPER OPTIONS";
+            label = t("sections.headers.developer");
             icon = "DEV";
             break;
         case "Profile":
-            label = "YOUR PROFILE";
+            label = t("sections.headers.your_profile");
             icon = "PROF";
             break;
         case "About":
-            label = "ABOUT";
+            label = t("sections.headers.about");
             icon = "ABOUT";
             break;
         default:

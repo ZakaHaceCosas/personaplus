@@ -3,7 +3,31 @@
         "header": {
             "label": "Hello",
             "sublabel": "This is your summary for today"
+        },
+        "no_objectives": {
+            "all_done": "You've done everything!",
+            "not_any_objective": "You don't have any objectives. Create one now!"
         }
+    },
+    "page_dashboard": {
+        "header": {
+            "label": "Dashboard",
+            "sublabel": "Let's setup your path to success"
+        },
+        "objective": {
+            "description": "For {{duration}} minutes. {{rests}} rests and {{repetitions}} repetitions.",
+            "description_with_rests": "For {{duration}} minutes. {{rests}} rests of {{restDuration}} minutes each, and {{repetitions}} repetitions.",
+            "was_done": {
+                "true": "You've done this objective today.",
+                "false": "You haven't done this objective today."
+            }
+        },
+        "item_deleted": "Deleted objective {{id}} successfully!",
+        "specific_errors": {
+            "react_error": "Got a React error deleting objective {{id}}"
+        },
+        "create_active_objective": "Create active objective",
+        "not_any_objective": "You don't have any objectives. Create one now!"
     },
     "cool_messages": {
         "all_done": [
@@ -26,5 +50,34 @@
             "Enough for today. More tomorrow!",
             "For today; objectives due tomorrow aren't shown ;)"
         ]
+    },
+    "globals": {
+        "loading": "Loading...",
+        "lets_go": "Let's go!",
+        "already_done_it": "Already done it",
+        "nothing_more_to_see": "Nothing more to see here",
+        "react_error": "Got a React error!",
+        "remove": "Remove",
+        "coming_soon": "Coming soon!"
+    },
+    "sections": {
+        "headers": {
+            "your_active_objectives": "YOUR ACTIVE OBJECTIVES",
+            "your_passive_objectives": "YOUR PASSIVE OBJECTIVES",
+            "how_you_are_doing": "HOW YOU ARE DOING",
+            "unknown": "UNKNOWN",
+            "settings": "SETTINGS",
+            "developer": "DEVELOPER OPTIONS",
+            "your_profile": "YOUR PROFILE",
+            "about": "ABOUT"
+        },
+        "divisions": {
+            "active_objective": "ACTIVE OBJETIVE"
+        }
+    },
+    "navbar": {
+        "home": "Home",
+        "dashboard": "Dashboard",
+        "profile": "Profile"
     }
 }

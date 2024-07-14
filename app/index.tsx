@@ -231,7 +231,7 @@ export default function Home() {
                             textAlign="center"
                             textColor="#C8C8C8"
                         >
-                            Loading...
+                            {t("globals.loading")}
                         </BetterText>
                     </Native.View>
                 </Native.ScrollView>
@@ -277,7 +277,7 @@ export default function Home() {
                                     textColor="#FFF"
                                     fontWeight="Bold"
                                 >
-                                    You&apos;ve done everything!
+                                    {t("page_home.no_objectives.all_done")}
                                 </BetterText>
                                 <GapView height={10} />
                                 <BetterText
@@ -306,7 +306,9 @@ export default function Home() {
                                         <Division
                                             key={obj.identifier}
                                             status="REGULAR"
-                                            preheader="ACTIVE OBJECTIVE"
+                                            preheader={t(
+                                                "sections.divisions.active_objective"
+                                            )}
                                             header={obj.exercise}
                                         >
                                             <Button
@@ -316,7 +318,9 @@ export default function Home() {
                                                         obj.identifier
                                                     )
                                                 }
-                                                buttonText="Let's go!"
+                                                buttonText={t(
+                                                    "globals.lets_go"
+                                                )}
                                             />
                                             <Button
                                                 style="GOD"
@@ -325,7 +329,9 @@ export default function Home() {
                                                         obj.identifier
                                                     )
                                                 }
-                                                buttonText="Already done it"
+                                                buttonText={t(
+                                                    "globals.already_done_it"
+                                                )}
                                             />
                                         </Division>
                                     );
@@ -349,20 +355,21 @@ export default function Home() {
                                 textColor="#FFF"
                                 fontWeight="Bold"
                             >
-                                You don&apos;t have any objectives. Create one
-                                now!
+                                {t("page_home.no_objectives.not_any_objective")}
                             </BetterText>
                             <GapView height={15} />
                             <Button
                                 width="fill"
                                 style="ACE"
-                                buttonText="Let's go!"
+                                buttonText={t("globals.lets_go")}
                                 action={createNewActiveObjective}
                             />
                         </Native.View>
                     )}
                 </Section>
-                <GapView height={20} />
+                {objectives && Object.keys(objectives).length > 0 && (
+                    <GapView height={20} />
+                )}
                 {objectives && Object.keys(objectives).length > 0 && (
                     <Section kind="HowYouAreDoing">
                         <GapView height={20} />
@@ -372,7 +379,7 @@ export default function Home() {
                             fontSize={25}
                             textAlign="center"
                         >
-                            Coming soon!
+                            {t("globals.coming_soon")}
                         </BetterText>
                         <Native.View style={{ padding: 20 }}>
                             <BetterText

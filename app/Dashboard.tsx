@@ -14,6 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/components/Buttons";
 import { termLog } from "./DeveloperInterface";
 import * as ObjectiveToolkit from "@/components/toolkit/objectives";
+import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo
 import { Objective } from "@/components/types/Objective";
@@ -36,6 +37,7 @@ const styles = Native.StyleSheet.create({
 
 // Creamos la función
 export default function Dashboard() {
+    const { t } = useTranslation();
     const [loading, setLoading] = React.useState(true);
     const [objectives, setObjectives] = React.useState<{
         [key: string]: Objective;
@@ -70,7 +72,7 @@ export default function Dashboard() {
                 termLog(log, "error");
                 if (Native.Platform.OS === "android") {
                     Native.ToastAndroid.show(
-                        `Got a React error loading your objectives - ${e}`,
+                        `${t("globals.react_error")} - ${e}`,
                         Native.ToastAndroid.LONG
                     );
                 }
@@ -78,7 +80,7 @@ export default function Dashboard() {
         };
 
         fetchObjectives();
-    }, []);
+    }, [t]);
 
     const handleDeleteObjective = async (identifier: number) => {
         try {
@@ -88,7 +90,7 @@ export default function Dashboard() {
             setObjectives(updatedObjectives);
             if (Native.Platform.OS === "android") {
                 Native.ToastAndroid.show(
-                    `Deleted objective ${identifier} successfully!`,
+                    t("page_dashboard.item_deleted", { id: identifier }),
                     Native.ToastAndroid.SHORT
                 );
             }
@@ -97,7 +99,7 @@ export default function Dashboard() {
             termLog(log, "error");
             if (Native.Platform.OS === "android") {
                 Native.ToastAndroid.show(
-                    `Got a React error deleting objective ${identifier} - ${e}`,
+                    `${t("page_dashboard.specific_errors.react_error", { id: identifier })} - ${e}`,
                     Native.ToastAndroid.LONG
                 );
             }
@@ -118,7 +120,7 @@ export default function Dashboard() {
                             textAlign="center"
                             textColor="#C8C8C8"
                         >
-                            Loading...
+                            {t("globals.loading")}{" "}
                         </BetterText>
                     </Native.View>
                 </Native.ScrollView>
@@ -131,14 +133,14 @@ export default function Dashboard() {
             <BottomNav currentLocation={currentpage} />
             <Native.ScrollView style={styles.mainview}>
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={40}>
-                    Dashboard
+                    {t("page_dashboard.header.label")}
                 </BetterText>
                 <BetterText
                     textAlign="normal"
                     fontWeight="Regular"
                     fontSize={20}
                 >
-                    Let&apos;s set up your path to success
+                    {t("page_dashboard.header.sublabel")}
                 </BetterText>
                 <GapView height={20} />
                 <Section kind="Objectives">
@@ -151,30 +153,39 @@ export default function Dashboard() {
                                 return null;
                             }
 
-                            let descriptionDraft: string =
-                                "Duration: " +
-                                String(objective.duration) +
-                                " minutes. " +
-                                String(objective.rests) +
-                                " rests and " +
-                                String(objective.repetitions) +
-                                " repetitions.";
+                            let descriptionDraft: string = t(
+                                "page_dashboard.objective.description",
+                                {
+                                    duration: objective.duration,
+                                    rests: objective.rests,
+                                    repetitions: objective.repetitions,
+                                }
+                            );
                             if (objective?.rests > 0) {
-                                descriptionDraft =
-                                    descriptionDraft +
-                                    " Rest duration: " +
-                                    String(objective.restDuration) +
-                                    " minutes.";
+                                descriptionDraft = t(
+                                    "page_dashboard.objective.description_with_rests",
+                                    {
+                                        duration: objective.duration,
+                                        rests: objective.rests,
+                                        restDuration: objective.restDuration,
+                                        repetitions: objective.repetitions,
+                                    }
+                                );
                             }
+
                             descriptionDraft =
                                 descriptionDraft +
                                 (objective?.wasDone === true
-                                    ? "You've done this objective today."
-                                    : "You haven't done this objective today.");
+                                    ? t(
+                                          "page_dashboard.objective.was_done.true"
+                                      )
+                                    : t(
+                                          "page_dashboard.objective.was_done.false"
+                                      ));
 
                             const description: string =
                                 descriptionDraft +
-                                "\nID (just for the app): " +
+                                "\nID: " +
                                 String(objective.identifier) +
                                 ".";
 
@@ -182,7 +193,9 @@ export default function Dashboard() {
                                 <Native.View key={objective.identifier}>
                                     <Division
                                         status="REGULAR"
-                                        preheader="ACTIVE OBJECTIVE"
+                                        preheader={t(
+                                            "sections.divisions.active_objective"
+                                        )}
                                         header={objective.exercise}
                                         subheader={description}
                                     >
@@ -193,7 +206,7 @@ export default function Dashboard() {
                                                     objective.identifier
                                                 )
                                             }
-                                            buttonText="Remove"
+                                            buttonText={t("globals.remove")}
                                         />
                                     </Division>
                                 </Native.View>
@@ -216,14 +229,13 @@ export default function Dashboard() {
                                 textColor="#FFF"
                                 fontWeight="Bold"
                             >
-                                You don&apos;t have any objectives. Create one
-                                now!
+                                {t("page_dashboard.not_any_objective")}
                             </BetterText>
                             <GapView height={15} />
                             <Button
                                 width="fill"
                                 style="ACE"
-                                buttonText="Let's go!"
+                                buttonText={t("globals.lets_go")}
                                 action={() =>
                                     Router.router.navigate("/CreateObjective")
                                 }
@@ -239,7 +251,9 @@ export default function Dashboard() {
                             <Button
                                 width="fill"
                                 style="GOD"
-                                buttonText="Create active objective"
+                                buttonText={t(
+                                    "page_dashboard.create_active_objective"
+                                )}
                                 action={() =>
                                     Router.router.navigate("/CreateObjective")
                                 }

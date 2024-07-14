@@ -4,6 +4,7 @@ import * as Router from "expo-router";
 import BetterText from "@/components/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
+import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo
 interface SectionProps {
@@ -28,6 +29,7 @@ export default function BottomNav({ currentLocation }: SectionProps) {
     const handlePageChange = (newPage: string) => {
         setCurrentPage(newPage);
     };
+    const { t } = useTranslation();
 
     return (
         // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
@@ -66,7 +68,7 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                             fontSize={12}
                             textColor={currentPage === "/" ? "#FFF" : "#8A8C8E"}
                         >
-                            Home
+                            {t("navbar.home")}
                         </BetterText>
                     </Native.View>
                 </Native.View>
@@ -99,7 +101,7 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                                     : "#8A8C8E"
                             }
                         >
-                            Dash
+                            {t("navbar.dashboard")}
                         </BetterText>
                     </Native.View>
                 </Native.View>
@@ -128,7 +130,7 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                                 currentPage === "/Profile" ? "#FFF" : "#8A8C8E"
                             }
                         >
-                            Profile
+                            {t("navbar.profile")}
                         </BetterText>
                     </Native.View>
                 </Native.View>

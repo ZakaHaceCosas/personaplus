@@ -3,6 +3,72 @@
         "header": {
             "label": "¡Hola",
             "sublabel": "Este es tu resumen para hoy"
+        },
+        "no_objectives": {
+            "all_done": "¡Lo hiciste todo!",
+            "not_any_objective": "No tienes ningún objetivo. ¡Crea uno ahora!"
+        }
+    },
+    "page_dashboard": {
+        "header": {
+            "label": "Panel de control",
+            "sublabel": "Preparemos tu camino hacia el éxito"
+        },
+        "objective": {
+            "description": "Por {{duration}} minutos. {{rests}} descansos y {{repetitions}} repeticiones.",
+            "description_with_rests": "Por {{duration}} minutos. {{rests}} descansos de {{restDuration}} minutos cada uno, y {{repetitions}} repeticiones.",
+            "was_done": {
+                "true": "Has realizado este objetivo hoy.",
+                "false": "No has realizado este objetivo hoy."
+            }
+        },
+        "item_deleted": "¡Objetivo {{id}} eliminado exitosamente!",
+        "specific_errors": {
+            "react_error": "Se recibió un error de React al eliminar el objetivo {{id}}"
+        },
+        "create_active_objective": "Crear objetivo activo",
+        "not_any_objective": "No tienes ningún objetivo. ¡Crea uno ahora!"
+    },
+    "page_profile": {
+        "header": {
+            "label": "Perfil",
+            "sublabel": "¡Un placer conocerte, "
+        },
+        "your_profile_division": {
+            "gender": "Género",
+            "gender_male": "Hombre",
+            "gender_female": "Mujer",
+            "age": "Edad",
+            "age_suffix": " años",
+            "height": "Altura",
+            "weight": "Peso",
+            "update_button": "Actualizar mi perfil"
+        },
+        "change_your_language": "Cambia tu idioma",
+        "about_division": {
+            "header": "Sobre PersonaPlus",
+            "subheader": "Licencia, créditos, políticas, y más info sobre la app.",
+            "button": "Ver sobre"
+        },
+        "updates_division": {
+            "header": "Buscar actualizaciones",
+            "subheader": "Ahora estás usando la versión {{version}}.",
+            "button": "Comprobar si hay actualizaciones nuevas"
+        },
+        "developer": {
+            "use_dev_interface": "¿Usar Dev Interface?",
+            "description": "Habilita acceso a información avanzada para desarrolladores, con fines de testeo y contribución.",
+            "status": "Dev Interface está {{status}}.",
+            "button": {
+                "disable": "Deshabilitar Dev Interface",
+                "enable": "Habilitar Dev Interface",
+                "other_button": "Abrir Dev Interface"
+            }
+        },
+        "danger_zone": {
+            "preheader": "ZONA DE PELIGRO",
+            "header": "Empezar de cero",
+            "subheader": "Borra TODOS los datos (perfil, objetivo, estadísticas...) de PersonaPlus. No hay forma de deshacer esto o de recuperar tus datos. No recomendado, a menos que estés usando PersonaPlus con fines de testeo."
         }
     },
     "cool_messages": {
@@ -26,5 +92,36 @@
             "Suficiente por hoy. ¡Más mañana!",
             "Por hoy; los objetivos de mañana no se muestran ;)"
         ]
+    },
+    "globals": {
+        "loading": "Cargando...",
+        "lets_go": "¡Vamos allá!",
+        "already_done_it": "Ya lo hice",
+        "nothing_more_to_see": "Nada más que ver aquí",
+        "react_error": "¡Se recibió un error de React!",
+        "remove": "Eliminar",
+        "coming_soon": "¡Pronto disponible!",
+        "enabled": "activado",
+        "disabled": "desactivado"
+    },
+    "sections": {
+        "headers": {
+            "your_active_objectives": "TUS OBJETIVOS ACTIVOS",
+            "your_passive_objectives": "TUS OBJETIVOS PASIVOS",
+            "how_you_are_doing": "CÓMO ESTÁS RINDIENDO",
+            "unknown": "DESCONOCIDO",
+            "settings": "AJUSTES",
+            "developer": "OPCIONES DE DESARROLLADORES",
+            "your_profile": "TU PERFIL",
+            "about": "SOBRE"
+        },
+        "divisions": {
+            "active_objective": "OBJETIVO ACTIVO"
+        }
+    },
+    "navbar": {
+        "home": "Inicio",
+        "dashboard": "Panel de control",
+        "profile": "Perfil"
     }
 }
