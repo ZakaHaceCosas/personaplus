@@ -16,6 +16,7 @@ import { termLog } from "@/app/DeveloperInterface";
 import * as ObjectiveToolkit from "@/components/toolkit/objectives";
 // import useNotification from "@/components/hooks/useNotification";
 import * as Notification from "expo-notifications";
+import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo
 import { Objective } from "@/components/types/Objective";
@@ -117,6 +118,7 @@ export default function Home() {
     const [objectives, setObjectives] = React.useState<{
         [key: string]: Objective;
     } | null>(null);
+    const { t } = useTranslation();
 
     React.useEffect(() => {
         const multiFetch = async () => {
@@ -258,7 +260,7 @@ export default function Home() {
             <BottomNav currentLocation={currentpage} />
             <Native.ScrollView style={styles.mainview}>
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={40}>
-                    Hello, {username}!
+                    {t("index_header_hello")}, {username}!
                 </BetterText>
                 <BetterText
                     textAlign="normal"
