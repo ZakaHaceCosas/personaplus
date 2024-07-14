@@ -1,3 +1,30 @@
 {
-    "index_header_hello": "Hello"
+    "page_home": {
+        "header": {
+            "label": "Hello",
+            "sublabel": "This is your summary for today"
+        }
+    },
+    "cool_messages": {
+        "all_done": [
+            "Feel proud of yourself, don't you?",
+            "That is right, you have completed ALL of your objectives for today.",
+            "Now plan something else and make this day even more productive!",
+            "\"Giving yourself a PLUS\" seems to be worth it, right?",
+            "Take a moment to celebrate your accomplishments!",
+            "All tasks checked off! Well done, keep up the momentum.",
+            "Another productive day in the books. Great job!",
+            "Mission accomplished! What's next on your list?",
+            "mission passed, + respect",
+            "Seriously. You did it.",
+            "Not enough? You can go to your dashboard and add something else.",
+            "Who could tell a phone app could help you get so much done?",
+            "while (motivated) do\nGiveYourselfAPlus()",
+            "You're defo on ur prime",
+            "add objective -> acomplish it -> feel good -> repeat",
+            "bro finally got out his cave",
+            "Enough for today. More tomorrow!",
+            "For today; objectives due tomorrow aren't shown ;)"
+        ]
+    }
 }

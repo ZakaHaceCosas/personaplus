@@ -16,7 +16,7 @@ import { termLog } from "./DeveloperInterface";
 const styles = Native.StyleSheet.create({
     mainview: {
         width: "100%",
-        height: "100%",
+        height: Native.Dimensions.get("window").height,
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
@@ -42,6 +42,7 @@ const styles = Native.StyleSheet.create({
 
 // Definimos la función
 export default function WelcomePage() {
+    const [language, setLanguage] = React.useState<"en" | "es">("en");
     const [currentTab, setTab] = React.useState(1);
     const [formData, setFormData] = React.useState({
         username: "",
@@ -174,7 +175,8 @@ export default function WelcomePage() {
             formData.username &&
             formData.height &&
             formData.weight &&
-            formData.height
+            formData.height &&
+            language
         ) {
             try {
                 await AsyncStorage.setItem("username", formData.username);
@@ -189,6 +191,7 @@ export default function WelcomePage() {
                 await AsyncStorage.setItem("hasLaunched", "true");
                 await AsyncStorage.setItem("objectives", "{}");
                 await AsyncStorage.setItem("useDevTools", "false");
+                await AsyncStorage.setItem("language", language);
                 Router.router.navigate("/");
             } catch (e) {
                 const log = "Error creating profile: " + e;
@@ -558,7 +561,7 @@ export default function WelcomePage() {
                         How much do you sleep each night? Doesn&apos;t need to
                         be exact.
                     </BetterText>
-                    <GapView height={20} />
+                    <GapView height={10} />
                     <Select
                         selectedValue={sleep}
                         onValueChange={itemValue => setSleep(itemValue)}
@@ -578,7 +581,7 @@ export default function WelcomePage() {
                             />
                         ))}
                     </Select>
-                    <GapView height={20} />
+                    <GapView height={15} />
                     <BetterText
                         textAlign="normal"
                         fontWeight="Regular"
@@ -588,7 +591,7 @@ export default function WelcomePage() {
                         you perform exercise or other phisical activities?
                         Doesn&apos;t need to be exact.
                     </BetterText>
-                    <GapView height={20} />
+                    <GapView height={10} />
                     <Select
                         selectedValue={howActiveTheUserIs}
                         onValueChange={itemValue =>
@@ -610,6 +613,7 @@ export default function WelcomePage() {
                             />
                         ))}
                     </Select>
+                    <GapView height={15} />
                     <BetterText
                         textAlign="normal"
                         fontWeight="Regular"
@@ -617,7 +621,7 @@ export default function WelcomePage() {
                     >
                         Have you ever done a push-up? How long does it take you?
                     </BetterText>
-                    <GapView height={20} />
+                    <GapView height={10} />
                     <Select
                         selectedValue={timeToPushUp}
                         onValueChange={itemValue => setTimeToPushUp(itemValue)}
@@ -636,6 +640,37 @@ export default function WelcomePage() {
                                 value={option}
                             />
                         ))}
+                    </Select>
+                    <GapView height={15} />
+                    <BetterText
+                        textAlign="normal"
+                        fontWeight="Regular"
+                        fontSize={15}
+                    >
+                        What language would you prefer to use?
+                    </BetterText>
+                    <GapView height={10} />
+                    <Select
+                        selectedValue={language}
+                        onValueChange={itemValue => setLanguage(itemValue)}
+                        style={styles.picker}
+                        mode="dropdown"
+                    >
+                        <Select.Item
+                            label="Choose an option"
+                            value=""
+                            color="#999"
+                        />
+                        <Select.Item
+                            key={"spanish"}
+                            label={"Spanish"}
+                            value={"es"}
+                        />
+                        <Select.Item
+                            key={"english"}
+                            label={"English"}
+                            value={"en"}
+                        />
                     </Select>
                     <GapView height={15} />
                     <Native.View style={styles.flexbtns}>

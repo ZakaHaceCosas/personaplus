@@ -14,6 +14,7 @@ import BottomNav from "@/components/BottomNav";
 import GapView from "@/components/GapView";
 import { termLog } from "./DeveloperInterface";
 import { version } from "@/package.json";
+import { changeLanguage } from "i18next";
 
 // TypeScript, supongo
 interface Release {
@@ -29,6 +30,7 @@ interface UserData {
     age: string;
     height: string;
     weight: string;
+    language: "en" | "es" | string;
 }
 
 // Versión actual de la aplicación
@@ -138,7 +140,7 @@ const styles = Native.StyleSheet.create({
 export default function Profile() {
     // Loading state
     const [loading, setLoading] = React.useState<boolean>(true);
-
+    const [language, setLanguage] = React.useState<"en" | "es" | string>("en");
     const [username, setUsername] = React.useState<string>("Unknown");
     const [gender, setGender] = React.useState<string>("Unknown");
     const [age, setAge] = React.useState<string>("Unknown");
@@ -153,6 +155,7 @@ export default function Profile() {
                 "age",
                 "height",
                 "weight",
+                "language",
             ]);
 
             const data: UserData = {
@@ -161,6 +164,7 @@ export default function Profile() {
                 age: values[2][1] || "Unknown",
                 height: values[3][1] || "Unknown",
                 weight: values[4][1] || "Unknown",
+                language: values[5][1] || "en",
             };
             return data;
         } catch (e) {
@@ -171,6 +175,7 @@ export default function Profile() {
                 age: "Unknown",
                 height: "Unknown",
                 weight: "Unknown",
+                language: "en",
             };
         }
     };
@@ -183,6 +188,7 @@ export default function Profile() {
             setAge(userData.age);
             setHeight(userData.height);
             setWeight(userData.weight);
+            setLanguage(userData.language);
             setLoading(false);
         };
 
@@ -259,6 +265,23 @@ export default function Profile() {
     };
 
     const currentpage: string = Router.usePathname();
+
+    const handleChangeLanguaage = async (targetLang: "en" | "es") => {
+        try {
+            await AsyncStorage.setItem("language", targetLang);
+            changeLanguage(targetLang);
+            setLanguage(targetLang);
+            Router.router.navigate("/");
+        } catch (e) {
+            termLog("Error changing language! " + e, "error");
+            if (Native.Platform.OS === "android") {
+                Native.ToastAndroid.show(
+                    "React error changing your language! " + e,
+                    Native.ToastAndroid.LONG
+                );
+            }
+        }
+    };
 
     if (loading) {
         return (
@@ -345,6 +368,24 @@ export default function Profile() {
                                     buttonText="Update my profile"
                                 />
                             </Native.View>
+                        </Division>
+                    </Section>
+                    <GapView height={20} />
+                    <Section kind="Settings">
+                        <Division header="Change your language">
+                            <Button
+                                buttonText={
+                                    language === "en"
+                                        ? "Change to Spanish"
+                                        : "Change to English"
+                                }
+                                style="ACE"
+                                action={() =>
+                                    language === "es"
+                                        ? handleChangeLanguaage("en")
+                                        : handleChangeLanguaage("es")
+                                }
+                            />
                         </Division>
                     </Section>
                     <GapView height={20} />
