@@ -34,88 +34,6 @@ interface UserData {
     language: "en" | "es" | string;
 }
 
-// Versión actual de la aplicación
-const currentVersion = version;
-
-// Función asincrónica para comprobar actualizaciones
-const checkForUpdates = async () => {
-    try {
-        const response = await fetch(
-            "https://api.github.com/repos/ZakaHaceCosas/personaplus/releases"
-        );
-        if (!response.ok) {
-            throw new Error(
-                `Failed to fetch releases (status ${response.status})`
-            );
-        }
-        const releases: Release[] = await response.json();
-
-        // Ordenar releases por fecha descendente y obtener la más reciente
-        const latestRelease = releases.sort(
-            (a, b) =>
-                new Date(b.tag_name).getTime() - new Date(a.tag_name).getTime()
-        )[0];
-
-        if (latestRelease) {
-            const latestVersion = latestRelease.tag_name;
-            termLog(`Latest version: ${latestVersion}`, "log");
-
-            if (latestVersion !== currentVersion) {
-                Native.Alert.alert(
-                    "Update Available",
-                    `A new version (${latestVersion}) is available. Please update PersonaPlus to the latest version.\n\n"Update" will redirect you to the download page of the latest APK.\n\n"See changelog" will take you to the GitHub release page to see a summary of what's new.`,
-                    [
-                        {
-                            text: "Update",
-                            style: "default",
-                            onPress: () =>
-                                Native.Linking.openURL(
-                                    latestRelease.assets.length > 0
-                                        ? latestRelease.assets[0]
-                                              .browser_download_url
-                                        : ""
-                                ),
-                        },
-                        {
-                            text: "See changelog",
-                            onPress: () =>
-                                Native.Linking.openURL(
-                                    latestRelease.html_url || ""
-                                ),
-                        },
-                        {
-                            text: "Cancel",
-                            onPress: () => {},
-                        },
-                    ]
-                );
-            } else {
-                if (Native.Platform.OS === "android") {
-                    Native.ToastAndroid.show(
-                        "You are up to date!",
-                        Native.ToastAndroid.SHORT
-                    );
-                }
-            }
-        } else {
-            if (Native.Platform.OS === "android") {
-                Native.ToastAndroid.show(
-                    "Couldn't check for updates. You're (probably) up to date.",
-                    Native.ToastAndroid.SHORT
-                );
-            }
-        }
-    } catch (e) {
-        termLog("Error checking for update: " + e, "error");
-        if (Native.Platform.OS === "android") {
-            Native.ToastAndroid.show(
-                "Failed to check for updates. Please try again later (or manually check the repo).",
-                Native.ToastAndroid.SHORT
-            );
-        }
-    }
-};
-
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
@@ -139,8 +57,99 @@ const styles = Native.StyleSheet.create({
 
 // Creamos la función
 export default function Profile() {
-    const { t } = useTranslation();
+    // Versión actual de la aplicación
+    const currentVersion = version;
+
+    // Función asincrónica para comprobar actualizaciones
+    const checkForUpdates = async () => {
+        try {
+            const response = await fetch(
+                "https://api.github.com/repos/ZakaHaceCosas/personaplus/releases"
+            );
+            if (!response.ok) {
+                throw new Error(
+                    `Failed to fetch releases (status ${response.status})`
+                );
+            }
+            const releases: Release[] = await response.json();
+
+            // Ordenar releases por fecha descendente y obtener la más reciente
+            const latestRelease = releases.sort(
+                (a, b) =>
+                    new Date(b.tag_name).getTime() -
+                    new Date(a.tag_name).getTime()
+            )[0];
+
+            if (latestRelease) {
+                const latestVersion = latestRelease.tag_name;
+                termLog(`Latest version: ${latestVersion}`, "log");
+
+                if (latestVersion !== currentVersion) {
+                    Native.Alert.alert(
+                        t("page_profile.updates.update_flow.update_available"),
+                        t(
+                            "page_profile.updates.update_flow.update_available_text",
+                            { latestVersion: latestVersion }
+                        ),
+                        [
+                            {
+                                text: "Update",
+                                style: "default",
+                                onPress: () =>
+                                    Native.Linking.openURL(
+                                        latestRelease.assets.length > 0
+                                            ? latestRelease.assets[0]
+                                                  .browser_download_url
+                                            : ""
+                                    ),
+                            },
+                            {
+                                text: "See changelog",
+                                onPress: () =>
+                                    Native.Linking.openURL(
+                                        latestRelease.html_url || ""
+                                    ),
+                            },
+                            {
+                                text: "Cancel",
+                                style: "destructive",
+                                onPress: () => {},
+                            },
+                        ]
+                    );
+                } else {
+                    if (Native.Platform.OS === "android") {
+                        Native.ToastAndroid.show(
+                            t(
+                                "page_profile.updates.update_flow.youre_up_to_date"
+                            ),
+                            Native.ToastAndroid.SHORT
+                        );
+                    }
+                }
+            } else {
+                if (Native.Platform.OS === "android") {
+                    Native.ToastAndroid.show(
+                        t(
+                            "page_profile.updates.update_flow.youre_maybe_up_to_date"
+                        ),
+                        Native.ToastAndroid.SHORT
+                    );
+                }
+            }
+        } catch (e) {
+            termLog("Error checking for update: " + e, "error");
+            if (Native.Platform.OS === "android") {
+                Native.ToastAndroid.show(
+                    "Failed to check for updates. Please try again later (or manually check the repo).",
+                    Native.ToastAndroid.SHORT
+                );
+            }
+        }
+    };
+
     // Loading state
+    const { t } = useTranslation();
     const [loading, setLoading] = React.useState<boolean>(true);
     const [language, setLanguage] = React.useState<"en" | "es" | string>("en");
     const [username, setUsername] = React.useState<string>("Unknown");
@@ -278,7 +287,9 @@ export default function Profile() {
             termLog("Error changing language! " + e, "error");
             if (Native.Platform.OS === "android") {
                 Native.ToastAndroid.show(
-                    "React error changing your language! " + e,
+                    t("page_profile.specific_errors.lang_react_error") +
+                        " - " +
+                        e,
                     Native.ToastAndroid.LONG
                 );
             }
@@ -313,7 +324,7 @@ export default function Profile() {
                     <BetterText
                         textAlign="normal"
                         fontWeight="Bold"
-                        fontSize={40}
+                        fontSize={35}
                     >
                         {t("page_profile.header.label")}
                     </BetterText>
@@ -439,11 +450,9 @@ export default function Profile() {
                             <Division
                                 status="REGULAR"
                                 iconName={null}
-                                header={t(
-                                    "page_profile.update_division.header"
-                                )}
+                                header={t("page_profile.updates.header")}
                                 subheader={t(
-                                    "page_profile.update_division.subheader",
+                                    "page_profile.updates.subheader",
                                     { version: "0.0.1-R5-b21" } // placed it here so you only update once for all langs
                                 )}
                             >
@@ -451,7 +460,7 @@ export default function Profile() {
                                     style="ACE"
                                     action={checkForUpdates}
                                     buttonText={t(
-                                        "page_profile.update_division.button"
+                                        "page_profile.updates.button"
                                     )}
                                 />
                             </Division>

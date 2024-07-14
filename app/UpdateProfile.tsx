@@ -107,7 +107,7 @@ export default function UpdateProfile() {
                     {"<"} Go back
                 </BetterText>
                 <GapView height={20} />
-                <BetterText textAlign="normal" fontWeight="Bold" fontSize={40}>
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
                     Update your profile
                 </BetterText>
                 <BetterText

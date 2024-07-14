@@ -331,7 +331,7 @@ export default function Form() {
     return (
         <Native.View style={styles.containerview}>
             <Native.ScrollView style={styles.mainview}>
-                <BetterText textAlign="normal" fontWeight="Bold" fontSize={40}>
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
                     Let&apos;s do it!
                 </BetterText>
                 <BetterText

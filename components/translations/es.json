@@ -50,10 +50,17 @@
             "subheader": "Licencia, créditos, políticas, y más info sobre la app.",
             "button": "Ver sobre"
         },
-        "updates_division": {
+        "updates": {
             "header": "Buscar actualizaciones",
             "subheader": "Ahora estás usando la versión {{version}}.",
-            "button": "Comprobar si hay actualizaciones nuevas"
+            "button": "Buscar actualizaciones nuevas",
+            "update_flow": {
+                "update_available": "Actualización disponible",
+                "update_available_text": "Una nueva versión ({{latestVersion}}) está disponible. Por favor, actualiza PersonaPlus a la última versión.\n\n\"Actualizar\" te redirigiriá a la página de descarga del último APK.\n\n\"Novedades\" te llevará a la página de la actualización en GitHub para ver un resumen de lo que hay de nuevo.",
+                "youre_up_to_date": "¡Estás al día!",
+                "youre_maybe_up_to_date": "No se pudo consultar el repositorio. Puede que estés al día o puede que no.",
+                "cant_check_if_youre_up_to_date": "No se pudo comprobar si hay actualizaciones. Por favor, intenta más tarde (o comprueba manualmente el repo)."
+            }
         },
         "developer": {
             "use_dev_interface": "¿Usar Dev Interface?",
@@ -69,6 +76,9 @@
             "preheader": "ZONA DE PELIGRO",
             "header": "Empezar de cero",
             "subheader": "Borra TODOS los datos (perfil, objetivo, estadísticas...) de PersonaPlus. No hay forma de deshacer esto o de recuperar tus datos. No recomendado, a menos que estés usando PersonaPlus con fines de testeo."
+        },
+        "specific_errors": {
+            "lang_react_error": "¡Se recibió un error de React al tratar de cambiar de idioma!"
         }
     },
     "cool_messages": {
