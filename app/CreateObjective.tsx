@@ -194,7 +194,7 @@ export default function Form({ onSubmit }: ObjectiveProps) {
     const handleSubmit = async () => {
         // validation for an error
         if (typeof onSubmit !== "function") {
-            console.error("onSubmit is not a function");
+            termLog("onSubmit is not a function", "error");
             return;
         }
 

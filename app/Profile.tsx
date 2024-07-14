@@ -55,7 +55,7 @@ const checkForUpdates = async () => {
 
         if (latestRelease) {
             const latestVersion = latestRelease.tag_name;
-            console.log(`Latest version: ${latestVersion}`);
+            termLog(`Latest version: ${latestVersion}`, "log");
 
             if (latestVersion !== currentVersion) {
                 Native.Alert.alert(
@@ -102,8 +102,8 @@ const checkForUpdates = async () => {
                 );
             }
         }
-    } catch (error) {
-        console.error("Error checking for update:", error);
+    } catch (e) {
+        termLog("Error checking for update: " + e, "error");
         if (Native.Platform.OS === "android") {
             Native.ToastAndroid.show(
                 "Failed to check for updates. Please try again later (or manually check the repo).",
@@ -164,7 +164,7 @@ export default function Profile() {
             };
             return data;
         } catch (e) {
-            console.error(e);
+            termLog(String(e), "error");
             return {
                 username: "Unknown",
                 gender: "Unknown",
