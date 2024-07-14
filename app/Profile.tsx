@@ -15,6 +15,7 @@ import GapView from "@/components/GapView";
 import { termLog } from "./DeveloperInterface";
 import { version } from "@/package.json";
 import { changeLanguage } from "i18next";
+import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo
 interface Release {
@@ -138,6 +139,7 @@ const styles = Native.StyleSheet.create({
 
 // Creamos la función
 export default function Profile() {
+    const { t } = useTranslation();
     // Loading state
     const [loading, setLoading] = React.useState<boolean>(true);
     const [language, setLanguage] = React.useState<"en" | "es" | string>("en");
@@ -295,7 +297,7 @@ export default function Profile() {
                             textAlign="center"
                             textColor="#C8C8C8"
                         >
-                            Loading...
+                            {t("globals.loading")}
                         </BetterText>
                     </Native.View>
                 </Native.ScrollView>
@@ -313,14 +315,15 @@ export default function Profile() {
                         fontWeight="Bold"
                         fontSize={40}
                     >
-                        Profile
+                        {t("page_profile.header.label")}
                     </BetterText>
                     <BetterText
                         textAlign="normal"
                         fontWeight="Regular"
                         fontSize={20}
                     >
-                        Nice to meet you, {username}!
+                        {t("page_profile.header.sublabel")}
+                        {username}!
                     </BetterText>
                     <GapView height={20} />
                     <Section kind="Profile">
@@ -332,7 +335,17 @@ export default function Profile() {
                                     fontWeight="Regular"
                                     fontSize={15}
                                 >
-                                    Gender: {String(gender)}
+                                    {t(
+                                        "page_profile.your_profile_division.gender"
+                                    )}
+                                    :{" "}
+                                    {String(gender) === "male"
+                                        ? t(
+                                              "page_profile.your_profile_division.gender_male"
+                                          )
+                                        : t(
+                                              "page_profile.your_profile_division.gender_female"
+                                          )}
                                 </BetterText>
                                 <BetterText
                                     textAlign="normal"
@@ -340,7 +353,13 @@ export default function Profile() {
                                     fontWeight="Regular"
                                     fontSize={15}
                                 >
-                                    Age: {String(age)} years old
+                                    {t(
+                                        "page_profile.your_profile_division.age"
+                                    )}
+                                    : {String(age)}
+                                    {t(
+                                        "page_profile.your_profile_division.age_suffix"
+                                    )}
                                 </BetterText>
                                 <BetterText
                                     textAlign="normal"
@@ -348,7 +367,10 @@ export default function Profile() {
                                     fontWeight="Regular"
                                     fontSize={15}
                                 >
-                                    Height: {String(height)} cm
+                                    {t(
+                                        "page_profile.your_profile_division.height"
+                                    )}
+                                    : {String(height)} cm
                                 </BetterText>
 
                                 <BetterText
@@ -357,7 +379,10 @@ export default function Profile() {
                                     fontWeight="Regular"
                                     fontSize={15}
                                 >
-                                    Weight: {String(weight)} kg
+                                    {t(
+                                        "page_profile.your_profile_division.weight"
+                                    )}
+                                    : {String(weight)} kg
                                 </BetterText>
                                 <GapView height={10} />
                                 <Button
@@ -365,14 +390,18 @@ export default function Profile() {
                                     action={() =>
                                         Router.router.navigate("/UpdateProfile")
                                     }
-                                    buttonText="Update my profile"
+                                    buttonText={t(
+                                        "page_profile.your_profile_division.update_button"
+                                    )}
                                 />
                             </Native.View>
                         </Division>
                     </Section>
                     <GapView height={20} />
                     <Section kind="Settings">
-                        <Division header="Change your language">
+                        <Division
+                            header={t("page_profile.change_your_language")}
+                        >
                             <Button
                                 buttonText={
                                     language === "en"
@@ -393,26 +422,37 @@ export default function Profile() {
                         <Division
                             status="REGULAR"
                             iconName={null}
-                            header="About"
-                            subheader="License, credits, and more info about the app."
+                            header={t("page_profile.about_division.header")}
+                            subheader={t(
+                                "page_profile.about_division.subheader"
+                            )}
                         >
                             <Button
                                 style="ACE"
                                 action={() => Router.router.navigate("/About")}
-                                buttonText="See about"
+                                buttonText={t(
+                                    "page_profile.about_division.button"
+                                )}
                             />
                         </Division>
                         {Native.Platform.OS === "android" && (
                             <Division
                                 status="REGULAR"
                                 iconName={null}
-                                header="Check for updates"
-                                subheader="You are currently using 0.0.1-R5-b21."
+                                header={t(
+                                    "page_profile.update_division.header"
+                                )}
+                                subheader={t(
+                                    "page_profile.update_division.subheader",
+                                    { version: "0.0.1-R5-b21" } // placed it here so you only update once for all langs
+                                )}
                             >
                                 <Button
                                     style="ACE"
                                     action={checkForUpdates}
-                                    buttonText="Check for updates"
+                                    buttonText={t(
+                                        "page_profile.update_division.button"
+                                    )}
                                 />
                             </Division>
                         )}
@@ -421,10 +461,11 @@ export default function Profile() {
                     <Section kind="Developer">
                         <Division
                             status="REGULAR"
-                            iconName={null}
                             preheader="DEV INTERFACE"
-                            header="Use Dev Interface?"
-                            subheader="Enables advanced developer info for testing and contributions."
+                            header={t(
+                                "page_profile.developer.use_dev_interface"
+                            )}
+                            subheader={t("page_profile.developer.description")}
                         >
                             <Native.View style={styles.flexyview}>
                                 <BetterText
@@ -432,16 +473,12 @@ export default function Profile() {
                                     fontWeight="Regular"
                                     fontSize={15}
                                 >
-                                    Dev interface is{" "}
-                                    <BetterText
-                                        textAlign="normal"
-                                        fontWeight="Bold"
-                                        fontSize={15}
-                                    >
-                                        {wantsDev === true
-                                            ? "enabled"
-                                            : "disabled"}
-                                    </BetterText>
+                                    {t("page_profile.developer.status", {
+                                        status:
+                                            wantsDev === true
+                                                ? t("globals.enabled")
+                                                : t("globals.disabled"),
+                                    })}
                                     .
                                 </BetterText>
                                 <GapView height={10} />
@@ -449,7 +486,9 @@ export default function Profile() {
                                     <Button
                                         style="HMM"
                                         action={enableDevInterface}
-                                        buttonText="Enable Dev Interface"
+                                        buttonText={t(
+                                            "page_profile.developer.button.enable"
+                                        )}
                                     />
                                 ) : (
                                     <Native.View
@@ -461,7 +500,9 @@ export default function Profile() {
                                         <Button
                                             style="HMM"
                                             action={disableDevInterface}
-                                            buttonText="Disable Dev Interface"
+                                            buttonText={t(
+                                                "page_profile.developer.button.disable"
+                                            )}
                                         />
                                         <GapView width={10} />
                                         <Button
@@ -471,7 +512,9 @@ export default function Profile() {
                                                     "/DeveloperInterface"
                                                 )
                                             }
-                                            buttonText="Navigate to Dev Interface"
+                                            buttonText={t(
+                                                "page_profile.developer.button.other_button"
+                                            )}
                                         />
                                     </Native.View>
                                 )}
@@ -480,14 +523,16 @@ export default function Profile() {
                         <Division
                             status="REGULAR"
                             iconName={null}
-                            preheader="DANGER ZONE"
-                            header="Start over"
-                            subheader="Deletes ALL data (profile, objectives, stats...) from the app. There's no way to undo this or to recover your data. Not recommended, unless you're using PersonaPlus for testing purposes."
+                            preheader={t("page_profile.danger_zone.preheader")}
+                            header={t("page_profile.danger_zone.header")}
+                            subheader={t("page_profile.danger_zone.subheader")}
                         >
                             <Button
                                 style="WOR"
                                 action={startOver}
-                                buttonText="Start over"
+                                buttonText={t(
+                                    "page_profile.danger_zone.header"
+                                )}
                             />
                         </Division>
                     </Section>

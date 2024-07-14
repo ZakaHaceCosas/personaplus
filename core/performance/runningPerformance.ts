@@ -1,3 +1,7 @@
+// TO DO
+// CALCULATIONS *NOT* ALRIGHT
+// los cálculos *NO* están bien
+
 /*
 CALCULATE RUNNING / WALKING PERFORMANCE
 */

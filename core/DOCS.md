@@ -2,6 +2,8 @@
 
 > [!NOTE]
 > Don't confuse `DOCS.md` (Documentation) with `docs/`, a directory for content used by the library.
+<!--markdownlint-disable-next-line-->
+
 > [!TIP]
 > También disponible en [Español (Spanish)](DOCS.es.md)
 
@@ -42,7 +44,10 @@ OpenHealth.physicalHealth.BodyMassIndex.getLastUpdated();
 ***`Calculate`*** is the most important thing, where you pass **all the arguments required by the calculation function to work**, plus **two extra booleans:** `provideContext` and `provideExplanation`. It can ask for data like the weight, height, age, or gender of the subject, among others.
 
 > [!NOTE]
-> ***This library is american't.*** We use the international system, and there is neither support for the imperial system nor intentions to implement it. Thanks for understanding!
+>
+> ### ***This library is american't.***
+>
+> We adhere to the international system and do not support the imperial system, nor do we have intentions to implement it. Thank you for your understanding!
 
 `provideContext` gives a small context (sometimes just a word) about how the result should be interpreted. E.g., in the BMI (BodyMassIndex) function, `provideContext` returns (when applicable) a string saying if the result value does represent "healthy weight", "under weight", "obesity", and so on.
 
