@@ -266,11 +266,23 @@ export default function Profile() {
 
     const startOver = () => {
         Native.Alert.alert(
-            "Are you sure?",
-            "Again: THERE - IS - NO - WAY - BACK.",
+            t("page_profile.danger_zone.danger_zone_flow.title"),
+            t("page_profile.danger_zone.danger_zone_flow.subtitle"),
             [
-                { text: "Go ahead", style: "destructive", onPress: deleteAll },
-                { text: "Nevermind", style: "default", onPress: () => {} },
+                {
+                    text: t(
+                        "page_profile.danger_zone.danger_zone_flow.go_button"
+                    ),
+                    style: "destructive",
+                    onPress: deleteAll,
+                },
+                {
+                    text: t(
+                        "page_profile.danger_zone.danger_zone_flow.cancel_button"
+                    ),
+                    style: "default",
+                    onPress: () => {},
+                },
             ]
         );
     };
@@ -488,7 +500,6 @@ export default function Profile() {
                                                 ? t("globals.enabled")
                                                 : t("globals.disabled"),
                                     })}
-                                    .
                                 </BetterText>
                                 <GapView height={10} />
                                 {wantsDev === false ? (
