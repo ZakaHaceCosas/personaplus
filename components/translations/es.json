@@ -1,3 +1,30 @@
 {
-    "index_header_hello": "¡Hola"
+    "page_home": {
+        "header": {
+            "label": "¡Hola",
+            "sublabel": "Este es tu resumen para hoy"
+        }
+    },
+    "cool_messages": {
+        "all_done": [
+            "Te sentirás orgulloso de ti mismo, ¿no?",
+            "Eso es cierto, has completado TODOS tus objetivos de hoy.",
+            "Ahora, ¡planea algo más y haz de este día aún más productivo!",
+            "\"Darte un PLUS\" parece valer la pena, ¿cierto?",
+            "¡Tómate un momento para celebrar tus logros!",
+            "¡Todas las tareas están tachadas! Bien hecho, mantén el impulso.",
+            "Otro día productivo para los libros. ¡Gran trabajo!",
+            "¡Misión cumplida! ¿Qué va después en tu lista?",
+            "mission passed, + respect",
+            "En serio. Lo hiciste.",
+            "¿No es suficiente? Puedes ir al panel de control y añadir algo más.",
+            "¿Quién diría que una app del móvil podría ayudarte a hacer tantas cosas?",
+            "while (motivado) do\nDarteUnPlus()",
+            "estás definitivamente en tu prime",
+            "añadir objetivo -> cumplirlo -> sentirse bien -> repetir",
+            "mi bro porfin salió de su cueva",
+            "Suficiente por hoy. ¡Más mañana!",
+            "Por hoy; los objetivos de mañana no se muestran ;)"
+        ]
+    }
 }

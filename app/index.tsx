@@ -183,30 +183,14 @@ export default function Home() {
 
     // i got creative :]
     // commits / PRs that add more stuff will of course be taken into account
-    const allDoneMessages = [
-        "Feel proud of yourself, don't you?",
-        "That is right, you have completed ALL of your objectives for today.",
-        "Now plan something else and make this day even more productive!",
-        '"Giving yourself a PLUS" seems to be worth it, right?',
-        "Take a moment to celebrate your accomplishments!",
-        "All tasks checked off! Well done, keep up the momentum.",
-        "Another productive day in the books. Great job!",
-        "Mission accomplished! What's next on your list?",
-        "mission passed, + respect",
-        "Seriously. You did it.",
-        "Not enough? You can go to your dashboard and add something else.",
-        "Who could tell a phone app could help you get so much done?",
-        "while (motivated) do\nGiveYourselfAPlus()",
-        "You're defo on ur prime",
-        "add objective -> acomplish it -> feel good -> repeat",
-        "bro finally got out his cave", // lmao
-        "Enough for today. More tomorrow!",
-        "For today; objectives due tomorrow aren't shown ;)",
-    ];
+    const allDoneMessages: string[] = t("cool_messages.all_done", {
+        returnObjects: true,
+    });
 
     const randomMessageIndex = Math.floor(
         Math.random() * allDoneMessages.length
     );
+
     const randomMessageForAllDone = allDoneMessages[randomMessageIndex];
 
     // Today's date (since React for some reasons thinks it's funny to start weeks on Sunday, this needs to be done)
@@ -260,14 +244,14 @@ export default function Home() {
             <BottomNav currentLocation={currentpage} />
             <Native.ScrollView style={styles.mainview}>
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={40}>
-                    {t("index_header_hello")}, {username}!
+                    {t("page_home.header.label")}, {username}!
                 </BetterText>
                 <BetterText
                     textAlign="normal"
                     fontWeight="Regular"
                     fontSize={20}
                 >
-                    This is your summary for today
+                    {t("page_home.header.sublabel")}
                 </BetterText>
                 <GapView height={20} />
                 <Section kind="Objectives">
