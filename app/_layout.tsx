@@ -7,6 +7,7 @@ import * as Native from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import * as Router from "expo-router";
 import { useFonts } from "expo-font";
+import "@/components/toolkit/translations";
 
 // Definimos los estilos
 const styles = Native.StyleSheet.create({
