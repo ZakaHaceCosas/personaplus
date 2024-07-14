@@ -3,6 +3,7 @@ import * as Native from "react-native";
 import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
 import * as Router from "expo-router";
+import { useTranslation } from "react-i18next";
 
 const styles = Native.StyleSheet.create({
     containerview: {
@@ -23,6 +24,8 @@ const styles = Native.StyleSheet.create({
 });
 
 export default function License() {
+    const { t } = useTranslation();
+
     return (
         <Native.View style={styles.containerview}>
             <Native.ScrollView style={styles.mainview}>
@@ -31,7 +34,7 @@ export default function License() {
                     fontWeight="Light"
                     onTap={() => Router.router.navigate("/About")}
                 >
-                    {"<"} Go back
+                    {"<"} {t("globals.go_back")}
                 </BetterText>
                 <GapView height={20} />
                 <BetterText fontSize={30} fontWeight="SemiBold">

@@ -442,7 +442,7 @@ export default function WelcomePage() {
                         <Button
                             style="DEFAULT"
                             action={goback}
-                            buttonText="Go back"
+                            buttonText={t("globals.go_back")}
                             width="fill"
                         />
                         {!isFirstStepDone && (
@@ -510,7 +510,7 @@ export default function WelcomePage() {
                         <Button
                             style="DEFAULT"
                             action={goback}
-                            buttonText="Go back"
+                            buttonText={t("globals.go_back")}
                             width="fill"
                         />
                         {!(
@@ -679,7 +679,7 @@ export default function WelcomePage() {
                         <Button
                             style="DEFAULT"
                             action={goback}
-                            buttonText="Go back"
+                            buttonText={t("globals.go_back")}
                             width="fill"
                         />
                         {!sleep ||

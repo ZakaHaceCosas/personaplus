@@ -3,6 +3,7 @@ import * as Native from "react-native";
 import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
 import * as Router from "expo-router";
+import { useTranslation } from "react-i18next";
 
 interface OpenSourceLibrary {
     name: string; // Name of the library / package / whatever (bare username if no name found)
@@ -98,6 +99,8 @@ const styles = Native.StyleSheet.create({
 });
 
 export default function OpenSourceCredits() {
+    const { t } = useTranslation();
+
     return (
         <Native.View style={styles.containerview}>
             <Native.ScrollView style={styles.mainview}>
@@ -106,7 +109,7 @@ export default function OpenSourceCredits() {
                     fontWeight="Light"
                     onTap={() => Router.router.navigate("/About")}
                 >
-                    {"<"} Go back
+                    {"<"} {t("globals.go_back")}
                 </BetterText>
                 <GapView height={20} />
                 <BetterText fontSize={30} fontWeight="SemiBold">

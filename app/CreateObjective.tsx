@@ -12,6 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { termLog } from "./DeveloperInterface";
 import Notification from "@/components/Notification";
 import { Objective, ObjectiveWithoutId } from "@/components/types/Objective";
+import { useTranslation } from "react-i18next";
 // import { v4 as uuid } from "uuid";
 // if you wonder what is UUID doing here, well - after a problem with duplicate IDs i wanted to try this as a solution, but I simply don't like to have such a big ID with letters and dashes, would have to redo some types and stuff.
 
@@ -46,6 +47,7 @@ const styles = Native.StyleSheet.create({
 });
 
 export default function Form() {
+    const { t } = useTranslation();
     const [exercise, setExercise] = React.useState<string>("");
     const exercises = [
         "Push Up",
@@ -331,15 +333,23 @@ export default function Form() {
     return (
         <Native.View style={styles.containerview}>
             <Native.ScrollView style={styles.mainview}>
+                <BetterText
+                    fontSize={20}
+                    fontWeight="Light"
+                    onTap={() => Router.router.navigate("/About")}
+                >
+                    {"<"} {t("globals.go_back")}
+                </BetterText>
+                <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
-                    Let&apos;s do it!
+                    {t("subpage_create_active_objective.header.label")}
                 </BetterText>
                 <BetterText
                     textAlign="normal"
                     fontWeight="Regular"
                     fontSize={20}
                 >
-                    Create a new objective now!
+                    {t("subpage_create_active_objective.header.sublabel")}
                 </BetterText>
                 <GapView height={20} />
                 <Native.View>
@@ -348,7 +358,9 @@ export default function Form() {
                         textColor="#FFF"
                         fontWeight="Regular"
                     >
-                        What do you want to do?
+                        {t(
+                            "subpage_create_active_objective.questions.what_to_do"
+                        )}
                     </BetterText>
                     <GapView height={5} />
                     <Select
