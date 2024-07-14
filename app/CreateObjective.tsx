@@ -15,11 +15,6 @@ import { Objective, ObjectiveWithoutId } from "@/components/types/Objective";
 // import { v4 as uuid } from "uuid";
 // if you wonder what is UUID doing here, well - after a problem with duplicate IDs i wanted to try this as a solution, but I simply don't like to have such a big ID with letters and dashes, would have to redo some types and stuff.
 
-// TypeScript, supongo
-interface ObjectiveProps {
-    onSubmit: (objectiveData: Objective) => void;
-}
-
 // Creamos los estilos
 const styles = Native.StyleSheet.create({
     containerview: {
@@ -50,7 +45,7 @@ const styles = Native.StyleSheet.create({
     },
 });
 
-export default function Form({ onSubmit }: ObjectiveProps) {
+export default function Form() {
     const [exercise, setExercise] = React.useState<string>("");
     const exercises = [
         "Push Up",
@@ -192,12 +187,6 @@ export default function Form({ onSubmit }: ObjectiveProps) {
     };
 
     const handleSubmit = async () => {
-        // validation for an error
-        if (typeof onSubmit !== "function") {
-            termLog("onSubmit is not a function", "error");
-            return;
-        }
-
         const formData: ObjectiveWithoutId = {
             exercise,
             days,
