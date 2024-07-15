@@ -78,6 +78,28 @@ const libraries: OpenSourceLibrary[] = [
             "Lightweight React/React Native countdown timer component with color and progress animation based on SVG.",
         url: "https://github.com/vydimitrov/react-countdown-circle-timer/",
     },
+    {
+        name: "React Native SVG",
+        author: "Software Mansion",
+        license: "MIT License",
+        description:
+            "SVG library for React Native, React Native Web, and plain React web projects.",
+        url: "https://github.com/software-mansion/react-native-svg",
+    },
+    {
+        name: "React Navigation",
+        author: "Software Mansion",
+        license: "MIT License",
+        description: "Routing and navigation for your React Native apps.",
+        url: "https://github.com/react-navigation/react-navigation",
+    },
+    {
+        name: "i18next",
+        author: "i18next contributors",
+        license: "MIT License",
+        description: " i18next: learn once - translate everywhere.",
+        url: "https://github.com/i18next/i18next",
+    },
 ];
 
 const styles = Native.StyleSheet.create({
