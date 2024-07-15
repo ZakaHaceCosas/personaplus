@@ -92,16 +92,28 @@ Asegúrate de que cualquier software de terceros utilizado que esté bajo difere
 
 ### Créditos
 
+#### Creador y contribuidores
+
+Creado por Zakaria (@ZakaHaceCosas).
+
+Aquellos contribuidores que aporten significativamente a la app serán nombrados aquí. Todos ellos aparecen [en esta pestaña](https://github.com/zakaHaceCosas/personaplus/graphs/contributors).
+
+#### Software libre
+
 Gracias a todo este maravilloso software libre, PersonaPlus es posible. ¡Gracias!
 
-[React](https://react.dev/)
-[React Native](https://reactnative.dev/)
-[Expo](https://expo.dev/)
-[Async Storage](https://react-native-async-storage.github.io/async-storage/)
-[React Native Picker](https://github.com/react-native-picker/picker)
-[React Native Animatable](https://github.com/oblador/react-native-animatable)
-[Remove Console Msg](https://www.npmjs.com/package/remove-console-msg)
-[React Native Countdown Circle Timer](https://github.com/vydimitrov/react-countdown-circle-timer/)
+- [React](https://react.dev/)
+- > Y los paquetes asociados
+- [React Native](https://reactnative.dev/)
+- > Y los paquetes asociados
+- [Expo](https://expo.dev/)
+- > Y los paquetes asociados
+- [React Native Animatable](https://github.com/oblador/react-native-animatable)
+- [Remove Console Msg](https://www.npmjs.com/package/remove-console-msg)
+- [React Native Countdown Circle Timer](https://github.com/vydimitrov/react-countdown-circle-timer/)
+- [React Native SVG](https://github.com/software-mansion/react-native-svg)
+- [React Navigation]("https://github.com/react-navigation/react-navigation)
+- [i18next](https://github.com/i18next/i18next)
 
 ## Únete al club de los que quieren darse más :]
 

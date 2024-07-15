@@ -39,22 +39,6 @@ const libraries: OpenSourceLibrary[] = [
         url: "https://expo.dev/",
     },
     {
-        name: "Async Storage",
-        author: "Facebook",
-        license: "MIT License",
-        description:
-            "An asynchronous, persistent, key-value storage system for React Native.",
-        url: "https://react-native-async-storage.github.io/async-storage/",
-    },
-    {
-        name: "React Native Picker",
-        author: "Facebook",
-        license: "MIT License",
-        description:
-            "Picker is a cross-platform UI component for selecting an item from a list of options.",
-        url: "https://github.com/react-native-picker/picker",
-    },
-    {
         name: "React Native Animatable",
         author: "Joel Arvidsson",
         license: "MIT License",
