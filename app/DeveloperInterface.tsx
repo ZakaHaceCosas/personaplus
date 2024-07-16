@@ -14,6 +14,8 @@ import { version as PersonaPlusVersion } from "@/package.json";
 import * as ObjectiveToolkit from "@/components/toolkit/objectives";
 import { isDevelopmentBuild } from "expo-dev-client";
 import * as FileSystem from "expo-file-system";
+// import * as Permissions from "expo-permissions";
+import * as MediaLibrary from "expo-media-library";
 
 // TypeScript, supongo
 import { Objective } from "@/components/types/Objective";
@@ -22,9 +24,10 @@ const styles = Native.StyleSheet.create({
     consoleview: {
         flex: 1,
         padding: 10,
-        backgroundColor: "#f0f0f0",
+        backgroundColor: "#000",
         width: "100%",
         height: "100%",
+        borderRadius: 5,
     },
     mainview: {
         padding: 20,
@@ -36,10 +39,10 @@ const styles = Native.StyleSheet.create({
         marginBottom: 5,
     },
     log: {
-        color: "#000000",
+        color: "#FFFFFF",
         paddingLeft: 10,
         borderLeftWidth: 2,
-        borderLeftColor: "#000000",
+        borderLeftColor: "#FFFFFF",
     },
     success: {
         color: "#28a745",
@@ -221,14 +224,32 @@ export default function DeveloperInterface() {
             })
             .join("\n");
 
-        const fileUri = FileSystem.documentDirectory + "logs.personaplus.txt";
+        const fileUri = FileSystem.cacheDirectory + "logs.txt";
 
         try {
             await FileSystem.writeAsStringAsync(fileUri, logText);
-            console.log("Archivo guardado en:", fileUri);
-            return fileUri;
-        } catch (error) {
-            console.error("Error al guardar el archivo:", error);
+
+            const { status } = await MediaLibrary.requestPermissionsAsync();
+            if (status !== "granted") {
+                termLog(
+                    "No permission for saving stuff to Downloads folder",
+                    "warn"
+                );
+                return;
+            }
+
+            const asset = await MediaLibrary.createAssetAsync(fileUri);
+            const album = await MediaLibrary.getAlbumAsync("Download");
+            if (album == null) {
+                await MediaLibrary.createAlbumAsync("Download", asset, false);
+            } else {
+                await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
+            }
+
+            termLog("Logs filed to downloads folder: " + asset.uri, "success");
+            return asset.uri;
+        } catch (e) {
+            termLog("Error al guardar el archivo: " + e, "error");
         }
     };
 
@@ -362,7 +383,6 @@ export default function DeveloperInterface() {
                 <Native.View style={styles.consoleview}>
                     <BetterText
                         fontWeight="Regular"
-                        textColor="#000"
                         textAlign="normal"
                         fontSize={15}
                     >
@@ -380,7 +400,6 @@ export default function DeveloperInterface() {
                 <Native.View style={styles.consoleview}>
                     <BetterText
                         fontWeight="Regular"
-                        textColor="#000"
                         textAlign="normal"
                         fontSize={15}
                     >

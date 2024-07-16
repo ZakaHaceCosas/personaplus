@@ -1,6 +1,5 @@
 // components/Form.tsx
 // Formulario con select, array de toggles, increment/decrement para duration, repetitions, rests y rest duration
-// import "react-native-get-random-values";
 import * as React from "react";
 import * as Native from "react-native";
 import BetterText from "@/components/BetterText";
