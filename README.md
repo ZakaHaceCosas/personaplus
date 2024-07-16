@@ -73,8 +73,8 @@ PersonaPlus es una app en un estado muy temprano, muchas funciones aún están p
     - [ ] Formulario funcional
 - [ ] Misceláneos
   - [ ] Temas para la aplicación (claro, oscuro, etc...)
-  - [ ] Múltiples idiomas (Castellano, Inglés...)
-  - [ ] Recordatorios
+  - [X] Múltiples idiomas (Castellano, Inglés...)
+  - [X] Recordatorios
 
 ## ¿Cómo contribuir?
 
@@ -109,7 +109,7 @@ Gracias a todo este maravilloso software libre, PersonaPlus es posible. ¡Gracia
 - [Remove Console Msg](https://www.npmjs.com/package/remove-console-msg)
 - [React Native Countdown Circle Timer](https://github.com/vydimitrov/react-countdown-circle-timer/)
 - [React Native SVG](https://github.com/software-mansion/react-native-svg)
-- [React Navigation]("https://github.com/react-navigation/react-navigation)
+- [React Navigation](https://github.com/react-navigation/react-navigation)
 - [i18next](https://github.com/i18next/i18next)
 
 ## Únete al club de los que quieren darse más :]
