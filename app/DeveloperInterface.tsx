@@ -14,7 +14,6 @@ import { version as PersonaPlusVersion } from "@/package.json";
 import * as ObjectiveToolkit from "@/components/toolkit/objectives";
 import { isDevelopmentBuild } from "expo-dev-client";
 import * as FileSystem from "expo-file-system";
-// import * as Permissions from "expo-permissions";
 import * as MediaLibrary from "expo-media-library";
 
 // TypeScript, supongo
