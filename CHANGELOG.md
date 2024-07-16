@@ -16,6 +16,11 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - PD: Los logs serán en inglés, siempre.
 
+## 0.0.1-R5-b22
+
+- Implemented translations: now the app lets you choose between English (fully done) and Spanish (work in progress).
+- The WelcomeScreen layout still has a few issues, but it's now centered at least.
+
 ## 0.0.1-R5-b21
 
 - Fixed a _stupid_ mistake: sometimes THIS `{}` was used as an "array" instead of THIS `[]`, causing problems with objectives and their logic.
@@ -35,7 +40,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 > [!NOTE]
 >
-> ### **FIXED ERRORS - Latest**
+> ### **FIXED ERRORS - b21**
 >
 > - Fixed termLog() not making persistent logs for Dev Interface.
 > - Fixed sessions not being able to open.
@@ -47,7 +52,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 ---
 > [!NOTE]
 >
-> ### **KNOWN ERRORS - Latest**
+> ### **KNOWN ERRORS - b21**
 >
 > - Wrong Welcome Screen layout (not centered).
 
