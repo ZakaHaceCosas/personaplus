@@ -38,7 +38,7 @@ export default function Home() {
                 <BetterText
                     fontSize={20}
                     fontWeight="Light"
-                    onTap={() => Router.router.navigate("/Profile")}
+                    onTap={Router.router.back}
                 >
                     {"<"} {t("globals.go_back")}
                 </BetterText>

@@ -20,6 +20,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 
 - Implemented translations: now the app lets you choose between English (fully done) and Spanish (work in progress).
 - The WelcomeScreen layout still has a few issues, but it's now centered at least.
+- Fixed "Go back" button sometimes going to a different page.
 
 ## 0.0.1-R5-b21
 
