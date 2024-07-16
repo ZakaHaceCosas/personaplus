@@ -94,13 +94,6 @@
         },
         "questions": {
             "what_to_do": "What do you want to do?",
-            "what_to_do_answers": {
-                "Push Up": "Push Up",
-                "Lifting": "Lifting",
-                "Running": "Running",
-                "Walking": "Walking",
-                "Meditation": "Meditation"
-            },
             "when_to_do": "What days do you want to exercise?",
             "when_to_do_protip": "Tap each day to enable/disable it.\nColored days are enabled, gray ones are disabled.",
             "toggles_labels": {
@@ -121,7 +114,7 @@
             "amount_of_hands_protip_scales": "Basically: are you going to workout with 1 scale or with 2 scales, one on each hand? Deaults to two.",
             "amount_of_hands_protip_pushup": "Basically: are you going to push-up yourself using both hands (normal) or just one of them (advanced)? Defaults to two.",
             "what_speed_youll_run": "What speed will you run to?",
-            "what_speed_youll_run_protip": "Of course you don&apos;t need to be exact, just try to estimate it."
+            "what_speed_youll_run_protip": "Of course you don't need to be exact, just try to estimate it."
         },
         "warnings": {
             "too_much": {
@@ -177,6 +170,13 @@
             "friday": "Friday",
             "saturday": "Saturday",
             "sunday": "Sunday"
+        },
+        "supported_active_objectives": {
+            "Push Up": "Push-Ups",
+            "Lifting": "Lifting",
+            "Running": "Running",
+            "Walking": "Walking",
+            "Meditation": "Meditation"
         },
         "are_you_sure": "Are you sure?",
         "nevermind": "Nevermind"

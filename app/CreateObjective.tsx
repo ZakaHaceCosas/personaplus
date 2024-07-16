@@ -386,7 +386,7 @@ export default function Form() {
                             <Select.Item
                                 key={ex}
                                 label={t(
-                                    `subpage_create_active_objective.questions.what_to_do_answers.${ex}`
+                                    `globals.supported_active_objectives.${ex}`
                                 )}
                                 value={ex}
                             />
@@ -575,7 +575,7 @@ export default function Form() {
                                 fontWeight="Regular"
                             >
                                 {t(
-                                    "subpage_create_active_objective.questions.toggles_labels.how_many_pushups"
+                                    "subpage_create_active_objective.questions.how_many_pushups"
                                 )}
                             </BetterText>
                             <BetterText
@@ -584,7 +584,7 @@ export default function Form() {
                                 fontWeight="Regular"
                             >
                                 {t(
-                                    "subpage_create_active_objective.questions.toggles_labels.how_many_pushups_protip"
+                                    "subpage_create_active_objective.questions.how_many_pushups_protip"
                                 )}
                             </BetterText>
                             <GapView height={15} />
@@ -626,7 +626,7 @@ export default function Form() {
                                 fontWeight="Regular"
                             >
                                 {t(
-                                    "subpage_create_active_objective.questions.toggles_labels.how_many_lifts"
+                                    "subpage_create_active_objective.questions.how_many_lifts"
                                 )}
                             </BetterText>
                             <BetterText
@@ -635,7 +635,7 @@ export default function Form() {
                                 fontWeight="Regular"
                             >
                                 {t(
-                                    "subpage_create_active_objective.questions.toggles_labels.how_many_lifts_protip"
+                                    "subpage_create_active_objective.questions.how_many_lifts_protip"
                                 )}
                             </BetterText>
                             <GapView height={15} />
@@ -677,7 +677,7 @@ export default function Form() {
                                 fontWeight="Regular"
                             >
                                 {t(
-                                    "subpage_create_active_objective.questions.toggles_labels.how_much_does_the_lift_weight"
+                                    "subpage_create_active_objective.questions.how_much_does_the_lift_weight"
                                 )}
                             </BetterText>
                             <BetterText
@@ -686,7 +686,7 @@ export default function Form() {
                                 fontWeight="Regular"
                             >
                                 {t(
-                                    "subpage_create_active_objective.questions.toggles_labels.how_much_does_the_lift_weight_protip"
+                                    "subpage_create_active_objective.questions.how_much_does_the_lift_weight_protip"
                                 )}
                             </BetterText>
                             <GapView height={15} />
@@ -728,7 +728,7 @@ export default function Form() {
                                 fontWeight="Regular"
                             >
                                 {t(
-                                    "subpage_create_active_objective.questions.toggles_labels.how_much_does_the_bar_weight"
+                                    "subpage_create_active_objective.questions.how_much_does_the_bar_weight"
                                 )}
                             </BetterText>
                             <BetterText
@@ -737,7 +737,7 @@ export default function Form() {
                                 fontWeight="Regular"
                             >
                                 {t(
-                                    "subpage_create_active_objective.questions.toggles_labels.how_much_does_the_bar_weight_protip"
+                                    "subpage_create_active_objective.questions.how_much_does_the_bar_weight_protip"
                                 )}
                             </BetterText>
                             <GapView height={15} />
@@ -779,7 +779,7 @@ export default function Form() {
                                 fontWeight="Regular"
                             >
                                 {t(
-                                    "subpage_create_active_objective.questions.toggles_labels.amount_of_hands"
+                                    "subpage_create_active_objective.questions.amount_of_hands"
                                 )}
                             </BetterText>
                             <BetterText
@@ -788,7 +788,7 @@ export default function Form() {
                                 fontWeight="Regular"
                             >
                                 {t(
-                                    "subpage_create_active_objective.questions.toggles_labels.amount_of_hands_protip_scales"
+                                    "subpage_create_active_objective.questions.amount_of_hands_protip_scales"
                                 )}
                             </BetterText>
                             <GapView height={15} />
@@ -830,7 +830,7 @@ export default function Form() {
                                 fontWeight="Regular"
                             >
                                 {t(
-                                    "subpage_create_active_objective.questions.toggles_labels.amount_of_hands"
+                                    "subpage_create_active_objective.questions.amount_of_hands"
                                 )}
                             </BetterText>
                             <BetterText
@@ -839,7 +839,7 @@ export default function Form() {
                                 fontWeight="Regular"
                             >
                                 {t(
-                                    "subpage_create_active_objective.questions.toggles_labels.amount_of_hands_protip_pushup"
+                                    "subpage_create_active_objective.questions.amount_of_hands_protip_pushup"
                                 )}
                             </BetterText>
                             <GapView height={15} />
@@ -881,7 +881,7 @@ export default function Form() {
                                 fontWeight="Regular"
                             >
                                 {t(
-                                    "subpage_create_active_objective.questions.toggles_labels.what_speed_youll_run"
+                                    "subpage_create_active_objective.questions.what_speed_youll_run"
                                 )}
                             </BetterText>
                             <BetterText
@@ -890,7 +890,7 @@ export default function Form() {
                                 fontWeight="Regular"
                             >
                                 {t(
-                                    "subpage_create_active_objective.questions.toggles_labels.what_speed_youll_run_protip"
+                                    "subpage_create_active_objective.questions.what_speed_youll_run_protip"
                                 )}
                             </BetterText>
                             <GapView height={15} />
