@@ -18,7 +18,7 @@ Este proyecto y todos sus participantes y contribuyentes cumplen y deben cumplir
 
 ## Reportar Errores
 
-Si encuentras un error, por favor abre un [issue](https://github.com/tuusuario/personaplus/issues) en GitHub. Asegúrate de incluir:
+Si encuentras un error, por favor abre un [issue](https://github.com/ZakaHaceCosas/personaplus/issues) en GitHub. Asegúrate de incluir:
 
 - Una descripción clara del error.
 - Pasos para reproducir el error.
@@ -30,7 +30,7 @@ Si encuentras un error, por favor abre un [issue](https://github.com/tuusuario/p
 
 ## Hacer sugerencias
 
-Si tienes una idea para una nueva funcionalidad, abre un [issue](https://github.com/tuusuario/personaplus/issues) y describe:
+Si tienes una idea para una nueva funcionalidad, abre un [issue](https://github.com/ZakaHaceCosas/personaplus/issues) y describe:
 
 - El problema que estás tratando de resolver o el motivo de tu sugerencia.
 - Tu propuesta como tal.
