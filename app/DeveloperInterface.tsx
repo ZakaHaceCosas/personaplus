@@ -13,6 +13,7 @@ import { version as ReactVersion } from "react";
 import { version as PersonaPlusVersion } from "@/package.json";
 import * as ObjectiveToolkit from "@/components/toolkit/objectives";
 import { isDevelopmentBuild } from "expo-dev-client";
+import * as FileSystem from "expo-file-system";
 
 // TypeScript, supongo
 import { Objective } from "@/components/types/Objective";
@@ -212,6 +213,67 @@ export default function DeveloperInterface() {
         }
     };
 
+    const devFunctionToGenerateLogs = async (logs: Log[]) => {
+        const logText = logs
+            .map(log => {
+                const date = new Date(log.timestamp);
+                return `[${date.toDateString()} ${date.toLocaleTimeString()}] (${log.type.toUpperCase()}) ${log.message}`;
+            })
+            .join("\n");
+
+        const fileUri = FileSystem.documentDirectory + "logs.personaplus.txt";
+
+        try {
+            await FileSystem.writeAsStringAsync(fileUri, logText);
+            console.log("Archivo guardado en:", fileUri);
+            return fileUri;
+        } catch (error) {
+            console.error("Error al guardar el archivo:", error);
+        }
+    };
+
+    const handleDevFunctionToGenerateLogs = async () => {
+        try {
+            const fileUri = await devFunctionToGenerateLogs(logs);
+            if (fileUri) {
+                Native.Alert.alert("Success", `File saved on: ${fileUri}`);
+            }
+        } catch (e) {
+            Native.Alert.alert(
+                "Error",
+                "There was an error savin the file: " + e
+            );
+        }
+    };
+
+    const clelog = async () => {
+        try {
+            await AsyncStorage.setItem("globalLogs", "");
+            Router.router.navigate("/DeveloperInterface");
+        } catch (e) {
+            termLog(String(e), "error");
+        }
+    };
+
+    const devFunctionToClearGlobalLogs = () => {
+        Native.Alert.prompt(
+            "Are you sure?",
+            "Logs are very useful in the case you get an error, specially now that the app is still in a testing version. However, for privacy, we do allow to remove them. Do it at your own will.",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => {},
+                    style: "cancel",
+                },
+                {
+                    text: "Go ahead",
+                    onPress: clelog,
+                    style: "destructive",
+                },
+            ]
+        );
+    };
+
     const [everything, setEverything] = React.useState<object | null>(null);
 
     React.useEffect(() => {
@@ -286,6 +348,12 @@ export default function DeveloperInterface() {
                     buttonText="CLEAR ALL (Reset app, basically)"
                     style="WOR"
                 />
+                <GapView height={5} />
+                <Button
+                    action={devFunctionToClearGlobalLogs}
+                    buttonText="CLEAR LOGS"
+                    style="WOR"
+                />
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
                     Objectives JSON
@@ -323,6 +391,11 @@ export default function DeveloperInterface() {
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
                     Logs
                 </BetterText>
+                <Button
+                    style="GOD"
+                    buttonText="EXPORT LOGS TO FILE"
+                    action={handleDevFunctionToGenerateLogs}
+                />
                 <GapView height={5} />
                 <Native.View style={styles.consoleview}>
                     {logs.map((log, index) => (
