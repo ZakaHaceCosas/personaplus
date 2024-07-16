@@ -1,11 +1,17 @@
 // Dashboard.tsx
 // Dashboard, where you setup your path to success.
 
-import * as React from "react";
-import * as Native from "react-native";
+import React from "react";
+import {
+    StyleSheet,
+    DimensionValue,
+    Platform,
+    ToastAndroid,
+    View,
+    ScrollView,
+} from "react-native";
 import BetterText from "@/components/BetterText";
 import BottomNav from "@/components/BottomNav";
-import * as Router from "expo-router";
 import Section from "@/components/section/Section";
 import Division from "@/components/section/division/Division";
 import GapView from "@/components/GapView";
@@ -13,24 +19,28 @@ import Footer from "@/components/Footer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/components/Buttons";
 import { termLog } from "./DeveloperInterface";
-import * as ObjectiveToolkit from "@/components/toolkit/objectives";
+import {
+    fetchObjectives,
+    deleteObjective,
+} from "@/components/toolkit/objectives";
+import { router, usePathname } from "expo-router";
 import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo
 import { Objective } from "@/components/types/Objective";
 
 // Creamos los estilos
-const styles = Native.StyleSheet.create({
+const styles = StyleSheet.create({
     containerview: {
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100vw" as DimensionValue,
+        height: "100vh" as DimensionValue,
     },
     mainview: {
         padding: 20,
         display: "flex",
         flexDirection: "column",
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100vw" as DimensionValue,
+        height: "100vh" as DimensionValue,
         overflow: "scroll",
     },
 });
@@ -70,10 +80,10 @@ export default function Dashboard() {
                 const log =
                     "Could not get objectives fetched due to error: " + e;
                 termLog(log, "error");
-                if (Native.Platform.OS === "android") {
-                    Native.ToastAndroid.show(
+                if (Platform.OS === "android") {
+                    ToastAndroid.show(
                         `${t("globals.react_error")} - ${e}`,
-                        Native.ToastAndroid.LONG
+                        ToastAndroid.LONG
                     );
                 }
             }
@@ -84,36 +94,35 @@ export default function Dashboard() {
 
     const handleDeleteObjective = async (identifier: number) => {
         try {
-            await ObjectiveToolkit.deleteObjective(identifier);
-            const updatedObjectives =
-                await ObjectiveToolkit.fetchObjectives("object");
+            await deleteObjective(identifier);
+            const updatedObjectives = await fetchObjectives("object");
             setObjectives(updatedObjectives);
-            if (Native.Platform.OS === "android") {
-                Native.ToastAndroid.show(
+            if (Platform.OS === "android") {
+                ToastAndroid.show(
                     t("page_dashboard.item_deleted", { id: identifier }),
-                    Native.ToastAndroid.SHORT
+                    ToastAndroid.SHORT
                 );
             }
         } catch (e) {
             const log: string = "Got an error updating, " + e;
             termLog(log, "error");
-            if (Native.Platform.OS === "android") {
-                Native.ToastAndroid.show(
+            if (Platform.OS === "android") {
+                ToastAndroid.show(
                     `${t("page_dashboard.specific_errors.react_error", { id: identifier })} - ${e}`,
-                    Native.ToastAndroid.LONG
+                    ToastAndroid.LONG
                 );
             }
         }
     };
 
-    const currentpage: string = Router.usePathname();
+    const currentpage: string = usePathname();
 
     if (loading) {
         return (
-            <Native.View style={styles.containerview}>
+            <View style={styles.containerview}>
                 <BottomNav currentLocation={currentpage} />
-                <Native.ScrollView>
-                    <Native.View style={styles.mainview}>
+                <ScrollView>
+                    <View style={styles.mainview}>
                         <BetterText
                             fontWeight="Regular"
                             fontSize={15}
@@ -122,16 +131,16 @@ export default function Dashboard() {
                         >
                             {t("globals.loading")}{" "}
                         </BetterText>
-                    </Native.View>
-                </Native.ScrollView>
-            </Native.View>
+                    </View>
+                </ScrollView>
+            </View>
         );
     }
 
     return (
-        <Native.View style={styles.containerview}>
+        <View style={styles.containerview}>
             <BottomNav currentLocation={currentpage} />
-            <Native.ScrollView style={styles.mainview}>
+            <ScrollView style={styles.mainview}>
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
                     {t("page_dashboard.header.label")}
                 </BetterText>
@@ -190,7 +199,7 @@ export default function Dashboard() {
                                 ".";
 
                             return (
-                                <Native.View key={objective.identifier}>
+                                <View key={objective.identifier}>
                                     <Division
                                         status="REGULAR"
                                         preheader={t(
@@ -209,11 +218,11 @@ export default function Dashboard() {
                                             buttonText={t("globals.remove")}
                                         />
                                     </Division>
-                                </Native.View>
+                                </View>
                             );
                         })
                     ) : (
-                        <Native.View
+                        <View
                             style={{
                                 padding: 20,
                                 flex: 1,
@@ -237,13 +246,13 @@ export default function Dashboard() {
                                 style="ACE"
                                 buttonText={t("globals.lets_go")}
                                 action={() =>
-                                    Router.router.navigate("/CreateObjective")
+                                    router.navigate("/CreateObjective")
                                 }
                             />
-                        </Native.View>
+                        </View>
                     )}
                     {objectives && Object.keys(objectives).length > 0 && (
-                        <Native.View
+                        <View
                             style={{
                                 padding: 20,
                             }}
@@ -255,14 +264,14 @@ export default function Dashboard() {
                                     "page_dashboard.create_active_objective"
                                 )}
                                 action={() =>
-                                    Router.router.navigate("/CreateObjective")
+                                    router.navigate("/CreateObjective")
                                 }
                             />
-                        </Native.View>
+                        </View>
                     )}
                 </Section>
                 <Footer />
-            </Native.ScrollView>
-        </Native.View>
+            </ScrollView>
+        </View>
     );
 }

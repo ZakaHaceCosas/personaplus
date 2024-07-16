@@ -1,9 +1,17 @@
 // WelcomeScreen.tsx
 // Welcome page
 
-import * as React from "react";
-import * as Native from "react-native";
-import * as Router from "expo-router";
+import React from "react";
+import { router } from "expo-router";
+import {
+    StyleSheet,
+    Dimensions,
+    DimensionValue,
+    ScrollView,
+    View,
+    TextInput,
+    Linking,
+} from "react-native";
 import Swap from "@/components/Swap";
 import Button from "@/components/Buttons";
 import GapView from "@/components/GapView";
@@ -14,10 +22,10 @@ import { termLog } from "./DeveloperInterface";
 import { useTranslation } from "react-i18next";
 
 // Definimos los estilos
-const styles = Native.StyleSheet.create({
+const styles = StyleSheet.create({
     mainview: {
         width: "100%",
-        height: Native.Dimensions.get("window").height,
+        height: Dimensions.get("window").height,
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
@@ -28,7 +36,7 @@ const styles = Native.StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         gap: 15,
-        width: "calc(100% - 5px)" as Native.DimensionValue,
+        width: "calc(100% - 5px)" as DimensionValue,
     },
     picker: {
         padding: 12,
@@ -65,7 +73,7 @@ export default function WelcomePage() {
         { value: "female", label: "Transformer", default: false }, // lol.
         { value: "female", label: "Non-existant being", default: false },
     ];
-    const inputRefs = React.useRef<Native.TextInput[]>([]);
+    const inputRefs = React.useRef<TextInput[]>([]);
     const easteregg: number = Math.floor(Math.random() * 69000) + 1;
     const [focuspointValue, setFocuspointValue] = React.useState<string | null>(
         null
@@ -161,7 +169,7 @@ export default function WelcomePage() {
         if (currentTab > 0 && currentTab <= 3) {
             setTab(prevPage => prevPage + 1);
         } else {
-            Router.router.navigate("/");
+            router.navigate("/");
         }
     };
 
@@ -194,7 +202,7 @@ export default function WelcomePage() {
                 await AsyncStorage.setItem("objectives", "{}");
                 await AsyncStorage.setItem("useDevTools", "false");
                 await AsyncStorage.setItem("language", language);
-                Router.router.navigate("/");
+                router.navigate("/");
             } catch (e) {
                 const log = "Error creating profile: " + e;
                 termLog(log, "error");
@@ -212,7 +220,7 @@ export default function WelcomePage() {
     };
 
     return (
-        <Native.ScrollView style={styles.mainview}>
+        <ScrollView style={styles.mainview}>
             {currentTab === 1 && (
                 <React.Fragment>
                     <BetterText
@@ -240,7 +248,7 @@ export default function WelcomePage() {
                         Were proud to see you want to give yourself a plus.
                     </BetterText>
                     <GapView height={20} />
-                    <Native.View style={styles.flexbtns}>
+                    <View style={styles.flexbtns}>
                         <Button
                             style="GOD"
                             action={gonext}
@@ -248,7 +256,7 @@ export default function WelcomePage() {
                             width="fill"
                             height={500}
                         />
-                    </Native.View>
+                    </View>
                 </React.Fragment>
             )}
 
@@ -276,7 +284,7 @@ export default function WelcomePage() {
                             fontSize={20}
                             textColor="#3280FF"
                             onTap={() =>
-                                Native.Linking.openURL(
+                                Linking.openURL(
                                     "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md"
                                 )
                             }
@@ -286,7 +294,7 @@ export default function WelcomePage() {
                         .
                     </BetterText>
                     <GapView height={20} />
-                    <Native.TextInput
+                    <TextInput
                         placeholder="Username (doesn't have to be your real name)"
                         value={formData.username}
                         readOnly={false}
@@ -318,7 +326,7 @@ export default function WelcomePage() {
                         ref={ref => ref && (inputRefs.current[0] = ref)}
                     />
                     <GapView height={15} />
-                    <Native.TextInput
+                    <TextInput
                         placeholder="Height (cm) (don't add decimals)"
                         value={formData.height}
                         readOnly={false}
@@ -351,7 +359,7 @@ export default function WelcomePage() {
                         ref={ref => ref && (inputRefs.current[1] = ref)}
                     />
                     <GapView height={15} />
-                    <Native.TextInput
+                    <TextInput
                         placeholder="Weight (kg) (don't add decimals)"
                         value={formData.weight}
                         readOnly={false}
@@ -384,7 +392,7 @@ export default function WelcomePage() {
                         ref={ref => ref && (inputRefs.current[2] = ref)}
                     />
                     <GapView height={15} />
-                    <Native.TextInput
+                    <TextInput
                         placeholder="Age (years)"
                         value={formData.age}
                         readOnly={false}
@@ -438,7 +446,7 @@ export default function WelcomePage() {
                         />
                     )}
                     <GapView height={15} />
-                    <Native.View style={styles.flexbtns}>
+                    <View style={styles.flexbtns}>
                         <Button
                             style="DEFAULT"
                             action={goback}
@@ -465,7 +473,7 @@ export default function WelcomePage() {
                                 width="fill"
                             />
                         )}
-                    </Native.View>
+                    </View>
                 </React.Fragment>
             )}
 
@@ -506,7 +514,7 @@ export default function WelcomePage() {
                         onValueChange={handleFocuspointChange}
                     />
                     <GapView height={15} />
-                    <Native.View style={styles.flexbtns}>
+                    <View style={styles.flexbtns}>
                         <Button
                             style="DEFAULT"
                             action={goback}
@@ -532,7 +540,7 @@ export default function WelcomePage() {
                                 width="fill"
                             />
                         )}
-                    </Native.View>
+                    </View>
                 </React.Fragment>
             )}
 
@@ -675,7 +683,7 @@ export default function WelcomePage() {
                         />
                     </Select>
                     <GapView height={15} />
-                    <Native.View style={styles.flexbtns}>
+                    <View style={styles.flexbtns}>
                         <Button
                             style="DEFAULT"
                             action={goback}
@@ -702,9 +710,9 @@ export default function WelcomePage() {
                                 width="fill"
                             />
                         )}
-                    </Native.View>
+                    </View>
                 </React.Fragment>
             )}
-        </Native.ScrollView>
+        </ScrollView>
     );
 }

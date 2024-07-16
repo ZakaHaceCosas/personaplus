@@ -1,11 +1,20 @@
 // Profile.tsx
 // Profile page.
 
-import * as React from "react";
-import * as Native from "react-native";
+import React from "react";
+import {
+    StyleSheet,
+    DimensionValue,
+    Alert,
+    Linking,
+    Platform,
+    ToastAndroid,
+    View,
+    ScrollView,
+} from "react-native";
+import { router, usePathname } from "expo-router";
 import BetterText from "@/components/BetterText";
 import Footer from "@/components/Footer";
-import * as Router from "expo-router";
 import Section from "@/components/section/Section";
 import Division from "@/components/section/division/Division";
 import Button from "@/components/Buttons";
@@ -35,17 +44,17 @@ interface UserData {
 }
 
 // Creamos los estilos
-const styles = Native.StyleSheet.create({
+const styles = StyleSheet.create({
     containerview: {
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100vw" as DimensionValue,
+        height: "100vh" as DimensionValue,
     },
     mainview: {
         padding: 20,
         display: "flex",
         flexDirection: "column",
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100vw" as DimensionValue,
+        height: "100vh" as DimensionValue,
         overflow: "scroll",
     },
     flexyview: {
@@ -85,7 +94,7 @@ export default function Profile() {
                 termLog(`Latest version: ${latestVersion}`, "log");
 
                 if (latestVersion !== currentVersion) {
-                    Native.Alert.alert(
+                    Alert.alert(
                         t("page_profile.updates.update_flow.update_available"),
                         t(
                             "page_profile.updates.update_flow.update_available_text",
@@ -96,7 +105,7 @@ export default function Profile() {
                                 text: "Update",
                                 style: "default",
                                 onPress: () =>
-                                    Native.Linking.openURL(
+                                    Linking.openURL(
                                         latestRelease.assets.length > 0
                                             ? latestRelease.assets[0]
                                                   .browser_download_url
@@ -106,7 +115,7 @@ export default function Profile() {
                             {
                                 text: "See changelog",
                                 onPress: () =>
-                                    Native.Linking.openURL(
+                                    Linking.openURL(
                                         latestRelease.html_url || ""
                                     ),
                             },
@@ -118,31 +127,31 @@ export default function Profile() {
                         ]
                     );
                 } else {
-                    if (Native.Platform.OS === "android") {
-                        Native.ToastAndroid.show(
+                    if (Platform.OS === "android") {
+                        ToastAndroid.show(
                             t(
                                 "page_profile.updates.update_flow.youre_up_to_date"
                             ),
-                            Native.ToastAndroid.SHORT
+                            ToastAndroid.SHORT
                         );
                     }
                 }
             } else {
-                if (Native.Platform.OS === "android") {
-                    Native.ToastAndroid.show(
+                if (Platform.OS === "android") {
+                    ToastAndroid.show(
                         t(
                             "page_profile.updates.update_flow.youre_maybe_up_to_date"
                         ),
-                        Native.ToastAndroid.SHORT
+                        ToastAndroid.SHORT
                     );
                 }
             }
         } catch (e) {
             termLog("Error checking for update: " + e, "error");
-            if (Native.Platform.OS === "android") {
-                Native.ToastAndroid.show(
+            if (Platform.OS === "android") {
+                ToastAndroid.show(
                     "Failed to check for updates. Please try again later (or manually check the repo).",
-                    Native.ToastAndroid.SHORT
+                    ToastAndroid.SHORT
                 );
             }
         }
@@ -226,7 +235,7 @@ export default function Profile() {
     const enableDevInterface = async () => {
         try {
             await AsyncStorage.setItem("useDevTools", "true");
-            Router.router.navigate("/DeveloperInterface");
+            router.navigate("/DeveloperInterface");
         } catch (e) {
             termLog(`ERROR ENABLING DEV INTERFACE: ${e}`, "error");
         }
@@ -235,7 +244,7 @@ export default function Profile() {
     const disableDevInterface = async () => {
         try {
             await AsyncStorage.setItem("useDevTools", "false");
-            Router.router.navigate("/");
+            router.navigate("/");
         } catch (e) {
             termLog(`ERROR DISABLING DEV INTERFACE: ${e}`, "error");
         }
@@ -257,7 +266,7 @@ export default function Profile() {
                 "activness",
             ]);
             await AsyncStorage.setItem("objectives", JSON.stringify([]));
-            Router.router.navigate("/");
+            router.navigate("/");
             termLog("DEV CLEARED ALL", "log");
         } catch (e) {
             termLog(String(e), "error");
@@ -265,7 +274,7 @@ export default function Profile() {
     };
 
     const startOver = () => {
-        Native.Alert.alert(
+        Alert.alert(
             t("page_profile.danger_zone.danger_zone_flow.title"),
             t("page_profile.danger_zone.danger_zone_flow.subtitle"),
             [
@@ -287,22 +296,22 @@ export default function Profile() {
         );
     };
 
-    const currentpage: string = Router.usePathname();
+    const currentpage: string = usePathname();
 
     const handleChangeLanguaage = async (targetLang: "en" | "es") => {
         try {
             await AsyncStorage.setItem("language", targetLang);
             changeLanguage(targetLang);
             setLanguage(targetLang);
-            Router.router.navigate("/");
+            router.navigate("/");
         } catch (e) {
             termLog("Error changing language! " + e, "error");
-            if (Native.Platform.OS === "android") {
-                Native.ToastAndroid.show(
+            if (Platform.OS === "android") {
+                ToastAndroid.show(
                     t("page_profile.specific_errors.lang_react_error") +
                         " - " +
                         e,
-                    Native.ToastAndroid.LONG
+                    ToastAndroid.LONG
                 );
             }
         }
@@ -310,10 +319,10 @@ export default function Profile() {
 
     if (loading) {
         return (
-            <Native.View style={styles.containerview}>
+            <View style={styles.containerview}>
                 <BottomNav currentLocation={currentpage} />
-                <Native.ScrollView>
-                    <Native.View style={styles.mainview}>
+                <ScrollView>
+                    <View style={styles.mainview}>
                         <BetterText
                             fontWeight="Regular"
                             fontSize={15}
@@ -322,17 +331,17 @@ export default function Profile() {
                         >
                             {t("globals.loading")}
                         </BetterText>
-                    </Native.View>
-                </Native.ScrollView>
-            </Native.View>
+                    </View>
+                </ScrollView>
+            </View>
         );
     }
 
     return (
-        <Native.View style={styles.containerview}>
+        <View style={styles.containerview}>
             <BottomNav currentLocation={currentpage} />
-            <Native.ScrollView>
-                <Native.View style={styles.mainview}>
+            <ScrollView>
+                <View style={styles.mainview}>
                     <BetterText
                         textAlign="normal"
                         fontWeight="Bold"
@@ -351,7 +360,7 @@ export default function Profile() {
                     <GapView height={20} />
                     <Section kind="Profile">
                         <Division header={username}>
-                            <Native.View style={styles.flexyview}>
+                            <View style={styles.flexyview}>
                                 <BetterText
                                     textAlign="normal"
                                     textColor="#FFF"
@@ -411,13 +420,13 @@ export default function Profile() {
                                 <Button
                                     style="ACE"
                                     action={() =>
-                                        Router.router.navigate("/UpdateProfile")
+                                        router.navigate("/UpdateProfile")
                                     }
                                     buttonText={t(
                                         "page_profile.your_profile_division.update_button"
                                     )}
                                 />
-                            </Native.View>
+                            </View>
                         </Division>
                     </Section>
                     <GapView height={20} />
@@ -452,13 +461,13 @@ export default function Profile() {
                         >
                             <Button
                                 style="ACE"
-                                action={() => Router.router.navigate("/About")}
+                                action={() => router.navigate("/About")}
                                 buttonText={t(
                                     "page_profile.about_division.button"
                                 )}
                             />
                         </Division>
-                        {Native.Platform.OS === "android" && (
+                        {Platform.OS === "android" && (
                             <Division
                                 status="REGULAR"
                                 iconName={null}
@@ -488,7 +497,7 @@ export default function Profile() {
                             )}
                             subheader={t("page_profile.developer.description")}
                         >
-                            <Native.View style={styles.flexyview}>
+                            <View style={styles.flexyview}>
                                 <BetterText
                                     textAlign="normal"
                                     fontWeight="Regular"
@@ -511,7 +520,7 @@ export default function Profile() {
                                         )}
                                     />
                                 ) : (
-                                    <Native.View
+                                    <View
                                         style={{
                                             display: "flex",
                                             flexDirection: "row",
@@ -528,7 +537,7 @@ export default function Profile() {
                                         <Button
                                             style="DEFAULT"
                                             action={() =>
-                                                Router.router.navigate(
+                                                router.navigate(
                                                     "/DeveloperInterface"
                                                 )
                                             }
@@ -536,9 +545,9 @@ export default function Profile() {
                                                 "page_profile.developer.button.other_button"
                                             )}
                                         />
-                                    </Native.View>
+                                    </View>
                                 )}
-                            </Native.View>
+                            </View>
                         </Division>
                         <Division
                             status="REGULAR"
@@ -557,8 +566,8 @@ export default function Profile() {
                         </Division>
                     </Section>
                     <Footer />
-                </Native.View>
-            </Native.ScrollView>
-        </Native.View>
+                </View>
+            </ScrollView>
+        </View>
     );
 }

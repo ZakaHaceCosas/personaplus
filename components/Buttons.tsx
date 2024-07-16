@@ -1,8 +1,8 @@
 // Buttons.tsx
 // Buttons, botones, elementos presionables, ENTIDADES INTERACTIVAS UTILIZABLES POR MEDIO DE CLICS / TOCAMIENTOS DE LA PANTALLA xd
 
-import * as React from "react";
-import * as Native from "react-native";
+import React from "react";
+import { Pressable, DimensionValue } from "react-native";
 import BetterText from "@/components/BetterText";
 
 // TypeScript, supongo
@@ -124,19 +124,19 @@ export default function Button({
 
     // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
     return (
-        <Native.Pressable
+        <Pressable
             onPress={action}
             style={{
-                paddingTop: buttonMinorPadding as Native.DimensionValue,
-                paddingBottom: buttonMinorPadding as Native.DimensionValue,
-                paddingLeft: buttonMajorPadding as Native.DimensionValue,
-                paddingRight: buttonMajorPadding as Native.DimensionValue,
+                paddingTop: buttonMinorPadding as DimensionValue,
+                paddingBottom: buttonMinorPadding as DimensionValue,
+                paddingLeft: buttonMajorPadding as DimensionValue,
+                paddingRight: buttonMajorPadding as DimensionValue,
                 borderRadius: 10,
                 borderColor: borderColor,
                 backgroundColor: backgroundColor,
                 borderWidth: 4,
-                width: buttonWidth as Native.DimensionValue,
-                height: buttonHeight as Native.DimensionValue,
+                width: buttonWidth as DimensionValue,
+                height: buttonHeight as DimensionValue,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -154,6 +154,6 @@ export default function Button({
                 </BetterText>
             )}
             {children && children}
-        </Native.Pressable>
+        </Pressable>
     );
 }

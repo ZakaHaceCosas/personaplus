@@ -1,7 +1,7 @@
 // Swap.tsx
 // BetterSwitches (porque un "switch", en teoría hace "swap").
 
-import * as React from "react";
+import React from "react";
 import * as Native from "react-native";
 import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
@@ -23,7 +23,7 @@ interface SwapProps {
     onValueChange?: (value: string) => void; // Para obtener el valor seleccionado
 }
 
-const styles = Native.StyleSheet.create({
+const styles = StyleSheet.create({
     optionButton: {
         paddingTop: 15,
         paddingBottom: 15,
@@ -89,7 +89,7 @@ export default function Swap({
     }
 
     return (
-        <Native.View
+        <View
             style={{
                 flexDirection: orderString,
                 justifyContent: "space-between",
@@ -98,22 +98,22 @@ export default function Swap({
             key={id}
         >
             {options.map((option, index) => (
-                <Native.View
+                <View
                     key={`${id}-${index}`}
                     style={{
                         width:
                             orderString === "row"
-                                ? ("calc(50% + 2.5px)" as Native.DimensionValue)
-                                : ("calc(100% + 2.5px)" as Native.DimensionValue),
+                                ? ("calc(50% + 2.5px)" as DimensionValue)
+                                : ("calc(100% + 2.5px)" as DimensionValue),
                     }}
                 >
-                    <Native.View
+                    <View
                         style={{
                             flexDirection: "row",
                             justifyContent: "space-between",
                         }}
                     >
-                        <Native.Pressable
+                        <Pressable
                             style={[
                                 styles.optionButton,
                                 selectedOption === option &&
@@ -121,7 +121,7 @@ export default function Swap({
                             ]}
                             onPress={() => handleOptionPress(option)}
                         >
-                            <Native.View
+                            <View
                                 style={{
                                     display: "flex",
                                     flex: 1,
@@ -143,17 +143,17 @@ export default function Swap({
                                 >
                                     {option.label}
                                 </BetterText>
-                            </Native.View>
-                        </Native.Pressable>
+                            </View>
+                        </Pressable>
                         {orderString === "row" && (
                             <GapView key={`${id}-${index}-gap`} width={10} />
                         )}
-                    </Native.View>
+                    </View>
                     {orderString === "column" && (
                         <GapView key={`${id}-${index}-gap`} height={10} />
                     )}
-                </Native.View>
+                </View>
             ))}
-        </Native.View>
+        </View>
     );
 }

@@ -22,6 +22,7 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - The WelcomeScreen layout still has a few issues, but it's now centered at least.
 - Fixed "Go back" button sometimes going to a different page.
 - Added the option to save to a file PersonaPlus' logs.
+- Refactored import statements.
 
 ## 0.0.1-R5-b21
 

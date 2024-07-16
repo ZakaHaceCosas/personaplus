@@ -1,8 +1,8 @@
 // Notification.tsx
 // Notificaciones, para alertar al usuario de cosas que pasan
 
-import * as React from "react";
-import * as Native from "react-native";
+import React from "react";
+import { DimensionValue, View } from "react-native";
 import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
 
@@ -57,7 +57,7 @@ export default function Notification({
 
     // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
     return (
-        <Native.View
+        <View
             // @ts-expect-error: "Unnasignable types"
             style={{
                 padding: 15,
@@ -65,7 +65,7 @@ export default function Notification({
                 borderColor: borderColor,
                 backgroundColor: backgroundColor,
                 borderWidth: 4,
-                width: "100%" as Native.DimensionValue,
+                width: "100%" as DimensionValue,
                 position: position,
                 bottom: position === "absolute" ? 100 : undefined,
                 left: position === "absolute" ? 20 : undefined,
@@ -101,6 +101,6 @@ export default function Notification({
                     {String(subtext)}
                 </BetterText>
             )}
-        </Native.View>
+        </View>
     );
 }

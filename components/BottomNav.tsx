@@ -1,6 +1,6 @@
-import * as React from "react";
-import * as Native from "react-native";
-import * as Router from "expo-router";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { Link } from "expo-router";
 import BetterText from "@/components/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
@@ -12,7 +12,7 @@ interface SectionProps {
 }
 
 // Definimos los estilos
-const styles = Native.StyleSheet.create({
+const styles = StyleSheet.create({
     touchme: {
         display: "flex",
         flexDirection: "column",
@@ -34,7 +34,7 @@ export default function BottomNav({ currentLocation }: SectionProps) {
     return (
         // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
         // Aunque no los usamos en "touchme" ya que este se repite varias veces.
-        <Native.View
+        <View
             style={{
                 backgroundColor: "#16191E",
                 display: "flex",
@@ -51,17 +51,17 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                 bottom: 0,
             }}
         >
-            <Router.Link href="/" onPress={() => handlePageChange("/")}>
-                <Native.View style={styles.touchme}>
-                    <Native.View>
+            <Link href="/" onPress={() => handlePageChange("/")}>
+                <View style={styles.touchme}>
+                    <View>
                         <Ionicons
                             name="home"
                             size={25}
                             color={currentPage === "/" ? "#FFF" : "#8A8C8E"}
                         />
-                    </Native.View>
+                    </View>
                     <GapView height={5} />
-                    <Native.View>
+                    <View>
                         <BetterText
                             textAlign="normal"
                             fontWeight="Bold"
@@ -70,15 +70,15 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                         >
                             {t("navbar.home")}
                         </BetterText>
-                    </Native.View>
-                </Native.View>
-            </Router.Link>
-            <Router.Link
+                    </View>
+                </View>
+            </Link>
+            <Link
                 href="/Dashboard"
                 onPress={() => handlePageChange("/Dashboard")}
             >
-                <Native.View style={styles.touchme}>
-                    <Native.View>
+                <View style={styles.touchme}>
+                    <View>
                         <Ionicons
                             name="dashboard"
                             size={25}
@@ -88,9 +88,9 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                                     : "#8A8C8E"
                             }
                         />
-                    </Native.View>
+                    </View>
                     <GapView height={5} />
-                    <Native.View>
+                    <View>
                         <BetterText
                             textAlign="normal"
                             fontWeight="Bold"
@@ -103,15 +103,12 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                         >
                             {t("navbar.dashboard")}
                         </BetterText>
-                    </Native.View>
-                </Native.View>
-            </Router.Link>
-            <Router.Link
-                href="/Profile"
-                onPress={() => handlePageChange("/Profile")}
-            >
-                <Native.View style={styles.touchme}>
-                    <Native.View>
+                    </View>
+                </View>
+            </Link>
+            <Link href="/Profile" onPress={() => handlePageChange("/Profile")}>
+                <View style={styles.touchme}>
+                    <View>
                         <Ionicons
                             name="person"
                             size={25}
@@ -119,9 +116,9 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                                 currentPage === "/Profile" ? "#FFF" : "#8A8C8E"
                             }
                         />
-                    </Native.View>
+                    </View>
                     <GapView height={5} />
-                    <Native.View>
+                    <View>
                         <BetterText
                             textAlign="normal"
                             fontWeight="Bold"
@@ -132,9 +129,9 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                         >
                             {t("navbar.profile")}
                         </BetterText>
-                    </Native.View>
-                </Native.View>
-            </Router.Link>
-        </Native.View>
+                    </View>
+                </View>
+            </Link>
+        </View>
     );
 }
