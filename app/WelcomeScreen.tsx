@@ -212,7 +212,7 @@ export default function WelcomePage() {
     };
 
     return (
-        <Native.View style={styles.mainview}>
+        <Native.ScrollView style={styles.mainview}>
             {currentTab === 1 && (
                 <React.Fragment>
                     <BetterText
@@ -705,6 +705,6 @@ export default function WelcomePage() {
                     </Native.View>
                 </React.Fragment>
             )}
-        </Native.View>
+        </Native.ScrollView>
     );
 }

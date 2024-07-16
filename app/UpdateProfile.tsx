@@ -104,7 +104,7 @@ export default function UpdateProfile() {
                 <BetterText
                     fontSize={20}
                     fontWeight="Light"
-                    onTap={() => Router.router.navigate("/Profile")}
+                    onTap={Router.router.back}
                 >
                     {"<"} {t("globals.go_back")}
                 </BetterText>
@@ -263,7 +263,7 @@ export default function UpdateProfile() {
                 <Native.View style={styles.flexbtns}>
                     <Button
                         style="DEFAULT"
-                        action={() => Router.router.navigate("/Profile")}
+                        action={Router.router.back}
                         buttonText={t("globals.go_back")}
                         width="fill"
                     />

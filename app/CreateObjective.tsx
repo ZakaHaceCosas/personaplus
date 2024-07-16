@@ -336,7 +336,7 @@ export default function Form() {
                 <BetterText
                     fontSize={20}
                     fontWeight="Light"
-                    onTap={() => Router.router.navigate("/About")}
+                    onTap={Router.router.back}
                 >
                     {"<"} {t("globals.go_back")}
                 </BetterText>
