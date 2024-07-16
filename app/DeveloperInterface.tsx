@@ -278,7 +278,7 @@ export default function DeveloperInterface() {
     };
 
     const devFunctionToClearGlobalLogs = () => {
-        Native.Alert.prompt(
+        Native.Alert.alert(
             "Are you sure?",
             "Logs are very useful in case you get an error, especially now that the app is still in a testing version. However, for privacy, we do allow removing them. Do it at your own will.",
             [
