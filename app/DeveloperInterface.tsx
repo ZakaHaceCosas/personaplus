@@ -249,10 +249,11 @@ export default function DeveloperInterface() {
             return asset.uri;
         } catch (e) {
             termLog("Error al guardar el archivo: " + e, "error");
+            throw e;
         }
     };
 
-    const handleDevFunctionToGenerateLogs = async () => {
+    const handleDevFunctionToGenerateLogs = async (logs: Log[]) => {
         try {
             const fileUri = await devFunctionToGenerateLogs(logs);
             if (fileUri) {
@@ -261,15 +262,16 @@ export default function DeveloperInterface() {
         } catch (e) {
             Native.Alert.alert(
                 "Error",
-                "There was an error savin the file: " + e
+                "There was an error saving the file: " + e
             );
         }
     };
 
-    const clelog = async () => {
+    const clearLog = async () => {
         try {
             await AsyncStorage.setItem("globalLogs", "");
-            Router.router.navigate("/DeveloperInterface");
+            termLog("Cleared logs.", "log");
+            Router.router.navigate("/Profile");
         } catch (e) {
             termLog(String(e), "error");
         }
@@ -278,7 +280,7 @@ export default function DeveloperInterface() {
     const devFunctionToClearGlobalLogs = () => {
         Native.Alert.prompt(
             "Are you sure?",
-            "Logs are very useful in the case you get an error, specially now that the app is still in a testing version. However, for privacy, we do allow to remove them. Do it at your own will.",
+            "Logs are very useful in case you get an error, especially now that the app is still in a testing version. However, for privacy, we do allow removing them. Do it at your own will.",
             [
                 {
                     text: "Cancel",
@@ -287,7 +289,7 @@ export default function DeveloperInterface() {
                 },
                 {
                     text: "Go ahead",
-                    onPress: clelog,
+                    onPress: clearLog,
                     style: "destructive",
                 },
             ]
@@ -412,7 +414,7 @@ export default function DeveloperInterface() {
                 <Button
                     style="GOD"
                     buttonText="EXPORT LOGS TO FILE"
-                    action={handleDevFunctionToGenerateLogs}
+                    action={() => handleDevFunctionToGenerateLogs(logs)}
                 />
                 <GapView height={5} />
                 <Native.View style={styles.consoleview}>
