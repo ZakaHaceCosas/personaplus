@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Objective } from '@/components/types/Objective';
 import { termLog } from '@/app/DeveloperInterface';
-import * as Router from "expo-router"
-import * as Native from "react-native"
+import { router } from "expo-router";
+import { Platform, ToastAndroid } from 'react-native';
 
 const getObjectives = async (): Promise<Objective[]> => {
     const storedObjectives: string | null = await AsyncStorage.getItem("objectives");
@@ -29,11 +29,11 @@ const markObjectiveAsDone = async (identifier: number): Promise<void> => {
             obj.identifier === identifier ? { ...obj, wasDone: true } : obj
         );
         await saveObjectives(updatedObjectives);
-        Router.router.navigate("/")
-        if (Native.Platform.OS === "android") {
-            Native.ToastAndroid.show(
+        router.navigate("/")
+        if (Platform.OS === "android") {
+            ToastAndroid.show(
                 "Marked as done!",
-                Native.ToastAndroid.LONG
+                ToastAndroid.LONG
             )
         }
     }

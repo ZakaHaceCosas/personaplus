@@ -1,12 +1,19 @@
 // components/Form.tsx
 // Formulario con select, array de toggles, increment/decrement para duration, repetitions, rests y rest duration
-import * as React from "react";
-import * as Native from "react-native";
+import React from "react";
+import {
+    StyleSheet,
+    Platform,
+    ToastAndroid,
+    View,
+    ScrollView,
+    Pressable,
+} from "react-native";
+import { router } from "expo-router";
 import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
 import { Picker as Select } from "@react-native-picker/picker";
 import Button from "@/components/Buttons";
-import * as Router from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { termLog } from "./DeveloperInterface";
 import Notification from "@/components/Notification";
@@ -16,7 +23,7 @@ import { useTranslation } from "react-i18next";
 // if you wonder what is UUID doing here, well - after a problem with duplicate IDs i wanted to try this as a solution, but I simply don't like to have such a big ID with letters and dashes, would have to redo some types and stuff.
 
 // Creamos los estilos
-const styles = Native.StyleSheet.create({
+const styles = StyleSheet.create({
     containerview: {
         paddingTop: 20,
         width: "100%",
@@ -187,7 +194,7 @@ export default function Form() {
         }
     };
 
-    const handleSubmit = async () => {
+    const submit = async () => {
         const formData: ObjectiveWithoutId = {
             exercise,
             days,
@@ -237,22 +244,28 @@ export default function Form() {
                 JSON.stringify(finalObjectives)
             );
 
-            if (Native.Platform.OS === "android") {
-                Native.ToastAndroid.show(
+            if (Platform.OS === "android") {
+                ToastAndroid.show(
                     "Created your objective successfully!",
-                    Native.ToastAndroid.SHORT
+                    ToastAndroid.SHORT
                 );
             }
 
-            Router.router.push("/Dashboard");
+            router.push("/Dashboard");
         } catch (e) {
             const log = "Could not create an objective, got error: " + e;
             termLog(log, "error");
         }
     };
 
+    const handleSubmit = () => {
+        submit().catch(e => {
+            termLog("REACT ERROR: " + e, "error");
+        });
+    };
+
     const getOut = () => {
-        Router.router.push("/");
+        router.push("/");
     };
 
     let allConditionsAreMet: boolean = false;
@@ -330,12 +343,12 @@ export default function Form() {
     }
 
     return (
-        <Native.View style={styles.containerview}>
-            <Native.ScrollView style={styles.mainview}>
+        <View style={styles.containerview}>
+            <ScrollView style={styles.mainview}>
                 <BetterText
                     fontSize={20}
                     fontWeight="Light"
-                    onTap={Router.router.back}
+                    onTap={router.back}
                 >
                     {"<"} {t("globals.go_back")}
                 </BetterText>
@@ -351,7 +364,7 @@ export default function Form() {
                     {t("subpage_create_active_objective.header.sublabel")}
                 </BetterText>
                 <GapView height={20} />
-                <Native.View>
+                <View>
                     <BetterText
                         fontSize={20}
                         textColor="#FFF"
@@ -411,7 +424,7 @@ export default function Form() {
                         )}
                     </BetterText>
                     <GapView height={15} />
-                    <Native.View style={styles.flexydays}>
+                    <View style={styles.flexydays}>
                         {days.map((day, index) => {
                             const thisday: string =
                                 index === 0
@@ -438,7 +451,7 @@ export default function Form() {
                                                     "globals.days_of_the_week.sunday"
                                                 );
                             return (
-                                <Native.View
+                                <View
                                     key={index}
                                     style={{
                                         ...styles.dayContainer,
@@ -450,7 +463,7 @@ export default function Form() {
                                             : "#2A2D32",
                                     }}
                                 >
-                                    <Native.Pressable
+                                    <Pressable
                                         onPress={() => handleChangeDay(index)}
                                         style={{
                                             width: "100%",
@@ -468,14 +481,14 @@ export default function Form() {
                                         >
                                             {thisday.toUpperCase()}
                                         </BetterText>
-                                    </Native.Pressable>
-                                </Native.View>
+                                    </Pressable>
+                                </View>
                             );
                         })}
-                    </Native.View>
+                    </View>
                     <GapView height={20} />
                     {["duration", "repetitions", "rests"].map(item => (
-                        <Native.View key={item} style={{ marginBottom: 20 }}>
+                        <View key={item} style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
                                 textColor="#FFF"
@@ -486,7 +499,7 @@ export default function Form() {
                                 )}
                             </BetterText>
                             <GapView height={15} />
-                            <Native.View
+                            <View
                                 style={{
                                     flexDirection: "row",
                                     alignItems: "center",
@@ -517,11 +530,11 @@ export default function Form() {
                                     buttonText="+"
                                     action={() => handleIncrement(item)}
                                 />
-                            </Native.View>
-                        </Native.View>
+                            </View>
+                        </View>
                     ))}
                     {rests !== 0 && (
-                        <Native.View style={{ marginBottom: 20 }}>
+                        <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
                                 textColor="#FFF"
@@ -532,7 +545,7 @@ export default function Form() {
                                 )}
                             </BetterText>
                             <GapView height={15} />
-                            <Native.View
+                            <View
                                 style={{
                                     flexDirection: "row",
                                     alignItems: "center",
@@ -563,11 +576,11 @@ export default function Form() {
                                         handleIncrement("restDuration")
                                     }
                                 />
-                            </Native.View>
-                        </Native.View>
+                            </View>
+                        </View>
                     )}
                     {exercise.toLowerCase() === "push up" && (
-                        <Native.View style={{ marginBottom: 20 }}>
+                        <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
                                 textColor="#FFF"
@@ -587,7 +600,7 @@ export default function Form() {
                                 )}
                             </BetterText>
                             <GapView height={15} />
-                            <Native.View
+                            <View
                                 style={{
                                     flexDirection: "row",
                                     alignItems: "center",
@@ -614,11 +627,11 @@ export default function Form() {
                                     buttonText="+"
                                     action={() => handleIncrement("amount")}
                                 />
-                            </Native.View>
-                        </Native.View>
+                            </View>
+                        </View>
                     )}
                     {exercise.toLowerCase() === "lifting" && (
-                        <Native.View style={{ marginBottom: 20 }}>
+                        <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
                                 textColor="#FFF"
@@ -638,7 +651,7 @@ export default function Form() {
                                 )}
                             </BetterText>
                             <GapView height={15} />
-                            <Native.View
+                            <View
                                 style={{
                                     flexDirection: "row",
                                     alignItems: "center",
@@ -665,11 +678,11 @@ export default function Form() {
                                     buttonText="+"
                                     action={() => handleIncrement("lifts")}
                                 />
-                            </Native.View>
-                        </Native.View>
+                            </View>
+                        </View>
                     )}
                     {exercise.toLowerCase() === "lifting" && (
-                        <Native.View style={{ marginBottom: 20 }}>
+                        <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
                                 textColor="#FFF"
@@ -689,7 +702,7 @@ export default function Form() {
                                 )}
                             </BetterText>
                             <GapView height={15} />
-                            <Native.View
+                            <View
                                 style={{
                                     flexDirection: "row",
                                     alignItems: "center",
@@ -716,11 +729,11 @@ export default function Form() {
                                     buttonText="+"
                                     action={() => handleIncrement("liftWeight")}
                                 />
-                            </Native.View>
-                        </Native.View>
+                            </View>
+                        </View>
                     )}
                     {exercise.toLowerCase() === "lifting" && (
-                        <Native.View style={{ marginBottom: 20 }}>
+                        <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
                                 textColor="#FFF"
@@ -740,7 +753,7 @@ export default function Form() {
                                 )}
                             </BetterText>
                             <GapView height={15} />
-                            <Native.View
+                            <View
                                 style={{
                                     flexDirection: "row",
                                     alignItems: "center",
@@ -767,11 +780,11 @@ export default function Form() {
                                     buttonText="+"
                                     action={() => handleIncrement("barWeight")}
                                 />
-                            </Native.View>
-                        </Native.View>
+                            </View>
+                        </View>
                     )}
                     {exercise.toLowerCase() === "lifting" && (
-                        <Native.View style={{ marginBottom: 20 }}>
+                        <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
                                 textColor="#FFF"
@@ -791,7 +804,7 @@ export default function Form() {
                                 )}
                             </BetterText>
                             <GapView height={15} />
-                            <Native.View
+                            <View
                                 style={{
                                     flexDirection: "row",
                                     alignItems: "center",
@@ -818,11 +831,11 @@ export default function Form() {
                                     buttonText="+"
                                     action={() => handleIncrement("hands")}
                                 />
-                            </Native.View>
-                        </Native.View>
+                            </View>
+                        </View>
                     )}
                     {exercise.toLowerCase() === "push up" && (
-                        <Native.View style={{ marginBottom: 20 }}>
+                        <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
                                 textColor="#FFF"
@@ -842,7 +855,7 @@ export default function Form() {
                                 )}
                             </BetterText>
                             <GapView height={15} />
-                            <Native.View
+                            <View
                                 style={{
                                     flexDirection: "row",
                                     alignItems: "center",
@@ -869,11 +882,11 @@ export default function Form() {
                                     buttonText="+"
                                     action={() => handleIncrement("hands")}
                                 />
-                            </Native.View>
-                        </Native.View>
+                            </View>
+                        </View>
                     )}
                     {exercise.toLowerCase() === "running" && (
-                        <Native.View style={{ marginBottom: 20 }}>
+                        <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
                                 textColor="#FFF"
@@ -893,7 +906,7 @@ export default function Form() {
                                 )}
                             </BetterText>
                             <GapView height={15} />
-                            <Native.View
+                            <View
                                 style={{
                                     flexDirection: "row",
                                     alignItems: "center",
@@ -907,7 +920,7 @@ export default function Form() {
                                     buttonText="-"
                                     action={() => handleDecrement("speed")}
                                 />
-                                <Native.View>
+                                <View>
                                     <BetterText
                                         textColor="#FFF"
                                         fontSize={20}
@@ -924,15 +937,15 @@ export default function Form() {
                                     >
                                         {exactSpeedString}
                                     </BetterText>
-                                </Native.View>
+                                </View>
                                 <Button
                                     layout="box"
                                     style="ACE"
                                     buttonText="+"
                                     action={() => handleIncrement("speed")}
                                 />
-                            </Native.View>
-                        </Native.View>
+                            </View>
+                        </View>
                     )}
                     {repetitions * duration > 300 && (
                         // Lo máximo que me parece coherente son 5 horas seguidas haciendo UN ejercicio - recordemos que puedes tener varios al día
@@ -950,9 +963,7 @@ export default function Form() {
                         />
                     )}
                     {repetitions * duration > 300 && <GapView height={20} />}
-                    <Native.View
-                        style={{ display: "flex", flexDirection: "row" }}
-                    >
+                    <View style={{ display: "flex", flexDirection: "row" }}>
                         {allConditionsAreMet ? (
                             <Button
                                 style="GOD"
@@ -976,7 +987,7 @@ export default function Form() {
                             buttonText={t("globals.nevermind")}
                             action={getOut}
                         />
-                    </Native.View>
+                    </View>
                     <GapView height={10} />
                     <BetterText
                         textAlign="center"
@@ -986,8 +997,8 @@ export default function Form() {
                     >
                         {t("subpage_create_active_objective.required")}
                     </BetterText>
-                </Native.View>
-            </Native.ScrollView>
-        </Native.View>
+                </View>
+            </ScrollView>
+        </View>
     );
 }

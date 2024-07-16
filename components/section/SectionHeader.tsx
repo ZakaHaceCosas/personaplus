@@ -1,8 +1,8 @@
 // section/SectionHeader.tsx
 // Encabezado de Sección
 
-import * as React from "react";
-import * as Native from "react-native";
+import React from "react";
+import { View } from "react-native";
 import BetterText from "@/components/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
@@ -45,7 +45,7 @@ export default function SectionHeader({ icon, label }: SectionProps) {
     }
 
     return (
-        <Native.View
+        <View
             style={{
                 display: "flex",
                 flexDirection: "row",
@@ -87,6 +87,6 @@ export default function SectionHeader({ icon, label }: SectionProps) {
             >
                 {String(label)}
             </BetterText>
-        </Native.View>
+        </View>
     );
 }

@@ -1,8 +1,8 @@
 // BetterText.tsx
 // Text, con estilos apropiados y la tipografía Be Vietnam Pro
 
-import * as React from "react";
-import * as Native from "react-native";
+import React from "react";
+import { TextStyle, Text } from "react-native";
 
 // TypeScript, supongo
 interface BetterTextProps {
@@ -87,7 +87,7 @@ export default function BetterText({
             break;
     }
 
-    const textStyle: Native.TextStyle = {
+    const textStyle: TextStyle = {
         fontFamily: font,
         fontSize: fontSize,
         lineHeight: lineheight,
@@ -102,8 +102,8 @@ export default function BetterText({
     };
 
     return (
-        <Native.Text style={textStyle} {...(onTap ? { onPress: onTap } : {})}>
+        <Text style={textStyle} {...(onTap ? { onPress: onTap } : {})}>
             {children}
-        </Native.Text>
+        </Text>
     );
 }

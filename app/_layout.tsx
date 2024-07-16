@@ -1,16 +1,16 @@
 // _layout.tsx
 // Para evitar código duplicado, básicamente
 
-import * as React from "react";
+import React from "react";
+import { StyleSheet, ScrollView } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import * as Native from "react-native";
 import * as SplashScreen from "expo-splash-screen";
-import * as Router from "expo-router";
 import { useFonts } from "expo-font";
+import { Slot } from "expo-router";
 import "@/components/toolkit/translations";
 
 // Definimos los estilos
-const styles = Native.StyleSheet.create({
+const styles = StyleSheet.create({
     mainview: {
         backgroundColor: "#0E1013",
     },
@@ -78,9 +78,9 @@ export default function Layout() {
     }
 
     return (
-        <Native.ScrollView style={styles.mainview}>
+        <ScrollView style={styles.mainview}>
             <StatusBar style="light" animated={true} />
-            <Router.Slot />
-        </Native.ScrollView>
+            <Slot />
+        </ScrollView>
     );
 }

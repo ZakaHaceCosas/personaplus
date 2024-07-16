@@ -1,38 +1,49 @@
 // index.tsx
 // Welcome to PersonaPlus. Give yourself a plus!
 
-import * as React from "react";
-import * as Native from "react-native";
+import React from "react";
+import {
+    View,
+    ScrollView,
+    StyleSheet,
+    DimensionValue,
+    Platform,
+} from "react-native";
+import { router, usePathname } from "expo-router";
+import {
+    markObjectiveAsDone,
+    fetchObjectives,
+} from "@/components/toolkit/objectives";
 import BetterText from "@/components/BetterText";
 import Section from "@/components/section/Section";
 import BottomNav from "@/components/BottomNav";
-import * as Router from "expo-router";
 import Division from "@/components/section/division/Division";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/components/Buttons";
 import GapView from "@/components/GapView";
 import Footer from "@/components/Footer";
 import { termLog } from "@/app/DeveloperInterface";
-import * as ObjectiveToolkit from "@/components/toolkit/objectives";
-// import useNotification from "@/components/hooks/useNotification";
-import * as Notification from "expo-notifications";
 import { useTranslation } from "react-i18next";
+import {
+    scheduleNotificationAsync,
+    cancelScheduledNotificationAsync,
+} from "expo-notifications";
 
 // TypeScript, supongo
 import { Objective } from "@/components/types/Objective";
 
 // Creamos los estilos
-const styles = Native.StyleSheet.create({
+const styles = StyleSheet.create({
     containerview: {
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100vw" as DimensionValue,
+        height: "100vh" as DimensionValue,
     },
     mainview: {
         padding: 20,
         display: "flex",
         flexDirection: "column",
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100vw" as DimensionValue,
+        height: "100vh" as DimensionValue,
         overflow: "scroll",
     },
 });
@@ -80,7 +91,7 @@ const scheduleRandomNotifications = async () => {
             repeats: true,
         };
 
-        const identifier = await Notification.scheduleNotificationAsync({
+        const identifier = await scheduleNotificationAsync({
             content: {
                 title: "Pending PersonaPlus objectives!",
                 body: randomMessage,
@@ -100,7 +111,7 @@ const scheduleRandomNotifications = async () => {
 // Function to cancel scheduled notifications
 const cancelScheduledNotifications = async () => {
     for (const { identifier } of scheduledNotifications) {
-        await Notification.cancelScheduledNotificationAsync(identifier);
+        await cancelScheduledNotificationAsync(identifier);
     }
 
     scheduledNotifications.length = 0;
@@ -153,13 +164,12 @@ export default function Home() {
         multiFetch();
     }, []);
 
-    const currentpage: string = Router.usePathname();
+    const currentpage: string = usePathname();
 
     const handleMarkingObjectiveAsDone = async (identifier: number) => {
         try {
-            await ObjectiveToolkit.markObjectiveAsDone(identifier);
-            const updatedObjectives =
-                await ObjectiveToolkit.fetchObjectives("object");
+            await markObjectiveAsDone(identifier);
+            const updatedObjectives = await fetchObjectives("object");
             setObjectives(updatedObjectives);
         } catch (e) {
             const log: string = "Got an error updating, " + e;
@@ -168,15 +178,15 @@ export default function Home() {
     };
 
     if (isFirstLaunch) {
-        Router.router.push("/WelcomeScreen");
+        router.push("/WelcomeScreen");
     }
 
     const createNewActiveObjective = (): void => {
-        Router.router.navigate("/CreateObjective");
+        router.navigate("/CreateObjective");
     };
 
     const startSessionFromObjective = (identifier: number): void => {
-        Router.router.navigate("/Sessions?id=" + identifier);
+        router.navigate("/Sessions?id=" + identifier);
     };
 
     termLog(String(objectives), "log");
@@ -209,11 +219,11 @@ export default function Home() {
         });
 
         if (!allObjectivesHandled) {
-            if (Native.Platform.OS === "android") {
+            if (Platform.OS === "android") {
                 scheduleRandomNotifications();
             }
         } else {
-            if (Native.Platform.OS === "android") {
+            if (Platform.OS === "android") {
                 cancelScheduledNotifications();
             }
         }
@@ -221,10 +231,10 @@ export default function Home() {
 
     if (loading) {
         return (
-            <Native.View style={styles.containerview}>
+            <View style={styles.containerview}>
                 <BottomNav currentLocation={currentpage} />
-                <Native.ScrollView>
-                    <Native.View style={styles.mainview}>
+                <ScrollView>
+                    <View style={styles.mainview}>
                         <BetterText
                             fontWeight="Regular"
                             fontSize={15}
@@ -233,16 +243,16 @@ export default function Home() {
                         >
                             {t("globals.loading")}
                         </BetterText>
-                    </Native.View>
-                </Native.ScrollView>
-            </Native.View>
+                    </View>
+                </ScrollView>
+            </View>
         );
     }
 
     return (
-        <Native.View style={styles.containerview}>
+        <View style={styles.containerview}>
             <BottomNav currentLocation={currentpage} />
-            <Native.ScrollView style={styles.mainview}>
+            <ScrollView style={styles.mainview}>
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
                     {t("page_home.header.label")}, {username}!
                 </BetterText>
@@ -262,7 +272,7 @@ export default function Home() {
                                 !objectives[key].days ||
                                 !objectives[key].days[adjustedToday]
                         ) ? (
-                            <Native.View
+                            <View
                                 style={{
                                     padding: 20,
                                     flex: 1,
@@ -288,7 +298,7 @@ export default function Home() {
                                 >
                                     {randomMessageForAllDone}
                                 </BetterText>
-                            </Native.View>
+                            </View>
                         ) : (
                             Object.keys(objectives).map(key => {
                                 const obj = objectives[key];
@@ -340,7 +350,7 @@ export default function Home() {
                             })
                         )
                     ) : (
-                        <Native.View
+                        <View
                             style={{
                                 padding: 20,
                                 flex: 1,
@@ -364,7 +374,7 @@ export default function Home() {
                                 buttonText={t("globals.lets_go")}
                                 action={createNewActiveObjective}
                             />
-                        </Native.View>
+                        </View>
                     )}
                 </Section>
                 {objectives && Object.keys(objectives).length > 0 && (
@@ -381,7 +391,7 @@ export default function Home() {
                         >
                             {t("globals.coming_soon")}
                         </BetterText>
-                        <Native.View style={{ padding: 20 }}>
+                        <View style={{ padding: 20 }}>
                             <BetterText
                                 fontWeight="Regular"
                                 fontSize={15}
@@ -393,11 +403,11 @@ export default function Home() {
                                 many stats and helpful info. Be sure to check
                                 for updates every few weeks!
                             </BetterText>
-                        </Native.View>
+                        </View>
                     </Section>
                 )}
                 <Footer />
-            </Native.ScrollView>
-        </Native.View>
+            </ScrollView>
+        </View>
     );
 }

@@ -1,24 +1,35 @@
 // Sessions.tsx
 // Página para sesiones
 
-import * as React from "react";
-import * as Native from "react-native";
-import * as Router from "expo-router";
+import React from "react";
+import {
+    View,
+    StyleSheet,
+    Alert,
+    ToastAndroid,
+    DimensionValue,
+    Platform,
+    Dimensions,
+} from "react-native";
+import {
+    fetchObjectives,
+    markObjectiveAsDone,
+    getObjectiveByIdentifier,
+} from "@/components/toolkit/objectives";
+import { router, useGlobalSearchParams } from "expo-router";
 import BetterText from "@/components/BetterText";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/GapView";
 import { termLog } from "./DeveloperInterface";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import Button from "@/components/Buttons";
-import * as ObjectiveToolkit from "@/components/toolkit/objectives";
 
 // TypeScript, supongo.
 import { Objective } from "@/components/types/Objective";
 import { useTranslation } from "react-i18next";
 
 // Estilos
-const styles = Native.StyleSheet.create({
+const styles = StyleSheet.create({
     helpcontainer: {
         backgroundColor: "#14171C",
         position: "absolute",
@@ -39,7 +50,7 @@ const styles = Native.StyleSheet.create({
 export default function Sessions() {
     const { t } = useTranslation();
     const [loading, setLoading] = React.useState<boolean>(true);
-    const params = Router.useGlobalSearchParams();
+    const params = useGlobalSearchParams();
     const objectiveIdentifier = params.id ? Number(params.id) : null;
     const [objectives, setObjectives] = React.useState<Objective[] | null>(
         null
@@ -51,10 +62,9 @@ export default function Sessions() {
     const [timerKey, setTimerKey] = React.useState<number>(0);
 
     React.useEffect(() => {
-        const fetchObjectives = async () => {
+        const handleFetchObjectives = async () => {
             try {
-                const objectives =
-                    await ObjectiveToolkit.fetchObjectives("object");
+                const objectives = await fetchObjectives("object");
                 setObjectives(objectives);
             } catch (e) {
                 termLog("LOG 1 (:53) - Fetch error! " + e, "error");
@@ -63,7 +73,7 @@ export default function Sessions() {
             }
         };
 
-        fetchObjectives();
+        handleFetchObjectives();
     }, []);
 
     React.useEffect(() => {
@@ -80,9 +90,7 @@ export default function Sessions() {
             const fetchCurrentObjective = async () => {
                 try {
                     const objective =
-                        await ObjectiveToolkit.getObjectiveByIdentifier(
-                            objectiveIdentifier
-                        );
+                        await getObjectiveByIdentifier(objectiveIdentifier);
                     setCurrentObjective(objective);
                     setLaps(objective?.repetitions || 0); // Ensure laps is set correctly
                 } catch (e) {
@@ -137,7 +145,7 @@ export default function Sessions() {
     const timerColor = isTimerRunning ? "#32FF80" : "#FFC832";
 
     const cancel = () => {
-        Native.Alert.alert(
+        Alert.alert(
             "Are you sure?",
             "You are doing GREAT! Are you sure you want to give up? Your progress will be lost! (You can always start over if you change your mind)",
             [
@@ -149,7 +157,7 @@ export default function Sessions() {
                     text: "Yes, I give up",
                     style: "destructive",
                     onPress: () => {
-                        Router.router.navigate("/"); // basically goes home without saving, easy.
+                        router.navigate("/"); // basically goes home without saving, easy.
                     },
                 },
             ],
@@ -184,16 +192,14 @@ export default function Sessions() {
     const finish = async () => {
         if (currentObjective) {
             try {
-                await ObjectiveToolkit.markObjectiveAsDone(
-                    currentObjective.identifier
-                );
-                if (Native.Platform.OS === "android") {
-                    Native.ToastAndroid.show(
+                await markObjectiveAsDone(currentObjective.identifier);
+                if (Platform.OS === "android") {
+                    ToastAndroid.show(
                         messageForSessionCompleted,
-                        Native.ToastAndroid.LONG
+                        ToastAndroid.LONG
                     );
                 }
-                Router.router.navigate("/");
+                router.navigate("/");
             } catch (e) {
                 termLog(
                     "LOG 8 (:176) - Error parsing objectives (OBJS) for update: " +
@@ -265,10 +271,10 @@ export default function Sessions() {
 
     if (loading) {
         return (
-            <Native.View
+            <View
                 style={{
-                    width: "100vw" as Native.DimensionValue,
-                    height: "100vh" as Native.DimensionValue,
+                    width: "100vw" as DimensionValue,
+                    height: "100vh" as DimensionValue,
                     flex: 1,
                     display: "flex",
                     flexDirection: "column",
@@ -276,7 +282,7 @@ export default function Sessions() {
                     justifyContent: "center",
                 }}
             >
-                <GapView height={Native.Dimensions.get("screen").height / 2} />
+                <GapView height={Dimensions.get("screen").height / 2} />
                 <BetterText
                     textAlign="center"
                     fontSize={25}
@@ -285,22 +291,22 @@ export default function Sessions() {
                 >
                     Loading...
                 </BetterText>
-            </Native.View>
+            </View>
         );
     }
 
     if (!currentObjective) {
         return (
-            <Native.View>
+            <View>
                 <BetterText fontSize={20} fontWeight="Regular">
                     Error
                 </BetterText>
-            </Native.View>
+            </View>
         );
     }
 
     return (
-        <Native.View
+        <View
             style={{
                 width: "100%",
                 height: "100%",
@@ -314,7 +320,7 @@ export default function Sessions() {
                 overflow: "visible",
             }}
         >
-            <Native.View
+            <View
                 style={{
                     display: "flex",
                     flexDirection: "column",
@@ -325,7 +331,7 @@ export default function Sessions() {
                     marginTop: "37.5%",
                 }}
             >
-                <Native.View
+                <View
                     style={{
                         display: "flex",
                         flexDirection: "row",
@@ -346,9 +352,9 @@ export default function Sessions() {
                     >
                         IN A SESSION!
                     </BetterText>
-                </Native.View>
+                </View>
                 <GapView height={20} />
-                <Native.View
+                <View
                     style={{
                         display: "flex",
                         flexDirection: "column",
@@ -378,7 +384,7 @@ export default function Sessions() {
                         {currentObjective.duration > 1 && "s"}
                     </BetterText>
                     <GapView height={10} />
-                    <Native.View
+                    <View
                         style={{
                             display: "flex",
                             flexDirection: "row",
@@ -405,8 +411,8 @@ export default function Sessions() {
                                   ? `${currentObjective.rests} rest of ${currentObjective.restDuration} mins`
                                   : `${currentObjective.rests} rests (${currentObjective.restDuration} mins)`}
                         </BetterText>
-                    </Native.View>
-                    <Native.View
+                    </View>
+                    <View
                         style={{
                             flexDirection: "row",
                             alignItems: "center",
@@ -415,7 +421,7 @@ export default function Sessions() {
                     >
                         {currentObjective.exercise.toLowerCase() ===
                             "lifting" && (
-                            <Native.View
+                            <View
                                 style={{
                                     flexDirection: "row",
                                     alignItems: "center",
@@ -485,11 +491,11 @@ export default function Sessions() {
                                         : "N/A"}{" "}
                                     hand
                                 </BetterText>
-                            </Native.View>
+                            </View>
                         )}
                         {currentObjective.exercise.toLowerCase() ===
                             "running" && (
-                            <Native.View
+                            <View
                                 style={{
                                     flexDirection: "row",
                                     alignItems: "center",
@@ -516,11 +522,11 @@ export default function Sessions() {
                                           )
                                         : "N/A"}
                                 </BetterText>
-                            </Native.View>
+                            </View>
                         )}
                         {currentObjective.exercise.toLowerCase() ===
                             "push up" && (
-                            <Native.View
+                            <View
                                 style={{
                                     flexDirection: "row",
                                     alignItems: "center",
@@ -563,10 +569,10 @@ export default function Sessions() {
                                         : "N/A"}{" "}
                                     hand
                                 </BetterText>
-                            </Native.View>
+                            </View>
                         )}
-                    </Native.View>
-                </Native.View>
+                    </View>
+                </View>
                 <GapView height={20} />
                 <CountdownCircleTimer
                     key={timerKey}
@@ -598,7 +604,7 @@ export default function Sessions() {
                     )}
                 </CountdownCircleTimer>
                 <GapView height={20} />
-                <Native.View
+                <View
                     style={{
                         display: "flex",
                         flexDirection: "row",
@@ -643,10 +649,10 @@ export default function Sessions() {
                         height="default"
                         width="fill"
                     />
-                </Native.View>
-            </Native.View>
+                </View>
+            </View>
             {isUserCheckingHelp && (
-                <Native.View style={styles.helpcontainer}>
+                <View style={styles.helpcontainer}>
                     <BetterText fontSize={18} fontWeight="Regular">
                         Help with {currentObjectiveSustantivizedName}
                     </BetterText>
@@ -671,8 +677,8 @@ export default function Sessions() {
                         Psst... Don&apos;t worry, the timer has been paused so
                         you can read!
                     </BetterText>
-                </Native.View>
+                </View>
             )}
-        </Native.View>
+        </View>
     );
 }

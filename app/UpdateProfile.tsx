@@ -1,7 +1,13 @@
-import * as React from "react";
-import * as Native from "react-native";
+import React from "react";
+import {
+    DimensionValue,
+    StyleSheet,
+    TextInput,
+    View,
+    ScrollView,
+} from "react-native";
+import { router } from "expo-router";
 import BetterText from "@/components/BetterText";
-import * as Router from "expo-router";
 import GapView from "@/components/GapView";
 import Swap from "@/components/Swap";
 import { termLog } from "./DeveloperInterface";
@@ -10,24 +16,24 @@ import Button from "@/components/Buttons";
 import { useTranslation } from "react-i18next";
 
 // Creamos los estilos
-const styles = Native.StyleSheet.create({
+const styles = StyleSheet.create({
     containerview: {
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100vw" as DimensionValue,
+        height: "100vh" as DimensionValue,
     },
     mainview: {
         padding: 20,
         paddingTop: 50,
         display: "flex",
         flexDirection: "column",
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100vw" as DimensionValue,
+        height: "100vh" as DimensionValue,
         overflow: "scroll",
     },
     flexbtns: {
         display: "flex",
         flexDirection: "row",
-        width: "calc(100% - 5px)" as Native.DimensionValue,
+        width: "calc(100% - 5px)" as DimensionValue,
     },
 });
 
@@ -48,7 +54,7 @@ export default function UpdateProfile() {
         { value: "male", label: "Male", default: true },
         { value: "female", label: "Female", default: false },
     ];
-    const inputRefs = React.useRef<Native.TextInput[]>([]);
+    const inputRefs = React.useRef<TextInput[]>([]);
 
     const focusNextField = (index: number): void => {
         if (inputRefs.current[index + 1]) {
@@ -88,7 +94,7 @@ export default function UpdateProfile() {
                 await AsyncStorage.setItem("weight", formData.weight);
                 await AsyncStorage.setItem("age", formData.age);
                 await AsyncStorage.setItem("gender", genderValue);
-                Router.router.navigate("/");
+                router.navigate("/");
             } catch (e) {
                 const log = "Error creating profile: " + e;
                 termLog(log, "error");
@@ -99,12 +105,12 @@ export default function UpdateProfile() {
     };
 
     return (
-        <Native.View style={styles.containerview}>
-            <Native.ScrollView style={styles.mainview}>
+        <View style={styles.containerview}>
+            <ScrollView style={styles.mainview}>
                 <BetterText
                     fontSize={20}
                     fontWeight="Light"
-                    onTap={Router.router.back}
+                    onTap={router.back}
                 >
                     {"<"} {t("globals.go_back")}
                 </BetterText>
@@ -120,7 +126,7 @@ export default function UpdateProfile() {
                     Life changes and so do you.
                 </BetterText>
                 <GapView height={15} />
-                <Native.TextInput
+                <TextInput
                     placeholder="Username (doesn't have to be your real name)"
                     value={formData.username}
                     readOnly={false}
@@ -152,7 +158,7 @@ export default function UpdateProfile() {
                     ref={ref => ref && (inputRefs.current[0] = ref)}
                 />
                 <GapView height={15} />
-                <Native.TextInput
+                <TextInput
                     placeholder="Height (cm) (don't add decimals)"
                     value={formData.height}
                     readOnly={false}
@@ -185,7 +191,7 @@ export default function UpdateProfile() {
                     ref={ref => ref && (inputRefs.current[1] = ref)}
                 />
                 <GapView height={15} />
-                <Native.TextInput
+                <TextInput
                     placeholder="Weight (kg) (don't add decimals)"
                     value={formData.weight}
                     readOnly={false}
@@ -218,7 +224,7 @@ export default function UpdateProfile() {
                     ref={ref => ref && (inputRefs.current[2] = ref)}
                 />
                 <GapView height={15} />
-                <Native.TextInput
+                <TextInput
                     placeholder="Age (years)"
                     value={formData.age}
                     readOnly={false}
@@ -260,10 +266,10 @@ export default function UpdateProfile() {
                     order="horizontal"
                 />
                 <GapView height={5} />
-                <Native.View style={styles.flexbtns}>
+                <View style={styles.flexbtns}>
                     <Button
                         style="DEFAULT"
-                        action={Router.router.back}
+                        action={router.back}
                         buttonText={t("globals.go_back")}
                         width="fill"
                     />
@@ -288,8 +294,8 @@ export default function UpdateProfile() {
                             width="fill"
                         />
                     )}
-                </Native.View>
-            </Native.ScrollView>
-        </Native.View>
+                </View>
+            </ScrollView>
+        </View>
     );
 }

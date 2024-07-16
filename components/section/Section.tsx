@@ -1,8 +1,8 @@
 // section/Section.tsx
 // Sección
 
-import * as React from "react";
-import * as Native from "react-native";
+import React from "react";
+import { View } from "react-native";
 import SectionHeader from "@/components/section/SectionHeader";
 import { useTranslation } from "react-i18next";
 
@@ -66,7 +66,7 @@ export default function Division({ kind, children }: DivisionProps) {
     }
 
     return (
-        <Native.View
+        <View
             style={{
                 display: "flex",
                 backgroundColor: "#14171C",
@@ -77,6 +77,6 @@ export default function Division({ kind, children }: DivisionProps) {
         >
             <SectionHeader label={label} icon={icon} />
             {children}
-        </Native.View>
+        </View>
     );
 }

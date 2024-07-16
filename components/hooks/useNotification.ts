@@ -1,11 +1,10 @@
+import React from 'react'
+import { Platform } from 'react-native';
+import { isDevice } from 'expo-device';
+import { setNotificationChannelAsync, getPermissionsAsync, requestPermissionsAsync, setNotificationHandler, AndroidImportance, getExpoPushTokenAsync } from "expo-notifications";
+import * as Constants from "expo-constants";
 
-import * as React from 'react'
-import * as Native from 'react-native';
-import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
-import * as Constants from 'expo-constants';
-
-Notifications.setNotificationHandler({
+setNotificationHandler({
     handleNotification: async () => ({
         shouldShowAlert: true,
         shouldPlaySound: true,
@@ -16,27 +15,27 @@ Notifications.setNotificationHandler({
 async function registerForPushNotificationsAsync() {
     let token;
 
-    if (Native.Platform.OS === 'android') {
-        Notifications.setNotificationChannelAsync('default', {
+    if (Platform.OS === 'android') {
+        setNotificationChannelAsync('default', {
             name: 'default',
-            importance: Notifications.AndroidImportance.HIGH,
+            importance: AndroidImportance.HIGH,
             vibrationPattern: [0, 250, 250, 250],
             lightColor: '#32FF80FF',
         });
     }
 
-    if (Device.isDevice) {
-        const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    if (isDevice) {
+        const { status: existingStatus } = await getPermissionsAsync();
         let finalStatus = existingStatus;
         if (existingStatus !== 'granted') {
-            const { status } = await Notifications.requestPermissionsAsync();
+            const { status } = await requestPermissionsAsync();
             finalStatus = status;
         }
         if (finalStatus !== 'granted') {
             alert('Failed to get push token for push notification!');
             return;
         }
-        token = await Notifications.getExpoPushTokenAsync({
+        token = await getExpoPushTokenAsync({
             projectId: Constants.default.easConfig?.projectId,
         });
         console.log(token);

@@ -1,29 +1,35 @@
 // index.tsx
 // Welcome to PersonaPlus. Give yourself a plus!
 
-import * as React from "react";
-import * as Native from "react-native";
+import React from "react";
+import {
+    DimensionValue,
+    StyleSheet,
+    View,
+    ScrollView,
+    Linking,
+} from "react-native";
+import { router } from "expo-router";
 import BetterText from "@/components/BetterText";
 import Section from "@/components/section/Section";
-import * as Router from "expo-router";
 import Division from "@/components/section/division/Division";
 import Button from "@/components/Buttons";
 import GapView from "@/components/GapView";
 import { useTranslation } from "react-i18next";
 
 // Creamos los estilos
-const styles = Native.StyleSheet.create({
+const styles = StyleSheet.create({
     containerview: {
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100vw" as DimensionValue,
+        height: "100vh" as DimensionValue,
     },
     mainview: {
         padding: 20,
         paddingTop: 50,
         display: "flex",
         flexDirection: "column",
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100vw" as DimensionValue,
+        height: "100vh" as DimensionValue,
         overflow: "scroll",
     },
 });
@@ -33,17 +39,17 @@ export default function Home() {
     const { t } = useTranslation();
 
     return (
-        <Native.View style={styles.containerview}>
-            <Native.ScrollView style={styles.mainview}>
+        <View style={styles.containerview}>
+            <ScrollView style={styles.mainview}>
                 <BetterText
                     fontSize={20}
                     fontWeight="Light"
-                    onTap={Router.router.back}
+                    onTap={router.back}
                 >
                     {"<"} {t("globals.go_back")}
                 </BetterText>
                 <GapView height={20} />
-                <Native.View
+                <View
                     style={{
                         display: "flex",
                         flexDirection: "row",
@@ -59,7 +65,7 @@ export default function Home() {
                         PersonaPlus
                     </BetterText>
                     <GapView width={10} />
-                    <Native.View
+                    <View
                         style={{
                             paddingTop: 7.5,
                             paddingBottom: 7.5,
@@ -77,8 +83,8 @@ export default function Home() {
                         >
                             PRE-APP
                         </BetterText>
-                    </Native.View>
-                </Native.View>
+                    </View>
+                </View>
                 <GapView height={20} />
                 <Section kind="About">
                     <Division
@@ -104,32 +110,30 @@ export default function Home() {
                     </Division>
                 </Section>
                 <GapView height={20} />
-                <Native.View
+                <View
                     style={{ flex: 1, display: "flex", flexDirection: "row" }}
                 >
                     <Button
                         buttonText="License"
                         style="GOD"
-                        action={() => Router.router.navigate("/License")}
+                        action={() => router.navigate("/License")}
                     />
                     <GapView width={10} />
                     <Button
                         buttonText="Credits"
                         style="GOD"
-                        action={() =>
-                            Router.router.navigate("/OpenSourceCredits")
-                        }
+                        action={() => router.navigate("/OpenSourceCredits")}
                     />
-                </Native.View>
+                </View>
                 <GapView height={10} />
-                <Native.View
+                <View
                     style={{ flex: 1, display: "flex", flexDirection: "row" }}
                 >
                     <Button
                         buttonText="Privacy policy"
                         style="ACE"
                         action={() =>
-                            Native.Linking.openURL(
+                            Linking.openURL(
                                 "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md"
                             )
                         }
@@ -139,12 +143,12 @@ export default function Home() {
                         buttonText="Open Source"
                         style="ACE"
                         action={() =>
-                            Native.Linking.openURL(
+                            Linking.openURL(
                                 "https://github.com/ZakaHaceCosas/personaplus"
                             )
                         }
                     />
-                </Native.View>
+                </View>
                 <GapView height={15} />
                 <BetterText
                     textAlign="center"
@@ -165,7 +169,7 @@ export default function Home() {
                     being part of the testing version, it means a lot.
                     Don&apos;t forget to report any issues you find!
                 </BetterText>
-            </Native.ScrollView>
-        </Native.View>
+            </ScrollView>
+        </View>
     );
 }

@@ -1,7 +1,7 @@
 // section/division/Division.tsx
 // División
 
-import * as React from "react";
+import React from "react";
 import * as Native from "react-native";
 import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
@@ -36,7 +36,7 @@ export default function Division({
     }
 
     return (
-        <Native.View
+        <View
             style={{
                 display: "flex",
                 backgroundColor: "#202328",
@@ -45,9 +45,9 @@ export default function Division({
                 width: "100%",
             }}
         >
-            <Native.View style={{ width: "100%" }}>
-                <Native.View style={{ width: "100%" }}>
-                    <Native.View>
+            <View style={{ width: "100%" }}>
+                <View style={{ width: "100%" }}>
+                    <View>
                         {preheader && (
                             <BetterText
                                 textAlign="normal"
@@ -79,7 +79,7 @@ export default function Division({
                             </BetterText>
                         )}
                         <GapView height={10} />
-                        <Native.View
+                        <View
                             style={{
                                 display: "flex",
                                 flexDirection: "row",
@@ -89,10 +89,10 @@ export default function Division({
                             }}
                         >
                             {children}
-                        </Native.View>
-                    </Native.View>
-                </Native.View>
-            </Native.View>
-        </Native.View>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        </View>
     );
 }

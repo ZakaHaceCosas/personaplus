@@ -1,5 +1,5 @@
-import * as React from "react";
-import * as Native from "react-native";
+import React from "react";
+import { View } from "react-native";
 import OpenHealth from "@/core/openhealth";
 import { termLog } from "./DeveloperInterface";
 import BetterText from "@/components/BetterText";
@@ -41,9 +41,9 @@ export default function openhealthtest() {
     termLog(JSON.stringify(performance), "log");
 
     return (
-        <Native.View>
+        <View>
             <BottomNav currentLocation="/openhealthtest" />
-            <Native.View
+            <View
                 style={{
                     padding: 20,
                     backgroundColor: "#FFF",
@@ -74,9 +74,9 @@ export default function openhealthtest() {
                 >
                     {"\n"}explicacion: {bmi.explanation}
                 </BetterText>
-            </Native.View>
+            </View>
             <GapView height={20} />
-            <Native.View
+            <View
                 style={{
                     padding: 20,
                     backgroundColor: "#FFF",
@@ -109,9 +109,9 @@ export default function openhealthtest() {
                 >
                     {"\n"}explicacion: {performance.explanation}
                 </BetterText>
-            </Native.View>
+            </View>
             <GapView height={20} />
-            <Native.View
+            <View
                 style={{
                     padding: 20,
                     backgroundColor: "#FFF",
@@ -153,7 +153,7 @@ export default function openhealthtest() {
                     {"\n"}fuente:{" "}
                     {OpenHealth.physicalHealth.BodyMassIndex.getSource()}
                 </BetterText>
-            </Native.View>
-        </Native.View>
+            </View>
+        </View>
     );
 }

@@ -1,9 +1,8 @@
 // DeveloperInterface.tsx
 // Página que muestra ciertos logs de la consola para ayudar al desarrollador
 
-import * as React from "react";
-import * as Native from "react-native";
-import * as Router from "expo-router";
+import React from "react";
+import { Alert, ScrollView, StyleSheet, View, Text } from "react-native";
 import BottomNav from "@/components/BottomNav";
 import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
@@ -11,15 +10,19 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/components/Buttons";
 import { version as ReactVersion } from "react";
 import { version as PersonaPlusVersion } from "@/package.json";
-import * as ObjectiveToolkit from "@/components/toolkit/objectives";
 import { isDevelopmentBuild } from "expo-dev-client";
+import {
+    clearObjectives,
+    fetchObjectives,
+} from "@/components/toolkit/objectives";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 
 // TypeScript, supongo
 import { Objective } from "@/components/types/Objective";
+import { usePathname, router } from "expo-router";
 
-const styles = Native.StyleSheet.create({
+const styles = StyleSheet.create({
     consoleview: {
         flex: 1,
         padding: 10,
@@ -178,10 +181,9 @@ export default function DeveloperInterface() {
     );
 
     React.useEffect(() => {
-        const fetchObjectives = async () => {
+        const handleFetchObjectives = async () => {
             try {
-                const objectives =
-                    await ObjectiveToolkit.fetchObjectives("string");
+                const objectives = await fetchObjectives("string");
                 setObjs(JSON.parse(objectives));
             } catch (e) {
                 const log = `Could not get objectives fetched due to error: ${e}`;
@@ -189,10 +191,10 @@ export default function DeveloperInterface() {
             }
         };
 
-        fetchObjectives();
+        handleFetchObjectives();
     }, []);
 
-    const currentPage: string = Router.usePathname();
+    const currentPage: string = usePathname();
 
     const devFunctionToClearAll = async () => {
         try {
@@ -208,7 +210,7 @@ export default function DeveloperInterface() {
                 "sleep",
             ]);
             await AsyncStorage.setItem("objectives", JSON.stringify([]));
-            Router.router.navigate("/");
+            router.navigate("/");
             termLog("DEV CLEARED ALL", "log");
         } catch (e) {
             termLog(String(e), "error");
@@ -257,13 +259,10 @@ export default function DeveloperInterface() {
         try {
             const fileUri = await devFunctionToGenerateLogs(logs);
             if (fileUri) {
-                Native.Alert.alert("Success", `File saved on: ${fileUri}`);
+                Alert.alert("Success", `File saved on: ${fileUri}`);
             }
         } catch (e) {
-            Native.Alert.alert(
-                "Error",
-                "There was an error saving the file: " + e
-            );
+            Alert.alert("Error", "There was an error saving the file: " + e);
         }
     };
 
@@ -271,14 +270,14 @@ export default function DeveloperInterface() {
         try {
             await AsyncStorage.setItem("globalLogs", "");
             termLog("Cleared logs.", "log");
-            Router.router.navigate("/Profile");
+            router.navigate("/Profile");
         } catch (e) {
             termLog(String(e), "error");
         }
     };
 
     const devFunctionToClearGlobalLogs = () => {
-        Native.Alert.alert(
+        Alert.alert(
             "Are you sure?",
             "Logs are very useful in case you get an error, especially now that the app is still in a testing version. However, for privacy, we do allow removing them. Do it at your own will.",
             [
@@ -322,9 +321,9 @@ export default function DeveloperInterface() {
     }, []);
 
     return (
-        <Native.View style={styles.containerview}>
+        <View style={styles.containerview}>
             <BottomNav currentLocation={currentPage} />
-            <Native.ScrollView style={styles.mainview}>
+            <ScrollView style={styles.mainview}>
                 <GapView height={20} />
                 <BetterText
                     textAlign="normal"
@@ -348,19 +347,19 @@ export default function DeveloperInterface() {
                 </BetterText>
                 <GapView height={5} />
                 <Button
-                    action={() => Router.router.navigate("/WelcomeScreen")}
+                    action={() => router.navigate("/WelcomeScreen")}
                     buttonText="Go to Welcome Screen"
                     style="ACE"
                 />
                 <GapView height={5} />
                 <Button
-                    action={() => Router.router.navigate("/openhealthtest")}
+                    action={() => router.navigate("/openhealthtest")}
                     buttonText="Go to Open Health test page"
                     style="ACE"
                 />
                 <GapView height={5} />
                 <Button
-                    action={ObjectiveToolkit.clearObjectives}
+                    action={clearObjectives}
                     buttonText="CLEAR OBJECTIVES"
                     style="HMM"
                 />
@@ -381,7 +380,7 @@ export default function DeveloperInterface() {
                     Objectives JSON
                 </BetterText>
                 <GapView height={5} />
-                <Native.View style={styles.consoleview}>
+                <View style={styles.consoleview}>
                     <BetterText
                         fontWeight="Regular"
                         textAlign="normal"
@@ -389,7 +388,7 @@ export default function DeveloperInterface() {
                     >
                         {JSON.stringify(objs)}
                     </BetterText>
-                </Native.View>
+                </View>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
                     All AsyncStorage items
@@ -398,7 +397,7 @@ export default function DeveloperInterface() {
                     item,value,otheritem,otheritemvalue...
                 </BetterText>
                 <GapView height={5} />
-                <Native.View style={styles.consoleview}>
+                <View style={styles.consoleview}>
                     <BetterText
                         fontWeight="Regular"
                         textAlign="normal"
@@ -406,7 +405,7 @@ export default function DeveloperInterface() {
                     >
                         {String(everything)}
                     </BetterText>
-                </Native.View>
+                </View>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
                     Logs
@@ -417,25 +416,25 @@ export default function DeveloperInterface() {
                     action={() => handleDevFunctionToGenerateLogs(logs)}
                 />
                 <GapView height={5} />
-                <Native.View style={styles.consoleview}>
+                <View style={styles.consoleview}>
                     {logs.map((log, index) => (
-                        <Native.Text
+                        <Text
                             key={index}
                             style={[styles.logText, styles[log.type]]}
                         >
                             [{new Date(log.timestamp).toDateString()}{" "}
                             {new Date(log.timestamp).toLocaleTimeString()}] (
                             {log.type.toUpperCase()}) {log.message}{" "}
-                        </Native.Text>
+                        </Text>
                     ))}
-                </Native.View>
+                </View>
                 <GapView height={10} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={12}>
                     Running React Native v{ReactVersion} and PersonaPlus v
                     {PersonaPlusVersion}
                 </BetterText>
                 <GapView height={80} />
-            </Native.ScrollView>
-        </Native.View>
+            </ScrollView>
+        </View>
     );
 }

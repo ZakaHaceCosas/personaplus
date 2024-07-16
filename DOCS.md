@@ -138,43 +138,39 @@ Siempre el mismo orden, primero importamos, luego definimos la interfaz (los tip
 // ruta/al/Modulo.tsx
 // Breve descripción de que hace
 
-import * as React from 'react';
-import * as Native from 'react-native';
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import BetterText from '@/components/BetterText';
 
 interface ModuloProps {
- variable: string;
+  variable: string;
 }
 
-const styles = Native.StyleSheet.create({
- mainview: {
-  padding: 10,
-  backgroundColor: "#FFF"
- }
-})
+const styles = StyleSheet.create({
+  mainview: {
+    padding: 10,
+    backgroundColor: "#FFF"
+  }
+});
 
 export default function Modulo() {
- return (
-  <Native.View style={styles.mainview}>
-   <BeText align="normal" weight="Bold" size={20} color="#000">
-    Un módulo bien hecho
-   </BeText>
-  </Native.View>
- )
+  return (
+    <View style={styles.mainview}>
+      <BetterText textAlign="normal" fontWeight="bold" fontSize={20} textColor="#000">
+        Un módulo bien hecho
+      </BetterText>
+    </View>
+  );
 }
 ```
 
 #### 2. IMPORTA CORRECTAMENTE
 
-Para evitar tener importaciones muy largas, cuando sea necesario utiliza `import * as <Nombre> from <importacion>`.
-> **Siempre** se importa React Native de este modo, con el nombre "Native", al igual que React con el nombre "React".
-
-Ten en cuenta que cuando programes, esto llevará a que en vez de escribir, por ejemplo, `<View>`, escribas `<Native.View>`, o `React.useEffect` en vez de `useEffect`. Esto se hace para mantener unas importaciones limpias y consistentes.
-
-Además, para los componentes propios, utiliza `@` en vez de `./`. E.J.:
+Para los componentes propios, utiliza `@` en vez de `./`. E.J.:
 
 ```tsx
-import BeText from '@/components/Text'; // bien
-import BeText from './components/Text'; // no bien
+import BetterText from '@/components/Text'; // bien
+import BetterText from './components/Text'; // no bien
 ```
 
 #### 3. NOMBRA CLARAMENTE LAS VARIABLES
@@ -214,9 +210,8 @@ Estás trabajando con TypeScript, así que recuerda usar tipos. No vaya a ser qu
 Cuando se trate de la función principal de un componente, haz uso de una Interfaz.
 
 ```tsx
-import * as React from 'react';
-import * as Native from 'react-native';
-import BeText from "@/components/Text";
+import React from 'react';
+import BetterText from "@/components/BetterText";
 
 const mivariable: string = "String :D";
 

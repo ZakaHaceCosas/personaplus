@@ -1,8 +1,14 @@
-import * as React from "react";
-import * as Native from "react-native";
+import React from "react";
+import {
+    DimensionValue,
+    View,
+    ScrollView,
+    StyleSheet,
+    Linking,
+} from "react-native";
 import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
-import * as Router from "expo-router";
+import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
 
 interface OpenSourceLibrary {
@@ -86,18 +92,18 @@ const libraries: OpenSourceLibrary[] = [
     },
 ];
 
-const styles = Native.StyleSheet.create({
+const styles = StyleSheet.create({
     containerview: {
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100vw" as DimensionValue,
+        height: "100vh" as DimensionValue,
     },
     mainview: {
         padding: 20,
         paddingTop: 50,
         display: "flex",
         flexDirection: "column",
-        width: "100vw" as Native.DimensionValue,
-        height: "100vh" as Native.DimensionValue,
+        width: "100vw" as DimensionValue,
+        height: "100vh" as DimensionValue,
         overflow: "scroll",
         // backgroundColor: "#FFF",
         // i dont know why, but i feel a credits section in an app should have its background white (edit: nevermind)
@@ -108,12 +114,12 @@ export default function OpenSourceCredits() {
     const { t } = useTranslation();
 
     return (
-        <Native.View style={styles.containerview}>
-            <Native.ScrollView style={styles.mainview}>
+        <View style={styles.containerview}>
+            <ScrollView style={styles.mainview}>
                 <BetterText
                     fontSize={20}
                     fontWeight="Light"
-                    onTap={Router.router.back}
+                    onTap={router.back}
                 >
                     {"<"} {t("globals.go_back")}
                 </BetterText>
@@ -124,7 +130,7 @@ export default function OpenSourceCredits() {
                 </BetterText>
                 <GapView height={20} />
                 {libraries.map((library, index) => (
-                    <Native.View key={index} style={{ marginBottom: 40 }}>
+                    <View key={index} style={{ marginBottom: 40 }}>
                         <BetterText fontWeight="SemiBold" fontSize={18}>
                             {library.name}
                         </BetterText>
@@ -159,13 +165,13 @@ export default function OpenSourceCredits() {
                             fontWeight="Light"
                             fontSize={15}
                             url={true}
-                            onTap={() => Native.Linking.openURL(library.url)}
+                            onTap={() => Linking.openURL(library.url)}
                         >
                             {library.url}
                         </BetterText>
-                    </Native.View>
+                    </View>
                 ))}
-            </Native.ScrollView>
-        </Native.View>
+            </ScrollView>
+        </View>
     );
 }
