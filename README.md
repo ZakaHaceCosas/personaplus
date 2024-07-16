@@ -102,12 +102,9 @@ Aquellos contribuidores que aporten significativamente a la app serán nombrados
 
 Gracias a todo este maravilloso software libre, PersonaPlus es posible. ¡Gracias!
 
-- [React](https://react.dev/)
-- > Y los paquetes asociados
-- [React Native](https://reactnative.dev/)
-- > Y los paquetes asociados
-- [Expo](https://expo.dev/)
-- > Y los paquetes asociados
+- [React](https://react.dev/) (y los paquetes asociados)
+- [React Native](https://reactnative.dev/) (y los paquetes asociados)
+- [Expo](https://expo.dev/) (y los paquetes asociados)
 - [React Native Animatable](https://github.com/oblador/react-native-animatable)
 - [Remove Console Msg](https://www.npmjs.com/package/remove-console-msg)
 - [React Native Countdown Circle Timer](https://github.com/vydimitrov/react-countdown-circle-timer/)
