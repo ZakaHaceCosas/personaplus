@@ -258,9 +258,16 @@ export default function Form() {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = (): void => {
+        termLog(
+            "function handleSubmit() was called within CreateObjective.tsx",
+            "log"
+        );
         submit().catch(e => {
             termLog("REACT ERROR: " + e, "error");
+            if (Platform.OS === "android") {
+                ToastAndroid.show("REACT ERROR: " + e, ToastAndroid.LONG);
+            }
         });
     };
 
