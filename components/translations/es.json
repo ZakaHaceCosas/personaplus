@@ -128,6 +128,15 @@
         },
         "required": "Necesario: Duración, Ejercicio, y al menos un día de la semana. Algunos ejercicios específicos tendrán requisitos extra: por ejemplo \"Levantamiento de peso\" requiere que especifiques cuanto peso vas a levantar."
     },
+    "page_sessions": {
+        "help_section": {
+            "Push Up": "Para hacer flexiones normales, comienza en posición de plancha con las manos ligeramente más anchas que los hombros. Baja tu cuerpo doblando los codos hasta que tu pecho casi toque el suelo, luego empuja hacia arriba hasta la posición inicial. Mantén tu core activo para mayor estabilidad. Empieza con un número cómodo de repeticiones y aumenta gradualmente a medida que ganas fuerza.\n\nPara hacer flexiones con una sola mano, comienza en posición de plancha con una mano centrada debajo del hombro y la otra detrás de la espalda. Baja tu cuerpo doblando el codo hasta que tu pecho casi toque el suelo, luego empuja hacia arriba. Mantén tu core firme y el equilibrio durante todo el movimiento. Empieza con unas pocas repeticiones en cada lado y progresa conforme mejora tu fuerza.",
+            "Lifting": "Distribuye equitativamente el peso entre ambas manos. Por ejemplo, si tu objetivo es levantar 6 kg, pon 3 kg en cada peso (ya que levantarás dos pesos, uno para cada mano).\n\nSin soltarlo, extiende tu brazo verticalmente y comienza a moverlo hacia arriba y hacia abajo, haciendo que tu codo vaya desde un ángulo de 90º a 45º y luego de nuevo a 90º (esto cuenta como una repetición).\n\nContinúa hasta completar todas las repeticiones especificadas (o hasta que se acabe el tiempo).",
+            "Running": "Para empezar a correr, asegúrate de llevar calzado y ropa cómodos para correr. Empieza con un calentamiento caminando rápidamente durante 5-10 minutos para preparar tus músculos. Comienza a correr a un ritmo cómodo y mantén un patrón constante de respiración. Concéntrate en mantener una buena postura y mantenerse relajado. Si eres principiante, alterna entre correr y caminar en intervalos. Aumenta gradualmente el tiempo que corres a medida que mejora tu resistencia. Enfría caminando unos minutos y luego estirando.",
+            "Walking": "Usa zapatos cómodos y ropa adecuada para el clima. Comienza caminando a un ritmo natural, permitiendo que tus brazos se balanceen naturalmente a los lados. Concéntrate en mantener una buena postura, con la espalda recta y la cabeza erguida. Puedes variar tu velocidad, incorporando intervalos de caminata rápida para aumentar tu frecuencia cardíaca. Caminar se puede hacer casi en cualquier lugar, así que elige una ruta que disfrutes. Apunta a caminar al menos 30 minutos por sesión, y aumenta gradualmente la duración e intensidad a medida que aumenta tu resistencia.",
+            "Meditation": "Encuentra un lugar tranquilo y cómodo para sentarte o acostarte. Cierra los ojos y toma algunas respiraciones profundas, enfocándote en la sensación del aire entrando y saliendo de tu cuerpo. Comienza a observar tus pensamientos y sentimientos sin juzgar, dejándolos venir y ir naturalmente. Puedes enfocarte en tu respiración, en un mantra o simplemente en el momento presente. Si tu mente divaga, trae suavemente tu atención de vuelta a tu punto focal. Comienza con unos minutos y gradualmente extiende tu tiempo de meditación a medida que te sientas más cómodo con la práctica."
+        }
+    },
     "cool_messages": {
         "all_done": [
             "Te sentirás orgulloso de ti mismo, ¿no?",
@@ -148,6 +157,23 @@
             "mi bro porfin salió de su cueva",
             "Suficiente por hoy. ¡Más mañana!",
             "Por hoy; los objetivos de mañana no se muestran ;)"
+        ],
+        "session_done": [
+            "¡Bien hecho, bro!",
+            "Fue divertido, ¿no?",
+            "Mi bro se está dando un plus de verdad, ¡genial!",
+            "¡Me encantó!",
+            "Nada es más divertido que darse un plus, ¿cierto?",
+            "AND HIS NAME HIS JOHN CENA *trumpet plays*",
+            "Te diste un plus, ahora dáte un descanso ;]",
+            "Gran trabajo, ¡sígue así!",
+            "¡Estás que ardes!",
+            "\"Creciendo personalmente, sesión tras sesión\"",
+            "¡Ya te sentirás más fuerte! ¿Verdad?",
+            "¡Eso fue épico!",
+            "¡Eres una estrella!",
+            "¿Qué más puedes lograr?",
+            "Aún hay tiempo para otra más ;]"
         ]
     },
     "globals": {
@@ -162,6 +188,8 @@
         "disabled": "desactivado",
         "select_placeholder": "Elige una opción",
         "go_back": "Ir atrás",
+        "options": "Opciones",
+        "go_to_place": "Ir a {{place}}",
         "days_of_the_week": {
             "monday": "Lunes",
             "tuesday": "Martes",
@@ -201,5 +229,22 @@
         "home": "Inicio",
         "dashboard": "Panel de control",
         "profile": "Perfil"
+    },
+    "dev_interface": {
+        "is_development_build": {
+            "true": "Usando una Compilación de Desarrollo de Expo",
+            "false": "Usando una compilación / APK de producción / lanzamiento estandar"
+        },
+        "clear": {
+            "objectives": "Limpiar objetivos",
+            "logs": "Limpiar registro de la consola",
+            "all": "LIMPIAR TODO (RESETEAR APP, básicamente)"
+        },
+        "objectives_object": "Arreglo JSON de los objetivos",
+        "all_asyncstorage_items": "Todos los ítems del almacenamiento asíncrono (AsyncStorage)",
+        "logs": {
+            "logs": "Registro de la consola",
+            "export": "EXPORTAR REGISTRO A UN ARCHIVO"
+        }
     }
 }
