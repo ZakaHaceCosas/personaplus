@@ -128,6 +128,15 @@
         },
         "required": "Required: Duration, Exercise, and at least one day of the week. Specific exercises may have their own extra required fields: for example \"Lifting\" requires you to specify how much weight you'll be lifting."
     },
+    "page_sessions": {
+        "help_section": {
+            "Push Up": "To do a regular push-up, begin in a plank position with your hands slightly wider than shoulder-width apart. Lower your body by bending your elbows until your chest nearly touches the floor, then push back up to the starting position. Keep your core engaged throughout for stability. Start with a comfortable number of repetitions and gradually increase as you build strength.\n\nTo do a one handed push-up, begin in a plank position with one hand centered beneath your shoulder and the other behind your back. Lower your body by bending your elbow until your chest nearly touches the floor, then push back up. Keep your core tight and maintain balance throughout the movement. Start with a few reps on each side and progress as your strength improves.",
+            "Lifting": "Distribute evenly the weights between both hands. For example, if your objective is to lift 6kg, put 3kg to each weight (as you'll lift two weights, one for each hand).\n\nWithout dropping it, extend your arm vertically, and start moving it up and down, making your elbow go from a 90º angle to a 45º angle and then again to a 90º one (that would count as one lift).\n\nKeep going until you do all the lifts specified (or the timer runs out)!",
+            "Running": "To start running, ensure you have comfortable running shoes and attire. Begin with a warm-up by walking briskly for 5-10 minutes to prepare your muscles. Start running at a pace that feels comfortable, and maintain a steady breathing pattern. Focus on keeping a good posture and staying relaxed. If you're a beginner, alternate between running and walking in intervals. Gradually increase your running time as your endurance improves. Cool down by walking for a few minutes and then stretching.",
+            "Walking": "Wear comfortable shoes and clothing suitable for the weather. Begin by walking at a natural pace, allowing your arms to swing naturally at your sides. Focus on maintaining a good posture, with your back straight and your head up. You can vary your speed, incorporating brisk walking intervals to increase your heart rate. Walking can be done almost anywhere, so choose a route you enjoy. Aim for at least 30 minutes of walking per session, and gradually increase your duration and intensity as you build stamina.",
+            "Meditation": "Find a quiet and comfortable place to sit or lie down. Close your eyes and take a few deep breaths, focusing on the sensation of the air entering and leaving your body. Begin to observe your thoughts and feelings without judgment, letting them come and go naturally. You can focus on your breath, a mantra, or simply the present moment. If your mind wanders, gently bring your attention back to your focal point. Start with a few minutes and gradually extend your meditation time as you become more comfortable with the practice."
+        }
+    },
     "cool_messages": {
         "all_done": [
             "Feel proud of yourself, don't you?",
@@ -148,6 +157,23 @@
             "bro finally got out his cave",
             "Enough for today. More tomorrow!",
             "For today; objectives due tomorrow aren't shown ;)"
+        ],
+        "session_done": [
+            "Well done, bro!",
+            "It was fun, wasn't it?",
+            "Bro's actually giving himself a plus, great!",
+            "Loved it!",
+            "Nothing's funnier than giving yourself a plus, right?",
+            "AND HIS NAME HIS JOHN CENA *trumpet plays*",
+            "You gave yourself a plus, now give yourself a break",
+            "Awesome job, keep it up!",
+            "You're on fire!",
+            "\"Growing myself, one session at a time\"",
+            "Feeling stronger already! Right?",
+            "That was epic!",
+            "You're a rockstar!",
+            "What else can you achieve?",
+            "There's still time for another one ;]"
         ]
     },
     "globals": {
@@ -179,7 +205,9 @@
             "Meditation": "Meditation"
         },
         "are_you_sure": "Are you sure?",
-        "nevermind": "Nevermind"
+        "nevermind": "Nevermind",
+        "workinprogress": "PersonaPlus is still an app in early development. Many features, like this one, aren't yet available. Soon they'll be! Don't forget to check every few weeks for new updates.",
+        "error_loading_content": "There was an error loading this content. Sorry!"
     },
     "sections": {
         "headers": {

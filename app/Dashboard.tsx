@@ -175,7 +175,9 @@ export default function Dashboard() {
                                         preheader={t(
                                             "sections.divisions.active_objective"
                                         )}
-                                        header={objective.exercise}
+                                        header={t(
+                                            `globals.supported_active_objectives.${objective.exercise}`
+                                        )}
                                         subheader={description}
                                     >
                                         <Button

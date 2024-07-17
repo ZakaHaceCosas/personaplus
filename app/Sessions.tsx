@@ -23,10 +23,10 @@ import GapView from "@/components/GapView";
 import { termLog } from "./DeveloperInterface";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import Button from "@/components/Buttons";
+import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo.
 import { Objective } from "@/components/types/Objective";
-import { useTranslation } from "react-i18next";
 
 // Estilos
 const styles = StyleSheet.create({
@@ -57,7 +57,9 @@ export default function Sessions() {
     );
     const [currentObjective, setCurrentObjective] =
         React.useState<Objective | null>(null);
-    // if you wonder why to variables for the timer's loops, one is to keep account of many times repeat (laps) and other is to set the key (required by circle timer)
+    /*
+    If you wonder why there are two variables for the timer's loops, one of them is to keep account of many times repeat (laps) and other one is to set the "key" attribute of the circle timer, which is required for it to loop.
+    */
     const [laps, setLaps] = React.useState<number>(0);
     const [timerKey, setTimerKey] = React.useState<number>(0);
 
@@ -69,7 +71,7 @@ export default function Sessions() {
             } catch (e) {
                 termLog("LOG 1 (:53) - Fetch error! " + e, "error");
             } finally {
-                setLoading(false); // setLoading() in finally and not try, so in case of error the user doesnt get stuck on a Loading... screen
+                setLoading(false); // setLoading() in the finally block and not the try one, so in the case of an error the user doesnt get stuck on a "Loading..." screen
             }
         };
 
@@ -110,43 +112,25 @@ export default function Sessions() {
         );
     }, [currentObjective]);
 
-    let currentObjectiveSustantivizedName: string = "Doing something"; // Default value
-
-    switch (currentObjective?.exercise) {
-        case "Meditation":
-            currentObjectiveSustantivizedName = "Meditating";
-            break;
-        case "Push Up":
-            currentObjectiveSustantivizedName = "Doing push ups";
-            break;
-        case "Lifting":
-            currentObjectiveSustantivizedName = "Lifting weights";
-            break;
-        case "Running":
-            currentObjectiveSustantivizedName = "Running";
-            break;
-        case "Walking":
-            currentObjectiveSustantivizedName = "Walking";
-            break;
-        default:
-            break;
-    }
+    const currentObjectiveSustantivizedName: string = currentObjective?.exercise
+        ? t(
+              `globals.supported_active_objectives_sustantivized.${currentObjective.exercise}`
+          )
+        : "Doing something";
 
     const [isTimerRunning, setTimerStatus] = React.useState(true);
 
     const toggleTimerStatus = (manualTarget?: boolean): void => {
-        if (manualTarget !== undefined) {
-            setTimerStatus(manualTarget);
-        } else {
-            setTimerStatus(prevStatus => !prevStatus);
-        }
+        setTimerStatus(
+            manualTarget !== undefined ? manualTarget : !isTimerRunning
+        );
     };
 
     const timerColor = isTimerRunning ? "#32FF80" : "#FFC832";
 
     const cancel = () => {
         Alert.alert(
-            "Are you sure?",
+            t("globals.are_you_sure"),
             "You are doing GREAT! Are you sure you want to give up? Your progress will be lost! (You can always start over if you change your mind)",
             [
                 {
@@ -165,27 +149,14 @@ export default function Sessions() {
         );
     };
 
-    const sessionCompletedMessages = [
-        "Well done, bro!",
-        "It was fun, wasn't it?",
-        "Bro's actually giving himself a plus, great!",
-        "Loved it!",
-        "Nothing's funnier than giving yourself a plus, right?",
-        "AND HIS NAME HIS JOHN CENA *trumpet plays*", // xD
-        "You gave yourself a plus, now give yourself a break",
-        "Awesome job, keep it up!",
-        "You're on fire!",
-        '"Growing myself, one session at a time"',
-        "Feeling stronger already! Right?",
-        "That was epic!",
-        "You're a rockstar!",
-        "What else can you achieve?",
-        "There's still time for another one ;]",
-    ];
+    const sessionCompletedMessages: string[] = t("cool_messages.session_done", {
+        returnObjects: true,
+    });
 
     const sessionCompletedMessagesIndex = Math.floor(
         Math.random() * sessionCompletedMessages.length
     );
+
     const messageForSessionCompleted =
         sessionCompletedMessages[sessionCompletedMessagesIndex];
 
@@ -226,33 +197,9 @@ export default function Sessions() {
         toggleTimerStatus(!isUserCheckingHelp);
     };
 
-    let helpText: string = "Help!";
-
-    switch (currentObjective?.exercise.toLowerCase()) {
-        case "push up":
-            helpText =
-                "To do a regular push-up, begin in a plank position with your hands slightly wider than shoulder-width apart. Lower your body by bending your elbows until your chest nearly touches the floor, then push back up to the starting position. Keep your core engaged throughout for stability. Start with a comfortable number of repetitions and gradually increase as you build strength.\n\nTo do a one handed push-up, begin in a plank position with one hand centered beneath your shoulder and the other behind your back. Lower your body by bending your elbow until your chest nearly touches the floor, then push back up. Keep your core tight and maintain balance throughout the movement. Start with a few reps on each side and progress as your strength improves.";
-            break;
-        case "lifting":
-            helpText =
-                "Distribute evenly the weights between both hands. For example, if your objective is to lift 6kg, put 3kg to each weight (as you'll lift two weights, one for each hand).\n\nWithout dropping it, extend your arm vertically, and start moving it up and down, making your elbow go from a 90º angle to a 45º angle and then again to a 90º one (that would count as one lift).\n\nKeep going until you do all the lifts specified (or the timer runs out)!";
-            break;
-        case "running":
-            helpText =
-                "To start running, ensure you have comfortable running shoes and attire. Begin with a warm-up by walking briskly for 5-10 minutes to prepare your muscles. Start running at a pace that feels comfortable, and maintain a steady breathing pattern. Focus on keeping a good posture and staying relaxed. If you're a beginner, alternate between running and walking in intervals. Gradually increase your running time as your endurance improves. Cool down by walking for a few minutes and then stretching.";
-            break;
-        case "meditation":
-            helpText =
-                "Find a quiet and comfortable place to sit or lie down. Close your eyes and take a few deep breaths, focusing on the sensation of the air entering and leaving your body. Begin to observe your thoughts and feelings without judgment, letting them come and go naturally. You can focus on your breath, a mantra, or simply the present moment. If your mind wanders, gently bring your attention back to your focal point. Start with a few minutes and gradually extend your meditation time as you become more comfortable with the practice.";
-            break;
-        case "walking":
-            helpText =
-                "Wear comfortable shoes and clothing suitable for the weather. Begin by walking at a natural pace, allowing your arms to swing naturally at your sides. Focus on maintaining a good posture, with your back straight and your head up. You can vary your speed, incorporating brisk walking intervals to increase your heart rate. Walking can be done almost anywhere, so choose a route you enjoy. Aim for at least 30 minutes of walking per session, and gradually increase your duration and intensity as you build stamina.";
-            break;
-        default:
-            helpText = "Error loading help text.";
-            break;
-    }
+    const helpText: string = currentObjective?.exercise
+        ? t(`page_sessions.help_section.${currentObjective.exercise}`)
+        : t("globals.error_loading_content");
 
     const speedOptions: [string, string][] = [
         ["Brisk Walk", "1.6 - 3.2 km/h"],
@@ -289,7 +236,7 @@ export default function Sessions() {
                     textColor="#32FF80"
                     fontWeight="Medium"
                 >
-                    Loading...
+                    {t("globals.loading")}
                 </BetterText>
             </View>
         );
