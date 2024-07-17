@@ -22,6 +22,7 @@ import { termLog } from "./DeveloperInterface";
 import {
     fetchObjectives,
     deleteObjective,
+    defineObjectiveDescription,
 } from "@/components/toolkit/objectives";
 import { router, usePathname } from "expo-router";
 import { useTranslation } from "react-i18next";
@@ -162,41 +163,10 @@ export default function Dashboard() {
                                 return null;
                             }
 
-                            let descriptionDraft: string = t(
-                                "page_dashboard.objective.description",
-                                {
-                                    duration: objective.duration,
-                                    rests: objective.rests,
-                                    repetitions: objective.repetitions,
-                                }
+                            const description = defineObjectiveDescription(
+                                t,
+                                objective
                             );
-                            if (objective?.rests > 0) {
-                                descriptionDraft = t(
-                                    "page_dashboard.objective.description_with_rests",
-                                    {
-                                        duration: objective.duration,
-                                        rests: objective.rests,
-                                        restDuration: objective.restDuration,
-                                        repetitions: objective.repetitions,
-                                    }
-                                );
-                            }
-
-                            descriptionDraft =
-                                descriptionDraft +
-                                (objective?.wasDone === true
-                                    ? t(
-                                          "page_dashboard.objective.was_done.true"
-                                      )
-                                    : t(
-                                          "page_dashboard.objective.was_done.false"
-                                      ));
-
-                            const description: string =
-                                descriptionDraft +
-                                "\nID: " +
-                                String(objective.identifier) +
-                                ".";
 
                             return (
                                 <View key={objective.identifier}>
