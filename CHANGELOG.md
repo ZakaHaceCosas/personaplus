@@ -1,5 +1,8 @@
 # Registro de cambios de PersonaPlus (CHANGELOG)
-
+<!--
+README
+-->
+<!--
 COMO FUNCIONAN LAS VERSIONES // HOW DOES VERSIONING WORK:
 
 Dividamos el desarrollo en dos fases, PRE-APP y POST-APP.
@@ -15,6 +18,10 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 - Si se está en X.X.9, pero se siguen lanzado actualizaciones que deberían sumar al 9, sencillamente se seguirá sumando (p ej. 0.0.10-R5).
 
 - PD: Los logs serán en inglés, siempre.
+-->
+<!--
+END README
+-->
 
 ## 0.0.1-R5-b22
 
