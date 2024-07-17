@@ -10,7 +10,8 @@
         "ts:check": "tsc",
         "dep:check": "expo install --check",
         "dep:fix": "expo install --fix",
-        "lint": "eslint ."
+        "lint": "eslint .",
+        "build": "dep:fix && eas build -p android --profile production"
     },
     "author": {
         "name": "ZakaHaceCosas",
@@ -30,7 +31,7 @@
         "@react-native-async-storage/async-storage": "1.23.1",
         "@react-native-picker/picker": "2.7.5",
         "@react-navigation/native": "^6.0.2",
-        "expo": "~51.0.20",
+        "expo": "~51.0.21",
         "expo-build-properties": "~0.12.3",
         "expo-constants": "~16.0.2",
         "expo-dev-client": "~4.0.20",
