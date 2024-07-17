@@ -30,6 +30,11 @@ END README
 - Fixed "Go back" button sometimes going to a different page.
 - Added the option to save to a file PersonaPlus' logs.
 - Refactored import statements.
+- Changed the way CreateObjective handles the `submit` function, by adding a `void` function that handles the `async`, instead of calling the `async` directly.
+- Toolkified objectives' descriptions, saving a lot of code in the Dashboard.
+- Toolkified `adjustedToday`.
+- General code quality improvements, specially within Sessions.
+- Imrpoved some comments for better code understandability.
 
 ## 0.0.1-R5-b21
 
