@@ -188,6 +188,8 @@
         "disabled": "disabled",
         "select_placeholder": "Choose an option",
         "go_back": "Go back",
+        "options": "Options",
+        "go_to_place": "Go to {{place}}",
         "days_of_the_week": {
             "monday": "Monday",
             "tuesday": "Tuesday",
@@ -228,5 +230,22 @@
         "home": "Home",
         "dashboard": "Dashboard",
         "profile": "Profile"
+    },
+    "dev_interface": {
+        "is_development_build": {
+            "true": "Using an Expo Development Build",
+            "false": "Using a production APK / standard release"
+        },
+        "clear": {
+            "objectives": "Clear objectives",
+            "logs": "Clear log registry",
+            "all": "CLEAR ALL (RESET APP, basically)"
+        },
+        "objectives_object": "Objectives' JSON object",
+        "all_asyncstorage_items": "All AsyncStorage items",
+        "logs": {
+            "logs": "Log registry",
+            "export": "EXPORT REGISTRY TO FILE"
+        }
     }
 }
