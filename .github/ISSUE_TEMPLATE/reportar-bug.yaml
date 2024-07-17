@@ -3,9 +3,9 @@ description: "¿Encontraste un error? ¡Repórtalo y ayúdanos a mejorar!"
 title: "[BUG]: "
 labels: ["bug"]
 assignees:
-- ZakaHaceCosas
+  - ZakaHaceCosas
 body:
-- type: textarea
+  - type: textarea
     id: what-happened
     attributes:
       label: ¿Qué pasó?
@@ -13,7 +13,7 @@ body:
       placeholder: Explica el error
     validations:
       required: true
-- type: textarea
+  - type: textarea
     id: how-it-happened
     attributes:
       label: Pasos para replicar el bug
@@ -21,7 +21,7 @@ body:
       placeholder: ¿Cómo encontraste el bug?
     validations:
       required: true
-- type: textarea
+  - type: textarea
     id: what-didnt-happen
     attributes:
       label: Resultado esperado
@@ -29,7 +29,7 @@ body:
       placeholder: Si hubiera salido bien, ¿qué habría pasado?
     validations:
       required: true
-- type: dropdown
+  - type: dropdown
     id: browsers
     attributes:
       label: ¿En qué navegador / dispositivo estabas probando?
@@ -46,16 +46,10 @@ body:
         - Otro...
     validations:
       required: true
-- type: textarea
+  - type: textarea
     id: logs
     attributes:
       label: Logs de la consola
       description: A poder ser, copia y pega aquí cualquier log de error que hubieras visto en la consola. (Se formatea solo, así que tranqui)
       placeholder: Por ejemplo, "10:52:41 LOG Couldn't get OBJS fetched due to error e", o algo así. Como hayan salido.
-      render: shell
-- type: textarea
-    id: logs
-    attributes:
-      label: Logs de la consola
-      description: A poder ser, copia y pega aquí cualquier log de error que hubieras visto en la consola. (Se formatea solo, así que tranqui)
       render: shell
