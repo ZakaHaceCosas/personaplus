@@ -28,6 +28,7 @@ import {
     scheduleNotificationAsync,
     cancelScheduledNotificationAsync,
 } from "expo-notifications";
+import { adjustedToday } from "@/components/toolkit/today";
 
 // TypeScript, supongo
 import { Objective } from "@/components/types/Objective";
@@ -203,11 +204,6 @@ export default function Home() {
 
     const randomMessageForAllDone = allDoneMessages[randomMessageIndex];
 
-    // Today's date (since React for some reasons thinks it's funny to start weeks on Sunday, this needs to be done)
-    const today = new Date().getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
-    // Adjust today index to match week start (Monday as 0)
-    const adjustedToday = today === 0 ? 6 : today - 1; // Adjust Sunday to index 6, otherwise shift back by one
-
     if (objectives && Object.keys(objectives).length > 0) {
         const allObjectivesHandled = Object.keys(objectives).every(key => {
             const objective = objectives[key];
@@ -319,7 +315,9 @@ export default function Home() {
                                             preheader={t(
                                                 "sections.divisions.active_objective"
                                             )}
-                                            header={obj.exercise}
+                                            header={t(
+                                                `globals.supported_active_objectives.${obj.exercise}`
+                                            )}
                                         >
                                             <Button
                                                 style="ACE"
@@ -397,11 +395,7 @@ export default function Home() {
                                 fontSize={15}
                                 textAlign="center"
                             >
-                                PersonaPlus is still a work-in-progress app.
-                                {"\n\n"}
-                                On later updates you&apos;ll be able to see here
-                                many stats and helpful info. Be sure to check
-                                for updates every few weeks!
+                                {t("globals.workinprogress")}
                             </BetterText>
                         </View>
                     </Section>

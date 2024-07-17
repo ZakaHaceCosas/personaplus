@@ -179,7 +179,8 @@
             "Meditation": "Meditación"
         },
         "are_you_sure": "¿Estás seguro?",
-        "nevermind": "Olvídalo"
+        "nevermind": "Olvídalo",
+        "workinprogress": "PersonaPlus es todavía una app en temprano desarrollo. Muchas funciones, como esta, aún no están disponibles. ¡Pronto lo estarán! No olvides revisar cada pocas semanas si hay actualizaciones nuevas."
     },
     "sections": {
         "headers": {
