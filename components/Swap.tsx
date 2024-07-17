@@ -2,7 +2,7 @@
 // BetterSwitches (porque un "switch", en teoría hace "swap").
 
 import React from "react";
-import * as Native from "react-native";
+import { StyleSheet, View, DimensionValue, Pressable } from "react-native";
 import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
 

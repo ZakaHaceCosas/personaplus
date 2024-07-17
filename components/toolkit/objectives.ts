@@ -3,7 +3,9 @@ import { Objective } from '@/components/types/Objective';
 import { termLog } from '@/app/DeveloperInterface';
 import { router } from "expo-router";
 import { Platform, ToastAndroid } from 'react-native';
+import { TFunction } from 'i18next';
 
+// Función para obtener los objetivos
 const getObjectives = async (): Promise<Objective[]> => {
     const storedObjectives: string | null = await AsyncStorage.getItem("objectives");
     return storedObjectives ? JSON.parse(storedObjectives) : [];
@@ -67,6 +69,7 @@ const fetchObjectives = async (wayToGetThem: "object" | "string"): Promise<any> 
     }
 };
 
+// Funcion para vaciar / borrar los objetivos
 const clearObjectives = async () => {
     try {
         const objectives = await getObjectives();
@@ -92,4 +95,30 @@ const getObjectiveByIdentifier = async (identifier: number): Promise<Objective |
     }
 };
 
-export { deleteObjective, markObjectiveAsDone, clearObjectives, fetchObjectives, getObjectiveByIdentifier };
+
+const defineObjectiveDescription = (t: TFunction, objective: Objective): string => {
+    let descriptionDraft: string = t('page_dashboard.objective.description', {
+        duration: objective.duration,
+        rests: objective.rests,
+        repetitions: objective.repetitions,
+    });
+
+    if (objective?.rests > 0) {
+        descriptionDraft = t('page_dashboard.objective.description_with_rests', {
+            duration: objective.duration,
+            rests: objective.rests,
+            restDuration: objective.restDuration,
+            repetitions: objective.repetitions,
+        });
+    }
+
+    descriptionDraft += objective?.wasDone === true
+        ? t('page_dashboard.objective.was_done.true')
+        : t('page_dashboard.objective.was_done.false');
+
+    const description: string = `${descriptionDraft}\nID: ${String(objective.identifier)}.`;
+
+    return description;
+}
+
+export { deleteObjective, markObjectiveAsDone, clearObjectives, fetchObjectives, getObjectiveByIdentifier, defineObjectiveDescription };

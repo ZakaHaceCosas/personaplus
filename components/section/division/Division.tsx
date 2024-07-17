@@ -2,7 +2,7 @@
 // División
 
 import React from "react";
-import * as Native from "react-native";
+import { View } from "react-native";
 import BetterText from "@/components/BetterText";
 import GapView from "@/components/GapView";
 
