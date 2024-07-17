@@ -17,10 +17,11 @@ import {
 } from "@/components/toolkit/objectives";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
+import { usePathname, router } from "expo-router";
+import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo
 import { Objective } from "@/components/types/Objective";
-import { usePathname, router } from "expo-router";
 
 const styles = StyleSheet.create({
     consoleview: {
@@ -119,6 +120,7 @@ export const termLog = (
 };
 
 export default function DeveloperInterface() {
+    const { t } = useTranslation();
     const [logs, setLogs] = React.useState<Log[]>([]);
 
     React.useEffect(() => {
@@ -338,46 +340,50 @@ export default function DeveloperInterface() {
                     fontSize={15}
                 >
                     {isDevelopmentBuild() === true
-                        ? "Using Development Build"
-                        : "Using a standard release"}
+                        ? t("dev_interface.is_development_build.true")
+                        : t("dev_interface.is_development_build.false")}
                 </BetterText>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
-                    Options
+                    {t("globals.options")}
                 </BetterText>
                 <GapView height={5} />
                 <Button
                     action={() => router.navigate("/WelcomeScreen")}
-                    buttonText="Go to Welcome Screen"
+                    buttonText={t("globals.go_to_place", {
+                        place: "Welcome Screen",
+                    })}
                     style="ACE"
                 />
                 <GapView height={5} />
                 <Button
                     action={() => router.navigate("/openhealthtest")}
-                    buttonText="Go to Open Health test page"
+                    buttonText={t("globals.go_to_place", {
+                        place: "OpenHealthJS Testing",
+                    })}
                     style="ACE"
                 />
                 <GapView height={5} />
                 <Button
                     action={clearObjectives}
-                    buttonText="CLEAR OBJECTIVES"
+                    buttonText={t("dev_interface.clear.objectives")}
                     style="HMM"
                 />
                 <GapView height={5} />
                 <Button
-                    action={devFunctionToClearAll}
-                    buttonText="CLEAR ALL (Reset app, basically)"
-                    style="WOR"
-                />
-                <GapView height={5} />
-                <Button
                     action={devFunctionToClearGlobalLogs}
-                    buttonText="CLEAR LOGS"
+                    buttonText={t("dev_interface.clear.logs")}
                     style="WOR"
                 />
                 <GapView height={20} />
+                <Button
+                    action={devFunctionToClearAll}
+                    buttonText={t("dev_interface.clear.all")}
+                    style="WOR"
+                />
+                <GapView height={5} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
-                    Objectives JSON
+                    {t("dev_interface.objectives_object")}
                 </BetterText>
                 <GapView height={5} />
                 <View style={styles.consoleview}>
@@ -391,7 +397,7 @@ export default function DeveloperInterface() {
                 </View>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
-                    All AsyncStorage items
+                    {t("dev_interface.all_asyncstorage_items")}
                 </BetterText>
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={15}>
                     item,value,otheritem,otheritemvalue...
@@ -408,11 +414,11 @@ export default function DeveloperInterface() {
                 </View>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
-                    Logs
+                    {t("dev_interface.logs.logs")}
                 </BetterText>
                 <Button
                     style="GOD"
-                    buttonText="EXPORT LOGS TO FILE"
+                    buttonText={t("dev_interface.logs.export")}
                     action={() => handleDevFunctionToGenerateLogs(logs)}
                 />
                 <GapView height={5} />
