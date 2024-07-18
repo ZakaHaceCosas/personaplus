@@ -148,7 +148,7 @@
         },
         "fragment_one": {
             "title": "Háblanos de ti",
-            "subtitle": "Solo pedios los datos que la app necesita para funcionar. No enviamos información a nadie fuera de este dispositivo, nunca.",
+            "subtitle": "Solo pedimos los datos que la app necesita para funcionar. No enviamos información a nadie fuera de este dispositivo, nunca.",
             "questions": {
                 "username": "Nombre de usuario",
                 "height": "Altura (centímetros, sin decimales)",
@@ -206,7 +206,7 @@
                 }
             }
         },
-        "you_aint_that_old": "Tú NO tienes {{age}} años"
+        "you_aint_that_old": "Tú NO tienes {{age}} años, colega"
     },
     "cool_messages": {
         "all_done": [
@@ -287,6 +287,7 @@
         "are_you_sure": "¿Estás seguro?",
         "nevermind": "Olvídalo",
         "workinprogress": "PersonaPlus es todavía una app en temprano desarrollo. Muchas funciones, como esta, aún no están disponibles. ¡Pronto lo estarán! No olvides revisar cada pocas semanas si hay actualizaciones nuevas.",
+        "error_loading_content": "Hubo un error cargando este contenido. ¡Lo siento!",
         "learn_more": "Más información",
         "continue": "Continuar",
         "fill_all_items": "Rellena correctamente todos los campos",
