@@ -28,11 +28,12 @@ import { validateBasicData } from "@/components/toolkit/userData";
 // Definimos los estilos
 const styles = StyleSheet.create({
     mainview: {
-        width: "100%",
-        height: Dimensions.get("window").height,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
         display: "flex",
         flexDirection: "column",
-        padding: 40,
+        padding: 20,
+        overflow: "scroll",
     },
     flexbtns: {
         display: "flex",
