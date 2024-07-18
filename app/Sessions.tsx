@@ -318,7 +318,7 @@ export default function Sessions() {
                         fontSize={12}
                         textAlign="center"
                     >
-                        CURRENT OBJECTIVE
+                        {t("page_sessions.current")}
                     </BetterText>
                     <GapView height={10} />
                     <BetterText
@@ -326,8 +326,8 @@ export default function Sessions() {
                         fontSize={25}
                         textAlign="center"
                     >
-                        {currentObjectiveSustantivizedName} for{" "}
-                        {currentObjective.duration} minute
+                        {currentObjectiveSustantivizedName}{" "}
+                        {currentObjective.duration} {t("globals.minute")}
                         {currentObjective.duration > 1 && "s"}
                     </BetterText>
                     <GapView height={10} />
@@ -343,7 +343,7 @@ export default function Sessions() {
                         <GapView width={5} />
                         <BetterText fontWeight="Regular" fontSize={15}>
                             {laps === 0
-                                ? "None"
+                                ? t("globals.none")
                                 : laps === 1
                                   ? `${laps} repetition`
                                   : `${laps} repetitions`}
@@ -353,7 +353,7 @@ export default function Sessions() {
                         <GapView width={5} />
                         <BetterText fontWeight="Regular" fontSize={15}>
                             {currentObjective.rests === 0
-                                ? "None"
+                                ? t("globals.none")
                                 : currentObjective.rests === 1
                                   ? `${currentObjective.rests} rest of ${currentObjective.restDuration} mins`
                                   : `${currentObjective.rests} rests (${currentObjective.restDuration} mins)`}
@@ -581,7 +581,7 @@ export default function Sessions() {
                     <GapView width={10} />
                     <Button
                         style="HMM"
-                        buttonText="Help?"
+                        buttonText={t("globals.help")}
                         action={() => toggleHelpMenu()}
                         layout="normal"
                         height="default"
@@ -590,7 +590,7 @@ export default function Sessions() {
                     <GapView width={10} />
                     <Button
                         style="WOR"
-                        buttonText="Give up"
+                        buttonText={t("page_sessions.give_up")}
                         action={cancel}
                         layout="normal"
                         height="default"
@@ -601,7 +601,11 @@ export default function Sessions() {
             {isUserCheckingHelp && (
                 <View style={styles.helpcontainer}>
                     <BetterText fontSize={18} fontWeight="Regular">
-                        Help with {currentObjectiveSustantivizedName}
+                        {t("globals.help_with_item", {
+                            item: t(
+                                `globals.supported_active_objectives.${currentObjective.exercise}`
+                            ).toLowerCase(),
+                        })}
                     </BetterText>
                     <BetterText fontSize={14} fontWeight="Light">
                         {helpText}
@@ -611,7 +615,7 @@ export default function Sessions() {
                         layout="fixed"
                         height="default"
                         style="ACE"
-                        buttonText="Got it"
+                        buttonText={t("globals.got_it")}
                         action={toggleHelpMenu}
                     />
                     <GapView height={10} />
@@ -621,8 +625,7 @@ export default function Sessions() {
                         textColor="#C8C8C8"
                         textAlign="center"
                     >
-                        Psst... Don&apos;t worry, the timer has been paused so
-                        you can read!
+                        {t("page_sessions.timer_paused_help")}
                     </BetterText>
                 </View>
             )}

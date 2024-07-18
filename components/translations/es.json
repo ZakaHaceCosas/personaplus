@@ -129,13 +129,16 @@
     },
     "page_sessions": {
         "in_a_session": "¡EN UNA SESIÓN!",
+        "current": "OBJETIVO ACTUAL",
         "help_section": {
             "Push Up": "Para hacer flexiones normales, comienza en posición de plancha con las manos ligeramente más anchas que los hombros. Baja tu cuerpo doblando los codos hasta que tu pecho casi toque el suelo, luego empuja hacia arriba hasta la posición inicial. Mantén tu core activo para mayor estabilidad. Empieza con un número cómodo de repeticiones y aumenta gradualmente a medida que ganas fuerza.\n\nPara hacer flexiones con una sola mano, comienza en posición de plancha con una mano centrada debajo del hombro y la otra detrás de la espalda. Baja tu cuerpo doblando el codo hasta que tu pecho casi toque el suelo, luego empuja hacia arriba. Mantén tu core firme y el equilibrio durante todo el movimiento. Empieza con unas pocas repeticiones en cada lado y progresa conforme mejora tu fuerza.",
             "Lifting": "Distribuye equitativamente el peso entre ambas manos. Por ejemplo, si tu objetivo es levantar 6 kg, pon 3 kg en cada peso (ya que levantarás dos pesos, uno para cada mano).\n\nSin soltarlo, extiende tu brazo verticalmente y comienza a moverlo hacia arriba y hacia abajo, haciendo que tu codo vaya desde un ángulo de 90º a 45º y luego de nuevo a 90º (esto cuenta como una repetición).\n\nContinúa hasta completar todas las repeticiones especificadas (o hasta que se acabe el tiempo).",
             "Running": "Para empezar a correr, asegúrate de llevar calzado y ropa cómodos para correr. Empieza con un calentamiento caminando rápidamente durante 5-10 minutos para preparar tus músculos. Comienza a correr a un ritmo cómodo y mantén un patrón constante de respiración. Concéntrate en mantener una buena postura y mantenerse relajado. Si eres principiante, alterna entre correr y caminar en intervalos. Aumenta gradualmente el tiempo que corres a medida que mejora tu resistencia. Enfría caminando unos minutos y luego estirando.",
             "Walking": "Usa zapatos cómodos y ropa adecuada para el clima. Comienza caminando a un ritmo natural, permitiendo que tus brazos se balanceen naturalmente a los lados. Concéntrate en mantener una buena postura, con la espalda recta y la cabeza erguida. Puedes variar tu velocidad, incorporando intervalos de caminata rápida para aumentar tu frecuencia cardíaca. Caminar se puede hacer casi en cualquier lugar, así que elige una ruta que disfrutes. Apunta a caminar al menos 30 minutos por sesión, y aumenta gradualmente la duración e intensidad a medida que aumenta tu resistencia.",
             "Meditation": "Encuentra un lugar tranquilo y cómodo para sentarte o acostarte. Cierra los ojos y toma algunas respiraciones profundas, enfocándote en la sensación del aire entrando y saliendo de tu cuerpo. Comienza a observar tus pensamientos y sentimientos sin juzgar, dejándolos venir y ir naturalmente. Puedes enfocarte en tu respiración, en un mantra o simplemente en el momento presente. Si tu mente divaga, trae suavemente tu atención de vuelta a tu punto focal. Comienza con unos minutos y gradualmente extiende tu tiempo de meditación a medida que te sientas más cómodo con la práctica."
-        }
+        },
+        "give_up": "Me rindo",
+        "timer_paused_help": "Psst... No te preocupes, hemos pausado el temporizador para que puedas leer a tu ritmo."
     },
     "page_welcome": {
         "welcome": "¡Bienvenido a ",
@@ -286,7 +289,12 @@
         "workinprogress": "PersonaPlus es todavía una app en temprano desarrollo. Muchas funciones, como esta, aún no están disponibles. ¡Pronto lo estarán! No olvides revisar cada pocas semanas si hay actualizaciones nuevas.",
         "learn_more": "Más información",
         "continue": "Continuar",
-        "fill_all_items": "Rellena correctamente todos los campos"
+        "fill_all_items": "Rellena correctamente todos los campos",
+        "none": "Ninguno",
+        "minute": "minuto",
+        "help": "¿Ayuda?",
+        "help_with_item": "Ayuda con {{item}}",
+        "got_it": "Lo pillo"
     },
     "sections": {
         "headers": {
