@@ -212,6 +212,26 @@
         "title": "Actualiza tu perfil",
         "subtitle": "La vida cambia y tú también."
     },
+
+    "about_page": {
+        "project": {
+            "preheader": "Sobre el proyecto",
+            "header": "¿Qué es PersonaPlus?",
+            "subheader": "Está claro: una app diseñada para ayudarte a darte más y a tener una mejor vida a través de ayudita y trabajo duro."
+        },
+        "creator": {
+            "preheader": "Sobre el creador",
+            "header": "¿Quién es PersonaPlus?",
+            "subheader": "PersonaPlus es una app independiente hecha por mí mismo (Zaka). Como sea, es un proyecto de código abierto, puedes contribuir a su código (¡y que tu nombre acabe aquí!)."
+        },
+        "buttons": {
+            "license": "Licencia",
+            "credits": "Créditos",
+            "privacy": "Política y Manifiesto de la Privacidad",
+            "oss": "Código Abierto de PersonaPlus"
+        },
+        "testing": "Psst... Estás ahora en la fase \"pre-app\" - ¡la más temprana de las versiones de la app! Gracias por ser parte de la versión de pruebas, significa mucho. ¡No olvides reportar cualquier fallo que encuentres!"
+    },
     "cool_messages": {
         "all_done": [
             "Te sentirás orgulloso de ti mismo, ¿no?",
