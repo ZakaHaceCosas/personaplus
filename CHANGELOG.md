@@ -35,6 +35,7 @@ END README
 - Toolkified `adjustedToday`.
 - General code quality improvements, specially within Sessions.
 - Imrpoved some comments for better code understandability.
+- Now PersonaPlus will check daily for your active objectives' due days. If you've done an objective today, and tomorrow you have to do it again, it's `wasDone` (_boolean_) value will change to `false` again so it's shown again on the app's homepage.
 
 ## 0.0.1-R5-b21
 

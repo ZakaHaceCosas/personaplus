@@ -1,9 +1,16 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// OBJECTIVE TYPE
 import { Objective } from '@/components/types/Objective';
+// INTERNALS
 import { termLog } from '@/app/DeveloperInterface';
+// FRONTEND
 import { router } from "expo-router";
 import { Platform, ToastAndroid } from 'react-native';
 import { TFunction } from 'i18next';
+// BACKEND
+import * as BackgroundFetch from 'expo-background-fetch';
+import * as TaskManager from 'expo-task-manager';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { adjustedToday } from '@/components/toolkit/today';
 
 // Función para obtener los objetivos
 const getObjectives = async (): Promise<Objective[]> => {
@@ -31,17 +38,13 @@ const markObjectiveAsDone = async (identifier: number): Promise<void> => {
             obj.identifier === identifier ? { ...obj, wasDone: true } : obj
         );
         await saveObjectives(updatedObjectives);
-        router.navigate("/")
+        router.navigate("/");
         if (Platform.OS === "android") {
-            ToastAndroid.show(
-                "Marked as done!",
-                ToastAndroid.LONG
-            )
+            ToastAndroid.show("Marked as done!", ToastAndroid.LONG);
         }
-    }
-    catch (e) {
-        const log: string = "Got an error marking objective as done! " + e
-        termLog(log, "error")
+    } catch (e) {
+        const log: string = "Got an error marking objective as done! " + e;
+        termLog(log, "error");
     }
 };
 
@@ -95,7 +98,7 @@ const getObjectiveByIdentifier = async (identifier: number): Promise<Objective |
     }
 };
 
-
+// Funcion para definir la descripción del objetivo
 const defineObjectiveDescription = (t: TFunction, objective: Objective): string => {
     let descriptionDraft: string = t('page_dashboard.objective.description', {
         duration: objective.duration,
@@ -119,6 +122,52 @@ const defineObjectiveDescription = (t: TFunction, objective: Objective): string 
     const description: string = `${descriptionDraft}\nID: ${String(objective.identifier)}.`;
 
     return description;
+}
+
+// Funcion para reiniciar diariamente los objetivos
+const resetObjectivesDaily = async (): Promise<void> => {
+    try {
+        const objectives = await getObjectives();
+        const nextDay = (adjustedToday + 1) % 7;
+
+        const updatedObjectives = objectives.map(obj => {
+            if (obj.days && obj.days[nextDay]) {
+                return { ...obj, wasDone: false };
+            }
+            return obj;
+        });
+
+        await saveObjectives(updatedObjectives);
+    } catch (e) {
+        const log: string = "Got an error resetting objectives! " + e;
+        termLog(log, "error");
+    }
+};
+
+// La registramos
+const BACKGROUND_FETCH_TASK = 'background-fetch';
+
+TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
+    try {
+        await resetObjectivesDaily();
+        return BackgroundFetch.BackgroundFetchResult.NewData;
+    } catch (e) {
+        termLog('Error executing background fetch task: ' + e, "error");
+        return BackgroundFetch.BackgroundFetchResult.Failed;
+    }
+});
+
+export async function registerBackgroundObjectivesFetchAsync() {
+    try {
+        await BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
+            minimumInterval: 60 * 15,
+            stopOnTerminate: false,
+            startOnBoot: true,
+        });
+        termLog('Background fetch task registered', "success");
+    } catch (e) {
+        termLog('Error registering background fetch task: ' + e, "error");
+    }
 }
 
 export { deleteObjective, markObjectiveAsDone, clearObjectives, fetchObjectives, getObjectiveByIdentifier, defineObjectiveDescription };

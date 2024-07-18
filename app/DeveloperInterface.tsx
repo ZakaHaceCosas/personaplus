@@ -111,7 +111,7 @@ const addLogToGlobal = async (log: Log) => {
 
 export const termLog = (
     message: string,
-    type: "log" | "warn" | "error" | "success" = "log"
+    type: "log" | "warn" | "error" | "success"
 ) => {
     console.log(message);
     const timestamp = Date.now();
