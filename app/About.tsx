@@ -88,24 +88,19 @@ export default function Home() {
                 <GapView height={20} />
                 <Section kind="About">
                     <Division
-                        preheader="About the project"
-                        header="What is PersonaPlus?"
+                        preheader={t("about_page.project.preheader")}
+                        header={t("about_page.project.header")}
                     >
                         <BetterText fontWeight="Regular" fontSize={15}>
-                            It&apos;s clear: an app designed to help you give
-                            yourself more and have a better life through help
-                            and hard work.
+                            {t("about_page.project.subheader")}
                         </BetterText>
                     </Division>
                     <Division
-                        preheader="About the creator"
-                        header="Who is PersonaPlus?"
+                        preheader={t("about_page.creator.preheader")}
+                        header={t("about_page.creator.header")}
                     >
                         <BetterText fontWeight="Regular" fontSize={15}>
-                            PersonaPlus is an independent app made by myself
-                            (Zaka). However, it is an open source project, you
-                            can contribute to it&apos;s code (and get your name
-                            here!)
+                            {t("about_page.creator.subheader")}
                         </BetterText>
                     </Division>
                 </Section>
@@ -114,13 +109,13 @@ export default function Home() {
                     style={{ flex: 1, display: "flex", flexDirection: "row" }}
                 >
                     <Button
-                        buttonText="License"
+                        buttonText={t("about_page.buttons.license")}
                         style="GOD"
                         action={() => router.navigate("/License")}
                     />
                     <GapView width={10} />
                     <Button
-                        buttonText="Credits"
+                        buttonText={t("about_page.buttons.credits")}
                         style="GOD"
                         action={() => router.navigate("/OpenSourceCredits")}
                     />
@@ -130,7 +125,7 @@ export default function Home() {
                     style={{ flex: 1, display: "flex", flexDirection: "row" }}
                 >
                     <Button
-                        buttonText="Privacy policy"
+                        buttonText={t("about_page.buttons.privacy")}
                         style="ACE"
                         action={() =>
                             Linking.openURL(
@@ -140,7 +135,7 @@ export default function Home() {
                     />
                     <GapView width={10} />
                     <Button
-                        buttonText="Open Source"
+                        buttonText={t("about_page.buttons.oss")}
                         style="ACE"
                         action={() =>
                             Linking.openURL(
@@ -156,7 +151,7 @@ export default function Home() {
                     fontSize={30}
                     textColor="#32FF80"
                 >
-                    Give yourself a plus!
+                    {t("globals.gyap!")}
                 </BetterText>
                 <GapView height={5} />
                 <BetterText
@@ -164,10 +159,7 @@ export default function Home() {
                     fontWeight="Italic"
                     fontSize={12}
                 >
-                    Psst... You&apos;re currently in the &quot;pre-app&quot;
-                    stage - the earliest early versions of the app! Thanks for
-                    being part of the testing version, it means a lot.
-                    Don&apos;t forget to report any issues you find!
+                    {t("about_page.testing")}
                 </BetterText>
             </ScrollView>
         </View>
