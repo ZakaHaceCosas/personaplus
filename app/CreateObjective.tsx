@@ -215,12 +215,29 @@ export default function Form() {
         };
 
         try {
-            const storedObjectives: string | null =
+            // eslint-disable-next-line
+            let storedObjectives: string | null =
                 await AsyncStorage.getItem("objectives");
             let objs: Objective[] = [];
 
-            if (storedObjectives !== null) {
-                objs = JSON.parse(storedObjectives);
+            if (
+                storedObjectives === null ||
+                storedObjectives === "" ||
+                storedObjectives === "[]" ||
+                storedObjectives === "{}"
+            ) {
+                objs = [];
+            } else {
+                try {
+                    objs = JSON.parse(storedObjectives);
+                    if (!Array.isArray(objs)) {
+                        throw new Error("Stored objectives is not an array");
+                    }
+                } catch (e) {
+                    throw new Error(
+                        "Error parsing stored objectives JSON: " + e
+                    );
+                }
             }
 
             const generateObjectiveId = (): number => {
@@ -982,9 +999,7 @@ export default function Form() {
                         ) : (
                             <Button
                                 style="HMM"
-                                buttonText={t(
-                                    "subpage_create_active_objective.buttons.fill_all_items"
-                                )}
+                                buttonText={t("globals.fill_all_items")}
                                 action={() => {}}
                             />
                         )}

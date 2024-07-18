@@ -297,7 +297,7 @@ export default function Sessions() {
                         fontWeight="Bold"
                         textColor="#DDDDDD"
                     >
-                        IN A SESSION!
+                        {t("page_sessions.in_a_session")}
                     </BetterText>
                 </View>
                 <GapView height={20} />

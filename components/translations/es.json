@@ -123,12 +123,12 @@
             }
         },
         "buttons": {
-            "create": "Crear objetivo",
-            "fill_all_items": "Rellena todos los campos"
+            "create": "Crear objetivo"
         },
         "required": "Necesario: Duración, Ejercicio, y al menos un día de la semana. Algunos ejercicios específicos tendrán requisitos extra: por ejemplo \"Levantamiento de peso\" requiere que especifiques cuanto peso vas a levantar."
     },
     "page_sessions": {
+        "in_a_session": "¡EN UNA SESIÓN!",
         "help_section": {
             "Push Up": "Para hacer flexiones normales, comienza en posición de plancha con las manos ligeramente más anchas que los hombros. Baja tu cuerpo doblando los codos hasta que tu pecho casi toque el suelo, luego empuja hacia arriba hasta la posición inicial. Mantén tu core activo para mayor estabilidad. Empieza con un número cómodo de repeticiones y aumenta gradualmente a medida que ganas fuerza.\n\nPara hacer flexiones con una sola mano, comienza en posición de plancha con una mano centrada debajo del hombro y la otra detrás de la espalda. Baja tu cuerpo doblando el codo hasta que tu pecho casi toque el suelo, luego empuja hacia arriba. Mantén tu core firme y el equilibrio durante todo el movimiento. Empieza con unas pocas repeticiones en cada lado y progresa conforme mejora tu fuerza.",
             "Lifting": "Distribuye equitativamente el peso entre ambas manos. Por ejemplo, si tu objetivo es levantar 6 kg, pon 3 kg en cada peso (ya que levantarás dos pesos, uno para cada mano).\n\nSin soltarlo, extiende tu brazo verticalmente y comienza a moverlo hacia arriba y hacia abajo, haciendo que tu codo vaya desde un ángulo de 90º a 45º y luego de nuevo a 90º (esto cuenta como una repetición).\n\nContinúa hasta completar todas las repeticiones especificadas (o hasta que se acabe el tiempo).",
@@ -136,6 +136,74 @@
             "Walking": "Usa zapatos cómodos y ropa adecuada para el clima. Comienza caminando a un ritmo natural, permitiendo que tus brazos se balanceen naturalmente a los lados. Concéntrate en mantener una buena postura, con la espalda recta y la cabeza erguida. Puedes variar tu velocidad, incorporando intervalos de caminata rápida para aumentar tu frecuencia cardíaca. Caminar se puede hacer casi en cualquier lugar, así que elige una ruta que disfrutes. Apunta a caminar al menos 30 minutos por sesión, y aumenta gradualmente la duración e intensidad a medida que aumenta tu resistencia.",
             "Meditation": "Encuentra un lugar tranquilo y cómodo para sentarte o acostarte. Cierra los ojos y toma algunas respiraciones profundas, enfocándote en la sensación del aire entrando y saliendo de tu cuerpo. Comienza a observar tus pensamientos y sentimientos sin juzgar, dejándolos venir y ir naturalmente. Puedes enfocarte en tu respiración, en un mantra o simplemente en el momento presente. Si tu mente divaga, trae suavemente tu atención de vuelta a tu punto focal. Comienza con unos minutos y gradualmente extiende tu tiempo de meditación a medida que te sientas más cómodo con la práctica."
         }
+    },
+    "page_welcome": {
+        "welcome": "¡Bienvenido a ",
+        "subtitle": "¡Nos enorgullece ver que quieres darte un plus!",
+        "buttons": {
+            "start": "¡Comencemos!"
+        },
+        "fragment_one": {
+            "title": "Háblanos de ti",
+            "subtitle": "Solo pedios los datos que la app necesita para funcionar. No enviamos información a nadie fuera de este dispositivo, nunca.",
+            "questions": {
+                "username": "Nombre de usuario",
+                "height": "Altura (centímetros, sin decimales)",
+                "weight": "Peso (kilogramos, sin decimales)",
+                "age": "Edad (años)",
+                "gender": {
+                    "male": "Hombre",
+                    "female": "Mujer"
+                }
+            }
+        },
+        "fragment_two": {
+            "title": "¿Cuál es tu meta principal?",
+            "subtitle": "Sabemos que quieres mejorarte a ti mismo, pero, ¿cuál es tu prioridad clave?",
+            "subsubtitle": "Elige sólo una opción. Tranqui, siempre puedes cambiarla desde tu perfil.",
+            "options": {
+                "exercising": "El ejercicio: ¡necesito empezar a moverme de una vez!",
+                "eating": "La dieta: tengo que controlar un poco mejor lo que como.",
+                "wellbeing": "El bienestar: quiero cuidar mi salud mental y bienestar digital.",
+                "noprior": "¡Todo es una prioridad para mí!",
+                "nopriorwithassist": "No sé / No me decido"
+            }
+        },
+        "fragment_three": {
+            "questions": {
+                "sleeping": {
+                    "asks": "¿Cuánto duermes cada noche? No debe ser exacto",
+                    "three_or_less": "3 horas o menos",
+                    "four": "4 horas",
+                    "five": "5 horas",
+                    "six": "6 horas",
+                    "seven": "7 horas",
+                    "eight": "8 horas",
+                    "nine": "9 horas",
+                    "ten": "10 horas",
+                    "more_than_ten": "Más de 10 horas"
+                },
+                "activness": {
+                    "asks": "¿Qué tan activo eres? Esto quiere decir, ¿con que frecuencia haces ejercicio u otras actividades físicas? No debe ser exacto",
+                    "poor": "Pobremente activo (casi no ejercito)",
+                    "small": "Un poco activo (1 o 2 días semanales de ejercicio)",
+                    "normal": "Activo (de 3 a 5 días semanales de ejercicio)",
+                    "intense": "Intensamente activo (más de 5 días semanales de ejercicio, y/o ejercicios intensos)",
+                    "super": "Muy muy activo (ejercicio diario o casi diario, a veces más de una vec al día, y/o ejercicios muy intensos)"
+                },
+                "push_ups": {
+                    "asks": "¿Alguna vez has hecho flexiones? ¿Cuánto tardas de media en hacer una?",
+                    "one_sec": "Un segundo (increible...)",
+                    "two_sec": "Unos 2-3 segundos",
+                    "three_sec": "Unos 3-5 segundos",
+                    "five_sec": "Unos 5-7 segundos",
+                    "seven_sec": "Unos 7-10 segundos",
+                    "ten_sec": "Unos than 10 segundos",
+                    "doesnt_know": "No sé / Nunca hago flexiones"
+                }
+            }
+        },
+        "you_aint_that_old": "Tú NO tienes {{age}} años"
     },
     "cool_messages": {
         "all_done": [
@@ -206,9 +274,19 @@
             "Walking": "Caminar",
             "Meditation": "Meditación"
         },
+        "supported_active_objectives_sustantivized": {
+            "Push Up": "Haciendo flexiones",
+            "Lifting": "Levantando pesas",
+            "Running": "Corriendo",
+            "Walking": "Caminando",
+            "Meditation": "Meditando"
+        },
         "are_you_sure": "¿Estás seguro?",
         "nevermind": "Olvídalo",
-        "workinprogress": "PersonaPlus es todavía una app en temprano desarrollo. Muchas funciones, como esta, aún no están disponibles. ¡Pronto lo estarán! No olvides revisar cada pocas semanas si hay actualizaciones nuevas."
+        "workinprogress": "PersonaPlus es todavía una app en temprano desarrollo. Muchas funciones, como esta, aún no están disponibles. ¡Pronto lo estarán! No olvides revisar cada pocas semanas si hay actualizaciones nuevas.",
+        "learn_more": "Más información",
+        "continue": "Continuar",
+        "fill_all_items": "Rellena correctamente todos los campos"
     },
     "sections": {
         "headers": {

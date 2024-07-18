@@ -11,6 +11,8 @@ import {
     View,
     TextInput,
     Linking,
+    Platform,
+    ToastAndroid,
 } from "react-native";
 import Swap from "@/components/Swap";
 import Button from "@/components/Buttons";
@@ -20,6 +22,7 @@ import { Picker as Select } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { termLog } from "./DeveloperInterface";
 import { useTranslation } from "react-i18next";
+import { changeLanguage } from "i18next";
 
 // Definimos los estilos
 const styles = StyleSheet.create({
@@ -28,8 +31,6 @@ const styles = StyleSheet.create({
         height: Dimensions.get("window").height,
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-start",
-        justifyContent: "center",
         padding: 40,
     },
     flexbtns: {
@@ -37,6 +38,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         gap: 15,
         width: "calc(100% - 5px)" as DimensionValue,
+        alignItems: "center",
+        justifyContent: "center",
     },
     picker: {
         padding: 12,
@@ -52,7 +55,7 @@ const styles = StyleSheet.create({
 // Definimos la función
 export default function WelcomePage() {
     const { t } = useTranslation();
-    const [language, setLanguage] = React.useState<"en" | "es">("en");
+    const [language, setLanguage] = React.useState<"en" | "es" | string>("en");
     const [currentTab, setTab] = React.useState(1);
     const [formData, setFormData] = React.useState({
         username: "",
@@ -65,16 +68,25 @@ export default function WelcomePage() {
         setGenderValue(value);
     };
     const genderoptions = [
-        { value: "male", label: "Male", default: true },
-        { value: "female", label: "Female", default: false },
+        {
+            value: "male",
+            label: t("page_welcome.fragment_one.questions.gender.male"),
+            default: true,
+        },
+        {
+            value: "female",
+            label: t("page_welcome.fragment_one.questions.gender.female"),
+            default: false,
+        },
     ];
+    // this below is a joke (keep it for production please, at least until i see it once)
     const progenderoptions = [
         { value: "male", label: "Gigachad", default: true },
         { value: "female", label: "Transformer", default: false }, // lol.
         { value: "female", label: "Non-existant being", default: false },
     ];
     const inputRefs = React.useRef<TextInput[]>([]);
-    const easteregg: number = Math.floor(Math.random() * 69000) + 1;
+    const easteregg: number = Math.floor(Math.random() * 690) + 1;
     const [focuspointValue, setFocuspointValue] = React.useState<string | null>(
         null
     );
@@ -89,18 +101,17 @@ export default function WelcomePage() {
         },
         {
             value: "exercising",
-            label: "My focus is exercising, I need to start moving my body ASAP!",
+            label: t("page_welcome.fragment_two.options.exercising"),
             default: false,
         },
         {
             value: "eating",
-            label: "My focus is my diet, I need to take control over what I eat.",
+            label: t("page_welcome.fragment_two.options.eating"),
             default: false,
         },
         {
             value: "wellbeing",
-            label: "My focus is my digital welfare & mental health.",
-            // That addiction to my phone has to stop, somehow.  --- text too large, but i want to somehow get it in there...
+            label: t("page_welcome.fragment_two.options.wellbeing"),
             default: false,
         },
         // both options here equal no priority
@@ -109,55 +120,66 @@ export default function WelcomePage() {
         // if user says he has everything as a priority, no focus will be used and he'll be free to do whatever by himself
         {
             value: "noprior",
-            label: "Everything is a top priority for me!",
+            label: t("page_welcome.fragment_two.options.noprior"),
             default: false,
         },
         {
             value: "nopriorwithassist",
-            label: "Don't know / Can't decide on one",
+            label: t("page_welcome.fragment_two.options.nopriorwithassist"),
             default: false,
         },
     ];
-    // ESLint prefers constants as this is "never reassigned", but since the form changes I do believe this DOES get reassigned, so I disable ESLint here.
-    // eslint-disable-next-line
+
     let isFirstStepDone =
         !genderValue ||
-        Number(formData.age) > 125 ||
-        genderValue.trim() === "" ||
-        !formData.age ||
+        formData.age === null ||
+        isNaN(Number(formData.age)) ||
+        Number(formData.age) < 5 ||
+        Number(formData.age) > 99 ||
+        formData.weight === null ||
+        isNaN(Number(formData.weight)) ||
+        Number(formData.weight) < 15 ||
+        Number(formData.weight) > 300 ||
+        formData.height === null ||
+        isNaN(Number(formData.height)) ||
+        Number(formData.height) < 45 ||
+        Number(formData.height) > 260 ||
         !formData.username ||
         formData.username.trim() === "" ||
-        !formData.weight ||
-        !formData.height;
+        formData.username.trim().length < 3 ||
+        formData.username.trim().length > 40;
+
+    isFirstStepDone = !isFirstStepDone;
+
     const [sleep, setSleep] = React.useState("");
     const sleeps = [
-        "3 hours or less",
-        "4 hours",
-        "5 hours",
-        "6 hours",
-        "7 hours",
-        "8 hours",
-        "9 hours",
-        "10 hours",
-        "More than 10 hours",
+        t("page_welcome.fragment_three.questions.sleeping.three_or_less"),
+        t("page_welcome.fragment_three.questions.sleeping.four"),
+        t("page_welcome.fragment_three.questions.sleeping.five"),
+        t("page_welcome.fragment_three.questions.sleeping.six"),
+        t("page_welcome.fragment_three.questions.sleeping.seven"),
+        t("page_welcome.fragment_three.questions.sleeping.eight"),
+        t("page_welcome.fragment_three.questions.sleeping.nine"),
+        t("page_welcome.fragment_three.questions.sleeping.ten"),
+        t("page_welcome.fragment_three.questions.sleeping.more_than_ten"),
     ];
     const [howActiveTheUserIs, setHowActiveTheUserIs] = React.useState("");
     const activnessOptions = [
-        "Poorly active (almost no exercise)",
-        "A bit active (1 or 2 days of light exercise)",
-        "Active (3 to 5 days of exercise)",
-        "Intensely active (more than 5 days of exercise, and/or intense exercises)",
-        "Very active (exercise every day, even more than once a day, and/or pretty intense exercises)",
+        t("page_welcome.fragment_three.questions.activness.poor"),
+        t("page_welcome.fragment_three.questions.activness.small"),
+        t("page_welcome.fragment_three.questions.activness.normal"),
+        t("page_welcome.fragment_three.questions.activness.intense"),
+        t("page_welcome.fragment_three.questions.activness.super"),
     ];
     const [timeToPushUp, setTimeToPushUp] = React.useState("");
     const pushUpOptions = [
-        "One second (incredible)...",
-        "About 2-3 seconds",
-        "About 3-5 seconds",
-        "About 5-7 seconds",
-        "About 7-10 seconds",
-        "More than 10 second",
-        "I don't know / I never do push ups",
+        t("page_welcome.fragment_three.questions.push_ups.one_sec"),
+        t("page_welcome.fragment_three.questions.push_ups.two_sec"),
+        t("page_welcome.fragment_three.questions.push_ups.three_sec"),
+        t("page_welcome.fragment_three.questions.push_ups.five_sec"),
+        t("page_welcome.fragment_three.questions.push_ups.seven_sec"),
+        t("page_welcome.fragment_three.questions.push_ups.ten_sec"),
+        t("page_welcome.fragment_three.questions.push_ups.doesnt_know"),
     ];
     const focusNextField = (index: number): void => {
         if (inputRefs.current[index + 1]) {
@@ -212,6 +234,24 @@ export default function WelcomePage() {
         }
     };
 
+    const handleChangeLanguaage = async (targetLang: "en" | "es") => {
+        try {
+            await AsyncStorage.setItem("language", targetLang);
+            changeLanguage(targetLang);
+            setLanguage(targetLang);
+        } catch (e) {
+            termLog("Error changing language! " + e, "error");
+            if (Platform.OS === "android") {
+                ToastAndroid.show(
+                    t("page_profile.specific_errors.lang_react_error") +
+                        " - " +
+                        e,
+                    ToastAndroid.LONG
+                );
+            }
+        }
+    };
+
     const handleChange = (name: string, value: string) => {
         setFormData(prevData => ({
             ...prevData,
@@ -220,7 +260,13 @@ export default function WelcomePage() {
     };
 
     return (
-        <ScrollView style={styles.mainview}>
+        <ScrollView
+            style={styles.mainview}
+            contentContainerStyle={{
+                alignItems: "center",
+                justifyContent: "center",
+            }}
+        >
             {currentTab === 1 && (
                 <React.Fragment>
                     <BetterText
@@ -228,7 +274,7 @@ export default function WelcomePage() {
                         fontWeight="Bold"
                         fontSize={40}
                     >
-                        Welcome to{" "}
+                        {t("page_welcome.welcome")}
                         <BetterText
                             textAlign="normal"
                             fontWeight="ExtraBold"
@@ -245,14 +291,27 @@ export default function WelcomePage() {
                         fontWeight="Regular"
                         fontSize={20}
                     >
-                        Were proud to see you want to give yourself a plus.
+                        {t("page_welcome.subtitle")}
                     </BetterText>
                     <GapView height={20} />
                     <View style={styles.flexbtns}>
                         <Button
+                            buttonText={
+                                language === "en"
+                                    ? "Change to Spanish"
+                                    : "Change to English"
+                            }
+                            style="ACE"
+                            action={() =>
+                                language === "es"
+                                    ? handleChangeLanguaage("en")
+                                    : handleChangeLanguaage("es")
+                            }
+                        />
+                        <Button
                             style="GOD"
                             action={gonext}
-                            buttonText="Let's get started!"
+                            buttonText={t("page_welcome.buttons.start")}
                             width="fill"
                             height={500}
                         />
@@ -263,20 +322,19 @@ export default function WelcomePage() {
             {currentTab === 2 && (
                 <React.Fragment>
                     <BetterText
-                        textAlign="normal"
+                        textAlign="center"
                         fontWeight="Bold"
                         fontSize={40}
                     >
-                        Tell us about yourself
+                        {t("page_welcome.fragment_one.title")}
                     </BetterText>
                     <GapView height={10} />
                     <BetterText
-                        textAlign="normal"
+                        textAlign="center"
                         fontWeight="Regular"
                         fontSize={20}
                     >
-                        We only ask for the data we need for the app to work. No
-                        data is sent outside of this device, ever.{" "}
+                        {t("page_welcome.fragment_one.subtitle")}{" "}
                         <BetterText
                             url={true}
                             textAlign="normal"
@@ -289,13 +347,15 @@ export default function WelcomePage() {
                                 )
                             }
                         >
-                            Learn more
+                            {t("globals.learn_more")}
                         </BetterText>
                         .
                     </BetterText>
                     <GapView height={20} />
                     <TextInput
-                        placeholder="Username (doesn't have to be your real name)"
+                        placeholder={t(
+                            "page_welcome.fragment_one.questions.username"
+                        )}
                         value={formData.username}
                         readOnly={false}
                         placeholderTextColor="#949698"
@@ -327,7 +387,9 @@ export default function WelcomePage() {
                     />
                     <GapView height={15} />
                     <TextInput
-                        placeholder="Height (cm) (don't add decimals)"
+                        placeholder={t(
+                            "page_welcome.fragment_one.questions.height"
+                        )}
                         value={formData.height}
                         readOnly={false}
                         placeholderTextColor="#949698"
@@ -360,7 +422,9 @@ export default function WelcomePage() {
                     />
                     <GapView height={15} />
                     <TextInput
-                        placeholder="Weight (kg) (don't add decimals)"
+                        placeholder={t(
+                            "page_welcome.fragment_one.questions.weight"
+                        )}
                         value={formData.weight}
                         readOnly={false}
                         placeholderTextColor="#949698"
@@ -393,7 +457,9 @@ export default function WelcomePage() {
                     />
                     <GapView height={15} />
                     <TextInput
-                        placeholder="Age (years)"
+                        placeholder={t(
+                            "page_welcome.fragment_one.questions.age"
+                        )}
                         value={formData.age}
                         readOnly={false}
                         placeholderTextColor="#949698"
@@ -453,22 +519,24 @@ export default function WelcomePage() {
                             buttonText={t("globals.go_back")}
                             width="fill"
                         />
-                        {!isFirstStepDone && (
+                        {isFirstStepDone && (
                             <Button
                                 style="ACE"
                                 action={gonext}
-                                buttonText={"Continue"}
+                                buttonText={t("globals.continue")}
                                 width="fill"
                             />
                         )}
-                        {isFirstStepDone && (
+                        {!isFirstStepDone && (
                             <Button
                                 style="HMM"
                                 action={() => {}}
                                 buttonText={
-                                    !(Number(formData.age) > 125)
-                                        ? "Fill all the required fields"
-                                        : `You are NOT ${formData.age} years old.`
+                                    !(Number(formData.age) > 99)
+                                        ? t("globals.fill_all_items")
+                                        : t("page_welcome.you_aint_that_old", {
+                                              age: formData.age,
+                                          })
                                 }
                                 width="fill"
                             />
@@ -484,7 +552,7 @@ export default function WelcomePage() {
                         fontWeight="Bold"
                         fontSize={40}
                     >
-                        What is your main objective?
+                        {t("page_welcome.fragment_two.title")}
                     </BetterText>
                     <GapView height={10} />
                     <BetterText
@@ -492,8 +560,7 @@ export default function WelcomePage() {
                         fontWeight="Regular"
                         fontSize={20}
                     >
-                        We know you want to improve yourself, but, what is your
-                        key focus point?
+                        {t("page_welcome.fragment_two.subtitle")}
                     </BetterText>
                     <GapView height={10} />
                     <BetterText
@@ -502,7 +569,7 @@ export default function WelcomePage() {
                         fontSize={10}
                         textColor="#C8C8C8"
                     >
-                        Choose only one option. You can change it any time.
+                        {t("page_welcome.fragment_two.subsubtitle")}
                     </BetterText>
                     <GapView height={20} />
                     <Swap
@@ -527,7 +594,7 @@ export default function WelcomePage() {
                             <Button
                                 style="ACE"
                                 action={gonext}
-                                buttonText="Continue"
+                                buttonText={t("globals.continue")}
                                 width="fill"
                             />
                         )}
@@ -536,7 +603,7 @@ export default function WelcomePage() {
                             <Button
                                 style="HMM"
                                 action={() => {}}
-                                buttonText="Fill all the required fileds"
+                                buttonText={t("globals.fill_all_items")}
                                 width="fill"
                             />
                         )}
@@ -568,8 +635,9 @@ export default function WelcomePage() {
                         fontWeight="Regular"
                         fontSize={15}
                     >
-                        How much do you sleep each night? Doesn&apos;t need to
-                        be exact.
+                        {t(
+                            "page_welcome.fragment_three.questions.sleeping.asks"
+                        )}
                     </BetterText>
                     <GapView height={10} />
                     <Select
@@ -597,9 +665,9 @@ export default function WelcomePage() {
                         fontWeight="Regular"
                         fontSize={15}
                     >
-                        How active are you? This means, with what frequency do
-                        you perform exercise or other phisical activities?
-                        Doesn&apos;t need to be exact.
+                        {t(
+                            "page_welcome.fragment_three.questions.activness.asks"
+                        )}
                     </BetterText>
                     <GapView height={10} />
                     <Select
@@ -629,7 +697,9 @@ export default function WelcomePage() {
                         fontWeight="Regular"
                         fontSize={15}
                     >
-                        Have you ever done a push-up? How long does it take you?
+                        {t(
+                            "page_welcome.fragment_three.questions.push_ups.asks"
+                        )}
                     </BetterText>
                     <GapView height={10} />
                     <Select
@@ -652,37 +722,6 @@ export default function WelcomePage() {
                         ))}
                     </Select>
                     <GapView height={15} />
-                    <BetterText
-                        textAlign="normal"
-                        fontWeight="Regular"
-                        fontSize={15}
-                    >
-                        What language would you prefer to use?
-                    </BetterText>
-                    <GapView height={10} />
-                    <Select
-                        selectedValue={language}
-                        onValueChange={itemValue => setLanguage(itemValue)}
-                        style={styles.picker}
-                        mode="dropdown"
-                    >
-                        <Select.Item
-                            label={t("globals.select_placeholder")}
-                            value=""
-                            color="#999"
-                        />
-                        <Select.Item
-                            key={"spanish"}
-                            label={"Spanish"}
-                            value={"es"}
-                        />
-                        <Select.Item
-                            key={"english"}
-                            label={"English"}
-                            value={"en"}
-                        />
-                    </Select>
-                    <GapView height={15} />
                     <View style={styles.flexbtns}>
                         <Button
                             style="DEFAULT"
@@ -699,14 +738,14 @@ export default function WelcomePage() {
                             <Button
                                 style="HMM"
                                 action={() => {}}
-                                buttonText="Fill all the required fileds"
+                                buttonText={t("globals.fill_all_items")}
                                 width="fill"
                             />
                         ) : (
                             <Button
                                 style="ACE"
                                 action={submit}
-                                buttonText="Finish!"
+                                buttonText={t("globals.lets_go")}
                                 width="fill"
                             />
                         )}
