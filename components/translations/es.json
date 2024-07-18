@@ -208,6 +208,10 @@
         },
         "you_aint_that_old": "Tú NO tienes {{age}} años, colega"
     },
+    "subpage_edit_profile": {
+        "title": "Actualiza tu perfil",
+        "subtitle": "La vida cambia y tú también."
+    },
     "cool_messages": {
         "all_done": [
             "Te sentirás orgulloso de ti mismo, ¿no?",
@@ -295,7 +299,8 @@
         "minute": "minuto",
         "help": "¿Ayuda?",
         "help_with_item": "Ayuda con {{item}}",
-        "got_it": "Lo pillo"
+        "got_it": "Lo pillo",
+        "save": "¡Guárdalo!"
     },
     "sections": {
         "headers": {

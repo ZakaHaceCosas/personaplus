@@ -14,6 +14,7 @@ import { termLog } from "./DeveloperInterface";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/components/Buttons";
 import { useTranslation } from "react-i18next";
+import { validateBasicData } from "@/components/toolkit/userData";
 
 // Creamos los estilos
 const styles = StyleSheet.create({
@@ -51,8 +52,16 @@ export default function UpdateProfile() {
         setGenderValue(value);
     };
     const genderoptions = [
-        { value: "male", label: "Male", default: true },
-        { value: "female", label: "Female", default: false },
+        {
+            value: "male",
+            label: t("page_welcome.fragment_one.questions.gender.male"),
+            default: true,
+        },
+        {
+            value: "female",
+            label: t("page_welcome.fragment_one.questions.gender.female"),
+            default: false,
+        },
     ];
     const inputRefs = React.useRef<TextInput[]>([]);
 
@@ -69,16 +78,13 @@ export default function UpdateProfile() {
         }));
     };
 
-    // eslint-disable-next-line
-    let isFirstStepDone =
-        !genderValue ||
-        Number(formData.age) > 125 ||
-        genderValue.trim() === "" ||
-        !formData.age ||
-        !formData.username ||
-        formData.username.trim() === "" ||
-        !formData.weight ||
-        !formData.height;
+    const isFirstStepDone = validateBasicData(
+        genderValue,
+        formData.age,
+        formData.weight,
+        formData.height,
+        formData.username
+    );
 
     const submit = async () => {
         if (
@@ -116,18 +122,20 @@ export default function UpdateProfile() {
                 </BetterText>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
-                    Update your profile
+                    {t("subpage_edit_profile.title")}
                 </BetterText>
                 <BetterText
                     textAlign="normal"
                     fontWeight="Regular"
                     fontSize={20}
                 >
-                    Life changes and so do you.
+                    {t("subpage_edit_profile.subtitle")}
                 </BetterText>
                 <GapView height={15} />
                 <TextInput
-                    placeholder="Username (doesn't have to be your real name)"
+                    placeholder={t(
+                        "page_welcome.fragment_one.questions.username"
+                    )}
                     value={formData.username}
                     readOnly={false}
                     placeholderTextColor="#949698"
@@ -159,7 +167,9 @@ export default function UpdateProfile() {
                 />
                 <GapView height={15} />
                 <TextInput
-                    placeholder="Height (cm) (don't add decimals)"
+                    placeholder={t(
+                        "page_welcome.fragment_one.questions.height"
+                    )}
                     value={formData.height}
                     readOnly={false}
                     placeholderTextColor="#949698"
@@ -192,7 +202,9 @@ export default function UpdateProfile() {
                 />
                 <GapView height={15} />
                 <TextInput
-                    placeholder="Weight (kg) (don't add decimals)"
+                    placeholder={t(
+                        "page_welcome.fragment_one.questions.weight"
+                    )}
                     value={formData.weight}
                     readOnly={false}
                     placeholderTextColor="#949698"
@@ -225,7 +237,7 @@ export default function UpdateProfile() {
                 />
                 <GapView height={15} />
                 <TextInput
-                    placeholder="Age (years)"
+                    placeholder={t("page_welcome.fragment_one.questions.age")}
                     value={formData.age}
                     readOnly={false}
                     placeholderTextColor="#949698"
@@ -274,22 +286,24 @@ export default function UpdateProfile() {
                         width="fill"
                     />
                     <GapView width={15} />
-                    {!isFirstStepDone && (
+                    {isFirstStepDone && (
                         <Button
                             style="ACE"
                             action={submit}
-                            buttonText="Save!"
+                            buttonText={t("globals.save")}
                             width="fill"
                         />
                     )}
-                    {isFirstStepDone && (
+                    {!isFirstStepDone && (
                         <Button
                             style="HMM"
                             action={() => {}}
                             buttonText={
-                                !(Number(formData.age) > 125)
-                                    ? "Fill all the required fields"
-                                    : `You are NOT ${formData.age} years old.`
+                                !(Number(formData.age) > 99)
+                                    ? t("globals.fill_all_items")
+                                    : t("page_welcome.you_aint_that_old", {
+                                          age: formData.age,
+                                      })
                             }
                             width="fill"
                         />

@@ -23,6 +23,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { termLog } from "./DeveloperInterface";
 import { useTranslation } from "react-i18next";
 import { changeLanguage } from "i18next";
+import { validateBasicData } from "@/components/toolkit/userData";
 
 // Definimos los estilos
 const styles = StyleSheet.create({
@@ -130,26 +131,13 @@ export default function WelcomePage() {
         },
     ];
 
-    let isFirstStepDone =
-        !genderValue ||
-        formData.age === null ||
-        isNaN(Number(formData.age)) ||
-        Number(formData.age) < 5 ||
-        Number(formData.age) > 99 ||
-        formData.weight === null ||
-        isNaN(Number(formData.weight)) ||
-        Number(formData.weight) < 15 ||
-        Number(formData.weight) > 300 ||
-        formData.height === null ||
-        isNaN(Number(formData.height)) ||
-        Number(formData.height) < 45 ||
-        Number(formData.height) > 260 ||
-        !formData.username ||
-        formData.username.trim() === "" ||
-        formData.username.trim().length < 3 ||
-        formData.username.trim().length > 40;
-
-    isFirstStepDone = !isFirstStepDone;
+    const isFirstStepDone = validateBasicData(
+        genderValue,
+        formData.age,
+        formData.weight,
+        formData.height,
+        formData.username
+    );
 
     const [sleep, setSleep] = React.useState("");
     const sleeps = [

@@ -209,6 +209,10 @@
         },
         "you_aint_that_old": "You AIN'T {{age}} years old, bud"
     },
+    "subpage_edit_profile": {
+        "title": "Update your profile",
+        "subtitle": "Life changes and so do you."
+    },
     "cool_messages": {
         "all_done": [
             "Feel proud of yourself, don't you?",
@@ -296,7 +300,8 @@
         "minute": "minute",
         "help": "Help?",
         "help_with_item": "Help with {{item}}",
-        "got_it": "Got it"
+        "got_it": "Got it",
+        "save": "Save it!"
     },
     "sections": {
         "headers": {
