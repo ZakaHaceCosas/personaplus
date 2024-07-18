@@ -129,6 +129,7 @@
         "required": "Required: Duration, Exercise, and at least one day of the week. Specific exercises may have their own extra required fields: for example \"Lifting\" requires you to specify how much weight you'll be lifting."
     },
     "page_sessions": {
+        "in_a_session": "IN A SESSION!",
         "help_section": {
             "Push Up": "To do a regular push-up, begin in a plank position with your hands slightly wider than shoulder-width apart. Lower your body by bending your elbows until your chest nearly touches the floor, then push back up to the starting position. Keep your core engaged throughout for stability. Start with a comfortable number of repetitions and gradually increase as you build strength.\n\nTo do a one handed push-up, begin in a plank position with one hand centered beneath your shoulder and the other behind your back. Lower your body by bending your elbow until your chest nearly touches the floor, then push back up. Keep your core tight and maintain balance throughout the movement. Start with a few reps on each side and progress as your strength improves.",
             "Lifting": "Distribute evenly the weights between both hands. For example, if your objective is to lift 6kg, put 3kg to each weight (as you'll lift two weights, one for each hand).\n\nWithout dropping it, extend your arm vertically, and start moving it up and down, making your elbow go from a 90º angle to a 45º angle and then again to a 90º one (that would count as one lift).\n\nKeep going until you do all the lifts specified (or the timer runs out)!",
@@ -205,6 +206,13 @@
             "Running": "Running",
             "Walking": "Walking",
             "Meditation": "Meditation"
+        },
+        "supported_active_objectives_sustantivized": {
+            "Push Up": "Doing push-ups",
+            "Lifting": "Lifting weight",
+            "Running": "Running",
+            "Walking": "Walking",
+            "Meditation": "Meditating"
         },
         "are_you_sure": "Are you sure?",
         "nevermind": "Nevermind",
