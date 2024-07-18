@@ -125,8 +125,7 @@ export default function OpenSourceCredits() {
                 </BetterText>
                 <GapView height={20} />
                 <BetterText fontSize={30} fontWeight="SemiBold">
-                    All this open source software helps PersonaPlus be as
-                    awesome it is!
+                    {t("open_source_credits")}
                 </BetterText>
                 <GapView height={20} />
                 {libraries.map((library, index) => (
