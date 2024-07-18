@@ -1,7 +1,7 @@
 // index.tsx
 // Welcome to PersonaPlus. Give yourself a plus!
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     ScrollView,
@@ -13,6 +13,7 @@ import { router, usePathname } from "expo-router";
 import {
     markObjectiveAsDone,
     fetchObjectives,
+    registerBackgroundObjectivesFetchAsync,
 } from "@/components/toolkit/objectives";
 import BetterText from "@/components/BetterText";
 import Section from "@/components/section/Section";
@@ -29,6 +30,8 @@ import {
     cancelScheduledNotificationAsync,
 } from "expo-notifications";
 import { adjustedToday } from "@/components/toolkit/today";
+import * as BackgroundFetch from "expo-background-fetch";
+import * as TaskManager from "expo-task-manager";
 
 // TypeScript, supongo
 import { Objective } from "@/components/types/Objective";
@@ -130,6 +133,60 @@ export default function Home() {
     const [objectives, setObjectives] = React.useState<{
         [key: string]: Objective;
     } | null>(null);
+    const [isRegistered, setIsRegistered] = useState(false);
+    const [status, setStatus] =
+        useState<BackgroundFetch.BackgroundFetchStatus | null>(null);
+
+    const checkStatusAsync = async () => {
+        try {
+            const status = await BackgroundFetch.getStatusAsync();
+            const isRegistered =
+                await TaskManager.isTaskRegisteredAsync("background-fetch");
+            setStatus(status);
+            setIsRegistered(isRegistered);
+        } catch (error) {
+            console.error("Error checking status:", error);
+            termLog(
+                "Error checking background fetch status: " + error,
+                "error"
+            );
+        }
+    };
+
+    useEffect(() => {
+        const verifyStatusAsync = async () => {
+            try {
+                const isRegistered =
+                    await TaskManager.isTaskRegisteredAsync("background-fetch");
+                if (!isRegistered) {
+                    await registerBackgroundObjectivesFetchAsync();
+                }
+                termLog(
+                    "Daily objective fetching seems to be set up!",
+                    "success"
+                );
+            } catch (error) {
+                console.error(
+                    "Error verifying or registering background fetch:",
+                    error
+                );
+                termLog(
+                    "Error verifying or registering background fetch: " + error,
+                    "error"
+                );
+            } finally {
+                checkStatusAsync();
+            }
+        };
+
+        verifyStatusAsync();
+    }, []);
+
+    useEffect(() => {
+        termLog("isRegistered status at index: " + isRegistered, "log");
+        termLog("status status at index: " + status, "log");
+    }, [status, isRegistered]);
+
     const { t } = useTranslation();
 
     React.useEffect(() => {
