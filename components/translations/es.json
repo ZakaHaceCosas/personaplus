@@ -232,6 +232,11 @@
         },
         "testing": "Psst... Estás ahora en la fase \"pre-app\" - ¡la más temprana de las versiones de la app! Gracias por ser parte de la versión de pruebas, significa mucho. ¡No olvides reportar cualquier fallo que encuentres!"
     },
+    "subpage_legal_stuff": {
+        "title": "PersonaPlus está licenciada bajo la \"General Public License 3.0\"",
+        "gpl_small": "Este programa es software libre: puedes redistribuirlo y/o modificarlo bajo los términos de la Licencia Pública General de GNU, tal como ha sido publicada por la Free Software Foundation, ya sea la versión 3 de la Licencia o (a tu elección) cualquier versión posterior.\n\nEste programa se distribuye con la esperanza de que sea útil, pero SIN NINGUNA GARANTÍA; incluso sin la garantía implícita de COMERCIABILIDAD o APTITUD PARA UN PROPÓSITO PARTICULAR. Consulta la Licencia Pública General de GNU para más detalles.\n\nDeberías haber recibido una copia de la Licencia Pública General de GNU junto con este programa. Si no la recibiste, visita ",
+        "below_is_legal": "Debajo está el texto legal (SÓLO EN INGLÉS)"
+    },
     "cool_messages": {
         "all_done": [
             "Te sentirás orgulloso de ti mismo, ¿no?",
@@ -320,7 +325,8 @@
         "help": "¿Ayuda?",
         "help_with_item": "Ayuda con {{item}}",
         "got_it": "Lo pillo",
-        "save": "¡Guárdalo!"
+        "save": "¡Guárdalo!",
+        "gyap!": "¡Date un plus!"
     },
     "sections": {
         "headers": {

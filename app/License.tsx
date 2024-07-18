@@ -44,7 +44,7 @@ export default function License() {
                 </BetterText>
                 <GapView height={20} />
                 <BetterText fontSize={30} fontWeight="SemiBold">
-                    PersonaPlus is licensed under the General Public License 3.0
+                    {t("subpage_legal_stuff.title")}
                 </BetterText>
                 <GapView height={10} />
                 <BetterText fontSize={10} fontWeight="Italic">
@@ -56,17 +56,7 @@ export default function License() {
                 </BetterText>
                 <GapView height={20} />
                 <BetterText fontSize={20} fontWeight="Regular">
-                    This program is free software: you can redistribute it
-                    and/or modify it under the terms of the GNU General Public
-                    License as published by the Free Software Foundation, either
-                    version 3 of the License, or (at your option) any later
-                    version.{"\n\n"}This program is distributed in the hope that
-                    it will be useful, but WITHOUT ANY WARRANTY; without even
-                    the implied warranty of MERCHANTABILITY or FITNESS FOR A
-                    PARTICULAR PURPOSE. See the GNU General Public License for
-                    more details.{"\n\n"}You should have received a copy of the
-                    GNU General Public License along with this program. If not,
-                    see{" "}
+                    {t("subpage_legal_stuff.gpl_small")}
                     <BetterText
                         fontSize={20}
                         textColor="#3280FF"
@@ -82,7 +72,7 @@ export default function License() {
                 </BetterText>
                 <GapView height={20} />
                 <BetterText fontSize={15} fontWeight="Light">
-                    Below is the legal text
+                    {t("subpage_legal_stuff.below_is_legal")}
                 </BetterText>
                 <GapView height={20} />
                 <BetterText
