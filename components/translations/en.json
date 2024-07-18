@@ -130,13 +130,84 @@
     },
     "page_sessions": {
         "in_a_session": "IN A SESSION!",
+        "current": "CURRENT OBJECTIVE",
         "help_section": {
             "Push Up": "To do a regular push-up, begin in a plank position with your hands slightly wider than shoulder-width apart. Lower your body by bending your elbows until your chest nearly touches the floor, then push back up to the starting position. Keep your core engaged throughout for stability. Start with a comfortable number of repetitions and gradually increase as you build strength.\n\nTo do a one handed push-up, begin in a plank position with one hand centered beneath your shoulder and the other behind your back. Lower your body by bending your elbow until your chest nearly touches the floor, then push back up. Keep your core tight and maintain balance throughout the movement. Start with a few reps on each side and progress as your strength improves.",
             "Lifting": "Distribute evenly the weights between both hands. For example, if your objective is to lift 6kg, put 3kg to each weight (as you'll lift two weights, one for each hand).\n\nWithout dropping it, extend your arm vertically, and start moving it up and down, making your elbow go from a 90º angle to a 45º angle and then again to a 90º one (that would count as one lift).\n\nKeep going until you do all the lifts specified (or the timer runs out)!",
             "Running": "To start running, ensure you have comfortable running shoes and attire. Begin with a warm-up by walking briskly for 5-10 minutes to prepare your muscles. Start running at a pace that feels comfortable, and maintain a steady breathing pattern. Focus on keeping a good posture and staying relaxed. If you're a beginner, alternate between running and walking in intervals. Gradually increase your running time as your endurance improves. Cool down by walking for a few minutes and then stretching.",
             "Walking": "Wear comfortable shoes and clothing suitable for the weather. Begin by walking at a natural pace, allowing your arms to swing naturally at your sides. Focus on maintaining a good posture, with your back straight and your head up. You can vary your speed, incorporating brisk walking intervals to increase your heart rate. Walking can be done almost anywhere, so choose a route you enjoy. Aim for at least 30 minutes of walking per session, and gradually increase your duration and intensity as you build stamina.",
             "Meditation": "Find a quiet and comfortable place to sit or lie down. Close your eyes and take a few deep breaths, focusing on the sensation of the air entering and leaving your body. Begin to observe your thoughts and feelings without judgment, letting them come and go naturally. You can focus on your breath, a mantra, or simply the present moment. If your mind wanders, gently bring your attention back to your focal point. Start with a few minutes and gradually extend your meditation time as you become more comfortable with the practice."
-        }
+        },
+        "give_up": "I give up",
+        "timer_paused_help": "Psst... Don't worry, we'e stopped the timer so you can read."
+    },
+    "page_welcome": {
+        "welcome": "Welcome to ",
+        "subtitle": "We're proud to see you want to give yourself a plus!",
+        "buttons": {
+            "start": "Let's begin!"
+        },
+        "fragment_one": {
+            "title": "Tell us about you",
+            "subtitle": "We only ask for the data we need for the app to function. We don't send info to anyone outside of this device, ever.",
+            "questions": {
+                "username": "Username",
+                "height": "Height (centimeters, no decimals)",
+                "weight": "Weight (kilograms, no decimals)",
+                "age": "Age (years)",
+                "gender": {
+                    "male": "Male",
+                    "female": "Female"
+                }
+            }
+        },
+        "fragment_two": {
+            "title": "What's your key goal?",
+            "subtitle": "We know you want to improve yourself, but, what's your key priority?",
+            "subsubtitle": "Choose only one option. No worries, you can always change it later from your profile.",
+            "options": {
+                "exercising": "Exercising: I gotta move my body ASAP!",
+                "eating": "Diet: I should control a bit better what I eat.",
+                "wellbeing": "Wellbeing: I want to take care of my mental health and digital wellbeing.",
+                "noprior": "Everything is a top priority to me!",
+                "nopriorwithassist": "I don't know / I can't decide on one"
+            }
+        },
+        "fragment_three": {
+            "questions": {
+                "sleeping": {
+                    "asks": "How much do you sleep each night? It doesn't have to be exact",
+                    "three_or_less": "3 hours or less",
+                    "four": "4 hours",
+                    "five": "5 hours",
+                    "six": "6 hours",
+                    "seven": "7 hours",
+                    "eight": "8 hours",
+                    "nine": "9 hours",
+                    "ten": "10 hours",
+                    "more_than_ten": "More than 10 hours"
+                },
+                "activness": {
+                    "asks": "How active are you? This means, how often do you exercise or do other physical activities? It doesn't have to be exact.",
+                    "poor": "Poorly active (almost no exercise)",
+                    "small": "A little active (1 or 2 days of exercise per week)",
+                    "normal": "Active (3 to 5 days of exercise per week)",
+                    "intense": "Intensely active (more than 5 days of exercise per week, and/or intense exercises)",
+                    "super": "Very very active (daily or almost daily exercise, sometimes more than once a day, and/or very intense exercises)"
+                },
+                "push_ups": {
+                    "asks": "Have you ever done push-ups? How much does it take you to make one? On average",
+                    "one_sec": "One second (incredible...)",
+                    "two_sec": "About 2-3 seconds",
+                    "three_sec": "About 3-5 seconds",
+                    "five_sec": "About 5-7 seconds",
+                    "seven_sec": "About 7-10 seconds",
+                    "ten_sec": "About 10 seconds",
+                    "doesnt_know": "I don't know / I never do push ups"
+                }
+            }
+        },
+        "you_aint_that_old": "You AIN'T {{age}} years old, bud"
     },
     "cool_messages": {
         "all_done": [
@@ -217,7 +288,15 @@
         "are_you_sure": "Are you sure?",
         "nevermind": "Nevermind",
         "workinprogress": "PersonaPlus is still an app in early development. Many features, like this one, aren't yet available. Soon they'll be! Don't forget to check every few weeks for new updates.",
-        "error_loading_content": "There was an error loading this content. Sorry!"
+        "error_loading_content": "There was an error loading this content. Sorry!",
+        "learn_more": "Learn more",
+        "continue": "Continue",
+        "fill_all_items": "Correctly fill in all fields",
+        "none": "None",
+        "minute": "minute",
+        "help": "Help?",
+        "help_with_item": "Help with {{item}}",
+        "got_it": "Got it"
     },
     "sections": {
         "headers": {
