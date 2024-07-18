@@ -36,6 +36,7 @@ END README
 - General code quality improvements, specially within Sessions.
 - Imrpoved some comments for better code understandability.
 - Now PersonaPlus will check daily for your active objectives' due days. If you've done an objective today, and tomorrow you have to do it again, it's `wasDone` (_boolean_) value will change to `false` again so it's shown again on the app's homepage.
+- Added Expo's `expo-background-fetch` and `expo-task-manager` for that. Also fixed a few deps.
 
 ## 0.0.1-R5-b21
 
