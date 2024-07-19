@@ -474,7 +474,7 @@ export default function Profile() {
                                 header={t("page_profile.updates.header")}
                                 subheader={t(
                                     "page_profile.updates.subheader",
-                                    { version: "0.0.1-R5-b22" } // placed it here so you only update once for all langs
+                                    { version: "0.0.1-R5-b23" } // placed it here so you only update once for all langs
                                 )}
                             >
                                 <Button
