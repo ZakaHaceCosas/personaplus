@@ -52,13 +52,26 @@ PersonaPlus es una app en un estado muy temprano, muchas funciones aún están p
       - [X] Marcar como completado
       - [ ] Sesiones
         - [X] Funcionalidad básica
+          - [X] Temporizador
+          - [X] Repeticiones
+          - [ ] Descansos
+          - [X] Salida
+            - [X] Rendición
+            - [X] Marcado como completado
         - [ ] Sesiones múltiples
-        - [X] Ayuda
-        - [ ] Reproductor (música integrada)
-        - [ ] Sesiones avanzadas
-          - [ ] Mapas (GPS)
-          - [ ] Medidor de kcal quemadas
-          - [ ] Estadísticas avanzadas
+        - [X] Ayuda básica
+        - [ ] Ayuda de calidad
+        - [ ] Sesiones completas
+          - [ ] Obtención de datos
+            - [ ] Medidor de kcals quemadas
+            - [ ] Medidores específicos (ej. flexiones realizadas en una sesión, o km recorridos)
+          - [ ] Guardado de datos
+          - [ ] Estadísticas (vía [OpenHealth](https://github.com/ZakaHaceCosas/personaplus/blob/main/core/README.md))
+        - [ ] Sesiones avanzadas / funciones triviales
+          - [ ] Mapas (GPS) (para ejercicios como correr)
+          - [ ] Reproductor (música integrada)
+          - [ ] Efectos de sonido
+          - [ ] Sesiones encadenadas / Sesiones de micro-ejercicios
     - [ ] Objetivos pasivos
   - [ ] Edición
   - [X] Eliminación
@@ -75,6 +88,15 @@ PersonaPlus es una app en un estado muy temprano, muchas funciones aún están p
   - [ ] Temas para la aplicación (claro, oscuro, etc...)
   - [X] Múltiples idiomas (Castellano, Inglés...)
   - [X] Recordatorios
+
+### Orden de implementación
+
+Para que nadie pierda el rumbo, aunque voy tocando un poco de todo, este es el plan que intento seguir de momento (actualizaré esto cada que haga falta):
+
+1. Terminar de implementar las sesiones básicas.
+2. Una vez hecho eso, algún ajuste más a la app y de ahí a lo importante.
+3. Retomar OpenHealth (un poco olvidado desde que lo creé) e implementar todos los cálculos necesarios para las actividades que PersonaPlus soporta por defecto.
+4. Implementar - de alguna manera - obtención de datos básicos sobre cada sesión, su guardado, y la generación de estadísticas en base a los cálculos que OpenHealth pueda hacer con esos datos.
 
 ## ¿Cómo contribuir?
 
