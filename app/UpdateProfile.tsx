@@ -100,7 +100,7 @@ export default function UpdateProfile() {
                 await AsyncStorage.setItem("weight", formData.weight);
                 await AsyncStorage.setItem("age", formData.age);
                 await AsyncStorage.setItem("gender", genderValue);
-                router.navigate("/");
+                router.back();
             } catch (e) {
                 termLog("Error creating profile: " + e, "error");
             }
