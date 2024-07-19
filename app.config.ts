@@ -39,7 +39,8 @@ const config: ExpoConfig.ExpoConfig = {
         permissions: [
             "android.permission.SCHEDULE_EXACT_ALARM",
             "android.permission.POST_NOTIFICATIONS",
-            "android.permission.RECEIVE_BOOT_COMPLETED"
+            "android.permission.RECEIVE_BOOT_COMPLETED",
+            "android.permission.WAKE_LOCK"
         ],
         versionCode: 23,
         backgroundColor: "#0E1013"
