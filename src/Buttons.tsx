@@ -1,4 +1,4 @@
-// Buttons.tsx
+// src/Buttons.tsx
 // Buttons, botones, elementos presionables, ENTIDADES INTERACTIVAS UTILIZABLES POR MEDIO DE CLICS / TOCAMIENTOS DE LA PANTALLA xd
 
 import React, { ReactNode } from "react";

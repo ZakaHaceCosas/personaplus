@@ -1,4 +1,4 @@
-// BetterText.tsx
+// src/BetterText.tsx
 // Text, con estilos apropiados y la tipografía Be Vietnam Pro
 
 import React, { ReactNode } from "react";
@@ -45,56 +45,24 @@ export default function BetterText({
     isSerif,
     url,
 }: BetterTextProps) {
-    let fontprefix: string = "BeVietnamPro-";
-    if (isSerif === true) {
-        fontprefix = "NotoSerif-";
-    } else {
-        fontprefix = "BeVietnamPro-";
-    }
-    const font: string = fontprefix + fontWeight;
+    const fontprefix: string = isSerif ? "NotoSerif-" : "BeVietnamPro-";
+    const font: string = `${fontprefix}${fontWeight}`;
     const lineheight: number = fontSize + 0.5; // La altura de línea es igual al tamaño de letra (+ 0.5 para arreglar el texto viendose "recortado")
     const color: string = textColor || "#FFF"; // Si el color no se especifica, es blanco
-    let textalignment: string = textAlign || "normal"; // Si el alineamiento no se especifica, es normal (izquierda)
-    let textdecoration: string;
-
-    switch (textAlign) {
-        case "center":
-            textalignment = "center";
-            break;
-        case "normal":
-            textalignment = "left";
-            break;
-        case "left":
-            textalignment = "left";
-            break;
-        case "right":
-            textalignment = "right";
-            break;
-        default:
-            textalignment = "left";
-            break;
-    }
-
-    switch (url) {
-        case true:
-            textdecoration = "underline";
-            break;
-        case false:
-            textdecoration = "none";
-            break;
-        default:
-            textdecoration = "none";
-            break;
-    }
+    const textalignment: "center" | "right" | "left" =
+        textAlign === "center" || textAlign === "normal"
+            ? "center"
+            : textAlign === "right"
+              ? "right"
+              : "left";
+    const textdecoration: "underline" | "none" = url ? "underline" : "none";
 
     const textStyle: TextStyle = {
         fontFamily: font,
         fontSize: fontSize,
         lineHeight: lineheight,
         color: color,
-        // @ts-expect-error: Type error
         textAlign: textalignment,
-        // @ts-expect-error: Type error
         textDecorationLine: textdecoration,
         textDecorationColor: color,
         textDecorationStyle: "solid",
