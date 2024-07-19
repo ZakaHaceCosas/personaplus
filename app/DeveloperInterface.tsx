@@ -1,7 +1,7 @@
 // DeveloperInterface.tsx
 // Página que muestra ciertos logs de la consola para ayudar al desarrollador
 
-import React from "react";
+import React, { useState } from "react";
 import {
     Alert,
     ScrollView,
@@ -11,25 +11,22 @@ import {
     Platform,
     ToastAndroid,
 } from "react-native";
-import BottomNav from "@/components/BottomNav";
-import BetterText from "@/components/BetterText";
-import GapView from "@/components/GapView";
+import BottomNav from "@/src/BottomNav";
+import BetterText from "@/src/BetterText";
+import GapView from "@/src/GapView";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Button from "@/components/Buttons";
+import Button from "@/src/Buttons";
 import { version as ReactVersion } from "react";
 import { version as PersonaPlusVersion } from "@/package.json";
 import { isDevelopmentBuild } from "expo-dev-client";
-import {
-    clearObjectives,
-    fetchObjectives,
-} from "@/components/toolkit/objectives";
+import { clearObjectives, fetchObjectives } from "@/src/toolkit/objectives";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import { usePathname, router } from "expo-router";
 import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo
-import { Objective } from "@/components/types/Objective";
+import { Objective } from "@/src/types/Objective";
 
 const styles = StyleSheet.create({
     consoleview: {
@@ -129,7 +126,7 @@ export const termLog = (
 
 export default function DeveloperInterface() {
     const { t } = useTranslation();
-    const [logs, setLogs] = React.useState<Log[]>([]);
+    const [logs, setLogs] = useState<Log[]>([]);
 
     React.useEffect(() => {
         const fetchLogs = async () => {
@@ -186,9 +183,7 @@ export default function DeveloperInterface() {
         };
     }, []);
 
-    const [objs, setObjs] = React.useState<{ [key: string]: Objective } | null>(
-        null
-    );
+    const [objs, setObjs] = useState<{ [key: string]: Objective } | null>(null);
 
     React.useEffect(() => {
         const handleFetchObjectives = async () => {
@@ -309,7 +304,7 @@ export default function DeveloperInterface() {
         );
     };
 
-    const [everything, setEverything] = React.useState<object | null>(null);
+    const [everything, setEverything] = useState<object | null>(null);
 
     React.useEffect(() => {
         const fetchAll = async () => {

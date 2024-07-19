@@ -2,9 +2,9 @@ import React from "react";
 import { View } from "react-native";
 import OpenHealth from "@/core/openhealth";
 import { termLog } from "./DeveloperInterface";
-import BetterText from "@/components/BetterText";
-import GapView from "@/components/GapView";
-import BottomNav from "@/components/BottomNav";
+import BetterText from "@/src/BetterText";
+import GapView from "@/src/GapView";
+import BottomNav from "@/src/BottomNav";
 
 export default function openhealthtest() {
     const bmi = OpenHealth.physicalHealth.BodyMassIndex.calculate(

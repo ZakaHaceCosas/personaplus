@@ -1,5 +1,5 @@
 // OBJECTIVE TYPE
-import { Objective } from '@/components/types/Objective';
+import { Objective } from '@/src/types/Objective';
 // INTERNALS
 import { termLog } from '@/app/DeveloperInterface';
 // FRONTEND
@@ -10,7 +10,7 @@ import { TFunction } from 'i18next';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { adjustedToday } from '@/components/toolkit/today';
+import { adjustedToday } from '@/src/toolkit/today';
 
 // Función para obtener los objetivos
 const getObjectives = async (): Promise<Objective[]> => {

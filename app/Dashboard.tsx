@@ -1,7 +1,7 @@
 // Dashboard.tsx
 // Dashboard, where you setup your path to success.
 
-import React from "react";
+import React, { useState } from "react";
 import {
     StyleSheet,
     DimensionValue,
@@ -10,25 +10,25 @@ import {
     View,
     ScrollView,
 } from "react-native";
-import BetterText from "@/components/BetterText";
-import BottomNav from "@/components/BottomNav";
-import Section from "@/components/section/Section";
-import Division from "@/components/section/division/Division";
-import GapView from "@/components/GapView";
-import Footer from "@/components/Footer";
+import BetterText from "@/src/BetterText";
+import BottomNav from "@/src/BottomNav";
+import Section from "@/src/section/Section";
+import Division from "@/src/section/division/Division";
+import GapView from "@/src/GapView";
+import Footer from "@/src/Footer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Button from "@/components/Buttons";
+import Button from "@/src/Buttons";
 import { termLog } from "./DeveloperInterface";
 import {
     fetchObjectives,
     deleteObjective,
     defineObjectiveDescription,
-} from "@/components/toolkit/objectives";
+} from "@/src/toolkit/objectives";
 import { router, usePathname } from "expo-router";
 import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo
-import { Objective } from "@/components/types/Objective";
+import { Objective } from "@/src/types/Objective";
 
 // Creamos los estilos
 const styles = StyleSheet.create({
@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
 // Creamos la función
 export default function Dashboard() {
     const { t } = useTranslation();
-    const [loading, setLoading] = React.useState(true);
-    const [objectives, setObjectives] = React.useState<{
+    const [loading, setLoading] = useState(true);
+    const [objectives, setObjectives] = useState<{
         [key: string]: Objective;
     } | null>(null);
 

@@ -3,7 +3,7 @@
 
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import BetterText from "@/components/BetterText";
+import BetterText from "@/src/BetterText";
 import { useTranslation } from "react-i18next";
 
 // Definimos los estilos

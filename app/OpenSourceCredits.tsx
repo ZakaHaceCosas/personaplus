@@ -6,8 +6,8 @@ import {
     StyleSheet,
     Linking,
 } from "react-native";
-import BetterText from "@/components/BetterText";
-import GapView from "@/components/GapView";
+import BetterText from "@/src/BetterText";
+import GapView from "@/src/GapView";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
 

@@ -10,11 +10,11 @@ import {
     Linking,
 } from "react-native";
 import { router } from "expo-router";
-import BetterText from "@/components/BetterText";
-import Section from "@/components/section/Section";
-import Division from "@/components/section/division/Division";
-import Button from "@/components/Buttons";
-import GapView from "@/components/GapView";
+import BetterText from "@/src/BetterText";
+import Section from "@/src/section/Section";
+import Division from "@/src/section/division/Division";
+import Button from "@/src/Buttons";
+import GapView from "@/src/GapView";
 import { useTranslation } from "react-i18next";
 
 // Creamos los estilos

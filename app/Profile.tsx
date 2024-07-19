@@ -1,7 +1,7 @@
 // Profile.tsx
 // Profile page.
 
-import React from "react";
+import React, { useState } from "react";
 import {
     StyleSheet,
     DimensionValue,
@@ -13,14 +13,14 @@ import {
     ScrollView,
 } from "react-native";
 import { router, usePathname } from "expo-router";
-import BetterText from "@/components/BetterText";
-import Footer from "@/components/Footer";
-import Section from "@/components/section/Section";
-import Division from "@/components/section/division/Division";
-import Button from "@/components/Buttons";
+import BetterText from "@/src/BetterText";
+import Footer from "@/src/Footer";
+import Section from "@/src/section/Section";
+import Division from "@/src/section/division/Division";
+import Button from "@/src/Buttons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import BottomNav from "@/components/BottomNav";
-import GapView from "@/components/GapView";
+import BottomNav from "@/src/BottomNav";
+import GapView from "@/src/GapView";
 import { termLog } from "./DeveloperInterface";
 import { version } from "@/package.json";
 import { changeLanguage } from "i18next";
@@ -159,13 +159,13 @@ export default function Profile() {
 
     // Loading state
     const { t } = useTranslation();
-    const [loading, setLoading] = React.useState<boolean>(true);
-    const [language, setLanguage] = React.useState<"en" | "es" | string>("en");
-    const [username, setUsername] = React.useState<string>("Unknown");
-    const [gender, setGender] = React.useState<string>("Unknown");
-    const [age, setAge] = React.useState<string>("Unknown");
-    const [height, setHeight] = React.useState<string>("Unknown");
-    const [weight, setWeight] = React.useState<string>("Unknown");
+    const [loading, setLoading] = useState<boolean>(true);
+    const [language, setLanguage] = useState<"en" | "es" | string>("en");
+    const [username, setUsername] = useState<string>("Unknown");
+    const [gender, setGender] = useState<string>("Unknown");
+    const [age, setAge] = useState<string>("Unknown");
+    const [height, setHeight] = useState<string>("Unknown");
+    const [weight, setWeight] = useState<string>("Unknown");
 
     const getMultiple = async (): Promise<UserData> => {
         try {
@@ -215,7 +215,7 @@ export default function Profile() {
         fetchData();
     }, []);
 
-    const [wantsDev, setWantsDev] = React.useState<boolean | null>(null);
+    const [wantsDev, setWantsDev] = useState<boolean | null>(null);
 
     React.useEffect(() => {
         const checkForDev = async () => {

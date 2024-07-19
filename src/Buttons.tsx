@@ -3,7 +3,7 @@
 
 import React from "react";
 import { Pressable, DimensionValue } from "react-native";
-import BetterText from "@/components/BetterText";
+import BetterText from "@/src/BetterText";
 
 // TypeScript, supongo
 interface BtnsProps {

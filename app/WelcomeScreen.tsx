@@ -1,7 +1,7 @@
 // WelcomeScreen.tsx
 // Welcome page
 
-import React from "react";
+import React, { useState } from "react";
 import { router } from "expo-router";
 import {
     StyleSheet,
@@ -14,16 +14,16 @@ import {
     Platform,
     ToastAndroid,
 } from "react-native";
-import Swap from "@/components/Swap";
-import Button from "@/components/Buttons";
-import GapView from "@/components/GapView";
-import BetterText from "@/components/BetterText";
+import Swap from "@/src/Swap";
+import Button from "@/src/Buttons";
+import GapView from "@/src/GapView";
+import BetterText from "@/src/BetterText";
 import { Picker as Select } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { termLog } from "./DeveloperInterface";
 import { useTranslation } from "react-i18next";
 import { changeLanguage } from "i18next";
-import { validateBasicData } from "@/components/toolkit/userData";
+import { validateBasicData } from "@/src/toolkit/userData";
 
 // Definimos los estilos
 const styles = StyleSheet.create({
@@ -57,15 +57,15 @@ const styles = StyleSheet.create({
 // Definimos la función
 export default function WelcomePage() {
     const { t } = useTranslation();
-    const [language, setLanguage] = React.useState<"en" | "es" | string>("en");
-    const [currentTab, setTab] = React.useState(1);
-    const [formData, setFormData] = React.useState({
+    const [language, setLanguage] = useState<"en" | "es" | string>("en");
+    const [currentTab, setTab] = useState(1);
+    const [formData, setFormData] = useState({
         username: "",
         height: "",
         weight: "",
         age: "",
     });
-    const [genderValue, setGenderValue] = React.useState<string | null>(null);
+    const [genderValue, setGenderValue] = useState<string | null>(null);
     const handleGenderChange = (value: string) => {
         setGenderValue(value);
     };
@@ -89,9 +89,7 @@ export default function WelcomePage() {
     ];
     const inputRefs = React.useRef<TextInput[]>([]);
     const easteregg: number = Math.floor(Math.random() * 690) + 1;
-    const [focuspointValue, setFocuspointValue] = React.useState<string | null>(
-        null
-    );
+    const [focuspointValue, setFocuspointValue] = useState<string | null>(null);
     const handleFocuspointChange = (value: string) => {
         setFocuspointValue(value);
     };
@@ -140,7 +138,7 @@ export default function WelcomePage() {
         formData.username
     );
 
-    const [sleep, setSleep] = React.useState("");
+    const [sleep, setSleep] = useState("");
     const sleeps = [
         t("page_welcome.fragment_three.questions.sleeping.three_or_less"),
         t("page_welcome.fragment_three.questions.sleeping.four"),
@@ -152,7 +150,7 @@ export default function WelcomePage() {
         t("page_welcome.fragment_three.questions.sleeping.ten"),
         t("page_welcome.fragment_three.questions.sleeping.more_than_ten"),
     ];
-    const [howActiveTheUserIs, setHowActiveTheUserIs] = React.useState("");
+    const [howActiveTheUserIs, setHowActiveTheUserIs] = useState("");
     const activnessOptions = [
         t("page_welcome.fragment_three.questions.activness.poor"),
         t("page_welcome.fragment_three.questions.activness.small"),
@@ -160,7 +158,7 @@ export default function WelcomePage() {
         t("page_welcome.fragment_three.questions.activness.intense"),
         t("page_welcome.fragment_three.questions.activness.super"),
     ];
-    const [timeToPushUp, setTimeToPushUp] = React.useState("");
+    const [timeToPushUp, setTimeToPushUp] = useState("");
     const pushUpOptions = [
         t("page_welcome.fragment_three.questions.push_ups.one_sec"),
         t("page_welcome.fragment_three.questions.push_ups.two_sec"),

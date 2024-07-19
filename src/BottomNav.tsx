@@ -1,9 +1,11 @@
-import React from "react";
+// components/BottomNav.tsx
+
+import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { Link } from "expo-router";
-import BetterText from "@/components/BetterText";
+import BetterText from "@/src/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import GapView from "@/components/GapView";
+import GapView from "@/src/GapView";
 import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo
@@ -23,8 +25,7 @@ const styles = StyleSheet.create({
 
 // Creamos la función del componente
 export default function BottomNav({ currentLocation }: SectionProps) {
-    const [currentPage, setCurrentPage] =
-        React.useState<string>(currentLocation);
+    const [currentPage, setCurrentPage] = useState<string>(currentLocation);
     // Define la función para manejar el cambio de página
     const handlePageChange = (newPage: string) => {
         setCurrentPage(newPage);

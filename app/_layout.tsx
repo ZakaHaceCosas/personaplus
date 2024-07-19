@@ -7,7 +7,7 @@ import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
-import "@/components/toolkit/translations";
+import "@/src/toolkit/translations";
 
 // Definimos los estilos
 const styles = StyleSheet.create({
