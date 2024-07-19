@@ -26,9 +26,9 @@ import Footer from "@/components/Footer";
 import { termLog } from "@/app/DeveloperInterface";
 import { useTranslation } from "react-i18next";
 import {
-    scheduleNotificationAsync,
-    cancelScheduledNotificationAsync,
-} from "expo-notifications";
+    scheduleRandomNotifications,
+    cancelScheduledNotifications,
+} from "@/components/hooks/useNotification";
 import { adjustedToday } from "@/components/toolkit/today";
 import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
@@ -52,86 +52,20 @@ const styles = StyleSheet.create({
     },
 });
 
-interface NotificationIdentifier {
-    identifier: string;
-}
-
-const scheduledNotifications: NotificationIdentifier[] = [];
-
-const scheduleRandomNotifications = async () => {
-    const notificationMessages = [
-        "You know you got stuff to do!",
-        "Daily objective means DAILY objective - go and do it!",
-        "Time to give yourself a plus!",
-        "You said you wanted to give yourself a plus - get up!",
-        "The only difference between us and a regular task list? We're way more fun to check!",
-        "I'm like your mom: I won't stop till' you make it.",
-        "Give yourself a plus before, mute your phone after.",
-        "The only notification that doesn't make you waste time.",
-        "No, not another TikTok notification this time. Move your body!",
-        "They're called 'objectives' for a reason: you have to accomplish them!",
-        "No, I won't stop sending notifications until you stop ignoring your path to success",
-        "Trust me, you'll feel better later.",
-        "Just one more session pls, love u <3",
-        "You downloaded this app for a reason. Don't give it up.",
-        "It's that time again!",
-    ];
-
-    const randomDelay = () => (Math.floor(Math.random() * 1800) + 1800) * 1000;
-    // a random interval of 30-60 minutes, so user gets many reminders, but not too annoying
-
-    for (let i = 0; i < 2; i++) {
-        const randomMessage =
-            notificationMessages[
-                Math.floor(Math.random() * notificationMessages.length)
-            ];
-        const trigger = {
-            hour: Math.floor(Math.random() * 12) + 11,
-            minute: Math.floor(Math.random() * 60),
-            repeats: true,
-        };
-
-        const identifier = await scheduleNotificationAsync({
-            content: {
-                title: "Pending PersonaPlus objectives!",
-                body: randomMessage,
-            },
-            trigger,
-        });
-
-        // Store the notification identifier
-        scheduledNotifications.push({ identifier });
-
-        await new Promise(resolve => setTimeout(resolve, randomDelay()));
-        termLog(String(scheduledNotifications), "log");
-        termLog("Scheduled Notis ENABLED", "log");
-    }
-};
-
-// Function to cancel scheduled notifications
-const cancelScheduledNotifications = async () => {
-    for (const { identifier } of scheduledNotifications) {
-        await cancelScheduledNotificationAsync(identifier);
-    }
-
-    scheduledNotifications.length = 0;
-    termLog(String(scheduledNotifications), "log");
-    termLog("Scheduled Notis DISABLED", "log");
-};
-
 // Creamos la función
 export default function Home() {
-    const [loading, setLoading] = React.useState(true);
-    const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean | null>(
-        null
-    );
-    const [username, setUsername] = React.useState<string>("Unknown");
-    const [objectives, setObjectives] = React.useState<{
+    const [loading, setLoading] = useState(true);
+    const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null);
+    const [username, setUsername] = useState<string>("Unknown");
+    const [objectives, setObjectives] = useState<{
         [key: string]: Objective;
     } | null>(null);
     const [isRegistered, setIsRegistered] = useState(false);
     const [status, setStatus] =
         useState<BackgroundFetch.BackgroundFetchStatus | null>(null);
+
+    const { t } = useTranslation();
+    const currentpage = usePathname();
 
     const checkStatusAsync = async () => {
         try {
@@ -179,38 +113,49 @@ export default function Home() {
     }, []);
 
     useEffect(() => {
-        termLog("isRegistered status at index: " + isRegistered, "log");
-        termLog("status status at index: " + status, "log");
-    }, [status, isRegistered]);
-
-    const { t } = useTranslation();
-
-    React.useEffect(() => {
         const multiFetch = async () => {
-            const items = await AsyncStorage.multiGet([
-                "username",
-                "objectives",
-                "hasLaunched",
-            ]);
-            if (items) {
-                setUsername(String(items[0][1]));
-                if (items[1][1] !== null) {
-                    setObjectives(JSON.parse(String(items[1][1])));
+            try {
+                const items = await AsyncStorage.multiGet([
+                    "username",
+                    "objectives",
+                    "hasLaunched",
+                ]);
+                if (items) {
+                    setUsername(String(items[0][1]));
+                    setObjectives(
+                        items[1][1] !== null ||
+                            items[1][1] !== "" ||
+                            items[1][1] !== "{}" ||
+                            items[1][1] !== "[]" ||
+                            items[1][1]
+                            ? JSON.parse(String(items[1][1]))
+                            : {}
+                    );
+                    const isFirstLaunchValidation =
+                        items[2][1] === null || !items[2][1];
+                    if (isFirstLaunchValidation) {
+                        await AsyncStorage.setItem("hasLaunched", "true");
+                        setIsFirstLaunch(true);
+                    } else {
+                        setIsFirstLaunch(false);
+                    }
                 } else {
-                    setObjectives(JSON.parse("[]"));
-                }
-                const hasLaunchedValue = items[2][1];
-                if (hasLaunchedValue === null || !hasLaunchedValue) {
-                    await AsyncStorage.setItem("hasLaunched", "true");
-                    setIsFirstLaunch(true);
-                } else {
-                    setIsFirstLaunch(false);
+                    termLog(
+                        "Error fetching basic user data! No items (useEffect -> multiFetch -> try-catch.try -> if items)",
+                        "error"
+                    );
+                    setUsername("Unknown");
+                    setObjectives({});
                 }
                 setLoading(false);
-            } else {
-                termLog("Fetch error!", "error");
+            } catch (e) {
+                termLog(
+                    "Error fetching basic user data! (useEffect -> multiFetch -> try-catch). Catched: " +
+                        e,
+                    "error"
+                );
                 setUsername("Unknown");
-                setObjectives(JSON.parse("[]"));
+                setObjectives({});
                 setLoading(false);
             }
         };
@@ -218,7 +163,11 @@ export default function Home() {
         multiFetch();
     }, []);
 
-    const currentpage: string = usePathname();
+    useEffect(() => {
+        if (isFirstLaunch) {
+            router.push("/WelcomeScreen");
+        }
+    }, [isFirstLaunch]);
 
     const handleMarkingObjectiveAsDone = async (identifier: number) => {
         try {
@@ -226,14 +175,14 @@ export default function Home() {
             const updatedObjectives = await fetchObjectives("object");
             setObjectives(updatedObjectives);
         } catch (e) {
-            const log: string = "Got an error updating, " + e;
-            termLog(log, "error");
+            termLog("Got an error updating: " + e, "error");
         }
     };
 
-    if (isFirstLaunch) {
-        router.push("/WelcomeScreen");
-    }
+    useEffect(() => {
+        termLog("isRegistered status: " + isRegistered, "log");
+        termLog("status status: " + status, "log");
+    }, [status, isRegistered]);
 
     const createNewActiveObjective = (): void => {
         router.navigate("/CreateObjective");
@@ -245,38 +194,35 @@ export default function Home() {
 
     termLog(String(objectives), "log");
 
-    // i got creative :]
-    // commits / PRs that add more stuff will of course be taken into account
     const allDoneMessages: string[] = t("cool_messages.all_done", {
         returnObjects: true,
     });
 
-    const randomMessageIndex = Math.floor(
-        Math.random() * allDoneMessages.length
-    );
+    const randomMessageForAllDone =
+        allDoneMessages[Math.floor(Math.random() * allDoneMessages.length)];
 
-    const randomMessageForAllDone = allDoneMessages[randomMessageIndex];
-
-    if (objectives && Object.keys(objectives).length > 0) {
-        const allObjectivesHandled = Object.keys(objectives).every(key => {
-            const objective = objectives[key];
-            return (
-                objective.wasDone ||
-                !objective.days ||
-                !objective.days[adjustedToday]
+    useEffect(() => {
+        if (objectives && Object.keys(objectives).length > 0) {
+            const areAllObjectivesHandled = Object.keys(objectives).every(
+                key => {
+                    const objective = objectives[key];
+                    return (
+                        objective.wasDone ||
+                        !objective.days ||
+                        !objective.days[adjustedToday]
+                    );
+                }
             );
-        });
 
-        if (!allObjectivesHandled) {
             if (Platform.OS === "android") {
-                scheduleRandomNotifications();
-            }
-        } else {
-            if (Platform.OS === "android") {
-                cancelScheduledNotifications();
+                if (areAllObjectivesHandled) {
+                    cancelScheduledNotifications();
+                } else {
+                    scheduleRandomNotifications(t);
+                }
             }
         }
-    }
+    }, [objectives, t]);
 
     if (loading) {
         return (
