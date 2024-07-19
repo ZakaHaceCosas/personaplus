@@ -2,8 +2,8 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import enTranslations from '@/components/translations/en.json';
-import esTranslations from '@/components/translations/es.json';
+import enTranslations from '@/src/translations/en.json';
+import esTranslations from '@/src/translations/es.json';
 
 // Define las traducciones disponibles
 const resources = {
