@@ -27,6 +27,7 @@ END README
 
 - Several code quality improvements.
 - Renamed `components/` to `src/`.
+- Refactored `termLog` to avoid require cycles. It has been toolkified and moved to `src/toolkit/debug/console.ts`.
 
 ## 0.0.1-R5-b22
 
