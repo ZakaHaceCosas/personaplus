@@ -215,41 +215,6 @@ export default function Profile() {
         fetchData();
     }, []);
 
-    const [wantsDev, setWantsDev] = useState<boolean | null>(null);
-
-    useEffect(() => {
-        const checkForDev = async () => {
-            try {
-                const useDev = await AsyncStorage.getItem("useDevTools");
-                setWantsDev(useDev === "true");
-            } catch (e) {
-                termLog(
-                    `Got an error checking if the user wants to use Dev interface: ${e}`,
-                    "warn"
-                );
-            }
-        };
-        checkForDev();
-    }, []);
-
-    const enableDevInterface = async () => {
-        try {
-            await AsyncStorage.setItem("useDevTools", "true");
-            router.navigate("/DeveloperInterface");
-        } catch (e) {
-            termLog(`ERROR ENABLING DEV INTERFACE: ${e}`, "error");
-        }
-    };
-
-    const disableDevInterface = async () => {
-        try {
-            await AsyncStorage.setItem("useDevTools", "false");
-            router.navigate("/");
-        } catch (e) {
-            termLog(`ERROR DISABLING DEV INTERFACE: ${e}`, "error");
-        }
-    };
-
     const deleteAll = async () => {
         try {
             await AsyncStorage.multiRemove([
@@ -257,7 +222,6 @@ export default function Profile() {
                 "weight",
                 "height",
                 "username",
-                "useDevTools",
                 "hasLaunched",
                 "sleep",
                 "pushupTime",
@@ -498,55 +462,15 @@ export default function Profile() {
                             subheader={t("page_profile.developer.description")}
                         >
                             <View style={styles.flexyview}>
-                                <BetterText
-                                    textAlign="normal"
-                                    fontWeight="Regular"
-                                    fontSize={15}
-                                >
-                                    {t("page_profile.developer.status", {
-                                        status:
-                                            wantsDev === true
-                                                ? t("globals.enabled")
-                                                : t("globals.disabled"),
-                                    })}
-                                </BetterText>
-                                <GapView height={10} />
-                                {wantsDev === false ? (
-                                    <Button
-                                        style="HMM"
-                                        action={enableDevInterface}
-                                        buttonText={t(
-                                            "page_profile.developer.button.enable"
-                                        )}
-                                    />
-                                ) : (
-                                    <View
-                                        style={{
-                                            display: "flex",
-                                            flexDirection: "row",
-                                        }}
-                                    >
-                                        <Button
-                                            style="HMM"
-                                            action={disableDevInterface}
-                                            buttonText={t(
-                                                "page_profile.developer.button.disable"
-                                            )}
-                                        />
-                                        <GapView width={10} />
-                                        <Button
-                                            style="DEFAULT"
-                                            action={() =>
-                                                router.navigate(
-                                                    "/DeveloperInterface"
-                                                )
-                                            }
-                                            buttonText={t(
-                                                "page_profile.developer.button.other_button"
-                                            )}
-                                        />
-                                    </View>
-                                )}
+                                <Button
+                                    style="HMM"
+                                    action={() =>
+                                        router.navigate("/DeveloperInterface")
+                                    }
+                                    buttonText={t(
+                                        "page_profile.developer.button"
+                                    )}
+                                />
                             </View>
                         </Division>
                         <Division

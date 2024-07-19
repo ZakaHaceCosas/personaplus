@@ -64,14 +64,9 @@
             }
         },
         "developer": {
-            "use_dev_interface": "Use Dev Interface?",
+            "use_dev_interface": "Dev Interface",
             "description": "Enables access to advanced developer info, useful for testing and contribution purposes.",
-            "status": "Dev Interface is {{status}}.",
-            "button": {
-                "disable": "Disable Dev Interface",
-                "enable": "Enable Dev Interface",
-                "other_button": "Open Dev Interface"
-            }
+            "button": "Open Dev Interface"
         },
         "danger_zone": {
             "preheader": "DANGER ZONE",

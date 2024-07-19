@@ -209,7 +209,6 @@ export default function WelcomePage() {
                 await AsyncStorage.setItem("pushupTime", timeToPushUp);
                 await AsyncStorage.setItem("hasLaunched", "true");
                 await AsyncStorage.setItem("objectives", "{}");
-                await AsyncStorage.setItem("useDevTools", "false");
                 await AsyncStorage.setItem("language", language);
                 router.navigate("/");
             } catch (e) {
