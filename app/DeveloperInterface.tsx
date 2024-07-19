@@ -164,7 +164,6 @@ export default function DeveloperInterface() {
     const devFunctionToClearAll = async () => {
         try {
             await AsyncStorage.multiRemove([
-                "useDevTools",
                 "hasLaunched",
                 "age",
                 "gender",
@@ -273,7 +272,6 @@ export default function DeveloperInterface() {
         const fetchAll = async () => {
             try {
                 const e = await AsyncStorage.multiGet([
-                    "useDevTools",
                     "hasLaunched",
                     "age",
                     "gender",
