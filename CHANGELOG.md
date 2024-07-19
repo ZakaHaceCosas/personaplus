@@ -25,7 +25,8 @@ END README
 
 ## 0.0.1-R5-b23
 
-- Code quality improvements.
+- Several code quality improvements.
+- Renamed `components/` to `src/`.
 
 ## 0.0.1-R5-b22
 
