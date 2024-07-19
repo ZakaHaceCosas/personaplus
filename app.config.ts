@@ -9,7 +9,7 @@ const config: ExpoConfig.ExpoConfig = {
     scheme: "personaplus",
     description: "Give yourself a PLUS",
     owner: "zakahacecosas",
-    version: "0.0.1-R5-b22",
+    version: "0.0.1-R5-b23",
     orientation: "portrait",
     githubUrl: "https://github.com/ZakaHaceCosas/personaplus",
     icon: "./assets/icon.png",
@@ -41,7 +41,7 @@ const config: ExpoConfig.ExpoConfig = {
             "android.permission.POST_NOTIFICATIONS",
             "android.permission.RECEIVE_BOOT_COMPLETED"
         ],
-        versionCode: 22,
+        versionCode: 23,
         backgroundColor: "#0E1013"
     },
     web: {

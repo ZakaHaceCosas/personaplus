@@ -23,6 +23,10 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 END README
 -->
 
+## 0.0.1-R5-b23
+
+- Code quality improvements.
+
 ## 0.0.1-R5-b22
 
 - Implemented translations: now the app lets you choose between English (fully done) and Spanish (work in progress).
@@ -37,6 +41,7 @@ END README
 - Imrpoved some comments for better code understandability.
 - Now PersonaPlus will check daily for your active objectives' due days. If you've done an objective today, and tomorrow you have to do it again, it's `wasDone` (_boolean_) value will change to `false` again so it's shown again on the app's homepage.
 - Added Expo's `expo-background-fetch` and `expo-task-manager` for that. Also fixed a few deps.
+- Improved detection of invalid user data (age, weight, height...).
 
 ## 0.0.1-R5-b21
 
