@@ -59,7 +59,8 @@
                 "update_available_text": "Una nueva versión ({{latestVersion}}) está disponible. Por favor, actualiza PersonaPlus a la última versión.\n\n\"Actualizar\" te redirigiriá a la página de descarga del último APK.\n\n\"Novedades\" te llevará a la página de la actualización en GitHub para ver un resumen de lo que hay de nuevo.",
                 "youre_up_to_date": "¡Estás al día!",
                 "youre_maybe_up_to_date": "No se pudo consultar el repositorio. Puede que estés al día o puede que no.",
-                "cant_check_if_youre_up_to_date": "No se pudo comprobar si hay actualizaciones. Por favor, intenta más tarde (o comprueba manualmente el repo)."
+                "cant_check_if_youre_up_to_date": "No se pudo comprobar si hay actualizaciones. Por favor, intenta más tarde (o comprueba manualmente el repo).",
+                "failed_to_check": "No se pudo buscar actualizaciones. Por favor, intenta más tarde (o revisa manualmente el repositorio)."
             }
         },
         "developer": {
@@ -349,6 +350,10 @@
     },
     "notifications": {
         "daily_active_objectives_pending": "¡Objetivos de PersonaPlus por hacer!"
+    },
+    "messages": {
+        "created_objective": "¡Objetivo creado con éxito!",
+        "marked_objective_as_done": "¡Objetivo marcado como completado!"
     },
     "sections": {
         "headers": {

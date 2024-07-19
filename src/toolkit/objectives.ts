@@ -31,7 +31,7 @@ const deleteObjective = async (identifier: number): Promise<void> => {
 };
 
 // Función para marcar un objetivo como completado dado su identificador
-const markObjectiveAsDone = async (identifier: number): Promise<void> => {
+const markObjectiveAsDone = async (identifier: number, confirmWithToast: boolean, t: TFunction): Promise<void> => {
     try {
         const objectives = await getObjectives();
         const updatedObjectives = objectives.map(obj =>
@@ -39,12 +39,11 @@ const markObjectiveAsDone = async (identifier: number): Promise<void> => {
         );
         await saveObjectives(updatedObjectives);
         router.navigate("/");
-        if (Platform.OS === "android") {
-            ToastAndroid.show("Marked as done!", ToastAndroid.LONG);
+        if (Platform.OS === "android" && confirmWithToast === true) {
+            ToastAndroid.show(t("messages.marked_objective_as_done"), ToastAndroid.LONG);
         }
     } catch (e) {
-        const log: string = "Got an error marking objective as done! " + e;
-        termLog(log, "error");
+        termLog("Got an error marking objective as done! " + e, "error");
     }
 };
 

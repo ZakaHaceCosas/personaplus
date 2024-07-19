@@ -150,7 +150,7 @@ export default function Profile() {
             termLog("Error checking for update: " + e, "error");
             if (Platform.OS === "android") {
                 ToastAndroid.show(
-                    "Failed to check for updates. Please try again later (or manually check the repo).",
+                    t("page_profile.updates.update_flow.failed_to_check"),
                     ToastAndroid.SHORT
                 );
             }

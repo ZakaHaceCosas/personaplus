@@ -219,7 +219,10 @@ export default function DeveloperInterface() {
         } catch (e) {
             termLog(String(e), "error");
             if (Platform.OS === "android") {
-                ToastAndroid.show("REACT ERROR: " + e, ToastAndroid.LONG);
+                ToastAndroid.show(
+                    `${t("globals.react_error")} - ${e}`,
+                    ToastAndroid.LONG
+                );
             }
         } finally {
             router.navigate("/");
