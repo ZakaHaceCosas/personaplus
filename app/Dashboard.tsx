@@ -1,7 +1,7 @@
 // Dashboard.tsx
 // Dashboard, where you setup your path to success.
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
     DimensionValue,
@@ -54,7 +54,7 @@ export default function Dashboard() {
         [key: string]: Objective;
     } | null>(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchObjectives = async () => {
             try {
                 const storedObjectives =

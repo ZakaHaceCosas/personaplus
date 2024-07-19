@@ -1,7 +1,7 @@
 // BetterText.tsx
 // Text, con estilos apropiados y la tipografía Be Vietnam Pro
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { TextStyle, Text } from "react-native";
 
 // TypeScript, supongo
@@ -30,7 +30,7 @@ interface BetterTextProps {
     isSerif?: boolean; // Wether to use Serif font or not
     onTap?: () => void; // Si se proporciona, el texto actuará como un botón / enlace y hará algo
     textAlign?: "center" | "normal" | "left" | "right"; // Alineación del texto
-    children: React.ReactNode; // Texto en sí, dentro del tag <BeText>
+    children: ReactNode; // Texto en sí, dentro del tag <BeText>
     url?: boolean; // Si es verdadero el texto se estilizará como un enlace externo - default: false
 }
 

@@ -1,7 +1,7 @@
 // section/Section.tsx
 // Sección
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { View } from "react-native";
 import SectionHeader from "@/src/section/SectionHeader";
 import { useTranslation } from "react-i18next";
@@ -17,7 +17,7 @@ interface DivisionProps {
         | "Profile"
         | "About"
         | "Developer";
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 // Creamos la función

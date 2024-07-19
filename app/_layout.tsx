@@ -1,7 +1,7 @@
 // _layout.tsx
 // Para evitar código duplicado, básicamente
 
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, ScrollView } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
@@ -59,7 +59,7 @@ export default function Layout() {
     });
 
     // Cargamos las fuentes
-    React.useEffect(() => {
+    useEffect(() => {
         const onLayoutRootView = async () => {
             if (fontsLoaded || fontError) {
                 await SplashScreen.hideAsync();

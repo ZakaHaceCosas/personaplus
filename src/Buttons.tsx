@@ -1,7 +1,7 @@
 // Buttons.tsx
 // Buttons, botones, elementos presionables, ENTIDADES INTERACTIVAS UTILIZABLES POR MEDIO DE CLICS / TOCAMIENTOS DE LA PANTALLA xd
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { Pressable, DimensionValue } from "react-native";
 import BetterText from "@/src/BetterText";
 
@@ -13,7 +13,7 @@ interface BtnsProps {
     width?: "auto" | "fill";
     height?: "auto" | "fill" | "default" | number;
     layout?: "normal" | "box" | "fixed";
-    children?: React.ReactNode;
+    children?: ReactNode;
 }
 
 // Creamos la funcion

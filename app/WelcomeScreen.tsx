@@ -1,7 +1,7 @@
 // WelcomeScreen.tsx
 // Welcome page
 
-import React, { useState } from "react";
+import React, { Fragment, useRef, useState } from "react";
 import { router } from "expo-router";
 import {
     StyleSheet,
@@ -87,7 +87,7 @@ export default function WelcomePage() {
         { value: "female", label: "Transformer", default: false }, // lol.
         { value: "female", label: "Non-existant being", default: false },
     ];
-    const inputRefs = React.useRef<TextInput[]>([]);
+    const inputRefs = useRef<TextInput[]>([]);
     const easteregg: number = Math.floor(Math.random() * 690) + 1;
     const [focuspointValue, setFocuspointValue] = useState<string | null>(null);
     const handleFocuspointChange = (value: string) => {
@@ -255,7 +255,7 @@ export default function WelcomePage() {
             }}
         >
             {currentTab === 1 && (
-                <React.Fragment>
+                <Fragment>
                     <BetterText
                         textAlign="normal"
                         fontWeight="Bold"
@@ -303,11 +303,11 @@ export default function WelcomePage() {
                             height={500}
                         />
                     </View>
-                </React.Fragment>
+                </Fragment>
             )}
 
             {currentTab === 2 && (
-                <React.Fragment>
+                <Fragment>
                     <BetterText
                         textAlign="center"
                         fontWeight="Bold"
@@ -529,11 +529,11 @@ export default function WelcomePage() {
                             />
                         )}
                     </View>
-                </React.Fragment>
+                </Fragment>
             )}
 
             {currentTab === 3 && (
-                <React.Fragment>
+                <Fragment>
                     <BetterText
                         textAlign="normal"
                         fontWeight="Bold"
@@ -595,11 +595,11 @@ export default function WelcomePage() {
                             />
                         )}
                     </View>
-                </React.Fragment>
+                </Fragment>
             )}
 
             {currentTab === 4 && (
-                <React.Fragment>
+                <Fragment>
                     <BetterText
                         textAlign="normal"
                         fontWeight="Bold"
@@ -737,7 +737,7 @@ export default function WelcomePage() {
                             />
                         )}
                     </View>
-                </React.Fragment>
+                </Fragment>
             )}
         </ScrollView>
     );

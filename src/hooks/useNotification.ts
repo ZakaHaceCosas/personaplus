@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Platform } from 'react-native';
 import { isDevice } from 'expo-device';
 import {
@@ -61,7 +61,7 @@ const useNotification = () => {
 
     const [expoPushToken, setExpoPushToken] = useState('');
 
-    React.useEffect(() => {
+    useEffect(() => {
         registerForPushNotificationsAsync().then(token => {
             if (token) {
                 setExpoPushToken(token.data);
