@@ -1,4 +1,4 @@
-// section/division/Division.tsx
+// section/Division.tsx
 // División
 
 import React, { ReactNode } from "react";

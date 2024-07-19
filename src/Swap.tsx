@@ -1,4 +1,4 @@
-// Swap.tsx
+// src/Swap.tsx
 // BetterSwitches (porque un "switch", en teoría hace "swap").
 
 import React, { useState, useEffect } from "react";

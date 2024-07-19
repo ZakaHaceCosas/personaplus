@@ -1,4 +1,5 @@
-// components/types/Objective.ts
+// src/types/Objective.ts
+// Objective Type
 
 export interface Objective {
     identifier: number;

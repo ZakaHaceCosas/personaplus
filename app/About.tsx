@@ -12,7 +12,7 @@ import {
 import { router } from "expo-router";
 import BetterText from "@/src/BetterText";
 import Section from "@/src/section/Section";
-import Division from "@/src/section/division/Division";
+import Division from "@/src/section/Division";
 import Button from "@/src/Buttons";
 import GapView from "@/src/GapView";
 import { useTranslation } from "react-i18next";

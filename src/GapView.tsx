@@ -1,4 +1,4 @@
-// GapView.tsx
+// src/GapView.tsx
 // ¿flex-gap no funciona? ¿No quieres usar Flexbox? Un espaciador que no ocupa espacio en tu código
 
 import React from "react";
