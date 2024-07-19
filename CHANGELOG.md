@@ -25,9 +25,29 @@ END README
 
 ## 0.0.1-R5-b23
 
-- Several code quality improvements.
+### User updates
+
+- Now the duration selector for creating objectives allows for more precise durations.
+- Translated all `ToastAndroid` messages.
+- Simplified the Dev Interface flow. Removed the need of clicking three times just to access it the first time.
+- Replaced some `.navigate()` functions with `.back()` to avoid confusing the user.
+- Translated reminder notifications.
+
+### Dev updates
+
+- **A lot of code quality improvements and refactors, this is the key point of this update.**
 - Renamed `components/` to `src/`.
-- Refactored `termLog` to avoid require cycles. It has been toolkified and moved to `src/toolkit/debug/console.ts`.
+- Refactored `termLog` to avoid require cycles. It has been toolkified and moved to `src/toolkit/debug/console.ts`. Types have been consequently moved.
+- Removed the `wantsDev` check. This lead to less code and a simpler flow.
+- Added JSDoc to a few functions.
+- Toolkified reminder notifications.
+- Added some try-catch statements to improve error spotting.
+- Merged `Section.tsx` and `SectionHeader.tsx` onto a single file.
+
+### Trivial changes
+
+- Removed the preheader on the about page to save space.
+- Fixed an issue with spacing among the "CLEAR ALL" button in Dev Interface.
 
 ## 0.0.1-R5-b22
 
