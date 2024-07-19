@@ -144,9 +144,9 @@ const resetObjectivesDaily = async (): Promise<void> => {
 };
 
 // La registramos
-const BACKGROUND_FETCH_TASK = 'background-fetch';
+const BACKGROUND_ACTIVE_OBJECTIVE_FETCHING = 'background-active-objective-fetching';
 
-TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
+TaskManager.defineTask(BACKGROUND_ACTIVE_OBJECTIVE_FETCHING, async () => {
     try {
         await resetObjectivesDaily();
         return BackgroundFetch.BackgroundFetchResult.NewData;
@@ -158,8 +158,8 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
 
 async function registerBackgroundObjectivesFetchAsync() {
     try {
-        await BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-            minimumInterval: 60 * 15,
+        await BackgroundFetch.registerTaskAsync(BACKGROUND_ACTIVE_OBJECTIVE_FETCHING, {
+            minimumInterval: 60 * 10,
             stopOnTerminate: false,
             startOnBoot: true,
         });
