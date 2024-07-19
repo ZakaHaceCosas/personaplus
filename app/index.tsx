@@ -172,7 +172,7 @@ export default function Home() {
 
     const handleMarkingObjectiveAsDone = async (identifier: number) => {
         try {
-            await markObjectiveAsDone(identifier);
+            await markObjectiveAsDone(identifier, true, t);
             const updatedObjectives = await fetchObjectives("object");
             setObjectives(updatedObjectives);
         } catch (e) {

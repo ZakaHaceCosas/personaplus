@@ -162,7 +162,11 @@ export default function Sessions() {
     const finish = async () => {
         if (currentObjective) {
             try {
-                await markObjectiveAsDone(currentObjective.identifier);
+                await markObjectiveAsDone(
+                    currentObjective.identifier,
+                    false,
+                    t
+                );
                 if (Platform.OS === "android") {
                     ToastAndroid.show(
                         messageForSessionCompleted,

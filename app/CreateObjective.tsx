@@ -263,7 +263,7 @@ export default function Form() {
 
             if (Platform.OS === "android") {
                 ToastAndroid.show(
-                    "Created your objective successfully!",
+                    t("messages.created_objective"),
                     ToastAndroid.SHORT
                 );
             }
@@ -283,7 +283,10 @@ export default function Form() {
         submit().catch(e => {
             termLog("REACT ERROR: " + e, "error");
             if (Platform.OS === "android") {
-                ToastAndroid.show("REACT ERROR: " + e, ToastAndroid.LONG);
+                ToastAndroid.show(
+                    `${t("globals.react_error")} - ${e}`,
+                    ToastAndroid.LONG
+                );
             }
         });
     };
