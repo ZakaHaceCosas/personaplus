@@ -3,8 +3,8 @@
 
 import React from "react";
 import { StyleSheet, View, DimensionValue, Pressable } from "react-native";
-import BetterText from "@/components/BetterText";
-import GapView from "@/components/GapView";
+import BetterText from "@/src/BetterText";
+import GapView from "@/src/GapView";
 
 // TypeScript, supongo
 interface Option {
@@ -53,7 +53,7 @@ export default function Swap({
     onValueChange,
 }: SwapProps) {
     const defaultOption = options.find(option => option.default);
-    const [selectedOption, setSelectedOption] = React.useState<Option | null>(
+    const [selectedOption, setSelectedOption] = useState<Option | null>(
         value
             ? options.find(option => option.value === value) || null
             : defaultOption || null

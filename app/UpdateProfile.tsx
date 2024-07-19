@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     DimensionValue,
     StyleSheet,
@@ -7,14 +7,14 @@ import {
     ScrollView,
 } from "react-native";
 import { router } from "expo-router";
-import BetterText from "@/components/BetterText";
-import GapView from "@/components/GapView";
-import Swap from "@/components/Swap";
+import BetterText from "@/src/BetterText";
+import GapView from "@/src/GapView";
+import Swap from "@/src/Swap";
 import { termLog } from "./DeveloperInterface";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Button from "@/components/Buttons";
+import Button from "@/src/Buttons";
 import { useTranslation } from "react-i18next";
-import { validateBasicData } from "@/components/toolkit/userData";
+import { validateBasicData } from "@/src/toolkit/userData";
 
 // Creamos los estilos
 const styles = StyleSheet.create({
@@ -41,13 +41,13 @@ const styles = StyleSheet.create({
 // Creamos la función
 export default function UpdateProfile() {
     const { t } = useTranslation();
-    const [formData, setFormData] = React.useState({
+    const [formData, setFormData] = useState({
         username: "",
         height: "",
         weight: "",
         age: "",
     });
-    const [genderValue, setGenderValue] = React.useState<string | null>(null);
+    const [genderValue, setGenderValue] = useState<string | null>(null);
     const handleGenderChange = (value: string) => {
         setGenderValue(value);
     };

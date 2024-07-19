@@ -3,8 +3,8 @@
 
 import React from "react";
 import { DimensionValue, View } from "react-native";
-import BetterText from "@/components/BetterText";
-import GapView from "@/components/GapView";
+import BetterText from "@/src/BetterText";
+import GapView from "@/src/GapView";
 
 // TypeScript, supongo
 interface NotificationProps {

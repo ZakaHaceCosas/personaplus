@@ -15,27 +15,27 @@ import {
     fetchObjectives,
     registerBackgroundObjectivesFetchAsync,
     checkForTodaysObjectives,
-} from "@/components/toolkit/objectives";
-import BetterText from "@/components/BetterText";
-import Section from "@/components/section/Section";
-import BottomNav from "@/components/BottomNav";
-import Division from "@/components/section/division/Division";
+} from "@/src/toolkit/objectives";
+import BetterText from "@/src/BetterText";
+import Section from "@/src/section/Section";
+import BottomNav from "@/src/BottomNav";
+import Division from "@/src/section/division/Division";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Button from "@/components/Buttons";
-import GapView from "@/components/GapView";
-import Footer from "@/components/Footer";
+import Button from "@/src/Buttons";
+import GapView from "@/src/GapView";
+import Footer from "@/src/Footer";
 import { termLog } from "@/app/DeveloperInterface";
 import { useTranslation } from "react-i18next";
 import {
     scheduleRandomNotifications,
     cancelScheduledNotifications,
-} from "@/components/hooks/useNotification";
-import { adjustedToday } from "@/components/toolkit/today";
+} from "@/src/hooks/useNotification";
+import { adjustedToday } from "@/src/toolkit/today";
 import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
 
 // TypeScript, supongo
-import { Objective } from "@/components/types/Objective";
+import { Objective } from "@/src/types/Objective";
 
 // Creamos los estilos
 const styles = StyleSheet.create({

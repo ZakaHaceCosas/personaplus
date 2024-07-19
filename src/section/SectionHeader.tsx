@@ -3,9 +3,9 @@
 
 import React from "react";
 import { View } from "react-native";
-import BetterText from "@/components/BetterText";
+import BetterText from "@/src/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import GapView from "@/components/GapView";
+import GapView from "@/src/GapView";
 
 // TypeScript, supongo
 interface SectionProps {

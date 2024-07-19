@@ -1,7 +1,7 @@
 // Sessions.tsx
 // Página para sesiones
 
-import React from "react";
+import React, { useState } from "react";
 import {
     View,
     StyleSheet,
@@ -15,18 +15,18 @@ import {
     fetchObjectives,
     markObjectiveAsDone,
     getObjectiveByIdentifier,
-} from "@/components/toolkit/objectives";
+} from "@/src/toolkit/objectives";
 import { router, useGlobalSearchParams } from "expo-router";
-import BetterText from "@/components/BetterText";
+import BetterText from "@/src/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import GapView from "@/components/GapView";
+import GapView from "@/src/GapView";
 import { termLog } from "./DeveloperInterface";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
-import Button from "@/components/Buttons";
+import Button from "@/src/Buttons";
 import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo.
-import { Objective } from "@/components/types/Objective";
+import { Objective } from "@/src/types/Objective";
 
 // Estilos
 const styles = StyleSheet.create({
@@ -49,19 +49,18 @@ const styles = StyleSheet.create({
 
 export default function Sessions() {
     const { t } = useTranslation();
-    const [loading, setLoading] = React.useState<boolean>(true);
+    const [loading, setLoading] = useState<boolean>(true);
     const params = useGlobalSearchParams();
     const objectiveIdentifier = params.id ? Number(params.id) : null;
-    const [objectives, setObjectives] = React.useState<Objective[] | null>(
+    const [objectives, setObjectives] = useState<Objective[] | null>(null);
+    const [currentObjective, setCurrentObjective] = useState<Objective | null>(
         null
     );
-    const [currentObjective, setCurrentObjective] =
-        React.useState<Objective | null>(null);
     /*
     If you wonder why there are two variables for the timer's loops, one of them is to keep account of many times repeat (laps) and other one is to set the "key" attribute of the circle timer, which is required for it to loop.
     */
-    const [laps, setLaps] = React.useState<number>(0);
-    const [timerKey, setTimerKey] = React.useState<number>(0);
+    const [laps, setLaps] = useState<number>(0);
+    const [timerKey, setTimerKey] = useState<number>(0);
 
     React.useEffect(() => {
         const handleFetchObjectives = async () => {
@@ -118,7 +117,7 @@ export default function Sessions() {
           )
         : "Doing something";
 
-    const [isTimerRunning, setTimerStatus] = React.useState(true);
+    const [isTimerRunning, setTimerStatus] = useState(true);
 
     const toggleTimerStatus = (manualTarget?: boolean): void => {
         setTimerStatus(
@@ -190,7 +189,7 @@ export default function Sessions() {
         }
     };
 
-    const [isUserCheckingHelp, setIsUserCheckingHelp] = React.useState(false);
+    const [isUserCheckingHelp, setIsUserCheckingHelp] = useState(false);
 
     const toggleHelpMenu = (): void => {
         setIsUserCheckingHelp(prev => !prev);

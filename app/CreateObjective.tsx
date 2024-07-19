@@ -1,6 +1,6 @@
 // components/Form.tsx
 // Formulario con select, array de toggles, increment/decrement para duration, repetitions, rests y rest duration
-import React from "react";
+import React, { useState } from "react";
 import {
     StyleSheet,
     Platform,
@@ -10,14 +10,14 @@ import {
     Pressable,
 } from "react-native";
 import { router } from "expo-router";
-import BetterText from "@/components/BetterText";
-import GapView from "@/components/GapView";
+import BetterText from "@/src/BetterText";
+import GapView from "@/src/GapView";
 import { Picker as Select } from "@react-native-picker/picker";
-import Button from "@/components/Buttons";
+import Button from "@/src/Buttons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { termLog } from "./DeveloperInterface";
-import Notification from "@/components/Notification";
-import { Objective, ObjectiveWithoutId } from "@/components/types/Objective";
+import Notification from "@/src/Notification";
+import { Objective, ObjectiveWithoutId } from "@/src/types/Objective";
 import { useTranslation } from "react-i18next";
 // import { v4 as uuid } from "uuid";
 // if you wonder what is UUID doing here, well - after a problem with duplicate IDs i wanted to try this as a solution, but I simply don't like to have such a big ID with letters and dashes, would have to redo some types and stuff.
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 
 export default function Form() {
     const { t } = useTranslation();
-    const [exercise, setExercise] = React.useState<string>("");
+    const [exercise, setExercise] = useState<string>("");
     const exercises = [
         "Push Up",
         "Lifting",
@@ -62,7 +62,7 @@ export default function Form() {
         "Walking",
         "Meditation",
     ];
-    const [days, setDays] = React.useState<boolean[]>([
+    const [days, setDays] = useState<boolean[]>([
         false,
         false,
         false,
@@ -71,17 +71,17 @@ export default function Form() {
         false,
         false,
     ]);
-    const [duration, setDuration] = React.useState<number>(0);
-    const [repetitions, setRepetitions] = React.useState<number>(0);
-    const [rests, setRests] = React.useState<number>(0);
-    const [restDuration, setRestDuration] = React.useState<number>(0);
-    const [amount, setAmount] = React.useState<number>(0);
-    const [barWeight, setBarWeight] = React.useState<number>(0);
-    const [liftWeight, setLiftWeight] = React.useState<number>(0);
-    const [hands, setHands] = React.useState<number>(2);
-    const [lifts, setLifts] = React.useState<number>(0);
-    const [timeToPushUp, setTimeToPushup] = React.useState<number>(0);
-    const [speed, setSpeed] = React.useState<number>(2);
+    const [duration, setDuration] = useState<number>(0);
+    const [repetitions, setRepetitions] = useState<number>(0);
+    const [rests, setRests] = useState<number>(0);
+    const [restDuration, setRestDuration] = useState<number>(0);
+    const [amount, setAmount] = useState<number>(0);
+    const [barWeight, setBarWeight] = useState<number>(0);
+    const [liftWeight, setLiftWeight] = useState<number>(0);
+    const [hands, setHands] = useState<number>(2);
+    const [lifts, setLifts] = useState<number>(0);
+    const [timeToPushUp, setTimeToPushup] = useState<number>(0);
+    const [speed, setSpeed] = useState<number>(2);
     const speedOptions = [
         ["Brisk Walk", "1.6 - 3.2 km/h"],
         ["Light Jog", "3.2 - 4.0 km/h"],

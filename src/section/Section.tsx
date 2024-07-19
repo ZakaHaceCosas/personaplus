@@ -3,7 +3,7 @@
 
 import React from "react";
 import { View } from "react-native";
-import SectionHeader from "@/components/section/SectionHeader";
+import SectionHeader from "@/src/section/SectionHeader";
 import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo
