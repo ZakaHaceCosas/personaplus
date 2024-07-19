@@ -20,7 +20,7 @@ import GapView from "@/src/GapView";
 import BetterText from "@/src/BetterText";
 import { Picker as Select } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { termLog } from "./DeveloperInterface";
+import { termLog } from "@/src/toolkit/debug/console";
 import { useTranslation } from "react-i18next";
 import { changeLanguage } from "i18next";
 import { validateBasicData } from "@/src/toolkit/userData";

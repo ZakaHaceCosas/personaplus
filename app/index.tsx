@@ -24,7 +24,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/src/Buttons";
 import GapView from "@/src/GapView";
 import Footer from "@/src/Footer";
-import { termLog } from "@/app/DeveloperInterface";
+import { termLog } from "@/src/toolkit/debug/console";
 import { useTranslation } from "react-i18next";
 import {
     scheduleRandomNotifications,

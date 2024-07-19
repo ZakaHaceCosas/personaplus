@@ -15,7 +15,7 @@ import GapView from "@/src/GapView";
 import { Picker as Select } from "@react-native-picker/picker";
 import Button from "@/src/Buttons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { termLog } from "./DeveloperInterface";
+import { termLog } from "@/src/toolkit/debug/console";
 import Notification from "@/src/Notification";
 import { Objective, ObjectiveWithoutId } from "@/src/types/Objective";
 import { useTranslation } from "react-i18next";

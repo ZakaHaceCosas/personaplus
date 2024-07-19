@@ -11,7 +11,7 @@ import {
     scheduleNotificationAsync,
     cancelScheduledNotificationAsync
 } from "expo-notifications";
-import { termLog } from '@/app/DeveloperInterface';
+import { termLog } from '@/src/toolkit/debug/console';
 import * as Constants from "expo-constants";
 import { TFunction } from 'i18next';
 

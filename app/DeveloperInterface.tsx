@@ -24,9 +24,15 @@ import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import { usePathname, router } from "expo-router";
 import { useTranslation } from "react-i18next";
+import {
+    termLog,
+    getLogsFromStorage,
+    addLogToGlobal,
+} from "@/src/toolkit/debug/console";
 
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
+import { Log, Logs } from "@/src/types/Logs";
 
 const styles = StyleSheet.create({
     consoleview: {
@@ -76,57 +82,9 @@ const styles = StyleSheet.create({
     },
 });
 
-interface Log {
-    message: string;
-    type: "log" | "warn" | "error" | "success";
-    timestamp: number;
-}
-
-// Función para obtener logs desde AsyncStorage
-const getLogsFromStorage = async (): Promise<Log[]> => {
-    try {
-        const logsString = await AsyncStorage.getItem("globalLogs");
-        if (logsString) {
-            return JSON.parse(logsString);
-        }
-    } catch (e) {
-        termLog("Error fetching logs from AsyncStorage: " + e, "error");
-    }
-    return [];
-};
-
-// Función para guardar logs en AsyncStorage
-const saveLogsToStorage = async (logs: Log[]) => {
-    try {
-        await AsyncStorage.setItem("globalLogs", JSON.stringify(logs));
-    } catch (e) {
-        termLog("Error saving logs to AsyncStorage: " + e, "error");
-    }
-};
-
-const addLogToGlobal = async (log: Log) => {
-    try {
-        const currentLogs = await getLogsFromStorage();
-        const updatedLogs = [...currentLogs, log];
-        await saveLogsToStorage(updatedLogs);
-    } catch (e) {
-        termLog("Error adding log to AsyncStorage: " + e, "error");
-    }
-};
-
-export const termLog = (
-    message: string,
-    type: "log" | "warn" | "error" | "success"
-) => {
-    console.log(message);
-    const timestamp = Date.now();
-    const newLog: Log = { message: message, type, timestamp };
-    addLogToGlobal(newLog);
-};
-
 export default function DeveloperInterface() {
     const { t } = useTranslation();
-    const [logs, setLogs] = useState<Log[]>([]);
+    const [logs, setLogs] = useState<Logs>([]);
 
     useEffect(() => {
         const fetchLogs = async () => {
@@ -231,7 +189,7 @@ export default function DeveloperInterface() {
         }
     };
 
-    const devFunctionToGenerateLogs = async (logs: Log[]) => {
+    const devFunctionToGenerateLogs = async (logs: Logs) => {
         const logText = logs
             .map(log => {
                 const date = new Date(log.timestamp);
@@ -269,7 +227,7 @@ export default function DeveloperInterface() {
         }
     };
 
-    const handleDevFunctionToGenerateLogs = async (logs: Log[]) => {
+    const handleDevFunctionToGenerateLogs = async (logs: Logs) => {
         try {
             const fileUri = await devFunctionToGenerateLogs(logs);
             if (fileUri) {
@@ -387,13 +345,13 @@ export default function DeveloperInterface() {
                     buttonText={t("dev_interface.clear.logs")}
                     style="WOR"
                 />
-                <GapView height={20} />
+                <GapView height={5} />
                 <Button
                     action={devFunctionToClearAll}
                     buttonText={t("dev_interface.clear.all")}
                     style="WOR"
                 />
-                <GapView height={5} />
+                <GapView height={15} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
                     {t("dev_interface.objectives_object")}
                 </BetterText>
