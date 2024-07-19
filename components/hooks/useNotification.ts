@@ -1,8 +1,19 @@
 import React from 'react'
 import { Platform } from 'react-native';
 import { isDevice } from 'expo-device';
-import { setNotificationChannelAsync, getPermissionsAsync, requestPermissionsAsync, setNotificationHandler, AndroidImportance, getExpoPushTokenAsync } from "expo-notifications";
+import {
+    setNotificationChannelAsync,
+    getPermissionsAsync,
+    requestPermissionsAsync,
+    setNotificationHandler,
+    AndroidImportance,
+    getExpoPushTokenAsync,
+    scheduleNotificationAsync,
+    cancelScheduledNotificationAsync
+} from "expo-notifications";
+import { termLog } from '@/app/DeveloperInterface';
 import * as Constants from "expo-constants";
+import { TFunction } from 'i18next';
 
 setNotificationHandler({
     handleNotification: async () => ({
@@ -60,5 +71,54 @@ const useNotification = () => {
 
     return expoPushToken
 }
+
+interface NotificationIdentifier {
+    identifier: string;
+}
+
+const scheduledNotifications: NotificationIdentifier[] = [];
+
+export const scheduleRandomNotifications = async (t: TFunction) => {
+    const notificationMessages: string[] = t("cool_messages.all_done", {
+        returnObjects: true,
+    });
+
+    const randomDelay = () => (Math.floor(Math.random() * 1800) + 1800) * 1000; // a random interval of 30-60 minutes, so user gets many reminders, but not too annoying
+
+
+    for (let i = 0; i < 2; i++) {
+        const randomMessage: string = notificationMessages[Math.floor(Math.random() * notificationMessages.length)];
+        const trigger = {
+            hour: Math.floor(Math.random() * 12) + 11,
+            minute: Math.floor(Math.random() * 60),
+            repeats: true,
+        };
+
+        const identifier = await scheduleNotificationAsync({
+            content: {
+                title: "Pending PersonaPlus objectives!",
+                body: randomMessage,
+            },
+            trigger,
+        });
+
+        // Store the notification identifier
+        scheduledNotifications.push({ identifier });
+
+        await new Promise(resolve => setTimeout(resolve, randomDelay()));
+        termLog(String(scheduledNotifications), "log");
+        termLog("Scheduled Notis ENABLED", "log");
+    }
+};
+
+export const cancelScheduledNotifications = async () => {
+    for (const { identifier } of scheduledNotifications) {
+        await cancelScheduledNotificationAsync(identifier);
+    }
+
+    scheduledNotifications.length = 0;
+    termLog(String(scheduledNotifications), "log");
+    termLog("Scheduled Notis DISABLED", "log");
+};
 
 export default useNotification
