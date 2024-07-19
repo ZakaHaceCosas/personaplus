@@ -77,12 +77,8 @@ const scheduleRandomNotifications = async () => {
         "It's that time again!",
     ];
 
-    // const randomDelay = () => Math.floor(Math.random() * 30) * 1000;
     const randomDelay = () => (Math.floor(Math.random() * 1800) + 1800) * 1000;
-    // for testing: uncomment 1st and comment 2nd line
-    // for production: the opposite (comment 1st and uncomment 2nd line)
-    // 1st one is a random interval of 0-29 seconds between random notification
-    // 2nd one is also a random interval, but of 30-60 minutes, so it's not annoying for the end user
+    // a random interval of 30-60 minutes, so user gets many reminders, but not too annoying
 
     for (let i = 0; i < 2; i++) {
         const randomMessage =
