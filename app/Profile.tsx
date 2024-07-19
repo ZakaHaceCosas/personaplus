@@ -16,7 +16,7 @@ import { router, usePathname } from "expo-router";
 import BetterText from "@/src/BetterText";
 import Footer from "@/src/Footer";
 import Section from "@/src/section/Section";
-import Division from "@/src/section/division/Division";
+import Division from "@/src/section/Division";
 import Button from "@/src/Buttons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BottomNav from "@/src/BottomNav";

@@ -1,13 +1,14 @@
-// section/Section.tsx
-// Sección
+// src/section/Section.tsx
 
 import React, { ReactNode } from "react";
 import { View } from "react-native";
-import SectionHeader from "@/src/section/SectionHeader";
+import BetterText from "@/src/BetterText";
+import Ionicons from "@expo/vector-icons/MaterialIcons";
+import GapView from "@/src/GapView";
 import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo
-interface DivisionProps {
+interface SectionProps {
     kind:
         | "Objectives"
         | "PassiveObjs"
@@ -21,47 +22,55 @@ interface DivisionProps {
 }
 
 // Creamos la función
-export default function Division({ kind, children }: DivisionProps) {
+export default function Section({ kind, children }: SectionProps) {
     const { t } = useTranslation();
     let label: string;
-    let icon: string;
+    let headerIcon:
+        | "timer"
+        | "calendar-today"
+        | "space-dashboard"
+        | "person"
+        | "info"
+        | "settings"
+        | "code"
+        | "question-mark"; // If you add a new icon, add it here
 
     switch (kind) {
         case "Objectives":
             label = t("sections.headers.your_active_objectives");
-            icon = "OBJS";
+            headerIcon = "timer";
             break;
         case "PassiveObjs":
             label = t("sections.headers.your_passive_objectives");
-            icon = "POBJS";
+            headerIcon = "calendar-today";
             break;
         case "HowYouAreDoing":
             label = t("sections.headers.how_you_are_doing");
-            icon = "HYAD";
+            headerIcon = "space-dashboard";
             break;
         case "Unknown":
             label = t("sections.headers.unknown");
-            icon = "IDK";
+            headerIcon = "question-mark";
             break;
         case "Settings":
             label = t("sections.headers.settings");
-            icon = "SETS";
+            headerIcon = "settings";
             break;
         case "Developer":
             label = t("sections.headers.developer");
-            icon = "DEV";
+            headerIcon = "code";
             break;
         case "Profile":
             label = t("sections.headers.your_profile");
-            icon = "PROF";
+            headerIcon = "person";
             break;
         case "About":
             label = t("sections.headers.about");
-            icon = "ABOUT";
+            headerIcon = "info";
             break;
         default:
             label = "UNKNOWN";
-            icon = "IDK";
+            headerIcon = "question-mark";
             break;
     }
 
@@ -75,7 +84,26 @@ export default function Division({ kind, children }: DivisionProps) {
                 overflow: "hidden",
             }}
         >
-            <SectionHeader label={label} icon={icon} />
+            <View
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    padding: 15,
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                }}
+            >
+                <Ionicons name={headerIcon} size={15} color="#DDDDDD" />
+                <GapView width={10} />
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Bold"
+                    fontSize={12}
+                    textColor="#DDDDDD"
+                >
+                    {String(label)}
+                </BetterText>
+            </View>
             {children}
         </View>
     );

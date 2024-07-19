@@ -1,4 +1,4 @@
-// Footer.tsx
+// src/Footer.tsx
 // No more, nada más, se acabó, it ended...
 
 import React from "react";

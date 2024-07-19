@@ -50,11 +50,13 @@ export default function BetterText({
     const lineheight: number = fontSize + 0.5; // La altura de línea es igual al tamaño de letra (+ 0.5 para arreglar el texto viendose "recortado")
     const color: string = textColor || "#FFF"; // Si el color no se especifica, es blanco
     const textalignment: "center" | "right" | "left" =
-        textAlign === "center" || textAlign === "normal"
+        textAlign === "center"
             ? "center"
             : textAlign === "right"
               ? "right"
-              : "left";
+              : textAlign === "normal" || textAlign === "left"
+                ? "left"
+                : "left";
     const textdecoration: "underline" | "none" = url ? "underline" : "none";
 
     const textStyle: TextStyle = {

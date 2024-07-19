@@ -19,7 +19,7 @@ import {
 import BetterText from "@/src/BetterText";
 import Section from "@/src/section/Section";
 import BottomNav from "@/src/BottomNav";
-import Division from "@/src/section/division/Division";
+import Division from "@/src/section/Division";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/src/Buttons";
 import GapView from "@/src/GapView";

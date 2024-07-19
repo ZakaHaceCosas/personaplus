@@ -1,4 +1,4 @@
-// Notification.tsx
+// src/Notification.tsx
 // Notificaciones, para alertar al usuario de cosas que pasan
 
 import React from "react";
