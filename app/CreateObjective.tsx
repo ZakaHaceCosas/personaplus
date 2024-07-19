@@ -1,5 +1,6 @@
-// components/Form.tsx
-// Formulario con select, array de toggles, increment/decrement para duration, repetitions, rests y rest duration
+// app/CreateObjective.tsx
+// Creación de objetivos
+
 import React, { useState } from "react";
 import {
     StyleSheet,
@@ -19,8 +20,6 @@ import { termLog } from "@/src/toolkit/debug/console";
 import Notification from "@/src/Notification";
 import { Objective, ObjectiveWithoutId } from "@/src/types/Objective";
 import { useTranslation } from "react-i18next";
-// import { v4 as uuid } from "uuid";
-// if you wonder what is UUID doing here, well - after a problem with duplicate IDs i wanted to try this as a solution, but I simply don't like to have such a big ID with letters and dashes, would have to redo some types and stuff.
 
 // Creamos los estilos
 const styles = StyleSheet.create({
@@ -153,7 +152,22 @@ export default function Form() {
     const handleDecrement = (value: string) => {
         switch (value) {
             case "duration":
-                setDuration(prev => (prev > 1 ? prev - 1 : prev));
+                // odio javascript.
+                setDuration(prev => {
+                    let newValue;
+
+                    if (prev > 5) {
+                        newValue = prev - 1;
+                    } else if (prev > 1) {
+                        newValue = prev - 0.25;
+                    } else if (prev > 0.1) {
+                        newValue = prev - 0.1;
+                    } else {
+                        return prev; // mantener el minimo, como en las demas
+                    }
+
+                    return parseFloat(newValue.toFixed(2)); // redondear a 2 decimales, porque javascript no sabe contar (yo flipo)
+                });
                 break;
             case "repetitions":
                 setRepetitions(prev => (prev > 0 ? prev - 1 : prev));
@@ -288,10 +302,6 @@ export default function Form() {
                 );
             }
         });
-    };
-
-    const getOut = () => {
-        router.push("/");
     };
 
     let allConditionsAreMet: boolean = false;
@@ -1009,7 +1019,7 @@ export default function Form() {
                         <Button
                             style="DEFAULT"
                             buttonText={t("globals.nevermind")}
-                            action={getOut}
+                            action={router.back}
                         />
                     </View>
                     <GapView height={10} />
