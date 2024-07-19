@@ -178,7 +178,7 @@ export default function WelcomePage() {
         if (currentTab > 0 && currentTab <= 3) {
             setTab(prevPage => prevPage + 1);
         } else {
-            router.navigate("/");
+            router.replace("/");
         }
     };
 
@@ -210,7 +210,7 @@ export default function WelcomePage() {
                 await AsyncStorage.setItem("hasLaunched", "true");
                 await AsyncStorage.setItem("objectives", "{}");
                 await AsyncStorage.setItem("language", language);
-                router.navigate("/");
+                router.replace("/");
             } catch (e) {
                 termLog("Error creating profile: " + e, "error");
             }

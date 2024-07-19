@@ -282,7 +282,7 @@ export default function Form() {
                 );
             }
 
-            router.push("/Dashboard");
+            router.navigate("/Dashboard");
         } catch (e) {
             termLog("Could not create an objective, got error: " + e, "error");
         }
