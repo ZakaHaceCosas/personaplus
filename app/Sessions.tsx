@@ -20,7 +20,7 @@ import { router, useGlobalSearchParams } from "expo-router";
 import BetterText from "@/src/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/src/GapView";
-import { termLog } from "./DeveloperInterface";
+import { termLog } from "@/src/toolkit/debug/console";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import Button from "@/src/Buttons";
 import { useTranslation } from "react-i18next";

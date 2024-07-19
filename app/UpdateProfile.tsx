@@ -10,7 +10,7 @@ import { router } from "expo-router";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import Swap from "@/src/Swap";
-import { termLog } from "./DeveloperInterface";
+import { termLog } from "@/src/toolkit/debug/console";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/src/Buttons";
 import { useTranslation } from "react-i18next";

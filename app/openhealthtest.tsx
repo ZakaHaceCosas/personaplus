@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import OpenHealth from "@/core/openhealth";
-import { termLog } from "./DeveloperInterface";
+import { termLog } from "@/src/toolkit/debug/console";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import BottomNav from "@/src/BottomNav";

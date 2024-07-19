@@ -21,7 +21,7 @@ import Button from "@/src/Buttons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import BottomNav from "@/src/BottomNav";
 import GapView from "@/src/GapView";
-import { termLog } from "./DeveloperInterface";
+import { termLog } from "@/src/toolkit/debug/console";
 import { version } from "@/package.json";
 import { changeLanguage } from "i18next";
 import { useTranslation } from "react-i18next";

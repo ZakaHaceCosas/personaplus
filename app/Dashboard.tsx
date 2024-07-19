@@ -18,7 +18,7 @@ import GapView from "@/src/GapView";
 import Footer from "@/src/Footer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/src/Buttons";
-import { termLog } from "./DeveloperInterface";
+import { termLog } from "@/src/toolkit/debug/console";
 import {
     fetchObjectives,
     deleteObjective,

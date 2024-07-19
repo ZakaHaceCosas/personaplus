@@ -1,7 +1,7 @@
 // OBJECTIVE TYPE
 import { Objective } from '@/src/types/Objective';
 // INTERNALS
-import { termLog } from '@/app/DeveloperInterface';
+import { termLog } from '@/src/toolkit/debug/console';
 // FRONTEND
 import { router } from "expo-router";
 import { Platform, ToastAndroid } from 'react-native';
