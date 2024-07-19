@@ -1,7 +1,7 @@
 // Swap.tsx
 // BetterSwitches (porque un "switch", en teoría hace "swap").
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, DimensionValue, Pressable } from "react-native";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
@@ -59,7 +59,7 @@ export default function Swap({
             : defaultOption || null
     );
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (value) {
             const newSelectedOption = options.find(
                 option => option.value === value

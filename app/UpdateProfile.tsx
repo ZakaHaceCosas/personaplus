@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
     DimensionValue,
     StyleSheet,
@@ -63,7 +63,7 @@ export default function UpdateProfile() {
             default: false,
         },
     ];
-    const inputRefs = React.useRef<TextInput[]>([]);
+    const inputRefs = useRef<TextInput[]>([]);
 
     const focusNextField = (index: number): void => {
         if (inputRefs.current[index + 1]) {

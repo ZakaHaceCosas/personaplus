@@ -1,7 +1,7 @@
 // Profile.tsx
 // Profile page.
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
     DimensionValue,
@@ -200,7 +200,7 @@ export default function Profile() {
         }
     };
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchData = async () => {
             const userData = await getMultiple();
             setUsername(userData.username);
@@ -217,7 +217,7 @@ export default function Profile() {
 
     const [wantsDev, setWantsDev] = useState<boolean | null>(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const checkForDev = async () => {
             try {
                 const useDev = await AsyncStorage.getItem("useDevTools");

@@ -1,7 +1,7 @@
 // DeveloperInterface.tsx
 // Página que muestra ciertos logs de la consola para ayudar al desarrollador
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Alert,
     ScrollView,
@@ -128,7 +128,7 @@ export default function DeveloperInterface() {
     const { t } = useTranslation();
     const [logs, setLogs] = useState<Log[]>([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchLogs = async () => {
             const fetchedLogs = await getLogsFromStorage();
             setLogs(fetchedLogs);
@@ -185,7 +185,7 @@ export default function DeveloperInterface() {
 
     const [objs, setObjs] = useState<{ [key: string]: Objective } | null>(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const handleFetchObjectives = async () => {
             try {
                 const objectives = await fetchObjectives("string");
@@ -306,7 +306,7 @@ export default function DeveloperInterface() {
 
     const [everything, setEverything] = useState<object | null>(null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const fetchAll = async () => {
             try {
                 const e = await AsyncStorage.multiGet([

@@ -1,7 +1,7 @@
 // section/division/Division.tsx
 // División
 
-import React from "react";
+import React, { ReactNode } from "react";
 import { View } from "react-native";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
@@ -14,7 +14,7 @@ interface DivisionProps {
     preheader?: string; // Título
     header: string; // Texto grande
     subheader?: string; // El texto pequeño, de haberlo
-    children: React.ReactNode; // Los hijos (botones, básicamente)
+    children: ReactNode; // Los hijos (botones, básicamente)
 }
 
 // Creamos la función

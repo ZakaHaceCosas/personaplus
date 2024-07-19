@@ -1,7 +1,7 @@
 // Sessions.tsx
 // Página para sesiones
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     View,
     StyleSheet,
@@ -62,7 +62,7 @@ export default function Sessions() {
     const [laps, setLaps] = useState<number>(0);
     const [timerKey, setTimerKey] = useState<number>(0);
 
-    React.useEffect(() => {
+    useEffect(() => {
         const handleFetchObjectives = async () => {
             try {
                 const objectives = await fetchObjectives("object");
@@ -77,7 +77,7 @@ export default function Sessions() {
         handleFetchObjectives();
     }, []);
 
-    React.useEffect(() => {
+    useEffect(() => {
         termLog("LOG 2 (:63) - Objectives: " + objectives, "log");
         termLog(
             "LOG 3 (:64) - Objectives state: " + JSON.stringify(objectives),
@@ -86,7 +86,7 @@ export default function Sessions() {
         termLog("LOG 4 (:68) - Current ID: " + objectiveIdentifier, "log");
     }, [objectives, objectiveIdentifier]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (objectiveIdentifier !== null) {
             const fetchCurrentObjective = async () => {
                 try {
@@ -103,7 +103,7 @@ export default function Sessions() {
         }
     }, [objectiveIdentifier]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         termLog(
             "LOG 6 (:106) - Current Objective: " +
                 JSON.stringify(currentObjective),
