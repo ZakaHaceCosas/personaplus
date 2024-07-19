@@ -1,4 +1,5 @@
-// components/BottomNav.tsx
+// src/BottomNav.tsx
+// Navegación "de abajo" (está arriba, pero bueno)
 
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -33,8 +34,7 @@ export default function BottomNav({ currentLocation }: SectionProps) {
     const { t } = useTranslation();
 
     return (
-        // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
-        // Aunque no los usamos en "touchme" ya que este se repite varias veces.
+        // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final, salvo en "touchme" ya que este se repite varias veces.
         <View
             style={{
                 backgroundColor: "#16191E",
