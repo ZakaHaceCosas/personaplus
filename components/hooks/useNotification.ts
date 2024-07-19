@@ -96,7 +96,7 @@ export const scheduleRandomNotifications = async (t: TFunction) => {
 
         const identifier = await scheduleNotificationAsync({
             content: {
-                title: "Pending PersonaPlus objectives!",
+                title: t("notifications.daily_active_objectives_pending"),
                 body: randomMessage,
             },
             trigger,

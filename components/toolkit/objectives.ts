@@ -157,7 +157,7 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
     }
 });
 
-export async function registerBackgroundObjectivesFetchAsync() {
+async function registerBackgroundObjectivesFetchAsync() {
     try {
         await BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
             minimumInterval: 60 * 15,
@@ -170,4 +170,37 @@ export async function registerBackgroundObjectivesFetchAsync() {
     }
 }
 
-export { deleteObjective, markObjectiveAsDone, clearObjectives, fetchObjectives, getObjectiveByIdentifier, defineObjectiveDescription };
+// Funcion para verificar si tienes que hacer objetivos hoy o no, y si los has hecho
+/**
+ * Checks the objectives and determines if there are any objectives to be done today.
+ *
+ * The function performs the following checks:
+ * - Returns `null` if there are no objectives.
+ * - Returns `true` if there is at least one objective that needs to be done today.
+ * - Returns `false` if all objectives are either done or not due today.
+ *
+ * @param {Objective[]} objectives - The Objectives[] object
+ * @returns {null | true | false} - Returns `null` if there are no objectives, `true` if there is at least one objective due today, and `false` if all objectives are either completed or not due today.
+ */
+function checkForTodaysObjectives(objectives: { [key: string]: Objective }): null | true | false {
+    if (!objectives || Object.keys(objectives).length === 0) {
+        return null;
+    }
+
+    const objectiveKeys = Object.keys(objectives);
+    const dueTodayObjectives = objectiveKeys
+        .map(key => objectives[key])
+        .filter(obj => obj.days[adjustedToday] && !obj.wasDone);
+
+    if (dueTodayObjectives.length > 0) {
+        return true;
+    }
+
+    const allObjectivesDone = objectiveKeys.every(
+        key => objectives[key].wasDone || !objectives[key].days || !objectives[key].days[adjustedToday]
+    );
+
+    return allObjectivesDone ? false : null;
+}
+
+export { deleteObjective, markObjectiveAsDone, clearObjectives, fetchObjectives, getObjectiveByIdentifier, defineObjectiveDescription, registerBackgroundObjectivesFetchAsync, checkForTodaysObjectives };

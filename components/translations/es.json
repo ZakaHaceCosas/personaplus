@@ -227,8 +227,8 @@
         "buttons": {
             "license": "Licencia",
             "credits": "Créditos",
-            "privacy": "Política y Manifiesto de la Privacidad",
-            "oss": "Código Abierto de PersonaPlus"
+            "privacy": "Política Privacidad",
+            "oss": "Código Abierto"
         },
         "testing": "Psst... Estás ahora en la fase \"pre-app\" - ¡la más temprana de las versiones de la app! Gracias por ser parte de la versión de pruebas, significa mucho. ¡No olvides reportar cualquier fallo que encuentres!"
     },
@@ -346,6 +346,9 @@
         "got_it": "Lo pillo",
         "save": "¡Guárdalo!",
         "gyap!": "¡Date un plus!"
+    },
+    "notifications": {
+        "daily_active_objectives_pending": "¡Objetivos de PersonaPlus por hacer!"
     },
     "sections": {
         "headers": {

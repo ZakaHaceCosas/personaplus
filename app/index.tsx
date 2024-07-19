@@ -14,6 +14,7 @@ import {
     markObjectiveAsDone,
     fetchObjectives,
     registerBackgroundObjectivesFetchAsync,
+    checkForTodaysObjectives,
 } from "@/components/toolkit/objectives";
 import BetterText from "@/components/BetterText";
 import Section from "@/components/section/Section";
@@ -202,22 +203,11 @@ export default function Home() {
         allDoneMessages[Math.floor(Math.random() * allDoneMessages.length)];
 
     useEffect(() => {
-        if (objectives && Object.keys(objectives).length > 0) {
-            const areAllObjectivesHandled = Object.keys(objectives).every(
-                key => {
-                    const objective = objectives[key];
-                    return (
-                        objective.wasDone ||
-                        !objective.days ||
-                        !objective.days[adjustedToday]
-                    );
-                }
-            );
-
+        if (objectives && checkForTodaysObjectives(objectives) !== null) {
             if (Platform.OS === "android") {
-                if (areAllObjectivesHandled) {
+                if (checkForTodaysObjectives(objectives) === false) {
                     cancelScheduledNotifications();
-                } else {
+                } else if (checkForTodaysObjectives(objectives) === true) {
                     scheduleRandomNotifications(t);
                 }
             }
