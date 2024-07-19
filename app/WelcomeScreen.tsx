@@ -213,8 +213,7 @@ export default function WelcomePage() {
                 await AsyncStorage.setItem("language", language);
                 router.navigate("/");
             } catch (e) {
-                const log = "Error creating profile: " + e;
-                termLog(log, "error");
+                termLog("Error creating profile: " + e, "error");
             }
         } else {
             termLog("Error saving user data, some data is missing!", "error");

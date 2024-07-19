@@ -191,8 +191,10 @@ export default function DeveloperInterface() {
                 const objectives = await fetchObjectives("string");
                 setObjs(JSON.parse(objectives));
             } catch (e) {
-                const log = `Could not get objectives fetched due to error: ${e}`;
-                termLog(log, "error");
+                termLog(
+                    "Could not get objectives fetched due to error: " + e,
+                    "error"
+                );
             }
         };
 

@@ -78,9 +78,10 @@ export default function Dashboard() {
                     );
                 }
             } catch (e) {
-                const log =
-                    "Could not get objectives fetched due to error: " + e;
-                termLog(log, "error");
+                termLog(
+                    "Could not get objectives fetched due to error: " + e,
+                    "error"
+                );
                 if (Platform.OS === "android") {
                     ToastAndroid.show(
                         `${t("globals.react_error")} - ${e}`,
@@ -105,8 +106,7 @@ export default function Dashboard() {
                 );
             }
         } catch (e) {
-            const log: string = "Got an error updating, " + e;
-            termLog(log, "error");
+            termLog("Got an error updating, " + e, "error");
             if (Platform.OS === "android") {
                 ToastAndroid.show(
                     `${t("page_dashboard.specific_errors.react_error", { id: identifier })} - ${e}`,
@@ -158,8 +158,10 @@ export default function Dashboard() {
                         Object.keys(objectives).map(key => {
                             const objective = objectives[key];
                             if (!objective) {
-                                const log = `Data is undefined for objective with key: ${key}`;
-                                termLog(log, "warn");
+                                termLog(
+                                    `Data is undefined for objective with key: ${key}`,
+                                    "warn"
+                                );
                                 return null;
                             }
 

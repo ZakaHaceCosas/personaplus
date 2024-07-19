@@ -270,8 +270,7 @@ export default function Form() {
 
             router.push("/Dashboard");
         } catch (e) {
-            const log = "Could not create an objective, got error: " + e;
-            termLog(log, "error");
+            termLog("Could not create an objective, got error: " + e, "error");
         }
     };
 

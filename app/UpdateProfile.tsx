@@ -102,8 +102,7 @@ export default function UpdateProfile() {
                 await AsyncStorage.setItem("gender", genderValue);
                 router.navigate("/");
             } catch (e) {
-                const log = "Error creating profile: " + e;
-                termLog(log, "error");
+                termLog("Error creating profile: " + e, "error");
             }
         } else {
             termLog("Error saving user data, some data is missing!", "error");
