@@ -140,7 +140,7 @@ Siempre el mismo orden, primero importamos, luego definimos la interfaz (los tip
 
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import BetterText from '@/components/BetterText';
+import BetterText from '@/src/BetterText';
 
 interface ModuloProps {
   variable: string;
@@ -169,8 +169,8 @@ export default function Modulo() {
 Para los componentes propios, utiliza `@` en vez de `./`. E.J.:
 
 ```tsx
-import BetterText from '@/components/Text'; // bien
-import BetterText from './components/Text'; // no bien
+import BetterText from '@/src/Text'; // bien
+import BetterText from './src/Text'; // no bien
 ```
 
 #### 3. NOMBRA CLARAMENTE LAS VARIABLES
@@ -211,7 +211,7 @@ Cuando se trate de la función principal de un componente, haz uso de una Interf
 
 ```tsx
 import React from 'react';
-import BetterText from "@/components/BetterText";
+import BetterText from "@/src/BetterText";
 
 const mivariable: string = "String :D";
 
