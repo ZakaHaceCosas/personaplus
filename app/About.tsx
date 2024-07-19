@@ -87,18 +87,12 @@ export default function Home() {
                 </View>
                 <GapView height={20} />
                 <Section kind="About">
-                    <Division
-                        preheader={t("about_page.project.preheader")}
-                        header={t("about_page.project.header")}
-                    >
+                    <Division header={t("about_page.project.header")}>
                         <BetterText fontWeight="Regular" fontSize={15}>
                             {t("about_page.project.subheader")}
                         </BetterText>
                     </Division>
-                    <Division
-                        preheader={t("about_page.creator.preheader")}
-                        header={t("about_page.creator.header")}
-                    >
+                    <Division header={t("about_page.creator.header")}>
                         <BetterText fontWeight="Regular" fontSize={15}>
                             {t("about_page.creator.subheader")}
                         </BetterText>

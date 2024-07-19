@@ -215,20 +215,18 @@
     },
     "about_page": {
         "project": {
-            "preheader": "About the project",
             "header": "What is PersonaPlus?",
             "subheader": "It's clear: an app designed to help you give yourself more and have a better life through help and hard work."
         },
         "creator": {
-            "preheader": "About the creator",
             "header": "Who is PersonaPlus?",
             "subheader": "PersonaPlus is an independent app made by myself (Zaka). However, it is an open source project, you can contribute to it's code (and get your name here!)."
         },
         "buttons": {
             "license": "License",
             "credits": "Credits",
-            "privacy": "Privacy Policy & Manifesto",
-            "oss": "PersonaPlus' Open Source"
+            "privacy": "Privacy",
+            "oss": "Open Source"
         },
         "testing": "Psst... You're currently in the \"pre-app\" stage - the earliest early versions of the app! Thanks for being part of the testing version, it means a lot. Don't forget to report any issues you find!"
     },
@@ -346,6 +344,9 @@
         "got_it": "Got it",
         "save": "Save it!",
         "gyap!": "Give yourself a plus!"
+    },
+    "notifications": {
+        "daily_active_objectives_pending": "PersonaPlus objectives to do!"
     },
     "sections": {
         "headers": {
