@@ -66,8 +66,7 @@ const fetchObjectives = async (wayToGetThem: "object" | "string"): Promise<any> 
 
         return response;
     } catch (e) {
-        const log: string = "Got an error fetching objectives! " + e;
-        termLog(log, "error");
+        termLog("Got an error fetching objectives! " + e, "error");
     }
 };
 
@@ -79,8 +78,7 @@ const clearObjectives = async () => {
             await AsyncStorage.setItem("objectives", JSON.stringify([]));
         }
     } catch (e) {
-        const log: string = "Got an error clearing objectives! " + e;
-        termLog(log, "error");
+        termLog("Got an error clearing objectives! " + e, "error");
     }
 };
 
@@ -91,8 +89,7 @@ const getObjectiveByIdentifier = async (identifier: number): Promise<Objective |
         const objective = objectives.find(obj => obj.identifier === identifier);
         return objective || null;
     } catch (e) {
-        const log: string = "Got an error fetching the objective by identifier! " + e;
-        termLog(log, "error");
+        termLog("Got an error fetching the objective by identifier! " + e, "error");
         return null;
     }
 };
@@ -138,8 +135,7 @@ const resetObjectivesDaily = async (): Promise<void> => {
 
         await saveObjectives(updatedObjectives);
     } catch (e) {
-        const log: string = "Got an error resetting objectives! " + e;
-        termLog(log, "error");
+        termLog("Got an error resetting objectives! " + e, "error");
     }
 };
 
