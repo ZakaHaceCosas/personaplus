@@ -134,6 +134,8 @@
             "Meditation": "Encuentra un lugar tranquilo y cómodo para sentarte o acostarte. Cierra los ojos y toma algunas respiraciones profundas, enfocándote en la sensación del aire entrando y saliendo de tu cuerpo. Comienza a observar tus pensamientos y sentimientos sin juzgar, dejándolos venir y ir naturalmente. Puedes enfocarte en tu respiración, en un mantra o simplemente en el momento presente. Si tu mente divaga, trae suavemente tu atención de vuelta a tu punto focal. Comienza con unos minutos y gradualmente extiende tu tiempo de meditación a medida que te sientas más cómodo con la práctica."
         },
         "give_up": "Me rindo",
+        "give_up_yes": "Sí, me rindo",
+        "give_up_description": "¡Lo estás haciendo GENIAL! ¿Estás seguro de que lo quieres dejar? ¡Tu progreso se perderá! (Siempre puedes volver a empezar si cambias de idea)",
         "timer_paused_help": "Psst... No te preocupes, hemos pausado el temporizador para que puedas leer a tu ritmo."
     },
     "page_welcome": {
@@ -304,6 +306,7 @@
         "select_placeholder": "Elige una opción",
         "go_back": "Ir atrás",
         "options": "Opciones",
+        "success": "¡Oh sí!",
         "go_to_place": "Ir a {{place}}",
         "days_of_the_week": {
             "monday": "Lunes",
@@ -341,6 +344,7 @@
         "help_with_item": "Ayuda con {{item}}",
         "got_it": "Lo pillo",
         "save": "¡Guárdalo!",
+        "go_ahead": "Adelánte",
         "gyap!": "¡Date un plus!"
     },
     "notifications": {
@@ -384,7 +388,10 @@
         "all_asyncstorage_items": "Todos los ítems del almacenamiento asíncrono (AsyncStorage)",
         "logs": {
             "logs": "Registro de la consola",
-            "export": "EXPORTAR REGISTRO A UN ARCHIVO"
+            "export": "EXPORTAR REGISTRO A UN ARCHIVO",
+            "exported": "Registro guardado con éxito en {{path}}",
+            "not_exported": "Hubo un error al guardar el archivo: {{err}}",
+            "clear_warning": "Los registros son muy útiles en caso de que tengas un error, especialmente ahora que la app sigue en una versión de pruebas. Como sea, por privacidad, permitimos su eliminación. are very useful in case you get an error, especially now that the app is still in a testing version. However, for privacy, we do allow removing them. Hazlo a tu discreción."
         }
     }
 }

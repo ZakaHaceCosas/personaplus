@@ -135,6 +135,8 @@
             "Meditation": "Find a quiet and comfortable place to sit or lie down. Close your eyes and take a few deep breaths, focusing on the sensation of the air entering and leaving your body. Begin to observe your thoughts and feelings without judgment, letting them come and go naturally. You can focus on your breath, a mantra, or simply the present moment. If your mind wanders, gently bring your attention back to your focal point. Start with a few minutes and gradually extend your meditation time as you become more comfortable with the practice."
         },
         "give_up": "I give up",
+        "give_up_yes": "Yes, I give up",
+        "give_up_description": "You are doing GREAT! Are you sure you want to give up? Your progress will be lost! (You can always start over if you change your mind)",
         "timer_paused_help": "Psst... Don't worry, we'e stopped the timer so you can read."
     },
     "page_welcome": {
@@ -302,6 +304,7 @@
         "select_placeholder": "Choose an option",
         "go_back": "Go back",
         "options": "Options",
+        "success": "Hell yeah!",
         "go_to_place": "Go to {{place}}",
         "days_of_the_week": {
             "monday": "Monday",
@@ -339,6 +342,7 @@
         "help_with_item": "Help with {{item}}",
         "got_it": "Got it",
         "save": "Save it!",
+        "go_ahead": "Go ahead",
         "gyap!": "Give yourself a plus!"
     },
     "notifications": {
@@ -382,7 +386,10 @@
         "all_asyncstorage_items": "All AsyncStorage items",
         "logs": {
             "logs": "Log registry",
-            "export": "EXPORT REGISTRY TO FILE"
+            "export": "EXPORT REGISTRY TO FILE",
+            "exported": "Registry file successfully saved on {{path}}",
+            "not_exported": "There was an error saving the file: {{err}}",
+            "clear_warning": "Logs are very useful in case you get an error, especially now that the app is still in a testing version. However, for privacy, we do allow removing them. Do it at your own will."
         }
     }
 }
