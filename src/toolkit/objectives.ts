@@ -263,4 +263,21 @@ function checkForTodaysObjectives(objectives: { [key: string]: Objective }): nul
     return allObjectivesDone ? false : null;
 }
 
-export { deleteObjective, markObjectiveAsDone, clearObjectives, getObjectiveByIdentifier, defineObjectiveDescription, registerBackgroundObjectivesFetchAsync, checkForTodaysObjectives };
+/**
+ * Turns objective arrays where [key: string] is used onto objects to avoid errors.
+ *
+ * @param {Objective[]} objectives The `Objective[]` you want to correct
+ * @returns {{ [key: string]: Objective }} The corrected object
+ */
+function objectiveArrayToObject(objectives: Objective[]): { [key: string]: Objective } {
+    // i'll be honest, this .reduce() thingy is not something i wrote...
+    // if it breaks, dont blame it on me lmao
+    const objectivesObject = objectives.reduce((acc, objective) => {
+        acc[objective.identifier] = objective;
+        return acc;
+    }, {} as { [key: string]: Objective });
+
+    return objectivesObject;
+}
+
+export { getObjectives, deleteObjective, markObjectiveAsDone, clearObjectives, getObjectiveByIdentifier, defineObjectiveDescription, registerBackgroundObjectivesFetchAsync, checkForTodaysObjectives, objectiveArrayToObject };

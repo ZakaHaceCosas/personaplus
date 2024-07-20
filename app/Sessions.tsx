@@ -12,7 +12,7 @@ import {
     Dimensions,
 } from "react-native";
 import {
-    fetchObjectives,
+    getObjectives,
     markObjectiveAsDone,
     getObjectiveByIdentifier,
 } from "@/src/toolkit/objectives";
@@ -65,8 +65,12 @@ export default function Sessions() {
     useEffect(() => {
         const handleFetchObjectives = async () => {
             try {
-                const objectives = await fetchObjectives("object");
-                setObjectives(objectives);
+                const objectives = await getObjectives("object");
+                if (Array.isArray(objectives)) {
+                    setObjectives(objectives);
+                } else {
+                    termLog("Expected an array, got a string instead", "error");
+                }
             } catch (e) {
                 termLog("LOG 1 (:53) - Fetch error! " + e, "error");
                 if (Platform.OS === "android") {
@@ -95,7 +99,7 @@ export default function Sessions() {
                 try {
                     const objective =
                         await getObjectiveByIdentifier(objectiveIdentifier);
-                    setCurrentObjective(objective);
+                    setCurrentObjective(objective ?? null);
                     setLaps(objective?.repetitions || 0); // Ensure laps is set correctly
                 } catch (e) {
                     termLog("Error fetching current objective: " + e, "error");

@@ -20,9 +20,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/src/Buttons";
 import { termLog } from "@/src/toolkit/debug/console";
 import {
-    fetchObjectives,
+    getObjectives,
     deleteObjective,
     defineObjectiveDescription,
+    objectiveArrayToObject,
 } from "@/src/toolkit/objectives";
 import { router, usePathname } from "expo-router";
 import { useTranslation } from "react-i18next";
@@ -97,13 +98,20 @@ export default function Dashboard() {
     const handleDeleteObjective = async (identifier: number) => {
         try {
             await deleteObjective(identifier);
-            const updatedObjectives = await fetchObjectives("object");
-            setObjectives(updatedObjectives);
-            if (Platform.OS === "android") {
-                ToastAndroid.show(
-                    t("page_dashboard.item_deleted", { id: identifier }),
-                    ToastAndroid.SHORT
-                );
+            const updatedObjectives = await getObjectives("object");
+            if (Array.isArray(updatedObjectives)) {
+                const objectivesObject =
+                    objectiveArrayToObject(updatedObjectives);
+
+                setObjectives(objectivesObject);
+                if (Platform.OS === "android") {
+                    ToastAndroid.show(
+                        t("page_dashboard.item_deleted", { id: identifier }),
+                        ToastAndroid.SHORT
+                    );
+                }
+            } else {
+                termLog("Expected an array and got a string instead", "error");
             }
         } catch (e) {
             termLog("Got an error updating, " + e, "error");
