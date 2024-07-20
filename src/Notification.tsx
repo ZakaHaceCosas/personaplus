@@ -7,15 +7,58 @@ import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
 
 // TypeScript, supongo
+/**
+ * NotificationProps interface
+ *
+ * @interface NotificationProps
+ * @typedef {NotificationProps}
+ */
 interface NotificationProps {
+    /**
+     * The style of the button. Use ACE (blue) for accent, GOD (green) for positive / success alerts, WOR (red) for destructive / failure alerts, and HMM (orange) for warning alerts.
+     *
+     * @type {("ACE" | "GOD" | "WOR" | "HMM")}
+     */
     style: "ACE" | "GOD" | "WOR" | "HMM"; // Tipo (color)
+    /**
+     * The title of the notification (a small, short text before the actual "title").
+     *
+     * @type {string}
+     */
     title: string; // Título de la notificación
+    /**
+     * The actual "title" / main, big text of the notification.
+     *
+     * @type {string}
+     */
     text: string; // Texto de la misma
+    /**
+     * An optional smaller subtext below the title (`text`) to provide additional details.
+     *
+     * @type {?string}
+     */
     subtext?: string; // De haberlo, subtexto de la misma
+    /**
+     * CSS (StyleSheet) position.
+     *
+     * @type {?string}
+     */
     position?: string; // Posicionamiento
 }
 
 // Creamos la función
+/**
+ * Homemade alert / notification component
+ *
+ * @export
+ * @param {NotificationProps} param0
+ * @param {("ACE" | "GOD" | "WOR" | "HMM")} param0.style
+ * @param {string} param0.title
+ * @param {string} param0.text
+ * @param {string} [param0.position="static"]
+ * @param {string} param0.subtext
+ * @returns {*}
+ */
 export default function Notification({
     style,
     title,
