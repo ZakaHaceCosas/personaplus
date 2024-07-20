@@ -133,14 +133,14 @@ export default function Sessions() {
     const cancel = () => {
         Alert.alert(
             t("globals.are_you_sure"),
-            "You are doing GREAT! Are you sure you want to give up? Your progress will be lost! (You can always start over if you change your mind)",
+            t("page_sessions.give_up_description"),
             [
                 {
                     text: t("globals.nevermind"),
                     style: "cancel",
                 },
                 {
-                    text: "Yes, I give up",
+                    text: t("page_sessions.give_up_yes"),
                     style: "destructive",
                     onPress: () => {
                         router.navigate("/"); // basically goes home without saving, easy.

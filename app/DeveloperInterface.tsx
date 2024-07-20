@@ -230,10 +230,16 @@ export default function DeveloperInterface() {
         try {
             const fileUri = await devFunctionToGenerateLogs(logs);
             if (fileUri) {
-                Alert.alert("Success", `File saved on: ${fileUri}`);
+                Alert.alert(
+                    t("globals.success"),
+                    t("dev_interface.logs.exported", { path: fileUri })
+                );
             }
         } catch (e) {
-            Alert.alert("Error", "There was an error saving the file: " + e);
+            Alert.alert(
+                "Error",
+                t("dev_interface.logs.not_exported", { err: e })
+            );
         }
     };
 
@@ -249,16 +255,16 @@ export default function DeveloperInterface() {
 
     const devFunctionToClearGlobalLogs = () => {
         Alert.alert(
-            "Are you sure?",
-            "Logs are very useful in case you get an error, especially now that the app is still in a testing version. However, for privacy, we do allow removing them. Do it at your own will.",
+            t("globals.are_you_sure"),
+            t("dev_interface.logs.clear_warning"),
             [
                 {
-                    text: "Cancel",
+                    text: t("globals.nevermind"),
                     onPress: () => {},
                     style: "cancel",
                 },
                 {
-                    text: "Go ahead",
+                    text: t("globals.go_ahead"),
                     onPress: clearLog,
                     style: "destructive",
                 },
