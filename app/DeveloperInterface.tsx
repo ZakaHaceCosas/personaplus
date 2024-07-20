@@ -19,7 +19,11 @@ import Button from "@/src/Buttons";
 import { version as ReactVersion } from "react";
 import { version as PersonaPlusVersion } from "@/package.json";
 import { isDevelopmentBuild } from "expo-dev-client";
-import { clearObjectives, fetchObjectives } from "@/src/toolkit/objectives";
+import {
+    clearObjectives,
+    getObjectives,
+    objectiveArrayToObject,
+} from "@/src/toolkit/objectives";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import { usePathname, router } from "expo-router";
@@ -146,8 +150,12 @@ export default function DeveloperInterface() {
     useEffect(() => {
         const handleFetchObjectives = async () => {
             try {
-                const objectives = await fetchObjectives("string");
-                setObjs(JSON.parse(objectives));
+                const objectives = await getObjectives("object");
+                if (Array.isArray(objectives)) {
+                    setObjs(objectiveArrayToObject(objectives));
+                } else {
+                    termLog("Expected an array, got a string instead", "error");
+                }
             } catch (e) {
                 termLog(
                     "Could not get objectives fetched due to error: " + e,

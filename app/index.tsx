@@ -12,9 +12,10 @@ import {
 import { router, usePathname } from "expo-router";
 import {
     markObjectiveAsDone,
-    fetchObjectives,
+    getObjectives,
     registerBackgroundObjectivesFetchAsync,
     checkForTodaysObjectives,
+    objectiveArrayToObject,
 } from "@/src/toolkit/objectives";
 import BetterText from "@/src/BetterText";
 import Section from "@/src/section/Section";
@@ -173,8 +174,12 @@ export default function Home() {
     const handleMarkingObjectiveAsDone = async (identifier: number) => {
         try {
             await markObjectiveAsDone(identifier, true, t);
-            const updatedObjectives = await fetchObjectives("object");
-            setObjectives(updatedObjectives);
+            const updatedObjectives = await getObjectives("object");
+            if (Array.isArray(updatedObjectives)) {
+                setObjectives(objectiveArrayToObject(updatedObjectives));
+            } else {
+                termLog("Expected an array and got a string instead", "error");
+            }
         } catch (e) {
             termLog("Got an error updating: " + e, "error");
         }
