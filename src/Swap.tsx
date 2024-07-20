@@ -7,22 +7,79 @@ import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
 
 // TypeScript, supongo
+/**
+ * Option interface
+ *
+ * @interface Option
+ * @typedef {Option}
+ */
 interface Option {
+    /**
+     * The value of the option, a string that can be used by your code.
+     *
+     * @type {string}
+     */
     value: string;
+    /**
+     * The label of the option, the text that will be shown the user.
+     *
+     * @type {string}
+     */
     label: string;
+    /**
+     * Wether this option should be the default one of the Swap.
+     *
+     * @type {?boolean}
+     */
     default?: boolean;
 }
 
 // TypeScript, supongo
+/**
+ * SwapProps interface
+ *
+ * @interface SwapProps
+ * @typedef {SwapProps}
+ */
 interface SwapProps {
+    /**
+     * A custom `id` to differentiate this Swap from other Swaps.
+     *
+     * @type {string}
+     */
     id: string; // Para identificar cada BeSwap
+    /**
+     * An object of options.
+     *
+     * @type {Option[]}
+     */
     options: Option[]; // Opciones
+    /**
+     * The current selected value. Defaults to the `default` Option. It can be used to set the value progamatically.
+     *
+     * @type {?(string | number | null)}
+     */
     value?: string | number | null; // Para establecer el valor programáticamente
     // (reemplazado tipo "any" con number y null para mas seguridad)
+    /**
+     * Wether the swap should display items horizontally (flex-row) or vertically (flex-column)
+     *
+     * @type {("horizontal" | "vertical")}
+     */
     order: "horizontal" | "vertical"; // Basicamente, flex row o flex column? Orden horizontal o vertical?
+    /**
+     * A void function to interact with the event caused by the user chaning the option. Can be used to gather the currently selected value.
+     *
+     * @type {?(value: string) => void}
+     */
     onValueChange?: (value: string) => void; // Para obtener el valor seleccionado
 }
 
+/**
+ * Homemade swap component. Basically, it's pretty similar to a select component.
+ *
+ * @type {*}
+ */
 const styles = StyleSheet.create({
     optionButton: {
         paddingTop: 15,
@@ -45,6 +102,18 @@ const styles = StyleSheet.create({
     },
 });
 
+/**
+ * Homemade swap component. Basically, it's pretty similar to a select component.
+ *
+ * @export
+ * @param {SwapProps} param0
+ * @param {string} param0.id
+ * @param {{}} param0.options
+ * @param {(string | number)} param0.value
+ * @param {("horizontal" | "vertical")} param0.order
+ * @param {(value: string) => void} param0.onValueChange
+ * @returns {*}
+ */
 export default function Swap({
     id,
     options,
