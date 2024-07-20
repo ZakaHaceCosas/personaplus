@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
 import { Food24Filled, Shield24Filled, Broom24Filled, Question24Filled } from '@fluentui/react-native-icons';
 
-export default function BasicDivision({ labelc, headert, status, i, children, slabelc }) {
+export default function IconedDivision({ labelc, headert, status, i, children, slabelc }) {
     let bgImgSrc = require('../../assets/imgs/Bg.Normal.png');
 
     switch (status) {

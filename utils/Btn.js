@@ -8,18 +8,18 @@ export default function Btn({ kind, text }) {
     switch (kind) {
         default:
             bgImgSrc = require('../assets/imgs/Btn.Blu.png');
-            btnwidth = '48%';
+            btnwidth = '39%';
             break;
         case 'REGULAR':
             bgImgSrc = require('../assets/imgs/Btn.Blu.png');
-            btnwidth = '48%';
+            btnwidth = '39%';
             break;
         case 'GOOD':
-            bgImgSrc = require('../assets/imgs/Btn.Gre.png');
-            btnwidth = '48%';
+            bgImgSrc = require('../assets/imgs/Bg.Positive.png');
+            btnwidth = '39%';
             break;
         case 'BAD':
-            bgImgSrc = require('../assets/imgs/Btn.Red.png');
+            bgImgSrc = require('../assets/imgs/Bg.Worrying.png');
             btnwidth = '18%';
             break;
     }
@@ -35,7 +35,6 @@ export default function Btn({ kind, text }) {
 
 const styles = StyleSheet.create({
     btn: {
-        borderRadius: 6,
         padding: 0,
         overflow: 'hidden',
         borderRadius: 10,
@@ -47,6 +46,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         borderRadius: 10,
         borderStyle: 'solid',
+        resizeMode: 'cover',
+        objectFit: 'cover',
+        width: '100%',
+        height: '100%'
     },
     txt: {
         fontFamily: 'Inter-Bold',

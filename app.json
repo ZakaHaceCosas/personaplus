@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Persona Plus",
+    "name": "PersonaPlus",
     "slug": "personaplus",
     "version": "0.0.2",
     "orientation": "portrait",
@@ -15,7 +15,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true // it doesnt support iOS at all (i dont even know what react will do, but im not exporting to appstore, so apple boys, u can go fuck urselves)
+      "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {

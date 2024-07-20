@@ -6,6 +6,7 @@ import { useFonts } from 'expo-font';
 import Home from './utils/pages/Home';
 import MyProfile from './utils/pages/MyProfile';
 import Panel from './utils/pages/Panel';
+import * as FileSystem from 'expo-file-system';
 
 export default function App() {
   const [activePage, setActivePage] = useState('Home');

@@ -9,13 +9,14 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@expo/webpack-config": "^19.0.0",
+    "@expo/webpack-config": "^19.0.1",
     "@fluentui/react-native-icons": "^2.0.224",
-    "expo": "~49.0.15",
+    "expo": "^50.0.7",
+    "expo-file-system": "~15.4.5",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "0.72.6",
+    "react-native": "^0.73.4",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-web": "~0.19.6"
   },
