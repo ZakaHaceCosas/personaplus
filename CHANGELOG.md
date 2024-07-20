@@ -39,10 +39,11 @@ END README
 - Renamed `components/` to `src/`.
 - Refactored `termLog` to avoid require cycles. It has been toolkified and moved to `src/toolkit/debug/console.ts`. Types have been consequently moved.
 - Removed the `wantsDev` check. This lead to less code and a simpler flow.
-- Added JSDoc to a few functions.
+- Added JSDoc to many functions.
 - Toolkified reminder notifications.
 - Added some try-catch statements to improve error spotting.
 - Merged `Section.tsx` and `SectionHeader.tsx` onto a single file.
+- Updated the objectives toolkit, `getObjectives` and `fetchObjectives` have been merged.
 
 ### Trivial changes
 
