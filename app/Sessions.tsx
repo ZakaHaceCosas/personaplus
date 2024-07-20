@@ -69,6 +69,9 @@ export default function Sessions() {
                 setObjectives(objectives);
             } catch (e) {
                 termLog("LOG 1 (:53) - Fetch error! " + e, "error");
+                if (Platform.OS === "android") {
+                    ToastAndroid.show("Fetch error! " + e, ToastAndroid.LONG); // so the user knows whats up
+                }
             } finally {
                 setLoading(false); // setLoading() in the finally block and not the try one, so in the case of an error the user doesnt get stuck on a "Loading..." screen
             }
