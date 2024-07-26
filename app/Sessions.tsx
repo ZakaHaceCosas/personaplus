@@ -63,7 +63,7 @@ export default function Sessions() {
     const [timerKey, setTimerKey] = useState<number>(0);
 
     useEffect(() => {
-        const handleFetchObjectives = async () => {
+        const handle = async () => {
             try {
                 const objectives = await getObjectives("object");
                 if (Array.isArray(objectives)) {
@@ -72,7 +72,7 @@ export default function Sessions() {
                     termLog("Expected an array, got a string instead", "error");
                 }
             } catch (e) {
-                termLog("LOG 1 (:53) - Fetch error! " + e, "error");
+                termLog("SESSIONTS.TSX - Objective fetch error! " + e, "error");
                 if (Platform.OS === "android") {
                     ToastAndroid.show("Fetch error! " + e, ToastAndroid.LONG); // so the user knows whats up
                 }
@@ -81,16 +81,16 @@ export default function Sessions() {
             }
         };
 
-        handleFetchObjectives();
+        handle();
     }, []);
 
     useEffect(() => {
-        termLog("LOG 2 (:63) - Objectives: " + objectives, "log");
+        termLog("SESSIONS.TSX - Objectives: " + objectives, "log");
         termLog(
-            "LOG 3 (:64) - Objectives state: " + JSON.stringify(objectives),
+            "SESSIONTS.TSX - Objectives state: " + JSON.stringify(objectives),
             "log"
         );
-        termLog("LOG 4 (:68) - Current ID: " + objectiveIdentifier, "log");
+        termLog("SESSIONS.TSX - Current ID: " + objectiveIdentifier, "log");
     }, [objectives, objectiveIdentifier]);
 
     useEffect(() => {
@@ -103,6 +103,12 @@ export default function Sessions() {
                     setLaps(objective?.repetitions || 0); // Ensure laps is set correctly
                 } catch (e) {
                     termLog("Error fetching current objective: " + e, "error");
+                    if (Platform.OS === "android") {
+                        ToastAndroid.show(
+                            "Current Fetch error! " + e,
+                            ToastAndroid.LONG
+                        ); // so the user knows whats up
+                    }
                 }
             };
 
@@ -112,7 +118,7 @@ export default function Sessions() {
 
     useEffect(() => {
         termLog(
-            "LOG 6 (:106) - Current Objective: " +
+            "SESSIONS.TSX - Current Objective: " +
                 JSON.stringify(currentObjective),
             "log"
         );
@@ -167,7 +173,7 @@ export default function Sessions() {
         sessionCompletedMessages[sessionCompletedMessagesIndex];
 
     const finish = async () => {
-        if (currentObjective) {
+        if (currentObjective !== undefined && currentObjective !== null) {
             try {
                 await markObjectiveAsDone(
                     currentObjective.identifier,
@@ -183,15 +189,18 @@ export default function Sessions() {
                 router.navigate("/");
             } catch (e) {
                 termLog(
-                    "LOG 8 (:176) - Error parsing objectives (OBJS) for update: " +
+                    "SESSIONS.TSX - Error parsing objectives (OBJS) for update: " +
                         e,
                     "error"
                 );
+                if (Platform.OS === "android") {
+                    ToastAndroid.show("Parse error! " + e, ToastAndroid.LONG); // so the user knows whats up
+                }
             }
         }
     };
 
-    const doFinish = () => {
+    const handleFinish = () => {
         if (laps !== 0) {
             setLaps(prev => (prev > 0 ? prev - 1 : 0));
             setTimerKey(prevKey => prevKey + 1);
@@ -542,7 +551,7 @@ export default function Sessions() {
                     ]}
                     colorsTime={[15, 5]}
                     isSmoothColorTransition={false}
-                    onComplete={doFinish}
+                    onComplete={handleFinish}
                     isGrowing={true}
                     trailColor="#202328"
                     strokeLinecap="round"
