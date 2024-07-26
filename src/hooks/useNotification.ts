@@ -87,7 +87,7 @@ const scheduledNotifications: NotificationIdentifier[] = [];
 
 export const scheduleRandomNotifications = async (t: TFunction) => {
     try {
-        const notificationMessages: string[] = t("cool_messages.all_done", {
+        const notificationMessages: string[] = t("cool_messages.reminders", {
             returnObjects: true,
         });
 
