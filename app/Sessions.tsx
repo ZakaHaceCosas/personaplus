@@ -27,6 +27,7 @@ import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo.
 import { Objective } from "@/src/types/Objective";
+import InfoIcons from "@/src/sessions/InfoIcons";
 
 // Estilos
 const styles = StyleSheet.create({
@@ -220,21 +221,6 @@ export default function Sessions() {
         ? t(`page_sessions.help_section.${currentObjective.exercise}`)
         : t("globals.error_loading_content");
 
-    const speedOptions: [string, string][] = [
-        ["Brisk Walk", "1.6 - 3.2 km/h"],
-        ["Light Jog", "3.2 - 4.0 km/h"],
-        ["Moderate Run", "4.0 - 4.8 km/h"],
-        ["Fast Run", "4.8 - 5.5 km/h"],
-        ["Sprint", "5.5 - 6.4 km/h"],
-        ["Fast Sprint", "6.4 - 8.0 km/h"],
-        ["Running Fast", "8.0 - 9.6 km/h"],
-        ["Very Fast Run", "9.6 - 11.3 km/h"],
-        ["Sprinting", "11.3 - 12.9 km/h"],
-        ["Fast Sprinting", "12.9 - 14.5 km/h"],
-        ["Full Speed Sprinting", "14.5 - 16.1 km/h"],
-        ["Maximum Speed", "more than 16.1 km/h"],
-    ];
-
     if (loading) {
         return (
             <View
@@ -378,166 +364,7 @@ export default function Sessions() {
                                   : `${currentObjective.rests} rests (${currentObjective.restDuration} mins)`}
                         </BetterText>
                     </View>
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}
-                    >
-                        {currentObjective.exercise.toLowerCase() ===
-                            "lifting" && (
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    marginTop: 10,
-                                }}
-                            >
-                                <Ionicons
-                                    name="keyboard-double-arrow-down"
-                                    size={15}
-                                    color="#FFF"
-                                />
-                                <GapView width={5} />
-                                <BetterText
-                                    fontWeight="Regular"
-                                    textColor="#FFF"
-                                    fontSize={15}
-                                >
-                                    {currentObjective?.extra?.barWeight !==
-                                        undefined &&
-                                    currentObjective?.extra?.liftWeight !==
-                                        undefined &&
-                                    currentObjective.extra.hands !== undefined
-                                        ? String(
-                                              currentObjective.extra.barWeight +
-                                                  currentObjective.extra
-                                                      .liftWeight *
-                                                      currentObjective.extra
-                                                          .hands
-                                          )
-                                        : "N/A"}{" "}
-                                    kg
-                                </BetterText>
-                                <GapView width={10} />
-                                <Ionicons
-                                    name="change-circle"
-                                    size={15}
-                                    color="#FFF"
-                                />
-                                <GapView width={5} />
-                                <BetterText
-                                    fontWeight="Regular"
-                                    textColor="#FFF"
-                                    fontSize={15}
-                                >
-                                    {currentObjective?.extra?.lifts !==
-                                    undefined
-                                        ? String(currentObjective.extra.lifts)
-                                        : "N/A"}{" "}
-                                    lifts
-                                </BetterText>
-                                <GapView width={10} />
-                                <Ionicons
-                                    name="front-hand"
-                                    size={15}
-                                    color="#FFF"
-                                />
-                                <GapView width={5} />
-                                <BetterText
-                                    fontWeight="Regular"
-                                    textColor="#FFF"
-                                    fontSize={15}
-                                >
-                                    {currentObjective?.extra?.hands !==
-                                    undefined
-                                        ? String(currentObjective.extra.hands)
-                                        : "N/A"}{" "}
-                                    hand
-                                </BetterText>
-                            </View>
-                        )}
-                        {currentObjective.exercise.toLowerCase() ===
-                            "running" && (
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    marginTop: 10,
-                                }}
-                            >
-                                <Ionicons name="speed" size={15} color="#FFF" />
-                                <GapView width={5} />
-                                <BetterText
-                                    fontWeight="Regular"
-                                    textColor="#FFF"
-                                    fontSize={15}
-                                >
-                                    {currentObjective.extra.speed !==
-                                        undefined &&
-                                    currentObjective.extra.speed >= 0 &&
-                                    currentObjective.extra.speed <
-                                        speedOptions.length
-                                        ? String(
-                                              speedOptions[
-                                                  currentObjective.extra.speed
-                                              ][1]
-                                          )
-                                        : "N/A"}
-                                </BetterText>
-                            </View>
-                        )}
-                        {currentObjective.exercise.toLowerCase() ===
-                            "push up" && (
-                            <View
-                                style={{
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    marginTop: 10,
-                                }}
-                            >
-                                <Ionicons
-                                    name="repeat"
-                                    size={15}
-                                    color="#FFF"
-                                />
-                                <GapView width={5} />
-                                <BetterText
-                                    fontWeight="Regular"
-                                    textColor="#FFF"
-                                    fontSize={15}
-                                >
-                                    {currentObjective?.extra?.amount !==
-                                    undefined
-                                        ? String(currentObjective.extra.amount)
-                                        : "N/A"}{" "}
-                                    push-ups
-                                </BetterText>
-                                <GapView width={10} />
-                                <Ionicons
-                                    name="front-hand"
-                                    size={15}
-                                    color="#FFF"
-                                />
-                                <GapView width={5} />
-                                <BetterText
-                                    fontWeight="Regular"
-                                    textColor="#FFF"
-                                    fontSize={15}
-                                >
-                                    {currentObjective?.extra?.hands !==
-                                    undefined
-                                        ? String(currentObjective.extra.hands)
-                                        : "N/A"}{" "}
-                                    hand
-                                </BetterText>
-                            </View>
-                        )}
-                    </View>
+                    <InfoIcons objective={currentObjective} />
                 </View>
                 <GapView height={20} />
                 <CountdownCircleTimer
