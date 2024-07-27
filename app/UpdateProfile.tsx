@@ -15,6 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/src/Buttons";
 import { useTranslation } from "react-i18next";
 import { validateBasicData } from "@/src/toolkit/userData";
+import colors from "@/src/toolkit/design/colors";
 
 // TypeScript, supongo
 interface UserData {
@@ -194,7 +195,7 @@ export default function UpdateProfile() {
                             fontWeight="Regular"
                             fontSize={15}
                             textAlign="center"
-                            textColor="#C8C8C8"
+                            textColor={colors.LBLS.SDD}
                         >
                             {t("globals.loading")}{" "}
                         </BetterText>
@@ -230,7 +231,7 @@ export default function UpdateProfile() {
                     textAlign="normal"
                     fontWeight="Regular"
                     fontSize={15}
-                    textColor="#C8C8C8"
+                    textColor={colors.LBLS.SDD}
                 >
                     {t("page_welcome.fragment_one.questions.username")}
                 </BetterText>
@@ -241,14 +242,14 @@ export default function UpdateProfile() {
                     )}
                     value={formData.username}
                     readOnly={false}
-                    placeholderTextColor="#949698"
+                    placeholderTextColor={colors.MAIN.BLANDITEM.PLACEHOLDER}
                     style={[
                         {
-                            backgroundColor: "#2A2D32",
+                            backgroundColor: colors.MAIN.BLANDITEM.BACKGROUND,
                             borderRadius: 10,
                             padding: 15,
                             borderWidth: 4,
-                            borderColor: "#3E4146",
+                            borderColor: "{colors.MAIN.BLANDITEM.STRK}",
                             width: "100%",
                             color: "#FFF",
                             // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
@@ -273,7 +274,7 @@ export default function UpdateProfile() {
                     textAlign="normal"
                     fontWeight="Regular"
                     fontSize={15}
-                    textColor="#C8C8C8"
+                    textColor={colors.LBLS.SDD}
                 >
                     {t("page_welcome.fragment_one.questions.height")}
                 </BetterText>
@@ -284,14 +285,14 @@ export default function UpdateProfile() {
                     )}
                     value={formData.height}
                     readOnly={false}
-                    placeholderTextColor="#949698"
+                    placeholderTextColor={colors.MAIN.BLANDITEM.PLACEHOLDER}
                     style={[
                         {
-                            backgroundColor: "#2A2D32",
+                            backgroundColor: colors.MAIN.BLANDITEM.BACKGROUND,
                             borderRadius: 10,
                             padding: 15,
                             borderWidth: 4,
-                            borderColor: "#3E4146",
+                            borderColor: colors.MAIN.BLANDITEM.STRK,
                             width: "100%",
                             color: "#FFF",
                             // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
@@ -317,7 +318,7 @@ export default function UpdateProfile() {
                     textAlign="normal"
                     fontWeight="Regular"
                     fontSize={15}
-                    textColor="#C8C8C8"
+                    textColor={colors.LBLS.SDD}
                 >
                     {t("page_welcome.fragment_one.questions.weight")}
                 </BetterText>
@@ -328,14 +329,14 @@ export default function UpdateProfile() {
                     )}
                     value={formData.weight}
                     readOnly={false}
-                    placeholderTextColor="#949698"
+                    placeholderTextColor="{colors.MAIN.BLANDITEM.PLACEHOLDER}"
                     style={[
                         {
-                            backgroundColor: "#2A2D32",
+                            backgroundColor: colors.MAIN.BLANDITEM.BACKGROUND,
                             borderRadius: 10,
                             padding: 15,
                             borderWidth: 4,
-                            borderColor: "#3E4146",
+                            borderColor: "{colors.MAIN.BLANDITEM.STRK}",
                             width: "100%",
                             color: "#FFF",
                             // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
@@ -361,7 +362,7 @@ export default function UpdateProfile() {
                     textAlign="normal"
                     fontWeight="Regular"
                     fontSize={15}
-                    textColor="#C8C8C8"
+                    textColor={colors.LBLS.SDD}
                 >
                     {t("page_welcome.fragment_one.questions.age")}
                 </BetterText>
@@ -370,14 +371,14 @@ export default function UpdateProfile() {
                     placeholder={t("page_welcome.fragment_one.questions.age")}
                     value={formData.age}
                     readOnly={false}
-                    placeholderTextColor="#949698"
+                    placeholderTextColor="{colors.MAIN.BLANDITEM.PLACEHOLDER}"
                     style={[
                         {
-                            backgroundColor: "#2A2D32",
+                            backgroundColor: colors.MAIN.BLANDITEM.BACKGROUND,
                             borderRadius: 10,
                             padding: 15,
                             borderWidth: 4,
-                            borderColor: "#3E4146",
+                            borderColor: "{colors.MAIN.BLANDITEM.STRK}",
                             width: "100%",
                             color: "#FFF",
                             // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
@@ -403,7 +404,7 @@ export default function UpdateProfile() {
                     textAlign="normal"
                     fontWeight="Regular"
                     fontSize={15}
-                    textColor="#C8C8C8"
+                    textColor={colors.LBLS.SDD}
                 >
                     {t("page_profile.your_profile_division.gender")}
                 </BetterText>

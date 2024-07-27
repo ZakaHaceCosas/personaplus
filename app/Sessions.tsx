@@ -24,15 +24,16 @@ import { termLog } from "@/src/toolkit/debug/console";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 import Button from "@/src/Buttons";
 import { useTranslation } from "react-i18next";
+import InfoIcons from "@/src/sessions/InfoIcons";
+import colors from "@/src/toolkit/design/colors";
 
 // TypeScript, supongo.
 import { Objective } from "@/src/types/Objective";
-import InfoIcons from "@/src/sessions/InfoIcons";
 
 // Estilos
 const styles = StyleSheet.create({
     helpcontainer: {
-        backgroundColor: "#14171C",
+        backgroundColor: colors.MAIN.SECTION,
         position: "absolute",
         top: "20%",
         left: 10,
@@ -139,7 +140,9 @@ export default function Sessions() {
         );
     };
 
-    const timerColor = isTimerRunning ? "#32FF80" : "#FFC832";
+    const timerColor = isTimerRunning
+        ? colors.PRIMARIES.GOD.GOD
+        : colors.PRIMARIES.HMM.HMM;
 
     const cancel = () => {
         Alert.alert(
@@ -235,7 +238,7 @@ export default function Sessions() {
                 <BetterText
                     textAlign="center"
                     fontSize={25}
-                    textColor="#32FF80"
+                    textColor={colors.PRIMARIES.GOD.GOD}
                     fontWeight="Medium"
                 >
                     {t("globals.loading")}
@@ -265,7 +268,7 @@ export default function Sessions() {
                 justifyContent: "center",
                 padding: 20,
                 flex: 1,
-                backgroundColor: "#0E1013",
+                backgroundColor: colors.MAIN.APP,
                 overflow: "visible",
             }}
         >
@@ -285,19 +288,23 @@ export default function Sessions() {
                         display: "flex",
                         flexDirection: "row",
                         padding: 20,
-                        backgroundColor: "#14171C",
+                        backgroundColor: colors.MAIN.SECTION,
                         borderRadius: 15,
                         alignItems: "center",
                         justifyContent: "flex-start",
                         width: "100%",
                     }}
                 >
-                    <Ionicons name="play-arrow" size={20} color="#DDDDDD" />
+                    <Ionicons
+                        name="play-arrow"
+                        size={20}
+                        color={colors.LBLS.SHL}
+                    />
                     <GapView width={10} />
                     <BetterText
                         fontSize={15}
                         fontWeight="Bold"
-                        textColor="#DDDDDD"
+                        textColor={colors.LBLS.SHL}
                     >
                         {t("page_sessions.in_a_session")}
                     </BetterText>
@@ -308,7 +315,7 @@ export default function Sessions() {
                         display: "flex",
                         flexDirection: "column",
                         padding: 20,
-                        backgroundColor: "#14171C",
+                        backgroundColor: colors.MAIN.SECTION,
                         borderRadius: 15,
                         alignItems: "center",
                         justifyContent: "center",
@@ -370,14 +377,18 @@ export default function Sessions() {
                     size={160}
                     isPlaying={isTimerRunning}
                     colors={[
-                        timerColor === "#32FF80" ? "#32FF80" : "#FFC832",
-                        timerColor === "#32FF80" ? "#32FF80" : "#FFC832",
+                        timerColor === colors.PRIMARIES.GOD.GOD
+                            ? colors.PRIMARIES.GOD.GOD
+                            : colors.PRIMARIES.HMM.HMM,
+                        timerColor === colors.PRIMARIES.GOD.GOD
+                            ? colors.PRIMARIES.GOD.GOD
+                            : colors.PRIMARIES.HMM.HMM,
                     ]}
                     colorsTime={[15, 5]}
                     isSmoothColorTransition={false}
                     onComplete={handleFinish}
                     isGrowing={true}
-                    trailColor="#202328"
+                    trailColor={colors.MAIN.DIVISION}
                     strokeLinecap="round"
                     trailStrokeWidth={10}
                     strokeWidth={15}
@@ -399,7 +410,7 @@ export default function Sessions() {
                         display: "flex",
                         flexDirection: "row",
                         padding: 20,
-                        backgroundColor: "#14171C",
+                        backgroundColor: colors.MAIN.SECTION,
                         borderRadius: 15,
                         alignItems: "center",
                         justifyContent: "center",
@@ -465,7 +476,7 @@ export default function Sessions() {
                     <BetterText
                         fontSize={10}
                         fontWeight="Light"
-                        textColor="#C8C8C8"
+                        textColor={colors.LBLS.SDD}
                         textAlign="center"
                     >
                         {t("page_sessions.timer_paused_help")}

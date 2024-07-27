@@ -10,6 +10,7 @@ import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
+import colors from "@/src/toolkit/design/colors";
 
 const styles = StyleSheet.create({
     containerview: {
@@ -59,7 +60,7 @@ export default function License() {
                     {t("subpage_legal_stuff.gpl_small")}
                     <BetterText
                         fontSize={20}
-                        textColor="#3280FF"
+                        textColor={colors.PRIMARIES.ACE.ACE}
                         fontWeight="Regular"
                         url={true}
                         onTap={() =>

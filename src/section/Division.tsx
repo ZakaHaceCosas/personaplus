@@ -5,6 +5,7 @@ import React, { ReactNode } from "react";
 import { View } from "react-native";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
+import colors from "../toolkit/design/colors";
 
 // TypeScript, supongo
 interface DivisionProps {
@@ -39,7 +40,7 @@ export default function Division({
         <View
             style={{
                 display: "flex",
-                backgroundColor: "#202328",
+                backgroundColor: colors.MAIN.DIVISION,
                 flexDirection: "row",
                 padding: 20,
                 width: "100%",
@@ -73,7 +74,7 @@ export default function Division({
                                 textAlign="normal"
                                 fontWeight="Regular"
                                 fontSize={12}
-                                textColor="#C8C8C8"
+                                textColor={colors.LBLS.SDD}
                             >
                                 {subheader}
                             </BetterText>

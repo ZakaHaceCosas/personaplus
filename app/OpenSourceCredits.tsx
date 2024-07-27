@@ -10,6 +10,7 @@ import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
+import colors from "@/src/toolkit/design/colors";
 
 interface OpenSourceLibrary {
     name: string; // Name of the library / package / whatever (bare username if no name found)
@@ -160,7 +161,7 @@ export default function OpenSourceCredits() {
                         </BetterText>
                         <GapView height={5} />
                         <BetterText
-                            textColor="#3280FF"
+                            textColor={colors.PRIMARIES.ACE.ACE}
                             fontWeight="Light"
                             fontSize={15}
                             url={true}

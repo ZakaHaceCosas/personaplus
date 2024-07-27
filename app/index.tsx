@@ -34,6 +34,7 @@ import {
 import { adjustedToday } from "@/src/toolkit/today";
 import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
+import colors from "@/src/toolkit/design/colors";
 
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
@@ -229,7 +230,7 @@ export default function Home() {
                             fontWeight="Regular"
                             fontSize={15}
                             textAlign="center"
-                            textColor="#C8C8C8"
+                            textColor={colors.LBLS.SDD}
                         >
                             {t("globals.loading")}
                         </BetterText>
@@ -377,7 +378,7 @@ export default function Home() {
                         <GapView height={20} />
                         <BetterText
                             fontWeight="Regular"
-                            textColor="#32FF80"
+                            textColor={colors.PRIMARIES.GOD.GOD}
                             fontSize={25}
                             textAlign="center"
                         >

@@ -8,11 +8,12 @@ import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import "@/src/toolkit/translations";
+import colors from "@/src/toolkit/design/colors";
 
 // Definimos los estilos
 const styles = StyleSheet.create({
     mainview: {
-        backgroundColor: "#0E1013",
+        backgroundColor: colors.MAIN.APP,
     },
 });
 

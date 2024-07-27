@@ -16,6 +16,7 @@ import Division from "@/src/section/Division";
 import Button from "@/src/Buttons";
 import GapView from "@/src/GapView";
 import { useTranslation } from "react-i18next";
+import colors from "@/src/toolkit/design/colors";
 
 // Creamos los estilos
 const styles = StyleSheet.create({
@@ -71,7 +72,7 @@ export default function Home() {
                             paddingBottom: 7.5,
                             paddingLeft: 15,
                             paddingRight: 15,
-                            backgroundColor: "#32FF80",
+                            backgroundColor: colors.PRIMARIES.GOD.GOD,
                             borderRadius: 10,
                         }}
                     >
@@ -79,7 +80,7 @@ export default function Home() {
                             textAlign="normal"
                             fontWeight="Bold"
                             fontSize={18}
-                            textColor="#0E1013"
+                            textColor={colors.MAIN.APP}
                         >
                             PRE-APP
                         </BetterText>
@@ -143,7 +144,7 @@ export default function Home() {
                     textAlign="center"
                     fontWeight="Bold"
                     fontSize={30}
-                    textColor="#32FF80"
+                    textColor={colors.PRIMARIES.GOD.GOD}
                 >
                     {t("globals.gyap!")}
                 </BetterText>

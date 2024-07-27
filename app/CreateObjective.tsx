@@ -20,6 +20,7 @@ import { termLog } from "@/src/toolkit/debug/console";
 import Notification from "@/src/Notification";
 import { Objective, ObjectiveWithoutId } from "@/src/types/Objective";
 import { useTranslation } from "react-i18next";
+import colors from "@/src/toolkit/design/colors";
 
 // Creamos los estilos
 const styles = StyleSheet.create({
@@ -411,8 +412,8 @@ export default function Form() {
                         style={{
                             padding: 12,
                             width: "100%",
-                            backgroundColor: "#2A2D32",
-                            borderColor: "#3E4146",
+                            backgroundColor: colors.MAIN.BLANDITEM.BACKGROUND,
+                            borderColor: colors.MAIN.BLANDITEM.STRK,
                             borderWidth: 2,
                             borderRadius: 10,
                             color: exercise ? "#FFF" : "#999",
@@ -446,7 +447,7 @@ export default function Form() {
                     </BetterText>
                     <BetterText
                         fontSize={10}
-                        textColor="#C8C8C8"
+                        textColor={colors.LBLS.SDD}
                         fontWeight="Italic"
                     >
                         {t(
@@ -486,11 +487,11 @@ export default function Form() {
                                     style={{
                                         ...styles.dayContainer,
                                         borderColor: day
-                                            ? "#194080"
-                                            : "#3E4146",
+                                            ? colors.PRIMARIES.ACE.ACESTRK
+                                            : colors.MAIN.BLANDITEM.STRK,
                                         backgroundColor: day
-                                            ? "#3280FF"
-                                            : "#2A2D32",
+                                            ? colors.PRIMARIES.ACE.ACE
+                                            : colors.MAIN.BLANDITEM.BACKGROUND,
                                     }}
                                 >
                                     <Pressable
@@ -622,7 +623,7 @@ export default function Form() {
                             </BetterText>
                             <BetterText
                                 fontSize={10}
-                                textColor="#C8C8C8"
+                                textColor={colors.LBLS.SDD}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -673,7 +674,7 @@ export default function Form() {
                             </BetterText>
                             <BetterText
                                 fontSize={10}
-                                textColor="#C8C8C8"
+                                textColor={colors.LBLS.SDD}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -724,7 +725,7 @@ export default function Form() {
                             </BetterText>
                             <BetterText
                                 fontSize={10}
-                                textColor="#C8C8C8"
+                                textColor={colors.LBLS.SDD}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -775,7 +776,7 @@ export default function Form() {
                             </BetterText>
                             <BetterText
                                 fontSize={10}
-                                textColor="#C8C8C8"
+                                textColor={colors.LBLS.SDD}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -826,7 +827,7 @@ export default function Form() {
                             </BetterText>
                             <BetterText
                                 fontSize={10}
-                                textColor="#C8C8C8"
+                                textColor={colors.LBLS.SDD}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -877,7 +878,7 @@ export default function Form() {
                             </BetterText>
                             <BetterText
                                 fontSize={10}
-                                textColor="#C8C8C8"
+                                textColor={colors.LBLS.SDD}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -928,7 +929,7 @@ export default function Form() {
                             </BetterText>
                             <BetterText
                                 fontSize={10}
-                                textColor="#C8C8C8"
+                                textColor={colors.LBLS.SDD}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -960,7 +961,7 @@ export default function Form() {
                                         {speedString}
                                     </BetterText>
                                     <BetterText
-                                        textColor="#C8C8C8"
+                                        textColor={colors.LBLS.SDD}
                                         fontSize={10}
                                         fontWeight="Regular"
                                         textAlign="center"
@@ -1021,7 +1022,7 @@ export default function Form() {
                         textAlign="center"
                         fontSize={9}
                         fontWeight="Italic"
-                        textColor="#C8C8C8"
+                        textColor={colors.LBLS.SDD}
                     >
                         {t("subpage_create_active_objective.required")}
                     </BetterText>
