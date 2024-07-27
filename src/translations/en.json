@@ -125,6 +125,7 @@
         "required": "Required: Duration, Exercise, and at least one day of the week. Specific exercises may have their own extra required fields: for example \"Lifting\" requires you to specify how much weight you'll be lifting."
     },
     "page_sessions": {
+        "resting": "¡Descansando!",
         "in_a_session": "IN A SESSION!",
         "current": "CURRENT OBJECTIVE",
         "help_section": {
