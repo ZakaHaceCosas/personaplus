@@ -3,10 +3,11 @@
 
 import React from "react";
 import BottomNav from "./BottomNav";
-import { DimensionValue, View, ScrollView } from "react-native";
+import { DimensionValue, Dimensions, View, ScrollView } from "react-native";
 import BetterText from "./BetterText";
 import { useTranslation } from "react-i18next";
 import colors from "./toolkit/design/colors";
+import GapView from "./GapView";
 
 // TypeScript, supongo
 /**
@@ -28,6 +29,12 @@ interface LoadingProps {
      * @type {boolean}
      */
     displayNav: boolean;
+    /**
+     * Whether to use the normal one (default, `false`), or the special one (`true`) used by Sessions page.
+     *
+     * @type {boolean}
+     */
+    useSpecial?: boolean;
 }
 
 /**
@@ -37,10 +44,41 @@ interface LoadingProps {
  * @param {LoadingProps} param0
  * @param {string} param0.currentpage
  * @param {boolean} param0.displayNav
+ * @param {boolean} param0.useSpecial
  * @returns {*}
  */
-export default function Loading({ currentpage, displayNav }: LoadingProps) {
+export default function Loading({
+    currentpage,
+    displayNav,
+    useSpecial = false,
+}: LoadingProps) {
     const { t } = useTranslation();
+
+    if (useSpecial === true) {
+        return (
+            <View
+                style={{
+                    width: "100vw" as DimensionValue,
+                    height: "100vh" as DimensionValue,
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <GapView height={Dimensions.get("screen").height / 2} />
+                <BetterText
+                    textAlign="center"
+                    fontSize={25}
+                    textColor={colors.PRIMARIES.GOD.GOD}
+                    fontWeight="Medium"
+                >
+                    {t("globals.loading")}
+                </BetterText>
+            </View>
+        );
+    }
 
     return (
         <View
