@@ -100,7 +100,7 @@ export default function Button({
         case "GOD":
             borderColor = colors.PRIMARIES.GOD.GODSTRK;
             backgroundColor = colors.PRIMARIES.GOD.GOD;
-            textColor = "#000000";
+            textColor = colors.BASIC.BLACK;
             break;
         case "WOR":
             borderColor = colors.PRIMARIES.WOR.WORSTRK;
@@ -110,7 +110,7 @@ export default function Button({
         case "HMM":
             borderColor = colors.PRIMARIES.HMM.HMMSTRK;
             backgroundColor = colors.PRIMARIES.HMM.HMM;
-            textColor = "#000000";
+            textColor = colors.BASIC.BLACK;
             break;
         case "DEFAULT":
             borderColor = colors.MAIN.BLANDITEM.STRK;

@@ -80,7 +80,7 @@ export default function Notification({
         case "GOD":
             borderColor = colors.PRIMARIES.GOD.GODSTRK;
             backgroundColor = colors.PRIMARIES.GOD.GOD;
-            textColor = "#000000";
+            textColor = colors.BASIC.BLACK;
             break;
         case "WOR":
             borderColor = colors.PRIMARIES.WOR.WORSTRK;
@@ -90,7 +90,7 @@ export default function Notification({
         case "HMM":
             borderColor = colors.PRIMARIES.HMM.HMMSTRK;
             backgroundColor = colors.PRIMARIES.HMM.HMM;
-            textColor = "#000000";
+            textColor = colors.BASIC.BLACK;
             break;
         default:
             borderColor = colors.MAIN.BLANDITEM.STRK;

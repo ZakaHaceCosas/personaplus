@@ -633,7 +633,7 @@ export default function WelcomePage() {
                         <Select.Item
                             label={t("globals.select_placeholder")}
                             value=""
-                            color="#999"
+                            color={colors.MAIN.BLANDITEM.PLACEHOLDER}
                         />
                         {sleeps.map(sleep => (
                             <Select.Item
@@ -665,7 +665,7 @@ export default function WelcomePage() {
                         <Select.Item
                             label={t("globals.select_placeholder")}
                             value=""
-                            color="#999"
+                            color={colors.MAIN.BLANDITEM.PLACEHOLDER}
                         />
                         {activnessOptions.map(option => (
                             <Select.Item
@@ -695,7 +695,7 @@ export default function WelcomePage() {
                         <Select.Item
                             label={t("globals.select_placeholder")}
                             value=""
-                            color="#999"
+                            color={colors.MAIN.BLANDITEM.PLACEHOLDER}
                         />
                         {pushUpOptions.map(option => (
                             <Select.Item

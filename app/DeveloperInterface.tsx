@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     consoleview: {
         flex: 1,
         padding: 10,
-        backgroundColor: "#000",
+        backgroundColor: colors.BASIC.BLACK,
         width: "100%",
         height: "100%",
         borderRadius: 5,
@@ -56,22 +56,22 @@ const styles = StyleSheet.create({
         borderLeftColor: colors.BASIC.WHITE,
     },
     success: {
-        color: "#28a745",
+        color: colors.PRIMARIES.GOD.GOD,
         paddingLeft: 10,
         borderLeftWidth: 2,
-        borderLeftColor: "#28a745",
+        borderLeftColor: colors.PRIMARIES.GOD.GOD,
     },
     warn: {
-        color: "#ff9900",
+        color: colors.PRIMARIES.HMM.HMM,
         paddingLeft: 10,
         borderLeftWidth: 4,
-        borderLeftColor: "#ff9900",
+        borderLeftColor: colors.PRIMARIES.HMM.HMM,
     },
     error: {
-        color: "#ff0000",
+        color: colors.PRIMARIES.WOR.WOR,
         paddingLeft: 10,
         borderLeftWidth: 6,
-        borderLeftColor: "#ff0000",
+        borderLeftColor: colors.PRIMARIES.WOR.WOR,
     },
     containerview: {
         width: "100%",
