@@ -54,7 +54,7 @@ PersonaPlus es una app en un estado muy temprano, muchas funciones aún están p
         - [X] Funcionalidad básica
           - [X] Temporizador
           - [X] Repeticiones
-          - [ ] Descansos
+          - [X] Descansos
           - [X] Salida
             - [X] Rendición
             - [X] Marcado como completado
@@ -93,7 +93,7 @@ PersonaPlus es una app en un estado muy temprano, muchas funciones aún están p
 
 Para que nadie pierda el rumbo, aunque voy tocando un poco de todo, este es el plan que intento seguir de momento (actualizaré esto cada que haga falta):
 
-1. Terminar de implementar las sesiones básicas.
+1. ~~Terminar de implementar las sesiones básicas.~~ **Hecho.**
 2. Una vez hecho eso, algún ajuste más a la app y de ahí a lo importante.
 3. Retomar OpenHealth (un poco olvidado desde que lo creé) e implementar todos los cálculos necesarios para las actividades que PersonaPlus soporta por defecto.
 4. Implementar - de alguna manera - obtención de datos básicos sobre cada sesión, su guardado, y la generación de estadísticas en base a los cálculos que OpenHealth pueda hacer con esos datos.
