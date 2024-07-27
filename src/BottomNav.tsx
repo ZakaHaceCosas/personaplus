@@ -8,6 +8,7 @@ import BetterText from "@/src/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/src/GapView";
 import { useTranslation } from "react-i18next";
+import colors from "./toolkit/design/colors";
 
 // TypeScript, supongo
 interface SectionProps {
@@ -37,7 +38,7 @@ export default function BottomNav({ currentLocation }: SectionProps) {
         // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final, salvo en "touchme" ya que este se repite varias veces.
         <View
             style={{
-                backgroundColor: "#16191E",
+                backgroundColor: colors.MAIN.FOOTER.BACKGROUND,
                 display: "flex",
                 flexDirection: "row",
                 alignItems: "center",
@@ -58,7 +59,11 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                         <Ionicons
                             name="home"
                             size={25}
-                            color={currentPage === "/" ? "#FFF" : "#8A8C8E"}
+                            color={
+                                currentPage === "/"
+                                    ? colors.MAIN.FOOTER.FOOTERSEL
+                                    : colors.MAIN.FOOTER.FOOTERUNS
+                            }
                         />
                     </View>
                     <GapView height={5} />
@@ -67,7 +72,11 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                             textAlign="normal"
                             fontWeight="Bold"
                             fontSize={12}
-                            textColor={currentPage === "/" ? "#FFF" : "#8A8C8E"}
+                            textColor={
+                                currentPage === "/"
+                                    ? colors.MAIN.FOOTER.FOOTERSEL
+                                    : colors.MAIN.FOOTER.FOOTERUNS
+                            }
                         >
                             {t("navbar.home")}
                         </BetterText>
@@ -85,8 +94,8 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                             size={25}
                             color={
                                 currentPage === "/Dashboard"
-                                    ? "#FFF"
-                                    : "#8A8C8E"
+                                    ? colors.MAIN.FOOTER.FOOTERSEL
+                                    : colors.MAIN.FOOTER.FOOTERUNS
                             }
                         />
                     </View>
@@ -98,8 +107,8 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                             fontSize={12}
                             textColor={
                                 currentPage === "/Dashboard"
-                                    ? "#FFF"
-                                    : "#8A8C8E"
+                                    ? colors.MAIN.FOOTER.FOOTERSEL
+                                    : colors.MAIN.FOOTER.FOOTERUNS
                             }
                         >
                             {t("navbar.dashboard")}
@@ -114,7 +123,9 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                             name="person"
                             size={25}
                             color={
-                                currentPage === "/Profile" ? "#FFF" : "#8A8C8E"
+                                currentPage === "/Profile"
+                                    ? colors.MAIN.FOOTER.FOOTERSEL
+                                    : colors.MAIN.FOOTER.FOOTERUNS
                             }
                         />
                     </View>
@@ -125,7 +136,9 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                             fontWeight="Bold"
                             fontSize={12}
                             textColor={
-                                currentPage === "/Profile" ? "#FFF" : "#8A8C8E"
+                                currentPage === "/Profile"
+                                    ? colors.MAIN.FOOTER.FOOTERSEL
+                                    : colors.MAIN.FOOTER.FOOTERUNS
                             }
                         >
                             {t("navbar.profile")}

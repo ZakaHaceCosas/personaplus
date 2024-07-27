@@ -26,6 +26,7 @@ import {
     objectiveArrayToObject,
 } from "@/src/toolkit/objectives";
 import { router, usePathname } from "expo-router";
+import colors from "@/src/toolkit/design/colors";
 import { useTranslation } from "react-i18next";
 
 // TypeScript, supongo
@@ -129,7 +130,7 @@ export default function Dashboard() {
                             fontWeight="Regular"
                             fontSize={15}
                             textAlign="center"
-                            textColor="#C8C8C8"
+                            textColor={colors.LBLS.SDD}
                         >
                             {t("globals.loading")}{" "}
                         </BetterText>

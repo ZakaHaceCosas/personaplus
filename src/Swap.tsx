@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, DimensionValue, Pressable } from "react-native";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
+import colors from "./toolkit/design/colors";
 
 // TypeScript, supongo
 /**
@@ -88,8 +89,8 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         borderRadius: 10,
         borderWidth: 4,
-        borderColor: "#3E4146",
-        backgroundColor: "#2A2D32",
+        borderColor: colors.MAIN.BLANDITEM.STRK,
+        backgroundColor: colors.MAIN.BLANDITEM.BACKGROUND,
         flex: 1,
         display: "flex",
         flexDirection: "row",
@@ -97,8 +98,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     selectedButton: {
-        borderColor: "#194080",
-        backgroundColor: "#3280FF",
+        borderColor: colors.PRIMARIES.ACE.ACESTRK,
+        backgroundColor: colors.PRIMARIES.ACE.ACE,
     },
 });
 

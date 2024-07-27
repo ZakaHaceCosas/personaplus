@@ -6,6 +6,7 @@ import BetterText from "@/src/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/src/GapView";
 import { useTranslation } from "react-i18next";
+import colors from "../toolkit/design/colors";
 
 // TypeScript, supongo
 interface SectionProps {
@@ -78,7 +79,7 @@ export default function Section({ kind, children }: SectionProps) {
         <View
             style={{
                 display: "flex",
-                backgroundColor: "#14171C",
+                backgroundColor: colors.MAIN.SECTION,
                 flexDirection: "column",
                 borderRadius: 15,
                 overflow: "hidden",
@@ -93,13 +94,13 @@ export default function Section({ kind, children }: SectionProps) {
                     justifyContent: "flex-start",
                 }}
             >
-                <Ionicons name={headerIcon} size={15} color="#DDDDDD" />
+                <Ionicons name={headerIcon} size={15} color={colors.LBLS.SHL} />
                 <GapView width={10} />
                 <BetterText
                     textAlign="normal"
                     fontWeight="Bold"
                     fontSize={12}
-                    textColor="#DDDDDD"
+                    textColor={colors.LBLS.SHL}
                 >
                     {String(label)}
                 </BetterText>

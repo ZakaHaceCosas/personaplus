@@ -22,6 +22,7 @@ import { termLog } from "@/src/toolkit/debug/console";
 import { useTranslation } from "react-i18next";
 import { changeLanguage } from "i18next";
 import { validateBasicData } from "@/src/toolkit/userData";
+import colors from "@/src/toolkit/design/colors";
 
 // Definimos los estilos
 const styles = StyleSheet.create({
@@ -44,8 +45,8 @@ const styles = StyleSheet.create({
     picker: {
         padding: 12,
         width: "100%",
-        backgroundColor: "#2A2D32",
-        borderColor: "#3E4146",
+        backgroundColor: colors.MAIN.BLANDITEM.BACKGROUND,
+        borderColor: "{colors.MAIN.BLANDITEM.STRK}",
         borderWidth: 2,
         borderRadius: 10,
         color: "#FFF",
@@ -258,7 +259,7 @@ export default function WelcomePage() {
                             textAlign="normal"
                             fontWeight="ExtraBold"
                             fontSize={40}
-                            textColor="#32FF80"
+                            textColor={colors.PRIMARIES.GOD.GOD}
                         >
                             PersonaPlus
                         </BetterText>
@@ -319,7 +320,7 @@ export default function WelcomePage() {
                             textAlign="normal"
                             fontWeight="Regular"
                             fontSize={20}
-                            textColor="#3280FF"
+                            textColor={colors.PRIMARIES.ACE.ACE}
                             onTap={() =>
                                 Linking.openURL(
                                     "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md"
@@ -337,14 +338,15 @@ export default function WelcomePage() {
                         )}
                         value={formData.username}
                         readOnly={false}
-                        placeholderTextColor="#949698"
+                        placeholderTextColor="{colors.MAIN.BLANDITEM.PLACEHOLDER}"
                         style={[
                             {
-                                backgroundColor: "#2A2D32",
+                                backgroundColor:
+                                    colors.MAIN.BLANDITEM.BACKGROUND,
                                 borderRadius: 10,
                                 padding: 15,
                                 borderWidth: 4,
-                                borderColor: "#3E4146",
+                                borderColor: "{colors.MAIN.BLANDITEM.STRK}",
                                 width: "100%",
                                 color: "#FFF",
                                 // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
@@ -371,14 +373,15 @@ export default function WelcomePage() {
                         )}
                         value={formData.height}
                         readOnly={false}
-                        placeholderTextColor="#949698"
+                        placeholderTextColor="{colors.MAIN.BLANDITEM.PLACEHOLDER}"
                         style={[
                             {
-                                backgroundColor: "#2A2D32",
+                                backgroundColor:
+                                    colors.MAIN.BLANDITEM.BACKGROUND,
                                 borderRadius: 10,
                                 padding: 15,
                                 borderWidth: 4,
-                                borderColor: "#3E4146",
+                                borderColor: "{colors.MAIN.BLANDITEM.STRK}",
                                 width: "100%",
                                 color: "#FFF",
                                 // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
@@ -406,14 +409,15 @@ export default function WelcomePage() {
                         )}
                         value={formData.weight}
                         readOnly={false}
-                        placeholderTextColor="#949698"
+                        placeholderTextColor="{colors.MAIN.BLANDITEM.PLACEHOLDER}"
                         style={[
                             {
-                                backgroundColor: "#2A2D32",
+                                backgroundColor:
+                                    colors.MAIN.BLANDITEM.BACKGROUND,
                                 borderRadius: 10,
                                 padding: 15,
                                 borderWidth: 4,
-                                borderColor: "#3E4146",
+                                borderColor: "{colors.MAIN.BLANDITEM.STRK}",
                                 width: "100%",
                                 color: "#FFF",
                                 // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
@@ -441,14 +445,15 @@ export default function WelcomePage() {
                         )}
                         value={formData.age}
                         readOnly={false}
-                        placeholderTextColor="#949698"
+                        placeholderTextColor="{colors.MAIN.BLANDITEM.PLACEHOLDER}"
                         style={[
                             {
-                                backgroundColor: "#2A2D32",
+                                backgroundColor:
+                                    colors.MAIN.BLANDITEM.BACKGROUND,
                                 borderRadius: 10,
                                 padding: 15,
                                 borderWidth: 4,
-                                borderColor: "#3E4146",
+                                borderColor: "{colors.MAIN.BLANDITEM.STRK}",
                                 width: "100%",
                                 color: "#FFF",
                                 // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
@@ -546,7 +551,7 @@ export default function WelcomePage() {
                         textAlign="normal"
                         fontWeight="Regular"
                         fontSize={10}
-                        textColor="#C8C8C8"
+                        textColor={colors.LBLS.SDD}
                     >
                         {t("page_welcome.fragment_two.subsubtitle")}
                     </BetterText>

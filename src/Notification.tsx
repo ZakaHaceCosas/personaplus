@@ -5,6 +5,7 @@ import React from "react";
 import { DimensionValue, View } from "react-native";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
+import colors from "@/src/toolkit/design/colors";
 
 // TypeScript, supongo
 /**
@@ -72,28 +73,28 @@ export default function Notification({
 
     switch (style) {
         case "ACE":
-            borderColor = "#194080";
-            backgroundColor = "#3280FF";
+            borderColor = colors.PRIMARIES.ACE.ACESTRK;
+            backgroundColor = colors.PRIMARIES.ACE.ACE;
             textColor = "#FFFFFF";
             break;
         case "GOD":
-            borderColor = "#198040";
-            backgroundColor = "#32FF80";
+            borderColor = colors.PRIMARIES.GOD.GODSTRK;
+            backgroundColor = colors.PRIMARIES.GOD.GOD;
             textColor = "#000000";
             break;
         case "WOR":
-            borderColor = "#801919";
-            backgroundColor = "#FF3232";
+            borderColor = colors.PRIMARIES.WOR.WORSTRK;
+            backgroundColor = colors.PRIMARIES.WOR.WOR;
             textColor = "#FFFFFF";
             break;
         case "HMM":
-            borderColor = "#806419";
-            backgroundColor = "#FFC832";
+            borderColor = colors.PRIMARIES.HMM.HMMSTRK;
+            backgroundColor = colors.PRIMARIES.HMM.HMM;
             textColor = "#000000";
             break;
         default:
-            borderColor = "#3E4146";
-            backgroundColor = "#2A2D32";
+            borderColor = colors.MAIN.BLANDITEM.STRK;
+            backgroundColor = colors.MAIN.BLANDITEM.BACKGROUND;
             textColor = "#FFF";
             break;
     }

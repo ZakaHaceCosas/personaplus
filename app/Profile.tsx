@@ -25,6 +25,7 @@ import { termLog } from "@/src/toolkit/debug/console";
 import { version } from "@/package.json";
 import { changeLanguage } from "i18next";
 import { useTranslation } from "react-i18next";
+import colors from "@/src/toolkit/design/colors";
 
 // TypeScript, supongo
 interface Release {
@@ -283,7 +284,7 @@ export default function Profile() {
                             fontWeight="Regular"
                             fontSize={15}
                             textAlign="center"
-                            textColor="#C8C8C8"
+                            textColor={colors.LBLS.SDD}
                         >
                             {t("globals.loading")}
                         </BetterText>
