@@ -320,7 +320,7 @@ export default function Profile() {
                             <View style={styles.flexyview}>
                                 <BetterText
                                     textAlign="normal"
-                                    textColor="#FFF"
+                                    textColor={colors.BASIC.WHITE}
                                     fontWeight="Regular"
                                     fontSize={15}
                                 >
@@ -338,7 +338,7 @@ export default function Profile() {
                                 </BetterText>
                                 <BetterText
                                     textAlign="normal"
-                                    textColor="#FFF"
+                                    textColor={colors.BASIC.WHITE}
                                     fontWeight="Regular"
                                     fontSize={15}
                                 >
@@ -352,7 +352,7 @@ export default function Profile() {
                                 </BetterText>
                                 <BetterText
                                     textAlign="normal"
-                                    textColor="#FFF"
+                                    textColor={colors.BASIC.WHITE}
                                     fontWeight="Regular"
                                     fontSize={15}
                                 >
@@ -364,7 +364,7 @@ export default function Profile() {
 
                                 <BetterText
                                     textAlign="normal"
-                                    textColor="#FFF"
+                                    textColor={colors.BASIC.WHITE}
                                     fontWeight="Regular"
                                     fontSize={15}
                                 >

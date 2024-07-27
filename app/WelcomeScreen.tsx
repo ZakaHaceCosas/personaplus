@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         borderColor: colors.MAIN.BLANDITEM.STRK,
         borderWidth: 2,
         borderRadius: 10,
-        color: "#FFF",
+        color: colors.BASIC.WHITE,
     },
 });
 
@@ -348,7 +348,7 @@ export default function WelcomePage() {
                                 borderWidth: 4,
                                 borderColor: colors.MAIN.BLANDITEM.STRK,
                                 width: "100%",
-                                color: "#FFF",
+                                color: colors.BASIC.WHITE,
                                 // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                                 outline: "none",
                                 fontFamily: "BeVietnamPro-Regular",
@@ -383,7 +383,7 @@ export default function WelcomePage() {
                                 borderWidth: 4,
                                 borderColor: colors.MAIN.BLANDITEM.STRK,
                                 width: "100%",
-                                color: "#FFF",
+                                color: colors.BASIC.WHITE,
                                 // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                                 outline: "none",
                                 fontFamily: "BeVietnamPro-Regular",
@@ -419,7 +419,7 @@ export default function WelcomePage() {
                                 borderWidth: 4,
                                 borderColor: colors.MAIN.BLANDITEM.STRK,
                                 width: "100%",
-                                color: "#FFF",
+                                color: colors.BASIC.WHITE,
                                 // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                                 outline: "none",
                                 fontFamily: "BeVietnamPro-Regular",
@@ -455,7 +455,7 @@ export default function WelcomePage() {
                                 borderWidth: 4,
                                 borderColor: colors.MAIN.BLANDITEM.STRK,
                                 width: "100%",
-                                color: "#FFF",
+                                color: colors.BASIC.WHITE,
                                 // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                                 outline: "none",
                                 fontFamily: "BeVietnamPro-Regular",

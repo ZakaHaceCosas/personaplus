@@ -46,7 +46,7 @@ export default function openhealthtest() {
             <View
                 style={{
                     padding: 20,
-                    backgroundColor: "#FFF",
+                    backgroundColor: colors.BASIC.WHITE,
                     borderTopColor: "#F00",
                     borderTopWidth: 10,
                 }}
@@ -79,7 +79,7 @@ export default function openhealthtest() {
             <View
                 style={{
                     padding: 20,
-                    backgroundColor: "#FFF",
+                    backgroundColor: colors.BASIC.WHITE,
                     borderTopColor: "#F00",
                     borderTopWidth: 10,
                 }}
@@ -114,7 +114,7 @@ export default function openhealthtest() {
             <View
                 style={{
                     padding: 20,
-                    backgroundColor: "#FFF",
+                    backgroundColor: colors.BASIC.WHITE,
                     borderTopColor: "#F00",
                     borderTopWidth: 10,
                 }}

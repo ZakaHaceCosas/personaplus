@@ -3,6 +3,7 @@
 
 import React, { ReactNode } from "react";
 import { TextStyle, Text } from "react-native";
+import colors from "./toolkit/design/colors";
 
 // TypeScript, supongo
 /**
@@ -60,7 +61,7 @@ interface BetterTextProps {
         | "Black"
         | "BlackItalic"; // Intensidad de la tipografía
     /**
-     * The color of the text, as a HEX string (e.g. "#FFF", "#C8C8C8"). Defaults to white.
+     * The color of the text, as a HEX string (e.g. colors.BASIC.WHITE, "#C8C8C8"). Defaults to white.
      *
      * @type {?string}
      */
@@ -126,7 +127,7 @@ export default function BetterText({
     const fontprefix: string = isSerif ? "NotoSerif-" : "BeVietnamPro-";
     const font: string = `${fontprefix}${fontWeight}`;
     const lineheight: number = fontSize + 0.5; // La altura de línea es igual al tamaño de letra (+ 0.5 para arreglar el texto viendose "recortado")
-    const color: string = textColor || "#FFF"; // Si el color no se especifica, es blanco
+    const color: string = textColor || colors.BASIC.WHITE; // Si el color no se especifica, es blanco
     const textalignment: "center" | "right" | "left" =
         textAlign === "center"
             ? "center"

@@ -251,7 +251,7 @@ export default function UpdateProfile() {
                             borderWidth: 4,
                             borderColor: colors.MAIN.BLANDITEM.STRK,
                             width: "100%",
-                            color: "#FFF",
+                            color: colors.BASIC.WHITE,
                             // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                             outline: "none",
                             fontFamily: "BeVietnamPro-Regular",
@@ -294,7 +294,7 @@ export default function UpdateProfile() {
                             borderWidth: 4,
                             borderColor: colors.MAIN.BLANDITEM.STRK,
                             width: "100%",
-                            color: "#FFF",
+                            color: colors.BASIC.WHITE,
                             // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                             outline: "none",
                             fontFamily: "BeVietnamPro-Regular",
@@ -338,7 +338,7 @@ export default function UpdateProfile() {
                             borderWidth: 4,
                             borderColor: colors.MAIN.BLANDITEM.STRK,
                             width: "100%",
-                            color: "#FFF",
+                            color: colors.BASIC.WHITE,
                             // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                             outline: "none",
                             fontFamily: "BeVietnamPro-Regular",
@@ -380,7 +380,7 @@ export default function UpdateProfile() {
                             borderWidth: 4,
                             borderColor: colors.MAIN.BLANDITEM.STRK,
                             width: "100%",
-                            color: "#FFF",
+                            color: colors.BASIC.WHITE,
                             // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
                             outline: "none",
                             fontFamily: "BeVietnamPro-Regular",
