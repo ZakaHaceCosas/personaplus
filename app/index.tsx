@@ -38,6 +38,7 @@ import colors from "@/src/toolkit/design/colors";
 
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
+import Loading from "@/src/Loading";
 
 // Creamos los estilos
 const styles = StyleSheet.create({
@@ -221,23 +222,7 @@ export default function Home() {
     }, [objectives, t]);
 
     if (loading) {
-        return (
-            <View style={styles.containerview}>
-                <BottomNav currentLocation={currentpage} />
-                <ScrollView>
-                    <View style={styles.mainview}>
-                        <BetterText
-                            fontWeight="Regular"
-                            fontSize={15}
-                            textAlign="center"
-                            textColor={colors.LBLS.SDD}
-                        >
-                            {t("globals.loading")}
-                        </BetterText>
-                    </View>
-                </ScrollView>
-            </View>
-        );
+        return <Loading currentpage={currentpage} displayNav={true} />;
     }
 
     return (
