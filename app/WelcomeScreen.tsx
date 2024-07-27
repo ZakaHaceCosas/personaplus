@@ -11,8 +11,6 @@ import {
     View,
     TextInput,
     Linking,
-    Platform,
-    ToastAndroid,
 } from "react-native";
 import Swap from "@/src/Swap";
 import Button from "@/src/Buttons";
@@ -215,7 +213,11 @@ export default function WelcomePage() {
                 termLog("Error creating profile: " + e, "error");
             }
         } else {
-            termLog("Error saving user data, some data is missing!", "error");
+            termLog(
+                "Error saving user data, some data is missing!",
+                "warn",
+                true
+            );
         }
     };
 
@@ -226,14 +228,6 @@ export default function WelcomePage() {
             setLanguage(targetLang);
         } catch (e) {
             termLog("Error changing language! " + e, "error");
-            if (Platform.OS === "android") {
-                ToastAndroid.show(
-                    t("page_profile.specific_errors.lang_react_error") +
-                        " - " +
-                        e,
-                    ToastAndroid.LONG
-                );
-            }
         }
     };
 

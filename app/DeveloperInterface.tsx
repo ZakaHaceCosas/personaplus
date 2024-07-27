@@ -2,15 +2,7 @@
 // Página que muestra ciertos logs de la consola para ayudar al desarrollador
 
 import React, { useEffect, useState } from "react";
-import {
-    Alert,
-    ScrollView,
-    StyleSheet,
-    View,
-    Text,
-    Platform,
-    ToastAndroid,
-} from "react-native";
+import { Alert, ScrollView, StyleSheet, View, Text } from "react-native";
 import BottomNav from "@/src/BottomNav";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
@@ -184,13 +176,7 @@ export default function DeveloperInterface() {
             await AsyncStorage.setItem("objectives", JSON.stringify([]));
             termLog("DEV CLEARED ALL", "log");
         } catch (e) {
-            termLog(String(e), "error");
-            if (Platform.OS === "android") {
-                ToastAndroid.show(
-                    `${t("globals.react_error")} - ${e}`,
-                    ToastAndroid.LONG
-                );
-            }
+            termLog(t("globals.react_error" + e), "error");
         } finally {
             router.navigate("/");
         }
