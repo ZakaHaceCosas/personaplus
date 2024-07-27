@@ -249,7 +249,7 @@ export default function UpdateProfile() {
                             borderRadius: 10,
                             padding: 15,
                             borderWidth: 4,
-                            borderColor: "{colors.MAIN.BLANDITEM.STRK}",
+                            borderColor: colors.MAIN.BLANDITEM.STRK,
                             width: "100%",
                             color: "#FFF",
                             // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
@@ -329,14 +329,14 @@ export default function UpdateProfile() {
                     )}
                     value={formData.weight}
                     readOnly={false}
-                    placeholderTextColor="{colors.MAIN.BLANDITEM.PLACEHOLDER}"
+                    placeholderTextColor={colors.MAIN.BLANDITEM.PLACEHOLDER}
                     style={[
                         {
                             backgroundColor: colors.MAIN.BLANDITEM.BACKGROUND,
                             borderRadius: 10,
                             padding: 15,
                             borderWidth: 4,
-                            borderColor: "{colors.MAIN.BLANDITEM.STRK}",
+                            borderColor: colors.MAIN.BLANDITEM.STRK,
                             width: "100%",
                             color: "#FFF",
                             // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
@@ -371,14 +371,14 @@ export default function UpdateProfile() {
                     placeholder={t("page_welcome.fragment_one.questions.age")}
                     value={formData.age}
                     readOnly={false}
-                    placeholderTextColor="{colors.MAIN.BLANDITEM.PLACEHOLDER}"
+                    placeholderTextColor={colors.MAIN.BLANDITEM.PLACEHOLDER}
                     style={[
                         {
                             backgroundColor: colors.MAIN.BLANDITEM.BACKGROUND,
                             borderRadius: 10,
                             padding: 15,
                             borderWidth: 4,
-                            borderColor: "{colors.MAIN.BLANDITEM.STRK}",
+                            borderColor: colors.MAIN.BLANDITEM.STRK,
                             width: "100%",
                             color: "#FFF",
                             // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
