@@ -433,12 +433,20 @@ export default function Sessions() {
                         <Ionicons
                             name={isTimerRunning ? "pause" : "play-arrow"}
                             size={16}
-                            color={isTimerRunning ? colors.BASIC.WHITE : "#000"}
+                            color={
+                                isTimerRunning
+                                    ? colors.BASIC.WHITE
+                                    : colors.BASIC.BLACK
+                            }
                         />
                     </Button>
                     <GapView width={10} />
                     <Button style="GOD" action={finish} layout="box">
-                        <Ionicons name="check" size={16} color="#000" />
+                        <Ionicons
+                            name="check"
+                            size={16}
+                            color={colors.BASIC.BLACK}
+                        />
                     </Button>
                     <GapView width={10} />
                     <Button

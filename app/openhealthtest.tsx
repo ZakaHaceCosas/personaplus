@@ -5,6 +5,7 @@ import { termLog } from "@/src/toolkit/debug/console";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import BottomNav from "@/src/BottomNav";
+import colors from "@/src/toolkit/design/colors";
 
 export default function openhealthtest() {
     const bmi = OpenHealth.physicalHealth.BodyMassIndex.calculate(
@@ -47,7 +48,7 @@ export default function openhealthtest() {
                 style={{
                     padding: 20,
                     backgroundColor: colors.BASIC.WHITE,
-                    borderTopColor: "#F00",
+                    borderTopColor: colors.PRIMARIES.WOR.WOR,
                     borderTopWidth: 10,
                 }}
             >
@@ -56,7 +57,7 @@ export default function openhealthtest() {
                         fontSize={25}
                         textAlign="normal"
                         fontWeight="Regular"
-                        textColor="#000"
+                        textColor={colors.BASIC.BLACK}
                     >
                         calculo indice de masa corporal: {bmi.result}
                         {"\n"}edad {bmi.subject.age}
@@ -70,7 +71,7 @@ export default function openhealthtest() {
                     fontSize={20}
                     textAlign="normal"
                     fontWeight="Regular"
-                    textColor="#000"
+                    textColor={colors.BASIC.BLACK}
                 >
                     {"\n"}explicacion: {bmi.explanation}
                 </BetterText>
@@ -80,7 +81,7 @@ export default function openhealthtest() {
                 style={{
                     padding: 20,
                     backgroundColor: colors.BASIC.WHITE,
-                    borderTopColor: "#F00",
+                    borderTopColor: colors.PRIMARIES.WOR.WOR,
                     borderTopWidth: 10,
                 }}
             >
@@ -89,7 +90,7 @@ export default function openhealthtest() {
                         fontSize={25}
                         textAlign="normal"
                         fontWeight="Regular"
-                        textColor="#000"
+                        textColor={colors.BASIC.BLACK}
                     >
                         calculo de calorias quemadas: {performance.result}
                         {"\n"}edad {performance.subject.age}
@@ -105,7 +106,7 @@ export default function openhealthtest() {
                     fontSize={20}
                     textAlign="normal"
                     fontWeight="Regular"
-                    textColor="#000"
+                    textColor={colors.BASIC.BLACK}
                 >
                     {"\n"}explicacion: {performance.explanation}
                 </BetterText>
@@ -115,7 +116,7 @@ export default function openhealthtest() {
                 style={{
                     padding: 20,
                     backgroundColor: colors.BASIC.WHITE,
-                    borderTopColor: "#F00",
+                    borderTopColor: colors.PRIMARIES.WOR.WOR,
                     borderTopWidth: 10,
                 }}
             >
@@ -124,7 +125,7 @@ export default function openhealthtest() {
                         fontSize={25}
                         textAlign="normal"
                         fontWeight="Regular"
-                        textColor="#000"
+                        textColor={colors.BASIC.BLACK}
                     >
                         basal metabolic rate: {basalloquesea.result}
                         {"\n"}edad {basalloquesea.subject.age}
@@ -140,7 +141,7 @@ export default function openhealthtest() {
                     fontSize={20}
                     textAlign="normal"
                     fontWeight="Regular"
-                    textColor="#000"
+                    textColor={colors.BASIC.BLACK}
                 >
                     {"\n"}explicacion: {basalloquesea.explanation}
                 </BetterText>
@@ -148,7 +149,7 @@ export default function openhealthtest() {
                     fontSize={20}
                     textAlign="normal"
                     fontWeight="Regular"
-                    textColor="#000"
+                    textColor={colors.BASIC.BLACK}
                 >
                     {"\n"}fuente:{" "}
                     {OpenHealth.physicalHealth.BodyMassIndex.getSource()}
