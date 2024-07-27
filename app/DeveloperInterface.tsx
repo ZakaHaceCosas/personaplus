@@ -25,6 +25,7 @@ import {
     getLogsFromStorage,
     addLogToGlobal,
 } from "@/src/toolkit/debug/console";
+import colors from "@/src/toolkit/design/colors";
 
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
@@ -49,10 +50,10 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
     log: {
-        color: "#FFFFFF",
+        color: colors.BASIC.WHITE,
         paddingLeft: 10,
         borderLeftWidth: 2,
-        borderLeftColor: "#FFFFFF",
+        borderLeftColor: colors.BASIC.WHITE,
     },
     success: {
         color: "#28a745",

@@ -396,11 +396,7 @@ export default function Form() {
                 </BetterText>
                 <GapView height={20} />
                 <View>
-                    <BetterText
-                        fontSize={20}
-                        textColor="#FFF"
-                        fontWeight="Regular"
-                    >
+                    <BetterText fontSize={20} fontWeight="Regular">
                         {t(
                             "subpage_create_active_objective.questions.what_to_do"
                         )}
@@ -416,14 +412,16 @@ export default function Form() {
                             borderColor: colors.MAIN.BLANDITEM.STRK,
                             borderWidth: 2,
                             borderRadius: 10,
-                            color: exercise ? "#FFF" : "#999",
+                            color: exercise
+                                ? colors.BASIC.WHITE
+                                : colors.LBLS.SDD,
                         }}
                         mode="dropdown"
                     >
                         <Select.Item
                             label={t("globals.select_placeholder")}
                             value=""
-                            color="#999"
+                            color={colors.LBLS.SDD}
                         />
                         {exercises.map(ex => (
                             <Select.Item
@@ -436,11 +434,7 @@ export default function Form() {
                         ))}
                     </Select>
                     <GapView height={20} />
-                    <BetterText
-                        fontSize={20}
-                        textColor="#FFF"
-                        fontWeight="Regular"
-                    >
+                    <BetterText fontSize={20} fontWeight="Regular">
                         {t(
                             "subpage_create_active_objective.questions.when_to_do"
                         )}
@@ -506,7 +500,7 @@ export default function Form() {
                                         }}
                                     >
                                         <BetterText
-                                            textColor="#FFF"
+                                            textColor={colors.BASIC.WHITE}
                                             fontSize={15}
                                             fontWeight="Medium"
                                         >
@@ -522,7 +516,7 @@ export default function Form() {
                         <View key={item} style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -545,7 +539,7 @@ export default function Form() {
                                     action={() => handleDecrement(item)}
                                 />
                                 <BetterText
-                                    textColor="#FFF"
+                                    textColor={colors.BASIC.WHITE}
                                     fontSize={20}
                                     fontWeight="Medium"
                                 >
@@ -568,7 +562,7 @@ export default function Form() {
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -593,7 +587,7 @@ export default function Form() {
                                     }
                                 />
                                 <BetterText
-                                    textColor="#FFF"
+                                    textColor={colors.BASIC.WHITE}
                                     fontSize={20}
                                     fontWeight="Medium"
                                 >
@@ -614,7 +608,7 @@ export default function Form() {
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -646,7 +640,7 @@ export default function Form() {
                                     action={() => handleDecrement("amount")}
                                 />
                                 <BetterText
-                                    textColor="#FFF"
+                                    textColor={colors.BASIC.WHITE}
                                     fontSize={20}
                                     fontWeight="Medium"
                                 >
@@ -665,7 +659,7 @@ export default function Form() {
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -697,7 +691,7 @@ export default function Form() {
                                     action={() => handleDecrement("lifts")}
                                 />
                                 <BetterText
-                                    textColor="#FFF"
+                                    textColor={colors.BASIC.WHITE}
                                     fontSize={20}
                                     fontWeight="Medium"
                                 >
@@ -716,7 +710,7 @@ export default function Form() {
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -748,7 +742,7 @@ export default function Form() {
                                     action={() => handleDecrement("liftWeight")}
                                 />
                                 <BetterText
-                                    textColor="#FFF"
+                                    textColor={colors.BASIC.WHITE}
                                     fontSize={20}
                                     fontWeight="Medium"
                                 >
@@ -767,7 +761,7 @@ export default function Form() {
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -799,7 +793,7 @@ export default function Form() {
                                     action={() => handleDecrement("barWeight")}
                                 />
                                 <BetterText
-                                    textColor="#FFF"
+                                    textColor={colors.BASIC.WHITE}
                                     fontSize={20}
                                     fontWeight="Medium"
                                 >
@@ -818,7 +812,7 @@ export default function Form() {
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -850,7 +844,7 @@ export default function Form() {
                                     action={() => handleDecrement("hands")}
                                 />
                                 <BetterText
-                                    textColor="#FFF"
+                                    textColor={colors.BASIC.WHITE}
                                     fontSize={20}
                                     fontWeight="Medium"
                                 >
@@ -869,7 +863,7 @@ export default function Form() {
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -901,7 +895,7 @@ export default function Form() {
                                     action={() => handleDecrement("hands")}
                                 />
                                 <BetterText
-                                    textColor="#FFF"
+                                    textColor={colors.BASIC.WHITE}
                                     fontSize={20}
                                     fontWeight="Medium"
                                 >
@@ -920,7 +914,7 @@ export default function Form() {
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontWeight="Regular"
                             >
                                 {t(
@@ -953,7 +947,7 @@ export default function Form() {
                                 />
                                 <View>
                                     <BetterText
-                                        textColor="#FFF"
+                                        textColor={colors.BASIC.WHITE}
                                         fontSize={20}
                                         fontWeight="Medium"
                                         textAlign="center"

@@ -135,20 +135,20 @@ export default function OpenSourceCredits() {
                             {library.name}
                         </BetterText>
                         <BetterText
-                            textColor="#BBB"
+                            textColor={colors.LBLS.SHL}
                             fontWeight="Regular"
                             fontSize={14}
                         >
                             {library.license}
                         </BetterText>
                         <BetterText
-                            textColor="#999"
+                            textColor={colors.LBLS.SDD}
                             fontWeight="Light"
                             fontSize={14}
                         >
                             Made by{" "}
                             <BetterText
-                                textColor="#999"
+                                textColor={colors.LBLS.SDD}
                                 fontWeight="SemiBold"
                                 fontSize={14}
                             >

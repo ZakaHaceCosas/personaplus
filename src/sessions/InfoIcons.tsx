@@ -7,6 +7,7 @@ import GapView from "../GapView";
 import { Objective } from "../types/Objective";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import BetterText from "../BetterText";
+import colors from "../toolkit/design/colors";
 
 // TypeScript, supongo...
 type InfoIconsProps = {
@@ -53,12 +54,12 @@ const InfoIcons: React.FC<InfoIconsProps> = ({ objective }) => {
                             <Ionicons
                                 name="keyboard-double-arrow-down"
                                 size={15}
-                                color="#FFF"
+                                color={colors.BASIC.WHITE}
                             />
                             <GapView width={5} />
                             <BetterText
                                 fontWeight="Regular"
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontSize={15}
                             >
                                 {objective?.extra?.barWeight !== undefined &&
@@ -76,12 +77,12 @@ const InfoIcons: React.FC<InfoIconsProps> = ({ objective }) => {
                             <Ionicons
                                 name="change-circle"
                                 size={15}
-                                color="#FFF"
+                                color={colors.BASIC.WHITE}
                             />
                             <GapView width={5} />
                             <BetterText
                                 fontWeight="Regular"
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontSize={15}
                             >
                                 {objective?.extra?.lifts !== undefined
@@ -93,12 +94,12 @@ const InfoIcons: React.FC<InfoIconsProps> = ({ objective }) => {
                             <Ionicons
                                 name="front-hand"
                                 size={15}
-                                color="#FFF"
+                                color={colors.BASIC.WHITE}
                             />
                             <GapView width={5} />
                             <BetterText
                                 fontWeight="Regular"
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontSize={15}
                             >
                                 {objective?.extra?.hands !== undefined
@@ -117,11 +118,15 @@ const InfoIcons: React.FC<InfoIconsProps> = ({ objective }) => {
                                 marginTop: 10,
                             }}
                         >
-                            <Ionicons name="speed" size={15} color="#FFF" />
+                            <Ionicons
+                                name="speed"
+                                size={15}
+                                color={colors.BASIC.WHITE}
+                            />
                             <GapView width={5} />
                             <BetterText
                                 fontWeight="Regular"
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontSize={15}
                             >
                                 {objective.extra.speed !== undefined &&
@@ -146,11 +151,15 @@ const InfoIcons: React.FC<InfoIconsProps> = ({ objective }) => {
                                 marginTop: 10,
                             }}
                         >
-                            <Ionicons name="repeat" size={15} color="#FFF" />
+                            <Ionicons
+                                name="repeat"
+                                size={15}
+                                color={colors.BASIC.WHITE}
+                            />
                             <GapView width={5} />
                             <BetterText
                                 fontWeight="Regular"
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontSize={15}
                             >
                                 {objective?.extra?.amount !== undefined
@@ -162,12 +171,12 @@ const InfoIcons: React.FC<InfoIconsProps> = ({ objective }) => {
                             <Ionicons
                                 name="front-hand"
                                 size={15}
-                                color="#FFF"
+                                color={colors.BASIC.WHITE}
                             />
                             <GapView width={5} />
                             <BetterText
                                 fontWeight="Regular"
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontSize={15}
                             >
                                 {objective?.extra?.hands !== undefined

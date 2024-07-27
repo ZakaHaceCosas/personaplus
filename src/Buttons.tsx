@@ -95,7 +95,7 @@ export default function Button({
         case "ACE":
             borderColor = colors.PRIMARIES.ACE.ACESTRK;
             backgroundColor = colors.PRIMARIES.ACE.ACE;
-            textColor = "#FFFFFF";
+            textColor = colors.BASIC.WHITE;
             break;
         case "GOD":
             borderColor = colors.PRIMARIES.GOD.GODSTRK;
@@ -105,7 +105,7 @@ export default function Button({
         case "WOR":
             borderColor = colors.PRIMARIES.WOR.WORSTRK;
             backgroundColor = colors.PRIMARIES.WOR.WOR;
-            textColor = "#FFFFFF";
+            textColor = colors.BASIC.WHITE;
             break;
         case "HMM":
             borderColor = colors.PRIMARIES.HMM.HMMSTRK;
@@ -115,12 +115,12 @@ export default function Button({
         case "DEFAULT":
             borderColor = colors.MAIN.BLANDITEM.STRK;
             backgroundColor = colors.MAIN.BLANDITEM.BACKGROUND;
-            textColor = "#FFF";
+            textColor = colors.BASIC.WHITE;
             break;
         default:
             borderColor = colors.MAIN.BLANDITEM.STRK;
             backgroundColor = colors.MAIN.BLANDITEM.BACKGROUND;
-            textColor = "#FFF";
+            textColor = colors.BASIC.WHITE;
             break;
     }
 

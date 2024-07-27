@@ -275,7 +275,7 @@ export default function Home() {
                                 <BetterText
                                     textAlign="center"
                                     fontSize={30}
-                                    textColor="#FFF"
+                                    textColor={colors.BASIC.WHITE}
                                     fontWeight="Bold"
                                 >
                                     {t("page_home.no_objectives.all_done")}
@@ -284,7 +284,7 @@ export default function Home() {
                                 <BetterText
                                     textAlign="center"
                                     fontSize={15}
-                                    textColor="#FFF"
+                                    textColor={colors.BASIC.WHITE}
                                     fontWeight="Regular"
                                 >
                                     {randomMessageForAllDone}
@@ -355,7 +355,7 @@ export default function Home() {
                             <BetterText
                                 textAlign="center"
                                 fontSize={30}
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontWeight="Bold"
                             >
                                 {t("page_home.no_objectives.not_any_objective")}

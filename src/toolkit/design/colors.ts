@@ -34,6 +34,8 @@ interface MainColors {
     SECTION: Color;
     /** Default background of divisions */
     DIVISION: Color;
+    /** In case of a floating division, the color of its border */
+    DIVISIONBORDER: Color;
     /** Color for the bottom navigation */
     FOOTER: FooterColors;
     /** Colors for input elements */
@@ -90,6 +92,13 @@ interface PrimaryColors {
     HMM: HmmColors;
 }
 
+interface BasicColors {
+    /** Pure black */
+    BLACK: "#000000",
+    /** Pure white */
+    WHITE: "#FFFFFF"
+}
+
 interface Colors {
     /** Main color palette */
     MAIN: MainColors;
@@ -97,9 +106,17 @@ interface Colors {
     LBLS: LabelColors;
     /** Primary colors */
     PRIMARIES: PrimaryColors;
+    /** Black & white. Use them as a variable, as the app plans to add theming. */    BASIC: BasicColors;
 }
 
 const colors: Colors = {
+    /** Black & white. Use them as a variable, as the app plans to add theming. */
+    BASIC: {
+        /** Pure black */
+        BLACK: "#000000",
+        /** Pure white */
+        WHITE: "#FFFFFF"
+    },
     /** Main color palette */
     MAIN: {
         /** The very background of the app */
@@ -108,6 +125,8 @@ const colors: Colors = {
         SECTION: "#14171C",
         /** Default background of divisions */
         DIVISION: "#202328",
+        /** In case of a floating division, the color of its border */
+        DIVISIONBORDER: "#26282B",
         FOOTER: {
             /** Background for the bottom navigation */
             BACKGROUND: "#16191E",

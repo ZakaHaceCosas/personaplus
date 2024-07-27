@@ -211,7 +211,7 @@ export default function Dashboard() {
                             <BetterText
                                 textAlign="center"
                                 fontSize={30}
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                                 fontWeight="Bold"
                             >
                                 {t("page_dashboard.not_any_objective")}

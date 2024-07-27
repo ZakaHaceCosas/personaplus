@@ -54,7 +54,7 @@ export default function Division({
                                 textAlign="normal"
                                 fontWeight="Bold"
                                 fontSize={10}
-                                textColor="#FFF"
+                                textColor={colors.BASIC.WHITE}
                             >
                                 {preheader}
                             </BetterText>
@@ -64,7 +64,7 @@ export default function Division({
                             textAlign="normal"
                             fontWeight="Bold"
                             fontSize={25}
-                            textColor="#FFF"
+                            textColor={colors.BASIC.WHITE}
                         >
                             {header}
                         </BetterText>

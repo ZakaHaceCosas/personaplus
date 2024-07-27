@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
         padding: 20,
         borderRadius: 20,
         elevation: 16,
-        borderColor: "#26282b",
+        borderColor: colors.MAIN.DIVISIONBORDER,
         borderWidth: 4,
         zIndex: 999,
     },
@@ -348,7 +348,11 @@ export default function Sessions() {
                             justifyContent: "center",
                         }}
                     >
-                        <Ionicons name="loop" size={15} color="#FFF" />
+                        <Ionicons
+                            name="loop"
+                            size={15}
+                            color={colors.BASIC.WHITE}
+                        />
                         <GapView width={5} />
                         <BetterText fontWeight="Regular" fontSize={15}>
                             {laps === 0
@@ -358,7 +362,11 @@ export default function Sessions() {
                                   : `${laps} repetitions`}
                         </BetterText>
                         <GapView width={15} />
-                        <Ionicons name="snooze" size={15} color="#FFF" />
+                        <Ionicons
+                            name="snooze"
+                            size={15}
+                            color={colors.BASIC.WHITE}
+                        />
                         <GapView width={5} />
                         <BetterText fontWeight="Regular" fontSize={15}>
                             {currentObjective.rests === 0
@@ -425,7 +433,7 @@ export default function Sessions() {
                         <Ionicons
                             name={isTimerRunning ? "pause" : "play-arrow"}
                             size={16}
-                            color={isTimerRunning ? "#FFF" : "#000"}
+                            color={isTimerRunning ? colors.BASIC.WHITE : "#000"}
                         />
                     </Button>
                     <GapView width={10} />
