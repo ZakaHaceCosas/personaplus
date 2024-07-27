@@ -48,7 +48,8 @@ END README
 - Fixed an issue with `[key: string]: Objective` and `Objective[]` being messed up. Achieved by creating a `objectiveArrayToObject` toolkified function.
 - Now all `type="error"` `termLog`s will be shown by default to the end user within an Android toast message. This improves user feedback, but also helps improving code legibility as a lot of lines have been removed thanks to this. You can also manually show the user non-error logs passing `true` as the third argument to the function.
 - Created a component `sessions/InfoIcons.tsx` to display the info icons in the Sessions page, making code more readable.
-- Toolkified UI colors. Now all the colors we'll use are accessible from the `colors` constant, except obviously #000 and #FFF. It has JSDoc (to be polished, tho).
+- Toolkified UI colors. Now all the colors we'll use are accessible from the `colors`. It has JSDoc (to be polished, tho).
+- Componentified loading screens.
 
 ### Trivial changes
 
