@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
     DimensionValue,
     StyleSheet,
@@ -15,6 +15,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/src/Buttons";
 import { useTranslation } from "react-i18next";
 import { validateBasicData } from "@/src/toolkit/userData";
+
+// TypeScript, supongo
+interface UserData {
+    username: string;
+    gender: string;
+    age: string;
+    height: string;
+    weight: string;
+}
 
 // Creamos los estilos
 const styles = StyleSheet.create({
@@ -41,13 +50,80 @@ const styles = StyleSheet.create({
 // Creamos la función
 export default function UpdateProfile() {
     const { t } = useTranslation();
+    const [loading, setLoading] = useState<boolean>(true);
+    const [previousUsername, setPreviousUsername] = useState<string>("Unknown");
+    const [previousGender, setPreviousGender] = useState<string>("Unknown");
+    const [previousAge, setPreviousAge] = useState<string>("Unknown");
+    const [previousHeight, setPreviousHeight] = useState<string>("Unknown");
+    const [previousWeight, setPreviousWeight] = useState<string>("Unknown");
+
+    const getAllUserData = async (): Promise<UserData> => {
+        try {
+            const values = await AsyncStorage.multiGet([
+                "username",
+                "gender",
+                "age",
+                "height",
+                "weight",
+            ]);
+
+            const data: UserData = {
+                username: values[0][1] || "Unknown",
+                gender: values[1][1] || "Unknown",
+                age: values[2][1] || "Unknown",
+                height: values[3][1] || "Unknown",
+                weight: values[4][1] || "Unknown",
+            };
+            return data;
+        } catch (e) {
+            termLog(String(e), "error");
+            return {
+                username: "Unknown",
+                gender: "Unknown",
+                age: "Unknown",
+                height: "Unknown",
+                weight: "Unknown",
+            };
+        }
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const userData = await getAllUserData();
+            setPreviousUsername(userData.username);
+            setPreviousGender(userData.gender);
+            setPreviousAge(userData.age);
+            setPreviousHeight(userData.height);
+            setPreviousWeight(userData.weight);
+            setLoading(false);
+        };
+
+        fetchData();
+    }, []);
     const [formData, setFormData] = useState({
-        username: "",
-        height: "",
-        weight: "",
-        age: "",
+        username: previousUsername,
+        height: previousHeight,
+        weight: previousWeight,
+        age: previousAge,
     });
-    const [genderValue, setGenderValue] = useState<string | null>(null);
+    useEffect(() => {
+        setFormData({
+            username: previousUsername,
+            height: previousHeight,
+            weight: previousWeight,
+            age: previousAge,
+        });
+        setGenderValue(previousGender);
+    }, [
+        previousAge,
+        previousGender,
+        previousHeight,
+        previousUsername,
+        previousWeight,
+    ]);
+    const [genderValue, setGenderValue] = useState<string | null>(
+        previousGender
+    );
     const handleGenderChange = (value: string) => {
         setGenderValue(value);
     };
@@ -108,6 +184,25 @@ export default function UpdateProfile() {
             termLog("Error saving user data, some data is missing!", "error");
         }
     };
+
+    if (loading) {
+        return (
+            <View style={styles.containerview}>
+                <ScrollView>
+                    <View style={styles.mainview}>
+                        <BetterText
+                            fontWeight="Regular"
+                            fontSize={15}
+                            textAlign="center"
+                            textColor="#C8C8C8"
+                        >
+                            {t("globals.loading")}{" "}
+                        </BetterText>
+                    </View>
+                </ScrollView>
+            </View>
+        );
+    }
 
     return (
         <View style={styles.containerview}>
