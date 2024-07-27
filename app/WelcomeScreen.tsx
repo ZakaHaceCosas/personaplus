@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         padding: 12,
         width: "100%",
         backgroundColor: colors.MAIN.BLANDITEM.BACKGROUND,
-        borderColor: "{colors.MAIN.BLANDITEM.STRK}",
+        borderColor: colors.MAIN.BLANDITEM.STRK,
         borderWidth: 2,
         borderRadius: 10,
         color: "#FFF",
@@ -338,7 +338,7 @@ export default function WelcomePage() {
                         )}
                         value={formData.username}
                         readOnly={false}
-                        placeholderTextColor="{colors.MAIN.BLANDITEM.PLACEHOLDER}"
+                        placeholderTextColor={colors.MAIN.BLANDITEM.PLACEHOLDER}
                         style={[
                             {
                                 backgroundColor:
@@ -346,7 +346,7 @@ export default function WelcomePage() {
                                 borderRadius: 10,
                                 padding: 15,
                                 borderWidth: 4,
-                                borderColor: "{colors.MAIN.BLANDITEM.STRK}",
+                                borderColor: colors.MAIN.BLANDITEM.STRK,
                                 width: "100%",
                                 color: "#FFF",
                                 // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
@@ -373,7 +373,7 @@ export default function WelcomePage() {
                         )}
                         value={formData.height}
                         readOnly={false}
-                        placeholderTextColor="{colors.MAIN.BLANDITEM.PLACEHOLDER}"
+                        placeholderTextColor={colors.MAIN.BLANDITEM.PLACEHOLDER}
                         style={[
                             {
                                 backgroundColor:
@@ -381,7 +381,7 @@ export default function WelcomePage() {
                                 borderRadius: 10,
                                 padding: 15,
                                 borderWidth: 4,
-                                borderColor: "{colors.MAIN.BLANDITEM.STRK}",
+                                borderColor: colors.MAIN.BLANDITEM.STRK,
                                 width: "100%",
                                 color: "#FFF",
                                 // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
@@ -409,7 +409,7 @@ export default function WelcomePage() {
                         )}
                         value={formData.weight}
                         readOnly={false}
-                        placeholderTextColor="{colors.MAIN.BLANDITEM.PLACEHOLDER}"
+                        placeholderTextColor={colors.MAIN.BLANDITEM.PLACEHOLDER}
                         style={[
                             {
                                 backgroundColor:
@@ -417,7 +417,7 @@ export default function WelcomePage() {
                                 borderRadius: 10,
                                 padding: 15,
                                 borderWidth: 4,
-                                borderColor: "{colors.MAIN.BLANDITEM.STRK}",
+                                borderColor: colors.MAIN.BLANDITEM.STRK,
                                 width: "100%",
                                 color: "#FFF",
                                 // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
@@ -445,7 +445,7 @@ export default function WelcomePage() {
                         )}
                         value={formData.age}
                         readOnly={false}
-                        placeholderTextColor="{colors.MAIN.BLANDITEM.PLACEHOLDER}"
+                        placeholderTextColor={colors.MAIN.BLANDITEM.PLACEHOLDER}
                         style={[
                             {
                                 backgroundColor:
@@ -453,7 +453,7 @@ export default function WelcomePage() {
                                 borderRadius: 10,
                                 padding: 15,
                                 borderWidth: 4,
-                                borderColor: "{colors.MAIN.BLANDITEM.STRK}",
+                                borderColor: colors.MAIN.BLANDITEM.STRK,
                                 width: "100%",
                                 color: "#FFF",
                                 // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
