@@ -16,6 +16,7 @@ import Button from "@/src/Buttons";
 import { useTranslation } from "react-i18next";
 import { validateBasicData } from "@/src/toolkit/userData";
 import colors from "@/src/toolkit/design/colors";
+import Loading from "@/src/Loading";
 
 // TypeScript, supongo
 interface UserData {
@@ -187,22 +188,7 @@ export default function UpdateProfile() {
     };
 
     if (loading) {
-        return (
-            <View style={styles.containerview}>
-                <ScrollView>
-                    <View style={styles.mainview}>
-                        <BetterText
-                            fontWeight="Regular"
-                            fontSize={15}
-                            textAlign="center"
-                            textColor={colors.LBLS.SDD}
-                        >
-                            {t("globals.loading")}{" "}
-                        </BetterText>
-                    </View>
-                </ScrollView>
-            </View>
-        );
+        return <Loading currentpage={null} displayNav={false} />;
     }
 
     return (

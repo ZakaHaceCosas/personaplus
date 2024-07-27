@@ -26,6 +26,7 @@ import { version } from "@/package.json";
 import { changeLanguage } from "i18next";
 import { useTranslation } from "react-i18next";
 import colors from "@/src/toolkit/design/colors";
+import Loading from "@/src/Loading";
 
 // TypeScript, supongo
 interface Release {
@@ -275,23 +276,7 @@ export default function Profile() {
     };
 
     if (loading) {
-        return (
-            <View style={styles.containerview}>
-                <BottomNav currentLocation={currentpage} />
-                <ScrollView>
-                    <View style={styles.mainview}>
-                        <BetterText
-                            fontWeight="Regular"
-                            fontSize={15}
-                            textAlign="center"
-                            textColor={colors.LBLS.SDD}
-                        >
-                            {t("globals.loading")}
-                        </BetterText>
-                    </View>
-                </ScrollView>
-            </View>
-        );
+        return <Loading currentpage={currentpage} displayNav={true} />;
     }
 
     return (

@@ -28,6 +28,7 @@ import {
 import { router, usePathname } from "expo-router";
 import colors from "@/src/toolkit/design/colors";
 import { useTranslation } from "react-i18next";
+import Loading from "@/src/Loading";
 
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
@@ -121,23 +122,7 @@ export default function Dashboard() {
     const currentpage: string = usePathname();
 
     if (loading) {
-        return (
-            <View style={styles.containerview}>
-                <BottomNav currentLocation={currentpage} />
-                <ScrollView>
-                    <View style={styles.mainview}>
-                        <BetterText
-                            fontWeight="Regular"
-                            fontSize={15}
-                            textAlign="center"
-                            textColor={colors.LBLS.SDD}
-                        >
-                            {t("globals.loading")}{" "}
-                        </BetterText>
-                    </View>
-                </ScrollView>
-            </View>
-        );
+        return <Loading currentpage={currentpage} displayNav={true} />;
     }
 
     return (
