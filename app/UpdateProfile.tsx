@@ -226,6 +226,15 @@ export default function UpdateProfile() {
                     {t("subpage_edit_profile.subtitle")}
                 </BetterText>
                 <GapView height={15} />
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={15}
+                    textColor="#C8C8C8"
+                >
+                    {t("page_welcome.fragment_one.questions.username")}
+                </BetterText>
+                <GapView height={5} />
                 <TextInput
                     placeholder={t(
                         "page_welcome.fragment_one.questions.username"
@@ -260,6 +269,15 @@ export default function UpdateProfile() {
                     ref={ref => ref && (inputRefs.current[0] = ref)}
                 />
                 <GapView height={15} />
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={15}
+                    textColor="#C8C8C8"
+                >
+                    {t("page_welcome.fragment_one.questions.height")}
+                </BetterText>
+                <GapView height={5} />
                 <TextInput
                     placeholder={t(
                         "page_welcome.fragment_one.questions.height"
@@ -295,6 +313,15 @@ export default function UpdateProfile() {
                     ref={ref => ref && (inputRefs.current[1] = ref)}
                 />
                 <GapView height={15} />
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={15}
+                    textColor="#C8C8C8"
+                >
+                    {t("page_welcome.fragment_one.questions.weight")}
+                </BetterText>
+                <GapView height={5} />
                 <TextInput
                     placeholder={t(
                         "page_welcome.fragment_one.questions.weight"
@@ -330,6 +357,15 @@ export default function UpdateProfile() {
                     ref={ref => ref && (inputRefs.current[2] = ref)}
                 />
                 <GapView height={15} />
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={15}
+                    textColor="#C8C8C8"
+                >
+                    {t("page_welcome.fragment_one.questions.age")}
+                </BetterText>
+                <GapView height={5} />
                 <TextInput
                     placeholder={t("page_welcome.fragment_one.questions.age")}
                     value={formData.age}
@@ -363,6 +399,15 @@ export default function UpdateProfile() {
                     ref={ref => ref && (inputRefs.current[3] = ref)}
                 />
                 <GapView height={15} />
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={15}
+                    textColor="#C8C8C8"
+                >
+                    {t("page_profile.your_profile_division.gender")}
+                </BetterText>
+                <GapView height={5} />
                 <Swap
                     id="genderswap"
                     key="genderswap"
