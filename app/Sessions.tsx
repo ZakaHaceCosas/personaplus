@@ -70,20 +70,26 @@ export default function Sessions() {
                 if (Array.isArray(objectives)) {
                     setObjectives(objectives);
                 } else {
-                    termLog("Expected an array, got a string instead", "error");
+                    termLog(
+                        t("globals.react_error") +
+                            "Expected an array, got a string instead",
+                        "error"
+                    );
                 }
             } catch (e) {
-                termLog("SESSIONTS.TSX - Objective fetch error! " + e, "error");
-                if (Platform.OS === "android") {
-                    ToastAndroid.show("Fetch error! " + e, ToastAndroid.LONG); // so the user knows whats up
-                }
+                termLog(
+                    t("globals.react_error") +
+                        "SESSIONTS.TSX - Objective fetch error! " +
+                        e,
+                    "error"
+                );
             } finally {
                 setLoading(false); // setLoading() in the finally block and not the try one, so in the case of an error the user doesnt get stuck on a "Loading..." screen
             }
         };
 
         handle();
-    }, []);
+    }, [t]);
 
     useEffect(() => {
         termLog("SESSIONS.TSX - Objectives: " + objectives, "log");
@@ -104,12 +110,6 @@ export default function Sessions() {
                     setLaps(objective?.repetitions || 0); // Ensure laps is set correctly
                 } catch (e) {
                     termLog("Error fetching current objective: " + e, "error");
-                    if (Platform.OS === "android") {
-                        ToastAndroid.show(
-                            "Current Fetch error! " + e,
-                            ToastAndroid.LONG
-                        ); // so the user knows whats up
-                    }
                 }
             };
 
@@ -194,9 +194,6 @@ export default function Sessions() {
                         e,
                     "error"
                 );
-                if (Platform.OS === "android") {
-                    ToastAndroid.show("Parse error! " + e, ToastAndroid.LONG); // so the user knows whats up
-                }
             }
         }
     };

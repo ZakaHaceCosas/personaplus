@@ -295,12 +295,6 @@ export default function Form() {
         );
         submit().catch(e => {
             termLog("REACT ERROR: " + e, "error");
-            if (Platform.OS === "android") {
-                ToastAndroid.show(
-                    `${t("globals.react_error")} - ${e}`,
-                    ToastAndroid.LONG
-                );
-            }
         });
     };
 

@@ -83,12 +83,6 @@ export default function Dashboard() {
                     "Could not get objectives fetched due to error: " + e,
                     "error"
                 );
-                if (Platform.OS === "android") {
-                    ToastAndroid.show(
-                        `${t("globals.react_error")} - ${e}`,
-                        ToastAndroid.LONG
-                    );
-                }
             }
         };
 
@@ -114,13 +108,12 @@ export default function Dashboard() {
                 termLog("Expected an array and got a string instead", "error");
             }
         } catch (e) {
-            termLog("Got an error updating, " + e, "error");
-            if (Platform.OS === "android") {
-                ToastAndroid.show(
-                    `${t("page_dashboard.specific_errors.react_error", { id: identifier })} - ${e}`,
-                    ToastAndroid.LONG
-                );
-            }
+            termLog(
+                t("page_dashboard.specific_errors.react_error", {
+                    id: identifier,
+                }) + e,
+                "error"
+            );
         }
     };
 

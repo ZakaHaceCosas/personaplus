@@ -270,14 +270,6 @@ export default function Profile() {
             router.navigate("/");
         } catch (e) {
             termLog("Error changing language! " + e, "error");
-            if (Platform.OS === "android") {
-                ToastAndroid.show(
-                    t("page_profile.specific_errors.lang_react_error") +
-                        " - " +
-                        e,
-                    ToastAndroid.LONG
-                );
-            }
         }
     };
 

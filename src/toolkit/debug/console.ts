@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Log } from "@/src/types/Logs";
+import { Platform, ToastAndroid } from "react-native";
 
 // Función para obtener logs desde AsyncStorage
 /**
@@ -15,7 +16,7 @@ export const getLogsFromStorage = async (): Promise<Log[]> => {
             return JSON.parse(logsString);
         }
     } catch (e) {
-        termLog("Error fetching logs from AsyncStorage: " + e, "error");
+        termLog("Error accessing logs from AsyncStorage: " + e, "error");
     }
     return [];
 };
@@ -57,13 +58,19 @@ export const addLogToGlobal = async (log: Log) => {
  *
  * @param {string} message The message to be logged
  * @param {("log" | "warn" | "error" | "success")} type The kind of message you're logging. Either a standard log, warning, error message, or success message.
+ * @param {boolean} displayToEndUser Whether to show the end user the message in an Android toast message. **Note: Logs with `type` "error" will always be shown to the end user!** This is just if you want to explicitly show anything that isn't an error.
+ * @returns Nothing, it just works.
  */
 export const termLog = (
     message: string,
-    type: "log" | "warn" | "error" | "success"
+    type: "log" | "warn" | "error" | "success",
+    displayToEndUser?: boolean
 ) => {
-    console.log(message);
-    const timestamp = Date.now();
-    const newLog: Log = { message: message, type, timestamp };
-    addLogToGlobal(newLog);
+    console.log(message); // Regular console log
+    const timestamp = Date.now(); // Exact timestamp
+    const newLog: Log = { message: message, type, timestamp }; // Generates the log
+    addLogToGlobal(newLog); // Pushes it so it gets stored
+    if (Platform.OS === "android" && type === "error" || Platform.OS === "android" && displayToEndUser === true) {
+        ToastAndroid.show(message, ToastAndroid.LONG); // Shows a toast so the user knows whats up, if its either an error or a log where the dev explicitly asked to show it to the user.
+    }
 };
