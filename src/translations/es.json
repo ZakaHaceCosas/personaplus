@@ -124,6 +124,7 @@
         "required": "Necesario: Duración, Ejercicio, y al menos un día de la semana. Algunos ejercicios específicos tendrán requisitos extra: por ejemplo \"Levantamiento de peso\" requiere que especifiques cuanto peso vas a levantar."
     },
     "page_sessions": {
+        "resting": "Resting!",
         "in_a_session": "¡EN UNA SESIÓN!",
         "current": "OBJETIVO ACTUAL",
         "help_section": {

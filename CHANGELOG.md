@@ -33,6 +33,8 @@ END README
 - Replaced some `.navigate()` functions with `.back()` to avoid confusing the user.
 - Translated reminder notifications.
 - Now the profile update page makes more sense: before you only had the option to edit _all_ your profile again from scratch, even your gender. Now, all the data will default to the previous data, letting you change only what you want to change.
+- Now sessions display time in `mm:ss` format rather than just seconds.
+- Now rests do work properly!
 
 ### Dev updates
 
@@ -45,6 +47,7 @@ END README
 - Added some try-catch statements to improve error spotting.
 - Merged `Section.tsx` and `SectionHeader.tsx` onto a single file.
 - Updated the objectives toolkit, `getObjectives` and `fetchObjectives` have been merged.
+- Added a `calculateSessionFragmentsDuration` to the objective toolkit. Calculates rest timing for sessions, basically.
 - Fixed an issue with `[key: string]: Objective` and `Objective[]` being messed up. Achieved by creating a `objectiveArrayToObject` toolkified function.
 - Now all `type="error"` `termLog`s will be shown by default to the end user within an Android toast message. This improves user feedback, but also helps improving code legibility as a lot of lines have been removed thanks to this. You can also manually show the user non-error logs passing `true` as the third argument to the function.
 - Created a component `sessions/InfoIcons.tsx` to display the info icons in the Sessions page, making code more readable.

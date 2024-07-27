@@ -7,6 +7,7 @@ import {
     getObjectives,
     markObjectiveAsDone,
     getObjectiveByIdentifier,
+    calculateSessionFragmentsDuration,
 } from "@/src/toolkit/objectives";
 import { router, useGlobalSearchParams } from "expo-router";
 import BetterText from "@/src/BetterText";
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
 });
 
 export default function Sessions() {
+    // Stateful values and stuff
     const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean>(true);
     const params = useGlobalSearchParams();
@@ -51,6 +53,9 @@ export default function Sessions() {
     const [currentObjective, setCurrentObjective] = useState<Objective | null>(
         null
     );
+    const [isTimerRunning, setTimerStatus] = useState(true);
+    const [isUserCheckingHelp, setIsUserCheckingHelp] = useState(false);
+    const [isUserResting, setIsUserResting] = useState(false);
     /*
     If you wonder why there are two variables for the timer's loops, one of them is to keep account of many times repeat (laps) and other one is to set the "key" attribute of the circle timer, which is required for it to loop.
     */
@@ -125,8 +130,6 @@ export default function Sessions() {
           )
         : "Doing something";
 
-    const [isTimerRunning, setTimerStatus] = useState(true);
-
     const toggleTimerStatus = (manualTarget?: boolean): void => {
         setTimerStatus(
             manualTarget !== undefined ? manualTarget : !isTimerRunning
@@ -183,7 +186,7 @@ export default function Sessions() {
                         ToastAndroid.LONG
                     );
                 }
-                router.navigate("/");
+                router.replace("/");
             } catch (e) {
                 termLog(
                     "SESSIONS.TSX - Error parsing objectives (OBJS) for update: " +
@@ -203,16 +206,51 @@ export default function Sessions() {
         }
     };
 
-    const [isUserCheckingHelp, setIsUserCheckingHelp] = useState(false);
+    const handleRestState = (action: "pause" | "play") => {
+        if (action === "pause") {
+            toggleTimerStatus(false);
+            setIsUserResting(true);
+        } else if (action === "play") {
+            toggleTimerStatus(true);
+            setIsUserResting(false);
+        }
+    };
+
+    const handleResting = (
+        totalDuration: number,
+        timeLeft: number,
+        rests: number,
+        restDuration: number,
+        fragmentDuration: number
+    ): void => {
+        const elapsedTime = totalDuration - timeLeft; // Elapsed time
+        // the circle timer is supposed to call this thing each second, so it should work
+        termLog("Fragment Duration: " + fragmentDuration, "log"); // for debugging :]
+        const currentFragment = Math.floor(elapsedTime / fragmentDuration);
+        termLog("Current Fragment: " + currentFragment, "log");
+
+        if (
+            elapsedTime % fragmentDuration === 0 &&
+            elapsedTime !== 0 &&
+            currentFragment <= rests
+        ) {
+            termLog("Resting...", "success");
+            handleRestState("pause"); // Pauses
+            setTimeout(
+                () => {
+                    handleRestState("play"); // Plays, after the time has passed
+                },
+                restDuration * 60 * 1000 // Convert seconds to milliseconds
+            );
+        } else {
+            termLog("Session working... Elapsed: " + elapsedTime, "log"); // Just do a console log if it's not time to rest
+        }
+    };
 
     const toggleHelpMenu = (): void => {
         setIsUserCheckingHelp(prev => !prev);
-        toggleTimerStatus(!isUserCheckingHelp);
+        toggleTimerStatus(isUserCheckingHelp); // ok, I dont know...
     };
-
-    const helpText: string = currentObjective?.exercise
-        ? t(`page_sessions.help_section.${currentObjective.exercise}`)
-        : t("globals.error_loading_content");
 
     if (loading) {
         return (
@@ -225,6 +263,9 @@ export default function Sessions() {
             <View>
                 <BetterText fontSize={20} fontWeight="Regular">
                     Error
+                </BetterText>
+                <BetterText fontSize={10} fontWeight="Regular">
+                    {t("globals.react_error_check")}
                 </BetterText>
             </View>
         );
@@ -308,9 +349,13 @@ export default function Sessions() {
                         fontSize={25}
                         textAlign="center"
                     >
-                        {currentObjectiveSustantivizedName}{" "}
-                        {currentObjective.duration} {t("globals.minute")}
-                        {currentObjective.duration > 1 && "s"}
+                        {!isUserResting
+                            ? currentObjectiveSustantivizedName +
+                                  " " +
+                                  currentObjective.duration +
+                                  t("globals.minute") +
+                                  (currentObjective.duration > 1) && "s"
+                            : t("page_sessions.resting")}
                     </BetterText>
                     <GapView height={10} />
                     <View
@@ -366,25 +411,43 @@ export default function Sessions() {
                             : colors.PRIMARIES.HMM.HMM,
                     ]}
                     colorsTime={[15, 5]}
-                    isSmoothColorTransition={false}
+                    isSmoothColorTransition={true}
                     onComplete={handleFinish}
+                    onUpdate={remainingTime =>
+                        handleResting(
+                            currentObjective.duration * 60,
+                            remainingTime,
+                            currentObjective.rests,
+                            currentObjective.restDuration,
+                            calculateSessionFragmentsDuration(
+                                currentObjective.duration * 60,
+                                currentObjective.rests
+                            )
+                        )
+                    }
                     isGrowing={true}
                     trailColor={colors.MAIN.DIVISION}
                     strokeLinecap="round"
                     trailStrokeWidth={10}
                     strokeWidth={15}
                 >
-                    {({ remainingTime }) => (
-                        <BetterText
-                            fontSize={30}
-                            fontWeight="Bold"
-                            textAlign="center"
-                            textColor={timerColor}
-                        >
-                            {remainingTime}
-                        </BetterText>
-                    )}
+                    {({ remainingTime }) => {
+                        const minutes = Math.floor(remainingTime / 60);
+                        const seconds = remainingTime % 60;
+
+                        return (
+                            <BetterText
+                                fontSize={30}
+                                fontWeight="Bold"
+                                textAlign="center"
+                                textColor={timerColor}
+                            >
+                                {`${minutes}:${seconds}`}
+                            </BetterText>
+                        );
+                    }}
                 </CountdownCircleTimer>
+
                 <GapView height={20} />
                 <View
                     style={{
@@ -451,7 +514,11 @@ export default function Sessions() {
                         })}
                     </BetterText>
                     <BetterText fontSize={14} fontWeight="Light">
-                        {helpText}
+                        {currentObjective?.exercise
+                            ? t(
+                                  `page_sessions.help_section.${currentObjective.exercise}`
+                              )
+                            : t("globals.error_loading_content")}
                     </BetterText>
                     <GapView height={10} />
                     <Button
