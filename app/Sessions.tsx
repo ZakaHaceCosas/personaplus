@@ -2,15 +2,7 @@
 // Página para sesiones
 
 import React, { useEffect, useState } from "react";
-import {
-    View,
-    StyleSheet,
-    Alert,
-    ToastAndroid,
-    DimensionValue,
-    Platform,
-    Dimensions,
-} from "react-native";
+import { View, StyleSheet, Alert, ToastAndroid, Platform } from "react-native";
 import {
     getObjectives,
     markObjectiveAsDone,
@@ -29,6 +21,7 @@ import colors from "@/src/toolkit/design/colors";
 
 // TypeScript, supongo.
 import { Objective } from "@/src/types/Objective";
+import Loading from "@/src/Loading";
 
 // Estilos
 const styles = StyleSheet.create({
@@ -223,27 +216,7 @@ export default function Sessions() {
 
     if (loading) {
         return (
-            <View
-                style={{
-                    width: "100vw" as DimensionValue,
-                    height: "100vh" as DimensionValue,
-                    flex: 1,
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
-                <GapView height={Dimensions.get("screen").height / 2} />
-                <BetterText
-                    textAlign="center"
-                    fontSize={25}
-                    textColor={colors.PRIMARIES.GOD.GOD}
-                    fontWeight="Medium"
-                >
-                    {t("globals.loading")}
-                </BetterText>
-            </View>
+            <Loading currentpage={null} displayNav={false} useSpecial={true} />
         );
     }
 
