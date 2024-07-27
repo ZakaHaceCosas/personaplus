@@ -32,6 +32,7 @@ END README
 - Simplified the Dev Interface flow. Removed the need of clicking three times just to access it the first time.
 - Replaced some `.navigate()` functions with `.back()` to avoid confusing the user.
 - Translated reminder notifications.
+- Now the profile update page makes more sense: before you only had the option to edit _all_ your profile again from scratch, even your gender. Now, all the data will default to the previous data, letting you change only what you want to change.
 
 ### Dev updates
 
