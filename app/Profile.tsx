@@ -78,6 +78,10 @@ export default function Profile() {
                 "https://api.github.com/repos/ZakaHaceCosas/personaplus/releases"
             );
             if (!response.ok) {
+                termLog(
+                    `Failed to fetch releases (status ${response.status})`,
+                    "error"
+                );
                 throw new Error(
                     `Failed to fetch releases (status ${response.status})`
                 );
@@ -104,7 +108,9 @@ export default function Profile() {
                         ),
                         [
                             {
-                                text: "Update",
+                                text: t(
+                                    "page_profile.updates.update_flow.buttons.update"
+                                ),
                                 style: "default",
                                 onPress: () =>
                                     Linking.openURL(
@@ -115,14 +121,16 @@ export default function Profile() {
                                     ),
                             },
                             {
-                                text: "See changelog",
+                                text: t(
+                                    "page_profile.updates.update_flow.buttons.changelog"
+                                ),
                                 onPress: () =>
                                     Linking.openURL(
                                         latestRelease.html_url || ""
                                     ),
                             },
                             {
-                                text: "Cancel",
+                                text: t("globals.nevermind"),
                                 style: "destructive",
                                 onPress: () => {},
                             },
