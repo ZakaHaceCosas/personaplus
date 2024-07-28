@@ -28,10 +28,9 @@ END README
 ### User updates
 
 - Now the duration selector for creating objectives allows for more precise durations.
-- Translated all `ToastAndroid` messages.
+- Translated all `ToastAndroid` messages, reminder notifications, and buttons.
 - Simplified the Dev Interface flow. Removed the need of clicking three times just to access it the first time.
 - Replaced some `.navigate()` functions with `.back()` to avoid confusing the user.
-- Translated reminder notifications.
 - Now the profile update page makes more sense: before you only had the option to edit _all_ your profile again from scratch, even your gender. Now, all the data will default to the previous data, letting you change only what you want to change.
 - Now sessions display time in `mm:ss` format rather than just seconds.
 - Now rests do work properly!
