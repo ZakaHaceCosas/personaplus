@@ -6,29 +6,9 @@
 
 DOCUMENTACIÓN DE LA BASE DE CÓDIGO
 
-## 0. ¿Qué es PersonaPlus?
-
-> (Este punto es orientativo y no dirijido al código como tal, se puede [omitir](#1-el-stack-tecnológico))
-
-PersonaPlus es una aplicación de salud y bienestar digital, desarrollada en React Native y Expo.
-
-Aún se halla en una fase muy temprana del desarrollo, pero apunta a traer las siguientes funcionalidades:
-
-- Sistema basado en "Objetivos".
-  - El usuario nada más acceder a la app por primera vez, especifica sus datos necesarios para el funcionamiento de la app Y sus objetivos. Además, diariamente, recibirá una notificación para añadir datos nuevos sobre lo que ha hecho en el día de hoy, para crear un perfil y unas estadísticas sobre el mismo.
-  - Un "Objetivo" es una meta (puede ser un recordatorio para una actividad o proponerse hacer que las estadísticas lleguen a `x` punto (lo cual requeriría mejorar sus hábitos, probablemente)). Se clasifican en dos tipos, según la implementación:
-    - OBJETIVOS ACTIVOS: Aquellos que implican un recordatorio para realizar una actividad. Estos pueden marcarse como completados, como no realizados (dando por hecho que no se realizarán en todo el día), o pueden activarse en el momento, iniciando una sesión (la app se volvería un cronometro con indicaciones para que el usuario realice la actividad en cuestión).
-    - OBJETIVOS PASIVOS: Aquellos que implican establecer una "meta", como cumplir con `x` OBJ. ACT. durante 15 días seguidos, no ingerir más de `x` kilocalorías al día, etc...
-- Funcionalidades de Bienestar Digital y prevención de la adicción al teléfono móvil.
-  - El usuario podrá ver en que apps pasa más o menos tiempo, de que apps le llegan más o menos notificaciones, y etcétera.
-  - El usuario recibirá consejos y motivación para hacer algo con su vida y dejar el teléfono.
-- Autocontrol: El usuario se monitorea a si mismo (que come, cuando lo hace, con que frecuencia, visitas al lavabo, frecuencia con la que fuma o bebe (si lo hace)), para ayudarse a autocontrolar sus hábitos (o a abandonarlos directamente si fueran malos hábitos, como la fuma o el consumo de estupefacientes).
-
-Con estas ideas apuntamos a crear una aplicación estrella, gratuita y de código abierto, para ayudar a las personas a mejorar su propia salud.
-
 ## 1. El *stack* tecnológico
 
-La aplicación está desarrollada con **React Native 0.74.2**, **Expo SDK 51.0.14**, y programada en TypeScript.
+La aplicación está desarrollada con **React Native** y **Expo**, y programada en TypeScript.
 
 <!--markdownlint-disable-next-line-->
 <div align="center">
@@ -85,19 +65,11 @@ Otros:
 - [JS and TS Nightly](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-next)
 - [npm IntelliSense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense)
 
-### > LAS "PRE-VARIABLES"
-
-En el *root* del proyecto hay archivos `VAR-algo.jsonc` (JSON con comentarios).
-Estos incluyen las "variables" que no se pueden incorporar como variables reales (p ej., variables de CSS).
-
-Actualmente sólo hay una, `VAR-DSGN.jsonc`, con la paleta de colores de la app.
-
 ### > ESTRUCTURA DE ARCHIVOS
 
 PersonaPlus está organizado de una forma concreta. En caso de que te veas creando un archivo nuevo, que no desorganice el sistema de archivos.
 
-```txt
-> VAR-*.jsonc
+```tsx
 > package.json
 (etc...)
 |
@@ -169,13 +141,13 @@ export default function Modulo() {
 Para los componentes propios, utiliza `@` en vez de `./`. E.J.:
 
 ```tsx
-import BetterText from '@/src/Text'; // bien
-import BetterText from './src/Text'; // no bien
+import BetterText from '@/src/BetterText'; // bien
+import BetterText from './src/BetterText'; // no bien
 ```
 
 #### 3. NOMBRA CLARAMENTE LAS VARIABLES
 
-Utiliza el inglés, crea nombres descriptions, comprensibles, y que permitan reconocer con facilidad lo que hace cada cosa. Utiliza capitalización en camello (camel casing).
+Utiliza el inglés, crea nombres descriptions, comprensibles, y que permitan reconocer con facilidad lo que hace cada cosa. Aunque ninguna capitalización especifica es obligada (y yo mismo las mezclo a veces 😅), recomiendo utilizar capitalización en camello (CamelCasing) para funciones y capitalización en serpiente (snake_case) para variables.
 
 ```tsx
 // Muy mal.
@@ -193,21 +165,25 @@ const width = "100vh"
 const text = "Bold"
 const align = "center"
 
-// También bien, funciona.
+// También bien, funciona. Aún así, evita pasarte de largo.
 const alignment = "center"
 
 // No hagas esto.
-const access_objs;
+const access_objectives(ObjectiveIdentifier);
 
 // Haz esto
-const AccessObjs;
+const AccessObjectives(objective_identifier);
 ```
 
-#### 4. HAZ USO DEL TIPEADO
+#### 4. USA LOS COMPONENTES PROPIOS
 
-Estás trabajando con TypeScript, así que recuerda usar tipos. No vaya a ser que acabes asignando valores ilógicos a una variable...
+No utilices `Text` o `Pressable` de React Native: utiliza `BetterText` o `Button`. Tenemos una serie de componentes propios para facilitar el trabajo, haciendo que de forma más rápida tengas algo funcional y acorde al estilo de la app.
 
-Cuando se trate de la función principal de un componente, haz uso de una Interfaz.
+Incluso tenemos colores globales. Ni se te ocurra usar `"#FFF"` o `"#32FF80"` (color de acento), importa `colors` desde `@/src/toolkit/design/colors` e importa los colores desde ahí. Cada color tiene un JSDoc indicando donde deberías usarlo, así mantenemos una interfaz consistente.
+
+#### 5. HAZ UN BUEN USO DE LOS TIPOS
+
+Estás trabajando con TypeScript, así que obviamente te verás usando tipos.
 
 ```tsx
 import React from 'react';
@@ -227,7 +203,7 @@ export default function miComponente({ param, param2 }: miComponenteProps) {
 }
 ```
 
-#### 5. ELIMINA LOS *ERRORES TONTOS*
+#### 6. ELIMINA LOS *ERRORES TONTOS*
 
 ##### `width`y `height` dando guerra
 
@@ -250,24 +226,28 @@ width: "100vw" as Native.DimensionValue // Perfecto.
 Por alguna razón, la libreria `react-native-countdown-circle-timer` da este error:
 
 ```bash
-Android Bundling failed 884ms C:\Users\Zaka\PersonaPlus-R5\personaplus\node_modules\expo-router\entry.js (1142 modules)
+Android Bundling failed 884ms C:\Users\tu_usuario\personaplus\node_modules\expo-router\entry.js (1142 modules)
 Unable to resolve "./elements/Polygon" from "node_modules\react-native-svg\src\ReactNativeSVG.ts"
 ```
 
 Lo que recomiendo hacer es abrir el archivo (`node_modules\react-native-svg\src\ReactNativeSVG.ts`), buscar "Polygon" y comentar `//` todas las lineas que lo mencionen. Hacer eso dará el mismo error con otro archivo:
 
 ```bash
-Android Bundling failed 10727ms C:\Users\Zaka\PersonaPlus-R5\personaplus\node_modules\expo-router\entry.js (1224 modules)
+Android Bundling failed 10727ms C:\Users\tu_usuario\personaplus\node_modules\expo-router\entry.js (1224 modules)
 Unable to resolve "./elements/Polygon" from "node_modules\react-native-svg\src\xml.tsx"
 ```
 
 Repite el proceso con ese otro archivo, y ahora si debería funcionar. De momento no veo otra alternativa, de hecho cambié `react-native-countdown-component` por `react-native-countdown-circle-timer` solo por un problema de compatibilidad, ya que por ir iba perfecto - pero daba un error por usar React Native de mala manera / manera anticuada y no era viable, crasheaba la app.
 
-Tienes que arreglarlo manualmente ya que (obviamente y como sabrás) `node_modules/` no se puede sincronizar con GitHub (si puede pero es una idea estúpida subir todo eso a Git y ya lo sabes), así que tendrás que manipularlo por tu cuenta para testear en móvil (o no testear la página Sessions/).
+Tienes que arreglarlo manualmente ya que (obviamente y como sabrás) `node_modules/` no se puede sincronizar con GitHub (a ver, si puede, pero es una idea estúpida subir todo eso a Git y ya lo sabes), así que tendrás que manipularlo por tu cuenta para testear en móvil (o si no quieres hacerlo, simplemente no intentes testear la página Sessions/).
 
-#### 6. MANTEN EL FORMATO
+#### 7. MANTEN EL FORMATO
 
-Recuerda mantener un código uniforme, organizado, usando siempre puntos y coma, tabulación apropiada, entre otros. Además, asegurate de [evitar las entidades sin escapar (`eslint/no-unescaped-entities`)](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/no-unescaped-entities.md#disallow-unescaped-html-entities-from-appearing-in-markup-reactno-unescaped-entities).**Si usas Visual Studio Code, gracias a la configuración de`.vscode/settings.json`, cuando guardes un archivo se auto-formateará, así que esto es fácil :]**.
+Recuerda mantener un código uniforme, organizado, usando siempre puntos y coma, tabulación apropiada, entre otros. **Si usas Visual Studio Code, gracias a la configuración de`.vscode/settings.json`, cuando guardes un archivo se auto-formateará, así que esto es fácil :]**.
+
+#### 8. HAZ USO DE JSDoc
+
+Si eres tan humilde que vas a aportar una función entera a PersonaPlus, lo primero: ¡gracias!, y lo segundo: utiliza JSDoc. Personalmente recomiendo la extensión [JSDoc generator](https://marketplace.visualstudio.com/items?itemName=crystal-spider.jsdoc-generator) para VSCode, hace muy bien el trabajo (`Ctrl` + `Shift` + `P` y luego `Generate JSDoc for the current file`).
 
 ## Versionado
 
