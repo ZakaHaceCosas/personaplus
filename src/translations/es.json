@@ -392,7 +392,7 @@
             "export": "EXPORTAR REGISTRO A UN ARCHIVO",
             "exported": "Registro guardado con éxito en {{path}}",
             "not_exported": "Hubo un error al guardar el archivo: {{err}}",
-            "clear_warning": "Los registros son muy útiles en caso de que tengas un error, especialmente ahora que la app sigue en una versión de pruebas. Como sea, por privacidad, permitimos su eliminación. are very useful in case you get an error, especially now that the app is still in a testing version. However, for privacy, we do allow removing them. Hazlo a tu discreción."
+            "clear_warning": "Los registros son muy útiles en caso de que tengas un error, especialmente ahora que la app sigue en una versión de pruebas. Como sea, por privacidad, permitimos su eliminación. Hazlo a tu discreción."
         }
     }
 }
