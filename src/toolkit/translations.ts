@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getLocales } from 'expo-localization';
 
 import enTranslations from '@/src/translations/en.json';
 import esTranslations from '@/src/translations/es.json';
@@ -13,9 +14,10 @@ const resources = {
 
 // Función para inicializar i18n
 const initializeI18n = async () => {
-    // Obtén el idioma guardado en AsyncStorage
-    const savedLanguage = await AsyncStorage.getItem('language');
-    const defaultLanguage = savedLanguage || 'en'; // Usa 'en' si no se encuentra ningún idioma guardado
+    const locales = getLocales()
+    // Obtén el idioma guardado en AsyncStorage, o si no, el idioma por defecto del usuario
+    const savedLanguage = await AsyncStorage.getItem('language') || locales.at(0)?.languageCode;
+    const defaultLanguage = (savedLanguage === "es" || savedLanguage === "en") ? savedLanguage : "en"; // Si el idioma por defecto del usuario es un idioma soportado, bien. Si no, inglés.
 
     // Inicializa i18n con los recursos y el idioma detectado
     i18n.use(initReactI18next).init({
