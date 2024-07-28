@@ -176,6 +176,8 @@
             }
         },
         "fragment_three": {
+            "title": "Cuéntanos sobre tus hábitos",
+            "subtitle": "Entender tu vida nos ayudará a ayudarte a mejorarla.",
             "questions": {
                 "sleeping": {
                     "asks": "¿Cuánto duermes cada noche? No debe ser exacto",

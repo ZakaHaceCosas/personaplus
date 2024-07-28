@@ -177,6 +177,8 @@
             }
         },
         "fragment_three": {
+            "title": "Tell us about your habits",
+            "subtitle": "Understanding your life will help us help you improve it.",
             "questions": {
                 "sleeping": {
                     "asks": "How much do you sleep each night? It doesn't have to be exact",
