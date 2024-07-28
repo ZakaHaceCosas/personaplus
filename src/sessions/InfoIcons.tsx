@@ -33,7 +33,7 @@ const InfoIcons: React.FC<InfoIconsProps> = ({ objective }) => {
     ];
 
     return (
-        <div>
+        <View>
             {objective.exercise.toLowerCase() === "running" && (
                 <View
                     style={{
@@ -188,7 +188,7 @@ const InfoIcons: React.FC<InfoIconsProps> = ({ objective }) => {
                     )}
                 </View>
             )}
-        </div>
+        </View>
     );
 };
 
