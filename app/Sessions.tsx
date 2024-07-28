@@ -350,11 +350,15 @@ export default function Sessions() {
                         textAlign="center"
                     >
                         {!isUserResting
-                            ? currentObjectiveSustantivizedName +
+                            ? currentObjective.duration > 1
+                                ? currentObjectiveSustantivizedName +
                                   " " +
                                   currentObjective.duration +
                                   t("globals.minute") +
-                                  (currentObjective.duration > 1) && "s"
+                                  "s"
+                                : currentObjectiveSustantivizedName +
+                                  " " +
+                                  currentObjective.duration
                             : t("page_sessions.resting")}
                     </BetterText>
                     <GapView height={10} />
