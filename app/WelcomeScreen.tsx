@@ -602,7 +602,7 @@ export default function WelcomePage() {
                         fontWeight="Bold"
                         fontSize={40}
                     >
-                        Tell us about your habits
+                        {t("page_welcome.fragment_three.title")}
                     </BetterText>
                     <GapView height={10} />
                     <BetterText
@@ -610,8 +610,7 @@ export default function WelcomePage() {
                         fontWeight="Regular"
                         fontSize={20}
                     >
-                        Understanding your life will help us help you improve
-                        it.
+                        {t("page_welcome.fragment_three.subtitle")}
                     </BetterText>
                     <GapView height={20} />
                     <BetterText
