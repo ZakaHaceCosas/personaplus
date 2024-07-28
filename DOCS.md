@@ -1,10 +1,8 @@
-# PersonaPlus
+# Documentación para devs - PersonaPlus
 
 ![Banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER_DEV.png)
 
-## Dale un PLUS a tu Persona <!-- dato curioso, este eslogan lo dejo a proposito, es el OG -->
-
-DOCUMENTACIÓN DE LA BASE DE CÓDIGO
+Dale un PLUS a tu Persona <!-- dato curioso, este eslogan lo dejo a proposito, es el eslogan OG -->
 
 ## 1. El *stack* tecnológico
 
@@ -16,15 +14,14 @@ La aplicación está desarrollada con **React Native** y **Expo**, y programada 
 [![reactnative](https://img.shields.io/badge/React-Native-57c4dc?style=for-the-badge&logo=react&logoColor=black&labelColor=white)](https://reactnative.dev)
 [![expo](https://img.shields.io/badge/Expo-000?style=for-the-badge&logo=expo&logoColor=black&labelColor=white)](https://expo.dev)
 [![ts](https://img.shields.io/badge/TypeScript-2d79c7?style=for-the-badge&logo=typescript&logoColor=2d79c7&labelColor=white)](https://www.npmjs.com/package/typescript)
+
 </div>
 
 ## 2. Programando PersonaPlus
 
-Estas son las indicaciones básicas para programar, desde nombres de variables hasta prácticas recomendadas.
-
 ### > TRABAJANDO CON EL PROYECTO
 
-Necesitarás instalar (obviamente) `Git` y `Node.js` en tu sistema, y de ahí, instalar `Expo CLI`, con el cual interactuarás vía `npx expo <comando>`. Probablemente trabajas desde VSCode, así que recomendamos también la [extensión oficial de Expo Tools](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools).
+Necesitarás (obviamente) `Git` y `Node.js`, y de ahí, `Expo CLI`, con el cual interactuarás vía `npx expo <comando>`. Si trabajas desde VSCode, recomendamos la [extensión oficial de Expo Tools](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools).
 
 <!--markdownlint-disable-next-line-->
 <div align="center">
@@ -39,14 +36,8 @@ La mayor parte del tiempo solo usarás `npx expo start` (para iniciar el proyect
 
 > [!TIP]
 > Es ***muy*** recomendable que instales en tu teléfono **Expo Go** y lo utilices para probar la app. Ofrece una vista previa más realista de como se verá la app en Android. De hecho, si pruebas en PC verás errores visuales que en el móvil no se ven, derivados precisamente del hecho de que el código está optimizado pensado sólo en Android.
----
 
 [![Runs with Expo Go](https://img.shields.io/badge/Runs_with_Expo_Go-SDK_51-000.svg?style=for-the-badge&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.dev/client)
-
----
->
-> [!NOTE]
-> Aún así no dejes el PC de lado, te será útil probar ahí, sobre todo si necesitas ver algún log de consola. Aunque existe *Dev interface* dentro de la app, no captura bien todo lo que va a la consola.
 
 ### > CONFIGURACIÓN RECOMENDADA DEL EDITOR
 
@@ -67,7 +58,7 @@ Otros:
 
 ### > ESTRUCTURA DE ARCHIVOS
 
-PersonaPlus está organizado de una forma concreta. En caso de que te veas creando un archivo nuevo, que no desorganice el sistema de archivos.
+PersonaPlus está organizada de forma concreta. Si creas un archivo nuevo, que no desorganice el proyecto.
 
 ```tsx
 > package.json
@@ -81,18 +72,23 @@ PersonaPlus está organizado de una forma concreta. En caso de que te veas crean
 / fonts
   (...) // Todos los archivos .ttf de "Be Vietnam Pro", la tipografía de la app.
 |
-/ components
+/ src
   BetterText.tsx
   / section
     Section.tsx
+  / hooks
+  / toolkit
+    / debug
+    / design
+  ...
 |
 / app
-  _layout.tsx // Nombre que no sigue la estructura, debido a que Expo requiere que el nombre sea así
-  index.tsx // Lo mismo
+  _layout.tsx
+  index.tsx
   Dashboard.tsx
   Profile.tsx
   Sessions.tsx
-  // Cada página, nombrada con el nombre en ingles
+  // Cada página, nombrada con el nombre en ingles (salvo index y _layout)
   // EJ. "Panel de control" > "Dashboard" > "Dashboard.tsx"
 ```
 
@@ -102,9 +98,9 @@ Por el bien de todos, ¡el código se tiene que entender! Sigue estas prácticas
 
 #### 1. SIEMPRE EL MISMO ORDEN
 
-IMPORT - INTERFACE - STYLE - *FUNCTION
+IMPORT - INTERFACE - STYLE - FUNCTION
 
-Siempre el mismo orden, primero importamos, luego definimos la interfaz (los tipos), después, si procede, los estilos, y por último la función principal (ésta siempre sera la última. Si hace falta colocar otra función fuera de esta misma, que sea justo antes).
+Siempre el mismo orden, primero importamos, luego definimos la interfaz, después los estilos si proceden, y por último la función (si hay varias, el `export default` siempre será el último).
 
 ```tsx
 // ruta/al/Modulo.tsx
@@ -113,6 +109,7 @@ Siempre el mismo orden, primero importamos, luego definimos la interfaz (los tip
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import BetterText from '@/src/BetterText';
+import termLog from '@/src/toolkit/debug/console';
 
 interface ModuloProps {
   variable: string;
@@ -124,6 +121,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF"
   }
 });
+
+const otraFunction = () => {
+  termLog("Hago algo :D")
+}
 
 export default function Modulo() {
   return (
@@ -145,9 +146,9 @@ import BetterText from '@/src/BetterText'; // bien
 import BetterText from './src/BetterText'; // no bien
 ```
 
-#### 3. NOMBRA CLARAMENTE LAS VARIABLES
+#### 3. NOMBRA CLARAMENTE VARIABLES Y FUNCIONES
 
-Utiliza el inglés, crea nombres descriptions, comprensibles, y que permitan reconocer con facilidad lo que hace cada cosa. Aunque ninguna capitalización especifica es obligada (y yo mismo las mezclo a veces 😅), recomiendo utilizar capitalización en camello (CamelCasing) para funciones y capitalización en serpiente (snake_case) para variables.
+Utiliza el inglés, crea nombres descriptivos y comprensibles, que se entienda fácilmente qué es cada cosa. Aunque ninguna capitalización especifica es obligada (y yo mismo las mezclo a veces 😅), recomiendo utilizar capitalización en camello (CamelCasing) para funciones y capitalización en serpiente (snake_case) para variables.
 
 ```tsx
 // Muy mal.
