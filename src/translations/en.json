@@ -60,7 +60,11 @@
                 "youre_up_to_date": "You're up to date!",
                 "youre_maybe_up_to_date": "Couldn't check the repository. You may or may not be up to date.",
                 "cant_check_if_youre_up_to_date": "Couldn't check if there are new updates. Please, try again later (or manually check the repository).",
-                "failed_to_check": "Failed to check for updates. Please try again later (or manually check the repo)."
+                "failed_to_check": "Failed to check for updates. Please try again later (or manually check the repo).",
+                "buttons": {
+                    "update": "Update",
+                    "changelog": "See what's new"
+                }
             }
         },
         "developer": {

@@ -60,7 +60,11 @@
                 "youre_up_to_date": "¡Estás al día!",
                 "youre_maybe_up_to_date": "No se pudo consultar el repositorio. Puede que estés al día o puede que no.",
                 "cant_check_if_youre_up_to_date": "No se pudo comprobar si hay actualizaciones. Por favor, intenta más tarde (o comprueba manualmente el repo).",
-                "failed_to_check": "No se pudo buscar actualizaciones. Por favor, intenta más tarde (o revisa manualmente el repositorio)."
+                "failed_to_check": "No se pudo buscar actualizaciones. Por favor, intenta más tarde (o revisa manualmente el repositorio).",
+                "buttons": {
+                    "update": "Actualizar",
+                    "changelog": "Ver novedades"
+                }
             }
         },
         "developer": {
