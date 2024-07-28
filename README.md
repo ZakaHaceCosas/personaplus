@@ -93,10 +93,13 @@ PersonaPlus es una app en un estado muy temprano, muchas funciones aún están p
 
 Para que nadie pierda el rumbo, aunque voy tocando un poco de todo, este es el plan que intento seguir de momento (actualizaré esto cada que haga falta):
 
-1. ~~Terminar de implementar las sesiones básicas.~~ **Hecho.**
-2. Una vez hecho eso, algún ajuste más a la app y de ahí a lo importante.
-3. Retomar OpenHealth (un poco olvidado desde que lo creé) e implementar todos los cálculos necesarios para las actividades que PersonaPlus soporta por defecto.
-4. Implementar - de alguna manera - obtención de datos básicos sobre cada sesión, su guardado, y la generación de estadísticas en base a los cálculos que OpenHealth pueda hacer con esos datos.
+1. [ ] ~~Terminar de implementar las sesiones básicas.~~ **Hecho.**
+2. [ ] Una vez hecho eso, algún ajuste más a la app y de ahí a lo importante.
+3. [ ] Retomar OpenHealth (un poco olvidado desde que lo creé) e implementar todos los cálculos necesarios para las actividades que PersonaPlus soporta por defecto.
+4. [ ] Implementar - de alguna manera - obtención de datos básicos sobre cada sesión, su guardado, y la generación de estadísticas en base a los cálculos que OpenHealth pueda hacer con esos datos.
+5. [ ] A partir de ahí, implementar también el guardado de las sesiones en sí - o sea, que la app registre cada día si has hecho algo o no.
+6. [ ] Implementar la *hora de pensar* y sus respectivas notificaciones (cuando haga eso aprovecharé para arreglar las notificaciones actuales que funcionan fatal)
+7. A partir de ahí, iré viendo
 
 ## ¿Cómo contribuir?
 
