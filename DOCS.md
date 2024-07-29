@@ -148,7 +148,7 @@ import BetterText from './src/BetterText'; // no bien
 
 #### 3. NOMBRA CLARAMENTE VARIABLES Y FUNCIONES
 
-Utiliza el inglés, crea nombres descriptivos y comprensibles, que se entienda fácilmente qué es cada cosa. Aunque ninguna capitalización especifica es obligada (y yo mismo las mezclo a veces 😅), recomiendo utilizar capitalización en camello (CamelCasing) para funciones y capitalización en serpiente (snake_case) para variables.
+Utiliza el inglés, crea nombres descriptivos y comprensibles, que se entienda fácilmente qué es cada cosa. Aunque ninguna capitalización especifica es obligada (y yo mismo las mezclo a veces 😅), recomiendo utilizar capitalización en camello (CamelCasing).
 
 ```tsx
 // Muy mal.
@@ -169,11 +169,12 @@ const align = "center"
 // También bien, funciona. Aún así, evita pasarte de largo.
 const alignment = "center"
 
-// No hagas esto.
-const access_objectives(ObjectiveIdentifier);
+// No hagas ninguno de estos.
+const access_objectives(objective-identifier);
 
-// Haz esto
-const AccessObjectives(objective_identifier);
+// Haz esto.
+const AccessObjectives(ObjectiveIdentifier);
+// Empezar con MAYÚSCULA es opcional.
 ```
 
 #### 4. USA LOS COMPONENTES PROPIOS
