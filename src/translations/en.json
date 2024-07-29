@@ -379,7 +379,8 @@
             "logs": "Clear log registry",
             "all": "CLEAR ALL (RESET APP, basically)"
         },
-        "objectives_object": "Objectives' JSON object",
+        "objectives_object": "Objectives",
+        "objectives_daily_log_object": "Objectives daily registry",
         "all_asyncstorage_items": "All AsyncStorage items",
         "logs": {
             "logs": "Log registry",

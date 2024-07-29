@@ -381,7 +381,8 @@
             "logs": "Limpiar registro de la consola",
             "all": "LIMPIAR TODO (RESETEAR APP, básicamente)"
         },
-        "objectives_object": "Arreglo JSON de los objetivos",
+        "objectives_object": "Objetivos",
+        "objectives_daily_log_object": "Registro diario de los objetivos",
         "all_asyncstorage_items": "Todos los ítems del almacenamiento asíncrono (AsyncStorage)",
         "logs": {
             "logs": "Registro de la consola",
