@@ -1,7 +1,7 @@
 // WelcomeScreen.tsx
 // Welcome page
 
-import React, { Fragment, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { router } from "expo-router";
 import {
     StyleSheet,
@@ -31,13 +31,20 @@ const styles = StyleSheet.create({
         height: Dimensions.get("screen").height,
         display: "flex",
         flexDirection: "column",
-        padding: 20,
         overflow: "scroll",
+    },
+    fragmentview: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        justifyContent: "center",
+        height: Dimensions.get("screen").height,
+        width: Dimensions.get("screen").width - 40,
     },
     flexbtns: {
         display: "flex",
         flexDirection: "row",
-        gap: 15,
+        gap: 10,
         width: "calc(100% - 5px)" as DimensionValue,
         alignItems: "center",
         justifyContent: "center",
@@ -81,13 +88,14 @@ export default function WelcomePage() {
         },
     ];
     // this below is a joke (keep it for production please, at least until i see it once)
-    const progenderoptions = [
+    // nevermind...
+    /* const progenderoptions = [
         { value: "male", label: "Gigachad", default: true },
         { value: "female", label: "Transformer", default: false }, // lol.
         { value: "female", label: "Non-existant being", default: false },
-    ];
+    ]; */
     const inputRefs = useRef<TextInput[]>([]);
-    const easteregg: number = Math.floor(Math.random() * 690) + 1;
+    // const easteregg: number = Math.floor(Math.random() * 690) + 1;
     const [focuspointValue, setFocuspointValue] = useState<string | null>(null);
     const handleFocuspointChange = (value: string) => {
         setFocuspointValue(value);
@@ -157,7 +165,7 @@ export default function WelcomePage() {
         t("page_welcome.fragment_three.questions.activness.intense"),
         t("page_welcome.fragment_three.questions.activness.super"),
     ];
-    const [timeToPushUp, setTimeToPushUp] = useState("");
+    /* const [timeToPushUp, setTimeToPushUp] = useState("");
     const pushUpOptions = [
         t("page_welcome.fragment_three.questions.push_ups.one_sec"),
         t("page_welcome.fragment_three.questions.push_ups.two_sec"),
@@ -166,7 +174,7 @@ export default function WelcomePage() {
         t("page_welcome.fragment_three.questions.push_ups.seven_sec"),
         t("page_welcome.fragment_three.questions.push_ups.ten_sec"),
         t("page_welcome.fragment_three.questions.push_ups.doesnt_know"),
-    ];
+    ]; */
     const focusNextField = (index: number): void => {
         if (inputRefs.current[index + 1]) {
             inputRefs.current[index + 1].focus();
@@ -205,7 +213,7 @@ export default function WelcomePage() {
                 await AsyncStorage.setItem("focuspoint", focuspointValue);
                 await AsyncStorage.setItem("sleep", sleep);
                 await AsyncStorage.setItem("activness", howActiveTheUserIs);
-                await AsyncStorage.setItem("pushupTime", timeToPushUp);
+                // await AsyncStorage.setItem("pushupTime", timeToPushUp);
                 await AsyncStorage.setItem("hasLaunched", "true");
                 await AsyncStorage.setItem("objectives", "{}");
                 await AsyncStorage.setItem("language", language);
@@ -239,6 +247,20 @@ export default function WelcomePage() {
         }));
     };
 
+    /* <Button
+        buttonText={
+            language === "en"
+                ? "Change to Spanish"
+                : "Change to English"
+        }
+        style="ACE"
+        action={() =>
+            language === "es"
+                ? handleChangeLanguaage("en")
+                : handleChangeLanguaage("es")
+        }
+    /> */
+
     return (
         <ScrollView
             style={styles.mainview}
@@ -248,7 +270,7 @@ export default function WelcomePage() {
             }}
         >
             {currentTab === 1 && (
-                <Fragment>
+                <View style={styles.fragmentview}>
                     <BetterText
                         textAlign="normal"
                         fontWeight="Bold"
@@ -265,7 +287,7 @@ export default function WelcomePage() {
                         </BetterText>
                         !
                     </BetterText>
-                    <GapView height={10} />
+                    <GapView height={5} />
                     <BetterText
                         textAlign="normal"
                         fontWeight="Regular"
@@ -273,21 +295,8 @@ export default function WelcomePage() {
                     >
                         {t("page_welcome.subtitle")}
                     </BetterText>
-                    <GapView height={20} />
+                    <GapView height={10} />
                     <View style={styles.flexbtns}>
-                        <Button
-                            buttonText={
-                                language === "en"
-                                    ? "Change to Spanish"
-                                    : "Change to English"
-                            }
-                            style="ACE"
-                            action={() =>
-                                language === "es"
-                                    ? handleChangeLanguaage("en")
-                                    : handleChangeLanguaage("es")
-                            }
-                        />
                         <Button
                             style="GOD"
                             action={gonext}
@@ -296,24 +305,16 @@ export default function WelcomePage() {
                             height={500}
                         />
                     </View>
-                </Fragment>
+                </View>
             )}
 
             {currentTab === 2 && (
-                <Fragment>
-                    <BetterText
-                        textAlign="center"
-                        fontWeight="Bold"
-                        fontSize={40}
-                    >
+                <View style={styles.fragmentview}>
+                    <BetterText fontWeight="Bold" fontSize={40}>
                         {t("page_welcome.fragment_one.title")}
                     </BetterText>
-                    <GapView height={10} />
-                    <BetterText
-                        textAlign="center"
-                        fontWeight="Regular"
-                        fontSize={20}
-                    >
+                    <GapView height={5} />
+                    <BetterText fontWeight="Regular" fontSize={20}>
                         {t("page_welcome.fragment_one.subtitle")}{" "}
                         <BetterText
                             url={true}
@@ -331,7 +332,16 @@ export default function WelcomePage() {
                         </BetterText>
                         .
                     </BetterText>
-                    <GapView height={20} />
+                    <GapView height={10} />
+                    <BetterText
+                        textAlign="normal"
+                        fontWeight="Regular"
+                        fontSize={15}
+                        textColor={colors.LBLS.SDD}
+                    >
+                        {t("page_welcome.fragment_one.questions.username")}
+                    </BetterText>
+                    <GapView height={5} />
                     <TextInput
                         placeholder={t(
                             "page_welcome.fragment_one.questions.username"
@@ -366,79 +376,129 @@ export default function WelcomePage() {
                         onSubmitEditing={() => focusNextField(0)}
                         ref={ref => ref && (inputRefs.current[0] = ref)}
                     />
-                    <GapView height={15} />
-                    <TextInput
-                        placeholder={t(
-                            "page_welcome.fragment_one.questions.height"
-                        )}
-                        value={formData.height}
-                        readOnly={false}
-                        placeholderTextColor={colors.MAIN.BLANDITEM.PLACEHOLDER}
-                        style={[
-                            {
-                                backgroundColor:
-                                    colors.MAIN.BLANDITEM.BACKGROUND,
-                                borderRadius: 10,
-                                padding: 15,
-                                borderWidth: 4,
-                                borderColor: colors.MAIN.BLANDITEM.STRK,
-                                width: "100%",
-                                color: colors.BASIC.WHITE,
-                                // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
-                                outline: "none",
-                                fontFamily: "BeVietnamPro-Regular",
-                            },
-                        ]}
-                        autoCorrect={false}
-                        multiline={false}
-                        maxLength={3}
-                        textAlign="left"
-                        fontFamily="BeVietnamPro-Regular"
-                        textContentType="none"
-                        inputMode="numeric"
-                        key="heightinput"
-                        enterKeyHint="next"
-                        onChangeText={text => handleChange("height", text)}
-                        onSubmitEditing={() => focusNextField(1)}
-                        ref={ref => ref && (inputRefs.current[1] = ref)}
-                    />
-                    <GapView height={15} />
-                    <TextInput
-                        placeholder={t(
-                            "page_welcome.fragment_one.questions.weight"
-                        )}
-                        value={formData.weight}
-                        readOnly={false}
-                        placeholderTextColor={colors.MAIN.BLANDITEM.PLACEHOLDER}
-                        style={[
-                            {
-                                backgroundColor:
-                                    colors.MAIN.BLANDITEM.BACKGROUND,
-                                borderRadius: 10,
-                                padding: 15,
-                                borderWidth: 4,
-                                borderColor: colors.MAIN.BLANDITEM.STRK,
-                                width: "100%",
-                                color: colors.BASIC.WHITE,
-                                // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
-                                outline: "none",
-                                fontFamily: "BeVietnamPro-Regular",
-                            },
-                        ]}
-                        autoCorrect={false}
-                        multiline={false}
-                        maxLength={3}
-                        textAlign="left"
-                        fontFamily="BeVietnamPro-Regular"
-                        textContentType="none"
-                        inputMode="numeric"
-                        key="weightinput"
-                        enterKeyHint="next"
-                        onChangeText={text => handleChange("weight", text)}
-                        onSubmitEditing={() => focusNextField(2)}
-                        ref={ref => ref && (inputRefs.current[2] = ref)}
-                    />
-                    <GapView height={15} />
+                    <GapView height={10} />
+                    <View
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            gap: 10,
+                        }}
+                    >
+                        <View style={{ flex: 1 }}>
+                            <BetterText
+                                textAlign="normal"
+                                fontWeight="Regular"
+                                fontSize={15}
+                                textColor={colors.LBLS.SDD}
+                            >
+                                {t(
+                                    "page_welcome.fragment_one.questions.height"
+                                )}
+                            </BetterText>
+                            <GapView height={5} />
+                            <TextInput
+                                placeholder={t(
+                                    "page_welcome.fragment_one.questions.height"
+                                )}
+                                value={formData.height}
+                                readOnly={false}
+                                placeholderTextColor={
+                                    colors.MAIN.BLANDITEM.PLACEHOLDER
+                                }
+                                style={[
+                                    {
+                                        backgroundColor:
+                                            colors.MAIN.BLANDITEM.BACKGROUND,
+                                        borderRadius: 10,
+                                        padding: 15,
+                                        borderWidth: 4,
+                                        borderColor: colors.MAIN.BLANDITEM.STRK,
+                                        width: "100%",
+                                        color: colors.BASIC.WHITE,
+                                        // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
+                                        outline: "none",
+                                        fontFamily: "BeVietnamPro-Regular",
+                                    },
+                                ]}
+                                autoCorrect={false}
+                                multiline={false}
+                                maxLength={3}
+                                textAlign="left"
+                                fontFamily="BeVietnamPro-Regular"
+                                textContentType="none"
+                                inputMode="numeric"
+                                key="heightinput"
+                                enterKeyHint="next"
+                                onChangeText={text =>
+                                    handleChange("height", text)
+                                }
+                                onSubmitEditing={() => focusNextField(1)}
+                                ref={ref => ref && (inputRefs.current[1] = ref)}
+                            />
+                        </View>
+                        <View style={{ flex: 1 }}>
+                            <BetterText
+                                textAlign="normal"
+                                fontWeight="Regular"
+                                fontSize={15}
+                                textColor={colors.LBLS.SDD}
+                            >
+                                {t(
+                                    "page_welcome.fragment_one.questions.weight"
+                                )}
+                            </BetterText>
+                            <GapView height={5} />
+                            <TextInput
+                                placeholder={t(
+                                    "page_welcome.fragment_one.questions.weight"
+                                )}
+                                value={formData.weight}
+                                readOnly={false}
+                                placeholderTextColor={
+                                    colors.MAIN.BLANDITEM.PLACEHOLDER
+                                }
+                                style={[
+                                    {
+                                        backgroundColor:
+                                            colors.MAIN.BLANDITEM.BACKGROUND,
+                                        borderRadius: 10,
+                                        padding: 15,
+                                        borderWidth: 4,
+                                        borderColor: colors.MAIN.BLANDITEM.STRK,
+                                        width: "100%",
+                                        color: colors.BASIC.WHITE,
+                                        // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
+                                        outline: "none",
+                                        fontFamily: "BeVietnamPro-Regular",
+                                    },
+                                ]}
+                                autoCorrect={false}
+                                multiline={false}
+                                maxLength={3}
+                                textAlign="left"
+                                fontFamily="BeVietnamPro-Regular"
+                                textContentType="none"
+                                inputMode="numeric"
+                                key="weightinput"
+                                enterKeyHint="next"
+                                onChangeText={text =>
+                                    handleChange("weight", text)
+                                }
+                                onSubmitEditing={() => focusNextField(2)}
+                                ref={ref => ref && (inputRefs.current[2] = ref)}
+                            />
+                        </View>
+                    </View>
+                    <GapView height={10} />
+                    <BetterText
+                        textAlign="normal"
+                        fontWeight="Regular"
+                        fontSize={15}
+                        textColor={colors.LBLS.SDD}
+                    >
+                        {t("page_welcome.fragment_one.questions.age")}
+                    </BetterText>
+                    <GapView height={5} />
                     <TextInput
                         placeholder={t(
                             "page_welcome.fragment_one.questions.age"
@@ -474,28 +534,24 @@ export default function WelcomePage() {
                         onSubmitEditing={() => {}}
                         ref={ref => ref && (inputRefs.current[3] = ref)}
                     />
-                    <GapView height={15} />
-                    {easteregg !== 1 && (
-                        <Swap
-                            id="genderswap"
-                            key="genderswap"
-                            options={genderoptions}
-                            value={genderValue}
-                            onValueChange={handleGenderChange}
-                            order="horizontal"
-                        />
-                    )}
-                    {easteregg === 1 && (
-                        <Swap
-                            id="genderswap"
-                            key="genderswap"
-                            options={progenderoptions}
-                            value={genderValue}
-                            onValueChange={handleGenderChange}
-                            order="horizontal"
-                        />
-                    )}
-                    <GapView height={15} />
+                    <GapView height={10} />
+                    <BetterText
+                        textAlign="normal"
+                        fontWeight="Regular"
+                        fontSize={15}
+                        textColor={colors.LBLS.SDD}
+                    >
+                        {t("page_profile.your_profile_division.gender")}
+                    </BetterText>
+                    <GapView height={5} />
+                    <Swap
+                        id="genderswap"
+                        key="genderswap"
+                        options={genderoptions}
+                        value={genderValue}
+                        onValueChange={handleGenderChange}
+                        order="horizontal"
+                    />
                     <View style={styles.flexbtns}>
                         <Button
                             style="DEFAULT"
@@ -526,11 +582,11 @@ export default function WelcomePage() {
                             />
                         )}
                     </View>
-                </Fragment>
+                </View>
             )}
 
             {currentTab === 3 && (
-                <Fragment>
+                <View style={styles.fragmentview}>
                     <BetterText
                         textAlign="normal"
                         fontWeight="Bold"
@@ -592,11 +648,11 @@ export default function WelcomePage() {
                             />
                         )}
                     </View>
-                </Fragment>
+                </View>
             )}
 
             {currentTab === 4 && (
-                <Fragment>
+                <View style={styles.fragmentview}>
                     <BetterText
                         textAlign="normal"
                         fontWeight="Bold"
@@ -659,7 +715,7 @@ export default function WelcomePage() {
                             setHowActiveTheUserIs(itemValue)
                         }
                         style={styles.picker}
-                        mode="dropdown"
+                        mode="dialog"
                     >
                         <Select.Item
                             label={t("globals.select_placeholder")}
@@ -667,36 +723,6 @@ export default function WelcomePage() {
                             color={colors.MAIN.BLANDITEM.PLACEHOLDER}
                         />
                         {activnessOptions.map(option => (
-                            <Select.Item
-                                key={option}
-                                label={option}
-                                value={option}
-                            />
-                        ))}
-                    </Select>
-                    <GapView height={15} />
-                    <BetterText
-                        textAlign="normal"
-                        fontWeight="Regular"
-                        fontSize={15}
-                    >
-                        {t(
-                            "page_welcome.fragment_three.questions.push_ups.asks"
-                        )}
-                    </BetterText>
-                    <GapView height={10} />
-                    <Select
-                        selectedValue={timeToPushUp}
-                        onValueChange={itemValue => setTimeToPushUp(itemValue)}
-                        style={styles.picker}
-                        mode="dropdown"
-                    >
-                        <Select.Item
-                            label={t("globals.select_placeholder")}
-                            value=""
-                            color={colors.MAIN.BLANDITEM.PLACEHOLDER}
-                        />
-                        {pushUpOptions.map(option => (
                             <Select.Item
                                 key={option}
                                 label={option}
@@ -714,8 +740,8 @@ export default function WelcomePage() {
                         />
                         {!sleep ||
                         sleep.trim() === "" ||
-                        !timeToPushUp ||
-                        timeToPushUp.trim() === "" ||
+                        // !timeToPushUp ||
+                        // timeToPushUp.trim() === "" ||
                         !howActiveTheUserIs ||
                         howActiveTheUserIs.trim() === "" ? (
                             <Button
@@ -733,7 +759,7 @@ export default function WelcomePage() {
                             />
                         )}
                     </View>
-                </Fragment>
+                </View>
             )}
         </ScrollView>
     );
