@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
-    DimensionValue,
+    Dimensions,
     Platform,
     ToastAndroid,
     View,
@@ -36,15 +36,16 @@ import { Objective } from "@/src/types/Objective";
 // Creamos los estilos
 const styles = StyleSheet.create({
     containerview: {
-        width: "100vw" as DimensionValue,
-        height: "100vh" as DimensionValue,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
     },
     mainview: {
         padding: 20,
+        paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        width: "100vw" as DimensionValue,
-        height: "100vh" as DimensionValue,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
         overflow: "scroll",
     },
 });
@@ -127,7 +128,6 @@ export default function Dashboard() {
 
     return (
         <View style={styles.containerview}>
-            <BottomNav currentLocation={currentpage} />
             <ScrollView style={styles.mainview}>
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
                     {t("page_dashboard.header.label")}
@@ -233,6 +233,7 @@ export default function Dashboard() {
                 </Section>
                 <Footer />
             </ScrollView>
+            <BottomNav currentLocation={currentpage} />
         </View>
     );
 }

@@ -6,8 +6,8 @@ import {
     View,
     ScrollView,
     StyleSheet,
-    DimensionValue,
     Platform,
+    Dimensions,
 } from "react-native";
 import { router, usePathname } from "expo-router";
 import {
@@ -43,15 +43,16 @@ import Loading from "@/src/Loading";
 // Creamos los estilos
 const styles = StyleSheet.create({
     containerview: {
-        width: "100vw" as DimensionValue,
-        height: "100vh" as DimensionValue,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
     },
     mainview: {
         padding: 20,
+        paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        width: "100vw" as DimensionValue,
-        height: "100vh" as DimensionValue,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
         overflow: "scroll",
     },
 });
@@ -227,7 +228,6 @@ export default function Home() {
 
     return (
         <View style={styles.containerview}>
-            <BottomNav currentLocation={currentpage} />
             <ScrollView style={styles.mainview}>
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
                     {t("page_home.header.label")}, {username}!
@@ -382,6 +382,7 @@ export default function Home() {
                 )}
                 <Footer />
             </ScrollView>
+            <BottomNav currentLocation={currentpage} />
         </View>
     );
 }
