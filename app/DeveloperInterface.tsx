@@ -20,16 +20,12 @@ import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
 import { usePathname, router } from "expo-router";
 import { useTranslation } from "react-i18next";
-import {
-    termLog,
-    getLogsFromStorage,
-    addLogToGlobal,
-} from "@/src/toolkit/debug/console";
+import { termLog, getLogsFromStorage } from "@/src/toolkit/debug/console";
 import colors from "@/src/toolkit/design/colors";
 
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
-import { Log, Logs } from "@/src/types/Logs";
+import { Logs } from "@/src/types/Logs";
 
 const styles = StyleSheet.create({
     consoleview: {
@@ -89,53 +85,7 @@ export default function DeveloperInterface() {
             setLogs(fetchedLogs);
         };
 
-        const updateLogs = async (newLog: Log) => {
-            setLogs(prevLogs => [...prevLogs, newLog]);
-            await addLogToGlobal(newLog);
-        };
-
-        const originalConsoleLog = console.log;
-        const originalConsoleWarn = console.warn;
-        const originalConsoleError = console.error;
-
-        console.log = (message: string, ...optionalParams: unknown[]) => {
-            const newLog: Log = {
-                message: message.toString(),
-                type: "log",
-                timestamp: Date.now(),
-            };
-            updateLogs(newLog);
-            originalConsoleLog(message, ...optionalParams);
-        };
-
-        console.warn = (message: string, ...optionalParams: unknown[]) => {
-            const newLog: Log = {
-                message: message.toString(),
-                type: "warn",
-                timestamp: Date.now(),
-            };
-            updateLogs(newLog);
-            originalConsoleWarn(message, ...optionalParams);
-        };
-
-        console.error = (message: string, ...optionalParams: unknown[]) => {
-            const newLog: Log = {
-                message: message.toString(),
-                type: "error",
-                timestamp: Date.now(),
-            };
-            updateLogs(newLog);
-            originalConsoleError(message, ...optionalParams);
-        };
-
-        // Fetch logs on component mount
         fetchLogs();
-
-        return () => {
-            console.log = originalConsoleLog;
-            console.warn = originalConsoleWarn;
-            console.error = originalConsoleError;
-        };
     }, []);
 
     const [objs, setObjs] = useState<{ [key: string]: Objective } | null>(null);
