@@ -26,6 +26,7 @@ import colors from "@/src/toolkit/design/colors";
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
 import { Logs } from "@/src/types/Logs";
+import Loading from "@/src/Loading";
 
 const styles = StyleSheet.create({
     consoleview: {
@@ -78,24 +79,18 @@ const styles = StyleSheet.create({
 export default function DeveloperInterface() {
     const { t } = useTranslation();
     const [logs, setLogs] = useState<Logs>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [everything, setEverything] = useState<object | null>(null);
+    const [objectives, setObjectives] = useState<{
+        [key: string]: Objective;
+    } | null>(null);
 
     useEffect(() => {
-        const fetchLogs = async () => {
-            const fetchedLogs = await getLogsFromStorage();
-            setLogs(fetchedLogs);
-        };
-
-        fetchLogs();
-    }, []);
-
-    const [objs, setObjs] = useState<{ [key: string]: Objective } | null>(null);
-
-    useEffect(() => {
-        const handleFetchObjectives = async () => {
+        const fetchObjectives = async () => {
             try {
                 const objectives = await getObjectives("object");
                 if (Array.isArray(objectives)) {
-                    setObjs(objectiveArrayToObject(objectives));
+                    setObjectives(objectiveArrayToObject(objectives));
                 } else {
                     termLog("Expected an array, got a string instead", "error");
                 }
@@ -106,11 +101,53 @@ export default function DeveloperInterface() {
                 );
             }
         };
+        const fetchLogs = async () => {
+            try {
+                const fetchedLogs = await getLogsFromStorage();
+                setLogs(fetchedLogs);
+            } catch (e) {
+                termLog("Error fetching termLogs! " + e, "error");
+            }
+        };
+        const fetchUserData = async () => {
+            try {
+                const data = await AsyncStorage.multiGet([
+                    "hasLaunched",
+                    "age",
+                    "gender",
+                    "height",
+                    "weight",
+                    "focuspoint",
+                    "username",
+                    "sleep",
+                ]);
+                setEverything(data);
+            } catch (e) {
+                termLog(
+                    "Error fetching all user data for Dev Interface" + e,
+                    "error"
+                );
+            }
+        };
 
-        handleFetchObjectives();
+        const fetchEverything = async () => {
+            try {
+                await fetchUserData();
+                await fetchObjectives();
+                await fetchLogs();
+                setLoading(false);
+            } catch (e) {
+                termLog(
+                    "Error with Dev Interface data fetching: " + e,
+                    "error"
+                );
+            }
+        };
+
+        fetchEverything();
     }, []);
 
-    const currentPage: string = usePathname();
+    const currentpage: string = usePathname();
 
     const devFunctionToClearAll = async () => {
         try {
@@ -133,7 +170,7 @@ export default function DeveloperInterface() {
         }
     };
 
-    const devFunctionToGenerateLogs = async (logs: Logs) => {
+    const devExportLogs = async (logs: Logs) => {
         const logText = logs
             .map(log => {
                 const date = new Date(log.timestamp);
@@ -171,9 +208,9 @@ export default function DeveloperInterface() {
         }
     };
 
-    const handleDevFunctionToGenerateLogs = async (logs: Logs) => {
+    const handleDevFunctionToExportLogs = async (logs: Logs) => {
         try {
-            const fileUri = await devFunctionToGenerateLogs(logs);
+            const fileUri = await devExportLogs(logs);
             if (fileUri) {
                 Alert.alert(
                     t("globals.success"),
@@ -217,8 +254,6 @@ export default function DeveloperInterface() {
         );
     };
 
-    const [everything, setEverything] = useState<object | null>(null);
-
     useEffect(() => {
         const fetchAll = async () => {
             try {
@@ -241,9 +276,13 @@ export default function DeveloperInterface() {
         fetchAll();
     }, []);
 
+    if (loading) {
+        return <Loading currentpage={currentpage} displayNav={true} />;
+    }
+
     return (
         <View style={styles.containerview}>
-            <BottomNav currentLocation={currentPage} />
+            <BottomNav currentLocation={currentpage} />
             <ScrollView style={styles.mainview}>
                 <GapView height={20} />
                 <BetterText
@@ -311,7 +350,7 @@ export default function DeveloperInterface() {
                         textAlign="normal"
                         fontSize={15}
                     >
-                        {JSON.stringify(objs)}
+                        {JSON.stringify(objectives)}
                     </BetterText>
                 </View>
                 <GapView height={20} />
@@ -338,7 +377,7 @@ export default function DeveloperInterface() {
                 <Button
                     style="GOD"
                     buttonText={t("dev_interface.logs.export")}
-                    action={() => handleDevFunctionToGenerateLogs(logs)}
+                    action={() => handleDevFunctionToExportLogs(logs)}
                 />
                 <GapView height={5} />
                 <View style={styles.consoleview}>
