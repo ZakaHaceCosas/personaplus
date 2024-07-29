@@ -10,7 +10,7 @@ import { TFunction } from 'i18next';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { adjustedToday } from '@/src/toolkit/today';
+import { adjustedToday, getCurrentDate, TodaysDay } from '@/src/toolkit/today';
 
 // Función para obtener los objetivos
 /**
@@ -91,6 +91,8 @@ const markObjectiveAsDone = async (identifier: number, confirmWithToast: boolean
             const updatedObjectives = objectives.map(obj =>
                 obj.identifier === identifier ? { ...obj, wasDone: true } : obj
             );
+            const date = getCurrentDate()
+            saveDailyObjectivePerformance(identifier, date, true)
 
             await saveObjectives(updatedObjectives);
             router.navigate("/");
@@ -300,4 +302,74 @@ function calculateSessionFragmentsDuration(duration: number | null, rests: numbe
     }
 }
 
-export { getObjectives, deleteObjective, markObjectiveAsDone, clearObjectives, getObjectiveByIdentifier, defineObjectiveDescription, registerBackgroundObjectivesFetchAsync, checkForTodaysObjectives, objectiveArrayToObject, calculateSessionFragmentsDuration };
+/**
+ * Saves the results of an objective to a daily registry.
+ *
+ * @param {number} id ID of the objective
+ * @param {TodaysDay} date Today's date. Use `getCurrentDate()` to get it.
+ * @param {boolean} wasDone Wether the objective was done or not.
+ * @param {?string} [performance] Results for the session from OpenHealth. Optional (the user could have not done the objective, so no data would exist).
+ */
+function saveDailyObjectivePerformance(id: number, date: TodaysDay, wasDone: boolean, performance?: string) {
+    const saveObjective = async () => {
+        try {
+            // Fetch old data
+            const prevDailySavedData = await AsyncStorage.getItem("dailyObjectivesStorage");
+            if (!prevDailySavedData) {
+                await AsyncStorage.setItem("dailyObjectivesStorage", JSON.stringify({}))
+            }
+            // If there's no old data, creates an {}
+            const dailyData = prevDailySavedData ? JSON.parse(prevDailySavedData) : {};
+
+            // If there's no old data for today, creates an {} for today
+            if (!dailyData[date]) {
+                dailyData[date] = {};
+            }
+
+            // Saves the objective data
+            dailyData[date][id] = {
+                wasDone: wasDone,
+                performance: performance !== undefined ? performance : "undefined"
+            };
+
+            // Updates data and puts it back to AsyncStorage
+            await AsyncStorage.setItem("dailyObjectivesStorage", JSON.stringify(dailyData));
+            termLog(`Objective ${id} data saved for ${date}`, "success");
+        } catch (e) {
+            if (id) {
+                termLog(`Error saving user's performance for objective ${id}, caught: ${e}`, "error");
+            } else {
+                termLog(`Error saving user's performance for objective (no ID), caught: ${e}`, "error");
+            }
+        }
+    };
+
+    saveObjective();
+}
+
+/**
+ * Fetches the daily objective registry. Async function.
+ *
+ * @async
+ * @param {("string" | "object")} [wayToGetThem="object"] Whether you want to get them as an object or as a stringified JSON
+ * @returns {Promise<string | object>} The objectives daily log in the desired format
+ */
+const getObjectivesDailyLog = async (wayToGetThem: "string" | "object" = "object"): Promise<string | object> => {
+    try {
+        const storedObjectives: string | null = await AsyncStorage.getItem("dailyObjectivesStorage");
+        const objectives: object = storedObjectives ? JSON.parse(storedObjectives) : [];
+
+        if (wayToGetThem === "object") {
+            return objectives;
+        } else if (wayToGetThem === "string") {
+            return JSON.stringify(objectives);
+        } else {
+            throw new Error("Invalid wayToGetThem specified");
+        }
+    } catch (e) {
+        termLog("Got an error fetching objectives! " + e, "error");
+        return wayToGetThem === "object" ? [] : ""; // Return empty array or string based on format
+    }
+}
+
+export { getObjectives, deleteObjective, markObjectiveAsDone, clearObjectives, getObjectiveByIdentifier, defineObjectiveDescription, registerBackgroundObjectivesFetchAsync, checkForTodaysObjectives, objectiveArrayToObject, calculateSessionFragmentsDuration, saveDailyObjectivePerformance, getObjectivesDailyLog };

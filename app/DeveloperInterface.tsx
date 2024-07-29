@@ -22,6 +22,7 @@ import {
     clearObjectives,
     getObjectives,
     objectiveArrayToObject,
+    getObjectivesDailyLog,
 } from "@/src/toolkit/objectives";
 import * as FileSystem from "expo-file-system";
 import * as MediaLibrary from "expo-media-library";
@@ -94,6 +95,9 @@ export default function DeveloperInterface() {
     const [objectives, setObjectives] = useState<{
         [key: string]: Objective;
     } | null>(null);
+    const [objectivesDailyLog, setObjectivesDailyLog] = useState<
+        object | string
+    >();
 
     useEffect(() => {
         const fetchObjectives = async () => {
@@ -104,6 +108,17 @@ export default function DeveloperInterface() {
                 } else {
                     termLog("Expected an array, got a string instead", "error");
                 }
+            } catch (e) {
+                termLog(
+                    "Could not get objectives fetched due to error: " + e,
+                    "error"
+                );
+            }
+        };
+        const fetchObjectivesDailyLog = async () => {
+            try {
+                const storedDbjectives = await getObjectivesDailyLog("object");
+                setObjectivesDailyLog(storedDbjectives);
             } catch (e) {
                 termLog(
                     "Could not get objectives fetched due to error: " + e,
@@ -130,6 +145,7 @@ export default function DeveloperInterface() {
                     "focuspoint",
                     "username",
                     "sleep",
+                    "language",
                 ]);
                 setEverything(data);
             } catch (e) {
@@ -145,6 +161,7 @@ export default function DeveloperInterface() {
                 await fetchUserData();
                 await fetchObjectives();
                 await fetchLogs();
+                await fetchObjectivesDailyLog();
                 setLoading(false);
             } catch (e) {
                 termLog(
@@ -170,6 +187,7 @@ export default function DeveloperInterface() {
                 "focuspoint",
                 "username",
                 "sleep",
+                "language",
             ]);
             await AsyncStorage.setItem("objectives", JSON.stringify([]));
             termLog("DEV CLEARED ALL", "log");
@@ -360,6 +378,20 @@ export default function DeveloperInterface() {
                         fontSize={15}
                     >
                         {JSON.stringify(objectives)}
+                    </BetterText>
+                </View>
+                <GapView height={15} />
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
+                    {t("dev_interface.objectives_daily_log_object")}
+                </BetterText>
+                <GapView height={5} />
+                <View style={styles.consoleview}>
+                    <BetterText
+                        fontWeight="Regular"
+                        textAlign="normal"
+                        fontSize={15}
+                    >
+                        {JSON.stringify(objectivesDailyLog)}
                     </BetterText>
                 </View>
                 <GapView height={20} />
