@@ -2,9 +2,8 @@
 // BetterSwitches (porque un "switch", en teoría hace "swap").
 
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, DimensionValue, Pressable } from "react-native";
+import { StyleSheet, View, Pressable } from "react-native";
 import BetterText from "@/src/BetterText";
-import GapView from "@/src/GapView";
 import colors from "./toolkit/design/colors";
 
 // TypeScript, supongo
@@ -83,10 +82,6 @@ interface SwapProps {
  */
 const styles = StyleSheet.create({
     optionButton: {
-        paddingTop: 15,
-        paddingBottom: 15,
-        paddingRight: 15,
-        paddingLeft: 15,
         borderRadius: 10,
         borderWidth: 4,
         borderColor: colors.MAIN.BLANDITEM.STRK,
@@ -96,6 +91,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
+        height: 55,
     },
     selectedButton: {
         borderColor: colors.PRIMARIES.ACE.ACESTRK,
@@ -149,79 +145,54 @@ export default function Swap({
         }
     };
 
-    let orderString: "row" | "column" | "row-reverse" | "column-reverse" =
-        "row";
-
-    if (order === "horizontal") {
-        orderString = "column";
-    } else if (order === "vertical") {
-        orderString = "row";
-    }
+    const orderString: "row" | "column" | "row-reverse" | "column-reverse" =
+        order === "horizontal" ? "column" : "row";
 
     return (
         <View
             style={{
+                display: "flex",
                 flexDirection: orderString,
-                justifyContent: "space-between",
+                justifyContent: "center",
+                alignItems: "center",
                 width: "100%",
+                gap: 10,
             }}
-            key={id}
         >
             {options.map((option, index) => (
                 <View
                     key={`${id}-${index}`}
-                    style={{
-                        width:
-                            orderString === "row"
-                                ? ("calc(50% + 2.5px)" as DimensionValue)
-                                : ("calc(100% + 2.5px)" as DimensionValue),
-                    }}
+                    style={[
+                        styles.optionButton,
+                        selectedOption === option && styles.selectedButton,
+                    ]}
                 >
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                        }}
+                    <Pressable
+                        accessibilityLabel={option.label}
+                        onPress={() => handleOptionPress(option)}
                     >
-                        <Pressable
-                            style={[
-                                styles.optionButton,
-                                selectedOption === option &&
-                                    styles.selectedButton,
-                            ]}
-                            onPress={() => handleOptionPress(option)}
+                        <View
+                            style={{
+                                display: "flex",
+                                flex: 1,
+                                justifyContent: "center",
+                                alignItems:
+                                    orderString === "row"
+                                        ? "center"
+                                        : "flex-start",
+                            }}
                         >
-                            <View
-                                style={{
-                                    display: "flex",
-                                    flex: 1,
-                                    justifyContent: "center",
-                                    alignItems:
-                                        orderString === "row"
-                                            ? "center"
-                                            : "flex-start",
-                                }}
+                            <BetterText
+                                fontSize={15}
+                                textAlign={
+                                    orderString === "row" ? "center" : "normal"
+                                }
+                                fontWeight="SemiBold"
                             >
-                                <BetterText
-                                    fontSize={15}
-                                    textAlign={
-                                        orderString === "row"
-                                            ? "center"
-                                            : "normal"
-                                    }
-                                    fontWeight="SemiBold"
-                                >
-                                    {option.label}
-                                </BetterText>
-                            </View>
-                        </Pressable>
-                        {orderString === "row" && (
-                            <GapView key={`${id}-${index}-gap`} width={10} />
-                        )}
-                    </View>
-                    {orderString === "column" && (
-                        <GapView key={`${id}-${index}-gap`} height={10} />
-                    )}
+                                {option.label}
+                            </BetterText>
+                        </View>
+                    </Pressable>
                 </View>
             ))}
         </View>
