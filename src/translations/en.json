@@ -199,16 +199,6 @@
                     "normal": "Active (3 to 5 days of exercise per week)",
                     "intense": "Intensely active (more than 5 days of exercise per week, and/or intense exercises)",
                     "super": "Very very active (daily or almost daily exercise, sometimes more than once a day, and/or very intense exercises)"
-                },
-                "push_ups": {
-                    "asks": "Have you ever done push-ups? How much does it take you to make one? On average",
-                    "one_sec": "One second (incredible...)",
-                    "two_sec": "About 2-3 seconds",
-                    "three_sec": "About 3-5 seconds",
-                    "five_sec": "About 5-7 seconds",
-                    "seven_sec": "About 7-10 seconds",
-                    "ten_sec": "About 10 seconds",
-                    "doesnt_know": "I don't know / I never do push ups"
                 }
             }
         },

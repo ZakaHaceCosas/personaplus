@@ -198,16 +198,6 @@
                     "normal": "Activo (de 3 a 5 días semanales de ejercicio)",
                     "intense": "Intensamente activo (más de 5 días semanales de ejercicio, y/o ejercicios intensos)",
                     "super": "Muy muy activo (ejercicio diario o casi diario, a veces más de una vec al día, y/o ejercicios muy intensos)"
-                },
-                "push_ups": {
-                    "asks": "¿Alguna vez has hecho flexiones? ¿Cuánto tardas de media en hacer una?",
-                    "one_sec": "Un segundo (increible...)",
-                    "two_sec": "Unos 2-3 segundos",
-                    "three_sec": "Unos 3-5 segundos",
-                    "five_sec": "Unos 5-7 segundos",
-                    "seven_sec": "Unos 7-10 segundos",
-                    "ten_sec": "Unos than 10 segundos",
-                    "doesnt_know": "No sé / Nunca hago flexiones"
                 }
             }
         },

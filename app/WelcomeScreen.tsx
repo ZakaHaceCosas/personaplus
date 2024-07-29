@@ -165,16 +165,6 @@ export default function WelcomePage() {
         t("page_welcome.fragment_three.questions.activness.intense"),
         t("page_welcome.fragment_three.questions.activness.super"),
     ];
-    /* const [timeToPushUp, setTimeToPushUp] = useState("");
-    const pushUpOptions = [
-        t("page_welcome.fragment_three.questions.push_ups.one_sec"),
-        t("page_welcome.fragment_three.questions.push_ups.two_sec"),
-        t("page_welcome.fragment_three.questions.push_ups.three_sec"),
-        t("page_welcome.fragment_three.questions.push_ups.five_sec"),
-        t("page_welcome.fragment_three.questions.push_ups.seven_sec"),
-        t("page_welcome.fragment_three.questions.push_ups.ten_sec"),
-        t("page_welcome.fragment_three.questions.push_ups.doesnt_know"),
-    ]; */
     const focusNextField = (index: number): void => {
         if (inputRefs.current[index + 1]) {
             inputRefs.current[index + 1].focus();
@@ -213,7 +203,6 @@ export default function WelcomePage() {
                 await AsyncStorage.setItem("focuspoint", focuspointValue);
                 await AsyncStorage.setItem("sleep", sleep);
                 await AsyncStorage.setItem("activness", howActiveTheUserIs);
-                // await AsyncStorage.setItem("pushupTime", timeToPushUp);
                 await AsyncStorage.setItem("hasLaunched", "true");
                 await AsyncStorage.setItem("objectives", "{}");
                 await AsyncStorage.setItem("language", language);
@@ -740,8 +729,6 @@ export default function WelcomePage() {
                         />
                         {!sleep ||
                         sleep.trim() === "" ||
-                        // !timeToPushUp ||
-                        // timeToPushUp.trim() === "" ||
                         !howActiveTheUserIs ||
                         howActiveTheUserIs.trim() === "" ? (
                             <Button
