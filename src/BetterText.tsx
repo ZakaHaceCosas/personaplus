@@ -67,11 +67,11 @@ interface BetterTextProps {
      */
     textColor?: string; // Color del texto - default: blanco (ya que el fondo es negro)
     /**
-     * Wether to use the Noto Serif serif font. Defaults to false. Beware, as if you use `isSerif` with an incompatible `fontWeight` value you might stumble onto text not rendering properly.
+     * Whether to use the Noto Serif serif font. Defaults to false. Beware, as if you use `isSerif` with an incompatible `fontWeight` value you might stumble onto text not rendering properly.
      *
      * @type {?boolean}
      */
-    isSerif?: boolean; // Wether to use Serif font or not
+    isSerif?: boolean; // Whether to use Serif font or not
     /**
      * A void function that will be executed upon touching the text. Useful for URL links.
      *

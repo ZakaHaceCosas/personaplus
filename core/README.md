@@ -38,7 +38,7 @@ Learn [aquí](DOCS.md) to use OpenHealth.
 
 ## Contribution
 
-We're really thankfull for all possible contributions, in fact they are needed due to the huge amount of aspects of health that need to be covered. Feel free to fork this repo whenever you want, and make any contribution, wether it's a big or small one.
+We're really thankfull for all possible contributions, in fact they are needed due to the huge amount of aspects of health that need to be covered. Feel free to fork this repo whenever you want, and make any contribution, whether it's a big or small one.
 
 **The only thing we ask you for is that if you alter, add, modify, or remove any info, formula, or medical definition, please add, even if it's just a comment, a reference to any trustable source you based yourself on to make the said change(s).** Changes that are made "because yes" or without a valid explanation cannot be accepted. Health requires accuracy.
 

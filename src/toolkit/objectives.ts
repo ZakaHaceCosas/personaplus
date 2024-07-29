@@ -79,7 +79,7 @@ const deleteObjective = async (identifier: number): Promise<void> => {
  *
  * @async
  * @param {number} identifier The identifier.
- * @param {boolean} confirmWithToast Wether to show an Android Toast (`react-native.ToastAndroid`) saying "Marked as done!". Defaults to false. Use `false` when you use a different confirmation method (e.g. the custom toasts seen at the sessions page).
+ * @param {boolean} confirmWithToast Whether to show an Android Toast (`react-native.ToastAndroid`) saying "Marked as done!". Defaults to false. Use `false` when you use a different confirmation method (e.g. the custom toasts seen at the sessions page).
  * @param {TFunction} t Pass here the `i18next` translate function, please.
  * @returns {Promise<void>}
  */
@@ -307,7 +307,7 @@ function calculateSessionFragmentsDuration(duration: number | null, rests: numbe
  *
  * @param {number} id ID of the objective
  * @param {TodaysDay} date Today's date. Use `getCurrentDate()` to get it.
- * @param {boolean} wasDone Wether the objective was done or not.
+ * @param {boolean} wasDone Whether the objective was done or not.
  * @param {?string} [performance] Results for the session from OpenHealth. Optional (the user could have not done the objective, so no data would exist).
  */
 function saveDailyObjectivePerformance(id: number, date: TodaysDay, wasDone: boolean, performance?: string) {
