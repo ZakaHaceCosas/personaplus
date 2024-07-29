@@ -43,7 +43,7 @@ const saveLogsToStorage = async (logs: Log[]) => {
  * @param {Log} log The log to be added.
  * @returns {*} No return, it just works. Otherwise, logs an error.
  */
-export const addLogToGlobal = async (log: Log) => {
+const addLogToGlobal = async (log: Log) => {
     try {
         const currentLogs = await getLogsFromStorage();
         const updatedLogs = [...currentLogs, log];
