@@ -10,7 +10,7 @@ import colors from "./toolkit/design/colors";
 // Definimos los estilos
 const styles = StyleSheet.create({
     container: {
-        height: 120,
+        height: 100,
         paddingTop: 20,
     },
 });
