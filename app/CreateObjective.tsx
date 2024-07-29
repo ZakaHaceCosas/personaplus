@@ -988,29 +988,21 @@ export default function Form() {
                         />
                     )}
                     {repetitions * duration > 300 && <GapView height={20} />}
-                    <View style={{ display: "flex", flexDirection: "row" }}>
-                        {allConditionsAreMet ? (
-                            <Button
-                                style="GOD"
-                                buttonText={t(
-                                    "subpage_create_active_objective.buttons.create"
-                                )}
-                                action={handleSubmit}
-                            />
-                        ) : (
-                            <Button
-                                style="HMM"
-                                buttonText={t("globals.fill_all_items")}
-                                action={() => {}}
-                            />
-                        )}
-                        <GapView width={20} />
+                    {allConditionsAreMet ? (
                         <Button
-                            style="DEFAULT"
-                            buttonText={t("globals.nevermind")}
-                            action={router.back}
+                            style="ACE"
+                            buttonText={t(
+                                "subpage_create_active_objective.buttons.create"
+                            )}
+                            action={handleSubmit}
                         />
-                    </View>
+                    ) : (
+                        <Button
+                            style="HMM"
+                            buttonText={t("globals.fill_all_items")}
+                            action={() => {}}
+                        />
+                    )}
                     <GapView height={10} />
                     <BetterText
                         textAlign="center"

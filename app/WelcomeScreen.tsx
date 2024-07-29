@@ -264,7 +264,7 @@ export default function WelcomePage() {
                     <GapView height={10} />
                     <View style={styles.flexbtns}>
                         <Button
-                            style="GOD"
+                            style="ACE"
                             action={gonext}
                             buttonText={t("page_welcome.buttons.start")}
                             width="fill"
