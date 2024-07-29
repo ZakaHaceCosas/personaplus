@@ -78,10 +78,9 @@ export default function Home() {
                 await TaskManager.isTaskRegisteredAsync("background-fetch");
             setStatus(status);
             setIsRegistered(isRegistered);
-        } catch (error) {
-            console.error("Error checking status:", error);
+        } catch (e) {
             termLog(
-                "Error checking background fetch status: " + error,
+                "Error checking for background fetch status: " + e,
                 "error"
             );
         }
@@ -99,13 +98,9 @@ export default function Home() {
                     "Daily objective fetching seems to be set up!",
                     "success"
                 );
-            } catch (error) {
-                console.error(
-                    "Error verifying or registering background fetch:",
-                    error
-                );
+            } catch (e) {
                 termLog(
-                    "Error verifying or registering background fetch: " + error,
+                    "Error verifying or registering background fetch: " + e,
                     "error"
                 );
             } finally {
@@ -188,8 +183,11 @@ export default function Home() {
     };
 
     useEffect(() => {
-        termLog("isRegistered status: " + isRegistered, "log");
-        termLog("status status: " + status, "log");
+        termLog(
+            "(BACKGROUND OBJECTIVE FETCH) isRegistered status: " + isRegistered,
+            "log"
+        );
+        termLog("(BACKGROUND OBJECTIVE FETCH) status: " + status, "log");
     }, [status, isRegistered]);
 
     const createNewActiveObjective = (): void => {
@@ -200,7 +198,9 @@ export default function Home() {
         router.navigate("/Sessions?id=" + identifier);
     };
 
-    termLog(String(objectives), "log");
+    useEffect(() => {
+        termLog("Objectives: " + JSON.stringify(objectives), "log");
+    }, [objectives]);
 
     const allDoneMessages: string[] = t("cool_messages.all_done", {
         returnObjects: true,
@@ -279,7 +279,7 @@ export default function Home() {
                             Object.keys(objectives).map(key => {
                                 const obj = objectives[key];
                                 termLog(
-                                    `OBJ ${obj.identifier}, days[${adjustedToday}]: ${obj.days[adjustedToday]}`,
+                                    `OBJECTIVE ${obj.identifier}, days[${adjustedToday}]: ${obj.days[adjustedToday]}`,
                                     "log"
                                 );
 

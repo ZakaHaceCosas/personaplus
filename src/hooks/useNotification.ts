@@ -50,7 +50,7 @@ async function registerForPushNotificationsAsync() {
         token = await getExpoPushTokenAsync({
             projectId: Constants.default.easConfig?.projectId,
         });
-        console.log(token);
+        console.log(token); // Exception, doesnt use termLog to avoid storing it on the user's log file
     } else {
         alert('Must use physical device for Push Notifications');
         termLog('Must use physical device for Push Notifications', "warn");
