@@ -17,7 +17,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/src/Buttons";
 import { version as ReactVersion } from "react";
 import { version as PersonaPlusVersion } from "@/package.json";
-import { isDevelopmentBuild } from "expo-dev-client";
 import {
     clearObjectives,
     getObjectives,
@@ -30,11 +29,11 @@ import { usePathname, router } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { termLog, getLogsFromStorage } from "@/src/toolkit/debug/console";
 import colors from "@/src/toolkit/design/colors";
+import Loading from "@/src/Loading";
 
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
 import { Logs } from "@/src/types/Logs";
-import Loading from "@/src/Loading";
 
 const styles = StyleSheet.create({
     consoleview: {
@@ -318,15 +317,6 @@ export default function DeveloperInterface() {
                     fontSize={35}
                 >
                     Dev interface
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Italic"
-                    fontSize={15}
-                >
-                    {isDevelopmentBuild() === true
-                        ? t("dev_interface.is_development_build.true")
-                        : t("dev_interface.is_development_build.false")}
                 </BetterText>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
