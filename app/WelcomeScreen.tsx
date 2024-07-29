@@ -1,7 +1,7 @@
 // WelcomeScreen.tsx
 // Welcome page
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { router } from "expo-router";
 import {
     StyleSheet,
@@ -20,9 +20,9 @@ import { Picker as Select } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { termLog } from "@/src/toolkit/debug/console";
 import { useTranslation } from "react-i18next";
-import { changeLanguage } from "i18next";
 import { validateBasicData } from "@/src/toolkit/userData";
 import colors from "@/src/toolkit/design/colors";
+import { getDefaultLocale } from "@/src/toolkit/translations";
 
 // Definimos los estilos
 const styles = StyleSheet.create({
@@ -87,15 +87,7 @@ export default function WelcomePage() {
             default: false,
         },
     ];
-    // this below is a joke (keep it for production please, at least until i see it once)
-    // nevermind...
-    /* const progenderoptions = [
-        { value: "male", label: "Gigachad", default: true },
-        { value: "female", label: "Transformer", default: false }, // lol.
-        { value: "female", label: "Non-existant being", default: false },
-    ]; */
     const inputRefs = useRef<TextInput[]>([]);
-    // const easteregg: number = Math.floor(Math.random() * 690) + 1;
     const [focuspointValue, setFocuspointValue] = useState<string | null>(null);
     const handleFocuspointChange = (value: string) => {
         setFocuspointValue(value);
@@ -183,6 +175,15 @@ export default function WelcomePage() {
         setTab(prevPage => prevPage - 1);
     };
 
+    useEffect(() => {
+        const setDefaultLanguage = async () => {
+            const lang = await getDefaultLocale();
+            setLanguage(lang);
+        };
+
+        setDefaultLanguage();
+    }, []);
+
     const submit = async () => {
         if (
             genderValue &&
@@ -219,36 +220,12 @@ export default function WelcomePage() {
         }
     };
 
-    const handleChangeLanguaage = async (targetLang: "en" | "es") => {
-        try {
-            await AsyncStorage.setItem("language", targetLang);
-            changeLanguage(targetLang);
-            setLanguage(targetLang);
-        } catch (e) {
-            termLog("Error changing language! " + e, "error");
-        }
-    };
-
     const handleChange = (name: string, value: string) => {
         setFormData(prevData => ({
             ...prevData,
             [name]: value,
         }));
     };
-
-    /* <Button
-        buttonText={
-            language === "en"
-                ? "Change to Spanish"
-                : "Change to English"
-        }
-        style="ACE"
-        action={() =>
-            language === "es"
-                ? handleChangeLanguaage("en")
-                : handleChangeLanguaage("es")
-        }
-    /> */
 
     return (
         <ScrollView

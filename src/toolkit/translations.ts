@@ -12,12 +12,16 @@ const resources = {
     es: { translation: esTranslations },
 };
 
-// Función para inicializar i18n
-const initializeI18n = async () => {
-    const locales = getLocales()
-    // Obtén el idioma guardado en AsyncStorage, o si no, el idioma por defecto del usuario
+export const getDefaultLocale = async () => {
+    const locales = getLocales() // Obtén el idioma guardado en AsyncStorage, o si no, el idioma por defecto del usuario
     const savedLanguage = await AsyncStorage.getItem('language') || locales.at(0)?.languageCode;
     const defaultLanguage = (savedLanguage === "es" || savedLanguage === "en") ? savedLanguage : "en"; // Si el idioma por defecto del usuario es un idioma soportado, bien. Si no, inglés.
+    return defaultLanguage
+}
+
+// Función para inicializar i18n
+const initializeI18n = async () => {
+    const defaultLanguage = await getDefaultLocale()
 
     // Inicializa i18n con los recursos y el idioma detectado
     i18n.use(initReactI18next).init({
