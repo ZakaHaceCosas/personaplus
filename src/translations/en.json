@@ -152,7 +152,7 @@
         },
         "fragment_one": {
             "title": "Tell us about you",
-            "subtitle": "We only ask for the data we need for the app to function. We don't send info to anyone outside of this device, ever.",
+            "subtitle": "We only ask for required data for the app to function and it never, ever, leaves your device.",
             "questions": {
                 "username": "Username",
                 "height": "Height (centimeters, no decimals)",
@@ -194,11 +194,11 @@
                 },
                 "activness": {
                     "asks": "How active are you? This means, how often do you exercise or do other physical activities? It doesn't have to be exact.",
-                    "poor": "Poorly active (almost no exercise)",
-                    "small": "A little active (1 or 2 days of exercise per week)",
-                    "normal": "Active (3 to 5 days of exercise per week)",
-                    "intense": "Intensely active (more than 5 days of exercise per week, and/or intense exercises)",
-                    "super": "Very very active (daily or almost daily exercise, sometimes more than once a day, and/or very intense exercises)"
+                    "poor": "Poorly active (nearly no exercise)",
+                    "small": "A little active (1-2 days per week)",
+                    "normal": "Active (3-5 days per week)",
+                    "intense": "Highly active (more than 5 days or intense workouts)",
+                    "super": "Extremely active (daily or multiple times a day, very intense)"
                 }
             }
         },
