@@ -366,118 +366,95 @@ export default function WelcomePage() {
                         ref={ref => ref && (inputRefs.current[0] = ref)}
                     />
                     <GapView height={10} />
-                    <View
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            gap: 10,
-                        }}
+                    <BetterText
+                        textAlign="normal"
+                        fontWeight="Regular"
+                        fontSize={15}
+                        textColor={colors.LBLS.SDD}
                     >
-                        <View style={{ flex: 1 }}>
-                            <BetterText
-                                textAlign="normal"
-                                fontWeight="Regular"
-                                fontSize={15}
-                                textColor={colors.LBLS.SDD}
-                            >
-                                {t(
-                                    "page_welcome.fragment_one.questions.height"
-                                )}
-                            </BetterText>
-                            <GapView height={5} />
-                            <TextInput
-                                placeholder={t(
-                                    "page_welcome.fragment_one.questions.height"
-                                )}
-                                value={formData.height}
-                                readOnly={false}
-                                placeholderTextColor={
-                                    colors.MAIN.BLANDITEM.PLACEHOLDER
-                                }
-                                style={[
-                                    {
-                                        backgroundColor:
-                                            colors.MAIN.BLANDITEM.BACKGROUND,
-                                        borderRadius: 10,
-                                        padding: 15,
-                                        borderWidth: 4,
-                                        borderColor: colors.MAIN.BLANDITEM.STRK,
-                                        width: "100%",
-                                        color: colors.BASIC.WHITE,
-                                        // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
-                                        outline: "none",
-                                        fontFamily: "BeVietnamPro-Regular",
-                                    },
-                                ]}
-                                autoCorrect={false}
-                                multiline={false}
-                                maxLength={3}
-                                textAlign="left"
-                                fontFamily="BeVietnamPro-Regular"
-                                textContentType="none"
-                                inputMode="numeric"
-                                key="heightinput"
-                                enterKeyHint="next"
-                                onChangeText={text =>
-                                    handleChange("height", text)
-                                }
-                                onSubmitEditing={() => focusNextField(1)}
-                                ref={ref => ref && (inputRefs.current[1] = ref)}
-                            />
-                        </View>
-                        <View style={{ flex: 1 }}>
-                            <BetterText
-                                textAlign="normal"
-                                fontWeight="Regular"
-                                fontSize={15}
-                                textColor={colors.LBLS.SDD}
-                            >
-                                {t(
-                                    "page_welcome.fragment_one.questions.weight"
-                                )}
-                            </BetterText>
-                            <GapView height={5} />
-                            <TextInput
-                                placeholder={t(
-                                    "page_welcome.fragment_one.questions.weight"
-                                )}
-                                value={formData.weight}
-                                readOnly={false}
-                                placeholderTextColor={
-                                    colors.MAIN.BLANDITEM.PLACEHOLDER
-                                }
-                                style={[
-                                    {
-                                        backgroundColor:
-                                            colors.MAIN.BLANDITEM.BACKGROUND,
-                                        borderRadius: 10,
-                                        padding: 15,
-                                        borderWidth: 4,
-                                        borderColor: colors.MAIN.BLANDITEM.STRK,
-                                        width: "100%",
-                                        color: colors.BASIC.WHITE,
-                                        // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
-                                        outline: "none",
-                                        fontFamily: "BeVietnamPro-Regular",
-                                    },
-                                ]}
-                                autoCorrect={false}
-                                multiline={false}
-                                maxLength={3}
-                                textAlign="left"
-                                fontFamily="BeVietnamPro-Regular"
-                                textContentType="none"
-                                inputMode="numeric"
-                                key="weightinput"
-                                enterKeyHint="next"
-                                onChangeText={text =>
-                                    handleChange("weight", text)
-                                }
-                                onSubmitEditing={() => focusNextField(2)}
-                                ref={ref => ref && (inputRefs.current[2] = ref)}
-                            />
-                        </View>
-                    </View>
+                        {t("page_welcome.fragment_one.questions.height")}
+                    </BetterText>
+                    <GapView height={5} />
+                    <TextInput
+                        placeholder={t(
+                            "page_welcome.fragment_one.questions.height"
+                        )}
+                        value={formData.height}
+                        readOnly={false}
+                        placeholderTextColor={colors.MAIN.BLANDITEM.PLACEHOLDER}
+                        style={[
+                            {
+                                backgroundColor:
+                                    colors.MAIN.BLANDITEM.BACKGROUND,
+                                borderRadius: 10,
+                                padding: 15,
+                                borderWidth: 4,
+                                borderColor: colors.MAIN.BLANDITEM.STRK,
+                                width: "100%",
+                                color: colors.BASIC.WHITE,
+                                // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
+                                outline: "none",
+                                fontFamily: "BeVietnamPro-Regular",
+                            },
+                        ]}
+                        autoCorrect={false}
+                        multiline={false}
+                        maxLength={3}
+                        textAlign="left"
+                        fontFamily="BeVietnamPro-Regular"
+                        textContentType="none"
+                        inputMode="numeric"
+                        key="heightinput"
+                        enterKeyHint="next"
+                        onChangeText={text => handleChange("height", text)}
+                        onSubmitEditing={() => focusNextField(1)}
+                        ref={ref => ref && (inputRefs.current[1] = ref)}
+                    />
+                    <GapView height={10} />
+                    <BetterText
+                        textAlign="normal"
+                        fontWeight="Regular"
+                        fontSize={15}
+                        textColor={colors.LBLS.SDD}
+                    >
+                        {t("page_welcome.fragment_one.questions.weight")}
+                    </BetterText>
+                    <GapView height={5} />
+                    <TextInput
+                        placeholder={t(
+                            "page_welcome.fragment_one.questions.weight"
+                        )}
+                        value={formData.weight}
+                        readOnly={false}
+                        placeholderTextColor={colors.MAIN.BLANDITEM.PLACEHOLDER}
+                        style={[
+                            {
+                                backgroundColor:
+                                    colors.MAIN.BLANDITEM.BACKGROUND,
+                                borderRadius: 10,
+                                padding: 15,
+                                borderWidth: 4,
+                                borderColor: colors.MAIN.BLANDITEM.STRK,
+                                width: "100%",
+                                color: colors.BASIC.WHITE,
+                                // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
+                                outline: "none",
+                                fontFamily: "BeVietnamPro-Regular",
+                            },
+                        ]}
+                        autoCorrect={false}
+                        multiline={false}
+                        maxLength={3}
+                        textAlign="left"
+                        fontFamily="BeVietnamPro-Regular"
+                        textContentType="none"
+                        inputMode="numeric"
+                        key="weightinput"
+                        enterKeyHint="next"
+                        onChangeText={text => handleChange("weight", text)}
+                        onSubmitEditing={() => focusNextField(2)}
+                        ref={ref => ref && (inputRefs.current[2] = ref)}
+                    />
                     <GapView height={10} />
                     <BetterText
                         textAlign="normal"
@@ -539,8 +516,9 @@ export default function WelcomePage() {
                         options={genderoptions}
                         value={genderValue}
                         onValueChange={handleGenderChange}
-                        order="horizontal"
+                        order="vertical"
                     />
+                    <GapView height={10} />
                     <View style={styles.flexbtns}>
                         <Button
                             style="DEFAULT"
