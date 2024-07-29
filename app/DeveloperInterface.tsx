@@ -2,7 +2,14 @@
 // Página que muestra ciertos logs de la consola para ayudar al desarrollador
 
 import React, { useEffect, useState } from "react";
-import { Alert, ScrollView, StyleSheet, View, Text } from "react-native";
+import {
+    Alert,
+    Dimensions,
+    ScrollView,
+    StyleSheet,
+    View,
+    Text,
+} from "react-native";
 import BottomNav from "@/src/BottomNav";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
@@ -37,12 +44,6 @@ const styles = StyleSheet.create({
         height: "100%",
         borderRadius: 5,
     },
-    mainview: {
-        padding: 20,
-        flex: 1,
-        flexDirection: "column",
-        overflow: "scroll",
-    },
     logText: {
         marginBottom: 5,
     },
@@ -71,8 +72,17 @@ const styles = StyleSheet.create({
         borderLeftColor: colors.PRIMARIES.WOR.WOR,
     },
     containerview: {
-        width: "100%",
-        height: "100%",
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
+    },
+    mainview: {
+        padding: 20,
+        paddingTop: 40,
+        display: "flex",
+        flexDirection: "column",
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
+        overflow: "scroll",
     },
 });
 
@@ -282,7 +292,6 @@ export default function DeveloperInterface() {
 
     return (
         <View style={styles.containerview}>
-            <BottomNav currentLocation={currentpage} />
             <ScrollView style={styles.mainview}>
                 <GapView height={20} />
                 <BetterText
@@ -399,6 +408,7 @@ export default function DeveloperInterface() {
                 </BetterText>
                 <GapView height={80} />
             </ScrollView>
+            <BottomNav currentLocation={currentpage} />
         </View>
     );
 }
