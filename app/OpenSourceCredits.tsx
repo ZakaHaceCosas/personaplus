@@ -54,14 +54,6 @@ const libraries: OpenSourceLibrary[] = [
         url: "https://github.com/oblador/react-native-animatable",
     },
     {
-        name: "Remove Console Msg",
-        author: "akshayjani99",
-        license: "MIT License",
-        description:
-            "A package with the ability to remove all the console.* statement from your code.",
-        url: "https://www.npmjs.com/package/remove-console-msg",
-    },
-    {
         name: "React Native Countdown Circle Timer",
         author: "Vasil Dimitrov",
         license: "MIT License",
