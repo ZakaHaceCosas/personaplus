@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
-    DimensionValue,
+    Dimensions,
     Alert,
     Linking,
     Platform,
@@ -48,15 +48,16 @@ interface UserData {
 // Creamos los estilos
 const styles = StyleSheet.create({
     containerview: {
-        width: "100vw" as DimensionValue,
-        height: "100vh" as DimensionValue,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
     },
     mainview: {
         padding: 20,
+        paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        width: "100vw" as DimensionValue,
-        height: "100vh" as DimensionValue,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
         overflow: "scroll",
     },
     flexyview: {
@@ -289,195 +290,165 @@ export default function Profile() {
 
     return (
         <View style={styles.containerview}>
-            <BottomNav currentLocation={currentpage} />
-            <ScrollView>
-                <View style={styles.mainview}>
-                    <BetterText
-                        textAlign="normal"
-                        fontWeight="Bold"
-                        fontSize={35}
-                    >
-                        {t("page_profile.header.label")}
-                    </BetterText>
-                    <BetterText
-                        textAlign="normal"
-                        fontWeight="Regular"
-                        fontSize={20}
-                    >
-                        {t("page_profile.header.sublabel")}
-                        {username}!
-                    </BetterText>
-                    <GapView height={20} />
-                    <Section kind="Profile">
-                        <Division header={username}>
-                            <View style={styles.flexyview}>
-                                <BetterText
-                                    textAlign="normal"
-                                    textColor={colors.BASIC.WHITE}
-                                    fontWeight="Regular"
-                                    fontSize={15}
-                                >
-                                    {t(
-                                        "page_profile.your_profile_division.gender"
-                                    )}
-                                    :{" "}
-                                    {String(gender) === "male"
-                                        ? t(
-                                              "page_profile.your_profile_division.gender_male"
-                                          )
-                                        : t(
-                                              "page_profile.your_profile_division.gender_female"
-                                          )}
-                                </BetterText>
-                                <BetterText
-                                    textAlign="normal"
-                                    textColor={colors.BASIC.WHITE}
-                                    fontWeight="Regular"
-                                    fontSize={15}
-                                >
-                                    {t(
-                                        "page_profile.your_profile_division.age"
-                                    )}
-                                    : {String(age)}
-                                    {t(
-                                        "page_profile.your_profile_division.age_suffix"
-                                    )}
-                                </BetterText>
-                                <BetterText
-                                    textAlign="normal"
-                                    textColor={colors.BASIC.WHITE}
-                                    fontWeight="Regular"
-                                    fontSize={15}
-                                >
-                                    {t(
-                                        "page_profile.your_profile_division.height"
-                                    )}
-                                    : {String(height)} cm
-                                </BetterText>
-
-                                <BetterText
-                                    textAlign="normal"
-                                    textColor={colors.BASIC.WHITE}
-                                    fontWeight="Regular"
-                                    fontSize={15}
-                                >
-                                    {t(
-                                        "page_profile.your_profile_division.weight"
-                                    )}
-                                    : {String(weight)} kg
-                                </BetterText>
-                                <GapView height={10} />
-                                <Button
-                                    style="ACE"
-                                    action={() =>
-                                        router.navigate("/UpdateProfile")
-                                    }
-                                    buttonText={t(
-                                        "page_profile.your_profile_division.update_button"
-                                    )}
-                                />
-                            </View>
-                        </Division>
-                    </Section>
-                    <GapView height={20} />
-                    <Section kind="Settings">
-                        <Division
-                            header={t("page_profile.change_your_language")}
-                        >
-                            <Button
-                                buttonText={
-                                    language === "en"
-                                        ? "Change to Spanish"
-                                        : "Change to English"
-                                }
-                                style="ACE"
-                                action={() =>
-                                    language === "es"
-                                        ? handleChangeLanguaage("en")
-                                        : handleChangeLanguaage("es")
-                                }
-                            />
-                        </Division>
-                    </Section>
-                    <GapView height={20} />
-                    <Section kind="About">
-                        <Division
-                            status="REGULAR"
-                            iconName={null}
-                            header={t("page_profile.about_division.header")}
-                            subheader={t(
-                                "page_profile.about_division.subheader"
-                            )}
-                        >
-                            <Button
-                                style="ACE"
-                                action={() => router.navigate("/About")}
-                                buttonText={t(
-                                    "page_profile.about_division.button"
-                                )}
-                            />
-                        </Division>
-                        {Platform.OS === "android" && (
-                            <Division
-                                status="REGULAR"
-                                iconName={null}
-                                header={t("page_profile.updates.header")}
-                                subheader={t(
-                                    "page_profile.updates.subheader",
-                                    { version: "0.0.1-R5-b23" } // placed it here so you only update once for all langs
-                                )}
+            <ScrollView style={styles.mainview}>
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
+                    {t("page_profile.header.label")}
+                </BetterText>
+                <BetterText
+                    textAlign="normal"
+                    fontWeight="Regular"
+                    fontSize={20}
+                >
+                    {t("page_profile.header.sublabel")}
+                    {username}!
+                </BetterText>
+                <GapView height={20} />
+                <Section kind="Profile">
+                    <Division header={username}>
+                        <View style={styles.flexyview}>
+                            <BetterText
+                                textAlign="normal"
+                                textColor={colors.BASIC.WHITE}
+                                fontWeight="Regular"
+                                fontSize={15}
                             >
-                                <Button
-                                    style="ACE"
-                                    action={checkForUpdates}
-                                    buttonText={t(
-                                        "page_profile.updates.button"
-                                    )}
-                                />
-                            </Division>
-                        )}
-                    </Section>
-                    <GapView height={20} />
-                    <Section kind="Developer">
-                        <Division
-                            status="REGULAR"
-                            preheader="DEV INTERFACE"
-                            header={t(
-                                "page_profile.developer.use_dev_interface"
-                            )}
-                            subheader={t("page_profile.developer.description")}
-                        >
-                            <View style={styles.flexyview}>
-                                <Button
-                                    style="HMM"
-                                    action={() =>
-                                        router.navigate("/DeveloperInterface")
-                                    }
-                                    buttonText={t(
-                                        "page_profile.developer.button"
-                                    )}
-                                />
-                            </View>
-                        </Division>
+                                {t("page_profile.your_profile_division.gender")}
+                                :{" "}
+                                {String(gender) === "male"
+                                    ? t(
+                                          "page_profile.your_profile_division.gender_male"
+                                      )
+                                    : t(
+                                          "page_profile.your_profile_division.gender_female"
+                                      )}
+                            </BetterText>
+                            <BetterText
+                                textAlign="normal"
+                                textColor={colors.BASIC.WHITE}
+                                fontWeight="Regular"
+                                fontSize={15}
+                            >
+                                {t("page_profile.your_profile_division.age")}:{" "}
+                                {String(age)}
+                                {t(
+                                    "page_profile.your_profile_division.age_suffix"
+                                )}
+                            </BetterText>
+                            <BetterText
+                                textAlign="normal"
+                                textColor={colors.BASIC.WHITE}
+                                fontWeight="Regular"
+                                fontSize={15}
+                            >
+                                {t("page_profile.your_profile_division.height")}
+                                : {String(height)} cm
+                            </BetterText>
+
+                            <BetterText
+                                textAlign="normal"
+                                textColor={colors.BASIC.WHITE}
+                                fontWeight="Regular"
+                                fontSize={15}
+                            >
+                                {t("page_profile.your_profile_division.weight")}
+                                : {String(weight)} kg
+                            </BetterText>
+                            <GapView height={10} />
+                            <Button
+                                style="ACE"
+                                action={() => router.navigate("/UpdateProfile")}
+                                buttonText={t(
+                                    "page_profile.your_profile_division.update_button"
+                                )}
+                            />
+                        </View>
+                    </Division>
+                </Section>
+                <GapView height={20} />
+                <Section kind="Settings">
+                    <Division header={t("page_profile.change_your_language")}>
+                        <Button
+                            buttonText={
+                                language === "en"
+                                    ? "Change to Spanish"
+                                    : "Change to English"
+                            }
+                            style="ACE"
+                            action={() =>
+                                language === "es"
+                                    ? handleChangeLanguaage("en")
+                                    : handleChangeLanguaage("es")
+                            }
+                        />
+                    </Division>
+                </Section>
+                <GapView height={20} />
+                <Section kind="About">
+                    <Division
+                        status="REGULAR"
+                        iconName={null}
+                        header={t("page_profile.about_division.header")}
+                        subheader={t("page_profile.about_division.subheader")}
+                    >
+                        <Button
+                            style="ACE"
+                            action={() => router.navigate("/About")}
+                            buttonText={t("page_profile.about_division.button")}
+                        />
+                    </Division>
+                    {Platform.OS === "android" && (
                         <Division
                             status="REGULAR"
                             iconName={null}
-                            preheader={t("page_profile.danger_zone.preheader")}
-                            header={t("page_profile.danger_zone.header")}
-                            subheader={t("page_profile.danger_zone.subheader")}
+                            header={t("page_profile.updates.header")}
+                            subheader={t(
+                                "page_profile.updates.subheader",
+                                { version: "0.0.1-R5-b23" } // placed it here so you only update once for all langs
+                            )}
                         >
                             <Button
-                                style="WOR"
-                                action={startOver}
-                                buttonText={t(
-                                    "page_profile.danger_zone.header"
-                                )}
+                                style="ACE"
+                                action={checkForUpdates}
+                                buttonText={t("page_profile.updates.button")}
                             />
                         </Division>
-                    </Section>
-                    <Footer />
-                </View>
+                    )}
+                </Section>
+                <GapView height={20} />
+                <Section kind="Developer">
+                    <Division
+                        status="REGULAR"
+                        preheader="DEV INTERFACE"
+                        header={t("page_profile.developer.use_dev_interface")}
+                        subheader={t("page_profile.developer.description")}
+                    >
+                        <View style={styles.flexyview}>
+                            <Button
+                                style="HMM"
+                                action={() =>
+                                    router.navigate("/DeveloperInterface")
+                                }
+                                buttonText={t("page_profile.developer.button")}
+                            />
+                        </View>
+                    </Division>
+                    <Division
+                        status="REGULAR"
+                        iconName={null}
+                        preheader={t("page_profile.danger_zone.preheader")}
+                        header={t("page_profile.danger_zone.header")}
+                        subheader={t("page_profile.danger_zone.subheader")}
+                    >
+                        <Button
+                            style="WOR"
+                            action={startOver}
+                            buttonText={t("page_profile.danger_zone.header")}
+                        />
+                    </Division>
+                </Section>
+                <Footer />
             </ScrollView>
+            <BottomNav currentLocation={currentpage} />
         </View>
     );
 }
