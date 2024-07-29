@@ -23,9 +23,47 @@ Cuando la app llegue a un punto en el que es utilizable y se publique el primer 
 END README
 -->
 
+<!--
+TEMPLATE
+## <VERSION>
+
+### User updates - Latest
+
+### Dev updates - Latest
+
+### Trivial updates - Latest
+-->
+
+## 0.0.1-R5-b24
+
+### User updates - Latest
+
+- Finally! Fixed the WelcomeScreen's layout. It's now centered and (thanks to other changes made) it's looking pretty good.
+- Finally!! Fixed the Bottom navigation bar! It's now actually at the bottom.
+  - This change implied visual changes to many components (all the pages that use the BottomNav, also the Footer component).
+- Also fixed Swap's layout. It looks mostly correct now.
+- Simplified CreateObjective page (revomed the "Nevermind" button, use "< Go back" instead).
+- Instead of a "change to English / Spanish" button on WelcomeScreen, now PersonaPlus auto-detects your language (if you don't use a supported lang defaults to English just like always).
+- Changed some in-app texts to be shorter.
+
+### Dev updates - Latest
+
+- Removed the old, duplicate `termLog()` implementation from Dev Interface.
+- Dev Interface now also has Loading... state. Also, now all data is fetched from the same Effect.
+- Improved some console logs to be more descriptive.
+- Replaced `vw` and `vh` in many places with React Native's `Dimensions`.
+- Removed a useless export (`addLogToGlobal`) from termLog.
+- Added daily logging for objectives. It's toolkified onto the objectives toolkit. (Unfinished, work in progress).
+- Added a function to obtain today's date in the `DD/MM/YYYY` format (`toolkit/today.ts`, `getCurrentDate()`).
+
+### Trivial updates - Latest
+
+- Removed the useless easter egg from WelcomeScreen (which I never got the chance to see, by the way). Also removed the "time to push up" question.
+- Fixed typos.
+
 ## 0.0.1-R5-b23
 
-### User updates
+### User updates - b23
 
 - Now the duration selector for creating objectives allows for more precise durations.
 - Translated all `ToastAndroid` messages, reminder notifications, and buttons.
@@ -35,7 +73,7 @@ END README
 - Now sessions display time in `mm:ss` format rather than just seconds.
 - Now rests do work properly!
 
-### Dev updates
+### Dev updates - b23
 
 - **A lot of code quality improvements and refactors, this is the key point of this update.**
 - Renamed `components/` to `src/`.
@@ -53,7 +91,7 @@ END README
 - Toolkified UI colors. Now all the colors we'll use are accessible from the `colors`. It has JSDoc (to be polished, tho).
 - Componentified loading screens.
 
-### Trivial changes
+### Trivial changes - b23
 
 - Removed the preheader on the about page to save space.
 - Fixed an issue with spacing among the "CLEAR ALL" button in Dev Interface.
