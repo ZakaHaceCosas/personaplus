@@ -82,11 +82,13 @@ interface SwapProps {
  */
 const styles = StyleSheet.create({
     optionButton: {
+        paddingLeft: 10,
+        paddingRight: 10,
+        flexGrow: 1,
         borderRadius: 10,
         borderWidth: 4,
         borderColor: colors.MAIN.BLANDITEM.STRK,
         backgroundColor: colors.MAIN.BLANDITEM.BACKGROUND,
-        flex: 1,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
@@ -160,40 +162,35 @@ export default function Swap({
             }}
         >
             {options.map((option, index) => (
-                <View
+                <Pressable
                     key={`${id}-${index}`}
                     style={[
                         styles.optionButton,
                         selectedOption === option && styles.selectedButton,
                     ]}
+                    accessibilityLabel={option.label}
+                    onPress={() => handleOptionPress(option)}
                 >
-                    <Pressable
-                        accessibilityLabel={option.label}
-                        onPress={() => handleOptionPress(option)}
+                    <View
+                        style={{
+                            display: "flex",
+                            flex: 1,
+                            justifyContent: "center",
+                            alignItems:
+                                orderString === "row" ? "center" : "flex-start",
+                        }}
                     >
-                        <View
-                            style={{
-                                display: "flex",
-                                flex: 1,
-                                justifyContent: "center",
-                                alignItems:
-                                    orderString === "row"
-                                        ? "center"
-                                        : "flex-start",
-                            }}
+                        <BetterText
+                            fontSize={15}
+                            textAlign={
+                                orderString === "row" ? "center" : "normal"
+                            }
+                            fontWeight="SemiBold"
                         >
-                            <BetterText
-                                fontSize={15}
-                                textAlign={
-                                    orderString === "row" ? "center" : "normal"
-                                }
-                                fontWeight="SemiBold"
-                            >
-                                {option.label}
-                            </BetterText>
-                        </View>
-                    </Pressable>
-                </View>
+                            {option.label}
+                        </BetterText>
+                    </View>
+                </Pressable>
             ))}
         </View>
     );
