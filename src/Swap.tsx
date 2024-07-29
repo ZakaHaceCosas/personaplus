@@ -27,7 +27,7 @@ interface Option {
      */
     label: string;
     /**
-     * Wether this option should be the default one of the Swap.
+     * Whether this option should be the default one of the Swap.
      *
      * @type {?boolean}
      */
@@ -62,7 +62,7 @@ interface SwapProps {
     value?: string | number | null; // Para establecer el valor programáticamente
     // (reemplazado tipo "any" con number y null para mas seguridad)
     /**
-     * Wether the swap should display items horizontally (flex-row) or vertically (flex-column)
+     * Whether the swap should display items horizontally (flex-row) or vertically (flex-column)
      *
      * @type {("horizontal" | "vertical")}
      */

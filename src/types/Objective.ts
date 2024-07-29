@@ -9,7 +9,7 @@ export interface Objective {
     extra: {
         /* PUSH-UP */
         amount: number; // Amount of pushups
-        // hands?: 1 | 2; // Wether they are made with only one hand or two. Commented as lifting uses the exact same value - we can recycle it :]
+        // hands?: 1 | 2; // Whether they are made with only one hand or two. Commented as lifting uses the exact same value - we can recycle it :]
         time: number; // Estimatedly, how much does the user take to make a push-up.
         /* LIFTING */
         lifts: number; // How many lifts
