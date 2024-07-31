@@ -1,15 +1,15 @@
 /**
  * Validates the basic user data. It accepts invalid types, as the type can be incorrect due to user interaction (e.g., entering text in a number field).
  *
- * @param {string | null} gender - The gender of the user.
- * @param {string | number | null} age - The age of the user.
- * @param {string | number | null} weight - The weight of the user.
- * @param {string | number | null} height - The height of the user.
- * @param {string | null} username - The username of the user.
+ * @param {string | null | undefined} gender - The gender of the user.
+ * @param {string | number | null | undefined} age - The age of the user.
+ * @param {string | number | null | undefined} weight - The weight of the user.
+ * @param {string | number | null | undefined} height - The height of the user.
+ * @param {string | null | undefined} username - The username of the user.
  * @returns {boolean} - Returns true if all data is valid, false otherwise.
  */
 
-export const validateBasicData = (gender: string | null, age: string | number | null, weight: string | number | null, height: string | number | null, username: string | null) => {
+export const validateBasicData = (gender: string | null | undefined, age: string | number | null | undefined, weight: string | number | null | undefined, height: string | number | null | undefined, username: string | null | undefined) => {
     let isDataValid =
         !gender ||
         age === null ||
@@ -32,4 +32,86 @@ export const validateBasicData = (gender: string | null, age: string | number | 
     isDataValid = !isDataValid
 
     return isDataValid
+}
+
+/**
+ * An interface with the basic data of a person, required by most health calculations
+ *
+ * @export
+ * @interface UserHealthData
+ * @typedef {UserHealthData}
+ */
+export interface UserHealthData {
+    /**
+     * The age of the user
+     *
+     * @type {number}
+     */
+    age: number | null,
+    /**
+     * The weight of the user
+     *
+     * @type {number}
+     */
+    weight: number | null,
+    /**
+     * The height of the user
+     *
+     * @type {number}
+     */
+    height: number | null,
+    /**
+     * The gender of the user, must be either `"male"` or `"female"`
+     *
+     * @type {("male" | "female")}
+     */
+    gender: "male" | "female" | null
+}
+
+/**
+ * Validates the basic user data, including only data accepted by the `UserHealthData` type. It accepts invalid types, as the type can be incorrect due to user interaction (e.g., entering text in a number field).
+ *
+ * @param {string | null} gender - The gender of the user.
+ * @param {string | number | null} age - The age of the user.
+ * @param {string | number | null} weight - The weight of the user.
+ * @param {string | number | null} height - The height of the user.
+ * @returns {boolean} - Returns true if all data is valid, false otherwise.
+ */
+
+export const validateBasicHealthData = (gender: string | null | undefined, age: string | number | null | undefined, weight: string | number | null | undefined, height: string | number | null | undefined) => {
+    let isDataValid =
+        !gender ||
+        age === null ||
+        isNaN(Number(age)) ||
+        Number(age) < 5 ||
+        Number(age) > 99 ||
+        weight === null ||
+        isNaN(Number(weight)) ||
+        Number(weight) < 15 ||
+        Number(weight) > 300 ||
+        height === null ||
+        isNaN(Number(height)) ||
+        Number(height) < 45 ||
+        Number(height) > 260
+
+    isDataValid = !isDataValid
+
+    return isDataValid
+}
+
+/**
+ * An interface for all of the user's data.
+ *
+ * @export
+ * @interface UserData
+ * @typedef {UserData}
+ * @extends {UserHealthData} Extends UserHealthData, which contains age, gender, height, and weight.
+ */
+export interface UserData extends UserHealthData {
+    /**
+     * The user's username
+     *
+     * @type {string}
+     */
+    username: string
 }
