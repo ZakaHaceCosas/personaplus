@@ -124,11 +124,11 @@ export default function calculateRunningOrWalkingPerformance(
             speed,
             time,
         };
-        response.context = "The context provides additional details about the subject's profile and exercise parameters.";
+        response.context = "Running performance is returned as the estimate amount of burnt calories during the session, being " + response.result + "cal in this case.";
     }
 
     if (provideExplanation) {
-        response.explanation = "The performance can be measured in burnt calories, which are obtained by calculating the time spent on the exercise, the subject's weight, and the Metabolic Equivalent of Task (MET).";
+        response.explanation = "TODO!!";
     }
 
     return response;
