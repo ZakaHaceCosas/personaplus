@@ -172,6 +172,16 @@ export default function Sessions() {
     const messageForSessionCompleted =
         sessionCompletedMessages[sessionCompletedMessagesIndex];
 
+    let totalTime: number;
+
+    if (currentObjective) {
+        totalTime =
+            currentObjective?.duration +
+            currentObjective?.rests * currentObjective?.restDuration;
+    } else {
+        totalTime = 0;
+    }
+
     const finish = async () => {
         if (currentObjective !== undefined && currentObjective !== null) {
             try {
@@ -186,7 +196,14 @@ export default function Sessions() {
                         ToastAndroid.LONG
                     );
                 }
-                router.replace("/");
+                if (currentObjective.exercise.toLowerCase() === "running") {
+                    router.replace(
+                        `/Results?speed=${currentObjective.extra.speed}&time=${totalTime}&id=${currentObjective.identifier}&exercise=${currentObjective.exercise}&repetitions=${currentObjective.repetitions}&lifts=${currentObjective.extra.lifts}&barWeight=${currentObjective.extra.barWeight}`
+                    ); // long af because the system is designed to store everything onto an objective, even it its not needed (being 0, null, or others... in that case)
+                    // should refactor? maybe. but huh, if it works, i aint complain about it for now.
+                } else {
+                    router.replace("/");
+                }
             } catch (e) {
                 termLog(
                     "SESSIONS.TSX - Error parsing objectives (OBJS) for update: " +
@@ -354,6 +371,7 @@ export default function Sessions() {
                                 ? currentObjectiveSustantivizedName +
                                   " " +
                                   currentObjective.duration +
+                                  " " +
                                   t("globals.minute") +
                                   "s"
                                 : currentObjectiveSustantivizedName +
