@@ -15,7 +15,7 @@ interface DivisionProps {
     preheader?: string; // Título
     header: string; // Texto grande
     subheader?: string; // El texto pequeño, de haberlo
-    children: ReactNode; // Los hijos (botones, básicamente)
+    children?: ReactNode; // Los hijos (botones, básicamente)
 }
 
 // Creamos la función
@@ -42,7 +42,10 @@ export default function Division({
                 display: "flex",
                 backgroundColor: colors.MAIN.DIVISION,
                 flexDirection: "row",
-                padding: 20,
+                paddingTop: 20,
+                paddingLeft: 20,
+                paddingRight: 20,
+                paddingBottom: 20,
                 width: "100%",
             }}
         >
@@ -79,18 +82,20 @@ export default function Division({
                                 {subheader}
                             </BetterText>
                         )}
-                        <GapView height={10} />
-                        <View
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                flex: 1,
-                                width: "100%",
-                                gap: 15,
-                            }}
-                        >
-                            {children}
-                        </View>
+                        {children && <GapView height={10} />}
+                        {children && (
+                            <View
+                                style={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    flex: 1,
+                                    width: "100%",
+                                    gap: 15,
+                                }}
+                            >
+                                {children}
+                            </View>
+                        )}
                     </View>
                 </View>
             </View>
