@@ -3,7 +3,7 @@
 
 import React from "react";
 import BottomNav from "./BottomNav";
-import { DimensionValue, Dimensions, ScrollView, View } from "react-native";
+import { Dimensions, ScrollView, View } from "react-native";
 import BetterText from "./BetterText";
 import { useTranslation } from "react-i18next";
 import colors from "./toolkit/design/colors";
