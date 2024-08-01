@@ -9,8 +9,8 @@
 <!--Se destacará el vídeo que a mi me parezca :v-->
 <!--[![YouTube Video Views](https://img.shields.io/youtube/views/cPSmVmsvkeY?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=H2_0d-hLiMw)-->
 [![GitHub last commit](https://img.shields.io/github/last-commit/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github&color=black)](https://github.com/ZakaHaceCosas/personaplus/commits/)
-![GitHub Repo size](https://img.shields.io/github/repo-size/ZakaHaceCosas/personaplus?style=for-the-badge&logo=visualstudiocode)
-![GitHub Repo stars](https://img.shields.io/github/stars/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github&color=orange)
+[![GitHub Repo size](https://img.shields.io/github/repo-size/ZakaHaceCosas/personaplus?style=for-the-badge&logo=visualstudiocode)](https://github.com/ZakaHaceCosas/personaplus/tree/main/app)
+[![GitHub Repo stars](https://img.shields.io/github/stars/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github&color=orange)](https://github.com/ZakaHaceCosas/personaplus/stargazers)
 [![GitHub followers](https://img.shields.io/github/followers/ZakaHaceCosas?style=for-the-badge&logo=github)](https://github.com/ZakaHaceCosas?tab=followers)
 ![Created at](https://img.shields.io/github/created-at/ZakaHaceCosas/personaplus?style=for-the-badge&color=white&logo=github)
 [![GitHub License](https://img.shields.io/github/license/zakahacecosas/personaplus?style=for-the-badge&color=%23d52e35)](https://github.com/ZakaHaceCosas/personaplus/blob/main/LICENSE.md)
@@ -93,8 +93,8 @@ PersonaPlus es una app en un estado muy temprano, muchas funciones aún están p
 
 Para que nadie pierda el rumbo, aunque voy tocando un poco de todo, este es el plan que intento seguir de momento (actualizaré esto cada que haga falta):
 
-1. [ ] ~~Terminar de implementar las sesiones básicas.~~ **Hecho.**
-2. [ ] Una vez hecho eso, algún ajuste más a la app y de ahí a lo importante.
+1. [X] ~~Terminar de implementar las sesiones básicas.~~ **Hecho.**
+2. [X] ~~Una vez hecho eso, algún ajuste más a la app y de ahí a lo importante.~~ **Hecho.**
 3. [ ] Retomar OpenHealth (un poco olvidado desde que lo creé) e implementar todos los cálculos necesarios para las actividades que PersonaPlus soporta por defecto.
 4. [ ] Implementar - de alguna manera - obtención de datos básicos sobre cada sesión, su guardado, y la generación de estadísticas en base a los cálculos que OpenHealth pueda hacer con esos datos.
 5. [ ] A partir de ahí, implementar también el guardado de las sesiones en sí - o sea, que la app registre cada día si has hecho algo o no.
