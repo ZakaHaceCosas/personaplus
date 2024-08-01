@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     flexbtns: {
         display: "flex",
         flexDirection: "row",
-        width: "100%",
+        width: Dimensions.get("screen").width,
     },
 });
 
