@@ -106,7 +106,7 @@ export default function calculateMetabolicEquivalentOfTask(
             gender,
             intensity
         };
-        response.context = "The context provides additional details about the subject's profile and exercise parameters.";
+        response.context = "The MET is a value that helps measure the intensity of a task. For this context, MET value is " + mets + " and the intensity would be " + intensity + ".";
     }
 
     if (provideExplanation) {

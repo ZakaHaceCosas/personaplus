@@ -112,11 +112,11 @@ export default function calculateBodyFatPercentage(age: number, gender: "male" |
             weight,
             height,
         };
-        response.context = context;
+        response.context = "Based on the Body Fat Percentage calculations, in this case we're talking of an " + context + " BFP.";
     }
 
     if (provideExplanation) {
-        response.explanation = "not done.";
+        response.explanation = "Body Fat Percentage, usually calculated as a percentage of body weight. There are several methods for measuring it, and based on the percentage, it's possible to estimate whether the subject has normal weight, overweight, or underweight.";
     }
 
     return response;
