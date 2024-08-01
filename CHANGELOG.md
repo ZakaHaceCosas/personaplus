@@ -45,6 +45,7 @@ TEMPLATE
 - Simplified CreateObjective page (revomed the "Nevermind" button, use "< Go back" instead).
 - Instead of a "change to English / Spanish" button on WelcomeScreen, now PersonaPlus auto-detects your language (if you don't use a supported lang defaults to English just like always).
 - Changed some in-app texts to be shorter.
+- (WORK IN PROGRESS) Add a Results page after a session.
 
 ### Dev updates - Latest
 
@@ -55,11 +56,16 @@ TEMPLATE
 - Removed a useless export (`addLogToGlobal`) from termLog.
 - Added daily logging for objectives. It's toolkified onto the objectives toolkit. (Unfinished, work in progress).
 - Added a function to obtain today's date in the `DD/MM/YYYY` format (`toolkit/today.ts`, `getCurrentDate()`).
+- Now Divisions' children are optional.
+- Added support for `undefined` to `validateBasicData`, for less strict validation.
+- Added `UserData` and `UserHealthData` interfaces to toolkit `userData.ts`, alongside `validateBasicHealthData` function.
+- Removed some dependencies that weren't needed.
 
 ### Trivial updates - Latest
 
 - Removed the useless easter egg from WelcomeScreen (which I never got the chance to see, by the way). Also removed the "time to push up" question.
 - Fixed typos.
+- Removed the `isDevelopmentBuild()` comprobation in Dev Interface. It didn't work anyway.
 
 ## 0.0.1-R5-b23
 
