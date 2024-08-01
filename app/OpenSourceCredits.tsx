@@ -87,16 +87,16 @@ const libraries: OpenSourceLibrary[] = [
 
 const styles = StyleSheet.create({
     containerview: {
-        width: "100vw" as DimensionValue,
-        height: "100vh" as DimensionValue,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
     },
     mainview: {
         padding: 20,
         paddingTop: 50,
         display: "flex",
         flexDirection: "column",
-        width: "100vw" as DimensionValue,
-        height: "100vh" as DimensionValue,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
         overflow: "scroll",
         // backgroundColor: "#FFF",
         // i dont know why, but i feel a credits section in an app should have its background white (edit: nevermind)
