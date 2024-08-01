@@ -401,10 +401,9 @@ export default function Profile() {
                             status="REGULAR"
                             iconName={null}
                             header={t("page_profile.updates.header")}
-                            subheader={t(
-                                "page_profile.updates.subheader",
-                                { version: "0.0.1-R5-b23" } // placed it here so you only update once for all langs
-                            )}
+                            subheader={t("page_profile.updates.subheader", {
+                                version: version,
+                            })}
                         >
                             <Button
                                 style="ACE"
