@@ -152,17 +152,17 @@ Utiliza el inglés, crea nombres descriptivos y comprensibles, que se entienda f
 
 ```tsx
 // Muy mal.
-const w = "100vw"
+const w = Dimensions.get("screen").width / 2
 const t = "Bold"
 const a = "center"
 
 // Mal.
-const widt = "100vh"
+const widt = Dimensions.get("screen").width / 2
 const text = "Bold"
 const algn = "center"
 
 // Bien. Recomendable.
-const width = "100vh"
+const width = Dimensions.get("screen").width / 2
 const text = "Bold"
 const align = "center"
 
@@ -206,20 +206,6 @@ export default function miComponente({ param, param2 }: miComponenteProps) {
 ```
 
 #### 6. ELIMINA LOS *ERRORES TONTOS*
-
-##### `width`y `height` dando guerra
-
-Por alguna razón, el tipeado de TS da error cuando, por ejemplo, tratas de asignar "100vw" a `width` vía StyleSheet.
-
-```tsx
-width: "100vw" // Error: Type '"100vw"' is not assignable to type 'DimensionValue | undefined'.
-```
-
-Utiliza `DimensionValue`
-
-```tsx
-width: "100vw" as Native.DimensionValue // Perfecto.
-```
 
 ##### `Unable to resolve "./elements/Polygon" from
 

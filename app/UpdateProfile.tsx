@@ -30,16 +30,16 @@ interface UserData {
 // Creamos los estilos
 const styles = StyleSheet.create({
     containerview: {
-        width: "100vw" as DimensionValue,
-        height: "100vh" as DimensionValue,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
     },
     mainview: {
         padding: 20,
         paddingTop: 50,
         display: "flex",
         flexDirection: "column",
-        width: "100vw" as DimensionValue,
-        height: "100vh" as DimensionValue,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
         overflow: "scroll",
     },
     flexbtns: {

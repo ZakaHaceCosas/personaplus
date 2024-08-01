@@ -58,8 +58,8 @@ export default function Loading({
         return (
             <View
                 style={{
-                    width: "100vw" as DimensionValue,
-                    height: "100vh" as DimensionValue,
+                    width: Dimensions.get("screen").width,
+                    height: Dimensions.get("screen").height,
                     flex: 1,
                     display: "flex",
                     flexDirection: "column",
