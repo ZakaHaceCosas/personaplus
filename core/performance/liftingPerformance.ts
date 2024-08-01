@@ -74,7 +74,7 @@ export default function calculateLiftingPerformance(
     provideExplanation?: boolean
 ): LIFTING_Response {
     // Get the Metabolic Equivalent of Task for this
-    const calculateMET = (w: number, onerm: number, p: number, a: number, g: "male" | "female", r: number, t: number): number => {
+    const calculateMET = (w: number, onerm: number, a: number, g: "male" | "female", r: number, t: number): number => {
         const GENDER_COEFFICIENT = g === "male" ? 1 : 0.85;
         const AGE_ADJUSTMENT = 1 / (1 + 0.01 * (a - 22));
         const BASE_MET = 5.0;
@@ -87,9 +87,7 @@ export default function calculateLiftingPerformance(
 
     const oneRepMax = OneRepMaxObject.result;
 
-    // eslint-disable-next-line
-    // @ts-ignore
-    const metabolicEquivOfTask = calculateMET(weightLifted, oneRepMax, OneRepMaxObject.percentage, age, gender, repetitions, time);
+    const metabolicEquivOfTask = calculateMET(weightLifted, oneRepMax, age, gender, repetitions, time);
 
     const caloriesBurntPerKgPerHour = 0.075 * 4.3;
 
@@ -111,11 +109,11 @@ export default function calculateLiftingPerformance(
             scales,
             repetitions
         };
-        response.context = "The context provides additional details about the subject's profile and exercise parameters."; // I DONT REMEMBER WRITING IT LIKE THIS will rewrite asap
+        response.context = "The performance of a weight lifting session is measured in burnt calories, being " + caloriesBurnt + " for this session.";
     }
 
     if (provideExplanation) {
-        response.explanation = "The performance can be measured in burnt calories, which are obtained by calculating the time spent on the exercise, the subject's weight, and the Metabolic Equivalent of Task (MET).";
+        response.explanation = "The performance of a weight lifting session can be measured in burnt calories, which are obtained with a series of generic calculations using age, weight, height, gender of the subject, and weight lifted, time duration of the session, and the One Repetition Max.";
     }
 
     return response;

@@ -1,4 +1,11 @@
-# 0.0.1
+# Changelog
+
+## 0.0.2
+
+- Removed `docs/`. It was planned to be given a usage, but that will be postposed.
+- Fix `provideContext` and `provideExplanation` texts where required.
+
+## 0.0.1
 
 - Initial commits
   - Created functions for:
