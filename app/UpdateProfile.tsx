@@ -5,6 +5,7 @@ import {
     TextInput,
     View,
     ScrollView,
+    Dimensions,
 } from "react-native";
 import { router } from "expo-router";
 import BetterText from "@/src/BetterText";

@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    DimensionValue,
+    Dimensions,
     View,
     ScrollView,
     StyleSheet,

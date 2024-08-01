@@ -3,8 +3,8 @@ import {
     StyleSheet,
     View,
     ScrollView,
-    DimensionValue,
     Linking,
+    Dimensions,
 } from "react-native";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
