@@ -208,6 +208,14 @@
         "title": "Update your profile",
         "subtitle": "Life changes and so do you."
     },
+    "page_session_results": {
+        "results": {
+            "burnt_calories": "BURNT CALORIES",
+            "header_more": "MORE ABOUT YOUR PERFORMANCE",
+            "body_running": "You were running at about {{speed}} for {{time}} minutes`"
+        },
+        "well_done_bud": "Well done, bud. The results of this session will be saved, togheter with your results from other sessions."
+    },
     "about_page": {
         "project": {
             "header": "What is PersonaPlus?",
@@ -340,7 +348,8 @@
         "got_it": "Got it",
         "save": "Save it!",
         "go_ahead": "Go ahead",
-        "gyap!": "Give yourself a plus!"
+        "gyap!": "Give yourself a plus!",
+        "session_done": "Session completed!"
     },
     "notifications": {
         "daily_active_objectives_pending": "PersonaPlus objectives to do!"
