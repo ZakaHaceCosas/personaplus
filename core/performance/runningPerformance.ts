@@ -124,11 +124,11 @@ export default function calculateRunningOrWalkingPerformance(
             speed,
             time,
         };
-        response.context = "Running performance is returned as the estimate amount of burnt calories during the session, being " + response.result + "cal in this case.";
+        response.context = "The performance of a weight lifting session is measured in burnt calories, being an estimated " + caloriesBurnt + "cal for this session.";
     }
 
     if (provideExplanation) {
-        response.explanation = "TODO!!";
+        response.explanation = "The 'performance' of a running (or walking) session can be measured in burnt calories, which are obtained with a series of generic calculations using age, weight, height, gender of the subject, and other parameters like the estimate speed, time duration of the session, and the MET.";
     }
 
     return response;
