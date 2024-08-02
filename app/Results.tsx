@@ -37,16 +37,16 @@ const styles = StyleSheet.create({
         height: Dimensions.get("screen").height,
         overflow: "scroll",
     },
-    flexbtns: {
+    thirdview: {
         display: "flex",
-        flexDirection: "row",
-        width: Dimensions.get("screen").width,
+        flexDirection: "column",
     },
 });
 
 export default function Results() {
     // Params
     const params = useGlobalSearchParams();
+    // termLog(params, "log");
     // Global params
     const sessionElapsedTime: number = Number(params.time);
     const objectiveExercise: string = params.exercise as string;
@@ -60,6 +60,9 @@ export default function Results() {
 
     const [userData, setUserData] = useState<UserHealthData | null>(null);
     const [result, setResult] = useState<{ result: number } | null>(null);
+
+    const [randomMessage, setRandomMessage] = useState<string | null>(null);
+
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -155,7 +158,8 @@ export default function Results() {
 
         try {
             const response = handleExerciseCalculation();
-            if (response) {
+            // termLog(response, "log");
+            if (response !== undefined) {
                 setResult(response);
                 termLog(
                     "(RESULTS.TSX) Result of session passed to state value",
@@ -189,12 +193,16 @@ export default function Results() {
         repetitions,
     ]);
 
-    const allDoneMessages: string[] = t("cool_messages.session_done", {
-        returnObjects: true,
-    });
+    useEffect(() => {
+        const allDoneMessages: string[] = t("cool_messages.session_done", {
+            returnObjects: true,
+        });
 
-    const randomMessageForAllDone =
-        allDoneMessages[Math.floor(Math.random() * allDoneMessages.length)];
+        const randomMessageForAllDone =
+            allDoneMessages[Math.floor(Math.random() * allDoneMessages.length)];
+
+        setRandomMessage(randomMessageForAllDone);
+    }, [t]);
 
     const speedOptions = [
         ["Brisk Walk", "1.6 - 3.2 km/h"],
@@ -213,43 +221,47 @@ export default function Results() {
 
     return (
         <View style={styles.containerview}>
-            <ScrollView style={styles.mainview}>
-                <BetterText fontSize={40} fontWeight="SemiBold">
-                    ¡Sesión completada!
-                </BetterText>
-                <BetterText fontSize={20} fontWeight="SemiBold">
-                    {randomMessageForAllDone}
-                </BetterText>
-                <GapView height={10} />
-                {result?.result && (
-                    <Section kind="HowYouAreDoing">
-                        <Division
-                            preheader="CALORÍAS QUEMADAS"
-                            header={parseFloat(
-                                result?.result.toFixed(2)
-                            ).toString()}
-                        />
-                        <Division
-                            preheader="MÁS SOBRE TU RENDIMIENTO"
-                            header={`Corriste a unos ${speedOptions[objectiveRunning_Speed][1]} por ${sessionElapsedTime} minutos`}
-                        ></Division>
-                    </Section>
-                )}
-                <GapView height={10} />
-                <BetterText fontSize={20} fontWeight="Regular">
-                    Bien hecho, colega. Los resultados de esta sesión se
-                    guardarán, y junto a tus resultados en demás sesiones.
-                </BetterText>
-                <GapView height={10} />
-                <View style={styles.flexbtns}>
-                    <Button
-                        action={() => {
-                            router.replace("/");
-                        }}
-                        style="ACE"
-                        buttonText="Great!"
-                    />
+            <ScrollView
+                style={styles.mainview}
+                contentContainerStyle={{
+                    justifyContent: "space-between",
+                }}
+            >
+                <View style={styles.thirdview}>
+                    <BetterText fontSize={40} fontWeight="SemiBold">
+                        ¡Sesión completada!
+                    </BetterText>
+                    <BetterText fontSize={20} fontWeight="SemiBold">
+                        {randomMessage !== null ? randomMessage : ""}
+                    </BetterText>
+                    <GapView height={10} />
+                    {result?.result && (
+                        <Section kind="HowYouAreDoing">
+                            <Division
+                                preheader="CALORÍAS QUEMADAS"
+                                header={parseFloat(
+                                    result?.result.toFixed(2)
+                                ).toString()}
+                            />
+                            <Division
+                                preheader="MÁS SOBRE TU RENDIMIENTO"
+                                header={`Corriste a unos ${speedOptions[objectiveRunning_Speed]?.[1] || "desconocido"} por ${sessionElapsedTime} minutos`}
+                            />
+                        </Section>
+                    )}
+                    <GapView height={10} />
+                    <BetterText fontSize={20} fontWeight="Regular">
+                        Bien hecho, colega. Los resultados de esta sesión se
+                        guardarán, y junto a tus resultados en demás sesiones.
+                    </BetterText>
                 </View>
+                <Button
+                    action={() => {
+                        router.replace("/");
+                    }}
+                    style="ACE"
+                    buttonText="Great!"
+                />
             </ScrollView>
         </View>
     );
