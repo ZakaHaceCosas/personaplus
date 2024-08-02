@@ -198,7 +198,7 @@ export default function Sessions() {
                 }
                 if (currentObjective.exercise.toLowerCase() === "running") {
                     router.replace(
-                        `/Results?speed=${currentObjective.extra.speed}&time=${totalTime}&id=${currentObjective.identifier}&exercise=${currentObjective.exercise}&repetitions=${currentObjective.repetitions}&lifts=${currentObjective.extra.lifts}&barWeight=${currentObjective.extra.barWeight}`
+                        `/Results?speed=${currentObjective.extra.speed}&time=${totalTime}&id=${currentObjective.identifier}&exercise=${currentObjective.exercise}&repetitions=${currentObjective.repetitions}&lifts=${currentObjective.extra.lifts}&barWeight=${currentObjective.extra.barWeight}&liftWeight=${currentObjective.extra.liftWeight}`
                     ); // long af because the system is designed to store everything onto an objective, even it its not needed (being 0, null, or others... in that case)
                     // should refactor? maybe. but huh, if it works, i aint complain about it for now.
                 } else {
@@ -260,7 +260,8 @@ export default function Sessions() {
                 restDuration * 60 * 1000 // Convert seconds to milliseconds
             );
         } else {
-            termLog("Session working... Elapsed: " + elapsedTime, "log"); // Just do a console log if it's not time to rest
+            // termLog("Session working... Elapsed: " + elapsedTime, "log"); // Just do a console log if it's not time to rest
+            // Comented (aka removed) for performance. Even the terminal lags a bit.
         }
     };
 
