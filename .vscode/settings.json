@@ -9,7 +9,11 @@
         "**/.DS_Store": true,
         "**/android": true
     },
-    "scm.experimental.showHistoryGraph": false,
+    "terminal.integrated.suggest.enabled": true,
+    "terminal.integrated.suggest.builtinCompletions": {
+        "pwshCode": false,
+        "pwshGit": true
+    },
     "editor.fontSize": 15,
     "editor.fontVariations": true,
     "editor.wordWrap": "on",
@@ -69,5 +73,18 @@
         "editor.autoIndent": "advanced",
         "diffEditor.ignoreTrimWhitespace": false,
         "editor.formatOnSave": false
+    },
+    "workbench.editor.customLabels.patterns": {
+        "**/toolkit/**": "Toolkit, ${filename}.${extname}",
+        "**/toolkit/design/**": "Design toolkit, ${filename}.${extname}",
+        "**/toolkit/debug/**": "Debug toolkit, ${filename}.${extname}",
+        "**/translations/**": "Localization, ${filename}.${extname}",
+        "**/src/hooks/**": "Hooks, ${filename}.${extname}",
+        "**/core/**": "Core library, ${filename}.${extname} @ ${dirname}",
+        "**/assets/**": "Assets, ${filename}.${extname}",
+        "**/fonts/**": "Fonts, ${filename}.${extname}",
+        "**/app/**": "App pages, ${filename}.${extname}",
+        "**/src/types/**": "Types, ${filename}.${extname}",
+        "**/src/**": "Source components, ${filename}.${extname}"
     }
 }
