@@ -229,7 +229,7 @@ export default function Results() {
             >
                 <View style={styles.thirdview}>
                     <BetterText fontSize={40} fontWeight="SemiBold">
-                        ¡Sesión completada!
+                        {t("globals.session_done")}
                     </BetterText>
                     <BetterText fontSize={20} fontWeight="SemiBold">
                         {randomMessage !== null ? randomMessage : ""}
@@ -238,29 +238,43 @@ export default function Results() {
                     {result?.result && (
                         <Section kind="HowYouAreDoing">
                             <Division
-                                preheader="CALORÍAS QUEMADAS"
+                                preheader={t(
+                                    "page_session_results.results.burnt_calories"
+                                )}
                                 header={parseFloat(
                                     result?.result.toFixed(2)
                                 ).toString()}
                             />
                             <Division
-                                preheader="MÁS SOBRE TU RENDIMIENTO"
-                                header={`Corriste a unos ${speedOptions[objectiveRunning_Speed]?.[1] || "desconocido"} por ${sessionElapsedTime} minutos`}
+                                preheader={t(
+                                    "page_session_results.results.header_more"
+                                )}
+                                header={t(
+                                    "page_session_results.results.body_" +
+                                        objectiveExercise.toLowerCase(),
+                                    {
+                                        speed:
+                                            speedOptions[
+                                                objectiveRunning_Speed
+                                            ]?.[1] || "desconocido",
+                                        time: sessionElapsedTime,
+                                    }
+                                )}
                             />
                         </Section>
                     )}
                     <GapView height={10} />
                     <BetterText fontSize={20} fontWeight="Regular">
-                        Bien hecho, colega. Los resultados de esta sesión se
-                        guardarán, y junto a tus resultados en demás sesiones.
+                        {t("page_session_results.well_done_bud")}
                     </BetterText>
                 </View>
+                <GapView height={10} />
                 <Button
                     action={() => {
                         router.replace("/");
                     }}
                     style="ACE"
-                    buttonText="Great!"
+                    buttonText={t("globals.success")}
                 />
             </ScrollView>
         </View>
