@@ -109,11 +109,11 @@ export default function calculateLiftingPerformance(
             scales,
             repetitions
         };
-        response.context = "The performance of a weight lifting session is measured in burnt calories, being " + caloriesBurnt + " for this session.";
+        response.context = "The performance of a weight lifting session is measured in burnt calories, being an estimated " + caloriesBurnt + "cal for this session.";
     }
 
     if (provideExplanation) {
-        response.explanation = "The performance of a weight lifting session can be measured in burnt calories, which are obtained with a series of generic calculations using age, weight, height, gender of the subject, and weight lifted, time duration of the session, and the One Repetition Max.";
+        response.explanation = "The 'performance' of a weight lifting session can be measured in burnt calories, which are obtained with a series of generic calculations using age, weight, height, gender of the subject, and other parameters weight lifted, time duration of the session, and the One Repetition Max.";
     }
 
     return response;

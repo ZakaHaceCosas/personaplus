@@ -67,7 +67,7 @@ export default function calculateIdealBodyWeight(age: number, gender: "male" | "
     const fifthstep = fourthstep / 2.20462
     const ibw: number = fifthstep
 
-    const context: string | undefined = "this would be the ideal body weight for the given data, based on BMI. no further context can be provided."
+    const context: string | undefined = "The ideal body weight for the given profile, based on the BMI, would be of " + ibw + "kg."
 
     const response: IBWResponse = {
         result: ibw,
@@ -84,7 +84,7 @@ export default function calculateIdealBodyWeight(age: number, gender: "male" | "
     }
 
     if (provideExplanation) {
-        response.explanation = "not done.";
+        response.explanation = "The Ideal Body Weight (IDW) is an estimate of what the ideal weight would be for a person. There are several ways of calculating it, e.g. using the Body Mass Index of the subject, his basic data like age, gender, weight and height, and a series of calculations.";
     }
 
     return response;
