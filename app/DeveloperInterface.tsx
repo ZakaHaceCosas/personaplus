@@ -1,6 +1,8 @@
 // DeveloperInterface.tsx
 // Página que muestra ciertos logs de la consola para ayudar al desarrollador
 
+// BROKEN (creo)
+
 import React, { useEffect, useState } from "react";
 import {
     Alert,
@@ -80,9 +82,7 @@ const styles = StyleSheet.create({
         paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        width: Dimensions.get("screen").width,
-        height: Dimensions.get("screen").height,
-        overflow: "scroll",
+        flexGrow: 1,
     },
 });
 
@@ -367,7 +367,7 @@ export default function DeveloperInterface() {
                         textAlign="normal"
                         fontSize={15}
                     >
-                        {JSON.stringify(objectives)}
+                        {String(objectives)}
                     </BetterText>
                 </View>
                 <GapView height={15} />
@@ -381,7 +381,7 @@ export default function DeveloperInterface() {
                         textAlign="normal"
                         fontSize={15}
                     >
-                        {JSON.stringify(objectivesDailyLog)}
+                        {String(objectivesDailyLog)}
                     </BetterText>
                 </View>
                 <GapView height={20} />
