@@ -227,7 +227,7 @@ export default function Results() {
     } else if (objectiveExercise.toLowerCase() === "push up") {
         resultsInfoText = t("page_session_results.results.body_pushups", {
             amount: objectivePushups_Pushups || "??",
-            weight: multiobjective_hands || "??",
+            hands: multiobjective_hands || "??",
         });
     } else if (objectiveExercise.toLowerCase() === "lifting") {
         resultsInfoText = t("page_session_results.results.body_lifting", {
