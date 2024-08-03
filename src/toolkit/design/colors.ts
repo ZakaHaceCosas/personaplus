@@ -9,6 +9,12 @@
 
 type Color = `#${string}`;
 
+/**
+ * Colors for the bottom navigation.
+ *
+ * @interface FooterColors
+ * @typedef {FooterColors}
+ */
 interface FooterColors {
     /** Background for the bottom navigation */
     BACKGROUND: Color;
@@ -18,6 +24,12 @@ interface FooterColors {
     FOOTERSEL: Color;
 }
 
+/**
+ * Bland, dimmed colors.
+ *
+ * @interface BlandColors
+ * @typedef {BlandColors}
+ */
 interface BlandColors {
     /** Input background */
     BACKGROUND: Color;
@@ -27,6 +39,12 @@ interface BlandColors {
     STRK: Color;
 }
 
+/**
+ * Core, brand colors.
+ *
+ * @interface MainColors
+ * @typedef {MainColors}
+ */
 interface MainColors {
     /** The very background of the app */
     APP: Color;
@@ -42,6 +60,12 @@ interface MainColors {
     BLANDITEM: BlandColors;
 }
 
+/**
+ * Colors for labels and texts that aren't white.
+ *
+ * @interface LabelColors
+ * @typedef {LabelColors}
+ */
 interface LabelColors {
     /** Used for the title of sections */
     SHL: Color;
@@ -51,6 +75,12 @@ interface LabelColors {
     TBLH: Color;
 }
 
+/**
+ * GOD type core colors.
+ *
+ * @interface GodColors
+ * @typedef {GodColors}
+ */
 interface GodColors {
     /** Main color */
     GOD: Color;
@@ -58,6 +88,12 @@ interface GodColors {
     GODSTRK: Color;
 }
 
+/**
+ * ACE type core colors.
+ *
+ * @interface AceColors
+ * @typedef {AceColors}
+ */
 interface AceColors {
     /** Main color */
     ACE: Color;
@@ -67,6 +103,12 @@ interface AceColors {
     ACESCROLL: Color;
 }
 
+/**
+ * WOR type core colors.
+ *
+ * @interface WorColors
+ * @typedef {WorColors}
+ */
 interface WorColors {
     /** Main color */
     WOR: Color;
@@ -74,6 +116,12 @@ interface WorColors {
     WORSTRK: Color;
 }
 
+/**
+ * HMM type core colors.
+ *
+ * @interface HmmColors
+ * @typedef {HmmColors}
+ */
 interface HmmColors {
     /** Main color */
     HMM: Color;
@@ -81,6 +129,12 @@ interface HmmColors {
     HMMSTRK: Color;
 }
 
+/**
+ * Primary colors.
+ *
+ * @interface PrimaryColors
+ * @typedef {PrimaryColors}
+ */
 interface PrimaryColors {
     /** Accent color for branding, also used for positive elements and as an accent in some places */
     GOD: GodColors;
@@ -92,6 +146,12 @@ interface PrimaryColors {
     HMM: HmmColors;
 }
 
+/**
+ * Basic black and white.
+ *
+ * @interface BasicColors
+ * @typedef {BasicColors}
+ */
 interface BasicColors {
     /** Pure black */
     BLACK: "#000000",
@@ -99,6 +159,12 @@ interface BasicColors {
     WHITE: "#FFFFFF"
 }
 
+/**
+ * All the colors used by PersonaPlus.
+ *
+ * @interface Colors
+ * @typedef {Colors}
+ */
 interface Colors {
     /** Main color palette */
     MAIN: MainColors;
@@ -109,6 +175,11 @@ interface Colors {
     /** Black & white. Use them as a variable, as the app plans to add theming. */    BASIC: BasicColors;
 }
 
+/**
+ * All the colors used by PersonaPlus, in a HEX (`#123456`) format.
+ *
+ * @type {Colors}
+ */
 const colors: Colors = {
     /** Black & white. Use them as a variable, as the app plans to add theming. */
     BASIC: {
