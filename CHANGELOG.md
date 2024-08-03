@@ -60,12 +60,17 @@ TEMPLATE
 - Added support for `undefined` to `validateBasicData`, for less strict validation.
 - Added `UserData` and `UserHealthData` interfaces to toolkit `userData.ts`, alongside `validateBasicHealthData` function.
 - Removed some dependencies that weren't needed.
+- Made changes to VSCode config (`.vscode/settings`).
 
 ### Trivial updates - Latest
 
 - Removed the useless easter egg from WelcomeScreen (which I never got the chance to see, by the way). Also removed the "time to push up" question.
 - Fixed typos.
 - Removed the `isDevelopmentBuild()` comprobation in Dev Interface. It didn't work anyway.
+
+### Known errors
+
+- Dev Interface refuses to render, due to "an object not being a valid child" or something.
 
 ## 0.0.1-R5-b23
 
