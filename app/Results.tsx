@@ -33,9 +33,7 @@ const styles = StyleSheet.create({
         paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        width: Dimensions.get("screen").width,
-        height: Dimensions.get("screen").height,
-        overflow: "scroll",
+        flexGrow: 1,
     },
     thirdview: {
         display: "flex",
@@ -57,7 +55,6 @@ export default function Results() {
     const objectiveRunning_Speed: number = Number(params.speed);
     const objectiveLifting_barWeight: number = Number(params.barWeight);
     const objectiveLifting_liftWeight: number = Number(params.liftWeight);
-    const objectiveLifting_scales: number = Number(params.scales);
     const objectivePushups_Pushups: number = Number(params.pushups);
 
     const [userData, setUserData] = useState<UserHealthData | null>(null);
@@ -129,7 +126,7 @@ export default function Results() {
                             sessionElapsedTime,
                             objectiveLifting_barWeight,
                             objectiveLifting_liftWeight,
-                            objectiveLifting_scales,
+                            multiobjective_hands,
                             repetitions,
                             true,
                             false
@@ -189,7 +186,6 @@ export default function Results() {
         objectiveIdentifier,
         objectiveLifting_barWeight,
         objectiveLifting_liftWeight,
-        objectiveLifting_scales,
         repetitions,
         multiobjective_hands,
         objectivePushups_Pushups,
@@ -221,6 +217,29 @@ export default function Results() {
         ["Maximum Speed", "more than 16.1 km/h"],
     ];
 
+    let resultsInfoText: string;
+
+    if (objectiveExercise.toLowerCase() === "running") {
+        resultsInfoText = t("page_session_results.results.body_running", {
+            speed: speedOptions[objectiveRunning_Speed]?.[1] || "??",
+            time: sessionElapsedTime || "??",
+        });
+    } else if (objectiveExercise.toLowerCase() === "push up") {
+        resultsInfoText = t("page_session_results.results.body_pushups", {
+            amount: objectivePushups_Pushups || "??",
+            weight: multiobjective_hands || "??",
+        });
+    } else if (objectiveExercise.toLowerCase() === "lifting") {
+        resultsInfoText = t("page_session_results.results.body_lifting", {
+            amount: objectivePushups_Pushups || "??", // CONFUSING, I KNOW, BUT I THINK IT'S LIKE THIS
+            weight:
+                objectiveLifting_barWeight + objectiveLifting_liftWeight * 2 ||
+                "??",
+        });
+    } else {
+        resultsInfoText = "Error."; // lol
+    }
+
     return (
         <View style={styles.containerview}>
             <ScrollView
@@ -251,17 +270,7 @@ export default function Results() {
                                 preheader={t(
                                     "page_session_results.results.header_more"
                                 )}
-                                header={t(
-                                    "page_session_results.results.body_" +
-                                        objectiveExercise.toLowerCase(),
-                                    {
-                                        speed:
-                                            speedOptions[
-                                                objectiveRunning_Speed
-                                            ]?.[1] || "desconocido",
-                                        time: sessionElapsedTime,
-                                    }
-                                )}
+                                header={resultsInfoText}
                             />
                         </Section>
                     )}
