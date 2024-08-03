@@ -198,7 +198,7 @@ export default function Sessions() {
                 }
                 if (currentObjective.exercise.toLowerCase() === "running") {
                     router.replace(
-                        `/Results?speed=${currentObjective.extra.speed}&time=${totalTime}&id=${currentObjective.identifier}&exercise=${currentObjective.exercise}&repetitions=${currentObjective.repetitions}&lifts=${currentObjective.extra.lifts}&barWeight=${currentObjective.extra.barWeight}&liftWeight=${currentObjective.extra.liftWeight}`
+                        `/Results?speed=${currentObjective.extra.speed}&time=${totalTime}&id=${currentObjective.identifier}&exercise=${currentObjective.exercise}&repetitions=${currentObjective.repetitions}&lifts=${currentObjective.extra.lifts}&barWeight=${currentObjective.extra.barWeight}&liftWeight=${currentObjective.extra.liftWeight}&pushups=${currentObjective.extra.amount}&hands=${currentObjective.extra.hands}`
                     ); // long af because the system is designed to store everything onto an objective, even it its not needed (being 0, null, or others... in that case)
                     // should refactor? maybe. but huh, if it works, i aint complain about it for now.
                 } else {
