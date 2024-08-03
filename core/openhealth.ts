@@ -15,10 +15,8 @@ import * as oneRepetitionMax from './physicalHealth/oneRepMax';
 // PERFORMANCE
 
 import * as calculateRunningOrWalkingPerformance from './performance/runningPerformance';
-import * as calculateLiftingPerformance from './performance/liftingPerformance'
-
-// OPENHEALTH DATA
-// import getSource from './docs';
+import * as calculateLiftingPerformance from './performance/liftingPerformance';
+import * as calculatePushingUpPerformance from "./performance/pushingupPerformance";
 
 // DEFINITION
 
@@ -70,6 +68,11 @@ const OpenHealth = {
             calculate: calculateLiftingPerformance.default,
             getSource: calculateLiftingPerformance.getSource,
             getLastUpdate: calculateLiftingPerformance.getLastUpdate
+        },
+        PushingUpPerformance: {
+            calculate: calculatePushingUpPerformance.default,
+            getSource: calculatePushingUpPerformance.getSource,
+            getLastUpdate: calculatePushingUpPerformance.getLastUpdate
         }
     },
     openinfo: {
