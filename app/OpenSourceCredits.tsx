@@ -92,12 +92,10 @@ const styles = StyleSheet.create({
     },
     mainview: {
         padding: 20,
-        paddingTop: 50,
+        paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        width: Dimensions.get("screen").width,
-        height: Dimensions.get("screen").height,
-        overflow: "scroll",
+        flexGrow: 1,
         // backgroundColor: "#FFF",
         // i dont know why, but i feel a credits section in an app should have its background white (edit: nevermind)
     },
