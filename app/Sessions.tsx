@@ -182,7 +182,7 @@ export default function Sessions() {
         totalTime = 0;
     }
 
-    const finish = async () => {
+    const finishSession = async (skipResults: boolean) => {
         if (currentObjective !== undefined && currentObjective !== null) {
             try {
                 await markObjectiveAsDone(
@@ -196,11 +196,17 @@ export default function Sessions() {
                         ToastAndroid.LONG
                     );
                 }
-                if (currentObjective.exercise.toLowerCase() === "running") {
+                if (
+                    skipResults === false ||
+                    skipResults !== undefined ||
+                    skipResults !== null ||
+                    !skipResults
+                ) {
                     router.replace(
                         `/Results?speed=${currentObjective.extra.speed}&time=${totalTime}&id=${currentObjective.identifier}&exercise=${currentObjective.exercise}&repetitions=${currentObjective.repetitions}&lifts=${currentObjective.extra.lifts}&barWeight=${currentObjective.extra.barWeight}&liftWeight=${currentObjective.extra.liftWeight}&pushups=${currentObjective.extra.amount}&hands=${currentObjective.extra.hands}`
-                    ); // long af because the system is designed to store everything onto an objective, even it its not needed (being 0, null, or others... in that case)
-                    // should refactor? maybe. but huh, if it works, i aint complain about it for now.
+                    );
+                    // URL is long af because the system is designed to store everything onto an objective, even it its not needed (being 0, null, or others... in those cases)
+                    // should I refactor the system? probably. but huh, if it works, i aint complain about it for now.
                 } else {
                     router.replace("/");
                 }
@@ -219,7 +225,7 @@ export default function Sessions() {
             setLaps(prev => (prev > 0 ? prev - 1 : 0));
             setTimerKey(prevKey => prevKey + 1);
         } else {
-            finish();
+            finishSession(false);
         }
     };
 
@@ -500,7 +506,11 @@ export default function Sessions() {
                         />
                     </Button>
                     <GapView width={10} />
-                    <Button style="GOD" action={finish} layout="box">
+                    <Button
+                        style="GOD"
+                        action={() => finishSession(true)}
+                        layout="box"
+                    >
                         <Ionicons
                             name="check"
                             size={16}
