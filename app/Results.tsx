@@ -191,6 +191,8 @@ export default function Results() {
         objectiveLifting_liftWeight,
         objectiveLifting_scales,
         repetitions,
+        multiobjective_hands,
+        objectivePushups_Pushups,
     ]);
 
     useEffect(() => {
