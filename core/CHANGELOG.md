@@ -4,6 +4,7 @@
 
 - Removed `docs/`. It was planned to be given a usage, but that will be postposed.
 - Fix `provideContext` and `provideExplanation` texts where required.
+- Implement push ups performance calculation.
 
 ## 0.0.1
 
