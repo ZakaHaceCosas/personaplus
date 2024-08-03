@@ -212,7 +212,9 @@
         "results": {
             "burnt_calories": "BURNT CALORIES",
             "header_more": "MORE ABOUT YOUR PERFORMANCE",
-            "body_running": "You were running at about {{speed}} for {{time}} minutes`"
+            "body_running": "You were running at about {{speed}} for {{time}} minutes. Good run!",
+            "body_lifting": "You made {{amount}} lifts of {{weight}} kg. How strong!",
+            "body_pushups": "You made {{amount}} push ups with {{hands}} hands. Great!"
         },
         "well_done_bud": "Well done, bud. The results of this session will be saved, togheter with your results from other sessions."
     },
