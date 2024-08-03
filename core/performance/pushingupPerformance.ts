@@ -47,7 +47,7 @@ interface PUSHINGUP_Response {
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
  * @param height The height of the subject in centimeters (CM).
- * @param time The duration in HOURS of the exercise performed by the subject.
+ * @param time The duration in MINUTES of the exercise performed by the subject.
  * @param hands Whether push ups were done with both hands or only one.
  * @param pushUps The amount of push ups that were done.
  * @param provideContext Whether to provide a brief contextualization about the result.

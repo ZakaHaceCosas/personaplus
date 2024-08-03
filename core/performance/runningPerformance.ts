@@ -52,7 +52,7 @@ interface RUNNING_WALKING_Response {
  * @param weight The weight of the subject in kilograms (KG).
  * @param height The height of the subject in centimeters (CM).
  * @param speed The speed in KM/h the subject was running to.
- * @param time The duration in HOURS of the exercise performed by the subject.
+ * @param time The duration in MINUTES of the exercise performed by the subject.
  * @param provideContext Whether to provide a brief contextualization about the result.
  * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
  * @returns The calories burnt if neither provideContext nor provideExplanation are true, otherwise returns a RUNNING_WALKING_Response object.
