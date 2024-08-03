@@ -31,8 +31,10 @@ const styles = StyleSheet.create({
     },
     mainview: {
         padding: 20,
-        flex: 1,
+        paddingTop: 40,
+        display: "flex",
         flexDirection: "column",
+        flexGrow: 1,
     },
     flexydays: {
         flexDirection: "column",

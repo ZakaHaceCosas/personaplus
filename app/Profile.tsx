@@ -56,9 +56,7 @@ const styles = StyleSheet.create({
         paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        width: Dimensions.get("screen").width,
-        height: Dimensions.get("screen").height,
-        overflow: "scroll",
+        flexGrow: 1,
     },
     flexyview: {
         display: "flex",
