@@ -1,7 +1,7 @@
 // src/BetterText.tsx
 // Text, con estilos apropiados y la tipografía Be Vietnam Pro
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, ReactElement } from "react";
 import { TextStyle, Text } from "react-native";
 import colors from "./toolkit/design/colors";
 
@@ -112,7 +112,7 @@ interface BetterTextProps {
  * @param {() => void} param0.onTap
  * @param {boolean} param0.isSerif
  * @param {boolean} param0.url
- * @returns {*}
+ * @returns {ReactElement}
  */
 export default function BetterText({
     fontSize,
@@ -123,7 +123,7 @@ export default function BetterText({
     onTap,
     isSerif,
     url,
-}: BetterTextProps) {
+}: BetterTextProps): ReactElement {
     const fontprefix: string = isSerif ? "NotoSerif-" : "BeVietnamPro-";
     const font: string = `${fontprefix}${fontWeight}`;
     const lineheight: number = fontSize + 0.5; // La altura de línea es igual al tamaño de letra (+ 0.5 para arreglar el texto viendose "recortado")

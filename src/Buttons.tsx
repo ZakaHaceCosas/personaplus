@@ -1,7 +1,7 @@
 // src/Buttons.tsx
 // Buttons, botones, elementos presionables, ENTIDADES INTERACTIVAS UTILIZABLES POR MEDIO DE CLICS / TOCAMIENTOS DE LA PANTALLA xd
 
-import React, { ReactNode } from "react";
+import React, { ReactElement, ReactNode } from "react";
 import { Pressable, DimensionValue } from "react-native";
 import BetterText from "@/src/BetterText";
 import colors from "@/src/toolkit/design/colors";
@@ -71,7 +71,7 @@ interface BtnsProps {
  * @param {(number | "auto" | "fill" | "default")} param0.height The height of the button.
  * @param {("normal" | "box" | "fixed")} param0.layout The layout. Defaults to normal.
  * @param {ReactNode} param0.children The text of the button. Can be passed either here or as a parameter.
- * @returns {*}
+ * @returns {ReactElement}
  */
 export default function Button({
     style,
@@ -81,7 +81,7 @@ export default function Button({
     height,
     layout,
     children,
-}: BtnsProps) {
+}: BtnsProps): ReactElement {
     let borderColor: string; // Color del borde
     let backgroundColor: string; // Color del fondo
     let textColor: string; // Color del texto

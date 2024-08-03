@@ -10,12 +10,24 @@ import BetterText from "../BetterText";
 import colors from "../toolkit/design/colors";
 
 // TypeScript, supongo...
+/**
+ * InfoIconProps
+ *
+ * @typedef {InfoIconsProps}
+ */
 type InfoIconsProps = {
     objective: Objective;
 };
 
 // I don't usually use React.FC, I prefer export default function
 // This was the only fix I found for an IntrinsicAttributes error, tho
+/**
+ * Returns a JSX component with a list of icons containing info about a certain objective.
+ *
+ * @param {{ objective: any; }} param0
+ * @param {*} param0.objective The Objective
+ * @returns {*}
+ */
 const InfoIcons: React.FC<InfoIconsProps> = ({ objective }) => {
     const speedOptions: [string, string][] = [
         ["Brisk Walk", "1.6 - 3.2 km/h"],
