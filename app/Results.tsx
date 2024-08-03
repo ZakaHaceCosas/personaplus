@@ -52,11 +52,13 @@ export default function Results() {
     const objectiveExercise: string = params.exercise as string;
     const objectiveIdentifier: number = Number(params.id);
     const repetitions: number = Number(params.repetitions);
+    const multiobjective_hands: number = Number(params.hands);
     // Objective-specific params
     const objectiveRunning_Speed: number = Number(params.speed);
     const objectiveLifting_barWeight: number = Number(params.barWeight);
     const objectiveLifting_liftWeight: number = Number(params.liftWeight);
     const objectiveLifting_scales: number = Number(params.scales);
+    const objectivePushups_Pushups: number = Number(params.pushups);
 
     const [userData, setUserData] = useState<UserHealthData | null>(null);
     const [result, setResult] = useState<{ result: number } | null>(null);
@@ -118,20 +120,6 @@ export default function Results() {
                             true,
                             false
                         );
-                    } else if (objectiveExercise.toLowerCase() === "walking") {
-                        // this acts as a placeholder to remember the wanted logic.
-                        // the OpenHealth thing needs all other exercises to get implemented
-                        // this counts as a TODO
-                        return OpenHealth.performance.RunningOrWalkingPerformance.calculate(
-                            userData.age,
-                            userData.gender,
-                            userData.weight,
-                            userData.height,
-                            objectiveRunning_Speed,
-                            sessionElapsedTime,
-                            true,
-                            false
-                        );
                     } else if (objectiveExercise.toLowerCase() === "lifting") {
                         return OpenHealth.performance.LiftingPerformance.calculate(
                             userData.age,
@@ -143,6 +131,18 @@ export default function Results() {
                             objectiveLifting_liftWeight,
                             objectiveLifting_scales,
                             repetitions,
+                            true,
+                            false
+                        );
+                    } else if (objectiveExercise.toLowerCase() === "push up") {
+                        return OpenHealth.performance.PushingUpPerformance.calculate(
+                            userData.age,
+                            userData.gender,
+                            userData.weight,
+                            userData.height,
+                            sessionElapsedTime,
+                            multiobjective_hands,
+                            objectivePushups_Pushups * repetitions,
                             true,
                             false
                         );
