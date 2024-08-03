@@ -1,6 +1,6 @@
 // src/section/Section.tsx
 
-import React, { ReactNode } from "react";
+import React, { ReactElement } from "react";
 import { View } from "react-native";
 import BetterText from "@/src/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
@@ -9,7 +9,25 @@ import { useTranslation } from "react-i18next";
 import colors from "../toolkit/design/colors";
 
 // TypeScript, supongo
+/**
+ * SectionProps Interface
+ *
+ * @interface SectionProps
+ * @typedef {SectionProps}
+ */
 interface SectionProps {
+    /**
+     * The kind of section. Depending on this, the section will display a title and icon, or another one.
+     *
+     * @type {(| "Objectives"
+     *         | "PassiveObjs"
+     *         | "HowYouAreDoing"
+     *         | "Unknown"
+     *         | "Settings"
+     *         | "Profile"
+     *         | "About"
+     *         | "Developer")}
+     */
     kind:
         | "Objectives"
         | "PassiveObjs"
@@ -19,10 +37,26 @@ interface SectionProps {
         | "Profile"
         | "About"
         | "Developer";
-    children: ReactNode;
+    /**
+     * Children that you can append to the section (one or more). While any `ReactElement` is valid, it's expected that you use a `<Division />` or more.
+     *
+     * @type {ReactElement}
+     */
+    children: ReactElement;
 }
 
 // Creamos la función
+/**
+ * A PersonaPlus section.
+ *
+ * The PersonaPlus UI operates on a Section-Division basis, with Sections containing Divisions, being each Section of a different "kind", so it groups stuff by topics.
+ *
+ * @export
+ * @param {SectionProps} param0
+ * @param {("Objectives" | "PassiveObjs" | "HowYouAreDoing" | "Unknown" | "Settings" | "Profile" | "About" | "Developer")} param0.kind The kind of section. Depending on this, the section will display a title and icon, or another one.
+ * @param {ReactElement} param0.children Children that you can append to the section (one or more). While any `ReactElement` is valid, it's expected that you use a `<Division />` or more.
+ * @returns {*}
+ */
 export default function Section({ kind, children }: SectionProps) {
     const { t } = useTranslation();
     let label: string;
