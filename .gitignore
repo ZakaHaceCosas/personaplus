@@ -7,6 +7,7 @@ node_modules/
 .expo/
 dist/
 web-build/
+.expo-shared/
 
 # Native
 *.orig.*
@@ -27,6 +28,7 @@ yarn-error.*
 # macOS
 .DS_Store
 *.pem
+Thumbs.db
 
 # env files
 .env*.local
@@ -34,3 +36,21 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+
+# Android
+android/app/src/main/assets/
+android/app/src/main/res/
+android/app/build/
+android/.gradle/
+android/app/*.keystore
+android/local.properties
+
+# Gradle
+.gradle
+/build
+gradle/wrapper/gradle-wrapper.jar
+gradlew
+gradlew.bat
+
+# properties
+local.properties
