@@ -11,7 +11,8 @@
         "dep:check": "expo install --check",
         "dep:fix": "expo install --fix",
         "lint": "eslint .",
-        "build": "expo install --fix && eas build -p android --profile production"
+        "build": "expo install --fix && eas build -p android --profile production",
+        "build:fs": "expo install --fix && expo prebuild --clean && eas build -p android --profile production"
     },
     "author": {
         "name": "ZakaHaceCosas",
