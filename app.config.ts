@@ -114,6 +114,14 @@ const config: ExpoConfig.ExpoConfig = {
                 "color": "#32FF80",
                 "defaultChannel": "default"
             }
+        ],
+        [
+            "expo-build-properties",
+            {
+                "android": {
+                    "newArchEnabled": true
+                }
+            }
         ]
     ],
     extra: {

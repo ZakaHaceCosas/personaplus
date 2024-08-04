@@ -82,5 +82,12 @@
         "prettier": "^3.3.2",
         "typescript": "~5.3.3"
     },
-    "private": false
+    "private": false,
+    "expo": {
+        "doctor": {
+            "reactNativeDirectoryCheck": {
+                "enabled": true
+            }
+        }
+    }
 }
