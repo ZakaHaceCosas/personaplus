@@ -7,7 +7,7 @@
         "**/.hg": false,
         "**/CVS": false,
         "**/.DS_Store": false,
-        "**/android": true
+        "**/android": false
     },
     "terminal.integrated.suggest.enabled": true,
     "terminal.integrated.suggest.builtinCompletions": {
