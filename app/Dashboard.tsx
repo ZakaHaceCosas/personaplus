@@ -33,7 +33,7 @@ import Loading from "@/src/Loading";
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
 
-// Creamos los estilos
+// We define the styles
 const styles = StyleSheet.create({
     containerview: {
         width: Dimensions.get("screen").width,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     },
 });
 
-// Creamos la función
+// We create the function
 export default function Dashboard() {
     const { t } = useTranslation();
     const [loading, setLoading] = useState(true);
@@ -57,18 +57,21 @@ export default function Dashboard() {
     } | null>(null);
 
     useEffect(() => {
+        // fetches objectives
         const fetchObjectives = async () => {
             try {
-                const storedObjectives =
-                    await AsyncStorage.getItem("objectives");
-                if (storedObjectives) {
-                    setObjectives(JSON.parse(storedObjectives));
+                const storedObjectives = await getObjectives("object");
+                if (storedObjectives && Array.isArray(storedObjectives)) {
+                    const finalObjectives =
+                        objectiveArrayToObject(storedObjectives);
+                    setObjectives(finalObjectives);
                     termLog(
                         "(DASHBOARD.TSX) Objectives fetched and parsed!",
                         "success"
                     );
                     setLoading(false);
                 } else {
+                    // no objectives
                     await AsyncStorage.setItem(
                         "objectives",
                         JSON.stringify([])
