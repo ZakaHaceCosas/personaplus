@@ -1,5 +1,5 @@
-// index.tsx
-// Welcome to PersonaPlus. Give yourself a plus!
+// About.tsx
+// Info about the app
 
 import React from "react";
 import {
@@ -18,7 +18,7 @@ import GapView from "@/src/GapView";
 import { useTranslation } from "react-i18next";
 import colors from "@/src/toolkit/design/colors";
 
-// Creamos los estilos
+// We define the styles
 const styles = StyleSheet.create({
     containerview: {
         width: Dimensions.get("screen").width,
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
     },
 });
 
-// Creamos la función
+// We create the function
 export default function Home() {
-    const { t } = useTranslation();
+    const { t } = useTranslation(); // translate
 
     return (
         <View style={styles.containerview}>
@@ -125,6 +125,7 @@ export default function Home() {
                                 "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md"
                             )
                         }
+                        // actually https://personaplus.vercel.app/privacy exists, but it doesnt look good
                     />
                     <GapView width={10} />
                     <Button

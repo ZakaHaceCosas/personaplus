@@ -28,7 +28,7 @@ interface UserData {
     weight: string;
 }
 
-// Creamos los estilos
+// We define the styles
 const styles = StyleSheet.create({
     containerview: {
         width: Dimensions.get("screen").width,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     },
 });
 
-// Creamos la función
+// We create the function
 export default function UpdateProfile() {
     const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean>(true);

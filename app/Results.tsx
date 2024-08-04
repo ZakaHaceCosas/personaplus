@@ -22,7 +22,7 @@ import { saveDailyObjectivePerformance } from "@/src/toolkit/objectives";
 import { getCurrentDate } from "@/src/toolkit/today";
 import Button from "@/src/Buttons";
 
-// Creamos los estilos
+// We define the styles
 const styles = StyleSheet.create({
     containerview: {
         width: Dimensions.get("screen").width,

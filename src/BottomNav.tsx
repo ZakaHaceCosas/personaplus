@@ -15,7 +15,7 @@ interface SectionProps {
     currentLocation: string; // en que página ( /WelcomeScreen, /Profile...) está ahora
 }
 
-// Definimos los estilos
+// We define the styles
 const styles = StyleSheet.create({
     touchme: {
         display: "flex",
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     },
 });
 
-// Creamos la función del componente
+// We create the function
 export default function BottomNav({ currentLocation }: SectionProps) {
     const [currentPage, setCurrentPage] = useState<string>(currentLocation);
     // Define la función para manejar el cambio de página

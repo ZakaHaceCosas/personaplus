@@ -1,5 +1,5 @@
 // app/CreateObjective.tsx
-// Creación de objetivos
+// Objective creation
 
 import React, { useState } from "react";
 import {
@@ -22,7 +22,7 @@ import { Objective, ObjectiveWithoutId } from "@/src/types/Objective";
 import { useTranslation } from "react-i18next";
 import colors from "@/src/toolkit/design/colors";
 
-// Creamos los estilos
+// We define the styles
 const styles = StyleSheet.create({
     containerview: {
         paddingTop: 20,
@@ -54,16 +54,20 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function Form() {
-    const { t } = useTranslation();
-    const [exercise, setExercise] = useState<string>("");
+// We create the function
+export default function CreateObjective() {
+    const { t } = useTranslation(); // translate function
+    const [exercise, setExercise] = useState<string>(""); // what exercise is selected
     const exercises = [
         "Push Up",
         "Lifting",
         "Running",
-        "Walking",
-        "Meditation",
+        // "Walking", walking is literally running without the speed option, it's useless XD. so i comment it for now.
+        "Meditation", // you... you are also useless...
     ];
+
+    // monday, tuesday, wednesday... etc...
+    // each bool value is a day of the week
     const [days, setDays] = useState<boolean[]>([
         false,
         false,
@@ -82,8 +86,8 @@ export default function Form() {
     const [liftWeight, setLiftWeight] = useState<number>(0);
     const [hands, setHands] = useState<number>(2);
     const [lifts, setLifts] = useState<number>(0);
-    const [timeToPushUp, setTimeToPushup] = useState<number>(0);
-    const [speed, setSpeed] = useState<number>(2);
+    const [timeToPushUp, setTimeToPushup] = useState<number>(0); // i forgot what purpose does this serve, to be honest
+    const [speed, setSpeed] = useState<number>(2); // defaults to the 3rd value instead of the 1st one. how is the user going to know if he decrements there are more options? no fucking clue.
     const speedOptions = [
         ["Brisk Walk", "1.6 - 3.2 km/h"],
         ["Light Jog", "3.2 - 4.0 km/h"],
@@ -98,16 +102,18 @@ export default function Form() {
         ["Full Speed Sprinting", "14.5 - 16.1 km/h"],
         ["Maximum Speed", "more than 16.1 km/h"],
     ];
-
+    // TODO - translate the above speed options
     const speedString = speedOptions[speed][0];
     const exactSpeedString = speedOptions[speed][1];
 
+    // you give the index of a day, since its a boolean it just sets it to its opposite to toggle that day on/off
     const handleChangeDay = (index: number) => {
         const newDays = [...days];
         newDays[index] = !newDays[index];
         setDays(newDays);
     };
 
+    // handles incrementing each option
     const handleIncrement = (value: string) => {
         switch (value) {
             case "duration":
@@ -152,13 +158,15 @@ export default function Form() {
         }
     };
 
+    // handles decrementing each option
     const handleDecrement = (value: string) => {
         switch (value) {
             case "duration":
-                // odio javascript.
+                // i hate javascript.
                 setDuration(prev => {
-                    let newValue;
+                    let newValue; // we create a variable for the value we'll set the duration to
 
+                    // different operation depending on the prev amount
                     if (prev > 5) {
                         newValue = prev - 1;
                     } else if (prev > 1) {
@@ -166,10 +174,16 @@ export default function Form() {
                     } else if (prev > 0.1) {
                         newValue = prev - 0.1;
                     } else {
-                        return prev; // mantener el minimo, como en las demas
+                        return prev; // just as always, keep a minimun
                     }
 
-                    return parseFloat(newValue.toFixed(2)); // redondear a 2 decimales, porque javascript no sabe contar (yo flipo)
+                    return parseFloat(newValue.toFixed(2));
+                    // (EN) round to the 2nd decimal, because javascript doesnt know how to count (im freaking out)
+                    // (ES) redondear a 2 decimales, porque javascript no sabe contar (yo flipo)
+
+                    // prev (0.4) - 0.1 = 0.300000000000001
+                    // 0.300000000000001 - 0.1 = 0.23298103721873781
+                    // - JavaScript
                 });
                 break;
             case "repetitions":
@@ -211,6 +225,7 @@ export default function Form() {
         }
     };
 
+    // handles saving the objective
     const submit = async () => {
         const formData: ObjectiveWithoutId = {
             exercise,
@@ -237,6 +252,7 @@ export default function Form() {
                 await AsyncStorage.getItem("objectives");
             let objs: Objective[] = [];
 
+            // this gets the list of objectives
             if (
                 storedObjectives === null ||
                 storedObjectives === "" ||
@@ -257,27 +273,33 @@ export default function Form() {
                 }
             }
 
+            // this creates a random ID
             const generateObjectiveId = (): number => {
                 return Math.floor(Math.random() * 9000000000) + 1000000000;
             };
 
             let newIdentifier: number;
+            // verify there arent duplicates
             do {
                 newIdentifier = generateObjectiveId();
             } while (objs.some(obj => obj.identifier === newIdentifier));
 
+            // finally, the objective is created
             const finalObjective: Objective = {
                 ...formData,
                 identifier: newIdentifier,
             };
 
+            // gets added to the new objective array
             const finalObjectives = [...objs, finalObjective];
 
+            // save it to the storage!
             await AsyncStorage.setItem(
                 "objectives",
                 JSON.stringify(finalObjectives)
             );
 
+            // success :D
             if (Platform.OS === "android") {
                 ToastAndroid.show(
                     t("messages.created_objective"),
@@ -285,6 +307,7 @@ export default function Form() {
                 );
             }
 
+            // go back to dashboard
             router.navigate("/Dashboard");
         } catch (e) {
             termLog("Could not create an objective, got error: " + e, "error");

@@ -40,7 +40,7 @@ import colors from "@/src/toolkit/design/colors";
 import { Objective } from "@/src/types/Objective";
 import Loading from "@/src/Loading";
 
-// Creamos los estilos
+// We define the styles
 const styles = StyleSheet.create({
     containerview: {
         width: Dimensions.get("screen").width,
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     },
 });
 
-// Creamos la función
+// We create the function
 export default function Home() {
     const [loading, setLoading] = useState(true);
     const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null);

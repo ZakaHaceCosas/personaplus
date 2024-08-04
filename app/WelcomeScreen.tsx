@@ -24,7 +24,7 @@ import { validateBasicData } from "@/src/toolkit/userData";
 import colors from "@/src/toolkit/design/colors";
 import { getDefaultLocale } from "@/src/toolkit/translations";
 
-// Definimos los estilos
+// We define the styles
 const styles = StyleSheet.create({
     mainview: {
         width: Dimensions.get("screen").width,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     },
 });
 
-// Definimos la función
+// We create the function
 export default function WelcomePage() {
     const { t } = useTranslation();
     const [language, setLanguage] = useState<"en" | "es" | string>("en");
