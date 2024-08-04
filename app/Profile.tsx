@@ -45,7 +45,7 @@ interface UserData {
     language: "en" | "es" | string;
 }
 
-// Creamos los estilos
+// We define the styles
 const styles = StyleSheet.create({
     containerview: {
         width: Dimensions.get("screen").width,
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     },
 });
 
-// Creamos la función
+// We create the function
 export default function Profile() {
     // Versión actual de la aplicación
     const currentVersion = version;

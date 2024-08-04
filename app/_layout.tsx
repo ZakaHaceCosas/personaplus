@@ -1,5 +1,5 @@
 // _layout.tsx
-// Para evitar código duplicado, básicamente
+// Main layout, (something to avoid duplicate code)
 
 import React, { useEffect } from "react";
 import { StyleSheet, ScrollView } from "react-native";
@@ -10,16 +10,17 @@ import { Slot } from "expo-router";
 import "@/src/toolkit/translations";
 import colors from "@/src/toolkit/design/colors";
 
-// Definimos los estilos
+// We define the styles
 const styles = StyleSheet.create({
     mainview: {
         backgroundColor: colors.MAIN.APP,
     },
 });
 
-// Definimos la función
+// We create the function
 export default function Layout() {
-    // BeVietnamPro y NotoSerif, nuestras tipografías (no son nuestras, pero las usamos xd)
+    // BeVietnamPro y NotoSerif, our fonts
+    // (not our, but we use them xd)
     const [fontsLoaded, fontError] = useFonts({
         "BeVietnamPro-Black": require("../fonts/BeVietnamPro-Black.ttf"),
         "BeVietnamPro-BlackItalic": require("../fonts/BeVietnamPro-BlackItalic.ttf"),
@@ -59,18 +60,18 @@ export default function Layout() {
         "NotoSerif-ThinItalic": require("../fonts/NotoSerif-ThinItalic.ttf"),
     });
 
-    // Cargamos las fuentes
+    // We load the fonts
     useEffect(() => {
         const onLayoutRootView = async () => {
             if (fontsLoaded || fontError) {
-                await SplashScreen.hideAsync();
+                await SplashScreen.hideAsync(); // Hide the SplashScreen when everything's loaded
             }
         };
 
         onLayoutRootView();
 
         return () => {
-            // se deja vacio
+            // we let this empty
         };
     }, [fontsLoaded, fontError]);
 
@@ -78,6 +79,7 @@ export default function Layout() {
         return null;
     }
 
+    // pack it all in a ScrollView, add the android StatusBar, and the <Slot /> where the app will put everything
     return (
         <ScrollView style={styles.mainview}>
             <StatusBar style="light" animated={true} />

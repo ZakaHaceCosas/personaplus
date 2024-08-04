@@ -1,7 +1,7 @@
 // DeveloperInterface.tsx
-// Página que muestra ciertos logs de la consola para ayudar al desarrollador
+// Page that shows console logs and other stuff to help the developer debug the app
 
-// BROKEN (creo)
+// THIS SHIT IS BROKEN (perchance)
 
 import React, { useEffect, useState } from "react";
 import {

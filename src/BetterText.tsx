@@ -98,7 +98,7 @@ interface BetterTextProps {
     url?: boolean; // Si es verdadero el texto se estilizará como un enlace externo - default: false
 }
 
-// Creamos la función
+// We create the function
 /**
  * Homemade text component
  *

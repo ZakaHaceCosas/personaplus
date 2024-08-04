@@ -7,7 +7,7 @@ import BetterText from "@/src/BetterText";
 import { useTranslation } from "react-i18next";
 import colors from "./toolkit/design/colors";
 
-// Definimos los estilos
+// We define the styles
 const styles = StyleSheet.create({
     container: {
         height: 100,
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     },
 });
 
-// Creamos la función del componente
+// We create the function
 export default function Footer() {
     const { t } = useTranslation();
 

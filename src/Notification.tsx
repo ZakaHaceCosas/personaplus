@@ -47,7 +47,7 @@ interface NotificationProps {
     position?: string; // Posicionamiento
 }
 
-// Creamos la función
+// We create the function
 /**
  * Homemade alert / notification component
  *
