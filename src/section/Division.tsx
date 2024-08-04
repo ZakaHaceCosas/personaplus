@@ -1,7 +1,7 @@
 // section/Division.tsx
 // División
 
-import React, { ReactElement } from "react";
+import React, { ReactElement, ReactNode } from "react";
 import { View } from "react-native";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
@@ -54,12 +54,12 @@ interface DivisionProps {
     /**
      * A JSX element you can add inside of the division. Optional.
      *
-     * @type {?ReactElement}
+     * @type {?ReactNode}
      */
-    children?: ReactElement; // Los hijos (botones, básicamente)
+    children?: ReactNode; // Los hijos (botones, básicamente)
 }
 
-// Creamos la función
+// We create the function
 /**
  * A PersonaPlus division.
  *
