@@ -1,6 +1,6 @@
 // src/section/Section.tsx
 
-import React, { ReactElement } from "react";
+import React, { ReactNode } from "react";
 import { View } from "react-native";
 import BetterText from "@/src/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
@@ -38,14 +38,14 @@ interface SectionProps {
         | "About"
         | "Developer";
     /**
-     * Children that you can append to the section (one or more). While any `ReactElement` is valid, it's expected that you use a `<Division />` or more.
+     * Children that you can append to the section (one or more). While any `ReactNode` is valid, it's expected that you use a `<Division />` or more.
      *
-     * @type {ReactElement}
+     * @type {ReactNode}
      */
-    children: ReactElement;
+    children: ReactNode;
 }
 
-// Creamos la función
+// We create the function
 /**
  * A PersonaPlus section.
  *
