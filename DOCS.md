@@ -237,6 +237,19 @@ Recuerda mantener un código uniforme, organizado, usando siempre puntos y coma,
 
 Si eres tan humilde que vas a aportar una función entera a PersonaPlus, lo primero: ¡gracias!, y lo segundo: utiliza JSDoc. Personalmente recomiendo la extensión [JSDoc generator](https://marketplace.visualstudio.com/items?itemName=crystal-spider.jsdoc-generator) para VSCode, hace muy bien el trabajo (`Ctrl` + `Shift` + `P` y luego `Generate JSDoc for the current file`).
 
+#### 9. COMENTA BIEN
+
+Añade comentarios descriptivos a las funciones y variables para ayudar a que se entiendan. **Se comenta en inglés**, para el entendimiento de todos, aunque hay una excepción para esa regla: las funciones que usen JSDoc, pueden tener un comentario (no JSDoc) en Castellano al lado.
+
+```tsx
+/**
+ * This function does something
+ */
+export default function doSomething() { // Esta funcion hace algo
+    explode()
+}
+```
+
 ## Versionado
 
 Actualmente se usa un versionado muy simple, cuando cambies algo suma 1 a la `b` (*build*) en el archivo `CHANGELOG.md` y describe que cambios o mejoras hiciste.
