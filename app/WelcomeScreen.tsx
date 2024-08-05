@@ -64,13 +64,16 @@ const styles = StyleSheet.create({
 export default function WelcomePage() {
     const { t } = useTranslation();
     const [language, setLanguage] = useState<"en" | "es" | string>("en");
-    const [currentTab, setTab] = useState(1);
+    // what "tab" of the page the user's on
+    const [currentTab, setTab] = useState(1); // index starts at one instead of zero because I SAID SO
     const [formData, setFormData] = useState({
+        // default data to empty strings
         username: "",
         height: "",
         weight: "",
         age: "",
     });
+    // gender options
     const [genderValue, setGenderValue] = useState<string | null>(null);
     const handleGenderChange = (value: string) => {
         setGenderValue(value);
@@ -87,6 +90,7 @@ export default function WelcomePage() {
             default: false,
         },
     ];
+    // mhmm i dont know how to explain this one (but it works)
     const inputRefs = useRef<TextInput[]>([]);
     const [focuspointValue, setFocuspointValue] = useState<string | null>(null);
     const handleFocuspointChange = (value: string) => {
@@ -113,7 +117,7 @@ export default function WelcomePage() {
             label: t("page_welcome.fragment_two.options.wellbeing"),
             default: false,
         },
-        // both options here equal no priority
+        // both options below equal no priority
         // then why create two options?
         // if user says he doesnt know, no focus will be used and he'll see the assistant feature (when it gets developed lol)
         // if user says he has everything as a priority, no focus will be used and he'll be free to do whatever by himself
@@ -162,7 +166,7 @@ export default function WelcomePage() {
             inputRefs.current[index + 1].focus();
         }
     };
-
+    // pagination
     const gonext = () => {
         if (currentTab > 0 && currentTab <= 3) {
             setTab(prevPage => prevPage + 1);
@@ -184,6 +188,7 @@ export default function WelcomePage() {
         setDefaultLanguage();
     }, []);
 
+    // submit the data and create profile
     const submit = async () => {
         if (
             genderValue &&
@@ -196,6 +201,10 @@ export default function WelcomePage() {
             language
         ) {
             try {
+                // a separate item for each thing? yes
+                // i could just use an object? (like "userData":{ "username": "petro", "age": 69, ...}) yes
+                // should i refactor this? maybe
+                // will i? no
                 await AsyncStorage.setItem("username", formData.username);
                 await AsyncStorage.setItem("height", formData.height);
                 await AsyncStorage.setItem("weight", formData.weight);

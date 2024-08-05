@@ -60,6 +60,7 @@ export default function Dashboard() {
         // fetches objectives
         const fetchObjectives = async () => {
             try {
+                // this looks a bit weird, but it actually works
                 const storedObjectives = await getObjectives("object");
                 if (storedObjectives && Array.isArray(storedObjectives)) {
                     const finalObjectives =
@@ -83,6 +84,7 @@ export default function Dashboard() {
                     );
                 }
             } catch (e) {
+                // handle errors
                 termLog(
                     "Could not get objectives fetched due to error: " + e,
                     "error"
@@ -93,9 +95,11 @@ export default function Dashboard() {
         fetchObjectives();
     }, [t]);
 
+    // objective deletion - pretty simple
     const handleDeleteObjective = async (identifier: number) => {
         try {
-            await deleteObjective(identifier);
+            await deleteObjective(identifier); // actually this line itself does the entire thing, thanks to the objective toolkit
+            // the rest just updates the state to refresh the page
             const updatedObjectives = await getObjectives("object");
             if (Array.isArray(updatedObjectives)) {
                 const objectivesObject =
@@ -121,7 +125,7 @@ export default function Dashboard() {
         }
     };
 
-    const currentpage: string = usePathname();
+    const currentpage: string = usePathname(); // current page ("/Dashboard"). for the nav component.
 
     if (loading) {
         return <Loading currentpage={currentpage} displayNav={true} />;

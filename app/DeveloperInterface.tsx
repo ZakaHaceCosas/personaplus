@@ -90,7 +90,7 @@ export default function DeveloperInterface() {
     const { t } = useTranslation();
     const [logs, setLogs] = useState<Logs>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [everything, setEverything] = useState<object | null>(null);
+    const [everything, setEverything] = useState<object | null>(null); // everything = single object with all user data
     const [objectives, setObjectives] = useState<{
         [key: string]: Objective;
     } | null>(null);
@@ -99,6 +99,8 @@ export default function DeveloperInterface() {
     >();
 
     useEffect(() => {
+        // defines a function for each fetch
+        // objectives
         const fetchObjectives = async () => {
             try {
                 const objectives = await getObjectives("object");
@@ -114,6 +116,7 @@ export default function DeveloperInterface() {
                 );
             }
         };
+        // objectives daily log
         const fetchObjectivesDailyLog = async () => {
             try {
                 const storedDbjectives = await getObjectivesDailyLog("object");
@@ -125,6 +128,7 @@ export default function DeveloperInterface() {
                 );
             }
         };
+        // termlogs
         const fetchLogs = async () => {
             try {
                 const fetchedLogs = await getLogsFromStorage();
@@ -133,6 +137,7 @@ export default function DeveloperInterface() {
                 termLog("Error fetching termLogs! " + e, "error");
             }
         };
+        // user data
         const fetchUserData = async () => {
             try {
                 const data = await AsyncStorage.multiGet([
@@ -155,6 +160,7 @@ export default function DeveloperInterface() {
             }
         };
 
+        // an async that try-catches all fetches togheter. if everything succeeds, switches from loading to loaded.
         const fetchEverything = async () => {
             try {
                 await fetchUserData();
@@ -173,8 +179,9 @@ export default function DeveloperInterface() {
         fetchEverything();
     }, []);
 
-    const currentpage: string = usePathname();
+    const currentpage: string = usePathname(); // current page
 
+    // this function is to clear "all data" (not all, that would be AsyncStorage.clear(), removes all that's used by the app EXCEPT logs)
     const devFunctionToClearAll = async () => {
         try {
             await AsyncStorage.multiRemove([
@@ -197,7 +204,9 @@ export default function DeveloperInterface() {
         }
     };
 
+    // exports logs to a logs.txt file
     const devExportLogs = async (logs: Logs) => {
+        // formatting
         const logText = logs
             .map(log => {
                 const date = new Date(log.timestamp);
@@ -205,8 +214,10 @@ export default function DeveloperInterface() {
             })
             .join("\n");
 
+        // the file's location and name
         const fileUri = FileSystem.cacheDirectory + "logs.txt";
 
+        // tries to save (asking for permission if needed)
         try {
             await FileSystem.writeAsStringAsync(fileUri, logText);
 
@@ -221,6 +232,7 @@ export default function DeveloperInterface() {
 
             const asset = await MediaLibrary.createAssetAsync(fileUri);
             const album = await MediaLibrary.getAlbumAsync("Download");
+            // saves to downloads
             if (album == null) {
                 await MediaLibrary.createAlbumAsync("Download", asset, false);
             } else {
@@ -235,6 +247,7 @@ export default function DeveloperInterface() {
         }
     };
 
+    // this is the handler for log exporting
     const handleDevFunctionToExportLogs = async (logs: Logs) => {
         try {
             const fileUri = await devExportLogs(logs);
@@ -252,6 +265,7 @@ export default function DeveloperInterface() {
         }
     };
 
+    // function to clear all clear logs
     const clearLog = async () => {
         try {
             await AsyncStorage.setItem("globalLogs", "");
@@ -262,8 +276,10 @@ export default function DeveloperInterface() {
         }
     };
 
+    // handler for clearing all logs
     const devFunctionToClearGlobalLogs = () => {
         Alert.alert(
+            // shows a warning, cause' its a BAD PRACTICE to clear logs. dont clear logs!
             t("globals.are_you_sure"),
             t("dev_interface.logs.clear_warning"),
             [
@@ -281,6 +297,8 @@ export default function DeveloperInterface() {
         );
     };
 
+    // TODO
+    // this is actually useless, just remove it!
     useEffect(() => {
         const fetchAll = async () => {
             try {

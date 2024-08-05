@@ -63,6 +63,7 @@ export default function Home() {
     const [objectives, setObjectives] = useState<{
         [key: string]: Objective;
     } | null>(null);
+    // isRegistered and status are used by the background task handler, nothing else
     const [isRegistered, setIsRegistered] = useState(false);
     const [status, setStatus] =
         useState<BackgroundFetch.BackgroundFetchStatus | null>(null);
@@ -70,6 +71,8 @@ export default function Home() {
     const { t } = useTranslation();
     const currentpage = usePathname();
 
+    // this checks for the status of objective background fetching
+    // sets the status and later logs it
     const checkStatusAsync = async () => {
         try {
             const status = await BackgroundFetch.getStatusAsync();
@@ -85,13 +88,14 @@ export default function Home() {
         }
     };
 
+    // verification of background fetching status and logging
     useEffect(() => {
         const verifyStatusAsync = async () => {
             try {
                 const isRegistered =
                     await TaskManager.isTaskRegisteredAsync("background-fetch");
                 if (!isRegistered) {
-                    await registerBackgroundObjectivesFetchAsync();
+                    await registerBackgroundObjectivesFetchAsync(); // if not registered already
                 }
                 termLog(
                     "Daily objective fetching seems to be set up!",
@@ -110,17 +114,21 @@ export default function Home() {
         verifyStatusAsync();
     }, []);
 
+    // this fetches all stuff nedeed
     useEffect(() => {
         const multiFetch = async () => {
             try {
+                // this returns stuff in an [x][1] basis
+                // the username is [0] (because it's the first) and then always [1]
                 const items = await AsyncStorage.multiGet([
                     "username",
                     "objectives",
                     "hasLaunched",
                 ]);
                 if (items) {
-                    setUsername(String(items[0][1]));
+                    setUsername(String(items[0][1])); // see? username is [0][1]
                     setObjectives(
+                        // this checks if objectives is NOT null or "" or "{}" or "[]". if it is, objectives will be {}, otherwise, they will be the saved objectives.
                         items[1][1] !== null ||
                             items[1][1] !== "" ||
                             items[1][1] !== "{}" ||
@@ -130,9 +138,9 @@ export default function Home() {
                             : {}
                     );
                     const isFirstLaunchValidation =
-                        items[2][1] === null || !items[2][1];
+                        items[2][1] === null || !items[2][1]; // if this item is null or was never created ("hasLaunched"), this is considered the 1st launch and redirects to WelcomeScreen
                     if (isFirstLaunchValidation) {
-                        await AsyncStorage.setItem("hasLaunched", "true");
+                        await AsyncStorage.setItem("hasLaunched", "true"); // TODO: move this to the submit handler at the end of the WelcomeScreen, otherwise, if you exit the app without finishing the form, it thinks you already did it. no one is "Unknown years old"! so this needs to be moved
                         setIsFirstLaunch(true);
                     } else {
                         setIsFirstLaunch(false);
@@ -145,7 +153,7 @@ export default function Home() {
                     setUsername("Unknown");
                     setObjectives({});
                 }
-                setLoading(false);
+                setLoading(false); // if everything works, sets loading to false
             } catch (e) {
                 termLog(
                     "Error fetching basic user data! (useEffect -> multiFetch -> try-catch). Catched: " +
@@ -163,13 +171,15 @@ export default function Home() {
 
     useEffect(() => {
         if (isFirstLaunch) {
-            router.push("/WelcomeScreen");
+            router.push("/WelcomeScreen"); // if isFirstLaunch, pushes to WelcomeScreen
         }
     }, [isFirstLaunch]);
 
+    // marking an objective as done
     const handleMarkingObjectiveAsDone = async (identifier: number) => {
         try {
-            await markObjectiveAsDone(identifier, true, t);
+            await markObjectiveAsDone(identifier, true, t); // actually this line itself does the entire thing, thanks to the objective toolkit, the rest is just state handling for the page to update
+            // toolkification was probably the best idea i've ever had
             const updatedObjectives = await getObjectives("object");
             if (Array.isArray(updatedObjectives)) {
                 setObjectives(objectiveArrayToObject(updatedObjectives));
@@ -181,6 +191,7 @@ export default function Home() {
         }
     };
 
+    // logs background fetch status
     useEffect(() => {
         termLog(
             "(BACKGROUND OBJECTIVE FETCH) isRegistered status: " + isRegistered,
@@ -193,14 +204,21 @@ export default function Home() {
         router.navigate("/CreateObjective");
     };
 
+    // redirects to the Sessions page if the user starts a session, passing the objective's ID as a parameter
     const startSessionFromObjective = (identifier: number): void => {
         router.navigate("/Sessions?id=" + identifier);
     };
 
+    // logs all objectives
+    // some logs like this one of the backgorund fetch status should be removed if everything works, tho
+    // for performance
+    // counts as a TODO
     useEffect(() => {
         termLog("Objectives: " + JSON.stringify(objectives), "log");
     }, [objectives]);
 
+    // choose a random message for when you've done it all
+    // so the app feels more friendly :D
     const allDoneMessages: string[] = t("cool_messages.all_done", {
         returnObjects: true,
     });
@@ -208,6 +226,7 @@ export default function Home() {
     const randomMessageForAllDone =
         allDoneMessages[Math.floor(Math.random() * allDoneMessages.length)];
 
+    // if you've done it all, unsubscribe from reminder notifications
     useEffect(() => {
         if (objectives && checkForTodaysObjectives(objectives) !== null) {
             if (Platform.OS === "android") {

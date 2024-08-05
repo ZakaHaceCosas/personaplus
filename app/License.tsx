@@ -1,3 +1,6 @@
+// License.tsx
+// The GPL license. A bit strict, but it is what it is.
+
 import React from "react";
 import {
     StyleSheet,
@@ -24,13 +27,15 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         flexGrow: 1,
         // backgroundColor: "#FFF",
-        // i dont know why, but i feel a credits section in an app should have its background white (edit: nevermind)
+        // i dont know why, but i feel a license section in an app should have its background white
+        // (edit: nevermind)
     },
 });
 
 export default function License() {
     const { t } = useTranslation();
 
+    // yes, i did spend more than an hour formatting the General Public License into a lot of <BetterText> blocks. :]
     return (
         <View style={styles.containerview}>
             <ScrollView style={styles.mainview}>

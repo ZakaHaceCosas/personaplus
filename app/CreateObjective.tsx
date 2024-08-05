@@ -178,8 +178,7 @@ export default function CreateObjective() {
                     }
 
                     return parseFloat(newValue.toFixed(2));
-                    // (EN) round to the 2nd decimal, because javascript doesnt know how to count (im freaking out)
-                    // (ES) redondear a 2 decimales, porque javascript no sabe contar (yo flipo)
+                    // round to the 2nd decimal, because javascript doesnt know how to count (im freaking out) (yo flipo)
 
                     // prev (0.4) - 0.1 = 0.300000000000001
                     // 0.300000000000001 - 0.1 = 0.23298103721873781
