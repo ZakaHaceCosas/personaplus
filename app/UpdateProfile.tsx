@@ -1,3 +1,6 @@
+// UpdateProfile.tsx
+// Update your profile.
+
 import React, { useRef, useState, useEffect } from "react";
 import {
     DimensionValue,
@@ -19,7 +22,7 @@ import { validateBasicData } from "@/src/toolkit/userData";
 import colors from "@/src/toolkit/design/colors";
 import Loading from "@/src/Loading";
 
-// TypeScript, supongo
+// TypeScript, supongo (should use toolkified ver instead?)
 interface UserData {
     username: string;
     gender: string;
@@ -52,12 +55,13 @@ const styles = StyleSheet.create({
 export default function UpdateProfile() {
     const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean>(true);
-    const [previousUsername, setPreviousUsername] = useState<string>("Unknown");
-    const [previousGender, setPreviousGender] = useState<string>("Unknown");
-    const [previousAge, setPreviousAge] = useState<string>("Unknown");
-    const [previousHeight, setPreviousHeight] = useState<string>("Unknown");
-    const [previousWeight, setPreviousWeight] = useState<string>("Unknown");
+    const [previousUsername, setPreviousUsername] = useState<string>("Unknown"); // Store previous username
+    const [previousGender, setPreviousGender] = useState<string>("Unknown"); // Store previous gender
+    const [previousAge, setPreviousAge] = useState<string>("Unknown"); // Store previous age
+    const [previousHeight, setPreviousHeight] = useState<string>("Unknown"); // Store previous height
+    const [previousWeight, setPreviousWeight] = useState<string>("Unknown"); // Store previous weight
 
+    // Fetch all user data from AsyncStorage
     const getAllUserData = async (): Promise<UserData> => {
         try {
             const values = await AsyncStorage.multiGet([
@@ -68,6 +72,7 @@ export default function UpdateProfile() {
                 "weight",
             ]);
 
+            // Construct UserData object with fetched values or defaults
             const data: UserData = {
                 username: values[0][1] || "Unknown",
                 gender: values[1][1] || "Unknown",
@@ -79,6 +84,7 @@ export default function UpdateProfile() {
         } catch (e) {
             termLog(String(e), "error");
             return {
+                // "Nice to meet you, Unknown"!
                 username: "Unknown",
                 gender: "Unknown",
                 age: "Unknown",
@@ -91,6 +97,7 @@ export default function UpdateProfile() {
     useEffect(() => {
         const fetchData = async () => {
             const userData = await getAllUserData();
+            // Update state with fetched user data
             setPreviousUsername(userData.username);
             setPreviousGender(userData.gender);
             setPreviousAge(userData.age);
@@ -101,6 +108,7 @@ export default function UpdateProfile() {
 
         fetchData();
     }, []);
+
     const [formData, setFormData] = useState({
         username: previousUsername,
         height: previousHeight,
@@ -108,6 +116,7 @@ export default function UpdateProfile() {
         age: previousAge,
     });
     useEffect(() => {
+        // Update form data when previous user data changes
         setFormData({
             username: previousUsername,
             height: previousHeight,
@@ -122,12 +131,15 @@ export default function UpdateProfile() {
         previousUsername,
         previousWeight,
     ]);
+
     const [genderValue, setGenderValue] = useState<string | null>(
         previousGender
     );
+
     const handleGenderChange = (value: string) => {
         setGenderValue(value);
     };
+
     const genderoptions = [
         {
             value: "male",
@@ -142,12 +154,14 @@ export default function UpdateProfile() {
     ];
     const inputRefs = useRef<TextInput[]>([]);
 
+    // when tapping the Next button on android keyboard, focus the next input field
     const focusNextField = (index: number): void => {
         if (inputRefs.current[index + 1]) {
             inputRefs.current[index + 1].focus();
         }
     };
 
+    // Update form data with user input
     const handleChange = (name: string, value: string) => {
         setFormData(prevData => ({
             ...prevData,
@@ -155,6 +169,7 @@ export default function UpdateProfile() {
         }));
     };
 
+    // Check if all required data is valid
     const isFirstStepDone = validateBasicData(
         genderValue,
         formData.age,
@@ -172,17 +187,18 @@ export default function UpdateProfile() {
             formData.height
         ) {
             try {
+                // Save data to AsyncStorage
                 await AsyncStorage.setItem("username", formData.username);
                 await AsyncStorage.setItem("height", formData.height);
                 await AsyncStorage.setItem("weight", formData.weight);
                 await AsyncStorage.setItem("age", formData.age);
                 await AsyncStorage.setItem("gender", genderValue);
-                router.back();
+                router.back(); // go to the prev page
             } catch (e) {
                 termLog("Error creating profile: " + e, "error");
             }
         } else {
-            termLog("Error saving user data, some data is missing!", "error");
+            termLog("Error saving user data, some data is missing!", "error"); // bro forgor to add data
         }
     };
 

@@ -1,5 +1,5 @@
 // Profile.tsx
-// Profile page.
+// Profile page. Nice to meet ya!
 
 import React, { useEffect, useState } from "react";
 import {
@@ -36,6 +36,7 @@ interface Release {
     html_url: string;
 }
 
+// TODO - move to the userData toolkit
 interface UserData {
     username: string;
     gender: string;
@@ -67,15 +68,17 @@ const styles = StyleSheet.create({
 
 // We create the function
 export default function Profile() {
-    // Versión actual de la aplicación
+    // Current app version
     const currentVersion = version;
+    // FORMAT: X.X.X-R5-bX
+    // e.g. 0.0.1-R5-b24
 
-    // Función asincrónica para comprobar actualizaciones
+    // Async check for updates
     const checkForUpdates = async () => {
         try {
             const response = await fetch(
                 "https://api.github.com/repos/ZakaHaceCosas/personaplus/releases"
-            );
+            ); // checks github
             if (!response.ok) {
                 termLog(
                     `Failed to fetch releases (status ${response.status})`,
@@ -85,9 +88,9 @@ export default function Profile() {
                     `Failed to fetch releases (status ${response.status})`
                 );
             }
-            const releases: Release[] = await response.json();
+            const releases: Release[] = await response.json(); // gets releases
 
-            // Ordenar releases por fecha descendente y obtener la más reciente
+            // sorts releases by date and gets the most recent
             const latestRelease = releases.sort(
                 (a, b) =>
                     new Date(b.tag_name).getTime() -
@@ -95,10 +98,11 @@ export default function Profile() {
             )[0];
 
             if (latestRelease) {
-                const latestVersion = latestRelease.tag_name;
+                const latestVersion = latestRelease.tag_name; // gets the tagname
                 termLog(`Latest version: ${latestVersion}`, "log");
 
                 if (latestVersion !== currentVersion) {
+                    // if it's not the same as your current version, you're not up to date!
                     Alert.alert(
                         t("page_profile.updates.update_flow.update_available"),
                         t(
@@ -117,7 +121,7 @@ export default function Profile() {
                                             ? latestRelease.assets[0]
                                                   .browser_download_url
                                             : ""
-                                    ),
+                                    ), // update will download the APK from the browser
                             },
                             {
                                 text: t(
@@ -126,12 +130,12 @@ export default function Profile() {
                                 onPress: () =>
                                     Linking.openURL(
                                         latestRelease.html_url || ""
-                                    ),
+                                    ), // changelog will just open the page so you see whats new
                             },
                             {
                                 text: t("globals.nevermind"),
                                 style: "destructive",
-                                onPress: () => {},
+                                onPress: () => {}, // closes
                             },
                         ]
                     );
@@ -166,9 +170,10 @@ export default function Profile() {
         }
     };
 
-    // Loading state
     const { t } = useTranslation();
+    // Loading state
     const [loading, setLoading] = useState<boolean>(true);
+    // user data
     const [language, setLanguage] = useState<"en" | "es" | string>("en");
     const [username, setUsername] = useState<string>("Unknown");
     const [gender, setGender] = useState<string>("Unknown");
@@ -177,6 +182,7 @@ export default function Profile() {
     const [weight, setWeight] = useState<string>("Unknown");
 
     const getMultiple = async (): Promise<UserData> => {
+        // fetch all user data
         try {
             const values = await AsyncStorage.multiGet([
                 "username",
@@ -212,6 +218,8 @@ export default function Profile() {
     useEffect(() => {
         const fetchData = async () => {
             const userData = await getMultiple();
+            // fetches all and then
+            // set the states to all user data, or else, defaults
             setUsername(userData.username);
             setGender(userData.gender);
             setAge(userData.age);
@@ -224,6 +232,8 @@ export default function Profile() {
         fetchData();
     }, []);
 
+    // function to start over, deleting all data
+    // not recommended!
     const deleteAll = async () => {
         try {
             await AsyncStorage.multiRemove([
@@ -246,6 +256,7 @@ export default function Profile() {
         }
     };
 
+    // deleteAll handler
     const startOver = () => {
         Alert.alert(
             t("page_profile.danger_zone.danger_zone_flow.title"),
@@ -269,8 +280,10 @@ export default function Profile() {
         );
     };
 
-    const currentpage: string = usePathname();
+    const currentpage: string = usePathname(); // current page
 
+    // this changes the language. basically english or spanish.
+    // i dont think ill add anything else.
     const handleChangeLanguaage = async (targetLang: "en" | "es") => {
         try {
             await AsyncStorage.setItem("language", targetLang);

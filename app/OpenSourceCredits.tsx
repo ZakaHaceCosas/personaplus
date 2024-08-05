@@ -1,3 +1,6 @@
+// OpenSourceCredits.tsx
+// Credits to the amazing software that has saved me from my lazyness to learn how to make a timer in React
+
 import React from "react";
 import {
     Dimensions,
@@ -97,7 +100,8 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         flexGrow: 1,
         // backgroundColor: "#FFF",
-        // i dont know why, but i feel a credits section in an app should have its background white (edit: nevermind)
+        // i dont know why, but i feel a credits section in an app should have its background white
+        // (edit: nevermind)
     },
 });
 

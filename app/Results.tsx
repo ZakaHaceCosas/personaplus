@@ -62,9 +62,11 @@ export default function Results() {
 
     const [randomMessage, setRandomMessage] = useState<string | null>(null);
 
+    // Get translation function for multilingual support
     const { t } = useTranslation();
 
     useEffect(() => {
+        // Async function to fetch user data from storage
         const fetchUserData = async () => {
             try {
                 const data = await AsyncStorage.multiGet([
@@ -74,6 +76,7 @@ export default function Results() {
                     "gender",
                 ]);
 
+                // Process and clean up the fetched data
                 const processedData: UserHealthData = {
                     age: data[0][1] ? Number(data[0][1]) : null,
                     height: data[1][1] ? Number(data[1][1]) : null,
@@ -84,7 +87,7 @@ export default function Results() {
                             : null,
                 };
 
-                setUserData(processedData);
+                setUserData(processedData); // Update state with user data
             } catch (e) {
                 termLog("Error fetching user data: " + e, "error");
             }
@@ -94,8 +97,12 @@ export default function Results() {
     }, []);
 
     useEffect(() => {
+        // Function to handle exercise performance calculations
         const handleExerciseCalculation = () => {
             try {
+                // ok, I know nesting too much is a bad practice
+                // but uhh it has to be a different function with different params for each scenario
+                // so yeah i cant think of a better approach
                 if (
                     !isNaN(sessionElapsedTime) &&
                     !isNaN(objectiveRunning_Speed) &&
@@ -106,6 +113,7 @@ export default function Results() {
                     userData.weight &&
                     userData.height
                 ) {
+                    // Calculate performance based on the type of exercise
                     if (objectiveExercise.toLowerCase() === "running") {
                         return OpenHealth.performance.RunningOrWalkingPerformance.calculate(
                             userData.age,
@@ -192,16 +200,20 @@ export default function Results() {
     ]);
 
     useEffect(() => {
+        // Set a random message for the "session done" scenario
         const allDoneMessages: string[] = t("cool_messages.session_done", {
             returnObjects: true,
         });
 
+        // Pick a random message to celebrate the end of the session
         const randomMessageForAllDone =
             allDoneMessages[Math.floor(Math.random() * allDoneMessages.length)];
 
         setRandomMessage(randomMessageForAllDone);
     }, [t]);
 
+    // Speed options for running exercises
+    // TODO - translate this
     const speedOptions = [
         ["Brisk Walk", "1.6 - 3.2 km/h"],
         ["Light Jog", "3.2 - 4.0 km/h"],

@@ -1,5 +1,5 @@
 // Sessions.tsx
-// Página para sesiones
+// Page for live exercising sessions
 
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet, Alert, ToastAndroid, Platform } from "react-native";
@@ -24,7 +24,7 @@ import colors from "@/src/toolkit/design/colors";
 import { Objective } from "@/src/types/Objective";
 import Loading from "@/src/Loading";
 
-// Estilos
+// We define the styles
 const styles = StyleSheet.create({
     helpcontainer: {
         backgroundColor: colors.MAIN.SECTION,
@@ -57,11 +57,12 @@ export default function Sessions() {
     const [isUserCheckingHelp, setIsUserCheckingHelp] = useState(false);
     const [isUserResting, setIsUserResting] = useState(false);
     /*
-    If you wonder why there are two variables for the timer's loops, one of them is to keep account of many times repeat (laps) and other one is to set the "key" attribute of the circle timer, which is required for it to loop.
+    If you wonder why there are two variables for the timer's loops, one of them is to keep account of many times repeat (laps) and other one is to set the "key" attribute of the circle timer (timerKey), which is required for the timer to loop itself.
     */
     const [laps, setLaps] = useState<number>(0);
     const [timerKey, setTimerKey] = useState<number>(0);
 
+    // fetches the objectives - simple
     useEffect(() => {
         const handle = async () => {
             try {
@@ -90,6 +91,7 @@ export default function Sessions() {
         handle();
     }, [t]);
 
+    // some logs i added cause' this shi was broken in past and i didnt know howto fix it
     useEffect(() => {
         termLog("SESSIONS.TSX - Objectives: " + objectives, "log");
         termLog(
@@ -99,14 +101,15 @@ export default function Sessions() {
         termLog("SESSIONS.TSX - Current ID: " + objectiveIdentifier, "log");
     }, [objectives, objectiveIdentifier]);
 
+    // gather the fetched objective object, and find the current objective (the one belonging to this session)
     useEffect(() => {
         if (objectiveIdentifier !== null) {
             const fetchCurrentObjective = async () => {
                 try {
                     const objective =
-                        await getObjectiveByIdentifier(objectiveIdentifier);
-                    setCurrentObjective(objective ?? null);
-                    setLaps(objective?.repetitions || 0); // Ensure laps is set correctly
+                        await getObjectiveByIdentifier(objectiveIdentifier); // this line handles everything
+                    setCurrentObjective(objective ?? null); // this sets the gathered objective as the current objective, or null if something happened
+                    setLaps(objective?.repetitions || 0); // this ensures "laps" is set correctly
                 } catch (e) {
                     termLog("Error fetching current objective: " + e, "error");
                 }
@@ -116,6 +119,7 @@ export default function Sessions() {
         }
     }, [objectiveIdentifier]);
 
+    // more logs cause of this shi being broken
     useEffect(() => {
         termLog(
             "SESSIONS.TSX - Current Objective: " +
@@ -124,22 +128,28 @@ export default function Sessions() {
         );
     }, [currentObjective]);
 
+    // the sustantivized version of the objective name (i dont know how to call it)
+    // like if the exercise is "Push ups" this variable is "Pushing up" (or "Doing pushups"? i dont remember)
     const currentObjectiveSustantivizedName: string = currentObjective?.exercise
         ? t(
               `globals.supported_active_objectives_sustantivized.${currentObjective.exercise}`
           )
         : "Doing something";
 
+    // pauses/plays the timer
+    // you can pass a specific boolean value (true = play, false = pause), or dont pass anything for it to revert (true to false / false to true)
     const toggleTimerStatus = (manualTarget?: boolean): void => {
         setTimerStatus(
             manualTarget !== undefined ? manualTarget : !isTimerRunning
         );
     };
 
+    // the color of the timer
     const timerColor = isTimerRunning
         ? colors.PRIMARIES.GOD.GOD
         : colors.PRIMARIES.HMM.HMM;
 
+    // cancel() function (basically to give up)
     const cancel = () => {
         Alert.alert(
             t("globals.are_you_sure"),
@@ -161,6 +171,7 @@ export default function Sessions() {
         );
     };
 
+    // this is to show a random motivational message if the session is completed
     const sessionCompletedMessages: string[] = t("cool_messages.session_done", {
         returnObjects: true,
     });
@@ -172,6 +183,7 @@ export default function Sessions() {
     const messageForSessionCompleted =
         sessionCompletedMessages[sessionCompletedMessagesIndex];
 
+    // total duration of the session, including rests
     let totalTime: number;
 
     if (currentObjective) {
@@ -182,6 +194,9 @@ export default function Sessions() {
         totalTime = 0;
     }
 
+    // this function is basically to finish the session
+    // will mark the obj as done, save it, and head to the results page
+    // UNLESS you specify it to skip that step, heading to home page in that case
     const finishSession = async (skipResults: boolean) => {
         if (currentObjective !== undefined && currentObjective !== null) {
             try {
@@ -220,6 +235,8 @@ export default function Sessions() {
         }
     };
 
+    // handles finishing. this is called whenever the timer runs out of time
+    // however repetititons exist, so a handler is required
     const handleFinish = () => {
         if (laps !== 0) {
             setLaps(prev => (prev > 0 ? prev - 1 : 0));
@@ -239,6 +256,7 @@ export default function Sessions() {
         }
     };
 
+    // this handles pausing the timer for resting
     const handleResting = (
         totalDuration: number,
         timeLeft: number,
@@ -248,9 +266,16 @@ export default function Sessions() {
     ): void => {
         const elapsedTime = totalDuration - timeLeft; // Elapsed time
         // the circle timer is supposed to call this thing each second, so it should work
-        termLog("Fragment Duration: " + fragmentDuration, "log"); // for debugging :]
+        // termLog("Fragment Duration: " + fragmentDuration, "log"); // for debugging, commented for performance
         const currentFragment = Math.floor(elapsedTime / fragmentDuration);
-        termLog("Current Fragment: " + currentFragment, "log");
+        // termLog("Current Fragment: " + currentFragment, "log"); // also for debug, also commented for performance
+
+        /*
+        i'll try to explain what's up
+        sessions get divided in equally lasting "fragments", one division per rest
+        1 session (60 seconds) + 1 rest = 1 division = 2 fragments (30 seconds)
+        alright?
+        */
 
         if (
             elapsedTime % fragmentDuration === 0 &&

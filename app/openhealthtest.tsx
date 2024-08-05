@@ -1,3 +1,4 @@
+// this file is just for testing purposes, and its soon going to be deprecated in favor of the production-almost-ready Results.tsx page
 import React from "react";
 import { View } from "react-native";
 import OpenHealth from "@/core/openhealth";
@@ -8,6 +9,7 @@ import BottomNav from "@/src/BottomNav";
 import colors from "@/src/toolkit/design/colors";
 
 export default function openhealthtest() {
+    // some sample calculations
     const bmi = OpenHealth.physicalHealth.BodyMassIndex.calculate(
         21,
         "male",
