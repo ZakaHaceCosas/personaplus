@@ -147,8 +147,9 @@ const getObjectiveByIdentifier = async (identifier: number): Promise<Objective |
 
 // Funcion para definir la descripción del objetivo
 /**
- * Function to generate an objective's dashboard description.
+ * Function to generate an objective's dashboard description. **Async function**
  *
+ * @async
  * @param {TFunction} t Pass here the translate function, please.
  * @param {Objective} objective The objective itself.
  * @returns {string}
@@ -235,6 +236,14 @@ async function registerBackgroundObjectivesFetchAsync() {
     }
 }
 
+// Funcion para comprobar si un objetivo se tiene que hacer hoy
+/**
+ * Checks if an objective was already done today or needs to be done. **Async function.**
+ *
+ * @async
+ * @param {number} identifier The objective's identifier
+ * @returns {Promise<boolean | null>} A promise. Returns **true** if the objective IS done and doesn't need to be done. Returns **false** if otherwise (doesn't need to be done today). If an error occurs, will return null and `termLog()` the error.
+ */
 async function checkForAnObjectiveDailyStatus(identifier: number): Promise<boolean | null> {
     try {
         const prevDailySavedData = await AsyncStorage.getItem("dailyObjectivesStorage");
@@ -251,6 +260,7 @@ async function checkForAnObjectiveDailyStatus(identifier: number): Promise<boole
         if (dailyData[date][identifier]) {
             return dailyData[date][identifier].wasDone
         } else {
+            termLog("Error checking if an objective is due today: No data exists", "error")
             return null // Error
         }
 
@@ -262,8 +272,9 @@ async function checkForAnObjectiveDailyStatus(identifier: number): Promise<boole
 
 // Funcion para verificar si tienes que hacer objetivos hoy o no, y si los has hecho
 /**
- * Verifies if there are any objectives due today or not, and if they have been done or not.
+ * Verifies if there are any objectives due today or not, and if they have been done or not. **Async function.**
  *
+ * @async
  * @param {{ [key: string]: Objective }} objectives A [key: string]: Objective object.
  * @returns {Promise<null | true | false>} Null if no objectives at all, false if none is due today (or there is but was already done), and true if there's any due today.
  */
@@ -387,7 +398,7 @@ function saveDailyObjectivePerformance(id: number, date: TodaysDay, wasDone: boo
 }
 
 /**
- * Fetches the daily objective registry. Async function.
+ * Fetches the daily objective registry. **Async function.**
  *
  * @async
  * @param {("string" | "object")} [wayToGetThem="object"] Whether you want to get them as an object or as a stringified JSON
