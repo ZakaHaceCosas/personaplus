@@ -271,10 +271,11 @@ export default function Home() {
                 // update IDs list
                 setDueTodayObjectiveList(identifiers);
             }
+            termLog("Due today IDs: " + identifiers, "log");
         };
 
         handle();
-    });
+    }, [objectives]);
 
     if (loading) {
         return <Loading currentpage={currentpage} displayNav={true} />;
@@ -337,7 +338,9 @@ export default function Home() {
                                 if (
                                     obj &&
                                     obj.days[adjustedToday] &&
-                                    dueTodayObjectiveList[obj.identifier]
+                                    dueTodayObjectiveList.includes(
+                                        obj.identifier
+                                    )
                                 ) {
                                     return (
                                         <Division

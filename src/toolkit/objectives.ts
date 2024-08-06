@@ -257,8 +257,8 @@ async function checkForAnObjectiveDailyStatus(identifier: number): Promise<boole
         const date: TodaysDay = getCurrentDate()
 
         // If data exists, return it.
-        if (dailyData[date][identifier]) {
-            return dailyData[date][identifier].wasDone
+        if (dailyData[date][String(identifier)]) {
+            return dailyData[date][String(identifier)].wasDone
         } else {
             termLog("Error checking if an objective is due today: No data exists", "error")
             return null // Error
