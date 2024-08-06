@@ -119,7 +119,7 @@ const config: ExpoConfig.ExpoConfig = {
             "expo-build-properties",
             {
                 "android": {
-                    "newArchEnabled": true
+                    "newArchEnabled": false
                 }
             }
         ]
