@@ -242,7 +242,6 @@ export default function CreateObjective() {
                 speed,
                 barWeight,
             },
-            wasDone: false,
         };
 
         try {
