@@ -16,6 +16,7 @@ import {
     registerBackgroundObjectivesFetchAsync,
     checkForTodaysObjectives,
     objectiveArrayToObject,
+    checkForAnObjectiveDailyStatus,
 } from "@/src/toolkit/objectives";
 import BetterText from "@/src/BetterText";
 import Section from "@/src/section/Section";
@@ -63,6 +64,9 @@ export default function Home() {
     const [objectives, setObjectives] = useState<{
         [key: string]: Objective;
     } | null>(null);
+    const [dueTodayObjectiveList, setDueTodayObjectiveList] = useState<
+        number[]
+    >([]);
     // isRegistered and status are used by the background task handler, nothing else
     const [isRegistered, setIsRegistered] = useState(false);
     const [status, setStatus] =
@@ -228,16 +232,49 @@ export default function Home() {
 
     // if you've done it all, unsubscribe from reminder notifications
     useEffect(() => {
-        if (objectives && checkForTodaysObjectives(objectives) !== null) {
-            if (Platform.OS === "android") {
-                if (checkForTodaysObjectives(objectives) === false) {
-                    cancelScheduledNotifications();
-                } else if (checkForTodaysObjectives(objectives) === true) {
-                    scheduleRandomNotifications(t);
+        const unsubscribe = async () => {
+            if (objectives && checkForTodaysObjectives(objectives) !== null) {
+                const check = await checkForTodaysObjectives(objectives);
+                if (Platform.OS === "android") {
+                    if (check === false) {
+                        cancelScheduledNotifications();
+                    } else if (check === true) {
+                        scheduleRandomNotifications(t);
+                    }
                 }
             }
-        }
+        };
+
+        unsubscribe();
     }, [objectives, t]);
+
+    useEffect(() => {
+        const handle = async () => {
+            const identifiers = []; // A list of the IDs of objectives that are due today
+            if (objectives && Object.keys(objectives).length > 0) {
+                // iterates over all the objectives using a for...of loop to handle async/await stuff
+                for (const key of Object.keys(objectives)) {
+                    const objective = objectives[key];
+                    const isDailyStatusChecked =
+                        await checkForAnObjectiveDailyStatus(
+                            objective.identifier
+                        );
+
+                    if (
+                        !isDailyStatusChecked &&
+                        objective.days[adjustedToday] // if not done today AND has to be done today, push it
+                    ) {
+                        identifiers.push(objective.identifier);
+                    }
+                }
+
+                // update IDs list
+                setDueTodayObjectiveList(identifiers);
+            }
+        };
+
+        handle();
+    });
 
     if (loading) {
         return <Loading currentpage={currentpage} displayNav={true} />;
@@ -260,10 +297,7 @@ export default function Home() {
                 <Section kind="Objectives">
                     {objectives && Object.keys(objectives).length > 0 ? (
                         Object.keys(objectives).every(
-                            key =>
-                                objectives[key].wasDone ||
-                                !objectives[key].days ||
-                                !objectives[key].days[adjustedToday]
+                            key => !objectives[key].days[adjustedToday]
                         ) ? (
                             <View
                                 style={{
@@ -296,14 +330,14 @@ export default function Home() {
                             Object.keys(objectives).map(key => {
                                 const obj = objectives[key];
                                 termLog(
-                                    `OBJECTIVE ${obj.identifier}, days[${adjustedToday}]: ${obj.days[adjustedToday]}`,
+                                    `OBJECTIVE: ${obj.identifier}, days[${adjustedToday}]: ${obj.days[adjustedToday]}`,
                                     "log"
                                 );
 
                                 if (
                                     obj &&
-                                    !obj.wasDone &&
-                                    obj.days[adjustedToday]
+                                    obj.days[adjustedToday] &&
+                                    dueTodayObjectiveList[obj.identifier]
                                 ) {
                                     return (
                                         <Division
