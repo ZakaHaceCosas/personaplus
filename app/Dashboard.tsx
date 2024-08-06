@@ -33,6 +33,11 @@ import Loading from "@/src/Loading";
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
 
+// uh, interface to fix weird "implicit any" error with descriptions
+interface Descriptions {
+    [identifier: string]: string | undefined;
+}
+
 // We define the styles
 const styles = StyleSheet.create({
     containerview: {
@@ -55,6 +60,7 @@ export default function Dashboard() {
     const [objectives, setObjectives] = useState<{
         [key: string]: Objective;
     } | null>(null);
+    const [descriptions, setDescriptions] = useState<Descriptions>({}); // this is for descriptions of the objectives in the dashboard
 
     useEffect(() => {
         // fetches objectives
@@ -125,6 +131,28 @@ export default function Dashboard() {
         }
     };
 
+    useEffect(() => {
+        const fetchDescriptions = async () => {
+            try {
+                if (objectives) {
+                    const newDescriptions: Descriptions = {};
+                    for (const key of Object.keys(objectives)) {
+                        const objective = objectives[key];
+                        if (objective) {
+                            newDescriptions[objective.identifier] =
+                                await defineObjectiveDescription(t, objective);
+                        }
+                    }
+                    setDescriptions(newDescriptions);
+                }
+            } catch (e) {
+                termLog("Error getting descriptions: " + e, "error");
+            }
+        };
+
+        fetchDescriptions();
+    }, [objectives, t]);
+
     const currentpage: string = usePathname(); // current page ("/Dashboard"). for the nav component.
 
     if (loading) {
@@ -157,10 +185,8 @@ export default function Dashboard() {
                                 return null;
                             }
 
-                            const description = defineObjectiveDescription(
-                                t,
-                                objective
-                            );
+                            const description =
+                                descriptions[objective.identifier];
 
                             return (
                                 <View key={objective.identifier}>
@@ -172,7 +198,9 @@ export default function Dashboard() {
                                         header={t(
                                             `globals.supported_active_objectives.${objective.exercise}`
                                         )}
-                                        subheader={description}
+                                        subheader={
+                                            description || t("globals.loading")
+                                        }
                                     >
                                         <Button
                                             style="WOR"
