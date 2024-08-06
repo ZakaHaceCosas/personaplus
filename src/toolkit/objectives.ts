@@ -1,5 +1,5 @@
 // OBJECTIVE TYPE
-import { Objective } from '@/src/types/Objective';
+import { Objective, ObjectiveDailyLog } from '@/src/types/Objective';
 // INTERNALS
 import { termLog } from '@/src/toolkit/debug/console';
 // FRONTEND
@@ -88,13 +88,9 @@ const markObjectiveAsDone = async (identifier: number, confirmWithToast: boolean
         const objectives = await getObjectives("object");
 
         if (Array.isArray(objectives)) {
-            const updatedObjectives = objectives.map(obj =>
-                obj.identifier === identifier ? { ...obj, wasDone: true } : obj
-            );
             const date = getCurrentDate()
             saveDailyObjectivePerformance(identifier, date, true)
 
-            await saveObjectives(updatedObjectives);
             router.navigate("/");
 
             if (Platform.OS === "android" && confirmWithToast) {
@@ -157,7 +153,7 @@ const getObjectiveByIdentifier = async (identifier: number): Promise<Objective |
  * @param {Objective} objective The objective itself.
  * @returns {string}
  */
-const defineObjectiveDescription = (t: TFunction, objective: Objective): string => {
+async function defineObjectiveDescription(t: TFunction, objective: Objective): Promise<string> {
     let descriptionDraft: string = t('page_dashboard.objective.description', {
         duration: objective.duration,
         rests: objective.rests,
@@ -173,7 +169,9 @@ const defineObjectiveDescription = (t: TFunction, objective: Objective): string 
         });
     }
 
-    descriptionDraft += objective?.wasDone === true
+    const wasDone = await checkForAnObjectiveDailyStatus(objective.identifier)
+
+    descriptionDraft += wasDone === true
         ? t('page_dashboard.objective.was_done.true')
         : t('page_dashboard.objective.was_done.false');
 
@@ -237,32 +235,73 @@ async function registerBackgroundObjectivesFetchAsync() {
     }
 }
 
+async function checkForAnObjectiveDailyStatus(identifier: number): Promise<boolean | null> {
+    try {
+        const prevDailySavedData = await AsyncStorage.getItem("dailyObjectivesStorage");
+        if (!prevDailySavedData) {
+            await AsyncStorage.setItem("dailyObjectivesStorage", JSON.stringify({}))
+            return false // If the log doesn't exist, obviusly it's not done
+        }
+
+        const dailyData: ObjectiveDailyLog = JSON.parse(prevDailySavedData);
+
+        const date: TodaysDay = getCurrentDate()
+
+        // If data exists, return it.
+        if (dailyData[date][identifier]) {
+            return dailyData[date][identifier].wasDone
+        } else {
+            return null // Error
+        }
+
+    } catch (e) {
+        termLog("Error checking if an objective is due today: " + e, "error")
+        return null
+    }
+}
+
 // Funcion para verificar si tienes que hacer objetivos hoy o no, y si los has hecho
 /**
  * Verifies if there are any objectives due today or not, and if they have been done or not.
  *
  * @param {{ [key: string]: Objective }} objectives A [key: string]: Objective object.
- * @returns {(null | true | false)} Null if no objectives at all, false if none is due today (or there is but was already done), and true if there's any due today.
+ * @returns {Promise<null | true | false>} Null if no objectives at all, false if none is due today (or there is but was already done), and true if there's any due today.
  */
-function checkForTodaysObjectives(objectives: { [key: string]: Objective }): null | true | false {
+async function checkForTodaysObjectives(objectives: { [key: string]: Objective }): Promise<null | true | false> {
+    // if there are no objectives (either the object doesnt exist or it has no items), returns null
     if (!objectives || Object.keys(objectives).length === 0) {
         return null;
     }
 
-    const objectiveKeys = Object.keys(objectives);
-    const dueTodayObjectives = objectiveKeys
-        .map(key => objectives[key])
-        .filter(obj => obj.days[adjustedToday] && !obj.wasDone);
+    const dueTodayObjectives = await Promise.all(
+        Object.keys(objectives).map(async key => {
+            const obj = objectives[key];
+            if (obj.days[adjustedToday]) {
+                const status = await checkForAnObjectiveDailyStatus(obj.identifier);
+                return { identifier: obj.identifier, status };
+            }
+            return null;
+        })
+    );
 
-    if (dueTodayObjectives.length > 0) {
+    const objectivesToDo = dueTodayObjectives.filter(obj => obj && obj.status === false);
+
+    if (objectivesToDo.length > 0) {
         return true;
     }
 
-    const allObjectivesDone = objectiveKeys.every(
-        key => objectives[key].wasDone || !objectives[key].days || !objectives[key].days[adjustedToday]
+    const allObjectivesDone = await Promise.all(
+        Object.keys(objectives).map(async key => {
+            const obj = objectives[key];
+            if (obj.days[adjustedToday]) {
+                const status = await checkForAnObjectiveDailyStatus(obj.identifier);
+                return status === true;
+            }
+            return true;
+        })
     );
 
-    return allObjectivesDone ? false : null;
+    return allObjectivesDone.every(done => done) ? false : null;
 }
 
 /**
@@ -372,4 +411,4 @@ const getObjectivesDailyLog = async (wayToGetThem: "string" | "object" = "object
     }
 }
 
-export { getObjectives, deleteObjective, markObjectiveAsDone, clearObjectives, getObjectiveByIdentifier, defineObjectiveDescription, registerBackgroundObjectivesFetchAsync, checkForTodaysObjectives, objectiveArrayToObject, calculateSessionFragmentsDuration, saveDailyObjectivePerformance, getObjectivesDailyLog };
+export { getObjectives, deleteObjective, markObjectiveAsDone, clearObjectives, getObjectiveByIdentifier, defineObjectiveDescription, registerBackgroundObjectivesFetchAsync, checkForTodaysObjectives, objectiveArrayToObject, calculateSessionFragmentsDuration, saveDailyObjectivePerformance, getObjectivesDailyLog, checkForAnObjectiveDailyStatus };

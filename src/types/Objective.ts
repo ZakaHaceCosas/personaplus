@@ -1,6 +1,8 @@
 // src/types/Objective.ts
 // Objective Type
 
+import { TodaysDay } from "../toolkit/today";
+
 export interface Objective {
     identifier: number;
     days: boolean[];
@@ -26,7 +28,28 @@ export interface Objective {
     repetitions: number;
     restDuration: number;
     rests: number;
-    wasDone: boolean;
 }
 
 export type ObjectiveWithoutId = Omit<Objective, "identifier">; // for the CreateObjective form
+
+export interface ObjectiveDailyLog {
+    [date: TodaysDay]: {
+        [id: string | number]: {
+            wasDone: boolean;
+            performance: "undefined" | string | {
+                result?: number;
+                subject?: {
+                    age: number;
+                    gender: string;
+                    weight: number;
+                    height: number;
+                    speed?: number;
+                    time: number;
+                    pushUps?: number;
+                    hands?: number;
+                };
+                context?: string;
+            };
+        };
+    };
+}
