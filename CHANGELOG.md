@@ -45,7 +45,8 @@ TEMPLATE
 - Simplified CreateObjective page (revomed the "Nevermind" button, use "< Go back" instead).
 - Instead of a "change to English / Spanish" button on WelcomeScreen, now PersonaPlus auto-detects your language (if you don't use a supported lang defaults to English just like always).
 - Changed some in-app texts to be shorter.
-- (WORK IN PROGRESS) Add a Results page after a session.
+- Add a Results page after a session.
+- Added a daily log for objectives (Work in Progress)
 
 ### Dev updates - Latest
 
@@ -62,6 +63,7 @@ TEMPLATE
 - Removed some dependencies that weren't needed.
 - Made changes to VSCode config (`.vscode/settings`).
 - Added JSDoc to sections & divisions. Also improved color toolkit's JSDoc.
+- Replaced using a `wasDone` property on each objective in favour of the global daily log.
 
 ### Trivial updates - Latest
 
@@ -75,6 +77,7 @@ TEMPLATE
 ### Known errors
 
 - Dev Interface refuses to render, due to "an object not being a valid child" or something.
+- On some devices, scrolling doesn't work correctly. In others it does (older ones).
 
 ## 0.0.1-R5-b23
 
