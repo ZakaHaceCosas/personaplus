@@ -211,7 +211,9 @@
         "results": {
             "burnt_calories": "CALORÍAS QUEMADAS",
             "header_more": "MÁS SOBRE TU RENDIMIENTO",
-            "body_running": "Corriste a unos {{speed}} por {{time}} minutos`"
+            "body_running": "Corriste a unos {{speed}} por {{time}} minutos. ¡Buena carrera!",
+            "body_lifting": "Hiciste {{amount}} levantamientos de {{weight}} kg. ¡Qué fuerte!",
+            "body_pushups": "Hiciste {{amount}} flexiones con {{hands}} manos. ¡Genial!"
         },
         "well_done_bud": "Bien hecho, colega. Los resultados de esta sesión se guardarán, y junto a tus resultados en demás sesiones."
     },
