@@ -95,11 +95,12 @@ Para que nadie pierda el rumbo, aunque voy tocando un poco de todo, este es el p
 
 1. [X] ~~Terminar de implementar las sesiones básicas.~~ **Hecho.**
 2. [X] ~~Una vez hecho eso, algún ajuste más a la app y de ahí a lo importante.~~ **Hecho.**
-3. [ ] Retomar OpenHealth (un poco olvidado desde que lo creé) e implementar todos los cálculos necesarios para las actividades que PersonaPlus soporta por defecto.
-4. [ ] Implementar - de alguna manera - obtención de datos básicos sobre cada sesión, su guardado, y la generación de estadísticas en base a los cálculos que OpenHealth pueda hacer con esos datos.
-5. [ ] A partir de ahí, implementar también el guardado de las sesiones en sí - o sea, que la app registre cada día si has hecho algo o no.
-6. [ ] Implementar la *hora de pensar* y sus respectivas notificaciones (cuando haga eso aprovecharé para arreglar las notificaciones actuales que funcionan fatal)
-7. A partir de ahí, iré viendo
+3. [X] ~~Retomar OpenHealth (un poco olvidado desde que lo creé) e implementar todos los cálculos necesarios para las actividades que PersonaPlus soporta por defecto.~~ **Hecho.**
+4. [X] Implementar - de alguna manera - obtención de datos básicos sobre cada sesión y su guardado.
+5. [X] A partir de ahí, implementar también el guardado de las sesiones en sí - o sea, que la app registre cada día si has hecho algo o no.
+6. [ ] La generación de estadísticas en base a los cálculos que OpenHealth pueda hacer con los datos guardados en cada sesión.
+7. [ ] Implementar la *hora de pensar* y sus respectivas notificaciones (cuando haga eso aprovecharé para arreglar las notificaciones actuales que funcionan fatal)
+8. A partir de ahí, iré viendo
 
 ## ¿Cómo contribuir?
 
@@ -119,9 +120,9 @@ Asegúrate de que cualquier software de terceros utilizado que esté bajo difere
 
 #### Creador y contribuidores
 
-Creado por Zakaria (@ZakaHaceCosas).
+Creado por Zakaria ([@ZakaHaceCosas](https://bento.me/zakahacecosas)).
 
-Aquellos contribuidores que aporten significativamente a la app serán nombrados aquí. Todos ellos aparecen [en esta pestaña](https://github.com/zakaHaceCosas/personaplus/graphs/contributors).
+[Todos los contribuidores aparecen en esta pestaña](https://github.com/zakaHaceCosas/personaplus/graphs/contributors). Los que hagan aportes significativos, aparecerán también aquí. ¡Gracias por contribuir!
 
 #### Software libre
 
