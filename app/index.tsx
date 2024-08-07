@@ -40,6 +40,7 @@ import colors from "@/src/toolkit/design/colors";
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
 import Loading from "@/src/Loading";
+import { TFunction } from "i18next";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -55,6 +56,39 @@ const styles = StyleSheet.create({
         flexGrow: 1,
     },
 });
+
+// To prevent code from being super nested / unreadable, I've moved some things here, so they act as separate components
+function AllObjectivesDone(t: TFunction, randomMessageForAllDone: string) {
+    return (
+        <View
+            style={{
+                padding: 20,
+                flex: 1,
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+            }}
+        >
+            <BetterText
+                textAlign="center"
+                fontSize={30}
+                textColor={colors.BASIC.WHITE}
+                fontWeight="Bold"
+            >
+                {t("page_home.no_objectives.all_done")}
+            </BetterText>
+            <GapView height={10} />
+            <BetterText
+                textAlign="center"
+                fontSize={15}
+                textColor={colors.BASIC.WHITE}
+                fontWeight="Regular"
+            >
+                {randomMessageForAllDone}
+            </BetterText>
+        </View>
+    );
+}
 
 // We create the function
 export default function Home() {
@@ -249,6 +283,9 @@ export default function Home() {
     }, [objectives, t]);
 
     useEffect(() => {
+        let isMounted = true; // This is supposed to track if the component is still mounted
+        // found it somewhere, hope it does something useful
+
         const handle = async () => {
             const identifiers = []; // A list of the IDs of objectives that are due today
             if (objectives && Object.keys(objectives).length > 0) {
@@ -259,22 +296,29 @@ export default function Home() {
                         await checkForAnObjectiveDailyStatus(
                             objective.identifier
                         );
-
                     if (
                         !isDailyStatusChecked &&
-                        objective.days[adjustedToday] // if not done today AND has to be done today, push it
+                        objective.days[adjustedToday]
                     ) {
+                        // if not done today AND has to be done today, push it
                         identifiers.push(objective.identifier);
                     }
                 }
 
-                // update IDs list
-                setDueTodayObjectiveList(identifiers);
+                if (isMounted) {
+                    // update IDs list only if the component is still mounted
+                    setDueTodayObjectiveList(identifiers);
+                }
             }
             termLog("Due today IDs: " + identifiers, "log");
         };
 
         handle();
+
+        return () => {
+            // unmount this thing
+            isMounted = false;
+        };
     }, [objectives]);
 
     if (loading) {
@@ -300,41 +344,14 @@ export default function Home() {
                         Object.keys(objectives).every(
                             key => !objectives[key].days[adjustedToday]
                         ) ? (
-                            <View
-                                style={{
-                                    padding: 20,
-                                    flex: 1,
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                }}
-                            >
-                                <BetterText
-                                    textAlign="center"
-                                    fontSize={30}
-                                    textColor={colors.BASIC.WHITE}
-                                    fontWeight="Bold"
-                                >
-                                    {t("page_home.no_objectives.all_done")}
-                                </BetterText>
-                                <GapView height={10} />
-                                <BetterText
-                                    textAlign="center"
-                                    fontSize={15}
-                                    textColor={colors.BASIC.WHITE}
-                                    fontWeight="Regular"
-                                >
-                                    {randomMessageForAllDone}
-                                </BetterText>
-                            </View>
+                            AllObjectivesDone(t, randomMessageForAllDone)
                         ) : (
                             Object.keys(objectives).map(key => {
                                 const obj = objectives[key];
-                                termLog(
+                                /* termLog(
                                     `OBJECTIVE: ${obj.identifier}, days[${adjustedToday}]: ${obj.days[adjustedToday]}`,
                                     "log"
-                                );
-
+                                ); */
                                 if (
                                     obj &&
                                     obj.days[adjustedToday] &&
