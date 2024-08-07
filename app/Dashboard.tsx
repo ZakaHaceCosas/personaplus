@@ -41,8 +41,8 @@ interface Descriptions {
 // We define the styles
 const styles = StyleSheet.create({
     containerview: {
-        width: Dimensions.get("window").width,
-        height: Dimensions.get("window").height,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
     },
     mainview: {
         padding: 20,
@@ -68,7 +68,7 @@ export default function Dashboard() {
             try {
                 // this looks a bit weird, but it actually works
                 const storedObjectives = await getObjectives();
-                if (storedObjectives) {
+                if (storedObjectives || storedObjectives !== null) {
                     const finalObjectives =
                         objectiveArrayToObject(storedObjectives);
                     setObjectives(finalObjectives);
@@ -77,8 +77,19 @@ export default function Dashboard() {
                         "success"
                     );
                     setLoading(false);
-                } else {
+                } else if (objectives === null) {
                     // no objectives
+                    await AsyncStorage.setItem(
+                        "objectives",
+                        JSON.stringify([])
+                    );
+                    setObjectives(JSON.parse("[]"));
+                    termLog(
+                        "Could not get objectives fetched! Setting them to an empty array ( [] )",
+                        "warn"
+                    );
+                } else {
+                    // no objectives (fallback behaviour)
                     await AsyncStorage.setItem(
                         "objectives",
                         JSON.stringify([])
@@ -99,7 +110,7 @@ export default function Dashboard() {
         };
 
         fetchObjectives();
-    }, [t]);
+    }, [t, objectives]);
 
     // objective deletion - pretty simple
     const handleDeleteObjective = async (identifier: number) => {
@@ -107,14 +118,17 @@ export default function Dashboard() {
             await deleteObjective(identifier); // actually this line itself does the entire thing, thanks to the objective toolkit
             // the rest just updates the state to refresh the page
             const updatedObjectives = await getObjectives();
-            const objectivesObject = objectiveArrayToObject(updatedObjectives);
+            if (updatedObjectives) {
+                const objectivesObject =
+                    objectiveArrayToObject(updatedObjectives);
 
-            setObjectives(objectivesObject);
-            if (Platform.OS === "android") {
-                ToastAndroid.show(
-                    t("page_dashboard.item_deleted", { id: identifier }),
-                    ToastAndroid.SHORT
-                );
+                setObjectives(objectivesObject);
+                if (Platform.OS === "android") {
+                    ToastAndroid.show(
+                        t("page_dashboard.item_deleted", { id: identifier }),
+                        ToastAndroid.SHORT
+                    );
+                }
             }
         } catch (e) {
             termLog(

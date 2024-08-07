@@ -20,13 +20,15 @@ import { adjustedToday, getCurrentDate, TodaysDay } from '@/src/toolkit/today';
  * @param {("object" | "string")} [wayToGetThem="object"] - The format to return the objectives in.
  * @returns {Promise<Objective[] | string>} - Returns the objectives in the specified format.
  */
-const getObjectives = async (): Promise<Objective[]> => {
+const getObjectives = async (): Promise<Objective[] | null> => {
     try {
         const storedObjectives: string | null = await AsyncStorage.getItem("objectives");
         const objectives: Objective[] = storedObjectives ? JSON.parse(storedObjectives) : [];
 
         if (Array.isArray(objectives)) {
             return objectives;
+        } else if (!objectives) {
+            return null
         } else {
             throw new Error("Objectives array expected, got something else.")
         }
@@ -59,10 +61,14 @@ const saveObjectives = async (objectives: Objective[]): Promise<void> => {
 const deleteObjective = async (identifier: number): Promise<void> => {
     try {
         const objectives = await getObjectives();
-        const updatedObjectives = objectives.filter(obj => obj.identifier !== identifier);
-        await saveObjectives(updatedObjectives);
-    } catch (error) {
-        termLog("Error in deleteObjective: " + error, "error");
+        if (objectives) {
+            const updatedObjectives = objectives.filter(obj => obj.identifier !== identifier);
+            await saveObjectives(updatedObjectives);
+        } else {
+            termLog("Error in deleteObjective! No objectives", "error");
+        }
+    } catch (e) {
+        termLog("Error in deleteObjective: " + e, "error");
     }
 };
 
@@ -78,8 +84,6 @@ const deleteObjective = async (identifier: number): Promise<void> => {
  */
 const markObjectiveAsDone = async (identifier: number, confirmWithToast: boolean = true, t: TFunction): Promise<void> => {
     try {
-        const objectives = await getObjectives();
-
         const date = getCurrentDate()
         saveDailyObjectivePerformance(identifier, date, true)
 
@@ -122,8 +126,13 @@ const clearObjectives = async () => {
 const getObjectiveByIdentifier = async (identifier: number): Promise<Objective | null | undefined> => {
     try {
         const objectives = await getObjectives();
-        const objective = objectives.find(obj => obj.identifier === identifier);
-        return objective || null;
+        if (objectives) {
+            const objective = objectives.find(obj => obj.identifier === identifier);
+            return objective;
+        } else {
+            termLog("Got an error fetching the objective by identifier! No objectives", "error");
+            return null
+        }
     } catch (e) {
         termLog("Got an error fetching the objective by identifier! " + e, "error");
         return null;
