@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const config: ExpoConfig.ExpoConfig = {
-    name: "PersonaPlus",
+    name: process.env.APPNAME || "PersonaPlus",
     slug: "PersonaPlus",
     scheme: "personaplus",
     description: "Give yourself a PLUS",
@@ -29,13 +29,14 @@ const config: ExpoConfig.ExpoConfig = {
         "**/*"
     ],
     android: {
+        icon: process.env.APPICON || undefined, // || undefined, so either the blue dev icon or directly the regular adaptive icon
         adaptiveIcon: {
             foregroundImage: "./assets/adaptive-icon-foreground.png",
             backgroundImage: "./assets/adaptive-icon-background.png",
             backgroundColor: "#0E1013"
         },
         allowBackup: false,
-        package: "com.zakahacecosas.personaplus",
+        package: process.env.PACKAGE || "com.zakahacecosas.personaplus",
         permissions: [
             "android.permission.SCHEDULE_EXACT_ALARM",
             "android.permission.POST_NOTIFICATIONS",
