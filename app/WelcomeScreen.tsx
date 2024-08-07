@@ -27,11 +27,10 @@ import { getDefaultLocale } from "@/src/toolkit/translations";
 // We define the styles
 const styles = StyleSheet.create({
     mainview: {
-        width: Dimensions.get("window").width,
-        height: Dimensions.get("window").height,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
         display: "flex",
         flexDirection: "column",
-        overflow: "scroll",
     },
     fragmentview: {
         display: "flex",
