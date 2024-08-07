@@ -45,8 +45,8 @@ import { TFunction } from "i18next";
 // We define the styles
 const styles = StyleSheet.create({
     containerview: {
-        width: Dimensions.get("window").width,
-        height: Dimensions.get("window").height,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
     },
     mainview: {
         padding: 20,
@@ -87,6 +87,33 @@ function AllObjectivesDone(t: TFunction, randomMessageForAllDone: string) {
                 {randomMessageForAllDone}
             </BetterText>
         </View>
+    );
+}
+
+function ObjectiveDivision(
+    obj: Objective,
+    t: TFunction,
+    start: (arg0: number) => void,
+    markAsDone: (arg0: number) => void
+) {
+    return (
+        <Division
+            key={obj.identifier}
+            status="REGULAR"
+            preheader={t("sections.divisions.active_objective")}
+            header={t(`globals.supported_active_objectives.${obj.exercise}`)}
+        >
+            <Button
+                style="ACE"
+                action={() => start(obj.identifier)}
+                buttonText={t("globals.lets_go")}
+            />
+            <Button
+                style="GOD"
+                action={() => markAsDone(obj.identifier)}
+                buttonText={t("globals.already_done_it")}
+            />
+        </Division>
     );
 }
 
@@ -219,7 +246,9 @@ export default function Home() {
             await markObjectiveAsDone(identifier, true, t); // actually this line itself does the entire thing, thanks to the objective toolkit, the rest is just state handling for the page to update
             // toolkification was probably the best idea i've ever had
             const updatedObjectives = await getObjectives();
-            setObjectives(objectiveArrayToObject(updatedObjectives));
+            if (updatedObjectives) {
+                setObjectives(objectiveArrayToObject(updatedObjectives));
+            }
         } catch (e) {
             termLog("Got an error updating: " + e, "error");
         }
@@ -355,40 +384,11 @@ export default function Home() {
                                         obj.identifier
                                     )
                                 ) {
-                                    return (
-                                        <Division
-                                            key={obj.identifier}
-                                            status="REGULAR"
-                                            preheader={t(
-                                                "sections.divisions.active_objective"
-                                            )}
-                                            header={t(
-                                                `globals.supported_active_objectives.${obj.exercise}`
-                                            )}
-                                        >
-                                            <Button
-                                                style="ACE"
-                                                action={() =>
-                                                    startSessionFromObjective(
-                                                        obj.identifier
-                                                    )
-                                                }
-                                                buttonText={t(
-                                                    "globals.lets_go"
-                                                )}
-                                            />
-                                            <Button
-                                                style="GOD"
-                                                action={() =>
-                                                    handleMarkingObjectiveAsDone(
-                                                        obj.identifier
-                                                    )
-                                                }
-                                                buttonText={t(
-                                                    "globals.already_done_it"
-                                                )}
-                                            />
-                                        </Division>
+                                    ObjectiveDivision(
+                                        obj,
+                                        t,
+                                        startSessionFromObjective,
+                                        handleMarkingObjectiveAsDone
                                     );
                                 }
                                 return null;
