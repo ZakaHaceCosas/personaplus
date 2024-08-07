@@ -12,7 +12,9 @@
         "dep:fix": "expo install --fix",
         "lint": "eslint .",
         "build": "expo install --fix && eas build -p android --profile production",
-        "build:fs": "expo install --fix && expo prebuild --clean && eas build -p android --profile production"
+        "build:wp": "expo install --fix && expo prebuild --clean && eas build -p android --profile production",
+        "build:quick": "eas build -p android --profile production",
+        "build:dev": "eas build -p android --profile development"
     },
     "author": {
         "name": "ZakaHaceCosas",
