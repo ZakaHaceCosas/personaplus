@@ -64,6 +64,8 @@ TEMPLATE
 - Made changes to VSCode config (`.vscode/settings`).
 - Added JSDoc to sections & divisions. Also improved color toolkit's JSDoc.
 - Replaced using a `wasDone` property on each objective in favour of the global daily log.
+- Made code easier to read by turning into functions some logics that were done directly inside of the JSX, at `index.tsx` and `Sessions.tsx` for example.
+- Removed the `wayToGetThem` parameter from `getObjectives()`: now it's not possible to directly get them as a string. This removes the need to use `Array.isArray`, leading to shorter and more readable code.
 
 ### Trivial updates - Latest
 
@@ -73,6 +75,7 @@ TEMPLATE
 - Now the repo also comes with a `lockb` file, for Bun.
 - Added a lot of explanatory comments (and more).
 - Tried to use React Native's New Architecture - bad idea.
+- Now development builds have their own name and icon :]
 
 ### Known errors
 

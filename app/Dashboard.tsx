@@ -67,8 +67,8 @@ export default function Dashboard() {
         const fetchObjectives = async () => {
             try {
                 // this looks a bit weird, but it actually works
-                const storedObjectives = await getObjectives("object");
-                if (storedObjectives && Array.isArray(storedObjectives)) {
+                const storedObjectives = await getObjectives();
+                if (storedObjectives) {
                     const finalObjectives =
                         objectiveArrayToObject(storedObjectives);
                     setObjectives(finalObjectives);
@@ -106,20 +106,15 @@ export default function Dashboard() {
         try {
             await deleteObjective(identifier); // actually this line itself does the entire thing, thanks to the objective toolkit
             // the rest just updates the state to refresh the page
-            const updatedObjectives = await getObjectives("object");
-            if (Array.isArray(updatedObjectives)) {
-                const objectivesObject =
-                    objectiveArrayToObject(updatedObjectives);
+            const updatedObjectives = await getObjectives();
+            const objectivesObject = objectiveArrayToObject(updatedObjectives);
 
-                setObjectives(objectivesObject);
-                if (Platform.OS === "android") {
-                    ToastAndroid.show(
-                        t("page_dashboard.item_deleted", { id: identifier }),
-                        ToastAndroid.SHORT
-                    );
-                }
-            } else {
-                termLog("Expected an array and got a string instead", "error");
+            setObjectives(objectivesObject);
+            if (Platform.OS === "android") {
+                ToastAndroid.show(
+                    t("page_dashboard.item_deleted", { id: identifier }),
+                    ToastAndroid.SHORT
+                );
             }
         } catch (e) {
             termLog(
