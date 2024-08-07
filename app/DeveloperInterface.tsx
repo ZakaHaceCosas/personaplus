@@ -103,12 +103,8 @@ export default function DeveloperInterface() {
         // objectives
         const fetchObjectives = async () => {
             try {
-                const objectives = await getObjectives("object");
-                if (Array.isArray(objectives)) {
-                    setObjectives(objectiveArrayToObject(objectives));
-                } else {
-                    termLog("Expected an array, got a string instead", "error");
-                }
+                const objectives = await getObjectives();
+                setObjectives(objectiveArrayToObject(objectives));
             } catch (e) {
                 termLog(
                     "Could not get objectives fetched due to error: " + e,
