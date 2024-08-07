@@ -20,21 +20,19 @@ import { adjustedToday, getCurrentDate, TodaysDay } from '@/src/toolkit/today';
  * @param {("object" | "string")} [wayToGetThem="object"] - The format to return the objectives in.
  * @returns {Promise<Objective[] | string>} - Returns the objectives in the specified format.
  */
-const getObjectives = async (wayToGetThem: "object" | "string" = "object"): Promise<Objective[] | string> => {
+const getObjectives = async (): Promise<Objective[]> => {
     try {
         const storedObjectives: string | null = await AsyncStorage.getItem("objectives");
         const objectives: Objective[] = storedObjectives ? JSON.parse(storedObjectives) : [];
 
-        if (wayToGetThem === "object") {
+        if (Array.isArray(objectives)) {
             return objectives;
-        } else if (wayToGetThem === "string") {
-            return JSON.stringify(objectives);
         } else {
-            throw new Error("Invalid wayToGetThem specified");
+            throw new Error("Objectives array expected, got something else.")
         }
     } catch (e) {
         termLog("Got an error fetching objectives! " + e, "error");
-        return wayToGetThem === "object" ? [] : ""; // Return empty array or string based on format
+        throw new Error("Got an error fetching objectives! " + e)
     }
 };
 
@@ -60,14 +58,9 @@ const saveObjectives = async (objectives: Objective[]): Promise<void> => {
  */
 const deleteObjective = async (identifier: number): Promise<void> => {
     try {
-        const objectives = await getObjectives("object");
-
-        if (Array.isArray(objectives)) {
-            const updatedObjectives = objectives.filter(obj => obj.identifier !== identifier);
-            await saveObjectives(updatedObjectives);
-        } else {
-            termLog("Expected an array of objectives but got a string instead.", "error");
-        }
+        const objectives = await getObjectives();
+        const updatedObjectives = objectives.filter(obj => obj.identifier !== identifier);
+        await saveObjectives(updatedObjectives);
     } catch (error) {
         termLog("Error in deleteObjective: " + error, "error");
     }
@@ -85,19 +78,15 @@ const deleteObjective = async (identifier: number): Promise<void> => {
  */
 const markObjectiveAsDone = async (identifier: number, confirmWithToast: boolean = true, t: TFunction): Promise<void> => {
     try {
-        const objectives = await getObjectives("object");
+        const objectives = await getObjectives();
 
-        if (Array.isArray(objectives)) {
-            const date = getCurrentDate()
-            saveDailyObjectivePerformance(identifier, date, true)
+        const date = getCurrentDate()
+        saveDailyObjectivePerformance(identifier, date, true)
 
-            router.navigate("/");
+        router.navigate("/");
 
-            if (Platform.OS === "android" && confirmWithToast) {
-                ToastAndroid.show(t("messages.marked_objective_as_done"), ToastAndroid.LONG);
-            }
-        } else {
-            termLog("Expected an array of objectives but got a string instead.", "error");
+        if (Platform.OS === "android" && confirmWithToast) {
+            ToastAndroid.show(t("messages.marked_objective_as_done"), ToastAndroid.LONG);
         }
     } catch (e) {
         termLog("Got an error marking objective as done! " + e, "error");
@@ -132,13 +121,9 @@ const clearObjectives = async () => {
  */
 const getObjectiveByIdentifier = async (identifier: number): Promise<Objective | null | undefined> => {
     try {
-        const objectives = await getObjectives("object");
-        if (Array.isArray(objectives)) {
-            const objective = objectives.find(obj => obj.identifier === identifier);
-            return objective || null;
-        } else {
-            termLog("Expected an array of objectives but got a string instead.", "error")
-        }
+        const objectives = await getObjectives();
+        const objective = objectives.find(obj => obj.identifier === identifier);
+        return objective || null;
     } catch (e) {
         termLog("Got an error fetching the objective by identifier! " + e, "error");
         return null;
