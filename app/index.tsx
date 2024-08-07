@@ -218,12 +218,8 @@ export default function Home() {
         try {
             await markObjectiveAsDone(identifier, true, t); // actually this line itself does the entire thing, thanks to the objective toolkit, the rest is just state handling for the page to update
             // toolkification was probably the best idea i've ever had
-            const updatedObjectives = await getObjectives("object");
-            if (Array.isArray(updatedObjectives)) {
-                setObjectives(objectiveArrayToObject(updatedObjectives));
-            } else {
-                termLog("Expected an array and got a string instead", "error");
-            }
+            const updatedObjectives = await getObjectives();
+            setObjectives(objectiveArrayToObject(updatedObjectives));
         } catch (e) {
             termLog("Got an error updating: " + e, "error");
         }
