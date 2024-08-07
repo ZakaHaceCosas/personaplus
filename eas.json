@@ -8,6 +8,11 @@
             "distribution": "internal",
             "android": {
                 "buildType": "apk"
+            },
+            "env": {
+                "PACKAGE": "com.zakahacecosas.personaplus.development",
+                "APPICON": "./assets/icon-5050.png",
+                "APPNAME": "PP Developer"
             }
         },
         "preview-assembleDebug": {
@@ -19,7 +24,10 @@
             "android": {
                 "buildType": "apk"
             },
-            "distribution": "store"
+            "distribution": "store",
+            "env": {
+                "PACKAGE": "com.zakahacecosas.personaplus"
+            }
         }
     },
     "submit": {
