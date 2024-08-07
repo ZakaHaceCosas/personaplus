@@ -248,25 +248,37 @@ async function checkForAnObjectiveDailyStatus(identifier: number): Promise<boole
     try {
         const prevDailySavedData = await AsyncStorage.getItem("dailyObjectivesStorage");
         if (!prevDailySavedData) {
-            await AsyncStorage.setItem("dailyObjectivesStorage", JSON.stringify({}))
-            return false // If the log doesn't exist, obviusly it's not done
+            await AsyncStorage.setItem("dailyObjectivesStorage", JSON.stringify({}));
+            return false; // If the log doesn't exist, obviously it's not done
         }
 
         const dailyData: ObjectiveDailyLog = JSON.parse(prevDailySavedData);
+        const date: TodaysDay = getCurrentDate();
 
-        const date: TodaysDay = getCurrentDate()
-
-        // If data exists, return it.
-        if (dailyData[date][String(identifier)]) {
-            return dailyData[date][String(identifier)].wasDone
+        // Validate if dailyData and the specific identifier exist
+        if (dailyData[date]) {
+            if (dailyData[date][String(identifier)]) {
+                if (dailyData[date][String(identifier)].wasDone === true || dailyData[date][String(identifier)].wasDone === false) {
+                    return dailyData[date][String(identifier)].wasDone;
+                } else {
+                    const log = `Error checking if an objective is due today: Data exists for date ${date} and identifier ${identifier}, but wasDone is not valid or it's not present.`; // error
+                    termLog(log, "error");
+                    throw new Error(log);
+                }
+            } else {
+                const log = `Warning: No data exists for objective ${identifier}, date ${date}.`; // it's actually a normal behaviour most of the time: if you didn't interact with the objective at all, it won't be logged. most ineractions will mark it as done, but until those interactions happen, this warning will occur.
+                termLog(log, "warn");
+                return null
+            }
         } else {
-            termLog("Error checking if an objective is due today: No data exists", "error")
-            return null // Error
+            const log = `Warning: No data exists for date ${date} at all.`; // it's also a mostly normal behaviour: an entry for today isn't created until you do something, so when first opening the app it's most likely to happen.
+            termLog(log, "warn");
+            return null
         }
 
     } catch (e) {
-        termLog("Error checking if an objective is due today: " + e, "error")
-        return null
+        termLog("Error checking if an objective is due today: " + e, "error");
+        return null;
     }
 }
 
