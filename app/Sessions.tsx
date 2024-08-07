@@ -19,13 +19,64 @@ import Button from "@/src/Buttons";
 import { useTranslation } from "react-i18next";
 import InfoIcons from "@/src/sessions/InfoIcons";
 import colors from "@/src/toolkit/design/colors";
+import Loading from "@/src/Loading";
 
 // TypeScript, supongo.
 import { Objective } from "@/src/types/Objective";
-import Loading from "@/src/Loading";
 
 // We define the styles
 const styles = StyleSheet.create({
+    mainview: {
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        justifyContent: "center",
+        padding: 20,
+        flex: 1,
+        backgroundColor: colors.MAIN.APP,
+        overflow: "visible",
+    },
+    subview: {
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: "37.5%",
+    },
+    topbarview: {
+        display: "flex",
+        flexDirection: "row",
+        padding: 20,
+        backgroundColor: colors.MAIN.SECTION,
+        borderRadius: 15,
+        alignItems: "center",
+        justifyContent: "flex-start",
+        width: "100%",
+    },
+    buttonsview: {
+        display: "flex",
+        flexDirection: "row",
+        padding: 20,
+        backgroundColor: colors.MAIN.SECTION,
+        borderRadius: 15,
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+    },
+    infoview: {
+        display: "flex",
+        flexDirection: "column",
+        padding: 20,
+        backgroundColor: colors.MAIN.SECTION,
+        borderRadius: 15,
+        alignItems: "center",
+        justifyContent: "center",
+        width: "100%",
+    },
     helpcontainer: {
         backgroundColor: colors.MAIN.SECTION,
         position: "absolute",
@@ -43,39 +94,19 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function Sessions() {
-    // Stateful values and stuff
-    const { t } = useTranslation();
-    const [loading, setLoading] = useState<boolean>(true);
-    const params = useGlobalSearchParams();
-    const objectiveIdentifier = params.id ? Number(params.id) : null;
-    const [objectives, setObjectives] = useState<Objective[] | null>(null);
-    const [currentObjective, setCurrentObjective] = useState<Objective | null>(
-        null
-    );
-    const [isTimerRunning, setTimerStatus] = useState(true);
-    const [isUserCheckingHelp, setIsUserCheckingHelp] = useState(false);
-    const [isUserResting, setIsUserResting] = useState(false);
-    /*
-    If you wonder why there are two variables for the timer's loops, one of them is to keep account of many times repeat (laps) and other one is to set the "key" attribute of the circle timer (timerKey), which is required for the timer to loop itself.
-    */
-    const [laps, setLaps] = useState<number>(0);
-    const [timerKey, setTimerKey] = useState<number>(0);
-
+// Instead of a lot of useStates, maybe it's smarter to move some stuff to outside functions
+// That's what I've done here
+function useObjectivesFetching() {
     // fetches the objectives - simple
+    const { t } = useTranslation();
+    const [objectives, setObjectives] = useState<Objective[] | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+
     useEffect(() => {
-        const handle = async () => {
+        const fetchData = async () => {
             try {
-                const objectives = await getObjectives("object");
-                if (Array.isArray(objectives)) {
-                    setObjectives(objectives);
-                } else {
-                    termLog(
-                        t("globals.react_error") +
-                            "Expected an array, got a string instead",
-                        "error"
-                    );
-                }
+                const result = await getObjectives();
+                setObjectives(result);
             } catch (e) {
                 termLog(
                     t("globals.react_error") +
@@ -88,26 +119,25 @@ export default function Sessions() {
             }
         };
 
-        handle();
+        fetchData();
     }, [t]);
 
-    // some logs i added cause' this shi was broken in past and i didnt know howto fix it
-    useEffect(() => {
-        termLog("SESSIONS.TSX - Objectives: " + objectives, "log");
-        termLog(
-            "SESSIONTS.TSX - Objectives state: " + JSON.stringify(objectives),
-            "log"
-        );
-        termLog("SESSIONS.TSX - Current ID: " + objectiveIdentifier, "log");
-    }, [objectives, objectiveIdentifier]);
+    return { objectives, loading };
+}
 
-    // gather the fetched objective object, and find the current objective (the one belonging to this session)
+function useCurrentObjective(objectiveIdentifier: number | null) {
+    // gathers the fetched objectives, and finds the current objective (the one belonging to this session)
+    const [currentObjective, setCurrentObjective] = useState<Objective | null>(
+        null
+    );
+    const [laps, setLaps] = useState<number>(0);
+
     useEffect(() => {
         if (objectiveIdentifier !== null) {
             const fetchCurrentObjective = async () => {
                 try {
                     const objective =
-                        await getObjectiveByIdentifier(objectiveIdentifier); // this line handles everything
+                        await getObjectiveByIdentifier(objectiveIdentifier); // this line handles everything, actually
                     setCurrentObjective(objective ?? null); // this sets the gathered objective as the current objective, or null if something happened
                     setLaps(objective?.repetitions || 0); // this ensures "laps" is set correctly
                 } catch (e) {
@@ -118,6 +148,39 @@ export default function Sessions() {
             fetchCurrentObjective();
         }
     }, [objectiveIdentifier]);
+
+    return { currentObjective, laps, setLaps };
+}
+
+// We define the main function
+export default function Sessions() {
+    // Stateful values and stuff
+    const { t } = useTranslation();
+    const params = useGlobalSearchParams();
+    const objectiveIdentifier = params.id ? Number(params.id) : null;
+
+    const { objectives, loading } = useObjectivesFetching();
+    const { currentObjective, laps, setLaps } =
+        useCurrentObjective(objectiveIdentifier);
+
+    const [isTimerRunning, setTimerStatus] = useState(true);
+    const [isUserCheckingHelp, setIsUserCheckingHelp] = useState(false);
+    const [isUserResting, setIsUserResting] = useState(false);
+    /*
+    If you wonder why there are two variables for the timer's loops, one of them is to keep account of many times repeat (laps) and other one is to set the "key" attribute of the circle timer (timerKey), which is required for the timer to loop itself.
+    */
+    // const [laps, setLaps] = useState<number>(0);
+    const [timerKey, setTimerKey] = useState<number>(0);
+
+    // some logs i added cause' this shi was broken in past and i didnt know howto fix it
+    useEffect(() => {
+        termLog("SESSIONS.TSX - Objectives: " + objectives, "log");
+        termLog(
+            "SESSIONTS.TSX - Objectives state: " + JSON.stringify(objectives),
+            "log"
+        );
+        termLog("SESSIONS.TSX - Current ID: " + objectiveIdentifier, "log");
+    }, [objectives, objectiveIdentifier]);
 
     // more logs cause of this shi being broken
     useEffect(() => {
@@ -198,7 +261,7 @@ export default function Sessions() {
     // will mark the obj as done, save it, and head to the results page
     // UNLESS you specify it to skip that step, heading to home page in that case
     const finishSession = async (skipResults: boolean) => {
-        if (currentObjective !== undefined && currentObjective !== null) {
+        if (currentObjective) {
             try {
                 await markObjectiveAsDone(
                     currentObjective.identifier,
@@ -211,20 +274,12 @@ export default function Sessions() {
                         ToastAndroid.LONG
                     );
                 }
-                if (
-                    skipResults === false ||
-                    skipResults !== undefined ||
-                    skipResults !== null ||
-                    !skipResults
-                ) {
-                    router.replace(
-                        `/Results?speed=${currentObjective.extra.speed}&time=${totalTime}&id=${currentObjective.identifier}&exercise=${currentObjective.exercise}&repetitions=${currentObjective.repetitions}&lifts=${currentObjective.extra.lifts}&barWeight=${currentObjective.extra.barWeight}&liftWeight=${currentObjective.extra.liftWeight}&pushups=${currentObjective.extra.amount}&hands=${currentObjective.extra.hands}`
-                    );
-                    // URL is long af because the system is designed to store everything onto an objective, even it its not needed (being 0, null, or others... in those cases)
-                    // should I refactor the system? probably. but huh, if it works, i aint complain about it for now.
-                } else {
-                    router.replace("/");
-                }
+                const targetRoute = skipResults
+                    ? "/"
+                    : `/Results?speed=${currentObjective.extra.speed}&time=${totalTime}&id=${currentObjective.identifier}&exercise=${currentObjective.exercise}&repetitions=${currentObjective.repetitions}&lifts=${currentObjective.extra.lifts}&barWeight=${currentObjective.extra.barWeight}&liftWeight=${currentObjective.extra.liftWeight}&pushups=${currentObjective.extra.amount}&hands=${currentObjective.extra.hands}`;
+                router.replace(targetRoute);
+                // URL is long af because the system is designed to store everything onto an objective, even it its not needed (being 0, null, or others... in those cases)
+                // should I refactor the system? probably. but huh, if it works, i aint complain about it for now.
             } catch (e) {
                 termLog(
                     "SESSIONS.TSX - Error parsing objectives (OBJS) for update: " +
@@ -247,13 +302,8 @@ export default function Sessions() {
     };
 
     const handleRestState = (action: "pause" | "play") => {
-        if (action === "pause") {
-            toggleTimerStatus(false);
-            setIsUserResting(true);
-        } else if (action === "play") {
-            toggleTimerStatus(true);
-            setIsUserResting(false);
-        }
+        toggleTimerStatus(action === "play");
+        setIsUserResting(action === "pause");
     };
 
     // this handles pausing the timer for resting
@@ -321,43 +371,9 @@ export default function Sessions() {
     }
 
     return (
-        <View
-            style={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                justifyContent: "center",
-                padding: 20,
-                flex: 1,
-                backgroundColor: colors.MAIN.APP,
-                overflow: "visible",
-            }}
-        >
-            <View
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
-                    height: "100%",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginTop: "37.5%",
-                }}
-            >
-                <View
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        padding: 20,
-                        backgroundColor: colors.MAIN.SECTION,
-                        borderRadius: 15,
-                        alignItems: "center",
-                        justifyContent: "flex-start",
-                        width: "100%",
-                    }}
-                >
+        <View style={styles.mainview}>
+            <View style={styles.subview}>
+                <View style={styles.topbarview}>
                     <Ionicons
                         name="play-arrow"
                         size={20}
@@ -373,18 +389,7 @@ export default function Sessions() {
                     </BetterText>
                 </View>
                 <GapView height={20} />
-                <View
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        padding: 20,
-                        backgroundColor: colors.MAIN.SECTION,
-                        borderRadius: 15,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: "100%",
-                    }}
-                >
+                <View style={styles.infoview}>
                     <BetterText
                         fontWeight="Regular"
                         fontSize={12}
@@ -501,20 +506,8 @@ export default function Sessions() {
                         );
                     }}
                 </CountdownCircleTimer>
-
                 <GapView height={20} />
-                <View
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        padding: 20,
-                        backgroundColor: colors.MAIN.SECTION,
-                        borderRadius: 15,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        width: "100%",
-                    }}
-                >
+                <View style={styles.buttonsview}>
                     <Button
                         style={isTimerRunning ? "ACE" : "HMM"}
                         action={() => setTimerStatus(prev => !prev)}
