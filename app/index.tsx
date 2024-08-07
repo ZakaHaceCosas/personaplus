@@ -45,8 +45,8 @@ import { TFunction } from "i18next";
 // We define the styles
 const styles = StyleSheet.create({
     containerview: {
-        width: Dimensions.get("screen").width,
-        height: Dimensions.get("screen").height,
+        width: Dimensions.get("window").width,
+        height: Dimensions.get("window").height,
     },
     mainview: {
         padding: 20,
