@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
         borderLeftColor: colors.PRIMARIES.WOR.WOR,
     },
     containerview: {
-        width: Dimensions.get("window").width,
-        height: Dimensions.get("window").height,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
     },
     mainview: {
         padding: 20,
@@ -104,7 +104,9 @@ export default function DeveloperInterface() {
         const fetchObjectives = async () => {
             try {
                 const objectives = await getObjectives();
-                setObjectives(objectiveArrayToObject(objectives));
+                if (objectives) {
+                    setObjectives(objectiveArrayToObject(objectives));
+                }
             } catch (e) {
                 termLog(
                     "Could not get objectives fetched due to error: " + e,

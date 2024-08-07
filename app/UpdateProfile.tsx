@@ -34,8 +34,8 @@ interface UserData {
 // We define the styles
 const styles = StyleSheet.create({
     containerview: {
-        width: Dimensions.get("window").width,
-        height: Dimensions.get("window").height,
+        width: Dimensions.get("screen").width,
+        height: Dimensions.get("screen").height,
     },
     mainview: {
         padding: 20,
