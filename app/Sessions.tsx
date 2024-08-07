@@ -403,43 +403,18 @@ export default function Sessions() {
                             : t("page_sessions.resting")}
                     </BetterText>
                     <GapView height={10} />
-                    <View
-                        style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}
-                    >
-                        <Ionicons
-                            name="loop"
-                            size={15}
-                            color={colors.BASIC.WHITE}
-                        />
-                        <GapView width={5} />
-                        <BetterText fontWeight="Regular" fontSize={15}>
-                            {laps === 0
-                                ? t("globals.none")
-                                : laps === 1
-                                  ? `${laps} repetition`
-                                  : `${laps} repetitions`}
-                        </BetterText>
-                        <GapView width={15} />
-                        <Ionicons
-                            name="snooze"
-                            size={15}
-                            color={colors.BASIC.WHITE}
-                        />
-                        <GapView width={5} />
-                        <BetterText fontWeight="Regular" fontSize={15}>
-                            {currentObjective.rests === 0
-                                ? t("globals.none")
-                                : currentObjective.rests === 1
-                                  ? `${currentObjective.rests} rest of ${currentObjective.restDuration} mins`
-                                  : `${currentObjective.rests} rests (${currentObjective.restDuration} mins)`}
-                        </BetterText>
-                    </View>
-                    <InfoIcons objective={currentObjective} />
+                    <InfoIcons
+                        row={1}
+                        objective={currentObjective}
+                        t={t}
+                        laps={laps}
+                    />
+                    <InfoIcons
+                        row={2}
+                        objective={currentObjective}
+                        t={t}
+                        laps={laps}
+                    />
                 </View>
                 <GapView height={20} />
                 <CountdownCircleTimer
