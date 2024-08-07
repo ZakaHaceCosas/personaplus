@@ -27,8 +27,8 @@ import { getDefaultLocale } from "@/src/toolkit/translations";
 // We define the styles
 const styles = StyleSheet.create({
     mainview: {
-        width: Dimensions.get("screen").width,
-        height: Dimensions.get("screen").height,
+        width: Dimensions.get("window").width,
+        height: Dimensions.get("window").height,
         display: "flex",
         flexDirection: "column",
         overflow: "scroll",
