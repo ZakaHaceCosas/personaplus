@@ -23,6 +23,7 @@ import Loading from "@/src/Loading";
 
 // TypeScript, supongo.
 import { Objective } from "@/src/types/Objective";
+import HelpView from "@/src/sessions/HelpView";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -76,21 +77,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         width: "100%",
-    },
-    helpcontainer: {
-        backgroundColor: colors.MAIN.SECTION,
-        position: "absolute",
-        top: "20%",
-        left: 10,
-        right: 10,
-        bottom: 20,
-        overflow: "visible",
-        padding: 20,
-        borderRadius: 20,
-        elevation: 16,
-        borderColor: colors.MAIN.DIVISIONBORDER,
-        borderWidth: 4,
-        zIndex: 999,
     },
 });
 
@@ -555,41 +541,8 @@ export default function Sessions() {
                     />
                 </View>
             </View>
-            {isUserCheckingHelp && (
-                <View style={styles.helpcontainer}>
-                    <BetterText fontSize={18} fontWeight="Regular">
-                        {t("globals.help_with_item", {
-                            item: t(
-                                `globals.supported_active_objectives.${currentObjective.exercise}`
-                            ).toLowerCase(),
-                        })}
-                    </BetterText>
-                    <BetterText fontSize={14} fontWeight="Light">
-                        {currentObjective?.exercise
-                            ? t(
-                                  `page_sessions.help_section.${currentObjective.exercise}`
-                              )
-                            : t("globals.error_loading_content")}
-                    </BetterText>
-                    <GapView height={10} />
-                    <Button
-                        layout="fixed"
-                        height="default"
-                        style="ACE"
-                        buttonText={t("globals.got_it")}
-                        action={toggleHelpMenu}
-                    />
-                    <GapView height={10} />
-                    <BetterText
-                        fontSize={10}
-                        fontWeight="Light"
-                        textColor={colors.LBLS.SDD}
-                        textAlign="center"
-                    >
-                        {t("page_sessions.timer_paused_help")}
-                    </BetterText>
-                </View>
-            )}
+            {isUserCheckingHelp &&
+                HelpView(t, currentObjective, toggleHelpMenu)}
         </View>
     );
 }
