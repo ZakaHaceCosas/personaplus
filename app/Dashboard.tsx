@@ -106,11 +106,14 @@ export default function Dashboard() {
                     "Could not get objectives fetched due to error: " + e,
                     "error"
                 );
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchObjectives();
-    }, [t, objectives]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [t]);
 
     // objective deletion - pretty simple
     const handleDeleteObjective = async (identifier: number) => {
