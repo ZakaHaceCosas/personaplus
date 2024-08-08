@@ -106,58 +106,64 @@ export default function Results() {
                 if (
                     !isNaN(sessionElapsedTime) &&
                     !isNaN(objectiveRunning_Speed) &&
-                    userData &&
-                    userData.age &&
-                    !isNaN(userData.age) &&
-                    userData.gender &&
-                    userData.weight &&
-                    userData.height
+                    userData?.age &&
+                    userData?.gender &&
+                    userData?.weight &&
+                    userData?.height
                 ) {
-                    // Calculate performance based on the type of exercise
-                    if (objectiveExercise.toLowerCase() === "running") {
-                        return OpenHealth.performance.RunningOrWalkingPerformance.calculate(
-                            userData.age,
-                            userData.gender,
-                            userData.weight,
-                            userData.height,
-                            objectiveRunning_Speed,
-                            sessionElapsedTime,
-                            true,
-                            false
-                        );
-                    } else if (objectiveExercise.toLowerCase() === "lifting") {
-                        return OpenHealth.performance.LiftingPerformance.calculate(
-                            userData.age,
-                            userData.gender,
-                            userData.weight,
-                            userData.height,
-                            sessionElapsedTime,
-                            objectiveLifting_barWeight,
-                            objectiveLifting_liftWeight,
-                            multiobjective_hands,
-                            repetitions,
-                            true,
-                            false
-                        );
-                    } else if (objectiveExercise.toLowerCase() === "push up") {
-                        return OpenHealth.performance.PushingUpPerformance.calculate(
-                            userData.age,
-                            userData.gender,
-                            userData.weight,
-                            userData.height,
-                            sessionElapsedTime,
-                            multiobjective_hands,
-                            objectivePushups_Pushups * repetitions,
-                            true,
-                            false
-                        );
+                    const exercise = objectiveExercise.toLowerCase();
+
+                    switch (exercise) {
+                        case "running":
+                            return OpenHealth.performance.RunningOrWalkingPerformance.calculate(
+                                userData.age,
+                                userData.gender,
+                                userData.weight,
+                                userData.height,
+                                objectiveRunning_Speed,
+                                sessionElapsedTime,
+                                true,
+                                false
+                            );
+                        case "lifting":
+                            return OpenHealth.performance.LiftingPerformance.calculate(
+                                userData.age,
+                                userData.gender,
+                                userData.weight,
+                                userData.height,
+                                sessionElapsedTime,
+                                objectiveLifting_barWeight,
+                                objectiveLifting_liftWeight,
+                                multiobjective_hands,
+                                repetitions,
+                                true,
+                                false
+                            );
+                        case "push up":
+                            return OpenHealth.performance.PushingUpPerformance.calculate(
+                                userData.age,
+                                userData.gender,
+                                userData.weight,
+                                userData.height,
+                                sessionElapsedTime,
+                                multiobjective_hands,
+                                objectivePushups_Pushups * repetitions,
+                                true,
+                                false
+                            );
+                        default:
+                            throw new Error("Unknown or invalid exercise type");
                     }
+                } else {
+                    throw new Error("Invalid input data");
                 }
             } catch (e) {
                 termLog(
-                    "Error handling post-session calculations" + e,
+                    "Error handling post-session calculations (@ handleExerciseCalculation): " +
+                        e,
                     "error"
                 );
+                return undefined;
             }
         };
 
