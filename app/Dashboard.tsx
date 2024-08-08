@@ -162,8 +162,11 @@ export default function Dashboard() {
             }
         };
 
-        fetchDescriptions();
-    }, [objectives, t]);
+        if (objectives) {
+            fetchDescriptions();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [objectives]);
 
     const currentpage: string = usePathname(); // current page ("/Dashboard"). for the nav component.
 
