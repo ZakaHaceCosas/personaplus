@@ -83,7 +83,7 @@ export default function Results() {
                     weight: data[2][1] ? Number(data[2][1]) : null,
                     gender:
                         data[3][1] === "male" || data[3][1] === "female"
-                            ? data[3][1]
+                            ? (data[3][1] as "male" | "female")
                             : null,
                 };
 

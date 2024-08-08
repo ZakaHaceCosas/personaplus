@@ -2,7 +2,7 @@
     "java.configuration.updateBuildConfiguration": "interactive",
     "files.exclude": {
         "**/node_modules": false,
-        "**/.git": false,
+        "**/.git": true,
         "**/.svn": false,
         "**/.hg": false,
         "**/CVS": false,
