@@ -14,11 +14,10 @@ import { adjustedToday, getCurrentDate, TodaysDay } from '@/src/toolkit/today';
 
 // Función para obtener los objetivos
 /**
- * Returns the objectives from AsyncStorage in the specified format.
+ * Returns the objectives from AsyncStorage as an `Objective[]`, or `null` / `[]` if there aren't any objectives.
  *
  * @async
- * @param {("object" | "string")} [wayToGetThem="object"] - The format to return the objectives in.
- * @returns {Promise<Objective[] | string>} - Returns the objectives in the specified format.
+ * @returns {Promise<Objective[] | null>} - Returns the objectives in the specified format.
  */
 const getObjectives = async (): Promise<Objective[] | null> => {
     try {
@@ -321,7 +320,7 @@ async function checkForTodaysObjectives(objectives: { [key: string]: Objective }
 }
 
 /**
- * Turns objective arrays where [key: string] is used onto objects to avoid errors.
+ * Turns objective arrays where `[key: string]` is used onto objects to avoid errors.
  *
  * @param {Objective[]} objectives The `Objective[]` you want to correct
  * @returns {{ [key: string]: Objective }} The corrected object
