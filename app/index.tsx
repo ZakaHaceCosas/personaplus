@@ -224,11 +224,10 @@ export default function Home() {
                     setUsername(String(items[0][1])); // see? username is [0][1]
                     setObjectives(
                         // this checks if objectives is NOT null or "" or "{}" or "[]". if it is, objectives will be {}, otherwise, they will be the saved objectives.
-                        items[1][1] !== null ||
-                            items[1][1] !== "" ||
-                            items[1][1] !== "{}" ||
-                            items[1][1] !== "[]" ||
-                            items[1][1]
+                        items[1][1] !== null &&
+                            items[1][1] !== "" &&
+                            items[1][1] !== "{}" &&
+                            items[1][1] !== "[]"
                             ? JSON.parse(String(items[1][1]))
                             : {}
                     );
@@ -335,7 +334,8 @@ export default function Home() {
         };
 
         unsubscribe();
-    }, [objectives, t]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [objectives]);
 
     useEffect(() => {
         let isMounted = true; // This is supposed to track if the component is still mounted
