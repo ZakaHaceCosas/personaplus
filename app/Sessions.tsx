@@ -106,7 +106,8 @@ function useObjectivesFetching() {
         };
 
         fetchData();
-    }, [t]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return { objectives, loading };
 }
