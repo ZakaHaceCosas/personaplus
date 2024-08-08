@@ -66,7 +66,24 @@ export const termLog = (
     type: "log" | "warn" | "error" | "success",
     displayToEndUser?: boolean
 ) => {
-    console.log(message); // Regular console log
+    // Regular console log / warn / error / log again because no one thought about success logs (i'm a fucking genious)
+    switch (type) {
+        case "log":
+            console.log(message); // Regular console log
+            break;
+        case "warn":
+            console.warn(message); // Regular console warn
+            break;
+        case "error":
+            console.error(message); // Regular console error
+            break;
+        case "success":
+            console.log(message); // Not-regular console success (PersonaPlus exclusive :literallyogering:)
+            break;
+        default:
+            console.log(message); // Default to regular console log
+            break;
+    }
     const timestamp = Date.now(); // Exact timestamp
     const newLog: Log = { message: message, type, timestamp }; // Generates the log
     addLogToGlobal(newLog); // Pushes it so it gets stored
