@@ -25,16 +25,15 @@ const getObjectives = async (): Promise<Objective[] | null> => {
         const storedObjectives: string | null = await AsyncStorage.getItem("objectives");
         const objectives: Objective[] = storedObjectives ? JSON.parse(storedObjectives) : [];
 
-        if (Array.isArray(objectives)) {
+        if (objectives) {
             return objectives;
-        } else if (!objectives) {
-            return null
         } else {
-            throw new Error("Objectives array expected, got something else.")
+            termLog("Warning! Objectives are not an array", "warn");
+            return [];
         }
     } catch (e) {
         termLog("Got an error fetching objectives! " + e, "error");
-        throw new Error("Got an error fetching objectives! " + e)
+        throw new Error("Got an error fetching objectives! " + e);
     }
 };
 
