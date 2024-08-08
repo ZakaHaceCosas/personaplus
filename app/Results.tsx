@@ -210,7 +210,8 @@ export default function Results() {
             allDoneMessages[Math.floor(Math.random() * allDoneMessages.length)];
 
         setRandomMessage(randomMessageForAllDone);
-    }, [t]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     // Speed options for running exercises
     // TODO - translate this

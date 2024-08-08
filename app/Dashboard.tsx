@@ -113,7 +113,7 @@ export default function Dashboard() {
 
         fetchObjectives();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [t]);
+    }, []);
 
     // objective deletion - pretty simple
     const handleDeleteObjective = async (identifier: number) => {
