@@ -36,10 +36,10 @@ import { adjustedToday } from "@/src/toolkit/today";
 import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
 import colors from "@/src/toolkit/design/colors";
+import Loading from "@/src/Loading";
 
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
-import Loading from "@/src/Loading";
 import { TFunction } from "i18next";
 
 // We define the styles
@@ -365,7 +365,7 @@ export default function Home() {
                 </BetterText>
                 <GapView height={20} />
                 <Section kind="Objectives">
-                    {objectives && Object.keys(objectives).length > 0 ? (
+                    {objectives && Object.keys(objectives).length ? (
                         Object.keys(objectives).every(
                             key => !objectives[key].days[adjustedToday]
                         ) ? (
@@ -373,10 +373,10 @@ export default function Home() {
                         ) : (
                             Object.keys(objectives).map(key => {
                                 const obj = objectives[key];
-                                /* termLog(
+                                termLog(
                                     `OBJECTIVE: ${obj.identifier}, days[${adjustedToday}]: ${obj.days[adjustedToday]}`,
                                     "log"
-                                ); */
+                                );
                                 if (
                                     obj &&
                                     obj.days[adjustedToday] &&
@@ -384,7 +384,7 @@ export default function Home() {
                                         obj.identifier
                                     )
                                 ) {
-                                    ObjectiveDivision(
+                                    return ObjectiveDivision(
                                         obj,
                                         t,
                                         startSessionFromObjective,
