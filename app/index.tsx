@@ -117,6 +117,36 @@ function ObjectiveDivision(
     );
 }
 
+function NoObjectives(t: TFunction, create: () => void) {
+    return (
+        <View
+            style={{
+                padding: 20,
+                flex: 1,
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+            }}
+        >
+            <BetterText
+                textAlign="center"
+                fontSize={30}
+                textColor={colors.BASIC.WHITE}
+                fontWeight="Bold"
+            >
+                {t("page_home.no_objectives.not_any_objective")}
+            </BetterText>
+            <GapView height={15} />
+            <Button
+                width="fill"
+                style="ACE"
+                buttonText={t("globals.lets_go")}
+                action={create}
+            />
+        </View>
+    );
+}
+
 // We create the function
 export default function Home() {
     const [loading, setLoading] = useState(true);
@@ -346,6 +376,22 @@ export default function Home() {
         };
     }, [objectives]);
 
+    const renderObjectiveDivision = (obj: Objective) => {
+        if (
+            obj &&
+            obj.days[adjustedToday] &&
+            dueTodayObjectiveList.includes(obj.identifier)
+        ) {
+            return ObjectiveDivision(
+                obj,
+                t,
+                startSessionFromObjective,
+                handleMarkingObjectiveAsDone
+            );
+        }
+        return null;
+    };
+
     if (loading) {
         return <Loading currentpage={currentpage} displayNav={true} />;
     }
@@ -365,87 +411,39 @@ export default function Home() {
                 </BetterText>
                 <GapView height={20} />
                 <Section kind="Objectives">
-                    {objectives && Object.keys(objectives).length ? (
-                        Object.keys(objectives).every(
-                            key => !objectives[key].days[adjustedToday]
-                        ) ? (
-                            AllObjectivesDone(t, randomMessageForAllDone)
-                        ) : (
-                            Object.keys(objectives).map(key => {
-                                const obj = objectives[key];
-                                termLog(
-                                    `OBJECTIVE: ${obj.identifier}, days[${adjustedToday}]: ${obj.days[adjustedToday]}`,
-                                    "log"
-                                );
-                                if (
-                                    obj &&
-                                    obj.days[adjustedToday] &&
-                                    dueTodayObjectiveList.includes(
-                                        obj.identifier
-                                    )
-                                ) {
-                                    return ObjectiveDivision(
-                                        obj,
-                                        t,
-                                        startSessionFromObjective,
-                                        handleMarkingObjectiveAsDone
-                                    );
-                                }
-                                return null;
-                            })
-                        )
-                    ) : (
-                        <View
-                            style={{
-                                padding: 20,
-                                flex: 1,
-                                flexDirection: "column",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                        >
-                            <BetterText
-                                textAlign="center"
-                                fontSize={30}
-                                textColor={colors.BASIC.WHITE}
-                                fontWeight="Bold"
-                            >
-                                {t("page_home.no_objectives.not_any_objective")}
-                            </BetterText>
-                            <GapView height={15} />
-                            <Button
-                                width="fill"
-                                style="ACE"
-                                buttonText={t("globals.lets_go")}
-                                action={createNewActiveObjective}
-                            />
-                        </View>
-                    )}
+                    {objectives && Object.keys(objectives).length
+                        ? dueTodayObjectiveList.length === 0
+                            ? (termLog("All done!", "log"),
+                              AllObjectivesDone(t, randomMessageForAllDone))
+                            : Object.keys(objectives).map(key =>
+                                  renderObjectiveDivision(objectives[key])
+                              )
+                        : NoObjectives(t, createNewActiveObjective)}
                 </Section>
                 {objectives && Object.keys(objectives).length > 0 && (
-                    <GapView height={20} />
-                )}
-                {objectives && Object.keys(objectives).length > 0 && (
-                    <Section kind="HowYouAreDoing">
+                    <>
                         <GapView height={20} />
-                        <BetterText
-                            fontWeight="Regular"
-                            textColor={colors.PRIMARIES.GOD.GOD}
-                            fontSize={25}
-                            textAlign="center"
-                        >
-                            {t("globals.coming_soon")}
-                        </BetterText>
-                        <View style={{ padding: 20 }}>
+                        <Section kind="HowYouAreDoing">
+                            <GapView height={20} />
                             <BetterText
                                 fontWeight="Regular"
-                                fontSize={15}
+                                textColor={colors.PRIMARIES.GOD.GOD}
+                                fontSize={25}
                                 textAlign="center"
                             >
-                                {t("globals.workinprogress")}
+                                {t("globals.coming_soon")}
                             </BetterText>
-                        </View>
-                    </Section>
+                            <View style={{ padding: 20 }}>
+                                <BetterText
+                                    fontWeight="Regular"
+                                    fontSize={15}
+                                    textAlign="center"
+                                >
+                                    {t("globals.workinprogress")}
+                                </BetterText>
+                            </View>
+                        </Section>
+                    </>
                 )}
                 <Footer />
             </ScrollView>
