@@ -115,3 +115,20 @@ export interface UserData extends UserHealthData {
      */
     username: string
 }
+
+
+/**
+ * An interface for all of the user's settings.
+ *
+ * @export
+ * @interface UserSettings
+ * @typedef {UserSettings}
+ */
+export interface UserSettings {
+    /**
+     * The preferred language of the user, must be either `"es"` or `"en"`
+     *
+     * @type {("es" | "en")}
+     */
+    language: "es" | "en"
+}
