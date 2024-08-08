@@ -29,6 +29,7 @@ import colors from "@/src/toolkit/design/colors";
 import Loading from "@/src/Loading";
 
 // TypeScript, supongo
+import { UserData, UserSettings } from "@/src/toolkit/userData";
 interface Release {
     tag_name: string;
     prerelease: boolean;
@@ -36,15 +37,7 @@ interface Release {
     html_url: string;
 }
 
-// TODO - move to the userData toolkit
-interface UserData {
-    username: string;
-    gender: string;
-    age: string;
-    height: string;
-    weight: string;
-    language: "en" | "es" | string;
-}
+type ProfileData = UserData & UserSettings;
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -174,14 +167,14 @@ export default function Profile() {
     // Loading state
     const [loading, setLoading] = useState<boolean>(true);
     // user data
-    const [language, setLanguage] = useState<"en" | "es" | string>("en");
+    const [language, setLanguage] = useState<"en" | "es">("en");
     const [username, setUsername] = useState<string>("Unknown");
-    const [gender, setGender] = useState<string>("Unknown");
-    const [age, setAge] = useState<string>("Unknown");
-    const [height, setHeight] = useState<string>("Unknown");
-    const [weight, setWeight] = useState<string>("Unknown");
+    const [gender, setGender] = useState<"male" | "female" | null>(null);
+    const [age, setAge] = useState<number | null>(null);
+    const [height, setHeight] = useState<number | null>(null);
+    const [weight, setWeight] = useState<number | null>(null);
 
-    const getMultiple = async (): Promise<UserData> => {
+    const getMultiple = async (): Promise<ProfileData> => {
         // fetch all user data
         try {
             const values = await AsyncStorage.multiGet([
@@ -193,23 +186,23 @@ export default function Profile() {
                 "language",
             ]);
 
-            const data: UserData = {
+            const data: ProfileData = {
                 username: values[0][1] || "Unknown",
-                gender: values[1][1] || "Unknown",
-                age: values[2][1] || "Unknown",
-                height: values[3][1] || "Unknown",
-                weight: values[4][1] || "Unknown",
-                language: values[5][1] || "en",
+                gender: (values[1][1] as "male" | "female" | null) || null, // validate if value is male or female
+                age: values[2][1] ? parseFloat(values[2][1]) : null,
+                height: values[3][1] ? parseFloat(values[3][1]) : null,
+                weight: values[4][1] ? parseFloat(values[4][1]) : null,
+                language: (values[5][1] as "en" | "es") || "en",
             };
             return data;
         } catch (e) {
             termLog(String(e), "error");
             return {
                 username: "Unknown",
-                gender: "Unknown",
-                age: "Unknown",
-                height: "Unknown",
-                weight: "Unknown",
+                gender: null, // default all to null. which makes no sense, but this is a catch, so this can only happen if an error happens, and no errors should happen, so it's okay.
+                age: null,
+                height: null,
+                weight: null,
                 language: "en",
             };
         }
