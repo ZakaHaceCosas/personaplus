@@ -1,35 +1,33 @@
 /**
  * Validates the basic user data. It accepts invalid types, as the type can be incorrect due to user interaction (e.g., entering text in a number field).
  *
- * @param {string | null | undefined} gender - The gender of the user.
- * @param {string | number | null | undefined} age - The age of the user.
- * @param {string | number | null | undefined} weight - The weight of the user.
- * @param {string | number | null | undefined} height - The height of the user.
- * @param {string | null | undefined} username - The username of the user.
+ * @param {string | null} gender - The gender of the user.
+ * @param {string | number | null} age - The age of the user.
+ * @param {string | number | null} weight - The weight of the user.
+ * @param {string | number | null} height - The height of the user.
+ * @param {string | null } username - The username of the user.
  * @returns {boolean} - Returns true if all data is valid, false otherwise.
  */
 
-export const validateBasicData = (gender: string | null | undefined, age: string | number | null | undefined, weight: string | number | null | undefined, height: string | number | null | undefined, username: string | null | undefined) => {
-    let isDataValid =
-        !gender ||
-        age === null ||
-        isNaN(Number(age)) ||
-        Number(age) < 5 ||
-        Number(age) > 99 ||
-        weight === null ||
-        isNaN(Number(weight)) ||
-        Number(weight) < 15 ||
-        Number(weight) > 300 ||
-        height === null ||
-        isNaN(Number(height)) ||
-        Number(height) < 45 ||
-        Number(height) > 260 ||
-        !username ||
-        username.trim() === "" ||
-        username.trim().length < 3 ||
-        username.trim().length > 40;
-
-    isDataValid = !isDataValid
+export const validateBasicData = (gender: string | null, age: string | number | null, weight: string | number | null, height: string | number | null, username: string | null) => {
+    const isDataValid =
+        (gender === "male" || gender === "female") &&
+        age !== null &&
+        !isNaN(Number(age)) &&
+        Number(age) >= 5 &&
+        Number(age) <= 99 &&
+        weight !== null &&
+        !isNaN(Number(weight)) &&
+        Number(weight) >= 15 &&
+        Number(weight) <= 300 &&
+        height !== null &&
+        !isNaN(Number(height)) &&
+        Number(height) >= 45 &&
+        Number(height) <= 260 &&
+        username !== null &&
+        username.trim() !== "" &&
+        username.trim().length >= 3 &&
+        username.trim().length <= 40;
 
     return isDataValid
 }
@@ -78,23 +76,21 @@ export interface UserHealthData {
  * @returns {boolean} - Returns true if all data is valid, false otherwise.
  */
 
-export const validateBasicHealthData = (gender: string | null | undefined, age: string | number | null | undefined, weight: string | number | null | undefined, height: string | number | null | undefined) => {
-    let isDataValid =
-        !gender ||
-        age === null ||
-        isNaN(Number(age)) ||
-        Number(age) < 5 ||
-        Number(age) > 99 ||
-        weight === null ||
-        isNaN(Number(weight)) ||
-        Number(weight) < 15 ||
-        Number(weight) > 300 ||
-        height === null ||
-        isNaN(Number(height)) ||
-        Number(height) < 45 ||
-        Number(height) > 260
-
-    isDataValid = !isDataValid
+export const validateBasicHealthData = (gender: string | null, age: string | number | null, weight: string | number | null, height: string | number | null) => {
+    const isDataValid =
+        (gender === "male" || gender === "female") &&
+        age !== null &&
+        !isNaN(Number(age)) &&
+        Number(age) >= 5 &&
+        Number(age) <= 99 &&
+        weight !== null &&
+        !isNaN(Number(weight)) &&
+        Number(weight) >= 15 &&
+        Number(weight) <= 300 &&
+        height !== null &&
+        !isNaN(Number(height)) &&
+        Number(height) >= 45 &&
+        Number(height) <= 260;
 
     return isDataValid
 }
