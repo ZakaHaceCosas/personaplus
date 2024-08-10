@@ -26,13 +26,15 @@ export const getLogsFromStorage = async (): Promise<Log[]> => {
  *
  * @async
  * @param {Log[]} logs An array of logs
- * @returns {*} No return, it just works. Otherwise, logs an error.
+ * @returns {0 | 1} 0 if success, 1 if failure.
  */
-const saveLogsToStorage = async (logs: Log[]) => {
+const saveLogsToStorage = async (logs: Log[]): Promise<0 | 1> => {
     try {
         await AsyncStorage.setItem("globalLogs", JSON.stringify(logs));
+        return 0
     } catch (e) {
         termLog("Error saving logs to AsyncStorage: " + e, "error");
+        return 1
     }
 };
 
@@ -41,15 +43,17 @@ const saveLogsToStorage = async (logs: Log[]) => {
  *
  * @async
  * @param {Log} log The log to be added.
- * @returns {*} No return, it just works. Otherwise, logs an error.
+ * @returns {0 | 1} 0 if success, 1 if failure.
  */
 const addLogToGlobal = async (log: Log) => {
     try {
         const currentLogs = await getLogsFromStorage();
         const updatedLogs = [...currentLogs, log];
         await saveLogsToStorage(updatedLogs);
+        return 0
     } catch (e) {
         termLog("Error adding log to AsyncStorage: " + e, "error");
+        return 1
     }
 };
 
