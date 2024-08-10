@@ -319,6 +319,7 @@ export default function Home() {
         allDoneMessages[Math.floor(Math.random() * allDoneMessages.length)];
 
     // if you've done it all, unsubscribe from reminder notifications
+    // TODO: it doesnt work
     useEffect(() => {
         const unsubscribe = async () => {
             if (objectives && checkForTodaysObjectives(objectives) !== null) {
