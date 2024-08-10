@@ -23,7 +23,7 @@ test('should return the current date in DD/MM/YYYY format', () => {
 });
 
 test('should return date in the format DD/MM/YYYY', () => {
-    // another test, similar to the above, but using regex
+    // another test, this tests the same thing than the previous one, but using regex
     // why? idk
     const date = getCurrentDate();
     const regex = /^\d{2}\/\d{2}\/\d{4}$/;
