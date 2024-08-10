@@ -5,11 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Android - Experimental",
+            "name": "Debug Expo - Android",
             "request": "launch",
-            "type": "reactnative",
+            "type": "reactnativedirect",
             "cwd": "${workspaceFolder}",
-            "platform": "android"
+            "platform": "android",
+            "enableDebug": true
         }
     ]
 }
