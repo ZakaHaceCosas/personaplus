@@ -3,6 +3,7 @@ import { termLog, getLogsFromStorage } from "@/src/toolkit/debug/console";
 import { Log } from "@/src/types/Logs";
 import { ToastAndroid } from "react-native";
 
+// mocks, AFAIK this fakes the functions we depend on so the test works
 jest.mock("@react-native-async-storage/async-storage", () => ({
     getItem: jest.fn(),
     setItem: jest.fn(),
@@ -16,6 +17,7 @@ jest.mock("react-native", () => ({
     },
 }));
 
+// if this gets removed, type error happens :v
 const mockGetItem = AsyncStorage.getItem as jest.MockedFunction<typeof AsyncStorage.getItem>;
 
 describe("termLog Toolkit", () => {
@@ -24,6 +26,7 @@ describe("termLog Toolkit", () => {
     });
 
     describe("getLogsFromStorage", () => {
+        // it should fetch objectives
         test("should return logs from AsyncStorage", async () => {
             const mockLogs: Log[] = [
                 { message: "hello chat", type: "log", timestamp: 1620000000000 },
@@ -38,6 +41,7 @@ describe("termLog Toolkit", () => {
             expect(AsyncStorage.getItem).toHaveBeenCalledWith("globalLogs");
         });
 
+        // upon empty logs, empty array
         test("should return an empty array if there are no logs", async () => {
             mockGetItem.mockResolvedValueOnce(null);
 
@@ -47,6 +51,7 @@ describe("termLog Toolkit", () => {
             expect(AsyncStorage.getItem).toHaveBeenCalledWith("globalLogs");
         });
 
+        // upon error, empty array also
         test("should return an empty array if there is an error", async () => {
             mockGetItem.mockRejectedValueOnce(new Error("AsyncStorage error"));
 
@@ -58,6 +63,8 @@ describe("termLog Toolkit", () => {
     });
 
     describe("termLog", () => {
+        // these tests are all the same, it waits for console.* to be called with the same args that were passed to termLog. if that happens, it means it works.
+        // on error / log with displayToEndUser=true, does the same with ToastAndroid
         test("should log a message with 'log' type", () => {
             const consoleLogSpy = jest.spyOn(console, "log").mockImplementation();
             termLog("hi", "log");
