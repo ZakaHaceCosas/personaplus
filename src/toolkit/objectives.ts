@@ -17,7 +17,7 @@ import { adjustedToday, getCurrentDate, TodaysDay } from '@/src/toolkit/today';
  * Returns the objectives from AsyncStorage as an `Objective[]`, or `null` / `[]` if there aren't any objectives.
  *
  * @async
- * @returns {Promise<Objective[] | null>} - Returns the objectives in the specified format.
+ * @returns {Promise<Objective[] | null>} - Returns the objectives as an `Objective[]`.
  */
 const getObjectives = async (): Promise<Objective[] | null> => {
     try {
@@ -100,16 +100,18 @@ const markObjectiveAsDone = async (identifier: number, confirmWithToast: boolean
  * Clears all the objectives, setting the AsyncStorage object to `[]`.
  *
  * @async
- * @returns {*}
+ * @returns {0 | 1} 0 if success, 1 if failure.
  */
-const clearObjectives = async () => {
+const clearObjectives = async (): Promise<0 | 1> => {
     try {
         const objectives = await getObjectives();
         if (objectives !== null) {
             await AsyncStorage.setItem("objectives", JSON.stringify([]));
         }
+        return 0
     } catch (e) {
         termLog("Got an error clearing objectives! " + e, "error");
+        return 1
     }
 };
 
@@ -405,24 +407,17 @@ function saveDailyObjectivePerformance(id: number, date: TodaysDay, wasDone: boo
  * Fetches the daily objective registry. **Async function.**
  *
  * @async
- * @param {("string" | "object")} [wayToGetThem="object"] Whether you want to get them as an object or as a stringified JSON
- * @returns {Promise<string | object>} The objectives daily log in the desired format
+ * @returns {Promise<object>} The objectives daily log
  */
-const getObjectivesDailyLog = async (wayToGetThem: "string" | "object" = "object"): Promise<string | object> => {
+const getObjectivesDailyLog = async (): Promise<object> => {
     try {
         const storedObjectives: string | null = await AsyncStorage.getItem("dailyObjectivesStorage");
         const objectives: object = storedObjectives ? JSON.parse(storedObjectives) : [];
 
-        if (wayToGetThem === "object") {
-            return objectives;
-        } else if (wayToGetThem === "string") {
-            return JSON.stringify(objectives);
-        } else {
-            throw new Error("Invalid wayToGetThem specified");
-        }
+        return objectives;
     } catch (e) {
         termLog("Got an error fetching objectives! " + e, "error");
-        return wayToGetThem === "object" ? [] : ""; // Return empty array or string based on format
+        throw new Error("Got an error fetching objectives! " + e)
     }
 }
 
