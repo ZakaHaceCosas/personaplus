@@ -34,9 +34,28 @@ TEMPLATE
 ### Trivial updates - Latest
 -->
 
-## 0.0.1-R5-b24
+## 0.0.1-R5-b25
+
+> Note: This update also brings changes to OpenHealth (core library). See core/CHANGELOG.md for more info.
 
 ### User updates - Latest
+
+- Nothing (yet).
+
+### Dev updates - Latest
+
+- Added unit testing.
+- Removed `wayToGetThem` arg from `getObjectivesDailyLog()`.
+- Replaced `return {*}` with `1 | 0` (depending on failure / success) in some functions.
+- Removed the ability to pass `null` values to `UserHealthData` objects.
+
+### Trivial updates - Latest
+
+- Nothing (yet).
+
+## 0.0.1-R5-b24
+
+### User updates - b24
 
 - Finally! Fixed the WelcomeScreen's layout. It's now centered and (thanks to other changes made) it's looking pretty good.
 - Finally!! Fixed the Bottom navigation bar! It's now actually at the bottom.
@@ -48,7 +67,7 @@ TEMPLATE
 - Add a Results page after a session.
 - Added a daily log for objectives (Work in Progress)
 
-### Dev updates - Latest
+### Dev updates - b24
 
 - Removed the old, duplicate `termLog()` implementation from Dev Interface.
 - Dev Interface now also has Loading... state. Also, now all data is fetched from the same Effect.
@@ -67,7 +86,7 @@ TEMPLATE
 - Made code easier to read by turning into functions some logics that were done directly inside of the JSX, at `index.tsx` and `Sessions.tsx` for example.
 - Removed the `wayToGetThem` parameter from `getObjectives()`: now it's not possible to directly get them as a string. This removes the need to use `Array.isArray`, leading to shorter and more readable code.
 
-### Trivial updates - Latest
+### Trivial updates - b24
 
 - Removed the useless easter egg from WelcomeScreen (which I never got the chance to see, by the way). Also removed the "time to push up" question.
 - Fixed typos.
@@ -77,7 +96,7 @@ TEMPLATE
 - Tried to use React Native's New Architecture - bad idea.
 - Now development builds have their own name and icon :]
 
-### Known errors
+### Known errors - b24
 
 - Dev Interface refuses to render, due to "an object not being a valid child" or something.
 - On some devices, scrolling doesn't work correctly. In others it does (older ones).
