@@ -1,7 +1,7 @@
 // Loading.tsx
 // Página de carga
 
-import React from "react";
+import React, { ReactElement } from "react";
 import BottomNav from "./BottomNav";
 import { Dimensions, ScrollView, View } from "react-native";
 import BetterText from "./BetterText";
@@ -45,13 +45,13 @@ interface LoadingProps {
  * @param {string} param0.currentpage
  * @param {boolean} param0.displayNav
  * @param {boolean} param0.useSpecial
- * @returns {*}
+ * @returns {ReactElement}
  */
 export default function Loading({
     currentpage,
     displayNav,
     useSpecial = false,
-}: LoadingProps) {
+}: LoadingProps): ReactElement {
     const { t } = useTranslation();
 
     if (useSpecial === true) {

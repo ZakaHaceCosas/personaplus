@@ -1,7 +1,7 @@
 // src/GapView.tsx
 // ¿flex-gap no funciona? ¿No quieres usar Flexbox? Un espaciador que no ocupa espacio en tu código
 
-import React from "react";
+import React, { ReactElement } from "react";
 import { View } from "react-native-animatable";
 
 // TypeScript, supongo
@@ -34,8 +34,8 @@ interface GapViewProps {
  * @param {GapViewProps} param0
  * @param {number} param0.height
  * @param {number} param0.width
- * @returns {*}
+ * @returns {ReactElement}
  */
-export default function GapView({ height, width }: GapViewProps) {
+export default function GapView({ height, width }: GapViewProps): ReactElement {
     return <View style={{ height: height, width: width }} />;
 }

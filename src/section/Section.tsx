@@ -1,6 +1,6 @@
 // src/section/Section.tsx
 
-import React, { ReactNode } from "react";
+import React, { ReactElement, ReactNode } from "react";
 import { View } from "react-native";
 import BetterText from "@/src/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
@@ -55,9 +55,12 @@ interface SectionProps {
  * @param {SectionProps} param0
  * @param {("Objectives" | "PassiveObjs" | "HowYouAreDoing" | "Unknown" | "Settings" | "Profile" | "About" | "Developer")} param0.kind The kind of section. Depending on this, the section will display a title and icon, or another one.
  * @param {ReactElement} param0.children Children that you can append to the section (one or more). While any `ReactElement` is valid, it's expected that you use a `<Division />` or more.
- * @returns {*}
+ * @returns {ReactElement}
  */
-export default function Section({ kind, children }: SectionProps) {
+export default function Section({
+    kind,
+    children,
+}: SectionProps): ReactElement {
     const { t } = useTranslation();
     let label: string;
     let headerIcon:
