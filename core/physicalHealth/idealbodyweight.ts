@@ -55,7 +55,7 @@ export default function calculateIdealBodyWeight(age: number, gender: "male" | "
     // This is calculated using the BMI method, so the BMI is required.
     /*
     NOTE: ORIGINAL FORMULA IN AMERICAN: IBW [lb] = 5 × BMI + ((BMI ÷ 5) × (height − 60 [in]))
-    Converted by myself (@ZakaHaceCosas <zakahacecosas@protonmail.com>) to American't - will check if it's correct.
+    Converted by myself (@ZakaHaceCosas) to American't - will check if it's correct.
     IBW [kg]=2.204625×BMI+(5BMI x (height [cm]−60×2.54)))
     */
     const bmi = calculateBodyMassIndex(age, gender, weight, height, false, false);
