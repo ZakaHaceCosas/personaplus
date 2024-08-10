@@ -10,13 +10,7 @@
  * (React for real thinks it's funny to start weeks on Sunday bruh)
  * @constant {number} adjustedToday - The adjusted index for today with Monday as 0 and Sunday as 6.
  */
-const today = new Date().getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
-/**
- * Today's day index, being 0 (1st index) Monday and not Sunday, so objectives are tracked correctly.
- *
- * @type {number} Today's day index
- */
-export const adjustedToday: number = today === 0 ? 6 : today - 1; // Adjust Sunday to index 6, otherwise shift back by one
+export const adjustedToday: number = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1; // Adjust Sunday to index 6, otherwise shift back by one
 
 /**
  * Returns current day as a string in the DD/MM/YYYY format
