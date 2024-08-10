@@ -64,7 +64,7 @@ export default function Profile() {
     // Current app version
     const currentVersion = version;
     // FORMAT: X.X.X-R5-bX
-    // e.g. 0.0.1-R5-b24
+    // e.g. 0.0.1-R5-b25
 
     // Async check for updates
     const checkForUpdates = async () => {
