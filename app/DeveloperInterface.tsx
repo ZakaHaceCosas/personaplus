@@ -117,7 +117,7 @@ export default function DeveloperInterface() {
         // objectives daily log
         const fetchObjectivesDailyLog = async () => {
             try {
-                const storedDbjectives = await getObjectivesDailyLog("object");
+                const storedDbjectives = await getObjectivesDailyLog();
                 setObjectivesDailyLog(storedDbjectives);
             } catch (e) {
                 termLog(
