@@ -1,7 +1,7 @@
 // src/Swap.tsx
 // BetterSwitches (porque un "switch", en teoría hace "swap").
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactElement } from "react";
 import { StyleSheet, View, Pressable } from "react-native";
 import BetterText from "@/src/BetterText";
 import colors from "./toolkit/design/colors";
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
  * @param {(string | number)} param0.value
  * @param {("horizontal" | "vertical")} param0.order
  * @param {(value: string) => void} param0.onValueChange
- * @returns {*}
+ * @returns {ReactElement}
  */
 export default function Swap({
     id,
@@ -119,7 +119,7 @@ export default function Swap({
     value,
     order,
     onValueChange,
-}: SwapProps) {
+}: SwapProps): ReactElement {
     const defaultOption = options.find(option => option.default);
     const [selectedOption, setSelectedOption] = useState<Option | null>(
         value

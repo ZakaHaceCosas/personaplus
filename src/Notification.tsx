@@ -1,7 +1,7 @@
 // src/Notification.tsx
 // Notificaciones, para alertar al usuario de cosas que pasan
 
-import React from "react";
+import React, { ReactElement } from "react";
 import { DimensionValue, View } from "react-native";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
@@ -58,7 +58,7 @@ interface NotificationProps {
  * @param {string} param0.text
  * @param {string} [param0.position="static"]
  * @param {string} param0.subtext
- * @returns {*}
+ * @returns {ReactElement}
  */
 export default function Notification({
     style,
@@ -66,7 +66,7 @@ export default function Notification({
     text,
     position = "static",
     subtext,
-}: NotificationProps) {
+}: NotificationProps): ReactElement {
     let borderColor: string; // Color del borde
     let backgroundColor: string; // Color del fondo
     let textColor: string; // Color del texto
