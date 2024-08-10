@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.3
+
+- (WIP) Replace having an interface for each function with a generic `OpenHealthResponse`.
+- Update `physicalHealth` / `Body Mass Index`, added support for under 20 years of age calculations.
+
 ## 0.0.2
 
 - Removed `docs/`. It was planned to be given a usage, but that will be postposed.
