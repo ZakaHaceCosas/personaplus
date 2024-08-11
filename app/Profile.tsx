@@ -294,7 +294,11 @@ export default function Profile() {
 
     return (
         <View style={styles.containerview}>
-            <ScrollView style={styles.mainview}>
+            <ScrollView
+                style={styles.mainview}
+                contentContainerStyle={{ flexGrow: 1 }}
+                horizontal={false}
+            >
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
                     {t("page_profile.header.label")}
                 </BetterText>

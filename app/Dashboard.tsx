@@ -176,7 +176,11 @@ export default function Dashboard() {
 
     return (
         <View style={styles.containerview}>
-            <ScrollView style={styles.mainview}>
+            <ScrollView
+                style={styles.mainview}
+                contentContainerStyle={{ flexGrow: 1 }}
+                horizontal={false}
+            >
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
                     {t("page_dashboard.header.label")}
                 </BetterText>

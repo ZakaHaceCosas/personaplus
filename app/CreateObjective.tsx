@@ -397,7 +397,11 @@ export default function CreateObjective() {
 
     return (
         <View style={styles.containerview}>
-            <ScrollView style={styles.mainview}>
+            <ScrollView
+                style={styles.mainview}
+                contentContainerStyle={{ flexGrow: 1 }}
+                horizontal={false}
+            >
                 <BetterText
                     fontSize={20}
                     fontWeight="Light"
