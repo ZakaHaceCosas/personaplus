@@ -149,6 +149,7 @@ function NoObjectives(t: TFunction, create: () => void) {
 // We create the function
 export default function Home() {
     const [loading, setLoading] = useState(true);
+    const [loadingObjectives, setLoadingObjectives] = useState(true);
     const [username, setUsername] = useState<string>("Unknown");
     const [objectives, setObjectives] = useState<{
         [key: string]: Objective;
@@ -192,60 +193,6 @@ export default function Home() {
         }
     };
 
-    useEffect(() => {
-        // choose a random message for when you've done it all
-        // so the app feels more friendly :D
-        const allDoneMessages: string[] = t("cool_messages.all_done", {
-            returnObjects: true,
-        });
-
-        const randomMessageForAllDone =
-            allDoneMessages[Math.floor(Math.random() * allDoneMessages.length)];
-
-        setRandomMessage(randomMessageForAllDone);
-    }, [t]);
-
-    useEffect(() => {
-        let isMounted = true; // This is supposed to track if the component is still mounted
-        // found it somewhere, hope it does something useful
-
-        const handle = async () => {
-            if (!objectives || Object.keys(objectives).length === 0) return; // to avoid running this when not needed
-
-            const identifiers = []; // A list of the IDs of objectives that are due today
-            if (objectives && Object.keys(objectives).length > 0) {
-                // iterates over all the objectives using a for...of loop to handle async/await stuff
-                for (const key of Object.keys(objectives)) {
-                    if (!isMounted) return;
-                    const objective = objectives[key];
-                    const isDailyStatusChecked =
-                        await checkForAnObjectiveDailyStatus(
-                            objective.identifier
-                        );
-                    if (
-                        !isDailyStatusChecked &&
-                        objective.days[adjustedToday]
-                    ) {
-                        // if not done today AND has to be done today, push it
-                        identifiers.push(objective.identifier);
-                    }
-                }
-
-                if (isMounted) {
-                    // update IDs list only if the component is still mounted
-                    setDueTodayObjectiveList(identifiers);
-                }
-            }
-        };
-
-        handle();
-
-        return () => {
-            // unmount this thing
-            isMounted = false;
-        };
-    }, [objectives]);
-
     const renderObjectiveDivision = (obj: Objective) => {
         if (
             obj &&
@@ -262,6 +209,67 @@ export default function Home() {
         }
         return null;
     };
+
+    useEffect(() => {
+        // choose a random message for when you've done it all
+        // so the app feels more friendly :D
+        const allDoneMessages: string[] = t("cool_messages.all_done", {
+            returnObjects: true,
+        });
+
+        const randomMessageForAllDone =
+            allDoneMessages[Math.floor(Math.random() * allDoneMessages.length)];
+
+        setRandomMessage(randomMessageForAllDone);
+    }, [t]);
+
+    useEffect(() => {
+        try {
+            let isMounted = true; // This is supposed to track if the component is still mounted
+            // found it somewhere, hope it does something useful
+
+            const handle = async () => {
+                if (!objectives || Object.keys(objectives).length === 0) {
+                    return;
+                } // to avoid running this when not needed
+
+                const identifiers = []; // A list of the IDs of objectives that are due today
+                if (objectives && Object.keys(objectives).length > 0) {
+                    // iterates over all the objectives using a for...of loop to handle async/await stuff
+                    for (const key of Object.keys(objectives)) {
+                        if (!isMounted) return;
+                        const objective = objectives[key];
+                        const isDailyStatusChecked =
+                            await checkForAnObjectiveDailyStatus(
+                                objective.identifier
+                            );
+                        if (
+                            !isDailyStatusChecked &&
+                            objective.days[adjustedToday]
+                        ) {
+                            // if not done today AND has to be done today, push it
+                            identifiers.push(objective.identifier);
+                        }
+                    }
+
+                    if (isMounted) {
+                        // update IDs list only if the component is still mounted
+                        setDueTodayObjectiveList(identifiers);
+                        setLoadingObjectives(false);
+                    }
+                }
+            };
+
+            handle();
+
+            return () => {
+                // unmount this thing
+                isMounted = false;
+            };
+        } catch (e) {
+            termLog("Error fetching due today objectives: " + e, "error");
+        }
+    }, [objectives]);
 
     useEffect(() => {
         // function for verification of background fetching status and logging
@@ -331,7 +339,9 @@ export default function Home() {
                 setUsername("Unknown");
                 setObjectives({});
             } finally {
-                setLoading(false);
+                if (!loadingObjectives) {
+                    setLoading(false);
+                }
             }
         };
 
@@ -341,6 +351,12 @@ export default function Home() {
         // i don't want more of those... memory issues
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        if (!loadingObjectives) {
+            setLoading(false);
+        }
+    }, [loadingObjectives]);
 
     useEffect(() => {
         const unsubscribe = async () => {
