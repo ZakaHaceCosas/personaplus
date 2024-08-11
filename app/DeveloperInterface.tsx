@@ -19,7 +19,7 @@ import GapView from "@/src/GapView";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/src/Buttons";
 import { version as ReactVersion } from "react";
-import { osVersion } from "expo-device";
+import * as device from "expo-device";
 import { version as PersonaPlusVersion } from "@/package.json";
 import {
     clearObjectives,
@@ -320,7 +320,10 @@ export default function DeveloperInterface() {
                 <GapView height={10} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={12}>
                     Running React v{ReactVersion} and PersonaPlus v
-                    {PersonaPlusVersion}. Running Android {osVersion}.
+                    {PersonaPlusVersion}.{" "}
+                    {device.isDevice ? "Real device. " : "Emulator. "}Running
+                    Android {device.osVersion} on a {device.brand} device (
+                    {device.deviceName}). Model {device.modelName}.
                 </BetterText>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
