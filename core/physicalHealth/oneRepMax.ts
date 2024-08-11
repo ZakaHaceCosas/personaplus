@@ -57,9 +57,8 @@ export default function calculateOneRepetitionMax(
     const firstoperation_thirdstep: number = weightLiftedPerRep * firstoperation_secondstep
 
     const result: number = firstoperation_thirdstep
-    // ESLint disabled because: It asks for response to be "const" as it never gets reassigned, but it does get reassigned.
-    // eslint-disable-next-line
-    let response: ONERM_Response = {
+
+    const response: ONERM_Response = {
         result: result
     }
 

@@ -2,6 +2,7 @@
 CALCULATE IDEAL BODY WEIGHT
 */
 
+import OpenHealthResponse from "../types/OpenHealthResponse";
 import calculateBodyMassIndex from "./bodymassindex";
 
 // LAST UPDATE TO THIS FUNCTION, ITS DATA, ITS CALCULATIONS, OR ANYTHING THAT DOES AFFECT THE RESULT
@@ -28,7 +29,7 @@ export function getLastUpdate() {
     return UPDATED;
 }
 
-interface IBWResponse {
+/* interface IBWResponse {
     result: number;
     subject?: {
         age: number;
@@ -38,7 +39,7 @@ interface IBWResponse {
     };
     context?: string;
     explanation?: string;
-}
+} */
 
 /**
  * Calculate Ideal Body Weight (IBW) based on given parameters.
@@ -51,7 +52,7 @@ interface IBWResponse {
  * @returns The IBW value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the IBW value.
 */
 
-export default function calculateIdealBodyWeight(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): IBWResponse {
+export default function calculateIdealBodyWeight(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): OpenHealthResponse {
     // This is calculated using the BMI method, so the BMI is required.
     /*
     NOTE: ORIGINAL FORMULA IN AMERICAN: IBW [lb] = 5 × BMI + ((BMI ÷ 5) × (height − 60 [in]))
@@ -69,7 +70,7 @@ export default function calculateIdealBodyWeight(age: number, gender: "male" | "
 
     const context: string | undefined = "The ideal body weight for the given profile, based on the BMI, would be of " + ibw + "kg."
 
-    const response: IBWResponse = {
+    const response: OpenHealthResponse = {
         result: ibw,
     };
 

@@ -1,6 +1,7 @@
 /*
 CALCULATE BODY FAT PERCENTAGE
 */
+import OpenHealthResponse from "../types/OpenHealthResponse";
 import calculateBodyMassIndex from "./bodymassindex";
 
 // LAST UPDATE TO THIS FUNCTION, ITS DATA, ITS CALCULATIONS, OR ANYTHING THAT DOES AFFECT THE RESULT
@@ -27,7 +28,7 @@ export function getLastUpdate() {
     return UPDATED;
 }
 
-interface BFPResponse {
+/* interface BFPResponse {
     result: number;
     subject?: {
         age: number;
@@ -37,7 +38,7 @@ interface BFPResponse {
     };
     context?: string;
     explanation?: string;
-}
+} */
 
 /**
  * Calculate Body Fat Percentage (BFP) based on given parameters.
@@ -50,7 +51,7 @@ interface BFPResponse {
  * @returns The BFP value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the BFP value.
 */
 
-export default function calculateBodyFatPercentage(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): BFPResponse {
+export default function calculateBodyFatPercentage(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): OpenHealthResponse {
     // This is calculated using the BMI method, so the BMI is required.
     const bmi = calculateBodyMassIndex(age, gender, weight, height, false, false);
     let bfp: number;
@@ -101,7 +102,7 @@ export default function calculateBodyFatPercentage(age: number, gender: "male" |
         }
     }
 
-    const response: BFPResponse = {
+    const response: OpenHealthResponse = {
         result: bfp,
     };
 

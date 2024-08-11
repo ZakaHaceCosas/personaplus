@@ -2,6 +2,8 @@
 CALCULATE BASAL METABOLIC RATE
 */
 
+import OpenHealthResponse from "../types/OpenHealthResponse";
+
 // LAST UPDATE TO THIS FUNCTION, ITS DATA, ITS CALCULATIONS, OR ANYTHING THAT DOES AFFECT THE RESULT
 // Changes that do not affect the result, like just bug-fixes, performance improvments, code-legibility improvments, or that kind of stuff, do not need to bump the date.
 const UPDATED: string = "26/06/2024";
@@ -26,7 +28,7 @@ export function getLastUpdate() {
     return UPDATED;
 }
 
-interface BMRResponse {
+/* interface BMRResponse {
     result: number;
     subject?: {
         age: number;
@@ -37,7 +39,7 @@ interface BMRResponse {
     };
     context?: string;
     explanation?: string;
-}
+} */
 
 /**
  * Calculate Basal Metabolic Rate (BMR) based on given parameters.
@@ -51,7 +53,7 @@ interface BMRResponse {
  * @returns The BMR value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the BMR value.
 */
 
-export default function calculateBasalMetabolicRate(age: number, gender: "male" | "female", weight: number, height: number, activness: "poor" | "light" | "moderate" | "intense" | "extreme", provideContext?: boolean, provideExplanation?: boolean): BMRResponse {
+export default function calculateBasalMetabolicRate(age: number, gender: "male" | "female", weight: number, height: number, activness: "poor" | "light" | "moderate" | "intense" | "extreme", provideContext?: boolean, provideExplanation?: boolean): OpenHealthResponse {
     const firststep: number = 10 * weight
     const secondstep: number = 6.25 * height
     const thirdstep: number = 5 * age
@@ -67,7 +69,7 @@ export default function calculateBasalMetabolicRate(age: number, gender: "male" 
 
     const context: string | undefined = "The basal metabolic rate would be " + bmr + ".";
 
-    const response: BMRResponse = {
+    const response: OpenHealthResponse = {
         result: bmr,
     };
 

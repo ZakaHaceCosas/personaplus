@@ -2,6 +2,8 @@
 CALCULATE BODY MASS INDEX
 */
 
+import OpenHealthResponse from "../types/OpenHealthResponse";
+
 // LAST UPDATE TO THIS FUNCTION, ITS DATA, ITS CALCULATIONS, OR ANYTHING THAT DOES AFFECT THE RESULT
 // Changes that do not affect the result, like just bug-fixes, performance improvments, code-legibility improvments, or that kind of stuff, do not need to bump the date.
 const UPDATED: string = "10/08/2024";
@@ -27,7 +29,7 @@ export function getLastUpdate() {
     return UPDATED;
 }
 
-interface BMIResponse {
+/* interface BMIResponse {
     result: number;
     subject?: {
         age: number;
@@ -37,7 +39,7 @@ interface BMIResponse {
     };
     context?: string;
     explanation?: string;
-}
+} */
 
 /**
  * Represents percentiles data for Body Mass Index (BMI) for individuals between 2 and 20 years of age.
@@ -513,7 +515,7 @@ export function getPercentile(bmi: number, age: number, gender: "male" | "female
  * @returns The BMI value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the BMI value.
 */
 
-export default function calculateBodyMassIndex(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): BMIResponse {
+export default function calculateBodyMassIndex(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): OpenHealthResponse {
     // You MUST pass weight as KG (kilograms) and height as CM (centimeters)
     const bmi = weight / ((height / 100) ** 2);
 
@@ -547,7 +549,7 @@ export default function calculateBodyMassIndex(age: number, gender: "male" | "fe
         }
     }
 
-    const response: BMIResponse = {
+    const response: OpenHealthResponse = {
         result: bmi,
     };
 
