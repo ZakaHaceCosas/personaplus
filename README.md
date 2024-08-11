@@ -141,7 +141,7 @@ Gracias a todo este maravilloso software libre, PersonaPlus es posible. ¡Gracia
 <!--markdownlint-disable-next-line-->
 <div align="center">
 
-[![YouTube button](https://img.shields.io/badge/YouTube-ZakaHaceCosas-red?style=for-the-badge&logo=youtube)](https://youtube.com/@ZakaHaceCosas)
+[![YouTube button](https://img.shields.io/badge/YouTube-PersonaPlus-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/playlist?list=PLdif1flfmG__g_a1QSmBNnSh_6pAeRizW)
 [![Discord button](https://img.shields.io/badge/Discord-Servidor_de_Discord-blue?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/invite/euVHrr46c6)
 
 </div>
