@@ -2,6 +2,7 @@
 // Page that shows console logs and other stuff to help the developer debug the app
 
 // THIS SHIT IS BROKEN (perchance)
+// ok i think i fixed it
 
 import React, { useEffect, useState } from "react";
 import {
@@ -18,6 +19,7 @@ import GapView from "@/src/GapView";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/src/Buttons";
 import { version as ReactVersion } from "react";
+import { osVersion } from "expo-device";
 import { version as PersonaPlusVersion } from "@/package.json";
 import {
     clearObjectives,
@@ -36,6 +38,7 @@ import Loading from "@/src/Loading";
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
 import { Logs } from "@/src/types/Logs";
+import Footer from "@/src/Footer";
 
 const styles = StyleSheet.create({
     consoleview: {
@@ -268,7 +271,7 @@ export default function DeveloperInterface() {
         try {
             await AsyncStorage.setItem("globalLogs", "");
             termLog("Cleared logs.", "log");
-            router.navigate("/Profile");
+            router.navigate("/DeveloperInterface");
         } catch (e) {
             termLog(String(e), "error");
         }
@@ -314,27 +317,15 @@ export default function DeveloperInterface() {
                 >
                     Dev interface
                 </BetterText>
+                <GapView height={10} />
+                <BetterText textAlign="normal" fontWeight="Bold" fontSize={12}>
+                    Running React v{ReactVersion} and PersonaPlus v
+                    {PersonaPlusVersion}. Running Android {osVersion}.
+                </BetterText>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
                     {t("globals.options")}
                 </BetterText>
-                <GapView height={5} />
-                <Button
-                    action={() => router.navigate("/WelcomeScreen")}
-                    buttonText={t("globals.go_to_place", {
-                        place: "Welcome Screen",
-                    })}
-                    style="ACE"
-                />
-                <GapView height={5} />
-                <Button
-                    action={() => router.navigate("/openhealthtest")}
-                    buttonText={t("globals.go_to_place", {
-                        place: "OpenHealthJS Testing",
-                    })}
-                    style="ACE"
-                />
-                <GapView height={5} />
                 <Button
                     action={clearObjectives}
                     buttonText={t("dev_interface.clear.objectives")}
@@ -363,7 +354,7 @@ export default function DeveloperInterface() {
                         textAlign="normal"
                         fontSize={15}
                     >
-                        {String(objectives)}
+                        {JSON.stringify(objectives)}
                     </BetterText>
                 </View>
                 <GapView height={15} />
@@ -377,15 +368,12 @@ export default function DeveloperInterface() {
                         textAlign="normal"
                         fontSize={15}
                     >
-                        {String(objectivesDailyLog)}
+                        {JSON.stringify(objectivesDailyLog)}
                     </BetterText>
                 </View>
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={20}>
                     {t("dev_interface.all_asyncstorage_items")}
-                </BetterText>
-                <BetterText textAlign="normal" fontWeight="Bold" fontSize={15}>
-                    item,value,otheritem,otheritemvalue...
                 </BetterText>
                 <GapView height={5} />
                 <View style={styles.consoleview}>
@@ -394,7 +382,7 @@ export default function DeveloperInterface() {
                         textAlign="normal"
                         fontSize={15}
                     >
-                        {String(everything)}
+                        {JSON.stringify(everything)}
                     </BetterText>
                 </View>
                 <GapView height={20} />
@@ -419,12 +407,7 @@ export default function DeveloperInterface() {
                         </Text>
                     ))}
                 </View>
-                <GapView height={10} />
-                <BetterText textAlign="normal" fontWeight="Bold" fontSize={12}>
-                    Running React Native v{ReactVersion} and PersonaPlus v
-                    {PersonaPlusVersion}
-                </BetterText>
-                <GapView height={80} />
+                <Footer />
             </ScrollView>
             <BottomNav currentLocation={currentpage} />
         </View>
