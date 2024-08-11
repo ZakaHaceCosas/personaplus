@@ -11,11 +11,10 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github&color=black)](https://github.com/ZakaHaceCosas/personaplus/commits/)
 [![GitHub Repo size](https://img.shields.io/github/repo-size/ZakaHaceCosas/personaplus?style=for-the-badge&logo=visualstudiocode)](https://github.com/ZakaHaceCosas/personaplus/tree/main/app)
 [![GitHub Repo stars](https://img.shields.io/github/stars/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github&color=orange)](https://github.com/ZakaHaceCosas/personaplus/stargazers)
-[![GitHub followers](https://img.shields.io/github/followers/ZakaHaceCosas?style=for-the-badge&logo=github)](https://github.com/ZakaHaceCosas?tab=followers)
 ![Created at](https://img.shields.io/github/created-at/ZakaHaceCosas/personaplus?style=for-the-badge&color=white&logo=github)
 [![GitHub License](https://img.shields.io/github/license/zakahacecosas/personaplus?style=for-the-badge&color=%23d52e35)](https://github.com/ZakaHaceCosas/personaplus/blob/main/LICENSE.md)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fpersonaplus.vercel.app&up_message=WORKING%20%3A%5D&up_color=%2332FF80&down_message=NOT%20WORKING%20%3A%5B&down_color=%23FF3232&style=for-the-badge)](https://personaplus.vercel.app)
-[![GitHub package.json version](https://img.shields.io/github/package-json/v/zakahacecosas/personaplus?style=for-the-badge&labelColor=%23000&color=%23fff)](https://github.com/ZakaHaceCosas/personaplus/blob/main/package.json#L3)
+[![App version](https://img.shields.io/github/package-json/v/zakahacecosas/personaplus?style=for-the-badge&labelColor=%23000&color=%23fff)](https://github.com/ZakaHaceCosas/personaplus/blob/main/package.json#L3)
 
 </div>
 
