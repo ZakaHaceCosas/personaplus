@@ -257,7 +257,7 @@ export default function Results() {
         <View style={styles.containerview}>
             <ScrollView
                 style={styles.mainview}
-                contentContainerStyle={{ flexGrow: 1 }}
+                contentContainerStyle={{ flex: 1 }}
                 horizontal={false}
             >
                 <View style={styles.thirdview}>
