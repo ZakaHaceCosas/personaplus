@@ -84,22 +84,13 @@ interface BMIPercentiles {
 }
 
 // you can skip / collapse this part
-// while for people over 20 years of age BMI calculations can be generic
-// for people under 20 we need to use the percentiles
-// which translates to turn two graphics with 8 entires per age and 18 ages each
-// into separate objects
+// while for people over 20 years of age BMI calculations can be generic, for people under 20 we need to use the percentiles - which translates into turning a 300 rows excel table into two objects
 
-// note:
-// since i only have a visual graph (see SOURCES) and not a table, there is a very slight possible error margin (i have vision problems alright?). the error margin is of a max of 0.2
-// as seen in documentation (testing section) the default valid error margin for health calculations (like this one) is of 0.3, hence there shouldnt be any big problem, dont worry if you see ive put "15.76" and for you that point of the graph looks like "15.69", for example
-
-// edit regarding the above: nevermind, i did get a table.
 // TODO: revise all data to adjust its precision
-// TODO: update comments
-// TODO: add female percentiles
 // TODO: move this to separate component for code readability
 
 // (send help)
+// UNREVISED - UNPRECISE
 const male_percentiles: BMIPercentiles = {
     2: {
         5: 14.73,
@@ -293,8 +284,198 @@ const male_percentiles: BMIPercentiles = {
     }
 }
 
+// REVISED - PRECISE
 const female_percentiles: BMIPercentiles = {
-    // TODO
+    2: {
+        5: 14.39,
+        10: 14.80,
+        25: 15.52,
+        50: 16.42,
+        75: 17.42,
+        85: 18.01,
+        90: 18.44,
+        95: 19.10
+    },
+    3: {
+        5: 14.00,
+        10: 14.32,
+        25: 14.92,
+        50: 15.69,
+        75: 16.60,
+        85: 17.16,
+        90: 17.58,
+        95: 18.25
+    },
+    4: {
+        5: 13.71,
+        10: 14.90,
+        25: 14.56,
+        50: 15.29,
+        75: 16.20,
+        85: 16.80,
+        90: 17.25,
+        95: 18.02
+    },
+    5: {
+        5: 13.52,
+        10: 13.81,
+        25: 14.38,
+        50: 15.15,
+        75: 16.13,
+        85: 16.80,
+        90: 17.32,
+        95: 18.25
+    },
+    6: {
+        5: 13.42,
+        10: 13.74,
+        25: 14.36,
+        50: 15.21,
+        75: 16.33,
+        85: 17.09,
+        90: 17.71,
+        95: 18.83
+    },
+    7: {
+        5: 13.43,
+        10: 13.79,
+        25: 14.48,
+        50: 15.45,
+        75: 16.73,
+        85: 17.62,
+        90: 18.34,
+        95: 19.67
+    },
+    8: {
+        5: 13.54,
+        10: 13.94,
+        25: 14.73,
+        50: 15.82,
+        75: 17.29,
+        85: 18.31,
+        90: 19.15,
+        95: 20.69
+    },
+    9: {
+        5: 13.74,
+        10: 14.19,
+        25: 15.07,
+        50: 16.30,
+        75: 17.95,
+        85: 19.11,
+        90: 20.06,
+        95: 21.81
+    },
+    10: {
+        5: 14.03,
+        10: 14.53,
+        25: 15.50,
+        50: 16.86,
+        75: 18.69,
+        85: 19.98,
+        90: 21.03,
+        95: 22.98
+    },
+    11: {
+        5: 14.40,
+        10: 14.93,
+        25: 15.98,
+        50: 17.46,
+        75: 19.46,
+        85: 20.86,
+        90: 22.01,
+        95: 24.14
+    },
+    12: {
+        5: 14.83,
+        10: 15.40,
+        25: 16.52,
+        50: 18.10,
+        75: 20.23,
+        85: 21.74,
+        90: 22.97,
+        95: 25.25
+    },
+    13: {
+        5: 15.30,
+        10: 15.90,
+        25: 17.07,
+        50: 18.73,
+        75: 20.98,
+        85: 22.57,
+        90: 23.87,
+        95: 26.29
+    },
+    14: {
+        5: 15.80,
+        10: 16.42,
+        25: 17.63,
+        50: 19.35,
+        75: 21.68,
+        85: 23.34,
+        90: 24.71,
+        95: 27.25
+    },
+    15: {
+        5: 16.30,
+        10: 16.93,
+        25: 18.17,
+        50: 19.93,
+        75: 22.33,
+        85: 24.04,
+        90: 25.46,
+        95: 28.12
+    },
+    16: {
+        5: 16.78,
+        10: 17.42,
+        25: 18.67,
+        50: 20.45,
+        75: 22.90,
+        85: 24.66,
+        90: 26.13,
+        95: 28.90
+    },
+    17: {
+        5: 17.21,
+        10: 17.84,
+        25: 19.10,
+        50: 20.90,
+        75: 23.39,
+        85: 25.20,
+        90: 26.72,
+        95: 29.63
+    },
+    18: {
+        5: 17.55,
+        10: 18.18,
+        25: 19.45,
+        50: 21.27,
+        75: 23.81,
+        85: 25.67,
+        90: 27.25,
+        95: 30.32
+    },
+    19: {
+        5: 17.76,
+        10: 18.41,
+        25: 19.695,
+        50: 21.55,
+        75: 24.16,
+        85: 26.09,
+        90: 27.75,
+        95: 31.02
+    },
+    20: {
+        5: 17.82,
+        10: 18.48,
+        25: 19.80,
+        50: 21.71,
+        75: 24.44,
+        85: 26.47,
+        90: 28.23,
+        95: 31.76
+    }
 }
 
 /**
@@ -337,7 +518,7 @@ export default function calculateBodyMassIndex(age: number, gender: "male" | "fe
     }
 
     if (age < 0) {
-        context = "Invalid age provided.";
+        throw new Error("Invalid age provided.");
     } else if (age < 20) {
         const percentile = getPercentile(bmi, age);
 
