@@ -210,6 +210,8 @@ export default function Home() {
         // found it somewhere, hope it does something useful
 
         const handle = async () => {
+            if (!objectives || Object.keys(objectives).length === 0) return; // to avoid running this when not needed
+
             const identifiers = []; // A list of the IDs of objectives that are due today
             if (objectives && Object.keys(objectives).length > 0) {
                 // iterates over all the objectives using a for...of loop to handle async/await stuff
@@ -333,8 +335,14 @@ export default function Home() {
             }
         };
 
-        // if you've done it all, unsubscribe from reminder notifications
-        // TODO: it doesnt work
+        verifyObjectiveBackgroundFetchingStatusAsync();
+        multiFetch();
+        // THIS SHALL ONLY RUN ONCE, NO MORE TIMES
+        // i don't want more of those... memory issues
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
         const unsubscribe = async () => {
             if (objectives) {
                 const check = await checkForTodaysObjectives(objectives);
@@ -348,13 +356,11 @@ export default function Home() {
             }
         };
 
-        verifyObjectiveBackgroundFetchingStatusAsync();
-        multiFetch();
+        // if you've done it all, unsubscribe from reminder notifications
+        // TODO: it doesnt work
         unsubscribe();
-        // THIS SHALL ONLY RUN ONCE, NO MORE TIMES
-        // i don't want more of those... memory leaks
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [objectives]);
 
     if (loading) {
         return <Loading currentpage={currentpage} displayNav={true} />;
