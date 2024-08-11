@@ -212,15 +212,15 @@ const male_percentiles: BMIPercentiles = {
         90: 23,
         95: 25.17
     },
-    14: {
-        5: 16,
-        10: 16.46,
-        25: 17.6,
-        50: 19.05,
-        75: 21.20,
-        85: 22.60,
-        90: 24.80,
-        95: 26,
+    14: { // REVISED, ALRIGHT
+        5: 15.99,
+        10: 16.54,
+        25: 17.63,
+        50: 19.15,
+        75: 21.21,
+        85: 22.66,
+        90: 23.84,
+        95: 26.04,
     },
     15: {
         5: 16.55,
@@ -478,6 +478,30 @@ const female_percentiles: BMIPercentiles = {
     }
 }
 
+export function getPercentile(bmi: number, age: number, gender: "male" | "female"): number {
+    const percentilesForAge = gender === "male"
+        ? male_percentiles[age]
+        : female_percentiles[age];
+
+    if (!percentilesForAge) {
+        throw new Error(`Percentiles data for age ${age} not available.`);
+    } else if (age < 2 || age > 20) {
+        throw new Error(`Percentiles data for age ${age} not available. If you passed an age over twenty, then you're using this function mistakenly, as percentiles are not required for BMI calculations over 20 years of age.`)
+    } else { // sort the percentiles i guess
+        const sortedPercentiles = Object.keys(percentilesForAge).map(Number).sort((a, b) => a - b);
+
+        // spot the percentile that corresponds to the BMI/AGE data and return it
+        for (const percentile of sortedPercentiles) {
+            if (bmi <= percentilesForAge[percentile as 5 | 10 | 25 | 50 | 75 | 85 | 95]) {
+                return percentile;
+            }
+        }
+    }
+
+
+    return 100; // max percentile is 95. a return of 100 means that bro got a serious problem :skull:
+}
+
 /**
  * Calculate Body Mass Index (BMI) based on given parameters.
  * @param age The age of the subject.
@@ -495,41 +519,21 @@ export default function calculateBodyMassIndex(age: number, gender: "male" | "fe
 
     let context: string | undefined;
 
-    function getPercentile(bmi: number, age: number): number {
-        const percentilesForAge = gender === "male"
-            ? male_percentiles[age]
-            : female_percentiles[age];
-
-        if (!percentilesForAge) {
-            throw new Error(`Percentiles data for age ${age} not available.`);
-        }
-
-        // sort the percentiles i guess
-        const sortedPercentiles = Object.keys(percentilesForAge).map(Number).sort((a, b) => a - b);
-
-        // spot the percentile that corresponds to the BMI/AGE data and return it
-        for (const percentile of sortedPercentiles) {
-            if (bmi <= percentilesForAge[percentile as 5 | 10 | 25 | 50 | 75 | 85 | 95]) {
-                return percentile;
-            }
-        }
-
-        return 100; // max percentile is 95. a return of 100 means that bro got a serious problem :skull:
-    }
-
     if (age < 0) {
         throw new Error("Invalid age provided.");
     } else if (age < 20) {
-        const percentile = getPercentile(bmi, age);
+        const percentile = getPercentile(bmi, age, gender);
 
-        if (percentile < 5) {
+        if (percentile <= 5) {
             context = "underweight";
-        } else if (percentile >= 5 && percentile < 85) {
+        } else if (percentile >= 5 && percentile <= 75) {
             context = "healthy weight";
-        } else if (percentile >= 85 && percentile < 95) {
+        } else if (percentile >= 75 && percentile < 85) {
             context = "overweight";
-        } else {
+        } else if (percentile >= 85 && percentile <= 95) {
             context = "obesity";
+        } else if (percentile >= 95) {
+            context = "severe obesity"
         }
     } else {
         if (bmi < 18.5) {
