@@ -89,20 +89,19 @@ export default function CreateObjective() {
     const [timeToPushUp, setTimeToPushup] = useState<number>(0); // i forgot what purpose does this serve, to be honest
     const [speed, setSpeed] = useState<number>(2); // defaults to the 3rd value instead of the 1st one. how is the user going to know if he decrements there are more options? no fucking clue.
     const speedOptions = [
-        ["Brisk Walk", "1.6 - 3.2 km/h"],
-        ["Light Jog", "3.2 - 4.0 km/h"],
-        ["Moderate Run", "4.0 - 4.8 km/h"],
-        ["Fast Run", "4.8 - 5.5 km/h"],
-        ["Sprint", "5.5 - 6.4 km/h"],
-        ["Fast Sprint", "6.4 - 8.0 km/h"],
-        ["Running Fast", "8.0 - 9.6 km/h"],
-        ["Very Fast Run", "9.6 - 11.3 km/h"],
-        ["Sprinting", "11.3 - 12.9 km/h"],
-        ["Fast Sprinting", "12.9 - 14.5 km/h"],
-        ["Full Speed Sprinting", "14.5 - 16.1 km/h"],
-        ["Maximum Speed", "more than 16.1 km/h"],
+        [t("Brisk Walk"), t("1.6 - 3.2 km/h")],
+        [t("Light Jog"), t("3.2 - 4.0 km/h")],
+        [t("Moderate Run"), t("4.0 - 4.8 km/h")],
+        [t("Fast Run"), t("4.8 - 5.5 km/h")],
+        [t("Sprint"), t("5.5 - 6.4 km/h")],
+        [t("Fast Sprint"), t("6.4 - 8.0 km/h")],
+        [t("Running Fast"), t("8.0 - 9.6 km/h")],
+        [t("Very Fast Run"), t("9.6 - 11.3 km/h")],
+        [t("Sprinting"), t("11.3 - 12.9 km/h")],
+        [t("Fast Sprinting"), t("12.9 - 14.5 km/h")],
+        [t("Full Speed Sprinting"), t("14.5 - 16.1 km/h")],
+        [t("Maximum Speed"), t("more than 16.1 km/h")],
     ];
-    // TODO - translate the above speed options
     const speedString = speedOptions[speed][0];
     const exactSpeedString = speedOptions[speed][1];
 
