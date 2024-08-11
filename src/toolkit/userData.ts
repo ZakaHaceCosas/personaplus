@@ -45,25 +45,25 @@ export interface UserHealthData {
      *
      * @type {number}
      */
-    age: number,
+    age: number | null,
     /**
      * The weight of the user
      *
      * @type {number}
      */
-    weight: number,
+    weight: number | null,
     /**
      * The height of the user
      *
      * @type {number}
      */
-    height: number,
+    height: number | null,
     /**
      * The gender of the user, must be either `"male"` or `"female"`
      *
      * @type {("male" | "female")}
      */
-    gender: "male" | "female"
+    gender: "male" | "female" | null
 }
 
 /**
