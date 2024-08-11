@@ -401,5 +401,33 @@
             "not_exported": "Hubo un error al guardar el archivo: {{err}}",
             "clear_warning": "Los registros son muy útiles en caso de que tengas un error, especialmente ahora que la app sigue en una versión de pruebas. Como sea, por privacidad, permitimos su eliminación. Hazlo a tu discreción."
         }
+    },
+    "others": {
+        "speed": {
+            "Brisk Walk": "Caminata rápida",
+            "Light Jog": "Trote ligero",
+            "Moderate Run": "Carrera moderada",
+            "Fast Run": "Carrera rápida",
+            "Sprint": "Sprint",
+            "Fast Sprint": "Sprint rápido",
+            "Running Fast": "Corriendo rápido",
+            "Very Fast Run": "Carrera muy rápida",
+            "Sprinting": "Corriendo en sprint",
+            "Fast Sprinting": "Sprint muy rápido",
+            "Full Speed Sprinting": "Sprint a máxima velocidad",
+            "Maximum Speed": "Velocidad máxima",
+            "1.6 - 3.2 km/h": "1.6 - 3.2 km/h",
+            "3.2 - 4.0 km/h": "3.2 - 4.0 km/h",
+            "4.0 - 4.8 km/h": "4.0 - 4.8 km/h",
+            "4.8 - 5.5 km/h": "4.8 - 5.5 km/h",
+            "5.5 - 6.4 km/h": "5.5 - 6.4 km/h",
+            "6.4 - 8.0 km/h": "6.4 - 8.0 km/h",
+            "8.0 - 9.6 km/h": "8.0 - 9.6 km/h",
+            "9.6 - 11.3 km/h": "9.6 - 11.3 km/h",
+            "11.3 - 12.9 km/h": "11.3 - 12.9 km/h",
+            "12.9 - 14.5 km/h": "12.9 - 14.5 km/h",
+            "14.5 - 16.1 km/h": "14.5 - 16.1 km/h",
+            "more than 16.1 km/h": "más de 16.1 km/h"
+        }
     }
 }
