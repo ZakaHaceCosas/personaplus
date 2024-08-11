@@ -40,14 +40,17 @@ TEMPLATE
 
 ### User updates - Latest
 
-- Nothing (yet).
+- Some content lacking translations has now been translated.
+- **Fixed** the app thinking the Welcome form was done even if it wasn't. Before, if the app was left without submitting it, and relaunched, the app would directly load without the data, treating the user as "Unknown".
 
 ### Dev updates - Latest
 
 - Added unit testing.
 - Removed `wayToGetThem` arg from `getObjectivesDailyLog()`.
 - Replaced `return {*}` with `1 | 0` (depending on failure / success) in some functions.
-- Removed the ability to pass `null` values to `UserHealthData` objects.
+- Removed a useless `useEffect` from DeveloperInterface.
+- Removed some `termLog`s that were there for debug purposes and aren't required anymore.
+- Removed two `useState`s and one `useEffect` from `index.tsx`. Turns out the check for background fetching & notification status were duplicate.
 
 ### Trivial updates - Latest
 
