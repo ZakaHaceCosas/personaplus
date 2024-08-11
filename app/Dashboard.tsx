@@ -175,7 +175,10 @@ export default function Dashboard() {
     }
 
     return (
-        <View style={styles.containerview}>
+        <View
+            style={styles.containerview}
+            onStartShouldSetResponder={() => true}
+        >
             <ScrollView
                 style={styles.mainview}
                 contentContainerStyle={{ flex: 1 }}
