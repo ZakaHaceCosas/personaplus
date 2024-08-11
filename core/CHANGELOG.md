@@ -4,6 +4,7 @@
 
 - (WIP) Replace having an interface for each function with a generic `OpenHealthResponse`.
 - Update `physicalHealth` / `Body Mass Index`, added support for under 20 years of age calculations.
+- Some work around with DOCS and READMEs.
 
 ## 0.0.2
 

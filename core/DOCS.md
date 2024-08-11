@@ -1,9 +1,5 @@
 # OpenHealth documentation
 
-> [!NOTE]
-> Don't confuse `DOCS.md` (Documentation) with `docs/`, a directory for content used by the library.
-<!--markdownlint-disable-next-line-->
-
 > [!TIP]
 > También disponible en [Español (Spanish)](DOCS.es.md)
 
@@ -19,7 +15,7 @@ From there, you have different categories to access functions, like the followin
 
 ```tsx
 OpenHealth.physicalHealth // phisical health related features
-OpenHealth.mentalHealth // mental health related features
+OpenHealth.performance // performance measuring related features
 ...
 ```
 
@@ -28,7 +24,7 @@ Currently, these are all the categories available:
 | CATEGORY | EXPLANATION |
 | -------- | ----------- |
 | `physicalHealth` | Phisical health related functions and calculations. |
-| `mentalHealth` | Mental health related functions and calculations. (Not implemented yet) |
+| `mentalHealth` | **(Not yet implemented)** Mental health related functions and calculations. |
 | `performance` | Sport & activity performance related functions and calculations. |
 
 ## Now, how do functions work?
@@ -49,7 +45,7 @@ OpenHealth.physicalHealth.BodyMassIndex.getLastUpdated();
 >
 > We adhere to the international system and do not support the imperial system, nor do we have intentions to implement it. Thank you for your understanding!
 
-`provideContext` gives a small context (sometimes just a word) about how the result should be interpreted. E.g., in the BMI (BodyMassIndex) function, `provideContext` returns (when applicable) a string saying if the result value does represent "healthy weight", "under weight", "obesity", and so on.
+`provideContext` gives a small context (sometimes just a word) about how the result should be interpreted. E.g., in the BMI (Body Mass Index) function, `context` would a string saying if the result value does represent "healthy weight", "underweight", "obesity", and so on.
 
 `provideExplanation` gives a small explanation of what the calculation means. For example, in the BMI function it returns the following:
 
@@ -59,17 +55,18 @@ OpenHealth.physicalHealth.BodyMassIndex.getLastUpdated();
 
 ## What should I expect as a return?
 
-Calculation functions always follow the same structure for returns: an `object` which looks like this:
+Calculation functions always follow the same structure for returns: an `OpenHealthResponse` object which looks like this:
 
 ```tsx
-interface response {
-    result: number; // The result of the calculation itself. Always a number.
-    subject?: {
+interface OpenHealthResponse {
+    result: number; // The result of the calculation itself. Should always be a number.
+    subject: {
         age: number;
         gender: "male" | "female";
         weight: number;
         height: number;
-        ... // if there's any other function specific parameter, it will always be part of the "subject"
+        ...
+        // Additional params will always be inside of the subject. Specific functions might require additional params, specially performance related ones.
     };
     context?: string;
     explanation?: string;
@@ -78,13 +75,19 @@ interface response {
 
 > [!WARNING]
 > If both `provideContext` and `provideExplanation` are set to `false`, you will be returned an object that contains JUST the "`result`". This is because the `subject` is considered part of the context, therefore `provideContext` must be set to true if you wanted to retrieve it for any reason. Anyways all the content from the `subject` are arguments you pass to the function, so in theory you'll always have access to those even if you don't explicitly ask for the `subject` AND the `context`.
+>
+> In those cases, the number will be returned as part of the object, not as a standalone number.
 
-Then, there's `getSource()` which returns a string with the URLs to all the sources of knoweledge used to develop the function, write it's explanation, and so on, and `getLastUpdated()` returns a string with the last time the function ITSELF was updated (using the DD/MM/YYYY format).
+## What to expect from the other functions?
+
+There's `getSource()`, which returns a string with the URLs to all the sources of knoweledge used to develop the function, write it's explanation, and so on. The string will look like this: `"https://website-one.gov and https://website-two.org`.
+
+And then there's `getLastUpdated()`, which returns a string with the last time the function ITSELF was updated (using the DD/MM/YYYY format).
 
 > [!NOTE]
 > Updates that make trivial changes like cleaning the code, improving performance, etc... do not bump the `getLastUpdated()` date. Only true changes, like numbers used for calculations, explanations, and that kind of stuff will be considered as an update to "the function *itself*".
 
-Great, you got it!
+Great, you got it all!
 
 Now, let's move onto the reference manual: a list of all available functions, categorised, and with explanations.
 
@@ -163,3 +166,24 @@ Each `intensity` value is associated to a fixed, approximated MET value, as seen
 | `pretty_intense` | rope jumping, 84/min | 10.5 |
 | `very_intense` | rope jumping, 100/min | 11.0 |
 | `really_intense` | jogging, 10.9 km/h | 11.2 |
+
+## bodymassindex.`calculate()`
+
+**What's this?**
+
+> The BMI (body mass index) is a person's weight in kilograms divided by the square of height in meters.
+
+In an easier vocabulary: BMI is a number that creates a relationship between an individual's body mass and the rest of their "parameters" (age, gender, or height).
+
+**What purpose does the function serve?**
+
+You use it by passing the data needed to calculate the BMI, to calculate (based on the CDC's formula and their percentiles) the estimated Body Mass Index, and whether that BMI represents a healthy weight or an unhealthy one, either by underweight or overweight / obesity.
+
+For extra info about how this should be used within PersonaPlus' scope, see [USAGE.md](USAGE.md#bodyMassIndex).
+
+| Parameter | Type | Explanation |
+| --------- | ---- | ----------- |
+| `age` | Number | The **age** of the subject in years |
+| `gender` | "male" or "female" | The **gender** of the subject |
+| `weight` | Number | The weight of the subject in **kilograms** |
+| `height` | Height | The height of the subject in **centimeters** |
