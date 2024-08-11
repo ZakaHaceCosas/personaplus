@@ -1,4 +1,4 @@
-import calculateBodyMassIndex from "@/core/physicalHealth/bodymassindex";
+import calculateBodyMassIndex, { getPercentile } from "@/core/physicalHealth/bodymassindex";
 import { expect } from '@jest/globals';
 import type { MatcherFunction } from 'expect';
 
@@ -57,17 +57,6 @@ describe("body mass index calculations", () => {
         expect(calculation.result).toBeWithinMargin(22.0, 0.1);
     });
 
-    test("should return context when provideContext is true", () => {
-        const calculation = calculateBodyMassIndex(25, "male", 70, 175, true, false);
-        expect(calculation.subject).toEqual({
-            age: 25,
-            gender: "male",
-            weight: 70,
-            height: 175,
-        });
-        expect(calculation.context).toBe("healthy weight");
-    });
-
     test("should handle and return all BMI contexts (underweight, healthy weight, overweight, obesity)", () => {
         const cases = [
             { age: 25, weight: 45, height: 170, expected: "underweight" },
@@ -81,7 +70,9 @@ describe("body mass index calculations", () => {
             expect(calculation.context).toBe(expected);
         });
     });
+});
 
+describe("body mass index function handling", () => {
     test("should include explanation when provideExplanation is true", () => {
         const calculation = calculateBodyMassIndex(25, "female", 60, 165, false, true);
         expect(calculation.explanation).toBe("(According to CDC) Body mass index (BMI) is a person's weight in kilograms divided by the square of height in meters. BMI is an inexpensive and easy screening method for weight category—underweight, healthy weight, overweight, and obesity. BMI does not measure body fat directly, but BMI is moderately correlated with more direct measures of body fat. Furthermore, BMI appears to be as strongly correlated with various metabolic and disease outcomes as are these more direct measures of body fatness.");
@@ -90,4 +81,35 @@ describe("body mass index calculations", () => {
     test("should handle invalid age input", () => {
         expect(() => { calculateBodyMassIndex(-5, "male", 70, 175, true, true) }).toThrowError("Invalid age provided.")
     });
+
+    test("should return context when provideContext is true", () => {
+        const calculation = calculateBodyMassIndex(25, "male", 70, 175, true, false);
+        expect(calculation.subject).toEqual({
+            age: 25,
+            gender: "male",
+            weight: 70,
+            height: 175,
+        });
+        expect(calculation.context).toBe("healthy weight");
+    });
+})
+
+describe("body mass index underage calculations", () => {
+    // under 20 years of age, calculations are more strict / require of more precission,
+    // hence they got additional tests
+
+    test("should return accurate BMI value for age 14, male", () => {
+        const calculation = calculateBodyMassIndex(14, "male", 45, 170, true, false);
+        expect(calculation.result).toBeWithinMargin(15.6, 0.1);
+        expect(calculation.context).toBe("underweight");
+    });
 });
+
+describe("calibrate percentile calculations", () => {
+    // since i've been having more errors than expected, i added this to try to find the error by calibrating the way i get the percentiles
+
+    test("should return accurate percentile", () => {
+        const result = getPercentile(15.6, 14, "male")
+        expect(result).toBe(5) // 5, 1st percentile
+    })
+})
