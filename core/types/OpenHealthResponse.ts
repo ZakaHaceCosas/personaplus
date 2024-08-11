@@ -6,7 +6,7 @@ interface SubjectData extends UserHealthData {
 
 export default interface OpenHealthResponse {
     result: number,
-    subject: SubjectData
+    subject?: SubjectData
     context?: string
     explanation?: string
 }
