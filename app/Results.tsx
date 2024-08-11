@@ -254,13 +254,10 @@ export default function Results() {
     }
 
     return (
-        <View
-            style={styles.containerview}
-            onStartShouldSetResponder={() => true}
-        >
+        <View style={styles.containerview}>
             <ScrollView
                 style={styles.mainview}
-                contentContainerStyle={{ flex: 1 }}
+                contentContainerStyle={{ flexGrow: 1 }}
                 horizontal={false}
             >
                 <View style={styles.thirdview}>
@@ -268,7 +265,7 @@ export default function Results() {
                         {t("globals.session_done")}
                     </BetterText>
                     <BetterText fontSize={20} fontWeight="SemiBold">
-                        {randomMessage !== null ? randomMessage : ""}
+                        {randomMessage}
                     </BetterText>
                     <GapView height={10} />
                     {result?.result && (
@@ -296,6 +293,7 @@ export default function Results() {
                 </View>
                 <GapView height={10} />
                 <Button
+                    layout="fixed"
                     action={() => {
                         router.replace("/");
                     }}

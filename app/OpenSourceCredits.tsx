@@ -109,13 +109,10 @@ export default function OpenSourceCredits() {
     const { t } = useTranslation();
 
     return (
-        <View
-            style={styles.containerview}
-            onStartShouldSetResponder={() => true}
-        >
+        <View style={styles.containerview}>
             <ScrollView
                 style={styles.mainview}
-                contentContainerStyle={{ flex: 1 }}
+                contentContainerStyle={{ flexGrow: 1 }}
                 horizontal={false}
             >
                 <BetterText
