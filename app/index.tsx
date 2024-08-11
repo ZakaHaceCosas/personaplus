@@ -234,7 +234,6 @@ export default function Home() {
                     const isFirstLaunchValidation =
                         items[2][1] === null || !items[2][1]; // if this item is null or was never created ("hasLaunched"), this is considered the 1st launch and redirects to WelcomeScreen
                     if (isFirstLaunchValidation) {
-                        await AsyncStorage.setItem("hasLaunched", "true"); // TODO: move this to the submit handler at the end of the WelcomeScreen, otherwise, if you exit the app without finishing the form, it thinks you already did it. no one is "Unknown years old"! so this needs to be moved
                         setIsFirstLaunch(true);
                     } else {
                         setIsFirstLaunch(false);
