@@ -178,7 +178,7 @@ export default function Dashboard() {
         <View style={styles.containerview}>
             <ScrollView
                 style={styles.mainview}
-                contentContainerStyle={{ flexGrow: 1 }}
+                contentContainerStyle={{ flex: 1 }}
                 horizontal={false}
             >
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
