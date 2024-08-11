@@ -3,6 +3,7 @@ CALCULATE TOTAL DAILY ENERGY EXPENDITURE
 */
 
 import OpenHealth from "../openhealth";
+import OpenHealthResponse from "../types/OpenHealthResponse";
 
 // LAST UPDATE TO THIS FUNCTION, ITS DATA, ITS CALCULATIONS, OR ANYTHING THAT DOES AFFECT THE RESULT
 // Changes that do not affect the result, like just bug-fixes, performance improvments, code-legibility improvments, or that kind of stuff, do not need to bump the date.
@@ -28,7 +29,7 @@ export function getLastUpdate() {
     return UPDATED;
 }
 
-interface TDEEResponse {
+/* interface TDEEResponse {
     result: number;
     subject?: {
         age: number;
@@ -39,7 +40,7 @@ interface TDEEResponse {
     };
     context?: string;
     explanation?: string;
-}
+} */
 
 /**
  * Calculate Total Daily Energy Expenditure (TDEE) based on the Basal Metabolic Rate (BMR) and on given parameters.
@@ -53,7 +54,7 @@ interface TDEEResponse {
  * @returns The TDEE value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the TDEE value.
 */
 
-export default function calculateBasalMetabolicRate(age: number, gender: "male" | "female", weight: number, height: number, activness: "poor" | "light" | "moderate" | "intense" | "extreme", provideContext?: boolean, provideExplanation?: boolean): TDEEResponse {
+export default function calculateBasalMetabolicRate(age: number, gender: "male" | "female", weight: number, height: number, activness: "poor" | "light" | "moderate" | "intense" | "extreme", provideContext?: boolean, provideExplanation?: boolean): OpenHealthResponse {
     const bmrsource = OpenHealth.physicalHealth.BasalMetabolicRate.calculate(age, gender, weight, height, activness, true, true)
 
     const bmr = bmrsource.result
@@ -74,12 +75,12 @@ export default function calculateBasalMetabolicRate(age: number, gender: "male" 
     } else if (activness === "intense") {
         calc = bmr * 1.725;
         context = "The recommended daily calorical ingest would be of " + calc + ", taking into account the specified level of activness is " + activness + " and the BMR is " + bmr;
-    } else { // extreme
+    } else {
         calc = bmr * 1.9;
         context = "The recommended daily calorical ingest would be of " + calc + ", taking into account the specified level of activness is " + activness + " and the BMR is " + bmr;
     }
 
-    const response: TDEEResponse = {
+    const response: OpenHealthResponse = {
         result: calc,
     };
 
