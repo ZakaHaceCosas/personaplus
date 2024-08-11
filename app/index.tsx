@@ -149,7 +149,6 @@ function NoObjectives(t: TFunction, create: () => void) {
 // We create the function
 export default function Home() {
     const [loading, setLoading] = useState(true);
-    const [isFirstLaunch, setIsFirstLaunch] = useState<boolean | null>(null);
     const [username, setUsername] = useState<string>("Unknown");
     const [objectives, setObjectives] = useState<{
         [key: string]: Objective;
@@ -161,89 +160,7 @@ export default function Home() {
     const { t } = useTranslation();
     const currentpage = usePathname();
 
-    // verification of background fetching status and logging
-    useEffect(() => {
-        const verifyStatusAsync = async () => {
-            try {
-                const isRegistered = await TaskManager.isTaskRegisteredAsync(
-                    "background-active-objective-fetching"
-                );
-                if (!isRegistered) {
-                    await registerBackgroundObjectivesFetchAsync(); // if not registered already
-                }
-                termLog(
-                    "Daily objective fetching seems to be set up!",
-                    "success"
-                );
-            } catch (e) {
-                termLog(
-                    "Error verifying or registering background fetch: " + e,
-                    "error"
-                );
-            }
-        };
-
-        verifyStatusAsync();
-    }, []);
-
-    // this fetches all stuff nedeed
-    useEffect(() => {
-        const multiFetch = async () => {
-            try {
-                // this returns stuff in an [x][1] basis
-                // the username is [0] (because it's the first) and then always [1]
-                const items = await AsyncStorage.multiGet([
-                    "username",
-                    "objectives",
-                    "hasLaunched",
-                ]);
-                if (items) {
-                    setUsername(String(items[0][1])); // see? username is [0][1]
-                    setObjectives(
-                        // this checks if objectives is NOT null or "" or "{}" or "[]". if it is, objectives will be {}, otherwise, they will be the saved objectives.
-                        items[1][1] !== null &&
-                            items[1][1] !== "" &&
-                            items[1][1] !== "{}" &&
-                            items[1][1] !== "[]"
-                            ? JSON.parse(String(items[1][1]))
-                            : {}
-                    );
-                    const isFirstLaunchValidation =
-                        items[2][1] === null || !items[2][1]; // if this item is null or was never created ("hasLaunched"), this is considered the 1st launch and redirects to WelcomeScreen
-                    if (isFirstLaunchValidation) {
-                        setIsFirstLaunch(true);
-                    } else {
-                        setIsFirstLaunch(false);
-                    }
-                } else {
-                    termLog(
-                        "Error fetching basic user data! No items (useEffect -> multiFetch -> try-catch.try -> if items)",
-                        "error"
-                    );
-                    setUsername("Unknown");
-                    setObjectives({});
-                }
-                setLoading(false); // if everything works, sets loading to false
-            } catch (e) {
-                termLog(
-                    "Error fetching basic user data! (useEffect -> multiFetch -> try-catch). Catched: " +
-                        e,
-                    "error"
-                );
-                setUsername("Unknown");
-                setObjectives({});
-                setLoading(false);
-            }
-        };
-
-        multiFetch();
-    }, []);
-
-    useEffect(() => {
-        if (isFirstLaunch) {
-            router.push("/WelcomeScreen"); // if isFirstLaunch, pushes to WelcomeScreen
-        }
-    }, [isFirstLaunch]);
+    const [randomMessage, setRandomMessage] = useState<string>();
 
     // marking an objective as done
     const handleMarkingObjectiveAsDone = async (identifier: number) => {
@@ -265,37 +182,28 @@ export default function Home() {
 
     // redirects to the Sessions page if the user starts a session, passing the objective's ID as a parameter
     const startSessionFromObjective = (identifier: number): void => {
-        router.navigate("/Sessions?id=" + identifier);
+        if (identifier !== undefined) {
+            router.navigate("/Sessions?id=" + identifier);
+        } else {
+            termLog(
+                "Invalid identifier provided for starting a session",
+                "error"
+            );
+        }
     };
 
-    // choose a random message for when you've done it all
-    // so the app feels more friendly :D
-    const allDoneMessages: string[] = t("cool_messages.all_done", {
-        returnObjects: true,
-    });
-
-    const randomMessageForAllDone =
-        allDoneMessages[Math.floor(Math.random() * allDoneMessages.length)];
-
-    // if you've done it all, unsubscribe from reminder notifications
-    // TODO: it doesnt work
     useEffect(() => {
-        const unsubscribe = async () => {
-            if (objectives && checkForTodaysObjectives(objectives) !== null) {
-                const check = await checkForTodaysObjectives(objectives);
-                if (Platform.OS === "android") {
-                    if (check === false) {
-                        cancelScheduledNotifications();
-                    } else if (check === true) {
-                        scheduleRandomNotifications(t);
-                    }
-                }
-            }
-        };
+        // choose a random message for when you've done it all
+        // so the app feels more friendly :D
+        const allDoneMessages: string[] = t("cool_messages.all_done", {
+            returnObjects: true,
+        });
 
-        unsubscribe();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [objectives]);
+        const randomMessageForAllDone =
+            allDoneMessages[Math.floor(Math.random() * allDoneMessages.length)];
+
+        setRandomMessage(randomMessageForAllDone);
+    }, [t]);
 
     useEffect(() => {
         let isMounted = true; // This is supposed to track if the component is still mounted
@@ -306,6 +214,7 @@ export default function Home() {
             if (objectives && Object.keys(objectives).length > 0) {
                 // iterates over all the objectives using a for...of loop to handle async/await stuff
                 for (const key of Object.keys(objectives)) {
+                    if (!isMounted) return;
                     const objective = objectives[key];
                     const isDailyStatusChecked =
                         await checkForAnObjectiveDailyStatus(
@@ -338,7 +247,8 @@ export default function Home() {
     const renderObjectiveDivision = (obj: Objective) => {
         if (
             obj &&
-            obj.days[adjustedToday] &&
+            obj.days[adjustedToday] !== undefined &&
+            obj.days[adjustedToday] !== null &&
             dueTodayObjectiveList.includes(obj.identifier)
         ) {
             return ObjectiveDivision(
@@ -351,18 +261,107 @@ export default function Home() {
         return null;
     };
 
+    useEffect(() => {
+        // function for verification of background fetching status and logging
+        const verifyObjectiveBackgroundFetchingStatusAsync = async () => {
+            try {
+                const isRegistered = await TaskManager.isTaskRegisteredAsync(
+                    "background-active-objective-fetching"
+                );
+                if (!isRegistered) {
+                    await registerBackgroundObjectivesFetchAsync(); // if not registered already
+                }
+                termLog(
+                    "Daily objective fetching seems to be set up!",
+                    "success"
+                );
+            } catch (e) {
+                termLog(
+                    "Error verifying or registering background fetch: " + e,
+                    "error"
+                );
+            }
+        };
+
+        // this fetches all stuff nedeed
+        const multiFetch = async () => {
+            try {
+                // this returns stuff in an [x][1] basis
+                // the username is [0] (because it's the first) and then always [1]
+                const items = await AsyncStorage.multiGet([
+                    "username",
+                    "objectives",
+                    "hasLaunched",
+                ]);
+                if (items) {
+                    const username = items[0]?.[1]
+                        ? String(items[0][1])
+                        : "Error"; // in case of error sets to an "Error value"
+                    setUsername(username); // see? username is [0][1]
+
+                    const objectivesData = items[1]?.[1];
+                    const parsedObjectives = // this checks if objectives is NOT null or "" or "{}" or "[]". if it is, objectives will be {}, otherwise, they will be the saved objectives.
+                        objectivesData &&
+                        objectivesData !== "{}" &&
+                        objectivesData !== "[]"
+                            ? JSON.parse(objectivesData)
+                            : {};
+                    setObjectives(parsedObjectives);
+
+                    const isFirstLaunchValidation = !items[2]?.[1]; // if this item is null or was never created ("hasLaunched"), this is considered the 1st launch and redirects to WelcomeScreen
+                    if (isFirstLaunchValidation) {
+                        router.push("/WelcomeScreen"); // if isFirstLaunchValidation, pushes to WelcomeScreen
+                    }
+                } else {
+                    termLog(
+                        "Error fetching basic user data! No items (useEffect -> multiFetch -> try-catch.try -> if items)",
+                        "error"
+                    );
+                    setUsername("Unknown");
+                    setObjectives({});
+                }
+            } catch (e) {
+                termLog(
+                    "Error fetching basic user data! (useEffect -> multiFetch -> try-catch). Catched: " +
+                        e,
+                    "error"
+                );
+                setUsername("Unknown");
+                setObjectives({});
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        // if you've done it all, unsubscribe from reminder notifications
+        // TODO: it doesnt work
+        const unsubscribe = async () => {
+            if (objectives) {
+                const check = await checkForTodaysObjectives(objectives);
+                if (Platform.OS === "android") {
+                    if (check === false) {
+                        await cancelScheduledNotifications();
+                    } else if (check === true) {
+                        await scheduleRandomNotifications(t);
+                    }
+                }
+            }
+        };
+
+        verifyObjectiveBackgroundFetchingStatusAsync();
+        multiFetch();
+        unsubscribe();
+    }, []);
+
     if (loading) {
         return <Loading currentpage={currentpage} displayNav={true} />;
     }
 
     return (
-        <View
-            style={styles.containerview}
-            onStartShouldSetResponder={() => true}
-        >
+        <View style={styles.containerview}>
             <ScrollView
                 style={styles.mainview}
-                contentContainerStyle={{ flex: 1 }}
+                contentContainerStyle={{ flexGrow: 1 }}
                 horizontal={false}
             >
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
@@ -379,7 +378,7 @@ export default function Home() {
                 <Section kind="Objectives">
                     {objectives && Object.keys(objectives).length
                         ? dueTodayObjectiveList.length === 0
-                            ? AllObjectivesDone(t, randomMessageForAllDone)
+                            ? AllObjectivesDone(t, randomMessage ?? "Error.")
                             : Object.keys(objectives).map(key =>
                                   renderObjectiveDivision(objectives[key])
                               )
