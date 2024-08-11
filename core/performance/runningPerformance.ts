@@ -1,4 +1,4 @@
-// TO DO
+// TODO
 // CALCULATIONS *NOT* ALRIGHT
 // los cálculos *NO* están bien
 
