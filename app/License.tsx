@@ -37,13 +37,10 @@ export default function License() {
 
     // yes, i did spend more than an hour formatting the General Public License into a lot of <BetterText> blocks. :]
     return (
-        <View
-            style={styles.containerview}
-            onStartShouldSetResponder={() => true}
-        >
+        <View style={styles.containerview}>
             <ScrollView
                 style={styles.mainview}
-                contentContainerStyle={{ flex: 1 }}
+                contentContainerStyle={{ flexGrow: 1 }}
                 horizontal={false}
             >
                 <BetterText
