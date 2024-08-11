@@ -165,8 +165,9 @@ export default function Home() {
     useEffect(() => {
         const verifyStatusAsync = async () => {
             try {
-                const isRegistered =
-                    await TaskManager.isTaskRegisteredAsync("background-fetch");
+                const isRegistered = await TaskManager.isTaskRegisteredAsync(
+                    "background-active-objective-fetching"
+                );
                 if (!isRegistered) {
                     await registerBackgroundObjectivesFetchAsync(); // if not registered already
                 }
