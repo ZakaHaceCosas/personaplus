@@ -237,7 +237,10 @@ export default function Home() {
                 if (objectives && Object.keys(objectives).length > 0) {
                     // iterates over all the objectives using a for...of loop to handle async/await stuff
                     for (const key of Object.keys(objectives)) {
-                        if (!isMounted) return;
+                        if (!isMounted) {
+                            setLoadingObjectives(false);
+                            return;
+                        }
                         const objective = objectives[key];
                         const isDailyStatusChecked =
                             await checkForAnObjectiveDailyStatus(
