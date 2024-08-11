@@ -2,6 +2,7 @@ import calculateBodyMassIndex from "@/core/physicalHealth/bodymassindex";
 import { expect } from '@jest/globals';
 import type { MatcherFunction } from 'expect';
 
+// there is a possible error margin for OpenHealth's calculations, so this custom function allows for minimal errors within an acceptable range to pass the tests
 const toBeWithinMargin: MatcherFunction<[expected: number, margin?: number]> =
     function (received, expected, margin = 0.3) {
         if (typeof received !== 'number' || typeof expected !== 'number' || typeof margin !== 'number') {
@@ -38,9 +39,55 @@ declare module 'expect' {
 }
 
 describe("body mass index calculations", () => {
-    test("should return an accurate BMI value", () => {
-        const calculation = calculateBodyMassIndex(14, "male", 45.6, 170, false, false)
+    // expected results are provided from the CDC's calculator
+    // allowed error margin is of 0.1
 
-        expect(calculation.result).toBeWithinMargin(15.8, 0.3)
-    })
-})
+    test("should return accurate BMI value for age 19, female", () => {
+        const calculation = calculateBodyMassIndex(19, "female", 50, 160, false, false);
+        expect(calculation.result).toBeWithinMargin(19.5, 0.1);
+    });
+
+    test("should return accurate BMI value for age 21, male", () => {
+        const calculation = calculateBodyMassIndex(21, "male", 70, 175, false, false);
+        expect(calculation.result).toBeWithinMargin(22.9, 0.1);
+    });
+
+    test("should return accurate BMI value for age 30, female", () => {
+        const calculation = calculateBodyMassIndex(30, "female", 60, 165, false, false);
+        expect(calculation.result).toBeWithinMargin(22.0, 0.1);
+    });
+
+    test("should return context when provideContext is true", () => {
+        const calculation = calculateBodyMassIndex(25, "male", 70, 175, true, false);
+        expect(calculation.subject).toEqual({
+            age: 25,
+            gender: "male",
+            weight: 70,
+            height: 175,
+        });
+        expect(calculation.context).toBe("healthy weight");
+    });
+
+    test("should handle and return all BMI contexts (underweight, healthy weight, overweight, obesity)", () => {
+        const cases = [
+            { age: 25, weight: 45, height: 170, expected: "underweight" },
+            { age: 25, weight: 60, height: 170, expected: "healthy weight" },
+            { age: 25, weight: 80, height: 170, expected: "overweight" },
+            { age: 25, weight: 100, height: 170, expected: "obesity" }
+        ];
+
+        cases.forEach(({ age, weight, height, expected }) => {
+            const calculation = calculateBodyMassIndex(age, "female", weight, height, true, false);
+            expect(calculation.context).toBe(expected);
+        });
+    });
+
+    test("should include explanation when provideExplanation is true", () => {
+        const calculation = calculateBodyMassIndex(25, "female", 60, 165, false, true);
+        expect(calculation.explanation).toBe("(According to CDC) Body mass index (BMI) is a person's weight in kilograms divided by the square of height in meters. BMI is an inexpensive and easy screening method for weight category—underweight, healthy weight, overweight, and obesity. BMI does not measure body fat directly, but BMI is moderately correlated with more direct measures of body fat. Furthermore, BMI appears to be as strongly correlated with various metabolic and disease outcomes as are these more direct measures of body fatness.");
+    });
+
+    test("should handle invalid age input", () => {
+        expect(() => { calculateBodyMassIndex(-5, "male", 70, 175, true, true) }).toThrowError("Invalid age provided.")
+    });
+});
