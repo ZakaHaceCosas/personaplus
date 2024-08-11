@@ -1,7 +1,7 @@
 import { UserHealthData } from "@/src/toolkit/userData";
 
 interface SubjectData extends UserHealthData {
-    [key: string]: string | number | boolean | undefined;
+    [key: string]: string | number | boolean | null | undefined;
 }
 
 export default interface OpenHealthResponse {
