@@ -2,7 +2,7 @@
 CALCULATE BODY MASS INDEX
 */
 
-import OpenHealthResponse from "../types/OpenHealthResponse";
+import { OpenHealthResponse } from "../types/OpenHealthResponse";
 
 // LAST UPDATE TO THIS FUNCTION, ITS DATA, ITS CALCULATIONS, OR ANYTHING THAT DOES AFFECT THE RESULT
 // Changes that do not affect the result, like just bug-fixes, performance improvments, code-legibility improvments, or that kind of stuff, do not need to bump the date.
