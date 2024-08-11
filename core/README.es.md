@@ -8,9 +8,11 @@ Forma parte del proyecto **PersonaPlus** (de hecho, de momento comparten reposit
 
 > [!NOTE]
 > Todas las funciones deben contener (y contienen) una función `getSource` para obtener todas las URLs de todas las fuentes de información utilizadas para obtener los datos, fórmulas, y cálculos utilizados.
-> Para archivos de texto / contenido, debería haber un comentario al principio.
 
 ## Utilización
+
+> [!TIP]
+> Para una guía completa del uso dentro de PersonaPlus, chequea [USAGE.es.md](USAGE.es.md)
 
 ```tsx
 // 1. haz la importación
@@ -18,7 +20,6 @@ import OpenHealth from "@core/openhealth.ts"
 
 // 2. verás que todo está agrupado según el ámbito de la salud al que pertenece
 OpenHealth.physicalHealth
-OpenHealth.mentalHealth
 OpenHealth.performance
 // etc...
 
@@ -45,4 +46,5 @@ Al igual que PersonaPlus, OpenHealth está bajo la licencia **GPL-3.0**.
 Es totalmente gratuito hacer uso de OpenHealth, también para fines comerciales, siempre y cuando acredites al proyecto original (OpenHealth). _Además, es recomendable citar también las fuentes de información médica que utilices, recuerda que puedes obtenerlas con `getSource()`._
 
 Hecho con cariño por ZakaHaceCosas, creador de PersonaPlus.
+
 ¡Cuídate!
