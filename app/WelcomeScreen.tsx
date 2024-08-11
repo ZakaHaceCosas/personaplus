@@ -215,6 +215,7 @@ export default function WelcomePage() {
                 await AsyncStorage.setItem("hasLaunched", "true");
                 await AsyncStorage.setItem("objectives", "{}");
                 await AsyncStorage.setItem("language", language);
+                await AsyncStorage.setItem("hasLaunched", "true");
                 router.replace("/");
             } catch (e) {
                 termLog("Error creating profile: " + e, "error");
