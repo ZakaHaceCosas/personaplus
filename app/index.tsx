@@ -351,6 +351,9 @@ export default function Home() {
         verifyObjectiveBackgroundFetchingStatusAsync();
         multiFetch();
         unsubscribe();
+        // THIS SHALL ONLY RUN ONCE, NO MORE TIMES
+        // i don't want more of those... memory leaks
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (loading) {
