@@ -257,9 +257,8 @@ export default function Results() {
         <View style={styles.containerview}>
             <ScrollView
                 style={styles.mainview}
-                contentContainerStyle={{
-                    justifyContent: "space-between",
-                }}
+                contentContainerStyle={{ flexGrow: 1 }}
+                horizontal={false}
             >
                 <View style={styles.thirdview}>
                     <BetterText fontSize={40} fontWeight="SemiBold">

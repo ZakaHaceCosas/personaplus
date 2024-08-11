@@ -301,7 +301,11 @@ export default function DeveloperInterface() {
 
     return (
         <View style={styles.containerview}>
-            <ScrollView style={styles.mainview}>
+            <ScrollView
+                style={styles.mainview}
+                contentContainerStyle={{ flexGrow: 1 }}
+                horizontal={false}
+            >
                 <GapView height={20} />
                 <BetterText
                     textAlign="normal"
