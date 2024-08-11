@@ -295,30 +295,6 @@ export default function DeveloperInterface() {
         );
     };
 
-    // TODO
-    // this is actually useless, just remove it!
-    useEffect(() => {
-        const fetchAll = async () => {
-            try {
-                const e = await AsyncStorage.multiGet([
-                    "hasLaunched",
-                    "age",
-                    "gender",
-                    "height",
-                    "weight",
-                    "focuspoint",
-                    "username",
-                    "sleep",
-                ]);
-                setEverything(e);
-            } catch (e) {
-                termLog("Error fetching all" + e, "error");
-            }
-        };
-
-        fetchAll();
-    }, []);
-
     if (loading) {
         return <Loading currentpage={currentpage} displayNav={true} />;
     }
