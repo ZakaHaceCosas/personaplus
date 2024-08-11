@@ -33,7 +33,6 @@ import {
     cancelScheduledNotifications,
 } from "@/src/hooks/useNotification";
 import { adjustedToday } from "@/src/toolkit/today";
-import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
 import colors from "@/src/toolkit/design/colors";
 import Loading from "@/src/Loading";
@@ -158,30 +157,9 @@ export default function Home() {
     const [dueTodayObjectiveList, setDueTodayObjectiveList] = useState<
         number[]
     >([]);
-    // isRegistered and status are used by the background task handler, nothing else
-    const [isRegistered, setIsRegistered] = useState(false);
-    const [status, setStatus] =
-        useState<BackgroundFetch.BackgroundFetchStatus | null>(null);
 
     const { t } = useTranslation();
     const currentpage = usePathname();
-
-    // this checks for the status of objective background fetching
-    // sets the status and later logs it
-    const checkStatusAsync = async () => {
-        try {
-            const status = await BackgroundFetch.getStatusAsync();
-            const isRegistered =
-                await TaskManager.isTaskRegisteredAsync("background-fetch");
-            setStatus(status);
-            setIsRegistered(isRegistered);
-        } catch (e) {
-            termLog(
-                "Error checking for background fetch status: " + e,
-                "error"
-            );
-        }
-    };
 
     // verification of background fetching status and logging
     useEffect(() => {
@@ -201,8 +179,6 @@ export default function Home() {
                     "Error verifying or registering background fetch: " + e,
                     "error"
                 );
-            } finally {
-                checkStatusAsync();
             }
         };
 
@@ -282,15 +258,6 @@ export default function Home() {
         }
     };
 
-    // logs background fetch status
-    useEffect(() => {
-        termLog(
-            "(BACKGROUND OBJECTIVE FETCH) isRegistered status: " + isRegistered,
-            "log"
-        );
-        termLog("(BACKGROUND OBJECTIVE FETCH) status: " + status, "log");
-    }, [status, isRegistered]);
-
     const createNewActiveObjective = (): void => {
         router.navigate("/CreateObjective");
     };
@@ -299,14 +266,6 @@ export default function Home() {
     const startSessionFromObjective = (identifier: number): void => {
         router.navigate("/Sessions?id=" + identifier);
     };
-
-    // logs all objectives
-    // some logs like this one of the backgorund fetch status should be removed if everything works, tho
-    // for performance
-    // counts as a TODO
-    useEffect(() => {
-        termLog("Objectives: " + JSON.stringify(objectives), "log");
-    }, [objectives]);
 
     // choose a random message for when you've done it all
     // so the app feels more friendly :D
@@ -365,7 +324,6 @@ export default function Home() {
                     setDueTodayObjectiveList(identifiers);
                 }
             }
-            termLog("Due today IDs: " + identifiers, "log");
         };
 
         handle();
@@ -413,8 +371,7 @@ export default function Home() {
                 <Section kind="Objectives">
                     {objectives && Object.keys(objectives).length
                         ? dueTodayObjectiveList.length === 0
-                            ? (termLog("All done!", "log"),
-                              AllObjectivesDone(t, randomMessageForAllDone))
+                            ? AllObjectivesDone(t, randomMessageForAllDone)
                             : Object.keys(objectives).map(key =>
                                   renderObjectiveDivision(objectives[key])
                               )
