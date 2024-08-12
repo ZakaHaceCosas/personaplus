@@ -47,7 +47,7 @@ TEMPLATE
 
 - Added unit testing.
 - Removed `wayToGetThem` arg from `getObjectivesDailyLog()`.
-- Replaced `return {*}` with `1 | 0` (depending on failure / success) in some functions.
+- Replaced `return {*}` with `0 | 1` (depending on success / failure) in some functions.
 - Removed a useless `useEffect` from DeveloperInterface.
 - Removed some `termLog`s that were there for debug purposes and aren't required anymore.
 - Removed two `useState`s and one `useEffect` from `index.tsx`. Turns out the check for background fetching & notification status were duplicate.
