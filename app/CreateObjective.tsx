@@ -18,7 +18,11 @@ import Button from "@/src/Buttons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { termLog } from "@/src/toolkit/debug/console";
 import Notification from "@/src/Notification";
-import { Objective, ObjectiveWithoutId } from "@/src/types/Objective";
+import {
+    ActiveObjectiveSupportedExercises,
+    Objective,
+    ObjectiveWithoutId,
+} from "@/src/types/Objective";
 import { useTranslation } from "react-i18next";
 import colors from "@/src/toolkit/design/colors";
 
@@ -57,7 +61,8 @@ const styles = StyleSheet.create({
 // We create the function
 export default function CreateObjective() {
     const { t } = useTranslation(); // translate function
-    const [exercise, setExercise] = useState<string>(""); // what exercise is selected
+    const [exercise, setExercise] =
+        useState<ActiveObjectiveSupportedExercises | null>(null); // what exercise is selected
     const exercises = [
         "Push Up",
         "Lifting",
@@ -68,15 +73,9 @@ export default function CreateObjective() {
 
     // monday, tuesday, wednesday... etc...
     // each bool value is a day of the week
-    const [days, setDays] = useState<boolean[]>([
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-    ]);
+    const [days, setDays] = useState<
+        [boolean, boolean, boolean, boolean, boolean, boolean, boolean]
+    >([false, false, false, false, false, false, false]);
     const [duration, setDuration] = useState<number>(0);
     const [repetitions, setRepetitions] = useState<number>(0);
     const [rests, setRests] = useState<number>(0);
@@ -84,7 +83,7 @@ export default function CreateObjective() {
     const [amount, setAmount] = useState<number>(0);
     const [barWeight, setBarWeight] = useState<number>(0);
     const [liftWeight, setLiftWeight] = useState<number>(0);
-    const [hands, setHands] = useState<number>(2);
+    const [hands, setHands] = useState<1 | 2>(2);
     const [lifts, setLifts] = useState<number>(0);
     const [timeToPushUp, setTimeToPushup] = useState<number>(0); // i forgot what purpose does this serve, to be honest
     const [speed, setSpeed] = useState<number>(2); // defaults to the 3rd value instead of the 1st one. how is the user going to know if he decrements there are more options? no fucking clue.
@@ -107,8 +106,27 @@ export default function CreateObjective() {
 
     // you give the index of a day, since its a boolean it just sets it to its opposite to toggle that day on/off
     const handleChangeDay = (index: number) => {
-        const newDays = [...days];
+        // "clone" the tuple of current booleans
+        const newDays: [
+            boolean,
+            boolean,
+            boolean,
+            boolean,
+            boolean,
+            boolean,
+            boolean,
+        ] = [...days] as [
+            boolean,
+            boolean,
+            boolean,
+            boolean,
+            boolean,
+            boolean,
+            boolean,
+        ];
+        // change the value of the specified index
         newDays[index] = !newDays[index];
+        // update state with updated tuple
         setDays(newDays);
     };
 
@@ -143,7 +161,7 @@ export default function CreateObjective() {
                 setLifts(prev => prev + 1);
                 break;
             case "hands":
-                setHands(prev => (prev === 1 ? prev + 1 : prev));
+                setHands(prev => (prev === 1 ? 2 : 1));
                 break;
             case "speed":
                 setSpeed(prev => {
@@ -209,7 +227,7 @@ export default function CreateObjective() {
                 setLifts(prev => prev - 1);
                 break;
             case "hands":
-                setHands(prev => (prev === 2 ? prev - 1 : prev));
+                setHands(prev => (prev === 2 ? 1 : 2));
                 break;
             case "speed":
                 setSpeed(prev => {
@@ -225,6 +243,10 @@ export default function CreateObjective() {
 
     // handles saving the objective
     const submit = async () => {
+        if (exercise === null) {
+            throw new Error("Exercise cannot be null");
+        }
+
         const formData: ObjectiveWithoutId = {
             exercise,
             days,
@@ -324,13 +346,13 @@ export default function CreateObjective() {
     let allConditionsAreMet: boolean = false;
 
     if (
-        exercise.toLowerCase() !== "push up" &&
-        exercise.toLowerCase() !== "running" &&
-        exercise.toLowerCase() !== "lifting"
+        exercise?.toLowerCase() !== "push up" &&
+        exercise?.toLowerCase() !== "running" &&
+        exercise?.toLowerCase() !== "lifting"
     ) {
         if (
             duration > 0 &&
-            exercise !== "" &&
+            exercise !== null &&
             days &&
             days.length > 0 &&
             !days.every(day => day === false)
@@ -342,7 +364,7 @@ export default function CreateObjective() {
     } else if (exercise.toLowerCase() === "push up") {
         if (
             duration > 0 &&
-            exercise !== "" &&
+            exercise !== null &&
             days &&
             days.length > 0 &&
             !days.every(day => day === false) &&
@@ -357,7 +379,7 @@ export default function CreateObjective() {
     } else if (exercise.toLowerCase() === "lifting") {
         if (
             (duration > 0 &&
-                exercise !== "" &&
+                exercise !== null &&
                 days &&
                 days.length > 0 &&
                 !days.every(day => day === false) &&
@@ -366,7 +388,7 @@ export default function CreateObjective() {
                 barWeight > 0 &&
                 lifts > 0) ||
             (duration > 0 &&
-                exercise !== "" &&
+                exercise !== null &&
                 days &&
                 days.length > 0 &&
                 !days.every(day => day === false) &&
@@ -382,7 +404,7 @@ export default function CreateObjective() {
     } else if (exercise.toLowerCase() === "running") {
         if (
             duration > 0 &&
-            exercise !== "" &&
+            exercise !== null &&
             days &&
             days.length > 0 &&
             !days.every(day => day === false) &&
@@ -446,7 +468,7 @@ export default function CreateObjective() {
                     >
                         <Select.Item
                             label={t("globals.select_placeholder")}
-                            value=""
+                            value={null}
                             color={colors.LBLS.SDD}
                         />
                         {exercises.map(ex => (
@@ -630,7 +652,7 @@ export default function CreateObjective() {
                             </View>
                         </View>
                     )}
-                    {exercise.toLowerCase() === "push up" && (
+                    {exercise?.toLowerCase() === "push up" && (
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
@@ -681,7 +703,7 @@ export default function CreateObjective() {
                             </View>
                         </View>
                     )}
-                    {exercise.toLowerCase() === "lifting" && (
+                    {exercise?.toLowerCase() === "lifting" && (
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
@@ -732,7 +754,7 @@ export default function CreateObjective() {
                             </View>
                         </View>
                     )}
-                    {exercise.toLowerCase() === "lifting" && (
+                    {exercise?.toLowerCase() === "lifting" && (
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
@@ -783,7 +805,7 @@ export default function CreateObjective() {
                             </View>
                         </View>
                     )}
-                    {exercise.toLowerCase() === "lifting" && (
+                    {exercise?.toLowerCase() === "lifting" && (
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
@@ -834,7 +856,7 @@ export default function CreateObjective() {
                             </View>
                         </View>
                     )}
-                    {exercise.toLowerCase() === "lifting" && (
+                    {exercise?.toLowerCase() === "lifting" && (
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
@@ -885,7 +907,7 @@ export default function CreateObjective() {
                             </View>
                         </View>
                     )}
-                    {exercise.toLowerCase() === "push up" && (
+                    {exercise?.toLowerCase() === "push up" && (
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
@@ -936,7 +958,7 @@ export default function CreateObjective() {
                             </View>
                         </View>
                     )}
-                    {exercise.toLowerCase() === "running" && (
+                    {exercise?.toLowerCase() === "running" && (
                         <View style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
