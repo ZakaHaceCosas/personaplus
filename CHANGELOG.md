@@ -34,16 +34,32 @@ TEMPLATE
 ### Trivial updates - Latest
 -->
 
+## 0.0.1-R5-b26
+
+## User updates - Latest
+
+- Introduced constants for font sizes (FONT_SIZES) and spacings (SPACING), ensuring a consistent visual design across the app.
+- The BackButton component is now memoized, improving performance during re-renders in user interfaces.
+- Moved inline styles to a centralized StyleSheet object, leading to smoother rendering and easier updates.
+- `useCallback` was implemented for `handlePrivacyPress` and `handleOssPress` functions, making the app more responsive by reducing unnecessary function re-creations.
+
+## Dev updates - Latest
+- Improved typing for the BackButton component and the translation function, enhancing code maintainability and type security.
+
+## Trivial updates - Latest
+- Removed redundant code and unnecessary inline styles.
+- Extracted functions from JSX to improve readability and maintainability.
+
 ## 0.0.1-R5-b25
 
 > Note: This update also brings changes to OpenHealth (core library). See core/CHANGELOG.md for more info.
 
-### User updates - Latest
+### User updates - b25
 
 - Some content lacking translations has now been translated.
 - **Fixed** the app thinking the Welcome form was done even if it wasn't. Before, if the app was left without submitting it, and relaunched, the app would directly load without the data, treating the user as "Unknown".
 
-### Dev updates - Latest
+### Dev updates - b25
 
 - Added unit testing.
 - Removed `wayToGetThem` arg from `getObjectivesDailyLog()`.
@@ -52,7 +68,7 @@ TEMPLATE
 - Removed some `termLog`s that were there for debug purposes and aren't required anymore.
 - Removed two `useState`s and one `useEffect` from `index.tsx`. Turns out the check for background fetching & notification status were duplicate.
 
-### Trivial updates - Latest
+### Trivial updates - b25
 
 - Nothing (yet).
 
