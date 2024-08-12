@@ -17,7 +17,6 @@ import {
     checkForTodaysObjectives,
     objectiveArrayToObject,
     checkForAnObjectiveDailyStatus,
-    createNewActiveObjective,
     startSessionFromObjective,
 } from "@/src/toolkit/objectives";
 import BetterText from "@/src/BetterText";
@@ -385,7 +384,9 @@ export default function Home() {
                         return AllObjectivesDone(t);
                     }
                 } else {
-                    return NoObjectives(t, createNewActiveObjective);
+                    return NoObjectives(t, () =>
+                        router.navigate("/CreateObjective")
+                    );
                 }
             } else {
                 return null;
