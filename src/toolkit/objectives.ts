@@ -427,9 +427,9 @@ async function getObjectivesDailyLog(): Promise<object> {
  * @async
  * @param {ObjectiveWithoutId} objectiveMetadata The metadata as an `ObjectiveWithoutId`. The identifier is not passed as the function itself takes care of creating it.
  * @param {TFunction} t Pass here the translation function, please.
- * @returns {*}
+ * @returns {0 | 1}
  */
-async function createNewActiveObjective(objectiveMetadata: ObjectiveWithoutId, t: TFunction) {
+async function createNewActiveObjective(objectiveMetadata: ObjectiveWithoutId, t: TFunction): Promise<0 | 1> {
     try {
         const objectives = await getObjectives();
         let objs: Objective[] = [];
@@ -488,8 +488,10 @@ async function createNewActiveObjective(objectiveMetadata: ObjectiveWithoutId, t
 
         // go back to the prev page (either dashboard or home)
         router.back();
+        return 0
     } catch (e) {
         termLog("Could not create an objective, got error: " + e, "error");
+        return 1
     }
 }
 
