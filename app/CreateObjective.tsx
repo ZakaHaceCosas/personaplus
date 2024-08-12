@@ -890,19 +890,21 @@ export default function CreateObjective() {
                     {repetitions * duration > 300 && (
                         // Lo máximo que me parece coherente son 5 horas seguidas haciendo UN ejercicio - recordemos que puedes tener varios al día
                         // The maximum that makes sense to me it's 5 hours in a row making ONE exercise - remember you can make many each day
-                        <Notification
-                            style="HMM"
-                            title={t("globals.are_you_sure")}
-                            text={t(
-                                "subpage_create_active_objective.warnings.too_much.text",
-                                { equal: repetitions * duration }
-                            )}
-                            subtext={t(
-                                "subpage_create_active_objective.warnings.too_much.subtext"
-                            )}
-                        />
+                        <>
+                            <Notification
+                                style="HMM"
+                                title={t("globals.are_you_sure")}
+                                text={t(
+                                    "subpage_create_active_objective.warnings.too_much.text",
+                                    { equal: repetitions * duration }
+                                )}
+                                subtext={t(
+                                    "subpage_create_active_objective.warnings.too_much.subtext"
+                                )}
+                            />
+                            <GapView height={20} />
+                        </>
                     )}
-                    {repetitions * duration > 300 && <GapView height={20} />}
                     {allConditionsAreMet ? (
                         <Button
                             style="ACE"
