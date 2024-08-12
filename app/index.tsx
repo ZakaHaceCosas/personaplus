@@ -17,6 +17,8 @@ import {
     checkForTodaysObjectives,
     objectiveArrayToObject,
     checkForAnObjectiveDailyStatus,
+    createNewActiveObjective,
+    startSessionFromObjective,
 } from "@/src/toolkit/objectives";
 import BetterText from "@/src/BetterText";
 import Section from "@/src/section/Section";
@@ -40,6 +42,7 @@ import Loading from "@/src/Loading";
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
 import { TFunction } from "i18next";
+import generateRandomMessage from "@/src/toolkit/design/randomMessages";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -177,29 +180,14 @@ export default function Home() {
         }
     };
 
-    const createNewActiveObjective = (): void => {
-        router.navigate("/CreateObjective");
-    };
-
-    // redirects to the Sessions page if the user starts a session, passing the objective's ID as a parameter
-    const startSessionFromObjective = (identifier: number): void => {
-        if (identifier !== undefined) {
-            router.navigate("/Sessions?id=" + identifier);
-        } else {
-            termLog(
-                "Invalid identifier provided for starting a session",
-                "error"
-            );
-        }
-    };
-
-    const renderObjectiveDivision = (obj: Objective) => {
+    function renderObjectiveDivision(obj: Objective) {
         if (
             obj &&
             obj.days[adjustedToday] !== undefined &&
             obj.days[adjustedToday] !== null &&
             dueTodayObjectiveList.includes(obj.identifier)
         ) {
+            termLog("Rendering Objective Division:" + obj, "log");
             return ObjectiveDivision(
                 obj,
                 t,
@@ -208,74 +196,16 @@ export default function Home() {
             );
         }
         return null;
-    };
+    }
 
     useEffect(() => {
-        // choose a random message for when you've done it all
-        // so the app feels more friendly :D
-        const allDoneMessages: string[] = t("cool_messages.all_done", {
-            returnObjects: true,
-        });
-
-        const randomMessageForAllDone =
-            allDoneMessages[Math.floor(Math.random() * allDoneMessages.length)];
-
+        const randomMessageForAllDone = generateRandomMessage("all_done", t);
         setRandomMessage(randomMessageForAllDone);
-    }, [t]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
-        try {
-            let isMounted = true; // This is supposed to track if the component is still mounted
-            // found it somewhere, hope it does something useful
-
-            const handle = async () => {
-                if (!objectives || Object.keys(objectives).length === 0) {
-                    return;
-                } // to avoid running this when not needed
-
-                const identifiers = []; // A list of the IDs of objectives that are due today
-                if (objectives && Object.keys(objectives).length > 0) {
-                    // iterates over all the objectives using a for...of loop to handle async/await stuff
-                    for (const key of Object.keys(objectives)) {
-                        if (!isMounted) {
-                            setLoadingObjectives(false);
-                            return;
-                        }
-                        const objective = objectives[key];
-                        const isDailyStatusChecked =
-                            await checkForAnObjectiveDailyStatus(
-                                objective.identifier
-                            );
-                        if (
-                            !isDailyStatusChecked &&
-                            objective.days[adjustedToday]
-                        ) {
-                            // if not done today AND has to be done today, push it
-                            identifiers.push(objective.identifier);
-                        }
-                    }
-
-                    if (isMounted) {
-                        // update IDs list only if the component is still mounted
-                        setDueTodayObjectiveList(identifiers);
-                        setLoadingObjectives(false);
-                    }
-                }
-            };
-
-            handle();
-
-            return () => {
-                // unmount this thing
-                isMounted = false;
-            };
-        } catch (e) {
-            termLog("Error fetching due today objectives: " + e, "error");
-        }
-    }, [objectives]);
-
-    useEffect(() => {
-        // function for verification of background fetching status and logging
+        // Verifies background fetching status and logs it
         const verifyObjectiveBackgroundFetchingStatusAsync = async () => {
             try {
                 const isRegistered = await TaskManager.isTaskRegisteredAsync(
@@ -296,35 +226,34 @@ export default function Home() {
             }
         };
 
-        // this fetches all stuff nedeed
+        // Fetches all required data
         const multiFetch = async () => {
             try {
-                // this returns stuff in an [x][1] basis
-                // the username is [0] (because it's the first) and then always [1]
                 const items = await AsyncStorage.multiGet([
                     "username",
-                    "objectives",
                     "hasLaunched",
                 ]);
                 if (items) {
                     const username = items[0]?.[1]
                         ? String(items[0][1])
                         : "Error"; // in case of error sets to an "Error value"
-                    setUsername(username); // see? username is [0][1]
+                    setUsername(username);
 
-                    const objectivesData = items[1]?.[1];
-                    const parsedObjectives = // this checks if objectives is NOT null or "" or "{}" or "[]". if it is, objectives will be {}, otherwise, they will be the saved objectives.
-                        objectivesData &&
-                        objectivesData !== "{}" &&
-                        objectivesData !== "[]"
-                            ? JSON.parse(objectivesData)
-                            : {};
-                    setObjectives(parsedObjectives);
-
-                    const isFirstLaunchValidation = !items[2]?.[1]; // if this item is null or was never created ("hasLaunched"), this is considered the 1st launch and redirects to WelcomeScreen
-                    if (isFirstLaunchValidation) {
-                        router.push("/WelcomeScreen"); // if isFirstLaunchValidation, pushes to WelcomeScreen
+                    const parsedObjectives = await getObjectives();
+                    if (parsedObjectives) {
+                        setObjectives(objectiveArrayToObject(parsedObjectives));
+                        termLog("Parsed Objectives:" + parsedObjectives, "log");
+                    } else {
+                        setObjectives(objectiveArrayToObject([]));
                     }
+
+                    const isFirstLaunchValidation = !items[1]?.[1];
+                    if (isFirstLaunchValidation) {
+                        router.push("/WelcomeScreen"); // Redirects if it's the first launch
+                        return;
+                    }
+
+                    await fetchDueTodayObjectives();
                 } else {
                     termLog(
                         "Error fetching basic user data! No items (useEffect -> multiFetch -> try-catch.try -> if items)",
@@ -341,25 +270,66 @@ export default function Home() {
                 );
                 setUsername("Unknown");
                 setObjectives({});
-            } finally {
-                if (!loadingObjectives) {
-                    setLoading(false);
-                }
             }
         };
 
-        verifyObjectiveBackgroundFetchingStatusAsync();
-        multiFetch();
+        // Fetches objectives and determines which ones are due today
+        const fetchDueTodayObjectives = async () => {
+            if (!objectives || Object.keys(objectives).length === 0) {
+                setLoadingObjectives(false);
+                return;
+            } // Avoid running if not needed
+
+            const identifiers = await Promise.all(
+                Object.keys(objectives).map(async key => {
+                    const objective = objectives[key];
+                    const isDailyStatusChecked =
+                        await checkForAnObjectiveDailyStatus(
+                            objective.identifier
+                        );
+                    if (
+                        !isDailyStatusChecked &&
+                        objective.days[adjustedToday]
+                    ) {
+                        return objective.identifier;
+                    }
+                    return undefined;
+                })
+            );
+
+            /* const filteredIdentifiers = identifiers.filter(
+                (id): id is number => id !== undefined
+            ); */
+
+            termLog("Identifiers:" + identifiers, "log");
+            /* termLog("Filtered Identifiers:" + filteredIdentifiers, "log"); */
+
+            const validIdentifiers: number[] = identifiers.filter(
+                (id): id is number => id !== undefined
+            );
+
+            setDueTodayObjectiveList(validIdentifiers);
+            setLoadingObjectives(false);
+        };
+
+        // Main async function to handle the sequence
+        const handle = async () => {
+            try {
+                await verifyObjectiveBackgroundFetchingStatusAsync(); // Verifies background fetching
+                await multiFetch(); // Fetches user data and objectives
+                await fetchDueTodayObjectives(); // Processes the objectives
+
+                setLoading(false); // Finally, set loading to false
+            } catch (e) {
+                termLog("Error: " + e, "log");
+            }
+        };
+
+        handle(); // Execute the main sequence
         // THIS SHALL ONLY RUN ONCE, NO MORE TIMES
         // i don't want more of those... memory issues
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    useEffect(() => {
-        if (!loadingObjectives) {
-            setLoading(false);
-        }
-    }, [loadingObjectives]);
 
     useEffect(() => {
         const unsubscribe = async () => {
@@ -379,7 +349,46 @@ export default function Home() {
         // TODO: it doesnt work
         unsubscribe();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [objectives]);
+    }, [objectives, dueTodayObjectiveList]);
+
+    useEffect(() => {
+        if (!loading && !loadingObjectives) {
+            // checks for changes to state
+            termLog(
+                "Due Today Objective List Updated:" + dueTodayObjectiveList,
+                "log"
+            );
+        }
+    }, [loading, loadingObjectives, dueTodayObjectiveList]);
+
+    function renderObjectivesSection() {
+        try {
+            termLog("Loading Objectives:" + loadingObjectives, "log");
+            termLog("Objectives:" + objectives, "log");
+            termLog("Due Today Objective List:" + dueTodayObjectiveList, "log");
+            if (loadingObjectives === false) {
+                if (objectives && Object.keys(objectives).length > 0) {
+                    if (
+                        dueTodayObjectiveList &&
+                        dueTodayObjectiveList.length > 0
+                    ) {
+                        return Object.keys(objectives).map(key =>
+                            renderObjectiveDivision(objectives[key])
+                        );
+                    } else {
+                        return AllObjectivesDone(t, randomMessage ?? "Error.");
+                    }
+                } else {
+                    return NoObjectives(t, createNewActiveObjective);
+                }
+            } else {
+                return null;
+            }
+        } catch (e) {
+            termLog("Error rendering objectives section: " + e, "error");
+            return null;
+        }
+    }
 
     if (loading) {
         return <Loading currentpage={currentpage} displayNav={true} />;
@@ -403,40 +412,28 @@ export default function Home() {
                     {t("page_home.header.sublabel")}
                 </BetterText>
                 <GapView height={20} />
-                <Section kind="Objectives">
-                    {objectives && Object.keys(objectives).length
-                        ? dueTodayObjectiveList.length === 0
-                            ? AllObjectivesDone(t, randomMessage ?? "Error.")
-                            : Object.keys(objectives).map(key =>
-                                  renderObjectiveDivision(objectives[key])
-                              )
-                        : NoObjectives(t, createNewActiveObjective)}
+                <Section kind="Objectives">{renderObjectivesSection()}</Section>
+                <GapView height={20} />
+                <Section kind="HowYouAreDoing">
+                    <GapView height={20} />
+                    <BetterText
+                        fontWeight="Regular"
+                        textColor={colors.PRIMARIES.GOD.GOD}
+                        fontSize={25}
+                        textAlign="center"
+                    >
+                        {t("globals.coming_soon")}
+                    </BetterText>
+                    <View style={{ padding: 20 }}>
+                        <BetterText
+                            fontWeight="Regular"
+                            fontSize={15}
+                            textAlign="center"
+                        >
+                            {t("globals.workinprogress")}
+                        </BetterText>
+                    </View>
                 </Section>
-                {objectives && Object.keys(objectives).length > 0 && (
-                    <>
-                        <GapView height={20} />
-                        <Section kind="HowYouAreDoing">
-                            <GapView height={20} />
-                            <BetterText
-                                fontWeight="Regular"
-                                textColor={colors.PRIMARIES.GOD.GOD}
-                                fontSize={25}
-                                textAlign="center"
-                            >
-                                {t("globals.coming_soon")}
-                            </BetterText>
-                            <View style={{ padding: 20 }}>
-                                <BetterText
-                                    fontWeight="Regular"
-                                    fontSize={15}
-                                    textAlign="center"
-                                >
-                                    {t("globals.workinprogress")}
-                                </BetterText>
-                            </View>
-                        </Section>
-                    </>
-                )}
                 <Footer />
             </ScrollView>
             <BottomNav currentLocation={currentpage} />
