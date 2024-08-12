@@ -1,3 +1,6 @@
+// src/hooks/useNotification.ts
+// A hook to send reminder notifications for users to do what they have to do.
+
 import { useState, useEffect } from 'react'
 import { Platform } from 'react-native';
 import { isDevice } from 'expo-device';
@@ -9,7 +12,8 @@ import {
     AndroidImportance,
     getExpoPushTokenAsync,
     scheduleNotificationAsync,
-    cancelScheduledNotificationAsync
+    cancelScheduledNotificationAsync,
+    ExpoPushToken
 } from "expo-notifications";
 import { termLog } from '@/src/toolkit/debug/console';
 import * as Constants from "expo-constants";
@@ -23,43 +27,58 @@ setNotificationHandler({
     }),
 });
 
-async function registerForPushNotificationsAsync() {
-    let token;
+/**
+ * Function to register for using the push notifications. **Async function.**
+ *
+ * @async
+ * @returns {ExpoPushToken | undefined} An `ExpoPushToken`, or `undefined` if an error happened.
+ */
+async function registerForPushNotificationsAsync(): Promise<ExpoPushToken | undefined> {
+    try {
+        let token;
 
-    if (Platform.OS === 'android') {
-        setNotificationChannelAsync('default', {
-            name: 'default',
-            importance: AndroidImportance.MAX,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: '#32FF80FF',
-        });
-    }
-
-    if (isDevice) {
-        const { status: existingStatus } = await getPermissionsAsync();
-        let finalStatus = existingStatus;
-        if (existingStatus !== 'granted') {
-            const { status } = await requestPermissionsAsync();
-            finalStatus = status;
+        if (Platform.OS === 'android') {
+            setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#32FF80FF',
+            });
         }
-        if (finalStatus !== 'granted') {
-            alert('Failed to get push token for push notification!');
-            termLog('Failed to get push token for push notification!', "error");
-            return;
-        }
-        token = await getExpoPushTokenAsync({
-            projectId: Constants.default.easConfig?.projectId,
-        });
-        console.log(token); // Exception, doesnt use termLog to avoid storing it on the user's log file
-    } else {
-        alert('Must use physical device for Push Notifications');
-        termLog('Must use physical device for Push Notifications', "warn");
-    }
 
-    return token;
+        if (isDevice) {
+            const { status: existingStatus } = await getPermissionsAsync();
+            let finalStatus = existingStatus;
+            if (existingStatus !== 'granted') {
+                const { status } = await requestPermissionsAsync();
+                finalStatus = status;
+            }
+            if (finalStatus !== 'granted') {
+                alert('Failed to get push token for push notification!');
+                termLog('Failed to get push token for push notification!', "error");
+                return;
+            }
+            token = await getExpoPushTokenAsync({
+                projectId: Constants.default.easConfig?.projectId,
+            });
+            console.log(token); // Exception, doesnt use termLog to avoid storing it on the user's log file
+        } else {
+            alert('Must use physical device for Push Notifications');
+            termLog('Must use physical device for Push Notifications', "warn");
+        }
+
+        return token;
+    } catch (e) {
+        termLog("Error registering for push notifications: " + e, "error")
+    }
 }
 
-const useNotification = () => {
+/**
+ * Registers for push notifications and returns the token as a string.
+ *
+ * @returns {string} The Expo push token
+ */
+const useNotification = (): string => {
     const [expoPushToken, setExpoPushToken] = useState('');
 
     useEffect(() => {
@@ -80,11 +99,12 @@ interface NotificationIdentifier {
 const scheduledNotifications: NotificationIdentifier[] = [];
 
 /**
- * This function registers today's reminders
+ * This function registers today's reminders. **Async function.**
+ *
+ * @async
  * @param t Pass here the translate function
  * @returns {boolean} True if everything went alright, false if otherwise. Should log the try-catch error to termLog.
  */
-
 export const scheduleRandomNotifications = async (t: TFunction) => {
     try {
         const notificationMessages: string[] = t("cool_messages.reminders", {
@@ -125,11 +145,12 @@ export const scheduleRandomNotifications = async (t: TFunction) => {
 };
 
 /**
- * This function cancels today's registered reminders
+ * This function cancels today's registered reminders. **Async function.**
+ *
+ * @async
  * @returns {boolean} True if everything went alright, false if otherwise. Should log the try-catch error to termLog.
  */
-
-export const cancelScheduledNotifications = async () => {
+export const cancelScheduledNotifications = async (): Promise<boolean> => {
     try {
         for (const { identifier } of scheduledNotifications) {
             await cancelScheduledNotificationAsync(identifier);
