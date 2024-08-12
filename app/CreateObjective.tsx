@@ -226,7 +226,11 @@ export default function CreateObjective() {
     };
 
     // handles saving the objective
-    const submit = async () => {
+    const handleCreation = async () => {
+        termLog(
+            "function handleCreation() was called within CreateObjective.tsx",
+            "log"
+        );
         if (exercise === null) {
             throw new Error("Exercise cannot be null");
         }
@@ -256,84 +260,29 @@ export default function CreateObjective() {
         }
     };
 
-    const handleSubmit = (): void => {
-        termLog(
-            "function handleSubmit() was called within CreateObjective.tsx",
-            "log"
-        );
-        submit().catch(e => {
-            termLog("REACT ERROR: " + e, "error");
-        });
+    const areAllConditionsMet = (exercise: string) => {
+        if (exercise.toLowerCase() === "push up") {
+            return duration > 0 && amount > 0 && (hands === 1 || hands === 2);
+        }
+        if (exercise.toLowerCase() === "lifting") {
+            return (
+                (hands === 1 || hands === 2) &&
+                liftWeight > 0 &&
+                barWeight > 0 &&
+                lifts > 0
+            );
+        }
+        if (exercise.toLowerCase() === "running") {
+            return speed >= 0 && speed <= 11;
+        }
+        return true;
     };
 
-    let allConditionsAreMet: boolean = false;
-
-    if (
-        exercise?.toLowerCase() !== "push up" &&
-        exercise?.toLowerCase() !== "running" &&
-        exercise?.toLowerCase() !== "lifting"
-    ) {
-        if (
-            duration > 0 &&
-            exercise !== null &&
-            days &&
-            !days.every(day => day === false)
-        ) {
-            allConditionsAreMet = true;
-        } else {
-            allConditionsAreMet = false;
-        }
-    } else if (exercise.toLowerCase() === "push up") {
-        if (
-            duration > 0 &&
-            exercise !== null &&
-            days &&
-            !days.every(day => day === false) &&
-            amount > 0 &&
-            // timeToPushUp > 0 &&
-            (hands === 1 || hands === 2)
-        ) {
-            allConditionsAreMet = true;
-        } else {
-            allConditionsAreMet = false;
-        }
-    } else if (exercise.toLowerCase() === "lifting") {
-        if (
-            (duration > 0 &&
-                exercise !== null &&
-                days &&
-                !days.every(day => day === false) &&
-                hands === 1 &&
-                liftWeight > 0 &&
-                barWeight > 0 &&
-                lifts > 0) ||
-            (duration > 0 &&
-                exercise !== null &&
-                days &&
-                !days.every(day => day === false) &&
-                hands === 2 &&
-                liftWeight > 0 &&
-                barWeight > 0 &&
-                lifts > 0)
-        ) {
-            allConditionsAreMet = true;
-        } else {
-            allConditionsAreMet = false;
-        }
-    } else if (exercise.toLowerCase() === "running") {
-        if (
-            duration > 0 &&
-            exercise !== null &&
-            days &&
-            !days.every(day => day === false) &&
-            speed >= 0 &&
-            speed <= 11
-        ) {
-            allConditionsAreMet = true;
-        } else {
-            allConditionsAreMet = false;
-        }
-    }
+    const allConditionsAreMet =
+        exercise &&
+        duration > 0 &&
+        !days.every(day => !day) &&
+        areAllConditionsMet(exercise);
 
     return (
         <View style={styles.containerview}>
@@ -960,7 +909,7 @@ export default function CreateObjective() {
                             buttonText={t(
                                 "subpage_create_active_objective.buttons.create"
                             )}
-                            action={handleSubmit}
+                            action={handleCreation}
                         />
                     ) : (
                         <Button
