@@ -421,4 +421,20 @@ const getObjectivesDailyLog = async (): Promise<object> => {
     }
 }
 
-export { getObjectives, deleteObjective, markObjectiveAsDone, clearObjectives, getObjectiveByIdentifier, defineObjectiveDescription, registerBackgroundObjectivesFetchAsync, checkForTodaysObjectives, objectiveArrayToObject, calculateSessionFragmentsDuration, saveDailyObjectivePerformance, getObjectivesDailyLog, checkForAnObjectiveDailyStatus };
+function createNewActiveObjective() {
+    router.navigate("/CreateObjective")
+}
+
+// redirects to the Sessions page if the user starts a session, passing the objective's ID as a parameter
+const startSessionFromObjective = (identifier: number): void => {
+    if (identifier !== undefined) {
+        router.navigate("/Sessions?id=" + identifier);
+    } else {
+        termLog(
+            "Invalid identifier provided for starting a session",
+            "error"
+        );
+    }
+};
+
+export { getObjectives, deleteObjective, markObjectiveAsDone, clearObjectives, getObjectiveByIdentifier, defineObjectiveDescription, registerBackgroundObjectivesFetchAsync, checkForTodaysObjectives, objectiveArrayToObject, calculateSessionFragmentsDuration, saveDailyObjectivePerformance, getObjectivesDailyLog, checkForAnObjectiveDailyStatus, createNewActiveObjective, startSessionFromObjective };
