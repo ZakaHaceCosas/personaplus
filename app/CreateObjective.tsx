@@ -2,29 +2,21 @@
 // Objective creation
 
 import React, { useState } from "react";
-import {
-    StyleSheet,
-    Platform,
-    ToastAndroid,
-    View,
-    ScrollView,
-    Pressable,
-} from "react-native";
+import { StyleSheet, View, ScrollView, Pressable } from "react-native";
 import { router } from "expo-router";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import { Picker as Select } from "@react-native-picker/picker";
 import Button from "@/src/Buttons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { termLog } from "@/src/toolkit/debug/console";
 import Notification from "@/src/Notification";
 import {
     ActiveObjectiveSupportedExercises,
-    Objective,
     ObjectiveWithoutId,
 } from "@/src/types/Objective";
 import { useTranslation } from "react-i18next";
 import colors from "@/src/toolkit/design/colors";
+import { createNewActiveObjective } from "@/src/toolkit/objectives";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -107,15 +99,7 @@ export default function CreateObjective() {
     // you give the index of a day, since its a boolean it just sets it to its opposite to toggle that day on/off
     const handleChangeDay = (index: number) => {
         // "clone" the tuple of current booleans
-        const newDays: [
-            boolean,
-            boolean,
-            boolean,
-            boolean,
-            boolean,
-            boolean,
-            boolean,
-        ] = [...days] as [
+        const newDays = [...days] as [
             boolean,
             boolean,
             boolean,
@@ -266,68 +250,7 @@ export default function CreateObjective() {
         };
 
         try {
-            // eslint-disable-next-line
-            let storedObjectives: string | null =
-                await AsyncStorage.getItem("objectives");
-            let objs: Objective[] = [];
-
-            // this gets the list of objectives
-            if (
-                storedObjectives === null ||
-                storedObjectives === "" ||
-                storedObjectives === "[]" ||
-                storedObjectives === "{}"
-            ) {
-                objs = [];
-            } else {
-                try {
-                    objs = JSON.parse(storedObjectives);
-                    if (!Array.isArray(objs)) {
-                        throw new Error("Stored objectives is not an array");
-                    }
-                } catch (e) {
-                    throw new Error(
-                        "Error parsing stored objectives JSON: " + e
-                    );
-                }
-            }
-
-            // this creates a random ID
-            const generateObjectiveId = (): number => {
-                return Math.floor(Math.random() * 9000000000) + 1000000000;
-            };
-
-            let newIdentifier: number;
-            // verify there arent duplicates
-            do {
-                newIdentifier = generateObjectiveId();
-            } while (objs.some(obj => obj.identifier === newIdentifier));
-
-            // finally, the objective is created
-            const finalObjective: Objective = {
-                ...formData,
-                identifier: newIdentifier,
-            };
-
-            // gets added to the new objective array
-            const finalObjectives = [...objs, finalObjective];
-
-            // save it to the storage!
-            await AsyncStorage.setItem(
-                "objectives",
-                JSON.stringify(finalObjectives)
-            );
-
-            // success :D
-            if (Platform.OS === "android") {
-                ToastAndroid.show(
-                    t("messages.created_objective"),
-                    ToastAndroid.SHORT
-                );
-            }
-
-            // go back to dashboard
-            router.navigate("/Dashboard");
+            await createNewActiveObjective(formData, t);
         } catch (e) {
             termLog("Could not create an objective, got error: " + e, "error");
         }
@@ -354,7 +277,6 @@ export default function CreateObjective() {
             duration > 0 &&
             exercise !== null &&
             days &&
-            days.length > 0 &&
             !days.every(day => day === false)
         ) {
             allConditionsAreMet = true;
@@ -366,7 +288,6 @@ export default function CreateObjective() {
             duration > 0 &&
             exercise !== null &&
             days &&
-            days.length > 0 &&
             !days.every(day => day === false) &&
             amount > 0 &&
             // timeToPushUp > 0 &&
@@ -381,7 +302,6 @@ export default function CreateObjective() {
             (duration > 0 &&
                 exercise !== null &&
                 days &&
-                days.length > 0 &&
                 !days.every(day => day === false) &&
                 hands === 1 &&
                 liftWeight > 0 &&
@@ -390,7 +310,6 @@ export default function CreateObjective() {
             (duration > 0 &&
                 exercise !== null &&
                 days &&
-                days.length > 0 &&
                 !days.every(day => day === false) &&
                 hands === 2 &&
                 liftWeight > 0 &&
@@ -406,7 +325,6 @@ export default function CreateObjective() {
             duration > 0 &&
             exercise !== null &&
             days &&
-            days.length > 0 &&
             !days.every(day => day === false) &&
             speed >= 0 &&
             speed <= 11

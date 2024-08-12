@@ -1,5 +1,5 @@
 // OBJECTIVE TYPE
-import { Objective, ObjectiveDailyLog } from '@/src/types/Objective';
+import { Objective, ObjectiveDailyLog, ObjectiveWithoutId } from '@/src/types/Objective';
 // INTERNALS
 import { termLog } from '@/src/toolkit/debug/console';
 // FRONTEND
@@ -19,7 +19,7 @@ import { adjustedToday, getCurrentDate, TodaysDay } from '@/src/toolkit/today';
  * @async
  * @returns {Promise<Objective[] | null>} - Returns the objectives as an `Objective[]`.
  */
-const getObjectives = async (): Promise<Objective[] | null> => {
+async function getObjectives(): Promise<Objective[] | null> {
     try {
         const storedObjectives: string | null = await AsyncStorage.getItem("objectives");
         const objectives: Objective[] = storedObjectives ? JSON.parse(storedObjectives) : [];
@@ -34,7 +34,7 @@ const getObjectives = async (): Promise<Objective[] | null> => {
         termLog("Got an error fetching objectives! " + e, "error");
         throw new Error("Got an error fetching objectives! " + e);
     }
-};
+}
 
 // Función para guardar los objetivos en el AsyncStorage
 /**
@@ -44,9 +44,9 @@ const getObjectives = async (): Promise<Objective[] | null> => {
  * @param {Objective[]} objectives The array of objectives.
  * @returns {Promise<void>}
  */
-const saveObjectives = async (objectives: Objective[]): Promise<void> => {
+async function saveObjectives(objectives: Objective[]): Promise<void> {
     await AsyncStorage.setItem("objectives", JSON.stringify(objectives));
-};
+}
 
 // Función para eliminar un objetivo dado su identificador
 /**
@@ -56,7 +56,7 @@ const saveObjectives = async (objectives: Objective[]): Promise<void> => {
  * @param {number} identifier The identifier.
  * @returns {Promise<void>}
  */
-const deleteObjective = async (identifier: number): Promise<void> => {
+async function deleteObjective(identifier: number): Promise<void> {
     try {
         const objectives = await getObjectives();
         if (objectives) {
@@ -68,7 +68,7 @@ const deleteObjective = async (identifier: number): Promise<void> => {
     } catch (e) {
         termLog("Error in deleteObjective: " + e, "error");
     }
-};
+}
 
 // Función para marcar un objetivo como completado dado su identificador
 /**
@@ -80,10 +80,10 @@ const deleteObjective = async (identifier: number): Promise<void> => {
  * @param {TFunction} t Pass here the `i18next` translate function, please.
  * @returns {Promise<void>}
  */
-const markObjectiveAsDone = async (identifier: number, confirmWithToast: boolean = true, t: TFunction): Promise<void> => {
+async function markObjectiveAsDone(identifier: number, confirmWithToast: boolean = true, t: TFunction): Promise<void> {
     try {
-        const date = getCurrentDate()
-        saveDailyObjectivePerformance(identifier, date, true)
+        const date = getCurrentDate();
+        saveDailyObjectivePerformance(identifier, date, true);
 
         router.navigate("/");
 
@@ -93,37 +93,37 @@ const markObjectiveAsDone = async (identifier: number, confirmWithToast: boolean
     } catch (e) {
         termLog("Got an error marking objective as done! " + e, "error");
     }
-};
+}
 
 // Funcion para vaciar / borrar los objetivos
 /**
- * Clears all the objectives, setting the AsyncStorage object to `[]`.
+ * Clears all the objectives, setting the AsyncStorage object to `[]`. **Async function.**
  *
  * @async
  * @returns {0 | 1} 0 if success, 1 if failure.
  */
-const clearObjectives = async (): Promise<0 | 1> => {
+async function clearObjectives(): Promise<0 | 1> {
     try {
         const objectives = await getObjectives();
         if (objectives !== null) {
             await AsyncStorage.setItem("objectives", JSON.stringify([]));
         }
-        return 0
+        return 0;
     } catch (e) {
         termLog("Got an error clearing objectives! " + e, "error");
-        return 1
+        return 1;
     }
-};
+}
 
 // Función para obtener un objetivo dado su identificador
 /**
- * Gets a specific objective given its identifier, allowing to read all of its data easily.
+ * Gets a specific objective given its identifier, allowing to read all of its data easily. **Async function.**
  *
  * @async
  * @param {number} identifier The identifier.
  * @returns {Promise<Objective | null>}
  */
-const getObjectiveByIdentifier = async (identifier: number): Promise<Objective | null | undefined> => {
+async function getObjectiveByIdentifier(identifier: number): Promise<Objective | null | undefined> {
     try {
         const objectives = await getObjectives();
         if (objectives) {
@@ -131,13 +131,13 @@ const getObjectiveByIdentifier = async (identifier: number): Promise<Objective |
             return objective;
         } else {
             termLog("Got an error fetching the objective by identifier! No objectives", "error");
-            return null
+            return null;
         }
     } catch (e) {
         termLog("Got an error fetching the objective by identifier! " + e, "error");
         return null;
     }
-};
+}
 
 // Funcion para definir la descripción del objetivo
 /**
@@ -177,12 +177,12 @@ async function defineObjectiveDescription(t: TFunction, objective: Objective): P
 
 // Funcion para reiniciar diariamente los objetivos
 /**
- * Function to daily reset objectives.
+ * Function to daily reset objectives. **Async function.**
  *
  * @async
  * @returns {Promise<void>}
  */
-const resetObjectivesDaily = async (): Promise<void> => {
+async function resetObjectivesDaily(): Promise<void> {
     try {
         const objectives = await getObjectives();
         const nextDay = (adjustedToday + 1) % 7;
@@ -197,17 +197,17 @@ const resetObjectivesDaily = async (): Promise<void> => {
 
             await saveObjectives(updatedObjectives);
         } else {
-            termLog("", "error")
+            termLog("", "error");
         }
     } catch (e) {
         termLog("Got an error resetting objectives! " + e, "error");
     }
-};
+}
 
 // La registramos
 const BACKGROUND_ACTIVE_OBJECTIVE_FETCHING = 'background-active-objective-fetching';
 
-TaskManager.defineTask(BACKGROUND_ACTIVE_OBJECTIVE_FETCHING, async () => {
+TaskManager.defineTask(BACKGROUND_ACTIVE_OBJECTIVE_FETCHING, async function () {
     try {
         await resetObjectivesDaily();
         return BackgroundFetch.BackgroundFetchResult.NewData;
@@ -291,7 +291,7 @@ async function checkForTodaysObjectives(objectives: { [key: string]: Objective }
     }
 
     const dueTodayObjectives = await Promise.all(
-        Object.keys(objectives).map(async key => {
+        Object.keys(objectives).map(async function (key) {
             const obj = objectives[key];
             if (obj.days[adjustedToday]) {
                 const status = await checkForAnObjectiveDailyStatus(obj.identifier);
@@ -308,7 +308,7 @@ async function checkForTodaysObjectives(objectives: { [key: string]: Objective }
     }
 
     const allObjectivesDone = await Promise.all(
-        Object.keys(objectives).map(async key => {
+        Object.keys(objectives).map(async function (key) {
             const obj = objectives[key];
             if (obj.days[adjustedToday]) {
                 const status = await checkForAnObjectiveDailyStatus(obj.identifier);
@@ -367,12 +367,12 @@ function calculateSessionFragmentsDuration(duration: number | null, rests: numbe
  * @param {?string} [performance] Results for the session from OpenHealth. Optional (the user could have not done the objective, so no data would exist).
  */
 function saveDailyObjectivePerformance(id: number, date: TodaysDay, wasDone: boolean, performance?: string) {
-    const saveObjective = async () => {
+    async function saveObjective() {
         try {
             // Fetch old data
             const prevDailySavedData = await AsyncStorage.getItem("dailyObjectivesStorage");
             if (!prevDailySavedData) {
-                await AsyncStorage.setItem("dailyObjectivesStorage", JSON.stringify({}))
+                await AsyncStorage.setItem("dailyObjectivesStorage", JSON.stringify({}));
             }
             // If there's no old data, creates an {}
             const dailyData = prevDailySavedData ? JSON.parse(prevDailySavedData) : {};
@@ -398,7 +398,7 @@ function saveDailyObjectivePerformance(id: number, date: TodaysDay, wasDone: boo
                 termLog(`Error saving user's performance for objective (no ID), caught: ${e}`, "error");
             }
         }
-    };
+    }
 
     saveObjective();
 }
@@ -409,7 +409,7 @@ function saveDailyObjectivePerformance(id: number, date: TodaysDay, wasDone: boo
  * @async
  * @returns {Promise<object>} The objectives daily log
  */
-const getObjectivesDailyLog = async (): Promise<object> => {
+async function getObjectivesDailyLog(): Promise<object> {
     try {
         const storedObjectives: string | null = await AsyncStorage.getItem("dailyObjectivesStorage");
         const objectives: object = storedObjectives ? JSON.parse(storedObjectives) : [];
@@ -417,16 +417,89 @@ const getObjectivesDailyLog = async (): Promise<object> => {
         return objectives;
     } catch (e) {
         termLog("Got an error fetching objectives! " + e, "error");
-        throw new Error("Got an error fetching objectives! " + e)
+        throw new Error("Got an error fetching objectives! " + e);
     }
 }
 
-function createNewActiveObjective() {
-    router.navigate("/CreateObjective")
+/**
+ * Creates a new active objective and saves it. **Async function.**
+ *
+ * @async
+ * @param {ObjectiveWithoutId} objectiveMetadata The metadata as an `ObjectiveWithoutId`. The identifier is not passed as the function itself takes care of creating it.
+ * @param {TFunction} t Pass here the translation function, please.
+ * @returns {*}
+ */
+async function createNewActiveObjective(objectiveMetadata: ObjectiveWithoutId, t: TFunction) {
+    try {
+        const objectives = await getObjectives();
+        let objs: Objective[] = [];
+
+        if (
+            objectives === null ||
+            objectives === undefined
+        ) {
+            objs = [];
+        } else {
+            try {
+                objs = objectives;
+                if (!Array.isArray(objs)) {
+                    throw new Error("Stored objectives is not an array");
+                }
+            } catch (e) {
+                throw new Error(
+                    "Error parsing stored objectives JSON: " + e
+                );
+            }
+        }
+
+        // this creates a random ID
+        const generateObjectiveId = (): number => {
+            return Math.floor(Math.random() * 9000000000) + 1000000000;
+        };
+
+        let newIdentifier: number;
+        // verify there arent duplicates
+        do {
+            newIdentifier = generateObjectiveId();
+        } while (objs.some(obj => obj.identifier === newIdentifier));
+
+        // finally, the objective is created
+        const finalObjective: Objective = {
+            ...objectiveMetadata,
+            identifier: newIdentifier,
+        };
+
+        // gets added to the new objective array
+        const finalObjectives = [...objs, finalObjective];
+
+        // save it to the storage!
+        await AsyncStorage.setItem(
+            "objectives",
+            JSON.stringify(finalObjectives)
+        );
+
+        // success :D
+        if (Platform.OS === "android") {
+            ToastAndroid.show(
+                t("messages.created_objective"),
+                ToastAndroid.SHORT
+            );
+        }
+
+        // go back to the prev page (either dashboard or home)
+        router.back();
+    } catch (e) {
+        termLog("Could not create an objective, got error: " + e, "error");
+    }
 }
 
 // redirects to the Sessions page if the user starts a session, passing the objective's ID as a parameter
-const startSessionFromObjective = (identifier: number): void => {
+/**
+ * Starts a session, given an active objective's identifier.
+ *
+ * @param {number} identifier The objective¡s ID
+ */
+function startSessionFromObjective(identifier: number): void {
     if (identifier !== undefined) {
         router.navigate("/Sessions?id=" + identifier);
     } else {
@@ -435,6 +508,6 @@ const startSessionFromObjective = (identifier: number): void => {
             "error"
         );
     }
-};
+}
 
 export { getObjectives, deleteObjective, markObjectiveAsDone, clearObjectives, getObjectiveByIdentifier, defineObjectiveDescription, registerBackgroundObjectivesFetchAsync, checkForTodaysObjectives, objectiveArrayToObject, calculateSessionFragmentsDuration, saveDailyObjectivePerformance, getObjectivesDailyLog, checkForAnObjectiveDailyStatus, createNewActiveObjective, startSessionFromObjective };
