@@ -82,7 +82,6 @@ Gracias a todo este maravilloso software libre, PersonaPlus es posible. ¡Gracia
 - [React](https://react.dev/) (y los paquetes asociados)
 - [React Native](https://reactnative.dev/) (y los paquetes asociados)
 - [Expo](https://expo.dev/) (y los paquetes asociados)
-- [React Native Animatable](https://github.com/oblador/react-native-animatable)
 - [React Native Countdown Circle Timer](https://github.com/vydimitrov/react-countdown-circle-timer/)
 - [React Native SVG](https://github.com/software-mansion/react-native-svg)
 - [React Navigation](https://github.com/react-navigation/react-navigation)
