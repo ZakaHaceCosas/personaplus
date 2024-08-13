@@ -56,9 +56,9 @@ PD: Changelog is managed by the owner only, thanks. One task less for you!
 - Removed some `termLog`s that were there for debug purposes and aren't required anymore.
 - Removed two `useState`s and one `useEffect` from `index.tsx`. Turns out the check for background fetching & notification status were duplicate.
 - (WIP) Added constants for font sizes (FONT_SIZES) and spacings (SPACING), helping with visual consistency across the app.
-- Created a (memoized) BackButton component. Thanks, [@Alvaro842](https://github.com/alvaro842).
-- `useCallback` was implemented for `handlePrivacyPress` and `handleOssPress` functions, making the app more responsive by reducing unnecessary function re-creations. Thanks, [@Alvaro842](https://github.com/alvaro842).
-- Continue to extract functions from JSX to improve readability and maintainability. Thanks, [@Alvaro842](https://github.com/alvaro842).
+- Created a (memoized) BackButton component. Thanks, [@Alvaro842](https://github.com/Alvaro842DEV).
+- `useCallback` was implemented for `handlePrivacyPress` and `handleOssPress` functions, making the app more responsive by reducing unnecessary function re-creations. Thanks, [@Alvaro842](https://github.com/Alvaro842DEV).
+- Continue to extract functions from JSX to improve readability and maintainability. Thanks, [@Alvaro842](https://github.com/Alvaro842DEV).
 
 ### Trivial updates - Latest
 
