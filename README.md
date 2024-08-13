@@ -36,61 +36,13 @@ De momento PersonaPlus está en su primera fase, *codename* "PRE-APP". Ni Beta, 
 
 ## Funciones planeadas
 
-PersonaPlus es una app en un estado muy temprano, muchas funciones aún están por hacer y algunas tomarán mucho tiempo en empezar a implementarse. Además, esta lista está sujeta a cambios, según voy mejorando las ideas (o quitando alguna, que no suele pasar, pero puede).
+PersonaPlus es una app en un estado muy temprano, muchas funciones aún están por hacer y algunas tomarán mucho tiempo en empezar a implementarse. Además, las listas están sujetas a cambios, según voy mejorando las ideas (o quitando alguna, que no suele pasar, pero puede).
 
-- [ ] Registro de usuarios
-  - [X] Datos básicos
-  - [ ] Personalización
-    - [X] Metas
-    - [ ] Condiciones médicas
-    - [ ] Otros
-  - [ ] Hora de pensar
-- [ ] Objetivos en general
-  - [X] Creación
-    - [ ] Objetivos activos
-      - [X] Marcar como completado
-      - [ ] Sesiones
-        - [X] Funcionalidad básica
-          - [X] Temporizador
-          - [X] Repeticiones
-          - [X] Descansos
-          - [X] Salida
-            - [X] Rendición
-            - [X] Marcado como completado
-        - [ ] Sesiones múltiples
-        - [X] Ayuda básica
-        - [ ] Ayuda de calidad
-        - [ ] Sesiones completas
-          - [ ] Obtención de datos
-            - [ ] Medidor de kcals quemadas
-            - [ ] Medidores específicos (ej. flexiones realizadas en una sesión, o km recorridos)
-          - [ ] Guardado de datos
-          - [ ] Estadísticas (vía [OpenHealth](https://github.com/ZakaHaceCosas/personaplus/blob/main/core/README.md))
-        - [ ] Sesiones avanzadas / funciones triviales
-          - [ ] Mapas (GPS) (para ejercicios como correr)
-          - [ ] Reproductor (música integrada)
-          - [ ] Efectos de sonido
-          - [ ] Sesiones encadenadas / Sesiones de micro-ejercicios
-    - [ ] Objetivos pasivos
-  - [ ] Edición
-  - [X] Eliminación
-  - [ ] Generación vía asistente
-- [ ] Registro / Base de datos
-  - [ ] Generación de estadísticas
-    - [ ] Estadísticas precisas (datos médicos)
-  - [ ] Generación de informes
-  - [ ] Consejos
-  - [ ] Hora de pensar
-    - [ ] Notificación
-    - [ ] Formulario funcional
-- [ ] Misceláneos
-  - [ ] Temas para la aplicación (claro, oscuro, etc...)
-  - [X] Múltiples idiomas (Castellano, Inglés...)
-  - [X] Recordatorios
+Dicho esto, desde el [proyecto de GitHub](https://github.com/users/ZakaHaceCosas/projects/1/views/1) puedes ver todo lo planeado.
 
 ### Orden de implementación
 
-Para que nadie pierda el rumbo, aunque voy tocando un poco de todo, este es el plan que intento seguir de momento (actualizaré esto cada que haga falta):
+Para que nadie pierda el rumbo, aunque voy tocando un poco de todo, este es el plan que intento seguir de momento (actualizaré esto cada que haga falta).
 
 1. [X] ~~Terminar de implementar las sesiones básicas.~~ **Hecho.**
 2. [X] ~~Una vez hecho eso, algún ajuste más a la app y de ahí a lo importante.~~ **Hecho.**
