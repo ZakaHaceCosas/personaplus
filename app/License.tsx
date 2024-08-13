@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
-import { router } from "expo-router";
+import BackButton from "@/src/BackButton";
 import { useTranslation } from "react-i18next";
 import colors from "@/src/toolkit/design/colors";
 
@@ -43,13 +43,7 @@ export default function License() {
                 contentContainerStyle={{ flexGrow: 1 }}
                 horizontal={false}
             >
-                <BetterText
-                    fontSize={20}
-                    fontWeight="Light"
-                    onTap={router.back}
-                >
-                    {"<"} {t("globals.go_back")}
-                </BetterText>
+                <BackButton t={t} />
                 <GapView height={20} />
                 <BetterText fontSize={30} fontWeight="SemiBold">
                     {t("subpage_legal_stuff.title")}

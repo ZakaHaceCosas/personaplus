@@ -3,7 +3,6 @@
 
 import React, { useState } from "react";
 import { StyleSheet, View, ScrollView, Pressable } from "react-native";
-import { router } from "expo-router";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import { Picker as Select } from "@react-native-picker/picker";
@@ -17,6 +16,7 @@ import {
 import { useTranslation } from "react-i18next";
 import colors from "@/src/toolkit/design/colors";
 import { createNewActiveObjective } from "@/src/toolkit/objectives";
+import BackButton from "@/src/BackButton";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -291,13 +291,7 @@ export default function CreateObjective() {
                 contentContainerStyle={{ flexGrow: 1 }}
                 horizontal={false}
             >
-                <BetterText
-                    fontSize={20}
-                    fontWeight="Light"
-                    onTap={router.back}
-                >
-                    {"<"} {t("globals.go_back")}
-                </BetterText>
+                <BackButton t={t} />
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
                     {t("subpage_create_active_objective.header.label")}

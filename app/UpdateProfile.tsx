@@ -21,6 +21,7 @@ import { useTranslation } from "react-i18next";
 import { validateBasicData } from "@/src/toolkit/userData";
 import colors from "@/src/toolkit/design/colors";
 import Loading from "@/src/Loading";
+import BackButton from "@/src/BackButton";
 
 // TypeScript, supongo (should use toolkified ver instead?)
 interface UserData {
@@ -213,13 +214,7 @@ export default function UpdateProfile() {
                 contentContainerStyle={{ flexGrow: 1 }}
                 horizontal={false}
             >
-                <BetterText
-                    fontSize={20}
-                    fontWeight="Light"
-                    onTap={router.back}
-                >
-                    {"<"} {t("globals.go_back")}
-                </BetterText>
+                <BackButton t={t} />
                 <GapView height={20} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
                     {t("subpage_edit_profile.title")}
