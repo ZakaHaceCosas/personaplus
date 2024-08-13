@@ -64,3 +64,13 @@ core/**/*.wip.ts
 
 app/**/*.wip.tsx
 app/**/*.wip.ts
+
+# local-only testing
+src/**/*.testing.tsx
+src/**/*.testing.ts
+
+core/**/*.testing.tsx
+core/**/*.testing.ts
+
+app/**/*.testing.tsx
+app/**/*.testing.ts
