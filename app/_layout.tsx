@@ -1,21 +1,12 @@
 // _layout.tsx
 // Main layout, (something to avoid duplicate code)
 
-import React, { useEffect } from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import React, { Fragment, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import "@/src/toolkit/translations";
-import colors from "@/src/toolkit/design/colors";
-
-// We define the styles
-const styles = StyleSheet.create({
-    mainview: {
-        backgroundColor: colors.MAIN.APP,
-    },
-});
 
 // We create the function
 export default function Layout() {
@@ -81,9 +72,9 @@ export default function Layout() {
 
     // pack it all in a ScrollView, add the android StatusBar, and the <Slot /> where the app will put everything
     return (
-        <ScrollView style={styles.mainview}>
+        <Fragment>
             <StatusBar style="light" animated={true} />
             <Slot />
-        </ScrollView>
+        </Fragment>
     );
 }
