@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
 export default function Home() {
     const [loading, setLoading] = useState(true);
     const [loadingObjectives, setLoadingObjectives] = useState(true);
-    const [username, setUsername] = useState<string>("Unknown");
+    const [username, setUsername] = useState<string | null>(null);
     const [objectives, setObjectives] = useState<{
         [key: string]: Objective;
     } | null>(null);
@@ -255,6 +255,7 @@ export default function Home() {
                     if (parsedObjectives) {
                         setObjectives(objectiveArrayToObject(parsedObjectives));
                         termLog("Parsed Objectives:" + parsedObjectives, "log");
+                        await fetchDueTodayObjectives();
                     } else {
                         setObjectives({});
                     }
@@ -264,8 +265,6 @@ export default function Home() {
                         router.push("/WelcomeScreen"); // Redirects if it's the first launch
                         return;
                     }
-
-                    await fetchDueTodayObjectives();
                 } else {
                     termLog(
                         "Error fetching basic user data! No items (useEffect -> multiFetch -> try-catch.try -> if items)",
@@ -354,14 +353,17 @@ export default function Home() {
             }
         };
 
+        let isMounted = true; // thing that supposedly fixes issues :V
+
         // Main async function to handle the sequence
         const handle = async () => {
             try {
-                await verifyObjectiveBackgroundFetchingStatusAsync(); // Verifies background fetching
-                await multiFetch(); // Fetches user data and objectives
-                await fetchDueTodayObjectives(); // Processes the objectives
+                if (isMounted)
+                    await verifyObjectiveBackgroundFetchingStatusAsync(); // Verifies background fetching
+                if (isMounted) await multiFetch(); // Fetches user data and objectives
+                if (isMounted) await fetchDueTodayObjectives(); // Processes the objectives
 
-                setLoading(false); // Finally, set loading to false
+                if (isMounted) setLoading(false); // Finally, set loading to false
             } catch (e) {
                 termLog("Error: " + e, "log");
             }
@@ -370,6 +372,11 @@ export default function Home() {
         handle(); // Execute the main sequence
         // THIS SHALL ONLY RUN ONCE, NO MORE TIMES
         // i don't want more of those... memory issues
+
+        return () => {
+            isMounted = false;
+        };
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -413,13 +420,11 @@ export default function Home() {
                 );
             }
 
-            if (dueTodayObjectiveList.length > 0) {
-                return Object.keys(objectives).map(key =>
-                    renderObjectiveDivision(objectives[key])
-                );
-            }
-
-            return AllObjectivesDone(t);
+            return dueTodayObjectiveList.length > 0
+                ? Object.keys(objectives).map(key =>
+                      renderObjectiveDivision(objectives[key])
+                  )
+                : AllObjectivesDone(t);
         } catch (e) {
             termLog("Error rendering objectives section: " + e, "error");
             return null;
