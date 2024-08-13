@@ -46,6 +46,10 @@ const config: ExpoConfig.ExpoConfig = {
         versionCode: 25,
         backgroundColor: "#0E1013"
     },
+    ios: {
+        // apple is not supported and wont ever be, this is for some dude whos testing from an iphone
+        backgroundColor: "#0E1013"
+    },
     web: {
         favicon: "./assets/favicon.png",
         bundler: "metro"
@@ -132,7 +136,7 @@ const config: ExpoConfig.ExpoConfig = {
         eas: {
             projectId: process.env.PID
         }
-    }
+    },
 };
 
 export default ({ config: appConfig }: ExpoConfig.ConfigContext): ExpoConfig.ExpoConfig => ({
