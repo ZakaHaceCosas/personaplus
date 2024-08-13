@@ -1,7 +1,7 @@
 // src/Buttons.tsx
 // Buttons, botones, elementos presionables, ENTIDADES INTERACTIVAS UTILIZABLES POR MEDIO DE CLICS / TOCAMIENTOS DE LA PANTALLA xd
 
-import React, { ReactElement, ReactNode } from "react";
+import React, { ReactElement, ReactNode, useState } from "react";
 import { Pressable, DimensionValue } from "react-native";
 import BetterText from "@/src/BetterText";
 import colors from "@/src/toolkit/design/colors";
@@ -178,10 +178,14 @@ export default function Button({
             break;
     }
 
+    const [opacityVal, setOpacityVal] = useState(1); // on press "animation" (Not animated, but at least gives visual feedback)
+
     // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
     return (
         <Pressable
             onPress={action}
+            onPressIn={() => setOpacityVal(0.8)}
+            onPressOut={() => setOpacityVal(1)}
             style={{
                 paddingTop: buttonMinorPadding as DimensionValue,
                 paddingBottom: buttonMinorPadding as DimensionValue,
@@ -197,6 +201,7 @@ export default function Button({
                 alignItems: "center",
                 justifyContent: "center",
                 flex: flexValue,
+                opacity: opacityVal,
             }}
         >
             {buttonText && (
