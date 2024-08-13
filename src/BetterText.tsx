@@ -3,7 +3,8 @@
 
 import React, { ReactNode, ReactElement } from "react";
 import { TextStyle, Text } from "react-native";
-import colors from "./toolkit/design/colors";
+import colors from "@/src/toolkit/design/colors";
+import FontSizes from "@/src/toolkit/design/fontSizes";
 
 // TypeScript, supongo
 /**
@@ -85,7 +86,7 @@ interface BetterTextProps {
      */
     textAlign?: "center" | "normal" | "left" | "right"; // Alineación del texto
     /**
-     * The text to be rendered.
+     * The text to be rendered. You can also pass other `<BetterText>` to act as "spans" with separate styles, kinda like `<span>` in HTML5.
      *
      * @type {ReactNode}
      */
@@ -154,5 +155,53 @@ export default function BetterText({
         <Text style={textStyle} {...(onTap ? { onPress: onTap } : {})}>
             {children}
         </Text>
+    );
+}
+
+/**
+ * A pre-made **header**, based on `<BetterText>` and with default styles for design consistency.
+ *
+ * @export
+ * @param {{ children: ReactNode }} props - The props object.
+ * @param {ReactNode} props.children - The text you want to display. You can also pass other `<BetterText>` components to act as "spans" with separate styles, similar to `<span>` in HTML5.
+ * @returns {ReactElement} The rendered header component.
+ */
+export function BetterTextHeader({
+    children,
+}: {
+    children: ReactNode;
+}): ReactElement {
+    return (
+        <BetterText
+            textAlign="normal"
+            fontWeight="Bold"
+            fontSize={FontSizes.EXTRA_LARGE}
+        >
+            {children}
+        </BetterText>
+    );
+}
+
+/**
+ * A pre-made **subheader**, based on `<BetterText>` and with default styles for design consistency.
+ *
+ * @export
+ * @param {{ children: ReactNode }} props - The props object.
+ * @param {ReactNode} props.children - The text you want to display. You can also pass other `<BetterText>` components to act as "spans" with separate styles, similar to `<span>` in HTML5.
+ * @returns {ReactElement} The rendered subheader component.
+ */
+export function BetterTextSubheader({
+    children,
+}: {
+    children: ReactNode;
+}): ReactElement {
+    return (
+        <BetterText
+            textAlign="normal"
+            fontWeight="Medium"
+            fontSize={FontSizes.LARGE}
+        >
+            {children}
+        </BetterText>
     );
 }

@@ -9,7 +9,7 @@ import {
     StyleSheet,
     Linking,
 } from "react-native";
-import BetterText from "@/src/BetterText";
+import BetterText, { BetterTextHeader } from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import { useTranslation } from "react-i18next";
 import colors from "@/src/toolkit/design/colors";
@@ -117,9 +117,7 @@ export default function OpenSourceCredits() {
             >
                 <BackButton t={t} />
                 <GapView height={20} />
-                <BetterText fontSize={30} fontWeight="SemiBold">
-                    {t("open_source_credits")}
-                </BetterText>
+                <BetterTextHeader>{t("open_source_credits")}</BetterTextHeader>
                 <GapView height={20} />
                 {libraries.map((library, index) => (
                     <View key={index} style={{ marginBottom: 40 }}>

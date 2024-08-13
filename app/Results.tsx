@@ -5,7 +5,10 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView, Dimensions } from "react-native";
 import OpenHealth from "@/core/openhealth";
 import { termLog } from "@/src/toolkit/debug/console";
-import BetterText from "@/src/BetterText";
+import BetterText, {
+    BetterTextHeader,
+    BetterTextSubheader,
+} from "@/src/BetterText";
 import { router, useGlobalSearchParams } from "expo-router";
 import { UserHealthData } from "@/src/toolkit/userData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -261,12 +264,10 @@ export default function Results() {
                 horizontal={false}
             >
                 <View style={styles.thirdview}>
-                    <BetterText fontSize={40} fontWeight="SemiBold">
+                    <BetterTextHeader>
                         {t("globals.session_done")}
-                    </BetterText>
-                    <BetterText fontSize={20} fontWeight="SemiBold">
-                        {randomMessage}
-                    </BetterText>
+                    </BetterTextHeader>
+                    <BetterTextSubheader>{randomMessage}</BetterTextSubheader>
                     <GapView height={10} />
                     {result?.result && (
                         <Section kind="HowYouAreDoing">

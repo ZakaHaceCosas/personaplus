@@ -9,7 +9,7 @@ import {
     Linking,
     Dimensions,
 } from "react-native";
-import BetterText from "@/src/BetterText";
+import BetterText, { BetterTextHeader } from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import BackButton from "@/src/BackButton";
 import { useTranslation } from "react-i18next";
@@ -45,9 +45,9 @@ export default function License() {
             >
                 <BackButton t={t} />
                 <GapView height={20} />
-                <BetterText fontSize={30} fontWeight="SemiBold">
+                <BetterTextHeader>
                     {t("subpage_legal_stuff.title")}
-                </BetterText>
+                </BetterTextHeader>
                 <GapView height={10} />
                 <BetterText fontSize={10} fontWeight="Italic">
                     SPDX: GPL-3.0-only

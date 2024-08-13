@@ -9,7 +9,7 @@ import {
     Dimensions,
 } from "react-native";
 import { router } from "expo-router";
-import BetterText from "@/src/BetterText";
+import BetterText, { BetterTextHeader } from "@/src/BetterText";
 import Section from "@/src/section/Section";
 import Division from "@/src/section/Division";
 import Button from "@/src/Buttons";
@@ -73,13 +73,7 @@ export default function Home() {
                 <BackButton t={t} />
                 <GapView height={spacing.LARGE} />
                 <View style={styles.headerContainer}>
-                    <BetterText
-                        textAlign="normal"
-                        fontWeight="Bold"
-                        fontSize={FontSizes.EXTRA_LARGE}
-                    >
-                        PersonaPlus
-                    </BetterText>
+                    <BetterTextHeader>PersonaPlus</BetterTextHeader>
                     <GapView width={spacing.REGULAR} />
                     <View style={styles.preAppBadge}>
                         <BetterText
