@@ -1,4 +1,4 @@
-// colors.ts
+// src/toolkit/design/colors.ts
 // An export of all UI colors, for consistency
 
 /**
