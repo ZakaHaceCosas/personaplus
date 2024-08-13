@@ -13,7 +13,10 @@ import {
     ScrollView,
 } from "react-native";
 import { router, usePathname } from "expo-router";
-import BetterText from "@/src/BetterText";
+import BetterText, {
+    BetterTextHeader,
+    BetterTextSubheader,
+} from "@/src/BetterText";
 import Footer from "@/src/Footer";
 import Section from "@/src/section/Section";
 import Division from "@/src/section/Division";
@@ -299,17 +302,13 @@ export default function Profile() {
                 contentContainerStyle={{ flexGrow: 1 }}
                 horizontal={false}
             >
-                <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
+                <BetterTextHeader>
                     {t("page_profile.header.label")}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={20}
-                >
+                </BetterTextHeader>
+                <BetterTextSubheader>
                     {t("page_profile.header.sublabel")}
                     {username}!
-                </BetterText>
+                </BetterTextSubheader>
                 <GapView height={20} />
                 <Section kind="Profile">
                     <Division header={username}>

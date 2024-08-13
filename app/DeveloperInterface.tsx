@@ -14,7 +14,7 @@ import {
     Text,
 } from "react-native";
 import BottomNav from "@/src/BottomNav";
-import BetterText from "@/src/BetterText";
+import BetterText, { BetterTextHeader } from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Button from "@/src/Buttons";
@@ -310,13 +310,7 @@ export default function DeveloperInterface() {
                 horizontal={false}
             >
                 <GapView height={20} />
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={35}
-                >
-                    Dev interface
-                </BetterText>
+                <BetterTextHeader>Dev interface</BetterTextHeader>
                 <GapView height={10} />
                 <BetterText textAlign="normal" fontWeight="Bold" fontSize={12}>
                     Running React v{ReactVersion} and PersonaPlus v

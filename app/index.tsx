@@ -19,7 +19,10 @@ import {
     checkForAnObjectiveDailyStatus,
     startSessionFromObjective,
 } from "@/src/toolkit/objectives";
-import BetterText from "@/src/BetterText";
+import BetterText, {
+    BetterTextHeader,
+    BetterTextSubheader,
+} from "@/src/BetterText";
 import Section from "@/src/section/Section";
 import BottomNav from "@/src/BottomNav";
 import Division from "@/src/section/Division";
@@ -434,16 +437,12 @@ export default function Home() {
                 contentContainerStyle={{ flexGrow: 1 }}
                 horizontal={false}
             >
-                <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
+                <BetterTextHeader>
                     {t("page_home.header.label")}, {username}!
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={20}
-                >
+                </BetterTextHeader>
+                <BetterTextSubheader>
                     {t("page_home.header.sublabel")}
-                </BetterText>
+                </BetterTextSubheader>
                 <GapView height={20} />
                 <Section kind="Objectives">{renderObjectivesSection()}</Section>
                 <GapView height={20} />

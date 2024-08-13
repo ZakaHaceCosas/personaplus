@@ -11,7 +11,10 @@ import {
     Dimensions,
 } from "react-native";
 import { router } from "expo-router";
-import BetterText from "@/src/BetterText";
+import BetterText, {
+    BetterTextHeader,
+    BetterTextSubheader,
+} from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import Swap from "@/src/Swap";
 import { termLog } from "@/src/toolkit/debug/console";
@@ -216,16 +219,12 @@ export default function UpdateProfile() {
             >
                 <BackButton t={t} />
                 <GapView height={20} />
-                <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
+                <BetterTextHeader>
                     {t("subpage_edit_profile.title")}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={20}
-                >
+                </BetterTextHeader>
+                <BetterTextSubheader>
                     {t("subpage_edit_profile.subtitle")}
-                </BetterText>
+                </BetterTextSubheader>
                 <GapView height={15} />
                 <BetterText
                     textAlign="normal"

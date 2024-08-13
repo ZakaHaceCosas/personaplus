@@ -10,7 +10,10 @@ import {
     View,
     ScrollView,
 } from "react-native";
-import BetterText from "@/src/BetterText";
+import BetterText, {
+    BetterTextHeader,
+    BetterTextSubheader,
+} from "@/src/BetterText";
 import BottomNav from "@/src/BottomNav";
 import Section from "@/src/section/Section";
 import Division from "@/src/section/Division";
@@ -181,16 +184,12 @@ export default function Dashboard() {
                 contentContainerStyle={{ flexGrow: 1 }}
                 horizontal={false}
             >
-                <BetterText textAlign="normal" fontWeight="Bold" fontSize={35}>
+                <BetterTextHeader>
                     {t("page_dashboard.header.label")}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={20}
-                >
+                </BetterTextHeader>
+                <BetterTextSubheader>
                     {t("page_dashboard.header.sublabel")}
-                </BetterText>
+                </BetterTextSubheader>
                 <GapView height={20} />
                 <Section kind="Objectives">
                     {objectives && Object.keys(objectives).length > 0 ? (
