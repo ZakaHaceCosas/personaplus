@@ -54,3 +54,13 @@ gradlew.bat
 
 # properties
 local.properties
+
+# work in progress
+src/**/*.wip.tsx
+src/**/*.wip.ts
+
+core/**/*.wip.tsx
+core/**/*.wip.ts
+
+app/**/*.wip.tsx
+app/**/*.wip.ts
