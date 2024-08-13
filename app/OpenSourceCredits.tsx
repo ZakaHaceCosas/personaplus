@@ -49,14 +49,6 @@ const libraries: OpenSourceLibrary[] = [
         url: "https://expo.dev/",
     },
     {
-        name: "React Native Animatable",
-        author: "Joel Arvidsson",
-        license: "MIT License",
-        description:
-            "Standard set of easy to use animations and declarative transitions for React Native.",
-        url: "https://github.com/oblador/react-native-animatable",
-    },
-    {
         name: "React Native Countdown Circle Timer",
         author: "Vasil Dimitrov",
         license: "MIT License",
