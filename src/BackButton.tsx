@@ -41,11 +41,6 @@ const BackButtonComponent: React.FC<BackButtonProps> = ({
     </BetterText>
 );
 
-/**
- * Description placeholder
- *
- * @type {*}
- */
 const BackButton = React.memo(BackButtonComponent);
 
 BackButton.displayName = "BackButton";
