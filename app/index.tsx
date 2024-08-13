@@ -196,17 +196,21 @@ export default function Home() {
         );
     }
 
-    function renderObjectiveDivision(obj: Objective) {
-        if (
-            obj &&
-            obj.days[adjustedToday] !== undefined &&
-            obj.days[adjustedToday] !== null &&
-            dueTodayObjectiveList.includes(obj.identifier)
-        ) {
+    function renderObjectiveDivision(obj: Objective): ReactElement | null {
+        try {
+            const isObjectiveDueToday =
+                obj &&
+                obj.days[adjustedToday] !== null &&
+                obj.days[adjustedToday] !== undefined &&
+                dueTodayObjectiveList.includes(obj.identifier);
+            if (!isObjectiveDueToday) return null;
+
             termLog("Rendering Objective Division:" + obj, "log");
             return ObjectiveDivision(obj, t);
+        } catch (e) {
+            termLog("Error rendering objective division:" + e, "error");
+            throw new Error("Error rendering objective division:" + e);
         }
-        return null;
     }
 
     useEffect(() => {
@@ -249,7 +253,7 @@ export default function Home() {
                         setObjectives(objectiveArrayToObject(parsedObjectives));
                         termLog("Parsed Objectives:" + parsedObjectives, "log");
                     } else {
-                        setObjectives(objectiveArrayToObject([]));
+                        setObjectives({});
                     }
 
                     const isFirstLaunchValidation = !items[1]?.[1];
@@ -280,41 +284,71 @@ export default function Home() {
 
         // Fetches objectives and determines which ones are due today
         const fetchDueTodayObjectives = async () => {
-            if (!objectives || Object.keys(objectives).length === 0) {
-                setLoadingObjectives(false);
-                return;
-            } // Avoid running if not needed
+            try {
+                /* if (!objectives || Object.keys(objectives).length === 0) {
+                    setLoadingObjectives(false);
+                    return;
+                } */ // Avoid running if not needed
 
-            const identifiers = await Promise.all(
-                Object.keys(objectives).map(async key => {
-                    const objective = objectives[key];
-                    const isDailyStatusChecked =
-                        await checkForAnObjectiveDailyStatus(
-                            objective.identifier
-                        );
-                    if (
-                        !isDailyStatusChecked &&
-                        objective.days[adjustedToday]
-                    ) {
-                        return objective.identifier;
-                    }
-                    return undefined;
-                })
-            );
+                /* const identifiers = await Promise.all(
+                    Object.keys(objectives).map(async key => {
+                        const objective = objectives[key];
+                        const isDailyStatusChecked =
+                            await checkForAnObjectiveDailyStatus(
+                                objective.identifier
+                            );
+                        if (
+                            !isDailyStatusChecked &&
+                            objective.days[adjustedToday]
+                        ) {
+                            return objective.identifier;
+                        }
+                        return undefined;
+                    })
+                ); */
+                if (objectives) {
+                    const identifiers = await Promise.all(
+                        Object.keys(objectives).map(async key => {
+                            const objective = objectives[key];
+                            const isDueToday =
+                                !(await checkForAnObjectiveDailyStatus(
+                                    objective.identifier
+                                )) && objective.days[adjustedToday];
+                            return isDueToday
+                                ? objective.identifier
+                                : undefined;
+                        })
+                    );
 
-            /* const filteredIdentifiers = identifiers.filter(
+                    /* const filteredIdentifiers = identifiers.filter(
                 (id): id is number => id !== undefined
             ); */
 
-            termLog("Identifiers:" + identifiers, "log");
-            /* termLog("Filtered Identifiers:" + filteredIdentifiers, "log"); */
+                    termLog("Identifiers:" + identifiers, "log");
+                    /* termLog("Filtered Identifiers:" + filteredIdentifiers, "log"); */
 
-            const validIdentifiers: number[] = identifiers.filter(
-                (id): id is number => id !== undefined
-            );
+                    /* const validIdentifiers: number[] = identifiers.filter(
+                    (id): id is number => id !== undefined
+                );
 
-            setDueTodayObjectiveList(validIdentifiers);
-            setLoadingObjectives(false);
+                setDueTodayObjectiveList(validIdentifiers); */
+                    const filteredIdentifiers = identifiers.filter(
+                        (id): id is number => id !== undefined
+                    );
+                    setDueTodayObjectiveList(filteredIdentifiers);
+                    termLog(
+                        "Due Today Objective List:" + filteredIdentifiers,
+                        "log"
+                    );
+                    return filteredIdentifiers;
+                } else {
+                    return [];
+                }
+            } catch (e) {
+                termLog("Error fetching due today objectives: " + e, "error");
+            } finally {
+                setLoadingObjectives(false);
+            }
         };
 
         // Main async function to handle the sequence
@@ -368,29 +402,21 @@ export default function Home() {
 
     function renderObjectivesSection() {
         try {
-            termLog("Loading Objectives:" + loadingObjectives, "log");
-            termLog("Objectives:" + objectives, "log");
-            termLog("Due Today Objective List:" + dueTodayObjectiveList, "log");
-            if (loadingObjectives === false) {
-                if (objectives && Object.keys(objectives).length > 0) {
-                    if (
-                        dueTodayObjectiveList &&
-                        dueTodayObjectiveList.length > 0
-                    ) {
-                        return Object.keys(objectives).map(key =>
-                            renderObjectiveDivision(objectives[key])
-                        );
-                    } else {
-                        return AllObjectivesDone(t);
-                    }
-                } else {
-                    return NoObjectives(t, () =>
-                        router.navigate("/CreateObjective")
-                    );
-                }
-            } else {
-                return null;
+            if (loadingObjectives) return null;
+
+            if (!objectives || Object.keys(objectives).length === 0) {
+                return NoObjectives(t, () =>
+                    router.navigate("/CreateObjective")
+                );
             }
+
+            if (dueTodayObjectiveList.length > 0) {
+                return Object.keys(objectives).map(key =>
+                    renderObjectiveDivision(objectives[key])
+                );
+            }
+
+            return AllObjectivesDone(t);
         } catch (e) {
             termLog("Error rendering objectives section: " + e, "error");
             return null;
