@@ -24,12 +24,12 @@ async function getObjectives(): Promise<Objective[] | null> {
         const storedObjectives: string | null = await AsyncStorage.getItem("objectives");
         const objectives: Objective[] = storedObjectives ? JSON.parse(storedObjectives) : [];
 
-        if (objectives) {
-            return objectives;
-        } else {
+        if (!Array.isArray(objectives)) {
             termLog("Warning! Objectives are not an array", "warn");
             return [];
         }
+
+        return objectives;
     } catch (e) {
         termLog("Got an error fetching objectives! " + e, "error");
         throw new Error("Got an error fetching objectives! " + e);
@@ -197,7 +197,7 @@ async function resetObjectivesDaily(): Promise<void> {
 
             await saveObjectives(updatedObjectives);
         } else {
-            termLog("", "error");
+            termLog("Error: Objectives data is not valid", "error");
         }
     } catch (e) {
         termLog("Got an error resetting objectives! " + e, "error");
@@ -250,26 +250,23 @@ async function checkForAnObjectiveDailyStatus(identifier: number): Promise<boole
         const date: TodaysDay = getCurrentDate();
 
         // Validate if dailyData and the specific identifier exist
-        if (dailyData[date]) {
-            if (dailyData[date][String(identifier)]) {
-                if (dailyData[date][String(identifier)].wasDone === true || dailyData[date][String(identifier)].wasDone === false) {
-                    return dailyData[date][String(identifier)].wasDone;
-                } else {
-                    const log = `Error checking if an objective is due today: Data exists for date ${date} and identifier ${identifier}, but wasDone is not valid or it's not present.`; // error
-                    termLog(log, "error");
-                    throw new Error(log);
-                }
+        if (dailyData[date] && dailyData[date][String(identifier)]) {
+            const entry = dailyData[date][String(identifier)];
+            if (entry.wasDone === true || entry.wasDone === false) {
+                return entry.wasDone;
             } else {
-                const log = `Warning: No data exists for objective ${identifier}, date ${date}.`; // it's actually a normal behaviour most of the time: if you didn't interact with the objective at all, it won't be logged. most ineractions will mark it as done, but until those interactions happen, this warning will occur.
-                termLog(log, "warn");
-                return null
+                termLog(`Error: Invalid 'wasDone' value for objective ${identifier} on date ${date}`, "error");
+                throw new Error(`Invalid 'wasDone' value for objective ${identifier} on date ${date}`);
             }
         } else {
-            const log = `Warning: No data exists for date ${date} at all.`; // it's also a mostly normal behaviour: an entry for today isn't created until you do something, so when first opening the app it's most likely to happen.
+            const log = dailyData[date]
+                ? `Warning: No data exists for objective ${identifier} on date ${date}.`
+                : `Warning: No data exists for date ${date} at all.`;
+            termLog(log, "warn");
+            return null; // it's actually a normal behaviour most of the time: if you didn't interact with the objective at all, it won't be logged. most ineractions will mark it as done, but until those interactions happen, this warning will occur.
             termLog(log, "warn");
             return null
         }
-
     } catch (e) {
         termLog("Error checking if an objective is due today: " + e, "error");
         return null;
@@ -347,60 +344,53 @@ function objectiveArrayToObject(objectives: Objective[]): { [key: string]: Objec
  * @returns {number} A number, the amount of seconds each fragment shall last. If any of the params is null / invalid, throws an error.
  */
 function calculateSessionFragmentsDuration(duration: number | null, rests: number | null): number {
-    if (rests !== null && rests < 0) {
+    if (rests === null || duration === null) {
+        termLog("React error: Got a null value. Objective is not getting fetched correctly? Check your code", "error");
+        throw new Error("React error: Got a null value. Objective is not getting fetched correctly? Check your code");
+    }
+    if (rests < 0) {
         termLog("React error: Negative rests? Seriously? Check your code", "error");
         throw new Error("Negative rests? Seriously? Check your code"); // heh~
-    } else if (rests === null || duration === null) {
-        termLog("React error: Got a null value. Objective is not getting fetched correctly? Check your code", "error");
-        throw new Error("React error: Got a null value. Objective is not getting fetched correctly? Check your code"); // heh~
-    } else {
-        return duration / (rests + 1);
     }
+    return duration / (rests + 1);
 }
 
 /**
- * Saves the results of an objective to a daily registry.
+ * Saves the results of an objective to a daily registry. **Async function.**
  *
+ * @async
  * @param {number} id ID of the objective
  * @param {TodaysDay} date Today's date. Use `getCurrentDate()` to get it.
  * @param {boolean} wasDone Whether the objective was done or not.
  * @param {?string} [performance] Results for the session from OpenHealth. Optional (the user could have not done the objective, so no data would exist).
  */
-function saveDailyObjectivePerformance(id: number, date: TodaysDay, wasDone: boolean, performance?: string) {
-    async function saveObjective() {
-        try {
-            // Fetch old data
-            const prevDailySavedData = await AsyncStorage.getItem("dailyObjectivesStorage");
-            if (!prevDailySavedData) {
-                await AsyncStorage.setItem("dailyObjectivesStorage", JSON.stringify({}));
-            }
-            // If there's no old data, creates an {}
-            const dailyData = prevDailySavedData ? JSON.parse(prevDailySavedData) : {};
+async function saveDailyObjectivePerformance(id: number, date: TodaysDay, wasDone: boolean, performance?: string) {
+    try {
+        // Fetch old data
+        const prevDailySavedData = await AsyncStorage.getItem("dailyObjectivesStorage");
+        const dailyData = prevDailySavedData ? JSON.parse(prevDailySavedData) : {};
 
-            // If there's no old data for today, creates an {} for today
-            if (!dailyData[date]) {
-                dailyData[date] = {};
-            }
+        // If there's no old data for today, creates an {} for today
+        if (!dailyData[date]) {
+            dailyData[date] = {};
+        }
 
-            // Saves the objective data
-            dailyData[date][id] = {
-                wasDone: wasDone,
-                performance: performance !== undefined ? performance : "undefined"
-            };
+        // Saves the objective data
+        dailyData[date][id] = {
+            wasDone: wasDone,
+            performance: performance !== undefined ? performance : "undefined"
+        };
 
-            // Updates data and puts it back to AsyncStorage
-            await AsyncStorage.setItem("dailyObjectivesStorage", JSON.stringify(dailyData));
-            termLog(`Objective ${id} data saved for ${date}`, "success");
-        } catch (e) {
-            if (id) {
-                termLog(`Error saving user's performance for objective ${id}, caught: ${e}`, "error");
-            } else {
-                termLog(`Error saving user's performance for objective (no ID), caught: ${e}`, "error");
-            }
+        // Updates data and puts it back to AsyncStorage
+        await AsyncStorage.setItem("dailyObjectivesStorage", JSON.stringify(dailyData));
+        termLog(`Objective ${id} data saved for ${date}`, "success");
+    } catch (e) {
+        if (id) {
+            termLog(`Error saving user's performance for objective ${id}, caught: ${e}`, "error");
+        } else {
+            termLog(`Error saving user's performance for objective (no ID), caught: ${e}`, "error");
         }
     }
-
-    saveObjective();
 }
 
 /**
@@ -412,9 +402,7 @@ function saveDailyObjectivePerformance(id: number, date: TodaysDay, wasDone: boo
 async function getObjectivesDailyLog(): Promise<object> {
     try {
         const storedObjectives: string | null = await AsyncStorage.getItem("dailyObjectivesStorage");
-        const objectives: object = storedObjectives ? JSON.parse(storedObjectives) : [];
-
-        return objectives;
+        return storedObjectives ? JSON.parse(storedObjectives) : {};
     } catch (e) {
         termLog("Got an error fetching objectives! " + e, "error");
         throw new Error("Got an error fetching objectives! " + e);
@@ -434,22 +422,10 @@ async function createNewActiveObjective(objectiveMetadata: ObjectiveWithoutId, t
         const objectives = await getObjectives();
         let objs: Objective[] = [];
 
-        if (
-            objectives === null ||
-            objectives === undefined
-        ) {
+        if (objectives === null || !Array.isArray(objectives)) {
             objs = [];
         } else {
-            try {
-                objs = objectives;
-                if (!Array.isArray(objs)) {
-                    throw new Error("Stored objectives is not an array");
-                }
-            } catch (e) {
-                throw new Error(
-                    "Error parsing stored objectives JSON: " + e
-                );
-            }
+            objs = objectives;
         }
 
         // this creates a random ID
@@ -502,7 +478,7 @@ async function createNewActiveObjective(objectiveMetadata: ObjectiveWithoutId, t
  * @param {number} identifier The objective¡s ID
  */
 function startSessionFromObjective(identifier: number): void {
-    if (identifier !== undefined) {
+    if (identifier !== undefined && identifier !== null) {
         router.navigate("/Sessions?id=" + identifier);
     } else {
         termLog(
