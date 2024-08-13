@@ -2,7 +2,7 @@
 // ¿flex-gap no funciona? ¿No quieres usar Flexbox? Un espaciador que no ocupa espacio en tu código
 
 import React, { ReactElement } from "react";
-import { View } from "react-native-animatable";
+import { View } from "react-native";
 
 // TypeScript, supongo
 /**
