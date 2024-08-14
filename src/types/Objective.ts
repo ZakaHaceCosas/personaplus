@@ -25,12 +25,6 @@ interface extra {
      */
     amount: number;
     /**
-     * **PUSH-UPS**: Estimatedly, how much does the user take to make a push-up. `Deprecated`.
-     *
-     * @type {number}
-     */
-    time: number;
-    /**
      * **LIFTING**: The amount of lifts the user will do.
      *
      * @type {number}
@@ -148,7 +142,6 @@ export interface ObjectiveDailyLog {
                     weight: number;
                     height: number;
                     speed?: number;
-                    time: number;
                     pushUps?: number;
                     hands?: number;
                 };

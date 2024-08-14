@@ -80,7 +80,6 @@ export default function CreateObjective() {
     const [liftWeight, setLiftWeight] = useState<number>(0);
     const [hands, setHands] = useState<1 | 2>(2);
     const [lifts, setLifts] = useState<number>(0);
-    const [timeToPushUp, setTimeToPushup] = useState<number>(0); // i forgot what purpose does this serve, to be honest
     const [speed, setSpeed] = useState<number>(2); // defaults to the 3rd value instead of the 1st one. how is the user going to know if he decrements there are more options? no fucking clue.
     const speedOptions = [
         [t("Brisk Walk"), t("1.6 - 3.2 km/h")],
@@ -140,9 +139,6 @@ export default function CreateObjective() {
                 break;
             case "liftWeight":
                 setLiftWeight(prev => prev + 0.25);
-                break;
-            case "timeToPushup":
-                setTimeToPushup(prev => prev + 0.5);
                 break;
             case "lifts":
                 setLifts(prev => prev + 1);
@@ -207,9 +203,6 @@ export default function CreateObjective() {
             case "liftWeight":
                 setLiftWeight(prev => prev - 0.25);
                 break;
-            case "timeToPushup":
-                setTimeToPushup(prev => prev - 0.5);
-                break;
             case "lifts":
                 setLifts(prev => prev - 1);
                 break;
@@ -250,7 +243,6 @@ export default function CreateObjective() {
                 lifts,
                 liftWeight,
                 hands,
-                time: timeToPushUp,
                 speed,
                 barWeight,
             },
