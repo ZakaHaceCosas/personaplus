@@ -1,7 +1,7 @@
 // index.tsx
 // Welcome to PersonaPlus. Give yourself a plus!
 
-import React, { useState, useEffect, ReactElement } from "react";
+import React, { useState, useEffect, ReactElement, useCallback } from "react";
 import {
     View,
     ScrollView,
@@ -77,27 +77,31 @@ export default function Home() {
     const currentpage = usePathname();
 
     // marking an objective as done
-    const handleMarkingObjectiveAsDone = async (identifier: number) => {
-        try {
-            await markObjectiveAsDone(identifier, true, t); // actually this line itself does the entire thing, thanks to the objective toolkit, the rest is just state handling for the page to update
-            // toolkification was probably the best idea i've ever had
-            const updatedObjectives = await getObjectives();
-            if (updatedObjectives) {
-                setObjectives(objectiveArrayToObject(updatedObjectives));
+    const handleMarkingObjectiveAsDone = useCallback(
+        async (identifier: number) => {
+            try {
+                await markObjectiveAsDone(identifier, true, t); // actually this line itself does the entire thing, thanks to the objective toolkit, the rest is just state handling for the page to update
+                // toolkification was probably the best idea i've ever had
+                const updatedObjectives = await getObjectives();
+                if (updatedObjectives) {
+                    setObjectives(objectiveArrayToObject(updatedObjectives));
+                }
+            } catch (e) {
+                termLog("Got an error updating: " + e, "error");
             }
-        } catch (e) {
-            termLog("Got an error updating: " + e, "error");
-        }
-    };
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        []
+    );
 
     // To prevent code from being super nested / unreadable, I've moved some things here, so they act as separate components
     /**
      * Generates an "All objectives done!" view. Use it inside of the `<Section kind="objectives">`, for when there are objectives for today but are all done.
      *
      * @param {TFunction} t Pass the translate function, please.
-     * @returns {*}
+     * @returns {ReactElement}
      */
-    function AllObjectivesDone(t: TFunction) {
+    function AllObjectivesDone(t: TFunction): ReactElement {
         const message: string = generateRandomMessage("all_done", t);
 
         return (
