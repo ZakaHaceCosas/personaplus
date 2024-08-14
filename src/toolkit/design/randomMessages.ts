@@ -1,6 +1,6 @@
 import { TFunction } from "i18next";
 
-export default function generateRandomMessage(target: "all_done", t: TFunction) {
+export default function generateRandomMessage(target: "all_done" | "session_done" | "reminders", t: TFunction) {
     // choose a random message for certain parts of the UI
     // so the app feels more friendly :D
     const allMessages: string[] = t(`cool_messages.${target}`, {

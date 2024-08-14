@@ -19,6 +19,7 @@ import GapView from "@/src/GapView";
 import { saveDailyObjectivePerformance } from "@/src/toolkit/objectives";
 import { getCurrentDate } from "@/src/toolkit/today";
 import Button from "@/src/Buttons";
+import generateRandomMessage from "@/src/toolkit/design/randomMessages";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -57,8 +58,6 @@ export default function Results() {
 
     const [userData, setUserData] = useState<UserHealthData | null>(null);
     const [result, setResult] = useState<{ result: number } | null>(null);
-
-    const [randomMessage, setRandomMessage] = useState<string | null>(null);
 
     // Get translation function for multilingual support
     const { t } = useTranslation();
@@ -203,20 +202,6 @@ export default function Results() {
         objectivePushups_Pushups,
     ]);
 
-    useEffect(() => {
-        // Set a random message for the "session done" scenario
-        const allDoneMessages: string[] = t("cool_messages.session_done", {
-            returnObjects: true,
-        });
-
-        // Pick a random message to celebrate the end of the session
-        const randomMessageForAllDone =
-            allDoneMessages[Math.floor(Math.random() * allDoneMessages.length)];
-
-        setRandomMessage(randomMessageForAllDone);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     // Speed options for running exercises
     const speedOptions = [
         [t("Brisk Walk"), t("1.6 - 3.2 km/h")],
@@ -267,7 +252,9 @@ export default function Results() {
                     <BetterTextHeader>
                         {t("globals.session_done")}
                     </BetterTextHeader>
-                    <BetterTextSubheader>{randomMessage}</BetterTextSubheader>
+                    <BetterTextSubheader>
+                        {generateRandomMessage("session_done", t)}
+                    </BetterTextSubheader>
                     <GapView height={10} />
                     {result?.result && (
                         <Section kind="HowYouAreDoing">
