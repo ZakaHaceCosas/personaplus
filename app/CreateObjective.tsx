@@ -257,27 +257,38 @@ export default function CreateObjective() {
 
     const areAllConditionsMet = (exercise: string) => {
         if (exercise.toLowerCase() === "push up") {
-            return duration > 0 && amount > 0 && (hands === 1 || hands === 2);
+            return (
+                duration > 0 &&
+                amount > 0 &&
+                (hands === 1 || hands === 2) &&
+                duration > 0 &&
+                !days.every(day => !day)
+            );
         }
         if (exercise.toLowerCase() === "lifting") {
             return (
                 (hands === 1 || hands === 2) &&
                 liftWeight > 0 &&
                 barWeight > 0 &&
-                lifts > 0
+                lifts > 0 &&
+                duration > 0 &&
+                !days.every(day => !day)
             );
         }
         if (exercise.toLowerCase() === "running") {
-            return speed >= 0 && speed <= 11;
+            return (
+                speed >= 0 &&
+                speed <= 11 &&
+                duration > 0 &&
+                !days.every(day => !day)
+            );
         }
         return true;
     };
 
-    const allConditionsAreMet =
-        exercise &&
-        duration > 0 &&
-        !days.every(day => !day) &&
-        areAllConditionsMet(exercise);
+    const allConditionsAreMet: boolean = exercise
+        ? areAllConditionsMet(exercise)
+        : false;
 
     return (
         <View style={styles.containerview}>
