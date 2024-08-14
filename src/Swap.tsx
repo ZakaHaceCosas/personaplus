@@ -148,7 +148,7 @@ export default function Swap({
     };
 
     const orderString: "row" | "column" | "row-reverse" | "column-reverse" =
-        order === "horizontal" ? "column" : "row";
+        order === "horizontal" ? "row" : "column";
 
     return (
         <View
