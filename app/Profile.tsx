@@ -239,7 +239,6 @@ export default function Profile() {
                 "username",
                 "hasLaunched",
                 "sleep",
-                "pushupTime",
                 "gender",
                 "focuspoint",
                 "activness",
