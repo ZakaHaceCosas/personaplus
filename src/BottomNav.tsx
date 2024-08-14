@@ -1,7 +1,7 @@
 // src/BottomNav.tsx
 // Navegación "de abajo" (está arriba, pero bueno)
 
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Link } from "expo-router";
 import BetterText from "@/src/BetterText";
@@ -25,13 +25,48 @@ const styles = StyleSheet.create({
     },
 });
 
+const TouchMe = ({
+    href,
+    iconName,
+    label,
+    isSelected,
+}: {
+    href: string;
+    iconName: string;
+    label: string;
+    isSelected: boolean;
+}) => (
+    <Link href={href}>
+        <View style={styles.touchme}>
+            <Ionicons
+                // @ts-expect-error: This uses a type that's just "icon-name" | "icon-name-2" etc... and it's not exported, so I have no way to specify the correct type for this. Hence, gives a type error.
+                name={iconName}
+                size={25}
+                color={
+                    isSelected
+                        ? colors.MAIN.FOOTER.FOOTERSEL
+                        : colors.MAIN.FOOTER.FOOTERUNS
+                }
+            />
+            <GapView height={5} />
+            <BetterText
+                textAlign="normal"
+                fontWeight="Bold"
+                fontSize={12}
+                textColor={
+                    isSelected
+                        ? colors.MAIN.FOOTER.FOOTERSEL
+                        : colors.MAIN.FOOTER.FOOTERUNS
+                }
+            >
+                {label}
+            </BetterText>
+        </View>
+    </Link>
+);
+
 // We create the function
 export default function BottomNav({ currentLocation }: SectionProps) {
-    const [currentPage, setCurrentPage] = useState<string>(currentLocation);
-    // Define la función para manejar el cambio de página
-    const handlePageChange = (newPage: string) => {
-        setCurrentPage(newPage);
-    };
     const { t } = useTranslation();
 
     return (
@@ -51,99 +86,24 @@ export default function BottomNav({ currentLocation }: SectionProps) {
                 bottom: 0,
             }}
         >
-            <Link href="/" onPress={() => handlePageChange("/")}>
-                <View style={styles.touchme}>
-                    <View>
-                        <Ionicons
-                            name="home"
-                            size={25}
-                            color={
-                                currentPage === "/"
-                                    ? colors.MAIN.FOOTER.FOOTERSEL
-                                    : colors.MAIN.FOOTER.FOOTERUNS
-                            }
-                        />
-                    </View>
-                    <GapView height={5} />
-                    <View>
-                        <BetterText
-                            textAlign="normal"
-                            fontWeight="Bold"
-                            fontSize={12}
-                            textColor={
-                                currentPage === "/"
-                                    ? colors.MAIN.FOOTER.FOOTERSEL
-                                    : colors.MAIN.FOOTER.FOOTERUNS
-                            }
-                        >
-                            {t("navbar.home")}
-                        </BetterText>
-                    </View>
-                </View>
-            </Link>
-            <Link
+            <TouchMe
+                href="/"
+                iconName="home"
+                label={t("navbar.home")}
+                isSelected={currentLocation === "/"}
+            />
+            <TouchMe
                 href="/Dashboard"
-                onPress={() => handlePageChange("/Dashboard")}
-            >
-                <View style={styles.touchme}>
-                    <View>
-                        <Ionicons
-                            name="dashboard"
-                            size={25}
-                            color={
-                                currentPage === "/Dashboard"
-                                    ? colors.MAIN.FOOTER.FOOTERSEL
-                                    : colors.MAIN.FOOTER.FOOTERUNS
-                            }
-                        />
-                    </View>
-                    <GapView height={5} />
-                    <View>
-                        <BetterText
-                            textAlign="normal"
-                            fontWeight="Bold"
-                            fontSize={12}
-                            textColor={
-                                currentPage === "/Dashboard"
-                                    ? colors.MAIN.FOOTER.FOOTERSEL
-                                    : colors.MAIN.FOOTER.FOOTERUNS
-                            }
-                        >
-                            {t("navbar.dashboard")}
-                        </BetterText>
-                    </View>
-                </View>
-            </Link>
-            <Link href="/Profile" onPress={() => handlePageChange("/Profile")}>
-                <View style={styles.touchme}>
-                    <View>
-                        <Ionicons
-                            name="person"
-                            size={25}
-                            color={
-                                currentPage === "/Profile"
-                                    ? colors.MAIN.FOOTER.FOOTERSEL
-                                    : colors.MAIN.FOOTER.FOOTERUNS
-                            }
-                        />
-                    </View>
-                    <GapView height={5} />
-                    <View>
-                        <BetterText
-                            textAlign="normal"
-                            fontWeight="Bold"
-                            fontSize={12}
-                            textColor={
-                                currentPage === "/Profile"
-                                    ? colors.MAIN.FOOTER.FOOTERSEL
-                                    : colors.MAIN.FOOTER.FOOTERUNS
-                            }
-                        >
-                            {t("navbar.profile")}
-                        </BetterText>
-                    </View>
-                </View>
-            </Link>
+                iconName="dashboard"
+                label={t("navbar.dashboard")}
+                isSelected={currentLocation === "/Dashboard"}
+            />
+            <TouchMe
+                href="/Profile"
+                iconName="person"
+                label={t("navbar.profile")}
+                isSelected={currentLocation === "/Profile"}
+            />
         </View>
     );
 }
