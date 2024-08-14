@@ -18,6 +18,7 @@ import {
 import { termLog } from '@/src/toolkit/debug/console';
 import * as Constants from "expo-constants";
 import { TFunction } from 'i18next';
+import generateRandomMessage from '@/src/toolkit/design/randomMessages';
 
 setNotificationHandler({
     handleNotification: async () => ({
@@ -103,19 +104,15 @@ const scheduledNotifications: NotificationIdentifier[] = [];
  *
  * @async
  * @param t Pass here the translate function
- * @returns {boolean} True if everything went alright, false if otherwise. Should log the try-catch error to termLog.
+ * @returns {boolean | undefined} True if everything went alright, false if otherwise. Should log the try-catch error to termLog.
  */
-export const scheduleRandomNotifications = async (t: TFunction) => {
+export const scheduleRandomNotifications = async (t: TFunction): Promise<boolean | undefined> => {
     try {
-        const notificationMessages: string[] = t("cool_messages.reminders", {
-            returnObjects: true,
-        });
-
         const randomDelay = () => (Math.floor(Math.random() * 1800) + 1800) * 1000;
         // a random interval of 30-60 minutes, so user gets many reminders, but not too annoying
 
         for (let i = 0; i < 2; i++) {
-            const randomMessage: string = notificationMessages[Math.floor(Math.random() * notificationMessages.length)];
+            const randomMessage: string = generateRandomMessage("reminders", t);
             const trigger = {
                 hour: Math.floor(Math.random() * 12) + 11,
                 minute: Math.floor(Math.random() * 60),
