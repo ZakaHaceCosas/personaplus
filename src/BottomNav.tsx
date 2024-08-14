@@ -8,7 +8,7 @@ import BetterText from "@/src/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/src/GapView";
 import { useTranslation } from "react-i18next";
-import colors from "./toolkit/design/colors";
+import colors from "@/src/toolkit/design/colors";
 
 // TypeScript, supongo
 interface SectionProps {

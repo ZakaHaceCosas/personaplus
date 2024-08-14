@@ -2,12 +2,12 @@
 // Página de carga
 
 import React, { ReactElement } from "react";
-import BottomNav from "./BottomNav";
+import BottomNav from "@/src/BottomNav";
 import { Dimensions, ScrollView, View } from "react-native";
-import BetterText from "./BetterText";
+import BetterText from "@/src/BetterText";
 import { useTranslation } from "react-i18next";
-import colors from "./toolkit/design/colors";
-import GapView from "./GapView";
+import colors from "@/src/toolkit/design/colors";
+import GapView from "@/src/GapView";
 
 // TypeScript, supongo
 /**

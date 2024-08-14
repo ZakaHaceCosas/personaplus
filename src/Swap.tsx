@@ -4,7 +4,7 @@
 import React, { useState, useEffect, ReactElement } from "react";
 import { StyleSheet, View, Pressable } from "react-native";
 import BetterText from "@/src/BetterText";
-import colors from "./toolkit/design/colors";
+import colors from "@/src/toolkit/design/colors";
 
 // TypeScript, supongo
 /**

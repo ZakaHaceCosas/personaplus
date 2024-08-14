@@ -5,7 +5,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import BetterText from "@/src/BetterText";
 import { useTranslation } from "react-i18next";
-import colors from "./toolkit/design/colors";
+import colors from "@/src/toolkit/design/colors";
 
 // We define the styles
 const styles = StyleSheet.create({

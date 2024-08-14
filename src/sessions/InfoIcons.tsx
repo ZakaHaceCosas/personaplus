@@ -3,11 +3,11 @@
 
 import React from "react";
 import { View } from "react-native";
-import GapView from "../GapView";
-import { Objective } from "../types/Objective";
+import GapView from "@/src/GapView";
+import { Objective } from "@/src/types/Objective";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import BetterText from "../BetterText";
-import colors from "../toolkit/design/colors";
+import BetterText from "@/src/BetterText";
+import colors from "@/src/toolkit/design/colors";
 import { TFunction } from "i18next";
 
 // TypeScript, supongo...
