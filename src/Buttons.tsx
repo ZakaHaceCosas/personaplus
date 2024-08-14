@@ -85,8 +85,8 @@ export default function Button({
     let borderColor: string; // Color del borde
     let backgroundColor: string; // Color del fondo
     let textColor: string; // Color del texto
-    let buttonWidth: string | number; // Tamaño horizontal del botón
-    let buttonHeight: string | number; // Tamaño vertical del botón
+    let buttonWidth: DimensionValue; // Tamaño horizontal del botón
+    let buttonHeight: DimensionValue; // Tamaño vertical del botón
     let buttonMinorPadding: number; // Relleno / espaciado interior vertical (pequeño) del botón
     let buttonMajorPadding: number; // Relleno / espaciado interior horizontal (grande) del botón
     let flexValue: 0 | 1; // Valor de flex, puede ser 0 o 1.
@@ -144,8 +144,6 @@ export default function Button({
             buttonHeight = "100%";
             break;
         case "default":
-            buttonHeight = 55;
-            break;
         default:
             buttonHeight = 55;
             break;
@@ -155,7 +153,7 @@ export default function Button({
         case "normal":
             buttonMinorPadding = 0;
             buttonMajorPadding = 0;
-            buttonHeight = 50;
+            buttonHeight = 55;
             flexValue = 1;
             break;
         case "box":
@@ -168,7 +166,7 @@ export default function Button({
         case "fixed":
             buttonMinorPadding = 0;
             buttonMajorPadding = 0;
-            buttonHeight = 50;
+            buttonHeight = 55;
             flexValue = 0;
             break;
         default:
@@ -187,16 +185,16 @@ export default function Button({
             onPressIn={() => setOpacityVal(0.8)}
             onPressOut={() => setOpacityVal(1)}
             style={{
-                paddingTop: buttonMinorPadding as DimensionValue,
-                paddingBottom: buttonMinorPadding as DimensionValue,
-                paddingLeft: buttonMajorPadding as DimensionValue,
-                paddingRight: buttonMajorPadding as DimensionValue,
+                paddingTop: buttonMinorPadding,
+                paddingBottom: buttonMinorPadding,
+                paddingLeft: buttonMajorPadding,
+                paddingRight: buttonMajorPadding,
                 borderRadius: 10,
                 borderColor: borderColor,
                 backgroundColor: backgroundColor,
                 borderWidth: 4,
-                width: buttonWidth as DimensionValue,
-                height: buttonHeight as DimensionValue,
+                width: buttonWidth,
+                height: buttonHeight,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -204,17 +202,18 @@ export default function Button({
                 opacity: opacityVal,
             }}
         >
-            {buttonText && (
-                <BetterText
-                    fontWeight="Medium"
-                    fontSize={14}
-                    textColor={textColor}
-                    textAlign="center"
-                >
-                    {String(buttonText)}
-                </BetterText>
-            )}
-            {children && children}
+            {children
+                ? children
+                : buttonText && (
+                      <BetterText
+                          fontWeight="Medium"
+                          fontSize={14}
+                          textColor={textColor}
+                          textAlign="center"
+                      >
+                          {String(buttonText)}
+                      </BetterText>
+                  )}
         </Pressable>
     );
 }
