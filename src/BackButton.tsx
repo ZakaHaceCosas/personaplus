@@ -1,8 +1,8 @@
 import React, { ReactElement } from "react";
-import BetterText from "./BetterText";
+import BetterText from "@/src/BetterText";
 import { useTranslation } from "react-i18next";
 import { router } from "expo-router";
-import FontSizes from "./toolkit/design/fontSizes";
+import FontSizes from "@/src/toolkit/design/fontSizes";
 
 type TranslateFunction = ReturnType<typeof useTranslation>["t"];
 

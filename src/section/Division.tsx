@@ -5,7 +5,7 @@ import React, { ReactElement, ReactNode } from "react";
 import { View } from "react-native";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
-import colors from "../toolkit/design/colors";
+import colors from "@/src/toolkit/design/colors";
 
 // TypeScript, supongo
 /**

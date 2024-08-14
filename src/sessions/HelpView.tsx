@@ -1,11 +1,11 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import BetterText from "../BetterText";
-import GapView from "../GapView";
+import BetterText from "@/src/BetterText";
+import GapView from "@/src/GapView";
 import { TFunction } from "i18next";
-import Button from "../Buttons";
-import colors from "../toolkit/design/colors";
-import { Objective } from "../types/Objective";
+import Button from "@/src/Buttons";
+import colors from "@/src/toolkit/design/colors";
+import { Objective } from "@/src/types/Objective";
 
 const styles = StyleSheet.create({
     helpcontainer: {

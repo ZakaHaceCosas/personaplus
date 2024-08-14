@@ -1,7 +1,7 @@
 /*
 CALCULATE BODY FAT PERCENTAGE
 */
-import { OpenHealthResponse } from "../types/OpenHealthResponse";
+import { OpenHealthResponse } from "@/core/types/OpenHealthResponse";
 import calculateBodyMassIndex from "./bodymassindex";
 
 // LAST UPDATE TO THIS FUNCTION, ITS DATA, ITS CALCULATIONS, OR ANYTHING THAT DOES AFFECT THE RESULT

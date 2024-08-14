@@ -1,7 +1,7 @@
 // src/types/Objective.ts
 // Objective Type
 
-import { TodaysDay } from "../toolkit/today";
+import { TodaysDay } from "@/src/toolkit/today";
 
 /**
  * A type with all the exercises that are currently supported by Active Objectives.
