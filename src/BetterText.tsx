@@ -5,6 +5,7 @@ import React, { ReactNode, ReactElement } from "react";
 import { TextStyle, Text } from "react-native";
 import colors from "@/src/toolkit/design/colors";
 import FontSizes from "@/src/toolkit/design/fontSizes";
+import { FontWeights } from "@/src/types/FontWeights";
 
 // TypeScript, supongo
 /**
@@ -42,25 +43,7 @@ interface BetterTextProps {
      *         | "Black"
      *         | "BlackItalic")}
      */
-    fontWeight:
-        | "Light"
-        | "LightItalic"
-        | "ExtraLight"
-        | "ExtraLightItalic"
-        | "Thin"
-        | "ThinItalic"
-        | "Regular"
-        | "Italic"
-        | "Medium"
-        | "MediumItalic"
-        | "SemiBold"
-        | "SemiBoldItalic"
-        | "Bold"
-        | "BoldItalic"
-        | "ExtraBold"
-        | "ExtraBoldItalic"
-        | "Black"
-        | "BlackItalic"; // Intensidad de la tipografía
+    fontWeight: FontWeights; // Intensidad de la tipografía
     /**
      * The color of the text, as a HEX string (e.g. colors.BASIC.WHITE, "#C8C8C8"). Defaults to white.
      *
@@ -119,11 +102,11 @@ export default function BetterText({
     fontSize,
     fontWeight,
     children,
-    textColor,
-    textAlign,
+    textColor = colors.BASIC.WHITE,
+    textAlign = "normal",
     onTap,
-    isSerif,
-    url,
+    isSerif = false,
+    url = false,
 }: BetterTextProps): ReactElement {
     const fontprefix: string = isSerif ? "NotoSerif-" : "BeVietnamPro-";
     const font: string = `${fontprefix}${fontWeight}`;
