@@ -5,18 +5,18 @@
 
 // PHISICAL HEALTH
 
-import * as calculateBodyMassIndex from './physicalHealth/bodymassindex';
-import * as calculateBodyFatPercentage from './physicalHealth/bodyfatpercentage';
-import * as calculateIdealBodyWeight from './physicalHealth/idealbodyweight';
-import * as calculateBasalMetabolicRate from './physicalHealth/basalMetabolicRate';
-import * as getMetabolicEquivalentOfTask from './physicalHealth/getMetabolicEquivalentOfTask';
-import * as oneRepetitionMax from './physicalHealth/oneRepMax';
+import * as calculateBodyMassIndex from '@/core/physicalHealth/bodymassindex';
+import * as calculateBodyFatPercentage from '@/core/physicalHealth/bodyfatpercentage';
+import * as calculateIdealBodyWeight from '@/core/physicalHealth/idealbodyweight';
+import * as calculateBasalMetabolicRate from '@/core/physicalHealth/basalMetabolicRate';
+import * as getMetabolicEquivalentOfTask from '@/core/physicalHealth/getMetabolicEquivalentOfTask';
+import * as oneRepetitionMax from '@/core/physicalHealth/oneRepMax';
 
 // PERFORMANCE
 
-import * as calculateRunningOrWalkingPerformance from './performance/runningPerformance';
-import * as calculateLiftingPerformance from './performance/liftingPerformance';
-import * as calculatePushingUpPerformance from "./performance/pushingupPerformance";
+import * as calculateRunningOrWalkingPerformance from '@/core/performance/runningPerformance';
+import * as calculateLiftingPerformance from '@/core/performance/liftingPerformance';
+import * as calculatePushingUpPerformance from "@/core/performance/pushingupPerformance";
 
 // DEFINITION
 

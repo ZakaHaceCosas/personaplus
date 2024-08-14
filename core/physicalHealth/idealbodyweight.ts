@@ -3,7 +3,7 @@ CALCULATE IDEAL BODY WEIGHT
 */
 
 import { OpenHealthResponse } from "@/core/types/OpenHealthResponse";
-import calculateBodyMassIndex from "./bodymassindex";
+import calculateBodyMassIndex from "@/core/physicalHealth/bodymassindex";
 
 // LAST UPDATE TO THIS FUNCTION, ITS DATA, ITS CALCULATIONS, OR ANYTHING THAT DOES AFFECT THE RESULT
 // Changes that do not affect the result, like just bug-fixes, performance improvments, code-legibility improvments, or that kind of stuff, do not need to bump the date.
