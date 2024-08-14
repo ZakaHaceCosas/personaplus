@@ -187,17 +187,29 @@ export default function WelcomePage() {
         setDefaultLanguage();
     }, []);
 
+    const isValidFormData = () => {
+        if (!formData.username) return false;
+        if (
+            isNaN(parseFloat(formData.height)) ||
+            isNaN(parseFloat(formData.weight))
+        )
+            return false;
+        if (!genderValue) return false;
+        if (!focuspointValue) return false;
+        return true;
+    };
+
     // submit the data and create profile
     const submit = async () => {
         if (
-            genderValue &&
-            focuspointValue &&
-            sleep &&
-            formData.username &&
-            formData.height &&
-            formData.weight &&
-            formData.height &&
-            language
+            isValidFormData() &&
+            validateBasicData(
+                genderValue,
+                formData.age,
+                formData.weight,
+                formData.height,
+                formData.username
+            )
         ) {
             try {
                 // a separate item for each thing? yes
@@ -208,21 +220,20 @@ export default function WelcomePage() {
                 await AsyncStorage.setItem("height", formData.height);
                 await AsyncStorage.setItem("weight", formData.weight);
                 await AsyncStorage.setItem("age", formData.age);
-                await AsyncStorage.setItem("gender", genderValue);
-                await AsyncStorage.setItem("focuspoint", focuspointValue);
+                await AsyncStorage.setItem("gender", genderValue!);
+                await AsyncStorage.setItem("focuspoint", focuspointValue!);
                 await AsyncStorage.setItem("sleep", sleep);
                 await AsyncStorage.setItem("activness", howActiveTheUserIs);
                 await AsyncStorage.setItem("hasLaunched", "true");
                 await AsyncStorage.setItem("objectives", "{}");
                 await AsyncStorage.setItem("language", language);
-                await AsyncStorage.setItem("hasLaunched", "true");
                 router.replace("/");
             } catch (e) {
                 termLog("Error creating profile: " + e, "error");
             }
         } else {
             termLog(
-                "Error saving user data, some data is missing!",
+                "Error saving user data, some data is missing or not valid!",
                 "warn",
                 true
             );
