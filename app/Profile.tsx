@@ -13,7 +13,7 @@ import {
 import { router, usePathname } from "expo-router";
 import BetterText, {
     BetterTextHeader,
-    BetterTextSubheader,
+    BetterTextSubHeader,
 } from "@/src/BetterText";
 import Footer from "@/src/Footer";
 import Section from "@/src/section/Section";
@@ -198,10 +198,10 @@ export default function Profile() {
                 <BetterTextHeader>
                     {t("page_profile.header.label")}
                 </BetterTextHeader>
-                <BetterTextSubheader>
+                <BetterTextSubHeader>
                     {t("page_profile.header.sublabel")}
                     {username}!
-                </BetterTextSubheader>
+                </BetterTextSubHeader>
                 <GapView height={20} />
                 <Section kind="Profile">
                     <Division header={username}>

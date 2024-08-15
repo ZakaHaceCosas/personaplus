@@ -13,7 +13,7 @@ import {
 import { router } from "expo-router";
 import BetterText, {
     BetterTextHeader,
-    BetterTextSubheader,
+    BetterTextSubHeader,
 } from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import Swap from "@/src/Swap";
@@ -222,9 +222,9 @@ export default function UpdateProfile() {
                 <BetterTextHeader>
                     {t("subpage_edit_profile.title")}
                 </BetterTextHeader>
-                <BetterTextSubheader>
+                <BetterTextSubHeader>
                     {t("subpage_edit_profile.subtitle")}
-                </BetterTextSubheader>
+                </BetterTextSubHeader>
                 <GapView height={15} />
                 <BetterText
                     textAlign="normal"
