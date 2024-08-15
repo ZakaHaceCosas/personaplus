@@ -322,18 +322,7 @@ export default function Home() {
                         })
                     );
 
-                    /* const filteredIdentifiers = identifiers.filter(
-                (id): id is number => id !== undefined
-            ); */
-
                     termLog("Identifiers:" + identifiers, "log");
-                    /* termLog("Filtered Identifiers:" + filteredIdentifiers, "log"); */
-
-                    /* const validIdentifiers: number[] = identifiers.filter(
-                    (id): id is number => id !== undefined
-                );
-
-                setDueTodayObjectiveList(validIdentifiers); */
                     const filteredIdentifiers = identifiers.filter(
                         (id): id is number => id !== undefined
                     );
@@ -404,7 +393,7 @@ export default function Home() {
         };
 
         // if you've done it all, unsubscribe from reminder notifications
-        // TODO: it doesnt work
+        // WATCHOUT: didnt work, now its changed. notifications arent immediate so testing is required
         manageNotifications();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [objectives]);
@@ -434,6 +423,8 @@ export default function Home() {
             }
 
             return (
+                // FIXME: doesnt work, due today objectives aren't shown even tho there are.
+                // NOTE: somehow reactnative's fast-refresh (like edit & save your code) actually makes them appear when testing with expo dev build / expo go, so...
                 <>
                     {Object.values(objectives)
                         .filter(obj =>
