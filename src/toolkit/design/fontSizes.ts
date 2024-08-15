@@ -33,6 +33,12 @@ interface FontSizesProps {
      */
     LARGE: number;
     /**
+     * A font size used for larger texts, like higher headings.
+     *
+     * @type {number}
+     */
+    LARGER: number;
+    /**
      * A font size used for the largest heading of a page.
      *
      * @type {number}
@@ -50,6 +56,7 @@ const FontSizes: FontSizesProps = {
     MEDIUM: 13,
     REGULAR: 15,
     LARGE: 20,
+    LARGER: 25,
     EXTRA_LARGE: 30,
 };
 

@@ -173,7 +173,7 @@ export function BetterTextHeader({
  * @param {ReactNode} props.children - The text you want to display. You can also pass other `<BetterText>` components to act as "spans" with separate styles, similar to `<span>` in HTML5.
  * @returns {ReactElement} The rendered subheader component.
  */
-export function BetterTextSubheader({
+export function BetterTextSubHeader({
     children,
 }: {
     children: ReactNode;
@@ -183,6 +183,55 @@ export function BetterTextSubheader({
             textAlign="normal"
             fontWeight="Medium"
             fontSize={FontSizes.LARGE}
+        >
+            {children}
+        </BetterText>
+    );
+}
+
+/**
+ * A pre-made **extra** (larger than `SubHeader` but smaller than `Header`), based on `<BetterText>` and with default styles for design consistency.
+ *
+ * @export
+ * @param {{ children: ReactNode }} props - The props object.
+ * @param {ReactNode} props.children - The text you want to display. You can also pass other `<BetterText>` components to act as "spans" with separate styles, similar to `<span>` in HTML5.
+ * @returns {ReactElement} The rendered `ExtraHeader` component.
+ */
+export function BetterTextExtraHeader({
+    children,
+}: {
+    children: ReactNode;
+}): ReactElement {
+    return (
+        <BetterText
+            textAlign="normal"
+            fontWeight="Medium"
+            fontSize={FontSizes.LARGER}
+        >
+            {children}
+        </BetterText>
+    );
+}
+
+/**
+ * A pre-made **small text** (or **small header**), based on `<BetterText>` and with default styles for design consistency.
+ *
+ * @export
+ * @param {{ children: ReactNode }} props - The props object.
+ * @param {ReactNode} props.children - The text you want to display. You can also pass other `<BetterText>` components to act as "spans" with separate styles, similar to `<span>` in HTML5.
+ * @returns {ReactElement} The rendered subheader component.
+ */
+export function BetterTextSmallText({
+    children,
+}: {
+    children: ReactNode;
+}): ReactElement {
+    return (
+        <BetterText
+            textAlign="normal"
+            fontWeight="Regular"
+            fontSize={12}
+            textColor={colors.LBLS.SDD}
         >
             {children}
         </BetterText>
