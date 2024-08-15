@@ -35,6 +35,7 @@ import { useTranslation } from "react-i18next";
 import {
     scheduleRandomNotifications,
     cancelScheduledNotifications,
+    areNotificationsScheduledForToday,
 } from "@/src/hooks/useNotification";
 import { adjustedToday } from "@/src/toolkit/today";
 import * as TaskManager from "expo-task-manager";
@@ -205,18 +206,13 @@ export default function Home() {
 
     function renderObjectiveDivision(obj: Objective): ReactElement | null {
         try {
-            const isObjectiveDueToday =
-                obj &&
-                obj.days[adjustedToday] !== null &&
-                obj.days[adjustedToday] !== undefined &&
-                dueTodayObjectiveList.includes(obj.identifier);
-            if (!isObjectiveDueToday) return null;
+            if (!dueTodayObjectiveList.includes(obj.identifier)) return null;
 
             termLog("Rendering Objective Division:" + obj, "log");
             return ObjectiveDivision(obj, t);
         } catch (e) {
             termLog("Error rendering objective division:" + e, "error");
-            throw new Error("Error rendering objective division:" + e);
+            return null;
         }
     }
 
@@ -291,10 +287,10 @@ export default function Home() {
         // Fetches objectives and determines which ones are due today
         const fetchDueTodayObjectives = async () => {
             try {
-                /* if (!objectives || Object.keys(objectives).length === 0) {
+                if (!objectives || Object.keys(objectives).length === 0) {
                     setLoadingObjectives(false);
                     return;
-                } */ // Avoid running if not needed
+                } // Avoid running if not needed
 
                 /* const identifiers = await Promise.all(
                     Object.keys(objectives).map(async key => {
@@ -385,14 +381,23 @@ export default function Home() {
     }, []);
 
     useEffect(() => {
-        const unsubscribe = async () => {
+        const manageNotifications = async () => {
             if (objectives) {
                 const check = await checkForTodaysObjectives(objectives);
                 if (Platform.OS === "android") {
-                    if (check === false) {
+                    if (!check) {
                         await cancelScheduledNotifications();
-                    } else if (check === true) {
-                        await scheduleRandomNotifications(t);
+                    } else {
+                        const check2 =
+                            await areNotificationsScheduledForToday();
+                        if (!check2) {
+                            await scheduleRandomNotifications(t);
+                        } else {
+                            termLog(
+                                "Notifications seem to be up and running",
+                                "log"
+                            );
+                        }
                     }
                 }
             }
@@ -400,9 +405,9 @@ export default function Home() {
 
         // if you've done it all, unsubscribe from reminder notifications
         // TODO: it doesnt work
-        unsubscribe();
+        manageNotifications();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [objectives, dueTodayObjectiveList]);
+    }, [objectives]);
 
     useEffect(() => {
         if (!loading && !loadingObjectives) {
@@ -424,11 +429,19 @@ export default function Home() {
                 );
             }
 
-            return dueTodayObjectiveList.length > 0
-                ? Object.keys(objectives).map(key =>
-                      renderObjectiveDivision(objectives[key])
-                  )
-                : AllObjectivesDone(t);
+            if (!dueTodayObjectiveList || dueTodayObjectiveList.length === 0) {
+                return AllObjectivesDone(t);
+            }
+
+            return (
+                <>
+                    {Object.values(objectives)
+                        .filter(obj =>
+                            dueTodayObjectiveList.includes(obj.identifier)
+                        )
+                        .map(obj => renderObjectiveDivision(obj))}
+                </>
+            );
         } catch (e) {
             termLog("Error rendering objectives section: " + e, "error");
             return null;

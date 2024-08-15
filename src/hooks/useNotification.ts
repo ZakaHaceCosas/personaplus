@@ -13,7 +13,8 @@ import {
     getExpoPushTokenAsync,
     scheduleNotificationAsync,
     cancelScheduledNotificationAsync,
-    ExpoPushToken
+    ExpoPushToken,
+    getAllScheduledNotificationsAsync
 } from "expo-notifications";
 import { termLog } from '@/src/toolkit/debug/console';
 import * as Constants from "expo-constants";
@@ -79,7 +80,7 @@ async function registerForPushNotificationsAsync(): Promise<ExpoPushToken | unde
  *
  * @returns {string} The Expo push token
  */
-const useNotification = (): string => {
+export default function useNotification(): string {
     const [expoPushToken, setExpoPushToken] = useState('');
 
     useEffect(() => {
@@ -106,7 +107,7 @@ const scheduledNotifications: NotificationIdentifier[] = [];
  * @param t Pass here the translate function
  * @returns {boolean | undefined} True if everything went alright, false if otherwise. Should log the try-catch error to termLog.
  */
-export const scheduleRandomNotifications = async (t: TFunction): Promise<boolean | undefined> => {
+export async function scheduleRandomNotifications(t: TFunction): Promise<boolean | undefined> {
     try {
         const randomDelay = () => (Math.floor(Math.random() * 1800) + 1800) * 1000;
         // a random interval of 30-60 minutes, so user gets many reminders, but not too annoying
@@ -147,7 +148,7 @@ export const scheduleRandomNotifications = async (t: TFunction): Promise<boolean
  * @async
  * @returns {boolean} True if everything went alright, false if otherwise. Should log the try-catch error to termLog.
  */
-export const cancelScheduledNotifications = async (): Promise<boolean> => {
+export async function cancelScheduledNotifications(): Promise<boolean> {
     try {
         for (const { identifier } of scheduledNotifications) {
             await cancelScheduledNotificationAsync(identifier);
@@ -163,4 +164,30 @@ export const cancelScheduledNotifications = async (): Promise<boolean> => {
     }
 };
 
-export default useNotification
+/**
+ * Checks if reminders are already set up for today. **Async function.**
+ *
+ * @export
+ * @async
+ * @returns {Promise<boolean>} `true` if there are notifications already scheduled for today, `false` if otherwise.
+ */
+export async function areNotificationsScheduledForToday(): Promise<boolean> {
+    const notifications = await getAllScheduledNotificationsAsync(); // get notifications
+
+    const today = new Date(); // today
+    today.setHours(0, 0, 0, 0);
+
+    const tomorrow = new Date(today); // tomorrow
+    tomorrow.setDate(today.getDate() + 1);
+
+    const hasNotificationForToday = notifications.some(notification => {
+        const trigger = notification.trigger; // gets da trigger of each notification
+        if (trigger && 'date' in trigger) { // seeks for the date param
+            const notificationDate = new Date(trigger.date as string); // converts it to actual date
+            return notificationDate >= today && notificationDate < tomorrow; // compares, and returns
+        }
+        return false; // no date? then just false ig
+    });
+
+    return hasNotificationForToday; // return
+}
