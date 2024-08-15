@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import BetterText, {
     BetterTextHeader,
-    BetterTextSubheader,
+    BetterTextSubHeader,
 } from "@/src/BetterText";
 import BottomNav from "@/src/BottomNav";
 import Section from "@/src/section/Section";
@@ -187,9 +187,9 @@ export default function Dashboard() {
                 <BetterTextHeader>
                     {t("page_dashboard.header.label")}
                 </BetterTextHeader>
-                <BetterTextSubheader>
+                <BetterTextSubHeader>
                     {t("page_dashboard.header.sublabel")}
-                </BetterTextSubheader>
+                </BetterTextSubHeader>
                 <GapView height={20} />
                 <Section kind="Objectives">
                     {objectives && Object.keys(objectives).length > 0 ? (

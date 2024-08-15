@@ -22,7 +22,7 @@ import {
 import BetterText, {
     BetterTextExtraHeader,
     BetterTextHeader,
-    BetterTextSubheader,
+    BetterTextSubHeader,
 } from "@/src/BetterText";
 import Section from "@/src/section/Section";
 import BottomNav from "@/src/BottomNav";
@@ -454,9 +454,9 @@ export default function Home() {
                 <BetterTextHeader>
                     {t("page_home.header.label")}, {username}!
                 </BetterTextHeader>
-                <BetterTextSubheader>
+                <BetterTextSubHeader>
                     {t("page_home.header.sublabel")}
-                </BetterTextSubheader>
+                </BetterTextSubHeader>
                 <GapView height={20} />
                 <Section kind="Objectives">{renderObjectivesSection()}</Section>
                 <GapView height={20} />

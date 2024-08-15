@@ -7,7 +7,7 @@ import OpenHealth from "@/core/openhealth";
 import { termLog } from "@/src/toolkit/debug/console";
 import BetterText, {
     BetterTextHeader,
-    BetterTextSubheader,
+    BetterTextSubHeader,
 } from "@/src/BetterText";
 import { router, useGlobalSearchParams } from "expo-router";
 import { UserHealthData } from "@/src/toolkit/userData";

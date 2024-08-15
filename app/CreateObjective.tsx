@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { StyleSheet, View, ScrollView, Pressable } from "react-native";
 import BetterText, {
     BetterTextHeader,
-    BetterTextSubheader,
+    BetterTextSubHeader,
 } from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import { Picker as Select } from "@react-native-picker/picker";
@@ -302,9 +302,9 @@ export default function CreateObjective() {
                 <BetterTextHeader>
                     {t("subpage_create_active_objective.header.label")}
                 </BetterTextHeader>
-                <BetterTextSubheader>
+                <BetterTextSubHeader>
                     {t("subpage_create_active_objective.header.sublabel")}
-                </BetterTextSubheader>
+                </BetterTextSubHeader>
                 <GapView height={20} />
                 <View>
                     <BetterText fontSize={20} fontWeight="Regular">
