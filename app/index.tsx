@@ -20,6 +20,7 @@ import {
     startSessionFromObjective,
 } from "@/src/toolkit/objectives";
 import BetterText, {
+    BetterTextExtraHeader,
     BetterTextHeader,
     BetterTextSubheader,
 } from "@/src/BetterText";
@@ -461,14 +462,9 @@ export default function Home() {
                 <GapView height={20} />
                 <Section kind="HowYouAreDoing">
                     <GapView height={20} />
-                    <BetterText
-                        fontWeight="Regular"
-                        textColor={colors.PRIMARIES.GOD.GOD}
-                        fontSize={25}
-                        textAlign="center"
-                    >
+                    <BetterTextExtraHeader>
                         {t("globals.coming_soon")}
-                    </BetterText>
+                    </BetterTextExtraHeader>
                     <View style={{ padding: 20 }}>
                         <BetterText
                             fontWeight="Regular"

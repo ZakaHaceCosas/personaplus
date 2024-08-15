@@ -3,7 +3,10 @@
 
 import React, { ReactElement, ReactNode } from "react";
 import { View } from "react-native";
-import BetterText from "@/src/BetterText";
+import BetterText, {
+    BetterTextExtraHeader,
+    BetterTextSmallText,
+} from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import colors from "@/src/toolkit/design/colors";
 
@@ -119,24 +122,12 @@ export default function Division({
                             </BetterText>
                         )}
                         {preheader && <GapView height={10} />}
-                        <BetterText
-                            textAlign="normal"
-                            fontWeight="Bold"
-                            fontSize={25}
-                            textColor={colors.BASIC.WHITE}
-                        >
-                            {header}
-                        </BetterText>
+                        <BetterTextExtraHeader>{header}</BetterTextExtraHeader>
                         {subheader && <GapView height={10} />}
                         {subheader && (
-                            <BetterText
-                                textAlign="normal"
-                                fontWeight="Regular"
-                                fontSize={12}
-                                textColor={colors.LBLS.SDD}
-                            >
+                            <BetterTextSmallText>
                                 {subheader}
-                            </BetterText>
+                            </BetterTextSmallText>
                         )}
                         {children && <GapView height={10} />}
                         {children && (
