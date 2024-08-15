@@ -2,7 +2,7 @@
 // Notificaciones, para alertar al usuario de cosas que pasan
 
 import React, { ReactElement } from "react";
-import { DimensionValue, View } from "react-native";
+import { View } from "react-native";
 import BetterText from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import colors from "@/src/toolkit/design/colors";
@@ -42,9 +42,9 @@ interface NotificationProps {
     /**
      * CSS (StyleSheet) position.
      *
-     * @type {?string}
+     * @type {?("relative" | "absolute" | "static")}
      */
-    position?: string; // Posicionamiento
+    position?: "relative" | "absolute" | "static"; // Posicionamiento
 }
 
 // We create the function
@@ -102,14 +102,13 @@ export default function Notification({
     // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final
     return (
         <View
-            // @ts-expect-error: "Unnasignable types"
             style={{
                 padding: 15,
                 borderRadius: 10,
                 borderColor: borderColor,
                 backgroundColor: backgroundColor,
                 borderWidth: 4,
-                width: "100%" as DimensionValue,
+                width: "100%",
                 position: position,
                 bottom: position === "absolute" ? 100 : undefined,
                 left: position === "absolute" ? 20 : undefined,

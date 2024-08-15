@@ -3,7 +3,6 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import {
-    DimensionValue,
     StyleSheet,
     TextInput,
     View,
@@ -51,7 +50,7 @@ const styles = StyleSheet.create({
     flexbtns: {
         display: "flex",
         flexDirection: "row",
-        width: "calc(100% - 5px)" as DimensionValue,
+        width: "100%",
     },
 });
 
