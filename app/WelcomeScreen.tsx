@@ -6,7 +6,6 @@ import { router } from "expo-router";
 import {
     StyleSheet,
     Dimensions,
-    DimensionValue,
     ScrollView,
     View,
     TextInput,
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         gap: 10,
-        width: "calc(100% - 5px)" as DimensionValue,
+        width: "100%",
         alignItems: "center",
         justifyContent: "center",
     },
