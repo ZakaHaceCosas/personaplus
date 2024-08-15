@@ -252,9 +252,9 @@ export default function Results() {
                     <BetterTextHeader>
                         {t("globals.session_done")}
                     </BetterTextHeader>
-                    <BetterTextSubheader>
+                    <BetterTextSubHeader>
                         {generateRandomMessage("session_done", t)}
-                    </BetterTextSubheader>
+                    </BetterTextSubHeader>
                     <GapView height={10} />
                     {result?.result && (
                         <Section kind="HowYouAreDoing">
