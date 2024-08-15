@@ -293,33 +293,21 @@ export default function Home() {
                     return;
                 } // Avoid running if not needed
 
-                /* const identifiers = await Promise.all(
-                    Object.keys(objectives).map(async key => {
-                        const objective = objectives[key];
-                        const isDailyStatusChecked =
-                            await checkForAnObjectiveDailyStatus(
-                                objective.identifier
-                            );
-                        if (
-                            !isDailyStatusChecked &&
-                            objective.days[adjustedToday]
-                        ) {
-                            return objective.identifier;
-                        }
-                        return undefined;
-                    })
-                ); */
                 if (objectives) {
                     const identifiers = await Promise.all(
                         Object.keys(objectives).map(async key => {
                             const objective = objectives[key];
-                            const isDueToday =
-                                !(await checkForAnObjectiveDailyStatus(
+                            const isDailyStatusChecked =
+                                await checkForAnObjectiveDailyStatus(
                                     objective.identifier
-                                )) && objective.days[adjustedToday];
-                            return isDueToday
-                                ? objective.identifier
-                                : undefined;
+                                );
+                            if (
+                                !isDailyStatusChecked &&
+                                objective.days[adjustedToday]
+                            ) {
+                                return objective.identifier;
+                            }
+                            return undefined;
                         })
                     );
 
