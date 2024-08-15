@@ -9,7 +9,11 @@ import {
     Linking,
     Dimensions,
 } from "react-native";
-import BetterText, { BetterTextHeader } from "@/src/BetterText";
+import BetterText, {
+    BetterTextHeader,
+    BetterTextLicenseHeader,
+    BetterTextLicenseText,
+} from "@/src/BetterText";
 import GapView from "@/src/GapView";
 import BackButton from "@/src/BackButton";
 import { useTranslation } from "react-i18next";
@@ -94,32 +98,15 @@ export default function License() {
                         Version 3, 29 June 2007
                     </BetterText>
                 </BetterText>
-                <BetterText
-                    fontWeight="Regular"
-                    fontSize={13}
-                    textAlign="normal"
-                    isSerif={true}
-                >
+                <BetterTextLicenseText>
                     {"\n"}Copyright (C) 2007 Free Software Foundation, Inc.{" "}
                     {"https://fsf.org/"}.{"\n"}
                     Everyone is permitted to copy and distribute verbatim copies
                     of this license document, but changing it is not allowed.
-                </BetterText>
+                </BetterTextLicenseText>
                 <GapView height={20} />
-                <BetterText
-                    fontWeight="Bold"
-                    fontSize={13}
-                    textAlign="normal"
-                    isSerif={true}
-                >
-                    Preamble
-                </BetterText>
-                <BetterText
-                    fontWeight="Regular"
-                    fontSize={13}
-                    textAlign="normal"
-                    isSerif={true}
-                >
+                <BetterTextLicenseHeader>Preamble</BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     The GNU General Public License is a free, copyleft license
                     for software and other kinds of works.
                     {"\n\n"}
@@ -190,31 +177,16 @@ export default function License() {
                     {"\n\n"}
                     The precise terms and conditions for copying, distribution
                     and modification follow.
-                </BetterText>
+                </BetterTextLicenseText>
                 <GapView height={20} />
-                <BetterText
-                    fontWeight="Bold"
-                    fontSize={13}
-                    textAlign="normal"
-                    isSerif={true}
-                >
+                <BetterTextLicenseHeader>
                     TERMS AND CONDITIONS
-                </BetterText>
+                </BetterTextLicenseHeader>
                 <GapView height={20} />
-                <BetterText
-                    fontWeight="Bold"
-                    fontSize={13}
-                    textAlign="normal"
-                    isSerif={true}
-                >
+                <BetterTextLicenseHeader>
                     0. Definitions.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     &quot;This License&quot; refers to version 3 of the GNU
                     General Public License.
                     {"\n\n"}
@@ -260,21 +232,11 @@ export default function License() {
                     options, such as a menu, a prominent item in the list meets
                     this criterion.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     1. Source Code.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     The &quot;source code&quot; for a work means the preferred
                     form of the work for making modifications to it.
                     &quot;Object code&quot; means any non-source form of a work.
@@ -320,21 +282,11 @@ export default function License() {
                     The Corresponding Source for a work in source code form is
                     that same work.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     2. Basic Permissions.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     All rights granted under this License are granted for the
                     term of copyright on the Program, and are irrevocable
                     provided the stated conditions are met. This License
@@ -362,22 +314,12 @@ export default function License() {
                     under the conditions stated below. Sublicensing is not
                     allowed; section 10 makes it unnecessary.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     3. Protecting Users&apos; Legal Rights From
                     Anti-Circumvention Law.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     No covered work shall be deemed part of an effective
                     technological measure under any applicable law fulfilling
                     obligations under article 11 of the WIPO copyright treaty
@@ -393,21 +335,11 @@ export default function License() {
                     users, your or third parties&apos; legal rights to forbid
                     circumvention of technological measures.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     4. Conveying Verbatim Copies.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     You may convey verbatim copies of the Program&apos;s source
                     code as you receive it, in any medium, provided that you
                     conspicuously and appropriately publish on each copy an
@@ -421,21 +353,11 @@ export default function License() {
                     convey, and you may offer support or warranty protection for
                     a fee.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     5. Conveying Modified Source Versions.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     You may convey a work based on the Program, or the
                     modifications to produce it from the Program, in the form of
                     source code under the terms of section 4, provided that you
@@ -474,21 +396,11 @@ export default function License() {
                     does not cause this License to apply to the other parts of
                     the aggregate.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     6. Conveying Non-Source Forms.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     You may convey a covered work in object code form under the
                     terms of sections 4 and 5, provided that you also convey the
                     machine-readable Corresponding Source under the terms of
@@ -597,21 +509,11 @@ export default function License() {
                     require no special password or key for unpacking, reading or
                     copying.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     7. Additional Terms.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     &quot;Additional permissions&quot; are terms that supplement
                     the terms of this License by making exceptions from one or
                     more of its conditions. Additional permissions that are
@@ -684,21 +586,11 @@ export default function License() {
                     stated as exceptions; the above requirements apply either
                     way.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     8. Termination.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     You may not propagate or modify a covered work except as
                     expressly provided under this License. Any attempt otherwise
                     to propagate or modify it is void, and will automatically
@@ -728,21 +620,11 @@ export default function License() {
                     qualify to receive new licenses for the same material under
                     section 10.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     9. Acceptance Not Required for Having Copies.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     You are not required to accept this License in order to
                     receive or run a copy of the Program. Ancillary propagation
                     of a covered work occurring solely as a consequence of using
@@ -754,21 +636,11 @@ export default function License() {
                     a covered work, you indicate your acceptance of this License
                     to do so.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     10. Automatic Licensing of Downstream Recipients.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     Each time you convey a covered work, the recipient
                     automatically receives a license from the original
                     licensors, to run, modify and propagate that work, subject
@@ -796,21 +668,9 @@ export default function License() {
                     is infringed by making, using, selling, offering for sale,
                     or importing the Program or any portion of it.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
-                    11. Patents.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>11. Patents.</BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     Each time you convey a covered work, the recipient
                     automatically A &quot;contributor&quot; is a copyright
                     holder who authorizes use under this License of the Program
@@ -891,21 +751,11 @@ export default function License() {
                     infringement that may otherwise be available to you under
                     applicable patent law.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     12. No Surrender of Others&apos; Freedom.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     If conditions are imposed on you (whether by court order,
                     agreement or otherwise) that contradict the conditions of
                     this License, they do not excuse you from the conditions of
@@ -918,21 +768,11 @@ export default function License() {
                     only way you could satisfy both those terms and this License
                     would be to refrain entirely from conveying the Program.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     13. Use with the GNU Affero General Public License.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     Notwithstanding any other provision of this License, you
                     have permission to link or combine any covered work with a
                     work licensed under version 3 of the GNU Affero General
@@ -943,21 +783,11 @@ export default function License() {
                     License, section 13, concerning interaction through a
                     network will apply to the combination as such.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     14. Revised Versions of this License.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     The Free Software Foundation may publish revised and/or new
                     versions of the GNU General Public License from time to
                     time. Such new versions will be similar in spirit to the
@@ -985,21 +815,11 @@ export default function License() {
                     on any author or copyright holder as a result of your
                     choosing to follow a later version.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     15. Disclaimer of Warranty.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT
                     PERMITTED BY APPLICABLE LAW. EXCEPT WHEN OTHERWISE STATED IN
                     WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES PROVIDE
@@ -1011,21 +831,11 @@ export default function License() {
                     PROVE DEFECTIVE, YOU ASSUME THE COST OF ALL NECESSARY
                     SERVICING, REPAIR OR CORRECTION.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     16. Limitation of Liability.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO
                     IN WRITING WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO
                     MODIFIES AND/OR CONVEYS THE PROGRAM AS PERMITTED ABOVE, BE
@@ -1038,21 +848,11 @@ export default function License() {
                     HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
                     SUCH DAMAGES.
                     {"\n\n"}
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Bold"
-                    isSerif={true}
-                >
+                </BetterTextLicenseText>
+                <BetterTextLicenseHeader>
                     17. Interpretation of Sections 15 and 16.
-                </BetterText>
-                <BetterText
-                    textAlign="normal"
-                    fontSize={13}
-                    fontWeight="Regular"
-                    isSerif={true}
-                >
+                </BetterTextLicenseHeader>
+                <BetterTextLicenseText>
                     If the disclaimer of warranty and limitation of liability
                     provided above cannot be given local legal effect according
                     to their terms, reviewing courts shall apply local law that
@@ -1062,7 +862,7 @@ export default function License() {
                     in return for a fee.
                     {"\n\n"}
                     END OF TERMS AND CONDITIONS
-                </BetterText>
+                </BetterTextLicenseText>
             </ScrollView>
         </View>
     );

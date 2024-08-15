@@ -15,6 +15,12 @@ interface FontSizesProps {
      */
     SMALL: number;
     /**
+     * A font size used for texts that aren't "small" but aren't "big" either. Lower than regular. Used for license texts.
+     *
+     * @type {number}
+     */
+    MEDIUM: number;
+    /**
      * A font size used for most texts.
      *
      * @type {number}
@@ -41,6 +47,7 @@ interface FontSizesProps {
  */
 const FontSizes: FontSizesProps = {
     SMALL: 12,
+    MEDIUM: 13,
     REGULAR: 15,
     LARGE: 20,
     EXTRA_LARGE: 30,
