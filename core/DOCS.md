@@ -187,3 +187,24 @@ For extra info about how this should be used within PersonaPlus' scope, see [USA
 | `gender` | "male" or "female" | The **gender** of the subject |
 | `weight` | Number | The weight of the subject in **kilograms** |
 | `height` | Height | The height of the subject in **centimeters** |
+
+## bodyfatpercentage.`calculate()`
+
+**What's this?**
+
+> The BFP (body fat percentage) of an organism is the total mass of its fat divided by its total body mass, multiplied by 100; body fat includes essential body fat and storage body fat.
+
+In an easier vocabulary: BFP gives you the percentage of your body's weight that's fat.
+
+**What purpose does the function serve?**
+
+You use it by passing the data needed to calculate the BFP, to calculate the estimated percentage of your weight that's fat, and whether that BFP represents a healthy weight or an unhealthy one, either by underweight or overweight / obesity.
+
+For extra info about how this should be used within PersonaPlus' scope, see [USAGE.md](USAGE.md#bodyfatpercentage).
+
+| Parameter | Type | Explanation |
+| --------- | ---- | ----------- |
+| `age` | Number | The **age** of the subject in years |
+| `gender` | "male" or "female" | The **gender** of the subject |
+| `weight` | Number | The weight of the subject in **kilograms** |
+| `height` | Height | The height of the subject in **centimeters** |

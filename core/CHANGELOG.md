@@ -6,6 +6,7 @@
 - Update `physicalHealth` / `Body Mass Index`, added support for under 20 years of age calculations.
 - Some work around with DOCS and READMEs.
 - Replace `./` routing with `@/` for imports.
+- Add a simple `package.json`.
 
 ## 0.0.2
 
