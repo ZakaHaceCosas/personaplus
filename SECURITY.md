@@ -16,13 +16,9 @@ Nos comprometemos a responder a los informes de vulnerabilidades lo antes posibl
 
 ## Proceso de Gestión de Vulnerabilidades
 
-Nuestro proceso de gestión de vulnerabilidades incluye los siguientes pasos:
+En un plazo máximo de 24 horas te responderemos para confirmar que hemos recibido el reporte. Empezaremos a trabajar de inmediato en una solución. Como antes mencionado, puedes aportar tus soluciones si es posible, cosa que agradecemos.
 
-1. **Recepción del informe:** Confirmaremos la recepción de tu informe en un plazo de 24 horas.
-2. **Evaluación:** Evaluaremos la vulnerabilidad para determinar su impacto y prioridad.
-3. **Desarrollo de un parche:** Trabajaremos para desarrollar y probar un parche para solucionar la vulnerabilidad.
-4. **Lanzamiento del parche:** Publicaremos el parche en la próxima versión de la aplicación.
-5. **Notificación:** Te notificaremos una vez que el parche esté disponible y agradeceremos tu colaboración en la mejora de la seguridad de PersonaPlus.
+Lanzaremos un parche lo antes posible y te lo haremos saber (a tí y a todos).
 
 ## Políticas de Divulgación
 
@@ -32,10 +28,8 @@ Para proteger a nuestros usuarios, pedimos que no divulgues detalles de la vulne
 
 Para contribuir a la seguridad general de PersonaPlus, te pedimos que sigas estas mejores prácticas:
 
-- **Revisa el código:** Antes de enviar un pull request, revisa tu código para detectar posibles vulnerabilidades.
+- **Revisa el código:** Antes de enviar una solicitud de cambios o una commit, revisa tu código para detectar posibles vulnerabilidades.
 - **Actualiza dependencias:** Mantén las dependencias de tu entorno de desarrollo actualizadas para evitar vulnerabilidades conocidas.
-- **Usa herramientas de análisis de seguridad:** Utiliza herramientas de análisis estático y dinámico para detectar posibles problemas de seguridad en tu código.
-
-> Para esto, el repositorio ya utiliza algunas funcionalidades de escaneo de GitHub, como dependabot.
+- **Asegura tu código:** Asegurate de que todos los `__tests__` están pasando. Si además puedes añadir tests adicionales, mejor aún.
 
 ¡Gracias por ayudar a mantener PersonaPlus seguro para todos nuestros usuarios!
