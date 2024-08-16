@@ -1,6 +1,7 @@
-import calculateBodyMassIndex, { getPercentile } from "@/core/physicalHealth/bodymassindex";
+import OpenHealth from "@/core/openhealth";
 import { expect } from '@jest/globals';
 import type { MatcherFunction } from 'expect';
+import { getPercentile } from "@/core/physicalHealth/BodyMassIndex";
 
 // there is a possible error margin for OpenHealth's calculations, so this custom function allows for minimal errors within an acceptable range to pass the tests
 const toBeWithinMargin: MatcherFunction<[expected: number, margin?: number]> =
@@ -37,6 +38,8 @@ declare module 'expect' {
         toBeWithinMargin(expected: number, margin?: number): R;
     }
 }
+
+const calculateBodyMassIndex = OpenHealth.physicalHealth.BodyMassIndex.calculate
 
 describe("body mass index calculations", () => {
     // expected results are provided from the CDC's calculator

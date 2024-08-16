@@ -167,7 +167,7 @@ Each `intensity` value is associated to a fixed, approximated MET value, as seen
 | `very_intense` | rope jumping, 100/min | 11.0 |
 | `really_intense` | jogging, 10.9 km/h | 11.2 |
 
-## bodymassindex.`calculate()`
+## BodyMassIndex.`calculate()`
 
 **What's this?**
 
@@ -179,7 +179,7 @@ In an easier vocabulary: BMI is a number that creates a relationship between an 
 
 You use it by passing the data needed to calculate the BMI, to calculate (based on the CDC's formula and their percentiles) the estimated Body Mass Index, and whether that BMI represents a healthy weight or an unhealthy one, either by underweight or overweight / obesity.
 
-For extra info about how this should be used within PersonaPlus' scope, see [USAGE.md](USAGE.md#bodyMassIndex).
+For extra info about how this should be used within PersonaPlus' scope, see [USAGE.md](USAGE.md#BodyMassIndex).
 
 | Parameter | Type | Explanation |
 | --------- | ---- | ----------- |

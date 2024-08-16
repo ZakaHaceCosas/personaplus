@@ -6,30 +6,13 @@
 CALCULATE RUNNING / WALKING PERFORMANCE
 */
 
-// LAST UPDATE TO THIS FUNCTION, ITS DATA, ITS CALCULATIONS, OR ANYTHING THAT DOES AFFECT THE RESULT
-// Changes that do not affect the result, like just bug-fixes, performance improvments, code-legibility improvments, or that kind of stuff, do not need to bump the date.
-const UPDATED: string = "26/06/2024";
-// ANY SOURCE THAT HAS BEEN USED TO DEVELOP THE CALCULATIONS / DATA PROVIDED or that BACKS IT UP.
-const SOURCE: string = "https://downhilltodowntown.com/how-to-calculate-your-caloric-burn-while-running/ and https://scielo.isciii.es/scielo.php?script=sci_arttext&pid=S0212-16112012000400040 and https://eresdeportista.com/salud/como-calcular-calorias-quemadas-ejercicio/ and https://www.topendsports.com/weight-loss/energy-met.htm andhttps://journals.lww.com/acsm-msse/fulltext/2000/09001/compendium_of_physical_activities__an_update_of.9.aspx and https://www.cmu.edu/common-cold-project/measures-by-study/health-practices/physical-activity/index.html";
 
+import CreateComponentDataUtilities from "@/core/tools/OpenHealthDataBuilder";
 
-/**
- * Get all the sources of information used to develop the function, it's data, contents, returns, and etc...
- * @returns A single string with all the URLs, separated by "and" in case there's more than one - e.g. "https://coolsite.com and https://example.source"
-*/
-
-export function getSource() {
-    return SOURCE;
-}
-
-/**
- * Get the date of the last update made to this function (considering "update" any change to it's sources, calculations, data, results, etc... but not trivial, performance, code cleaning or similar changes.)
- * @returns A string with the date of the last update, using the DD/MM/YYYY format.
-*/
-
-export function getLastUpdate() {
-    return UPDATED;
-}
+export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
+    "26/06/2024",
+    "https://downhilltodowntown.com/how-to-calculate-your-caloric-burn-while-running/ and https://scielo.isciii.es/scielo.php?script=sci_arttext&pid=S0212-16112012000400040 and https://eresdeportista.com/salud/como-calcular-calorias-quemadas-ejercicio/ and https://www.topendsports.com/weight-loss/energy-met.htm andhttps://journals.lww.com/acsm-msse/fulltext/2000/09001/compendium_of_physical_activities__an_update_of.9.aspx and https://www.cmu.edu/common-cold-project/measures-by-study/health-practices/physical-activity/index.html"
+);
 
 interface RUNNING_WALKING_Response {
     result: number;
