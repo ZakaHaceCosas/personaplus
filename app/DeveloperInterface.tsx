@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     containerview: {
         width: Dimensions.get("screen").width,
         height: Dimensions.get("screen").height,
+        backgroundColor: colors.MAIN.APP,
     },
     mainview: {
         padding: 20,

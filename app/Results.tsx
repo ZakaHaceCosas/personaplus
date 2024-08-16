@@ -20,12 +20,14 @@ import { saveDailyObjectivePerformance } from "@/src/toolkit/objectives";
 import { getCurrentDate } from "@/src/toolkit/today";
 import Button from "@/src/Buttons";
 import generateRandomMessage from "@/src/toolkit/design/randomMessages";
+import colors from "@/src/toolkit/design/colors";
 
 // We define the styles
 const styles = StyleSheet.create({
     containerview: {
         width: Dimensions.get("screen").width,
         height: Dimensions.get("screen").height,
+        backgroundColor: colors.MAIN.APP,
     },
     mainview: {
         padding: 20,
