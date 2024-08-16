@@ -1,7 +1,13 @@
 // index.tsx
 // Welcome to PersonaPlus. Give yourself a plus!
 
-import React, { useState, useEffect, ReactElement, useCallback } from "react";
+import React, {
+    useState,
+    useEffect,
+    ReactElement,
+    useCallback,
+    useRef,
+} from "react";
 import {
     View,
     ScrollView,
@@ -20,7 +26,6 @@ import {
     startSessionFromObjective,
 } from "@/src/toolkit/objectives";
 import BetterText, {
-    BetterTextExtraHeader,
     BetterTextHeader,
     BetterTextSubHeader,
 } from "@/src/BetterText";
@@ -53,6 +58,7 @@ const styles = StyleSheet.create({
     containerview: {
         width: Dimensions.get("screen").width,
         height: Dimensions.get("screen").height,
+        backgroundColor: colors.MAIN.APP,
     },
     mainview: {
         padding: 20,
@@ -217,6 +223,8 @@ export default function Home() {
         }
     }
 
+    const isMounted = useRef(true); // thing that supposedly fixes issues :V
+
     useEffect(() => {
         // Verifies background fetching status and logs it
         const verifyObjectiveBackgroundFetchingStatusAsync = async () => {
@@ -331,32 +339,26 @@ export default function Home() {
             }
         };
 
-        let isMounted = true; // thing that supposedly fixes issues :V
-
         // Main async function to handle the sequence
         const handle = async () => {
             try {
-                if (isMounted)
+                if (isMounted.current)
                     await verifyObjectiveBackgroundFetchingStatusAsync(); // Verifies background fetching
-                if (isMounted) await multiFetch(); // Fetches user data and objectives
-                if (isMounted) await fetchDueTodayObjectives(); // Processes the objectives
+                if (isMounted.current) await multiFetch(); // Fetches user data and objectives
+                if (isMounted.current) await fetchDueTodayObjectives(); // Processes the objectives
 
-                if (isMounted) setLoading(false); // Finally, set loading to false
+                if (isMounted.current) setLoading(false); // Finally, set loading to false
             } catch (e) {
                 termLog("Error: " + e, "log");
             }
         };
 
-        handle(); // Execute the main sequence
-        // THIS SHALL ONLY RUN ONCE, NO MORE TIMES
-        // i don't want more of those... memory issues
+        handle();
 
         return () => {
-            isMounted = false;
+            isMounted.current = false;
         };
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [objectives]);
 
     useEffect(() => {
         const manageNotifications = async () => {
@@ -450,9 +452,13 @@ export default function Home() {
                 <GapView height={20} />
                 <Section kind="HowYouAreDoing">
                     <GapView height={20} />
-                    <BetterTextExtraHeader>
+                    <BetterText
+                        fontWeight="Regular"
+                        fontSize={15}
+                        textAlign="center"
+                    >
                         {t("globals.coming_soon")}
-                    </BetterTextExtraHeader>
+                    </BetterText>
                     <View style={{ padding: 20 }}>
                         <BetterText
                             fontWeight="Regular"
