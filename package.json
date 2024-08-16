@@ -72,7 +72,7 @@
         "@babel/preset-flow": "^7.24.1",
         "@babel/preset-react": "^7.24.1",
         "@expo/config": "~9.0.0",
-        "@testing-library/react-native": "^12.5.2",
+        "@testing-library/react-native": "^12.6.0",
         "@types/jest": "^29.5.12",
         "@types/react": "~18.2.45",
         "@typescript-eslint/eslint-plugin": "^7.13.1",
