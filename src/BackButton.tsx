@@ -3,6 +3,7 @@ import BetterText from "@/src/BetterText";
 import { useTranslation } from "react-i18next";
 import { router } from "expo-router";
 import FontSizes from "@/src/toolkit/design/fontSizes";
+import { TFunction } from "i18next";
 
 type TranslateFunction = ReturnType<typeof useTranslation>["t"];
 
@@ -23,14 +24,16 @@ interface BackButtonProps {
 
 // Memoized back button component
 /**
- * Description placeholder
+ * A **< Go back** button for the top of the UI in certain pages.
  *
- * @param {{ t: any; }} param0
+ * @param {{ t: TFunction; }} param0
  * @param {TranslateFunction} param0.t Pass here the translate function, please.
  * @returns {ReactElement} A JSX element
  */
 const BackButtonComponent: React.FC<BackButtonProps> = ({
     t,
+}: {
+    t: TFunction;
 }): ReactElement => (
     <BetterText
         fontSize={FontSizes.LARGE}
