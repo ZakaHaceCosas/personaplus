@@ -5,18 +5,18 @@
 
 // PHISICAL HEALTH
 
-import * as calculateBodyMassIndex from '@/core/physicalHealth/bodymassindex';
-import * as calculateBodyFatPercentage from '@/core/physicalHealth/bodyfatpercentage';
-import * as calculateIdealBodyWeight from '@/core/physicalHealth/idealbodyweight';
-import * as calculateBasalMetabolicRate from '@/core/physicalHealth/basalMetabolicRate';
-import * as getMetabolicEquivalentOfTask from '@/core/physicalHealth/getMetabolicEquivalentOfTask';
-import * as oneRepetitionMax from '@/core/physicalHealth/oneRepMax';
+import * as BodyMassIndex from '@/core/physicalHealth/BodyMassIndex';
+import * as BodyFatPercentage from '@/core/physicalHealth/BodyFatPercentage';
+import * as IdealBodyWeight from '@/core/physicalHealth/IdealBodyWeight';
+import * as BasalMetabolicRate from "@/core/physicalHealth/BasalMetabolicRate";
+import * as getMetabolicEquivalentOfTask from '@/core/physicalHealth/MetabolicEquivalentOfTask';
+import * as oneRepetitionMax from '@/core/physicalHealth/OneRepMax';
 
 // PERFORMANCE
 
-import * as calculateRunningOrWalkingPerformance from '@/core/performance/runningPerformance';
-import * as calculateLiftingPerformance from '@/core/performance/liftingPerformance';
-import * as calculatePushingUpPerformance from "@/core/performance/pushingupPerformance";
+import * as calculateRunningOrWalkingPerformance from '@/core/performance/RunningPerformance';
+import * as calculateLiftingPerformance from '@/core/performance/LiftingPerformance';
+import * as calculatePushingUpPerformance from "@/core/performance/PushingUpPerformance";
 
 // DEFINITION
 
@@ -28,24 +28,24 @@ import * as calculatePushingUpPerformance from "@/core/performance/pushingupPerf
 const OpenHealth = {
     physicalHealth: {
         BodyMassIndex: {
-            calculate: calculateBodyMassIndex.default,
-            getSource: calculateBodyMassIndex.getSource,
-            getLastUpdate: calculateBodyMassIndex.getLastUpdate
+            calculate: BodyMassIndex.default,
+            getSource: BodyMassIndex.getSource,
+            getLastUpdate: BodyMassIndex.getLastUpdate
         },
         BodyFatPercentage: {
-            calculate: calculateBodyFatPercentage.default,
-            getSource: calculateBodyFatPercentage.getSource,
-            getLastUpdate: calculateBodyFatPercentage.getLastUpdate
+            calculate: BodyFatPercentage.default,
+            getSource: BodyFatPercentage.getSource,
+            getLastUpdate: BodyFatPercentage.getLastUpdate
         },
         IdealBodyWeight: {
-            calculate: calculateIdealBodyWeight.default,
-            getSource: calculateIdealBodyWeight.getSource,
-            getLastUpdate: calculateIdealBodyWeight.getLastUpdate
+            calculate: IdealBodyWeight.default,
+            getSource: IdealBodyWeight.getSource,
+            getLastUpdate: IdealBodyWeight.getLastUpdate
         },
         BasalMetabolicRate: {
-            calculate: calculateBasalMetabolicRate.default,
-            getSource: calculateBasalMetabolicRate.getSource,
-            getLastUpdate: calculateBasalMetabolicRate.getLastUpdate
+            calculate: BasalMetabolicRate.default,
+            getSource: BasalMetabolicRate.getSource,
+            getLastUpdate: BasalMetabolicRate.getLastUpdate
         },
         getMetabolicEquivalentOfTask: {
             calculate: getMetabolicEquivalentOfTask.default,
@@ -75,9 +75,6 @@ const OpenHealth = {
             getLastUpdate: calculatePushingUpPerformance.getLastUpdate
         }
     },
-    openinfo: {
-        // This will be done later. It is related to /docs.
-    }
 };
 
 export default OpenHealth;
