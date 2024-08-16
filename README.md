@@ -34,24 +34,13 @@ Que no te sorprenda encontrar fallos, o que varias funciones prometidas aún no 
 
 De momento PersonaPlus está en su primera fase, *codename* "PRE-APP". Ni Beta, ni Alpha, mucho anterior. Es muy inestable y presenta varios errores conocidos. Si encuentras alguna falla, por favor, [repórtala aquí (página "Issues" del repositorio)](https://github.com/ZakaHaceCosas/personaplus/issues). ¡Cada aporte ayuda a que la app sea mejor!
 
-## Funciones planeadas
+## Funciones planeadas, hoja de ruta, y más
 
-PersonaPlus es una app en un estado muy temprano, muchas funciones aún están por hacer y algunas tomarán mucho tiempo en empezar a implementarse. Además, las listas están sujetas a cambios, según voy mejorando las ideas (o quitando alguna, que no suele pasar, pero puede).
+PersonaPlus es una app en un estado temprano, muchas funciones aún están por hacer y algunas tomarán mucho tiempo en empezar a implementarse.
 
-Dicho esto, desde el [proyecto de GitHub](https://github.com/users/ZakaHaceCosas/projects/1/views/1) puedes ver todo lo planeado.
+Las funciones planeadas las puedes encontrar en la página de Issues, o desde el [proyecto de GitHub](https://github.com/users/ZakaHaceCosas/projects/1/views/1) donde está todo organizado.
 
-### Orden de implementación
-
-Para que nadie pierda el rumbo, aunque voy tocando un poco de todo, este es el plan que intento seguir de momento (actualizaré esto cada que haga falta).
-
-1. [X] ~~Terminar de implementar las sesiones básicas.~~ **Hecho.**
-2. [X] ~~Una vez hecho eso, algún ajuste más a la app y de ahí a lo importante.~~ **Hecho.**
-3. [X] ~~Retomar OpenHealth (un poco olvidado desde que lo creé) e implementar todos los cálculos necesarios para las actividades que PersonaPlus soporta por defecto.~~ **Hecho.**
-4. [X] Implementar - de alguna manera - obtención de datos básicos sobre cada sesión y su guardado.
-5. [X] A partir de ahí, implementar también el guardado de las sesiones en sí - o sea, que la app registre cada día si has hecho algo o no.
-6. [ ] La generación de estadísticas en base a los cálculos que OpenHealth pueda hacer con los datos guardados en cada sesión.
-7. [ ] Implementar la *hora de pensar* y sus respectivas notificaciones (cuando haga eso aprovecharé para arreglar las notificaciones actuales que funcionan fatal)
-8. A partir de ahí, iré viendo
+Respecto a las *milestones*, estas incluyen las "issues" de etiqueta `ROADMAP` según para cuando se quieren completar. Cuando se vayan creando nuevas issues por los demás usuarios, como sugerencias o errores, aquellas que se acepten se irán añadiendo a las milestones según la prioridad dada.
 
 ## ¿Cómo contribuir?
 
