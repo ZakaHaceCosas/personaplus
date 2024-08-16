@@ -1,13 +1,7 @@
 // index.tsx
 // Welcome to PersonaPlus. Give yourself a plus!
 
-import React, {
-    useState,
-    useEffect,
-    ReactElement,
-    useCallback,
-    useRef,
-} from "react";
+import React, { useState, useEffect, ReactElement, useCallback } from "react";
 import {
     View,
     ScrollView,
@@ -223,8 +217,6 @@ export default function Home() {
         }
     }
 
-    const isMounted = useRef(true); // thing that supposedly fixes issues :V
-
     useEffect(() => {
         // Verifies background fetching status and logs it
         const verifyObjectiveBackgroundFetchingStatusAsync = async () => {
@@ -342,23 +334,19 @@ export default function Home() {
         // Main async function to handle the sequence
         const handle = async () => {
             try {
-                if (isMounted.current)
-                    await verifyObjectiveBackgroundFetchingStatusAsync(); // Verifies background fetching
-                if (isMounted.current) await multiFetch(); // Fetches user data and objectives
-                if (isMounted.current) await fetchDueTodayObjectives(); // Processes the objectives
-
-                if (isMounted.current) setLoading(false); // Finally, set loading to false
+                await verifyObjectiveBackgroundFetchingStatusAsync(); // Verifies background fetching
+                await multiFetch(); // Fetches user data and objectives
+                await fetchDueTodayObjectives(); // Processes the objectives
+                setLoading(false); // Finally, set loading to false
             } catch (e) {
                 termLog("Error: " + e, "log");
             }
         };
 
-        handle();
-
-        return () => {
-            isMounted.current = false;
-        };
-    }, [objectives]);
+        if (loadingObjectives) {
+            handle();
+        }
+    }, [loadingObjectives, objectives]);
 
     useEffect(() => {
         const manageNotifications = async () => {
@@ -430,7 +418,7 @@ export default function Home() {
         }
     }
 
-    if (loading) {
+    if (loading || loadingObjectives) {
         return <Loading currentpage={currentpage} displayNav={true} />;
     }
 
@@ -453,8 +441,9 @@ export default function Home() {
                 <Section kind="HowYouAreDoing">
                     <GapView height={20} />
                     <BetterText
-                        fontWeight="Regular"
-                        fontSize={15}
+                        fontWeight="Medium"
+                        fontSize={25}
+                        textColor={colors.PRIMARIES.GOD.GOD}
                         textAlign="center"
                     >
                         {t("globals.coming_soon")}
