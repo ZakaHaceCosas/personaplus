@@ -65,6 +65,7 @@ export default function Loading({
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
+                    backgroundColor: colors.MAIN.APP,
                 }}
             >
                 <GapView height={Dimensions.get("screen").height / 2} />
@@ -96,6 +97,7 @@ export default function Loading({
                     width: Dimensions.get("screen").width,
                     height: Dimensions.get("screen").height,
                     overflow: "scroll",
+                    backgroundColor: colors.MAIN.APP,
                 }}
             >
                 <BetterText
