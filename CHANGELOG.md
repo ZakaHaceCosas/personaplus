@@ -46,23 +46,41 @@ PD: Changelog is managed by the owner only, thanks. One task less for you!
 
 - Some content lacking translations has now been translated.
 - **Fixed** the app thinking the Welcome form was done even if it wasn't. Before, if the app was left without submitting it, and relaunched, the app would directly load without the data, treating the user as "Unknown".
+- **Fixed** Dev Interface showing "[object Object]" instead of the data the user cares about.
+- **Fixed** the app registering twice or even more times for reminder notifications, leading to the app spamming unwanted reminders. (*Requires testing*)
+- **Fixed** buttons having unconsistent heights.
+- **Fixed** swap components having their order messed up.
 
 ### Dev updates - Latest
 
-- Added unit testing.
+- Added testing to a few functions. Will slowly roll out to as much code as possible.
+- Toolkified design: added constants for font sizes and spacings, togheter with pre-made BetterText components such as `BetterTextHeader`. This will help with visual consistency across the app.
+- Made a general effort to improve the codebase: took care of many forgotten `TODO`s, removed useless comments, remove unused legacy code, improved JSDoc, made typing stronger, and optimised code for better readability.
+- Toolkified objective creation and session starting.
+- Toolkified checking for updates.
+- Remove the usage of CSS directives that didn't exist in React Native, such as `calc()`.
+- Full refactor of `index.tsx`. **Has known issues.**
+  - Removed some `termLog`s that were there for debug purposes and aren't required anymore.
+  - Removed two `useState`s and one `useEffect` from `index.tsx`. Turns out the check for background fetching & notification status were duplicate.
+  - Among many other changes.
+- Created a (memoized) BackButton component. Thanks, [@Alvaro842](https://github.com/Alvaro842DEV).
+- `useCallback` was implemented for `handlePrivacyPress` and `handleOssPress` functions (at `About.tsx`), making the app more responsive by reducing unnecessary function re-creations. Thanks, [@Alvaro842](https://github.com/Alvaro842DEV).
+- Continue to extract functions from JSX to improve readability and maintainability. Thanks, [@Alvaro842](https://github.com/Alvaro842DEV).
+- Partially refactored **BottomNav.tsx**.
+- Added JSDoc to the `useNotification` hook, and also added a check to avoid duplicate registering.
 - Removed `wayToGetThem` arg from `getObjectivesDailyLog()`.
 - Replaced `return {*}` with `0 | 1` (depending on success / failure) in some functions.
 - Removed a useless `useEffect` from DeveloperInterface.
-- Removed some `termLog`s that were there for debug purposes and aren't required anymore.
-- Removed two `useState`s and one `useEffect` from `index.tsx`. Turns out the check for background fetching & notification status were duplicate.
-- (WIP) Added constants for font sizes (FONT_SIZES) and spacings (SPACING), helping with visual consistency across the app.
-- Created a (memoized) BackButton component. Thanks, [@Alvaro842](https://github.com/Alvaro842DEV).
-- `useCallback` was implemented for `handlePrivacyPress` and `handleOssPress` functions, making the app more responsive by reducing unnecessary function re-creations. Thanks, [@Alvaro842](https://github.com/Alvaro842DEV).
-- Continue to extract functions from JSX to improve readability and maintainability. Thanks, [@Alvaro842](https://github.com/Alvaro842DEV).
+- Finally created a well-structured interface for active objectives.
 
 ### Trivial updates - Latest
 
-- Nothing (yet).
+- Update many MarkDown files for simplicity and easier reading.
+- Deprecated (removed) `VAR-DSGN.jsonc`.
+- Deprecated (removed) `openhealthtest.tsx`.
+- Updated the banner for DOCS.md. It's now better 😃.
+- Removed React Native Animatable as a dependency.
+- Add custom props to `.gitignore`, for internal dev purposes 😉.
 
 ## 0.0.1-R5-b24
 
@@ -120,7 +138,7 @@ PD: Changelog is managed by the owner only, thanks. One task less for you!
 - Translated all `ToastAndroid` messages, reminder notifications, and buttons.
 - Simplified the Dev Interface flow. Removed the need of clicking three times just to access it the first time.
 - Replaced some `.navigate()` functions with `.back()` to avoid confusing the user.
-- Now the profile update page makes more sense: before you only had the option to edit _all_ your profile again from scratch, even your gender. Now, all the data will default to the previous data, letting you change only what you want to change.
+- Now the profile update page makes more sense: before you only had the option to edit *all* your profile again from scratch, even your gender. Now, all the data will default to the previous data, letting you change only what you want to change.
 - Now sessions display time in `mm:ss` format rather than just seconds.
 - Now rests do work properly!
 
@@ -159,13 +177,13 @@ PD: Changelog is managed by the owner only, thanks. One task less for you!
 - Toolkified `adjustedToday`.
 - General code quality improvements, specially within Sessions.
 - Imrpoved some comments for better code understandability.
-- Now PersonaPlus will check daily for your active objectives' due days. If you've done an objective today, and tomorrow you have to do it again, it's `wasDone` (_boolean_) value will change to `false` again so it's shown again on the app's homepage.
+- Now PersonaPlus will check daily for your active objectives' due days. If you've done an objective today, and tomorrow you have to do it again, it's `wasDone` (*boolean*) value will change to `false` again so it's shown again on the app's homepage.
 - Added Expo's `expo-background-fetch` and `expo-task-manager` for that. Also fixed a few deps.
 - Improved detection of invalid user data (age, weight, height...).
 
 ## 0.0.1-R5-b21
 
-- Fixed a _stupid_ mistake: sometimes THIS `{}` was used as an "array" instead of THIS `[]`, causing problems with objectives and their logic.
+- Fixed a *stupid* mistake: sometimes THIS `{}` was used as an "array" instead of THIS `[]`, causing problems with objectives and their logic.
 - Updated `app.config.ts` for Android stuff.
 - Updated Expo and added some packages that apparently were required but weren't installed (`expo-system-ui` and `expo-device`). Also added `expo-navigation-bar` to customise the Android navbar's behavior, and `expo-file-system` and `uuid`, which are (currently) unused.
 - Fixed the status bar not looking properly.
@@ -206,14 +224,14 @@ PD: Changelog is managed by the owner only, thanks. One task less for you!
 > **What does that even mean?**
 >
 > See: Basically, the app needs to work with a lot of health data so that it can provide accurate statistics and tips to the end user, so the first idea would be to find a library or something that does provide functions for that stuff.
-> However - I thought it would be a nice idea to try to make our own "health.js" library, and just like that! There's a new directory called `/code` for _the core of the app_, on which I started working and then decided to give it's own name, documentation, and stuff. This new library will allow PersonaPlus to turn all the frontend we've been working on since 2023 into actual, worthy data for users to understand themselves, their performance, and their health.
+> However - I thought it would be a nice idea to try to make our own "health.js" library, and just like that! There's a new directory called `/code` for *the core of the app*, on which I started working and then decided to give it's own name, documentation, and stuff. This new library will allow PersonaPlus to turn all the frontend we've been working on since 2023 into actual, worthy data for users to understand themselves, their performance, and their health.
 
 Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`. It's mentioned here only this time, as this is the most important change of this update.
 
 - Now `/WelcomeScreen` works! Users can register with basic info.
-  - ~~Fixed the Welcome Screen layout; it is now centered.~~ _Nope._
+  - ~~Fixed the Welcome Screen layout; it is now centered.~~ *Nope.*
   - Added form validation to `/WelcomeScreen` and placeholder options to arrays to avoid saving empty (`""`) strings.
-    - ~~**Review required**: Need to add validation to the Android keyboard's submit button (✔ icon in keyboard).~~ _This was fixed in later commits._
+    - ~~**Review required**: Need to add validation to the Android keyboard's submit button (✔ icon in keyboard).~~ *This was fixed in later commits.*
   - User data is now saved! Basic data like height, age, and more.
     - Updated the "Clear all" button in the Dev Interface to match the new schema.
     - Data previously saved in `index.tsx` (`hasLaunched`, `objs`, and `useDevTools`) now gets saved here.
@@ -222,7 +240,7 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 - Now `Sessions` work! (more or less)
   - Fixed layout; it now looks (almost) as it should (not perfect, but usable).
   - Timer is correctly set up depending on the objective.
-  - You can give up, skip, or mark as done (_known errors_).
+  - You can give up, skip, or mark as done (*known errors*).
   - You can pause by clicking either the pause button or the timer itself.
   - You can see details, like how many lifts you have to do or what speed you should run to.
   - Added a Help menu with a small text to explain what you should be doing.
@@ -302,7 +320,7 @@ Note:
 - Added a function to remove an OBJ from the Dashboard (`/Dash`).
 - Fixed app not refreshing when marked an OBJ as done.
 - Made several improvements to types.
-- Fixed many visual mistakes and improved layouts. _Particullary, for some reason using `vertical` `order` on `<BeSwap>` caused a really hard to explain visual bug on the Welcome ("`/Welc`") screen. It was "fixed" by changing the order prop to `horizontal`._
+- Fixed many visual mistakes and improved layouts. *Particullary, for some reason using `vertical` `order` on `<BeSwap>` caused a really hard to explain visual bug on the Welcome ("`/Welc`") screen. It was "fixed" by changing the order prop to `horizontal`.*
 - Improved the flow of username changes.
 - Added React & PersonaPlus versions to the Dev interface.
 - Made Dev interface opt-in, via `useDevTools` item in AsyncStorage.
@@ -325,7 +343,7 @@ Note:
 ## 0.0.1-R5-b16
 
 - Made more changes to match the requirements of ESLint.
-- Made a lof of UI and design changes to improve the looks on mobile - _this lead to things looking bad on desktop -_ _**it's not a problem, as the only target devices are phones.**_
+- Made a lof of UI and design changes to improve the looks on mobile - *this lead to things looking bad on desktop -* ***it's not a problem, as the only target devices are phones.***
 - Made a peculiar change ;] - moved the bottom navigation bar to the top.
 - Added a "Dev" tab designed to help during testing, specially on mobile. Has shortcuts for things that can be done from desktop but not mobile, like clearing `OBJS`.
 - Created a function `testLog` designed specifically to make "console logs" for this tab, as sometimes regular `console.log` calls don't appear on the console's replica for the Dev tab.
@@ -352,11 +370,11 @@ Note:
 >
 > ### **KNOWN ERRORS - b15**
 >
-> _**New errors**_:
+> ***New errors***:
 >
 > `b15`: For some reason, the `objs`' name is not being displayed on mobile devices on Expo Go. No clue what the source is, will look onto that.
 >
-> _**Still not fixed from older dev versions**_:
+> ***Still not fixed from older dev versions***:
 >
 > `b11:` For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. Don't know it's origin & only happens sometimes, making it hard to replicate. Will look onto it.
 
@@ -368,7 +386,7 @@ Note:
 - **Updated React Native:** From ~~0.73~~ to **0.74.2**
 - Updated all the dependencies to match the new SDK and RN versions.
 - Added an empty return to font loading on `_layout.tsx`, to avoid issues.
-- Made _several_ UI (both style and layout) changes.
+- Made *several* UI (both style and layout) changes.
 - Removed the usage of `Noti` for dev logging. Plus, finally made console logs consistent across all the code.
 - Fixed username input using numerical and not text keyboard on mobile.
 - Added a few comments to the code to explain stuff better.
@@ -379,18 +397,18 @@ Note:
 >
 > ### **FIXED ERRORS - b14**
 >
-> `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`". _The error was a stupid inline comment, LOL._
+> `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`". *The error was a stupid inline comment, LOL.*
 > **And thanks to this fix, app was finally properly tested on mobile!**
 ---
 > [!WARNING]
 >
 > ### **KNOWN ERRORS - b14**
 >
-> _**New errors**_:
+> ***New errors***:
 >
 > None.
 >
-> _**Still not fixed from older dev versions**_:
+> ***Still not fixed from older dev versions***:
 >
 > `b11:` For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. Don't know it's origin & only happens sometimes, making it hard to replicate. Will look onto it.
 
@@ -415,9 +433,9 @@ Note:
 ## 0.0.1-R5-b11
 
 - Fixed the `key` prop not being used properly in `Dash.tsx`.
-- Fixed the "Create active objective" button being spammed on the UI when there _are_ created objectives.
+- Fixed the "Create active objective" button being spammed on the UI when there *are* created objectives.
 - Added a new First launch check on the `index.tsx` page. Will redirect to `/Welc` (welcome screen) if `hasLaunched` item does not exist in LocalStorage. Also, it gets created so you don't get redirected each time you open PersonaPlus, only on the first launch.
-- Updated the `Swap` component, now supports new optional property `order` which is equivalent to _`flex-direction`_.
+- Updated the `Swap` component, now supports new optional property `order` which is equivalent to *`flex-direction`*.
 - Fixed errors with the `Crea.tsx` page:
   - Not creating objs.
   - Not going home when an obj is created.
@@ -426,11 +444,11 @@ Note:
 >
 > ### **KNOWN ERRORS - b11**
 >
-> _**New errors**_:
+> ***New errors***:
 >
 > For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. Don't know it's origin & only happens sometimes, making it hard to replicate. Will look onto it.
 >
-> _**Still not fixed from older dev versions**_:
+> ***Still not fixed from older dev versions***:
 >
 > `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`".
 
@@ -446,10 +464,10 @@ Note:
 >
 > ### **KNOWN ERRORS - b10**
 >
-> _**New errors**_:
+> ***New errors***:
 > None 😎
 >
-> _**Still not fixed from older dev versions**_:
+> ***Still not fixed from older dev versions***:
 >
 > `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`".
 
@@ -472,14 +490,14 @@ Note:
 > [!NOTE]
 > **KNWON ISSUE:** For some reason, I didn't managed to make Microsoft's Fluent Icons (the ones used in the UI design) React package work, so I used Material Design Icons instead, via Expo's `@expo/vectoricons`
 
-- Now the documentation is fully usable, can be considered "done". _Of course, it is still subject to changes at any time._
+- Now the documentation is fully usable, can be considered "done". *Of course, it is still subject to changes at any time.*
 - Licensed under Apache 2.0.
 - Added input colors to `VAR-DSGN.jsonc`.
 - Updated all files to follow the documentation's requested code guidelines.
 - Fully formatted the code + added formatting on save.
 - Changed many `.vscode` settings.
 - General changes and improvements to the Homepage (`/`).
-- Made some progress in the dashboard (`/Dash`). Implemented `Notis` and _fixed_ obj fetching. (Still looking forward to implementing obj creation).
+- Made some progress in the dashboard (`/Dash`). Implemented `Notis` and *fixed* obj fetching. (Still looking forward to implementing obj creation).
 
 > [!WARNING]
 > **KNOWN ERROR**: Still doesn't access them 100% correctly.
@@ -553,7 +571,7 @@ Note:
   - Created `metro.config.js`.
   - Created `.vscode/`.
 - Removal of every single in-app gradient, in favour of plain colors.
-- Implemented `AsyncStorage` to store _OBJS_ data.
+- Implemented `AsyncStorage` to store *OBJS* data.
 - Rewritten the documentation `DOCS.md`.
 - Added versioning (`CHANGELOG.md` (this file)).
 - Created a better, more complete `README`.
