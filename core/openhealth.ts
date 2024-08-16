@@ -9,71 +9,43 @@ import * as BodyMassIndex from '@/core/physicalHealth/BodyMassIndex';
 import * as BodyFatPercentage from '@/core/physicalHealth/BodyFatPercentage';
 import * as IdealBodyWeight from '@/core/physicalHealth/IdealBodyWeight';
 import * as BasalMetabolicRate from "@/core/physicalHealth/BasalMetabolicRate";
-import * as getMetabolicEquivalentOfTask from '@/core/physicalHealth/MetabolicEquivalentOfTask';
-import * as oneRepetitionMax from '@/core/physicalHealth/OneRepMax';
+import * as MetabolicEquivalentOfTask from '@/core/physicalHealth/MetabolicEquivalentOfTask';
+import * as OneRepMax from '@/core/physicalHealth/OneRepMax';
 
 // PERFORMANCE
 
-import * as calculateRunningOrWalkingPerformance from '@/core/performance/RunningPerformance';
-import * as calculateLiftingPerformance from '@/core/performance/LiftingPerformance';
-import * as calculatePushingUpPerformance from "@/core/performance/PushingUpPerformance";
+import * as RunningPerformance from '@/core/performance/RunningPerformance';
+import * as LiftingPerformance from '@/core/performance/LiftingPerformance';
+import * as PushingUpPerformance from "@/core/performance/PushingUpPerformance";
+
+// Interface for all OpenHealthModules
+interface OpenHealthModule<T = unknown> {
+    default: T; // Define el tipo de retorno real si lo sabes
+    getSource: () => string; // Define el tipo de retorno real si lo sabes
+    getLastUpdate: () => string; // Define el tipo de retorno real si lo sabes
+}
+
+// Helper function to create each module
+const CreateModule = <T>(module: OpenHealthModule<T>) => ({
+    calculate: module.default,
+    getSource: module.getSource,
+    getLastUpdate: module.getLastUpdate
+});
 
 // DEFINITION
-
-/**
- * @type {OpenHealth}
- * @description Main library where everything comes from.
-*/
-
 const OpenHealth = {
     physicalHealth: {
-        BodyMassIndex: {
-            calculate: BodyMassIndex.default,
-            getSource: BodyMassIndex.getSource,
-            getLastUpdate: BodyMassIndex.getLastUpdate
-        },
-        BodyFatPercentage: {
-            calculate: BodyFatPercentage.default,
-            getSource: BodyFatPercentage.getSource,
-            getLastUpdate: BodyFatPercentage.getLastUpdate
-        },
-        IdealBodyWeight: {
-            calculate: IdealBodyWeight.default,
-            getSource: IdealBodyWeight.getSource,
-            getLastUpdate: IdealBodyWeight.getLastUpdate
-        },
-        BasalMetabolicRate: {
-            calculate: BasalMetabolicRate.default,
-            getSource: BasalMetabolicRate.getSource,
-            getLastUpdate: BasalMetabolicRate.getLastUpdate
-        },
-        getMetabolicEquivalentOfTask: {
-            calculate: getMetabolicEquivalentOfTask.default,
-            getSource: getMetabolicEquivalentOfTask.getSource,
-            getLastUpdate: getMetabolicEquivalentOfTask.getLastUpdate
-        },
-        OneRepetitionMax: {
-            calculate: oneRepetitionMax.default,
-            getSource: oneRepetitionMax.getSource,
-            getLastUpdated: oneRepetitionMax.getLastUpdate
-        }
+        BodyMassIndex: CreateModule(BodyMassIndex),
+        BodyFatPercentage: CreateModule(BodyFatPercentage),
+        IdealBodyWeight: CreateModule(IdealBodyWeight),
+        BasalMetabolicRate: CreateModule(BasalMetabolicRate),
+        getMetabolicEquivalentOfTask: CreateModule(MetabolicEquivalentOfTask),
+        OneRepetitionMax: CreateModule(OneRepMax),
     },
     performance: {
-        RunningOrWalkingPerformance: {
-            calculate: calculateRunningOrWalkingPerformance.default,
-            getSource: calculateRunningOrWalkingPerformance.getSource,
-            getLastUpdate: calculateRunningOrWalkingPerformance.getLastUpdate
-        },
-        LiftingPerformance: {
-            calculate: calculateLiftingPerformance.default,
-            getSource: calculateLiftingPerformance.getSource,
-            getLastUpdate: calculateLiftingPerformance.getLastUpdate
-        },
-        PushingUpPerformance: {
-            calculate: calculatePushingUpPerformance.default,
-            getSource: calculatePushingUpPerformance.getSource,
-            getLastUpdate: calculatePushingUpPerformance.getLastUpdate
-        }
+        RunningOrWalkingPerformance: CreateModule(RunningPerformance),
+        LiftingPerformance: CreateModule(LiftingPerformance),
+        PushingUpPerformance: CreateModule(PushingUpPerformance),
     },
 };
 
