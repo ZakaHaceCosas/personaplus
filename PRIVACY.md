@@ -3,17 +3,6 @@
 > [!WARNING]
 > <strong>NOTA: Al ser una aplicación que NO ESTÁ ACABADA, esto es susceptible a cambios. Esto es solo un boceto.</strong>
 
-<h1>Manifiesto de la Privacidad - PersonaPlus</h1>
-<h2>Nuestra Misión</h2>
-
-<p>PersonaPlus es un proyecto independiente, creado por mí con el compromiso de ayudar a mejorar tu salud y bienestar a través de una aplicación innovadora, fácil de usar y completamente gratuita. Creo de buena fe que tu salud es fundamental, y que la privacidad forma parte de esa salud. La Política de Privacidad de PersonaPlus se basa en nuestro propio principio, "De cortesía, De verdad, De por vida":</p>
-
-<ul>
-  <li><strong>De cortesía:</strong> PersonaPlus es completamente gratuita y libre de anuncios, servicios "premium" ni pagos adicionales.</li>
-  <li><strong>De verdad:</strong> PersonaPlus está diseñada para, entre otras cosas, proteger tu privacidad. No es necesario que crees una cuenta ni que proporciones información personal para utilizar la aplicación.</li>
-  <li><strong>De por vida:</strong> PersonaPlus es una aplicación transparente, de código abierto, permitiendo así a todo el mundo verificar que todo lo que aquí se manifiesta es verdad, que ni puede ni va jamás a cambiar su Política de Privacidad, sus principios, ni su único objetivo: ayudarte a darte más.</li>
-</ul>
-
 <h1>Política de Privacidad de PersonaPlus</h1>
 <h2>Introducción</h2>
 
