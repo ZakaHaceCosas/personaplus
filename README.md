@@ -20,33 +20,27 @@
 
 ## DATE UN PLUS
 
-PersonaPlus es una app de código abierto en React Native y Expo para ayudar a los usuarios a cuidar de su salud, dieta, y bienestar digital. A ***darse más***, como nos gusta decir.
+**PersonaPlus** es una app de código abierto 3 en 1 para ayudar a los usuarios a cuidar de su salud, dieta, y bienestar digital. A ***darse más***, como nos gusta decir.
 
-Este repositorio actua de *monorepo*, pues aloja también otro proyecto, la libreria propia que he hecho para realizar cálculos estadísticos con datos del usuario para obtener información y estadísticas sobre la salud y el rendimiento del usuario.
+Este repositorio es un *monorepo*, aloja la app PersonaPlus y la libreria [OpenHealthJS](https://github.com/ZakaHaceCosas/personaplus/blob/main/core/README.md), creada por nosotrs para obtener datos de salud precisos con los que ayudar al usuario.
 
 ## Descargar la app
 
-Puedes probarla descargando alguna *Pre-Release* desde la [página de lanzamientos del repositorio](https://github.com/ZakaHaceCosas/personaplus/releases). Eso sí, **no hay versiones estables** - quiero decir, la app no está acabada y las versiones publicadas son para que los primeros usuarios vayan probando la app y reportando errores.
-
-Que no te sorprenda encontrar fallos, o que varias funciones prometidas aún no están implementadas. Además, la app sólo está disponible en inglés (de momento).
+Prueba la app descargando una *Pre-Release* desde la [página de lanzamientos](https://github.com/ZakaHaceCosas/personaplus/releases). **No hay versiones estables**, así que es normal encontrar fallos y funciones aún no implementadas.
 
 ### Testing
 
-De momento PersonaPlus está en su primera fase, *codename* "PRE-APP". Ni Beta, ni Alpha, mucho anterior. Es muy inestable y presenta varios errores conocidos. Si encuentras alguna falla, por favor, [repórtala aquí (página "Issues" del repositorio)](https://github.com/ZakaHaceCosas/personaplus/issues). ¡Cada aporte ayuda a que la app sea mejor!
+PersonaPlus está en su primera fase, codename "*PRE-APP*", con varios errores conocidos. Si encuentras algún problema, por favor [repórtalo aquí](https://github.com/ZakaHaceCosas/personaplus/issues). ¡Cada aporte cuenta!
 
 ## Funciones planeadas, hoja de ruta, y más
 
-PersonaPlus es una app en un estado temprano, muchas funciones aún están por hacer y algunas tomarán mucho tiempo en empezar a implementarse.
-
-Las funciones planeadas las puedes encontrar en la página de Issues, o desde el [proyecto de GitHub](https://github.com/users/ZakaHaceCosas/projects/1/views/1) donde está todo organizado.
+Muchas funciones están en desarrollo o por implementar. Puedes ver lo planeado en la página de Issues o en el [proyecto de GitHub](https://github.com/users/ZakaHaceCosas/projects/1/views/1).
 
 Respecto a las *milestones*, estas incluyen las "issues" de etiqueta `ROADMAP` según para cuando se quieren completar. Cuando se vayan creando nuevas issues por los demás usuarios, como sugerencias o errores, aquellas que se acepten se irán añadiendo a las milestones según la prioridad dada.
 
 ## ¿Cómo contribuir?
 
-Fácil, clona el repositorio (`git clone https://github.com/ZakaHaceCosas/personaplus.git`) y ponte a programar.
-
-Cualquier contribución es bienvenida. Házlo a tu manera, aunque te agradecería que siguieras las [PAUTAS DE CONTRIBUCIÓN](https://github.com/ZakaHaceCosas/personaplus/blob/main/CONTRIBUTING.md) y la [DOCUMENTACIÓN](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md#3-programando-personaplus).
+Fácil: clona el repositorio (`git clone https://github.com/ZakaHaceCosas/personaplus.git`) y empieza a programar. Todas las contribuciones son bienvenidas. Programa a tu manera, aunque te agradecería seguir las [PAUTAS DE CONTRIBUCIÓN](https://github.com/ZakaHaceCosas/personaplus/blob/main/CONTRIBUTING.md) y la [DOCUMENTACIÓN](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md).
 
 ## Licencia y créditos
 
