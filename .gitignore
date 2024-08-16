@@ -56,21 +56,9 @@ gradlew.bat
 local.properties
 
 # work in progress
-src/**/*.wip.tsx
-src/**/*.wip.ts
-
-core/**/*.wip.tsx
-core/**/*.wip.ts
-
-app/**/*.wip.tsx
-app/**/*.wip.ts
+**/*.wip.*
+*.wip.*
 
 # local-only testing
-src/**/*.testing.tsx
-src/**/*.testing.ts
-
-core/**/*.testing.tsx
-core/**/*.testing.ts
-
-app/**/*.testing.tsx
-app/**/*.testing.ts
+**/*.testing.*
+*.testing.*
