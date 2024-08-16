@@ -5,7 +5,13 @@
         "strict": true,
         "paths": {
             "@/*": ["./*"]
-        }
+        },
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "strictNullChecks": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "incremental": true
     },
     "include": ["**/*.ts", "**/*.tsx", "jest.config.js"]
 }
