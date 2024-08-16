@@ -227,7 +227,8 @@ export default function CreateObjective() {
             "function handleCreation() was called within CreateObjective.tsx",
             "log"
         );
-        if (exercise === null) {
+        // @ts-expect-error: Because "" is not valid or smth, gives an error
+        if (exercise === null || exercise === "") {
             throw new Error("Exercise cannot be null");
         }
 
@@ -331,7 +332,7 @@ export default function CreateObjective() {
                     >
                         <Select.Item
                             label={t("globals.select_placeholder")}
-                            value={null}
+                            value=""
                             color={colors.LBLS.SDD}
                         />
                         {exercises.map(ex => (
