@@ -1,7 +1,7 @@
 // InfoIcons.tsx
 // Informative icons for the session page
 
-import React from "react";
+import React, { ReactElement } from "react";
 import { View } from "react-native";
 import GapView from "@/src/GapView";
 import { Objective } from "@/src/types/Objective";
@@ -9,6 +9,7 @@ import Ionicons from "@expo/vector-icons/MaterialIcons";
 import BetterText from "@/src/BetterText";
 import colors from "@/src/toolkit/design/colors";
 import { TFunction } from "i18next";
+import FontSizes from "../toolkit/design/fontSizes";
 
 // TypeScript, supongo...
 /**
@@ -37,9 +38,14 @@ type InfoIconsProps = {
  * @param {1 | 2} props.row Whether to show the 1st row (generic data) or the 2nd row (exercise-specific) data.
  * @param {TFunction} props.t The translate function.
  * @param {number} props.laps The `laps` stateful value.
- * @returns {JSX.Element} The JSX component displaying the icons.
+ * @returns {ReactElement} The JSX component displaying the icons.
  */
-const InfoIcons: React.FC<InfoIconsProps> = ({ objective, row, t, laps }) => {
+const InfoIcons: React.FC<InfoIconsProps> = ({
+    objective,
+    row,
+    t,
+    laps,
+}: InfoIconsProps): ReactElement => {
     const speedOptions: [string, string][] = [
         [t("Brisk Walk"), t("1.6 - 3.2 km/h")],
         [t("Light Jog"), t("3.2 - 4.0 km/h")],
@@ -85,9 +91,7 @@ const InfoIcons: React.FC<InfoIconsProps> = ({ objective, row, t, laps }) => {
                 </BetterText>
             </View>
         );
-    }
-
-    if (row === 2) {
+    } else if (row === 2) {
         return (
             <>
                 {objective.exercise.toLowerCase() === "running" && (
@@ -230,6 +234,18 @@ const InfoIcons: React.FC<InfoIconsProps> = ({ objective, row, t, laps }) => {
                     </View>
                 )}
             </>
+        );
+    } else {
+        return (
+            <View>
+                <BetterText
+                    fontSize={FontSizes.SMALL}
+                    textColor={colors.LBLS.SDD}
+                    fontWeight="Regular"
+                >
+                    Error. Invalid `row` parameter.
+                </BetterText>
+            </View>
         );
     }
 };

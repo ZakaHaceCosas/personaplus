@@ -80,7 +80,7 @@ interface DivisionProps {
  */
 export default function Division({
     status,
-    iconName,
+    // iconName,
     preheader,
     header,
     subheader,

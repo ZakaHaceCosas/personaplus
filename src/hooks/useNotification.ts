@@ -59,11 +59,11 @@ async function registerForPushNotificationsAsync(): Promise<ExpoPushToken | unde
                 alert('Failed to get push token for push notification!');
                 termLog('Failed to get push token for push notification!', "error");
                 return;
+            } else {
+                token = await getExpoPushTokenAsync({
+                    projectId: Constants.default.easConfig?.projectId,
+                });
             }
-            token = await getExpoPushTokenAsync({
-                projectId: Constants.default.easConfig?.projectId,
-            });
-            console.log(token); // Exception, doesnt use termLog to avoid storing it on the user's log file
         } else {
             alert('Must use physical device for Push Notifications');
             termLog('Must use physical device for Push Notifications', "warn");
