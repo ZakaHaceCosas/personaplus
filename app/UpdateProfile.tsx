@@ -197,7 +197,11 @@ export default function UpdateProfile() {
                 await AsyncStorage.setItem("weight", formData.weight);
                 await AsyncStorage.setItem("age", formData.age);
                 await AsyncStorage.setItem("gender", genderValue);
-                router.back(); // go to the prev page
+                if (router.canGoBack()) {
+                    router.back();
+                } else {
+                    router.replace("/Profile");
+                } // go to the prev page
             } catch (e) {
                 termLog("Error creating profile: " + e, "error");
             }

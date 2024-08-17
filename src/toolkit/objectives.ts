@@ -463,7 +463,7 @@ async function createNewActiveObjective(objectiveMetadata: ObjectiveWithoutId, t
         }
 
         // go back to the prev page (either dashboard or home)
-        router.back();
+        if (router.canGoBack()) { router.back() } else { router.replace("/") };
         return 0
     } catch (e) {
         termLog("Could not create an objective, got error: " + e, "error");
