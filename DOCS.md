@@ -18,7 +18,7 @@ Dale un PLUS a tu Persona <!-- dato curioso, este eslogan lo dejo a proposito, e
 
 Necesitarás TypeScript, Expo, y Expo CLI. Si trabajas desde VSCode, recomendamos la [extensión oficial de Expo Tools](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools).
 
-La mayor parte del tiempo solo usarás `expo start`, a veces con el arg. `--clear` (para limpiar la caché), y `npx expo install --check` y `--fix` para arreglar dependencias rotas.
+La mayor parte del tiempo solo usarás `expo start`, a veces con el arg. `--clear` (para limpiar la caché), y `expo install --check` y `--fix` para arreglar dependencias rotas.
 
 > [!TIP]
 > Recomiendo instalar Expo Go en tu teléfono para probar la app en Android. Probando en PC verás muchos errores visuales y botones que no funcionan - el código solo está optimizado para móvil.
