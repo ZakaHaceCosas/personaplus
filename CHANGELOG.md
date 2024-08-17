@@ -50,6 +50,7 @@ PD: Changelog is managed by the owner only, thanks. One task less for you!
 - **Fixed** the app registering twice or even more times for reminder notifications, leading to the app spamming unwanted reminders. (*Requires testing*)
 - **Fixed** buttons having unconsistent heights.
 - **Fixed** swap components having their order messed up.
+- **Fixed** buttons that should go back not going anywhere when there's no history.
 
 ### Dev updates - Latest
 

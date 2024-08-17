@@ -38,7 +38,7 @@ const BackButtonComponent: React.FC<BackButtonProps> = ({
     <BetterText
         fontSize={FontSizes.LARGE}
         fontWeight="Light"
-        onTap={router.back}
+        onTap={() => (router.canGoBack() ? router.back() : router.replace("/"))}
     >
         {"<"} {t("globals.go_back")}
     </BetterText>
