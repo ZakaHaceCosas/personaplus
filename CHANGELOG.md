@@ -72,6 +72,7 @@ PD: Changelog is managed by the owner only, thanks. One task less for you!
 - Replaced `return {*}` with `0 | 1` (depending on success / failure) in some functions.
 - Removed a useless `useEffect` from DeveloperInterface.
 - Finally created a well-structured interface for active objectives.
+- Migrate to `pnpm` as a package manager.
 
 ### Trivial updates - Latest
 
