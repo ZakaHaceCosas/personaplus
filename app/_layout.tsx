@@ -86,7 +86,7 @@ export default function Layout() {
     // pack it all in a ScrollView, add the android StatusBar, and the <Slot /> where the app will put everything
     return (
         <Fragment>
-            <StatusBar style="light" animated={true} />
+            <StatusBar style="auto" animated={true} />
             <Slot />
         </Fragment>
     );
