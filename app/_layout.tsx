@@ -8,6 +8,14 @@ import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import "@/src/toolkit/translations";
 
+export {
+    // Catch any errors thrown by the Layout component.
+    ErrorBoundary,
+} from "expo-router";
+
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
+
 // We create the function
 export default function Layout() {
     // BeVietnamPro y NotoSerif, our fonts
@@ -51,10 +59,15 @@ export default function Layout() {
         "NotoSerif-ThinItalic": require("../fonts/NotoSerif-ThinItalic.ttf"),
     });
 
+    // Expo Router uses Error Boundaries to catch errors in the navigation tree.
+    useEffect(() => {
+        if (fontError) throw fontError;
+    }, [fontError]);
+
     // We load the fonts
     useEffect(() => {
         const onLayoutRootView = async () => {
-            if (fontsLoaded || fontError) {
+            if (fontsLoaded) {
                 await SplashScreen.hideAsync(); // Hide the SplashScreen when everything's loaded
             }
         };
@@ -64,9 +77,9 @@ export default function Layout() {
         return () => {
             // we let this empty
         };
-    }, [fontsLoaded, fontError]);
+    }, [fontsLoaded]);
 
-    if (!fontsLoaded && !fontError) {
+    if (!fontsLoaded) {
         return null;
     }
 
