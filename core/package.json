@@ -2,5 +2,15 @@
     "name": "openhealthjs",
     "displayName": "OpenHealth",
     "version": "0.0.3",
-    "private": "true"
+    "private": "true",
+    "main": "openhealth.ts",
+    "scripts": {
+        "clean": "rimraf dist",
+        "build": "pnpm run clean && tsc"
+    },
+    "author": "ZakaHaceCosas",
+    "contributors": [
+        "The PersonaPlus contributors"
+    ],
+    "license": "ISC"
 }
