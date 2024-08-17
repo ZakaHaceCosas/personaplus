@@ -13,6 +13,7 @@
         "noUnusedParameters": true,
         "incremental": true,
         "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
         "allowSyntheticDefaultImports": true
     },
     "include": ["**/*.ts", "**/*.tsx", "jest.config.js"]
