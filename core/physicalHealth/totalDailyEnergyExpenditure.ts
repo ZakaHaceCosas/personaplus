@@ -23,7 +23,7 @@ export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
  * @returns The TDEE value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the TDEE value.
 */
 
-export default function calculateBasalMetabolicRate(age: number, gender: "male" | "female", weight: number, height: number, activness: "poor" | "light" | "moderate" | "intense" | "extreme", provideContext?: boolean, provideExplanation?: boolean): OpenHealthResponse {
+export default function calculateTotalDailyEnergyExpenditure(age: number, gender: "male" | "female", weight: number, height: number, activness: "poor" | "light" | "moderate" | "intense" | "extreme", provideContext?: boolean, provideExplanation?: boolean): OpenHealthResponse {
     const bmrsource = OpenHealth.physicalHealth.BasalMetabolicRate.calculate(age, gender, weight, height, activness, true, true)
 
     const bmr = bmrsource.result
