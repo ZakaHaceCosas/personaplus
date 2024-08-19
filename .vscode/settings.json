@@ -1,5 +1,4 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive",
     "files.exclude": {
         "**/node_modules": false,
         "**/.git": true,
