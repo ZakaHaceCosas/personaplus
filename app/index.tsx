@@ -2,13 +2,7 @@
 // Welcome to PersonaPlus. Give yourself a plus!
 
 import React, { useState, useEffect, ReactElement, useCallback } from "react";
-import {
-    View,
-    ScrollView,
-    StyleSheet,
-    Platform,
-    Dimensions,
-} from "react-native";
+import { View, ScrollView, StyleSheet, Platform } from "react-native";
 import { router, usePathname } from "expo-router";
 import {
     markObjectiveAsDone,
@@ -49,12 +43,8 @@ import { TFunction } from "i18next";
 
 // We define the styles
 const styles = StyleSheet.create({
-    containerview: {
-        width: Dimensions.get("screen").width,
-        height: Dimensions.get("screen").height,
-        backgroundColor: colors.MAIN.APP,
-    },
     mainview: {
+        backgroundColor: colors.MAIN.APP,
         padding: 20,
         paddingTop: 40,
         display: "flex",
@@ -423,7 +413,7 @@ export default function Home() {
     }
 
     return (
-        <View style={styles.containerview}>
+        <>
             <ScrollView
                 style={styles.mainview}
                 contentContainerStyle={{ flexGrow: 1 }}
@@ -432,6 +422,55 @@ export default function Home() {
                 <BetterTextHeader>
                     {t("page_home.header.label")}, {username}!
                 </BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
+                <BetterTextHeader>scrollea puto</BetterTextHeader>
                 <BetterTextSubHeader>
                     {t("page_home.header.sublabel")}
                 </BetterTextSubHeader>
@@ -461,6 +500,6 @@ export default function Home() {
                 <Footer />
             </ScrollView>
             <BottomNav currentLocation={currentpage} />
-        </View>
+        </>
     );
 }
