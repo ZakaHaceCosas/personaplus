@@ -4,7 +4,6 @@
 import React, { useEffect, useState } from "react";
 import {
     StyleSheet,
-    Dimensions,
     Platform,
     ToastAndroid,
     View,
@@ -43,17 +42,13 @@ interface Descriptions {
 
 // We define the styles
 const styles = StyleSheet.create({
-    containerview: {
-        width: Dimensions.get("screen").width,
-        height: Dimensions.get("screen").height,
-        backgroundColor: colors.MAIN.APP,
-    },
     mainview: {
+        backgroundColor: colors.MAIN.APP,
         padding: 20,
         paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        flexGrow: 1,
+        minHeight: "100%",
     },
 });
 
@@ -179,7 +174,7 @@ export default function Dashboard() {
     }
 
     return (
-        <View style={styles.containerview}>
+        <>
             <ScrollView
                 style={styles.mainview}
                 contentContainerStyle={{ flexGrow: 1 }}
@@ -286,6 +281,6 @@ export default function Dashboard() {
                 <Footer />
             </ScrollView>
             <BottomNav currentLocation={currentpage} />
-        </View>
+        </>
     );
 }

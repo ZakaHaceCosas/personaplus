@@ -2,13 +2,7 @@
 // The GPL license. A bit strict, but it is what it is.
 
 import React from "react";
-import {
-    StyleSheet,
-    View,
-    ScrollView,
-    Linking,
-    Dimensions,
-} from "react-native";
+import { StyleSheet, ScrollView, Linking } from "react-native";
 import BetterText, {
     BetterTextHeader,
     BetterTextLicenseHeader,
@@ -20,17 +14,13 @@ import { useTranslation } from "react-i18next";
 import colors from "@/src/toolkit/design/colors";
 
 const styles = StyleSheet.create({
-    containerview: {
-        width: Dimensions.get("screen").width,
-        height: Dimensions.get("screen").height,
-        backgroundColor: colors.MAIN.APP,
-    },
     mainview: {
+        backgroundColor: colors.MAIN.APP,
         padding: 20,
         paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        flexGrow: 1,
+        minHeight: "100%",
         // backgroundColor: "#FFF",
         // i dont know why, but i feel a license section in an app should have its background white
         // (edit: nevermind)
@@ -42,7 +32,7 @@ export default function License() {
 
     // yes, i did spend more than an hour formatting the General Public License into a lot of <BetterText> blocks. :]
     return (
-        <View style={styles.containerview}>
+        <>
             <ScrollView
                 style={styles.mainview}
                 contentContainerStyle={{ flexGrow: 1 }}
@@ -865,6 +855,6 @@ export default function License() {
                     END OF TERMS AND CONDITIONS
                 </BetterTextLicenseText>
             </ScrollView>
-        </View>
+        </>
     );
 }

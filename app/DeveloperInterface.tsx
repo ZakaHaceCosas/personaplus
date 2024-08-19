@@ -5,14 +5,7 @@
 // ok i think i fixed it
 
 import React, { useEffect, useState } from "react";
-import {
-    Alert,
-    Dimensions,
-    ScrollView,
-    StyleSheet,
-    View,
-    Text,
-} from "react-native";
+import { Alert, ScrollView, StyleSheet, View, Text } from "react-native";
 import BottomNav from "@/src/BottomNav";
 import BetterText, { BetterTextHeader } from "@/src/BetterText";
 import GapView from "@/src/GapView";
@@ -76,17 +69,13 @@ const styles = StyleSheet.create({
         borderLeftWidth: 6,
         borderLeftColor: colors.PRIMARIES.WOR.WOR,
     },
-    containerview: {
-        width: Dimensions.get("screen").width,
-        height: Dimensions.get("screen").height,
-        backgroundColor: colors.MAIN.APP,
-    },
     mainview: {
+        backgroundColor: colors.MAIN.APP,
         padding: 20,
         paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        flexGrow: 1,
+        minHeight: "100%",
     },
 });
 
@@ -304,7 +293,7 @@ export default function DeveloperInterface() {
     }
 
     return (
-        <View style={styles.containerview}>
+        <>
             <ScrollView
                 style={styles.mainview}
                 contentContainerStyle={{ flexGrow: 1 }}
@@ -408,6 +397,6 @@ export default function DeveloperInterface() {
                 <Footer />
             </ScrollView>
             <BottomNav currentLocation={currentpage} />
-        </View>
+        </>
     );
 }

@@ -23,18 +23,13 @@ import BackButton from "@/src/BackButton";
 
 // We define the styles
 const styles = StyleSheet.create({
-    containerview: {
-        paddingTop: 20,
-        width: "100%",
-        height: "100%",
-        backgroundColor: colors.MAIN.APP,
-    },
     mainview: {
+        backgroundColor: colors.MAIN.APP,
         padding: 20,
         paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        flexGrow: 1,
+        minHeight: "100%",
     },
     flexydays: {
         flexDirection: "column",
@@ -293,7 +288,7 @@ export default function CreateObjective() {
         : false;
 
     return (
-        <View style={styles.containerview}>
+        <>
             <ScrollView
                 style={styles.mainview}
                 contentContainerStyle={{ flexGrow: 1 }}
@@ -929,6 +924,6 @@ export default function CreateObjective() {
                     </BetterText>
                 </View>
             </ScrollView>
-        </View>
+        </>
     );
 }

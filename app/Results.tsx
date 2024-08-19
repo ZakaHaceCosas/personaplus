@@ -2,7 +2,7 @@
 // Results page for when a session is done.
 
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, ScrollView, Dimensions } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import OpenHealth from "@/core/openhealth";
 import { termLog } from "@/src/toolkit/debug/console";
 import BetterText, {
@@ -24,17 +24,13 @@ import colors from "@/src/toolkit/design/colors";
 
 // We define the styles
 const styles = StyleSheet.create({
-    containerview: {
-        width: Dimensions.get("screen").width,
-        height: Dimensions.get("screen").height,
-        backgroundColor: colors.MAIN.APP,
-    },
     mainview: {
+        backgroundColor: colors.MAIN.APP,
         padding: 20,
         paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        flexGrow: 1,
+        minHeight: "100%",
     },
     thirdview: {
         display: "flex",
@@ -244,7 +240,7 @@ export default function Results() {
     }
 
     return (
-        <View style={styles.containerview}>
+        <>
             <ScrollView
                 style={styles.mainview}
                 contentContainerStyle={{ flexGrow: 1 }}
@@ -291,6 +287,6 @@ export default function Results() {
                     buttonText={t("globals.success")}
                 />
             </ScrollView>
-        </View>
+        </>
     );
 }
