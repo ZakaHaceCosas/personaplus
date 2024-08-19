@@ -422,55 +422,6 @@ export default function Home() {
                 <BetterTextHeader>
                     {t("page_home.header.label")}, {username}!
                 </BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
-                <BetterTextHeader>scrollea puto</BetterTextHeader>
                 <BetterTextSubHeader>
                     {t("page_home.header.sublabel")}
                 </BetterTextSubHeader>
