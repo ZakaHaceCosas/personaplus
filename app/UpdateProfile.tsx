@@ -2,13 +2,7 @@
 // Update your profile.
 
 import React, { useRef, useState, useEffect } from "react";
-import {
-    StyleSheet,
-    TextInput,
-    View,
-    ScrollView,
-    Dimensions,
-} from "react-native";
+import { StyleSheet, TextInput, View, ScrollView } from "react-native";
 import { router } from "expo-router";
 import BetterText, {
     BetterTextHeader,
@@ -36,17 +30,13 @@ interface UserData {
 
 // We define the styles
 const styles = StyleSheet.create({
-    containerview: {
-        width: Dimensions.get("screen").width,
-        height: Dimensions.get("screen").height,
-        backgroundColor: colors.MAIN.APP,
-    },
     mainview: {
+        backgroundColor: colors.MAIN.APP,
         padding: 20,
         paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        flexGrow: 1,
+        minHeight: "100%",
     },
     flexbtns: {
         display: "flex",
@@ -215,7 +205,7 @@ export default function UpdateProfile() {
     }
 
     return (
-        <View style={styles.containerview}>
+        <>
             <ScrollView
                 style={styles.mainview}
                 contentContainerStyle={{ flexGrow: 1 }}
@@ -453,6 +443,6 @@ export default function UpdateProfile() {
                     )}
                 </View>
             </ScrollView>
-        </View>
+        </>
     );
 }

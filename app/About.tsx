@@ -1,13 +1,7 @@
 // About.tsx
 // Info about the app
 import React, { useCallback } from "react";
-import {
-    StyleSheet,
-    View,
-    ScrollView,
-    Linking,
-    Dimensions,
-} from "react-native";
+import { StyleSheet, View, ScrollView, Linking } from "react-native";
 import { router } from "expo-router";
 import BetterText, { BetterTextHeader } from "@/src/BetterText";
 import Section from "@/src/section/Section";
@@ -22,17 +16,13 @@ import BackButton from "@/src/BackButton";
 
 // We define the styles
 const styles = StyleSheet.create({
-    containerview: {
-        width: Dimensions.get("screen").width,
-        height: Dimensions.get("screen").height,
-        backgroundColor: colors.MAIN.APP,
-    },
     mainview: {
+        backgroundColor: colors.MAIN.APP,
         padding: 20,
         paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        flexGrow: 1,
+        minHeight: "100%",
     },
     headerContainer: {
         display: "flex",
@@ -69,7 +59,7 @@ export default function Home() {
     }, []);
 
     return (
-        <View style={styles.containerview}>
+        <>
             <ScrollView style={styles.mainview}>
                 <BackButton t={t} />
                 <GapView height={spacing.LARGE} />
@@ -152,6 +142,6 @@ export default function Home() {
                     {t("about_page.testing")}
                 </BetterText>
             </ScrollView>
-        </View>
+        </>
     );
 }
