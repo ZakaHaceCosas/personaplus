@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         paddingTop: 40,
         display: "flex",
         flexDirection: "column",
-        flexGrow: 1,
+        minHeight: "100%",
     },
 });
 
