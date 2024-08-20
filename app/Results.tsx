@@ -22,6 +22,20 @@ import Button from "@/src/Buttons";
 import generateRandomMessage from "@/src/toolkit/design/randomMessages";
 import colors from "@/src/toolkit/design/colors";
 
+// TypeScript, supongo
+interface Params {
+    speed: number;
+    time: number;
+    id: number;
+    exercise: string;
+    repetitions: number;
+    lifts: number;
+    barWeight: number;
+    liftWeight: number;
+    pushups: number;
+    hands: number;
+}
+
 // We define the styles
 const styles = StyleSheet.create({
     mainview: {
@@ -40,19 +54,31 @@ const styles = StyleSheet.create({
 
 export default function Results() {
     // Params
-    const params = useGlobalSearchParams();
+    const originalParams = useGlobalSearchParams();
     // termLog(params, "log");
+    const params: Params = {
+        speed: Number(originalParams.speed) || 0,
+        time: Number(originalParams.time) || 0,
+        id: Number(originalParams.id) || 0,
+        exercise: (originalParams.exercise as string) || "",
+        repetitions: Number(originalParams.repetitions) || 0,
+        lifts: Number(originalParams.lifts) || 0,
+        barWeight: Number(originalParams.barWeight) || 0,
+        liftWeight: Number(originalParams.liftWeight) || 0,
+        pushups: Number(originalParams.pushups) || 0,
+        hands: Number(originalParams.hands) || 0,
+    };
     // Global params
-    const sessionElapsedTime: number = Number(params.time);
-    const objectiveExercise: string = params.exercise as string;
-    const objectiveIdentifier: number = Number(params.id);
-    const repetitions: number = Number(params.repetitions);
-    const multiobjective_hands: number = Number(params.hands);
+    const sessionElapsedTime: number = params.time;
+    const objectiveExercise: string = params.exercise;
+    const objectiveIdentifier: number = params.id;
+    const repetitions: number = params.repetitions;
+    const multiobjective_hands: number = params.hands;
     // Objective-specific params
-    const objectiveRunning_Speed: number = Number(params.speed);
-    const objectiveLifting_barWeight: number = Number(params.barWeight);
-    const objectiveLifting_liftWeight: number = Number(params.liftWeight);
-    const objectivePushups_Pushups: number = Number(params.pushups);
+    const objectiveRunning_Speed: number = params.speed;
+    const objectiveLifting_barWeight: number = params.barWeight;
+    const objectiveLifting_liftWeight: number = params.liftWeight;
+    const objectivePushups_Pushups: number = params.pushups;
 
     const [userData, setUserData] = useState<UserHealthData | null>(null);
     const [result, setResult] = useState<{ result: number } | null>(null);
@@ -230,7 +256,7 @@ export default function Results() {
         });
     } else if (objectiveExercise.toLowerCase() === "lifting") {
         resultsInfoText = t("page_session_results.results.body_lifting", {
-            amount: objectivePushups_Pushups || "??", // CONFUSING, I KNOW, BUT I THINK IT'S LIKE THIS
+            amount: objectivePushups_Pushups || "??",
             weight:
                 objectiveLifting_barWeight + objectiveLifting_liftWeight * 2 ||
                 "??",
