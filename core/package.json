@@ -13,7 +13,7 @@
         "dist"
     ],
     "devDependencies": {
-        "typescript": "^5.0.0"
+        "typescript": "latest"
     },
     "author": "ZakaHaceCosas",
     "contributors": [
