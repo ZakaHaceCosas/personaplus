@@ -11,7 +11,7 @@ export interface OpenHealthResponse {
     explanation?: string
 }
 
-export interface OpenHealthPredictableResponse {
+export interface OpenHealthResponsePredictable {
     result: number,
     subject: UserHealthData,
     context?: string,

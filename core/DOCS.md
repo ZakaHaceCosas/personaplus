@@ -5,10 +5,10 @@
 
 ## First thing first: categories
 
-The entry point of the library is `OpenHealth`
+The entry point of the library is `OpenHealth` (`@/core/openhealth.ts`).
 
 ```tsx
-import OpenHealth from "openhealth"
+import OpenHealth from "@/core/openhealth"
 ```
 
 From there, you have different categories to access functions, like the following:
@@ -24,8 +24,8 @@ Currently, these are all the categories available:
 | CATEGORY | EXPLANATION |
 | -------- | ----------- |
 | `physicalHealth` | Phisical health related functions and calculations. |
-| `mentalHealth` | **(Not yet implemented)** Mental health related functions and calculations. |
 | `performance` | Sport & activity performance related functions and calculations. |
+| `mentalHealth` | **(Not yet implemented)** Mental health related functions and calculations. |
 
 ## Now, how do functions work?
 
@@ -37,7 +37,7 @@ OpenHealth.physicalHealth.BodyMassIndex.getSource();
 OpenHealth.physicalHealth.BodyMassIndex.getLastUpdated();
 ```
 
-***`Calculate`*** is the most important thing, where you pass **all the arguments required by the calculation function to work**, plus **two extra booleans:** `provideContext` and `provideExplanation`. It can ask for data like the weight, height, age, or gender of the subject, among others.
+**`Calculate`** is the most important thing, where you pass all the arguments required by the calculation function to work, plus **two extra booleans:** `provideContext` and `provideExplanation`. It can ask for data like the weight, height, age, or gender of the subject, among others.
 
 > [!NOTE]
 >
@@ -55,28 +55,37 @@ OpenHealth.physicalHealth.BodyMassIndex.getLastUpdated();
 
 ## What should I expect as a return?
 
-Calculation functions always follow the same structure for returns: an `OpenHealthResponse` object which looks like this:
+Calculation functions always follow the same structure for returns, or almost:
+
+There are three possible kinds of response, being all of them defined interfaces: `OpenHealthResponse`, `OpenHealthResponsePredictable`, and `OpenHealthResponseVersatile`.
+
+Basically, the basic response looks like this:
 
 ```tsx
 interface OpenHealthResponse {
-    result: number; // The result of the calculation itself. Should always be a number.
-    subject: {
+    result: number;
+    subject?: {
         age: number;
         gender: "male" | "female";
         weight: number;
         height: number;
-        ...
-        // Additional params will always be inside of the subject. Specific functions might require additional params, specially performance related ones.
+        [key: string]: string | number | boolean | null | undefined;
     };
     context?: string;
     explanation?: string;
 }
 ```
 
+`result` is the result of the calculation. `subject` is basically the data you provided to the function, with the option of additional params. And context & explanation are those two texts that can be optionally returned.
+
 > [!WARNING]
 > If both `provideContext` and `provideExplanation` are set to `false`, you will be returned an object that contains JUST the "`result`". This is because the `subject` is considered part of the context, therefore `provideContext` must be set to true if you wanted to retrieve it for any reason. Anyways all the content from the `subject` are arguments you pass to the function, so in theory you'll always have access to those even if you don't explicitly ask for the `subject` AND the `context`.
 >
 > In those cases, the number will be returned as part of the object, not as a standalone number.
+
+Then there's the `OpenHealthResponsePredictable`, which - as the name implies - is a *predictable* version of the OH response. In other words, there are no optional params and subject? is not optional (subject).
+
+And lastly, there's `OpenHealthResponseVersatile`, which is the opposite: more params are optional, meaning you can, for example, not get a `subject.weight` value returned, in the case it's not required by the function in the 1st place.
 
 ## What to expect from the other functions?
 
