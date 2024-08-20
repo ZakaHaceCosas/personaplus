@@ -12,7 +12,8 @@
             "env": {
                 "PACKAGE": "com.zakahacecosas.personaplus.development",
                 "APPICON": "./assets/icon-5050.png",
-                "APPNAME": "PP Developer"
+                "APPNAME": "PP Developer",
+                "APPADAPTIVEICONBACKGROUND": "./assets/aib-5050.png"
             }
         },
         "preview-assembleDebug": {

@@ -32,7 +32,7 @@ const config: ExpoConfig.ExpoConfig = {
         icon: process.env.APPICON || undefined, // || undefined, so either the blue dev icon or directly the regular adaptive icon
         adaptiveIcon: {
             foregroundImage: "./assets/adaptive-icon-foreground.png",
-            backgroundImage: "./assets/adaptive-icon-background.png",
+            backgroundImage: process.env.APPADAPTIVEICONBACKGROUND || "./assets/adaptive-icon-background.png",
             backgroundColor: "#0E1013"
         },
         allowBackup: false,
