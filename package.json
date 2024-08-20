@@ -12,9 +12,9 @@
         "dep:check": "expo install --check",
         "dep:fix": "expo install --fix",
         "lint": "eslint .",
-        "build": "expo install --fix && eas build -p android --profile production",
-        "build:wp": "expo install --fix && expo prebuild --clean && eas build -p android --profile production",
-        "build:quick": "eas build -p android --profile production",
+        "build": "eas build -p android --profile production",
+        "build:depcheck": "expo install --fix && eas build -p android --profile production",
+        "build:prebuild": "expo install --fix && expo prebuild --clean && eas build -p android --profile production",
         "build:dev": "eas build -p android --profile development",
         "test": "jest"
     },
