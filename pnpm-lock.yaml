@@ -69,8 +69,8 @@ importers:
         specifier: ~3.0.7
         version: 3.0.7(expo@51.0.29(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
       expo-notifications:
-        specifier: ~0.28.15
-        version: 0.28.15(expo@51.0.29(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
+        specifier: ~0.28.16
+        version: 0.28.16(expo@51.0.29(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2)))
       expo-router:
         specifier: ~3.5.23
         version: 3.5.23(expo-constants@16.0.2(expo@51.0.29(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))))(expo-linking@6.3.1(expo@51.0.29(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))))(expo-modules-autolinking@1.11.2)(expo-status-bar@1.12.1)(expo@51.0.29(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2)))(react-native-safe-area-context@4.10.5(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0))(react-native-screens@3.31.1(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0))(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)(typescript@5.3.3)
@@ -991,7 +991,7 @@ packages:
 
   '@expo/bunyan@4.0.1':
     resolution: {integrity: sha512-+Lla7nYSiHZirgK+U/uYzsLv/X+HaJienbD5AKX1UQZHYfWaP+9uuQluRB4GrEVWF0GZ7vEVp/jzaOT9k/SQlg==}
-    engines: {'0': node >=0.10.0}
+    engines: {node: '>=0.10.0'}
 
   '@expo/cli@0.18.29':
     resolution: {integrity: sha512-X810C48Ss+67RdZU39YEO1khNYo1RmjouRV+vVe0QhMoTe8R6OA3t+XYEdwaNbJ5p/DJN7szfHfNmX2glpC7xg==}
@@ -2525,8 +2525,8 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
 
-  electron-to-chromium@1.5.12:
-    resolution: {integrity: sha512-tIhPkdlEoCL1Y+PToq3zRNehUaKp3wBX/sr7aclAWdIWjvqAe/Im/H0SiCM4c1Q8BLPHCdoJTol+ZblflydehA==}
+  electron-to-chromium@1.5.13:
+    resolution: {integrity: sha512-lbBcvtIJ4J6sS4tb5TLp1b4LyfCdMkwStzXPyAgVgTRAsep4bvrAGaBOP7ZJtQMNJpSQ9SqG4brWOroNaQtm7Q==}
 
   emittery@0.13.1:
     resolution: {integrity: sha512-DeWwawk6r5yR9jFgnDKYt4sLS0LmHJJi3ZOnb5/JdbYwj3nW+FxQnHIjhBKz8YLC7oRNPVM9NQ47I3CVx34eqQ==}
@@ -2877,8 +2877,8 @@ packages:
     peerDependencies:
       expo: '*'
 
-  expo-notifications@0.28.15:
-    resolution: {integrity: sha512-T303dw2akcG4w8HBKI7+Y1v5kFxYy53DjlBSLBMo5f22vnLTHWaa8oOhmpwGRGU4uiX56Bw4q0wywCTSgbEamQ==}
+  expo-notifications@0.28.16:
+    resolution: {integrity: sha512-sj4oDip+uFNmxieGHkfS2Usrwbw2jfOTfQ22a7z5tdSo/vD6jWMlCHOnJifqYLjPxyqf9SLTsQWO3bmk7MY2Yg==}
     peerDependencies:
       expo: '*'
 
@@ -8527,7 +8527,7 @@ snapshots:
   browserslist@4.23.3:
     dependencies:
       caniuse-lite: 1.0.30001651
-      electron-to-chromium: 1.5.12
+      electron-to-chromium: 1.5.13
       node-releases: 2.0.18
       update-browserslist-db: 1.1.0(browserslist@4.23.3)
 
@@ -9015,7 +9015,7 @@ snapshots:
     dependencies:
       jake: 10.9.2
 
-  electron-to-chromium@1.5.12: {}
+  electron-to-chromium@1.5.13: {}
 
   emittery@0.13.1: {}
 
@@ -9531,7 +9531,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  expo-notifications@0.28.15(expo@51.0.29(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))):
+  expo-notifications@0.28.16(expo@51.0.29(@babel/core@7.25.2)(@babel/preset-env@7.25.3(@babel/core@7.25.2))):
     dependencies:
       '@expo/image-utils': 0.5.1
       '@ide/backoff': 1.0.0
