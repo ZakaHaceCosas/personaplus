@@ -58,7 +58,7 @@
         "expo-localization": "~15.0.3",
         "expo-media-library": "~16.0.4",
         "expo-navigation-bar": "~3.0.7",
-        "expo-notifications": "~0.28.15",
+        "expo-notifications": "~0.28.16",
         "expo-router": "~3.5.23",
         "expo-splash-screen": "~0.27.5",
         "expo-status-bar": "~1.12.1",
