@@ -101,7 +101,7 @@
         "jest-expo": "~51.0.4",
         "prettier": "^3.3.3",
         "ts-jest": "^29.2.4",
-        "typescript": "^5.3.3"
+        "typescript": "~5.3.3"
     },
     "private": false,
     "expo": {
