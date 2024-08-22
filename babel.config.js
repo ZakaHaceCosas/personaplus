@@ -19,5 +19,8 @@ module.exports = function (api) {
                 "react-native-svg-transformer"
             ),
         },
+        resolver: {
+            sourceExts: ["ts", "tsx", "js", "jsx", "json", "mjs"],
+        },
     };
 };
