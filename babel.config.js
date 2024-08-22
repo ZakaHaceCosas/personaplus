@@ -14,13 +14,5 @@ module.exports = function (api) {
                 },
             ],
         ],
-        transformer: {
-            babelTransformerPath: require.resolve(
-                "react-native-svg-transformer"
-            ),
-        },
-        resolver: {
-            sourceExts: ["ts", "tsx", "js", "jsx", "json", "mjs"],
-        },
     };
 };
