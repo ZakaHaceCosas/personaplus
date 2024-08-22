@@ -48,18 +48,19 @@ PD: Changelog is managed by the owner only, thanks. One task less for you!
 - **Fixed** the app thinking the Welcome form was done even if it wasn't. Before, if the app was left without submitting it, and relaunched, the app would directly load without the data, treating the user as "Unknown".
 - **Fixed** Dev Interface showing "[object Object]" instead of the data the user cares about.
 - **Fixed** the app registering twice or even more times for reminder notifications, leading to the app spamming unwanted reminders. (*Requires testing*)
-- **Fixed** buttons having unconsistent heights.
+- **Fixed** buttons having inconsistent heights.
 - **Fixed** swap components having their order messed up.
 - **Fixed** buttons that should go back not going anywhere when there's no history.
+- **Fixed** the app not being able to scroll on some devices.
 
 ### Dev updates - Latest
 
 - Added testing to a few functions. Will slowly roll out to as much code as possible.
-- Toolkified design: added constants for font sizes and spacings, togheter with pre-made BetterText components such as `BetterTextHeader`. This will help with visual consistency across the app.
-- Made a general effort to improve the codebase: took care of many forgotten `TODO`s, removed useless comments, remove unused legacy code, improved JSDoc, made typing stronger, and optimised code for better readability.
+- Toolkified design: added constants for font sizes and spacings, together with pre-made BetterText components such as `BetterTextHeader`. This will help with visual consistency across the app.
+- Made a general effort to improve the codebase: took care of many forgotten `TODO`s, removed useless comments, removed unused legacy code, improved JSDoc, made typing stronger, and optimized code for better readability.
 - Toolkified objective creation and session starting.
 - Toolkified checking for updates.
-- Remove the usage of CSS directives that didn't exist in React Native, such as `calc()`.
+- Removed the usage of CSS directives that didn't exist in React Native, such as `calc()`.
 - Full refactor of `index.tsx`. **Has known issues.**
   - Removed some `termLog`s that were there for debug purposes and aren't required anymore.
   - Removed two `useState`s and one `useEffect` from `index.tsx`. Turns out the check for background fetching & notification status were duplicate.
@@ -73,7 +74,12 @@ PD: Changelog is managed by the owner only, thanks. One task less for you!
 - Replaced `return {*}` with `0 | 1` (depending on success / failure) in some functions.
 - Removed a useless `useEffect` from DeveloperInterface.
 - Finally created a well-structured interface for active objectives.
-- Migrate to `pnpm` as a package manager.
+- ~~Migrate to `pnpm` as a package manager.~~ *Yeah, I still prefer `pnpm`, but it just broke the project for whatever reason. We're sticking with the storage-counter-efficient `npm`, I guess.*
+- Updated deps and renamed some `package.json` scripts.
+  - Added many dependencies and changed `babel.config.js` because that motherf- was causing a lot of issues, missing package over missing package >:|
+- Added an interface for Result page's URL params.
+- Fixed a few issues with font loading.
+- Made `tsconfig.json` *slightly* more strict.
 
 ### Trivial updates - Latest
 
