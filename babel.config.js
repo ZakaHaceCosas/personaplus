@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = function (api) {
     api.cache(true);
     return {
@@ -7,10 +9,15 @@ module.exports = function (api) {
                 "module-resolver",
                 {
                     alias: {
-                        "@": "./",
+                        "@": path.resolve(__dirname),
                     },
                 },
             ],
         ],
+        transformer: {
+            babelTransformerPath: require.resolve(
+                "react-native-svg-transformer"
+            ),
+        },
     };
 };
