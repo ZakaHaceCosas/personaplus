@@ -5,18 +5,18 @@
 
 // PHISICAL HEALTH
 
-import * as BodyMassIndex from '@/core/physicalHealth/BodyMassIndex';
-import * as BodyFatPercentage from '@/core/physicalHealth/BodyFatPercentage';
-import * as IdealBodyWeight from '@/core/physicalHealth/IdealBodyWeight';
-import * as BasalMetabolicRate from "@/core/physicalHealth/BasalMetabolicRate";
-import * as MetabolicEquivalentOfTask from '@/core/physicalHealth/MetabolicEquivalentOfTask';
-import * as OneRepMax from '@/core/physicalHealth/OneRepMax';
+import * as BodyMassIndex from './physicalHealth/BodyMassIndex';
+import * as BodyFatPercentage from './physicalHealth/BodyFatPercentage';
+import * as IdealBodyWeight from './physicalHealth/IdealBodyWeight';
+import * as BasalMetabolicRate from "./physicalHealth/BasalMetabolicRate";
+import * as MetabolicEquivalentOfTask from './physicalHealth/MetabolicEquivalentOfTask';
+import * as OneRepMax from './physicalHealth/OneRepMax';
 
 // PERFORMANCE
 
-import * as RunningPerformance from '@/core/performance/RunningPerformance';
-import * as LiftingPerformance from '@/core/performance/LiftingPerformance';
-import * as PushingUpPerformance from "@/core/performance/PushingUpPerformance";
+import * as RunningPerformance from './performance/RunningPerformance';
+import * as LiftingPerformance from './performance/LiftingPerformance';
+import * as PushingUpPerformance from "./performance/PushingUpPerformance";
 
 // Interface for all OpenHealthModules
 interface OpenHealthModule<T = unknown> {
