@@ -111,5 +111,10 @@
                 "enabled": true
             }
         }
+    },
+    "pnpm": {
+        "overrides": {
+            "@react-native/gradle-plugin": ">=0.75.1"
+        }
     }
 }
