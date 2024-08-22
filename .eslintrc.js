@@ -5,7 +5,7 @@ module.exports = {
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended",
-        "prettier",
+        "plugin:prettier",
     ],
     parser: "@typescript-eslint/parser",
     parserOptions: {
@@ -18,6 +18,5 @@ module.exports = {
     plugins: ["react", "@typescript-eslint"],
     rules: {
         "space-infix-ops": ["error", { int32Hint: false }],
-        "@typescript-eslint/ban-types": "error",
     },
 };
