@@ -14,7 +14,9 @@
         "incremental": true,
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "strictFunctionTypes": true,
+        "alwaysStrict": true
     },
     "include": ["**/*.ts", "**/*.tsx", "jest.config.js"]
 }

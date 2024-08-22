@@ -18,5 +18,6 @@ module.exports = {
     plugins: ["react", "@typescript-eslint"],
     rules: {
         "space-infix-ops": ["error", { int32Hint: false }],
+        "@typescript-eslint/ban-types": "error",
     },
 };
