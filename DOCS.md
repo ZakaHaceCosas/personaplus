@@ -184,6 +184,18 @@ export default function doSomething() { // Esta funcion hace algo
 }
 ```
 
+##### 8.1 USA PALABRAS CLAVE
+
+Ciertos tipos de comentario pueden (y deberían) llevar palabras clave para ayudar a encontrarlos y entender de que van. Serían "TODO", "FIXME", "NOTE", "WATCHOUT", y "FAILING", para los siguientes casos:
+
+```ts
+// TODO: para tareas pendientes, cosas que estén inacabadas, o que necesiten cambios
+// FIXME: cosas que sabes que no funcionan o que están mal, pero no sabes arreglar y prefieres dejar para algún otro contribuidor
+// NOTE: info importante sobre el codigo en cuestión
+// WATCHOUT: similar a FIXME, pero para casos mas complejos / en los que no siempre falle / en los que haga falta estar atento
+// FAILING: añade esto a __tests__ que no estén pasando y no sepas porque (similar a FIXME)
+```
+
 ## Versionado y registro de cambios
 
 Cuando hagas cambios, aunque no es obligatorio, agradecemos que los añadas al `CHANGELOG.md`. Basta con que digas brevemente que cambiaste, no hace falta más. No subas el número de version, de eso nos encargamos nosotros ;D
