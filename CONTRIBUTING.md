@@ -74,7 +74,7 @@ Ahora sí.
 ### 4. Instala las dependencias
 
 ```bash
-pnpm install
+npm install
 ```
 
 (*Si no tienes Expo CLI, te ofrecerá instalarlo*)
@@ -82,7 +82,7 @@ pnpm install
 ### 5. Inicia la aplicación utilizando Expo CLI
 
 ```bash
-pmpm dlx expo start # o mas facil:
+npx expo start # o "npm run start"
 ```
 
 ¡Aparcado! En la interfaz, clica `w` para ver una demo rápida en tu navegador, o clica `a` para abrirla en un emulador Android (requiere Android Studio). Ya estás listo para programar. Realiza tus cambios en el código. Asegúrate de seguir las [convenciones de codificación del proyecto (la documentación)](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md).
