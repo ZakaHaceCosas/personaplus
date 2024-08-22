@@ -73,6 +73,7 @@ describe('checkForUpdates', () => {
 
         await checkForUpdates(mockT);
 
+        // FAILING: test not passing for whatever reason. tho I THINK it works in prod.
         expect(ToastAndroid.show).toHaveBeenCalledWith(
             "page_profile.updates.update_flow.youre_up_to_date",
             ToastAndroid.SHORT
