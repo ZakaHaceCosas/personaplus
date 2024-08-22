@@ -3,9 +3,9 @@
     "compilerOptions": {
         "jsx": "react",
         "strict": true,
-        "baseUrl": "./",
+        "baseUrl": ".",
         "paths": {
-            "@/*": ["./*"]
+            "@/*": ["*"]
         },
         "noImplicitAny": true,
         "noImplicitOverride": true,
