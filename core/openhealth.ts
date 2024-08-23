@@ -1,11 +1,11 @@
 // THIS IS THE MAIN FILE, CONTAINS NOTHING BUT ALL THE IMPORT MODULES SO THAT THEY CAN BE ACCESSED VIA import OpenHealth from '<path>'.
-// This file is expect to grow a lot in height...
+// This file is expected to grow a lot in height long term...
 
 // IMPORT MODULES
 
 // PHISICAL HEALTH
 
-import * as BodyMassIndex from './physicalHealth/BodyMassIndex';
+import * as BodyMassIndex from './physicalHealth/BodyMassIndex.ts';
 import * as BodyFatPercentage from './physicalHealth/BodyFatPercentage';
 import * as IdealBodyWeight from './physicalHealth/IdealBodyWeight';
 import * as BasalMetabolicRate from "./physicalHealth/BasalMetabolicRate";
