@@ -85,5 +85,6 @@
         "**/app/**": "App pages, ${filename}.${extname}",
         "**/src/types/**": "Types, ${filename}.${extname}",
         "**/src/**": "Source components, ${filename}.${extname}"
-    }
+    },
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }
