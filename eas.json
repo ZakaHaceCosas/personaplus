@@ -1,7 +1,7 @@
 {
     "cli": {
         "version": ">= 9.0.7",
-        "requireCommit": true,
+        "requireCommit": false,
         "promptToConfigurePushNotifications": true
     },
     "build": {
