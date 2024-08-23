@@ -17,7 +17,8 @@
         "forceConsistentCasingInFileNames": true,
         "allowSyntheticDefaultImports": true,
         "strictFunctionTypes": true,
-        "alwaysStrict": true
+        "alwaysStrict": true,
+        "allowImportingTsExtensions": true
     },
     "include": ["**/*.ts", "**/*.tsx", "jest.config.js"]
 }
