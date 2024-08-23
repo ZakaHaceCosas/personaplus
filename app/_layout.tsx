@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 // _layout.tsx
 // Main layout, (something to avoid duplicate code)
 

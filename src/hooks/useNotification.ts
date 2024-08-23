@@ -140,7 +140,7 @@ export async function scheduleRandomNotifications(t: TFunction): Promise<boolean
         termLog("ERROR REGISTERING NOTIFICATIONS: " + e, "error")
         return false
     }
-};
+}
 
 /**
  * This function cancels today's registered reminders. **Async function.**
@@ -162,7 +162,7 @@ export async function cancelScheduledNotifications(): Promise<boolean> {
         termLog("ERROR REGISTERING NOTIFICATIONS: " + e, "error")
         return false
     }
-};
+}
 
 /**
  * Checks if reminders are already set up for today. **Async function.**
