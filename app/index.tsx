@@ -14,6 +14,7 @@ import {
 } from "@/src/toolkit/objectives";
 import BetterText, {
     BetterTextHeader,
+    BetterTextSmallText,
     BetterTextSubHeader,
 } from "@/src/BetterText";
 import Section from "@/src/section/Section";
@@ -68,13 +69,29 @@ export default function Home() {
     const { t } = useTranslation();
     const currentpage = usePathname();
 
+    // nope, i didnt write this
+    // nope, i dont understand this
+    // yeah, i hope the solution is this
+    const handlePromiseWithTimeout = (promise: Promise<any>, ms: number) => {
+        const timeout = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error("Timeout")), ms)
+        );
+        return Promise.race([promise, timeout]);
+    };
+
     // marking an objective as done
     const handleMarkingObjectiveAsDone = useCallback(
         async (identifier: number) => {
             try {
-                await markObjectiveAsDone(identifier, true, t); // actually this line itself does the entire thing, thanks to the objective toolkit, the rest is just state handling for the page to update
+                await handlePromiseWithTimeout(
+                    markObjectiveAsDone(identifier, true, t),
+                    5000
+                ); // actually this line itself does the entire thing, thanks to the objective toolkit, the rest is just state handling for the page to update
                 // toolkification was probably the best idea i've ever had
-                const updatedObjectives = await getObjectives();
+                const updatedObjectives = await handlePromiseWithTimeout(
+                    getObjectives(),
+                    5000
+                );
                 if (updatedObjectives) {
                     setObjectives(objectiveArrayToObject(updatedObjectives));
                 }
@@ -86,7 +103,9 @@ export default function Home() {
         []
     );
 
-    function renderObjectiveDivision(obj: Objective): ReactElement | null {
+    function handleRenderObjectiveDivision(
+        obj: Objective
+    ): ReactElement | null {
         try {
             if (!dueTodayObjectiveList.includes(obj.identifier)) return null;
 
@@ -131,7 +150,7 @@ export default function Home() {
                     "username",
                     "hasLaunched",
                 ]);
-                if (items) {
+                if (items && items.length > 0) {
                     const username = items[0]?.[1]
                         ? String(items[0][1])
                         : "Error"; // in case of error sets to an "Error value"
@@ -140,7 +159,11 @@ export default function Home() {
                     const parsedObjectives = await getObjectives();
                     if (parsedObjectives) {
                         setObjectives(objectiveArrayToObject(parsedObjectives));
-                        termLog("Parsed Objectives:" + parsedObjectives, "log");
+                        termLog(
+                            "Parsed Objectives:" +
+                                JSON.stringify(parsedObjectives),
+                            "log"
+                        );
                         await fetchDueTodayObjectives();
                     } else {
                         setObjectives({});
@@ -175,40 +198,36 @@ export default function Home() {
             try {
                 if (!objectives || Object.keys(objectives).length === 0) {
                     setLoadingObjectives(false);
-                    return;
+                    return [];
                 } // Avoid running if not needed
 
-                if (objectives) {
-                    const identifiers = await Promise.all(
-                        Object.keys(objectives).map(async (key) => {
-                            const objective = objectives[key];
-                            const isDailyStatusChecked =
-                                await checkForAnObjectiveDailyStatus(
-                                    objective.identifier
-                                );
-                            if (
-                                !isDailyStatusChecked &&
-                                objective.days[adjustedToday]
-                            ) {
-                                return objective.identifier;
-                            }
-                            return undefined;
-                        })
-                    );
+                const identifiers = await Promise.all(
+                    Object.keys(objectives).map(async (key) => {
+                        const objective = objectives[key];
+                        const isDailyStatusChecked =
+                            await checkForAnObjectiveDailyStatus(
+                                objective.identifier
+                            );
+                        if (
+                            !isDailyStatusChecked &&
+                            objective.days[adjustedToday]
+                        ) {
+                            return objective.identifier;
+                        }
+                        return undefined;
+                    })
+                );
 
-                    termLog("Identifiers:" + identifiers, "log");
-                    const filteredIdentifiers = identifiers.filter(
-                        (id): id is number => id !== undefined
-                    );
-                    setDueTodayObjectiveList(filteredIdentifiers);
-                    termLog(
-                        "Due Today Objective List:" + filteredIdentifiers,
-                        "log"
-                    );
-                    return filteredIdentifiers;
-                } else {
-                    return [];
-                }
+                termLog("Identifiers:" + identifiers, "log");
+                const filteredIdentifiers = identifiers.filter(
+                    (id): id is number => id !== undefined
+                );
+                setDueTodayObjectiveList(filteredIdentifiers);
+                termLog(
+                    "Due Today Objective List:" + filteredIdentifiers,
+                    "log"
+                );
+                return filteredIdentifiers;
             } catch (e) {
                 termLog("Error fetching due today objectives: " + e, "error");
             } finally {
@@ -231,7 +250,7 @@ export default function Home() {
         if (loadingObjectives) {
             handle();
         }
-    }, [loadingObjectives, objectives]);
+    }, [loadingObjectives]);
 
     useEffect(() => {
         const manageNotifications = async () => {
@@ -274,7 +293,12 @@ export default function Home() {
 
     function renderObjectivesSection() {
         try {
-            if (loadingObjectives) return null;
+            if (loadingObjectives)
+                return (
+                    <BetterTextSmallText>
+                        {t("globals.loading")}
+                    </BetterTextSmallText>
+                );
 
             if (!objectives || Object.keys(objectives).length === 0) {
                 return RenderNoObjectivesDivision(t, () =>
@@ -294,7 +318,7 @@ export default function Home() {
                         .filter((obj) =>
                             dueTodayObjectiveList.includes(obj.identifier)
                         )
-                        .map((obj) => renderObjectiveDivision(obj))}
+                        .map((obj) => handleRenderObjectiveDivision(obj))}
                 </>
             );
         } catch (e) {
