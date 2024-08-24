@@ -18,6 +18,11 @@
 
 </div>
 
+<!--R6 MD ONLY, remove on merge-->
+# :en: Welcome to PersonaPlus R6 / :es: Bienvenido a PersonaPlus R6
+
+R6 stands for 6th rewrite. / R6 se refiere a reescritura por 6ta vez.
+
 ## DATE UN PLUS
 
 **PersonaPlus** es una app de código abierto 3 en 1 para ayudar a los usuarios a cuidar de su salud, dieta, y bienestar digital. A ***darse más***, como nos gusta decir.
