@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
         height: Dimensions.get("screen").height,
         display: "flex",
         flexDirection: "column",
+        backgroundColor: colors.MAIN.APP,
     },
     fragmentview: {
         display: "flex",
@@ -512,7 +513,7 @@ export default function WelcomePage() {
                         options={genderoptions}
                         value={genderValue}
                         onValueChange={handleGenderChange}
-                        order="vertical"
+                        order="horizontal"
                     />
                     <GapView height={10} />
                     <View style={styles.flexbtns}>
@@ -580,7 +581,7 @@ export default function WelcomePage() {
                         key="focuspointswap"
                         options={focuspointoptions}
                         value={focuspointValue}
-                        order="horizontal"
+                        order="vertical"
                         onValueChange={handleFocuspointChange}
                     />
                     <GapView height={15} />
