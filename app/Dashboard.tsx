@@ -189,7 +189,7 @@ export default function Dashboard() {
                 <GapView height={20} />
                 <Section kind="Objectives">
                     {objectives && Object.keys(objectives).length > 0 ? (
-                        Object.keys(objectives).map(key => {
+                        Object.keys(objectives).map((key) => {
                             const objective = objectives[key];
                             if (!objective) {
                                 termLog(

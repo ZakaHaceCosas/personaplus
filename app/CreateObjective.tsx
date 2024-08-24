@@ -104,7 +104,7 @@ export default function CreateObjective() {
             boolean,
             boolean,
             boolean,
-            boolean,
+            boolean
         ];
         // change the value of the specified index
         newDays[index] = !newDays[index];
@@ -116,34 +116,34 @@ export default function CreateObjective() {
     const handleIncrement = (value: string) => {
         switch (value) {
             case "duration":
-                setDuration(prev => (prev < 15 ? prev + 1 : prev + 5));
+                setDuration((prev) => (prev < 15 ? prev + 1 : prev + 5));
                 break;
             case "repetitions":
-                setRepetitions(prev => prev + 1);
+                setRepetitions((prev) => prev + 1);
                 break;
             case "rests":
-                setRests(prev => prev + 1);
+                setRests((prev) => prev + 1);
                 break;
             case "restDuration":
-                setRestDuration(prev => (prev < 5 ? prev + 0.25 : prev));
+                setRestDuration((prev) => (prev < 5 ? prev + 0.25 : prev));
                 break;
             case "amount":
-                setAmount(prev => prev + 1);
+                setAmount((prev) => prev + 1);
                 break;
             case "barWeight":
-                setBarWeight(prev => prev + 0.25);
+                setBarWeight((prev) => prev + 0.25);
                 break;
             case "liftWeight":
-                setLiftWeight(prev => prev + 0.25);
+                setLiftWeight((prev) => prev + 0.25);
                 break;
             case "lifts":
-                setLifts(prev => prev + 1);
+                setLifts((prev) => prev + 1);
                 break;
             case "hands":
-                setHands(prev => (prev === 1 ? 2 : 1));
+                setHands((prev) => (prev === 1 ? 2 : 1));
                 break;
             case "speed":
-                setSpeed(prev => {
+                setSpeed((prev) => {
                     if (prev >= 0 && prev < 11) {
                         return prev + 1;
                     } else {
@@ -159,7 +159,7 @@ export default function CreateObjective() {
         switch (value) {
             case "duration":
                 // i hate javascript.
-                setDuration(prev => {
+                setDuration((prev) => {
                     let newValue; // we create a variable for the value we'll set the duration to
 
                     // different operation depending on the prev amount
@@ -182,31 +182,31 @@ export default function CreateObjective() {
                 });
                 break;
             case "repetitions":
-                setRepetitions(prev => (prev > 0 ? prev - 1 : prev));
+                setRepetitions((prev) => (prev > 0 ? prev - 1 : prev));
                 break;
             case "rests":
-                setRests(prev => (prev > 0 ? prev - 1 : prev));
+                setRests((prev) => (prev > 0 ? prev - 1 : prev));
                 break;
             case "restDuration":
-                setRestDuration(prev => (prev > 0 ? prev - 0.25 : prev));
+                setRestDuration((prev) => (prev > 0 ? prev - 0.25 : prev));
                 break;
             case "amount":
-                setAmount(prev => prev - 1);
+                setAmount((prev) => prev - 1);
                 break;
             case "barWeight":
-                setBarWeight(prev => prev - 0.25);
+                setBarWeight((prev) => prev - 0.25);
                 break;
             case "liftWeight":
-                setLiftWeight(prev => prev - 0.25);
+                setLiftWeight((prev) => prev - 0.25);
                 break;
             case "lifts":
-                setLifts(prev => prev - 1);
+                setLifts((prev) => prev - 1);
                 break;
             case "hands":
-                setHands(prev => (prev === 2 ? 1 : 2));
+                setHands((prev) => (prev === 2 ? 1 : 2));
                 break;
             case "speed":
-                setSpeed(prev => {
+                setSpeed((prev) => {
                     if (prev > 0 && prev <= 11) {
                         return prev - 1;
                     } else {
@@ -259,7 +259,7 @@ export default function CreateObjective() {
                 amount > 0 &&
                 (hands === 1 || hands === 2) &&
                 duration > 0 &&
-                !days.every(day => !day)
+                !days.every((day) => !day)
             );
         }
         if (exercise.toLowerCase() === "lifting") {
@@ -269,7 +269,7 @@ export default function CreateObjective() {
                 barWeight > 0 &&
                 lifts > 0 &&
                 duration > 0 &&
-                !days.every(day => !day)
+                !days.every((day) => !day)
             );
         }
         if (exercise.toLowerCase() === "running") {
@@ -277,7 +277,7 @@ export default function CreateObjective() {
                 speed >= 0 &&
                 speed <= 11 &&
                 duration > 0 &&
-                !days.every(day => !day)
+                !days.every((day) => !day)
             );
         }
         return true;
@@ -312,7 +312,7 @@ export default function CreateObjective() {
                     <GapView height={5} />
                     <Select
                         selectedValue={exercise}
-                        onValueChange={itemValue => setExercise(itemValue)}
+                        onValueChange={(itemValue) => setExercise(itemValue)}
                         style={{
                             padding: 12,
                             width: "100%",
@@ -331,7 +331,7 @@ export default function CreateObjective() {
                             value=""
                             color={colors.LBLS.SDD}
                         />
-                        {exercises.map(ex => (
+                        {exercises.map((ex) => (
                             <Select.Item
                                 key={ex}
                                 label={t(
@@ -363,26 +363,16 @@ export default function CreateObjective() {
                                 index === 0
                                     ? t("globals.days_of_the_week.monday")
                                     : index === 1
-                                      ? t("globals.days_of_the_week.tuesday")
-                                      : index === 2
-                                        ? t(
-                                              "globals.days_of_the_week.wednesday"
-                                          )
-                                        : index === 3
-                                          ? t(
-                                                "globals.days_of_the_week.thursday"
-                                            )
-                                          : index === 4
-                                            ? t(
-                                                  "globals.days_of_the_week.friday"
-                                              )
-                                            : index === 5
-                                              ? t(
-                                                    "globals.days_of_the_week.saturday"
-                                                )
-                                              : t(
-                                                    "globals.days_of_the_week.sunday"
-                                                );
+                                    ? t("globals.days_of_the_week.tuesday")
+                                    : index === 2
+                                    ? t("globals.days_of_the_week.wednesday")
+                                    : index === 3
+                                    ? t("globals.days_of_the_week.thursday")
+                                    : index === 4
+                                    ? t("globals.days_of_the_week.friday")
+                                    : index === 5
+                                    ? t("globals.days_of_the_week.saturday")
+                                    : t("globals.days_of_the_week.sunday");
                             return (
                                 <View
                                     key={index}
@@ -420,7 +410,7 @@ export default function CreateObjective() {
                         })}
                     </View>
                     <GapView height={20} />
-                    {["duration", "repetitions", "rests"].map(item => (
+                    {["duration", "repetitions", "rests"].map((item) => (
                         <View key={item} style={{ marginBottom: 20 }}>
                             <BetterText
                                 fontSize={20}
@@ -454,8 +444,8 @@ export default function CreateObjective() {
                                     {item === "duration"
                                         ? duration
                                         : item === "repetitions"
-                                          ? repetitions
-                                          : rests}
+                                        ? repetitions
+                                        : rests}
                                 </BetterText>
                                 <Button
                                     layout="box"

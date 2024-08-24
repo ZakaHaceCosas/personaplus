@@ -20,9 +20,9 @@ import * as PushingUpPerformance from "./performance/PushingUpPerformance";
 
 // Interface for all OpenHealthModules
 interface OpenHealthModule<T = unknown> {
-    default: T; // Define el tipo de retorno real si lo sabes
-    getSource: () => string; // Define el tipo de retorno real si lo sabes
-    getLastUpdate: () => string; // Define el tipo de retorno real si lo sabes
+    default: T; // unknown, as it can be any thing
+    getSource: () => string;
+    getLastUpdate: () => string;
 }
 
 // Helper function to create each module

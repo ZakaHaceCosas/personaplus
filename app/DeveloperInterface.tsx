@@ -199,9 +199,11 @@ export default function DeveloperInterface() {
     const devExportLogs = async (logs: Logs) => {
         // formatting
         const logText = logs
-            .map(log => {
+            .map((log) => {
                 const date = new Date(log.timestamp);
-                return `[${date.toDateString()} ${date.toLocaleTimeString()}] (${log.type.toUpperCase()}) ${log.message}`;
+                return `[${date.toDateString()} ${date.toLocaleTimeString()}] (${log.type.toUpperCase()}) ${
+                    log.message
+                }`;
             })
             .join("\n");
 
