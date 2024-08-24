@@ -52,8 +52,9 @@ const styles = StyleSheet.create({
 // We create the function
 export default function CreateObjective() {
     const { t } = useTranslation(); // translate function
-    const [exercise, setExercise] =
-        useState<ActiveObjectiveSupportedExercises | null>(null); // what exercise is selected
+    const [exercise, setExercise] = useState<
+        ActiveObjectiveSupportedExercises | ""
+    >(""); // what exercise is selected
     const exercises = [
         "Push Up",
         "Lifting",
@@ -223,7 +224,7 @@ export default function CreateObjective() {
             "function handleCreation() was called within CreateObjective.tsx",
             "log"
         );
-        // @ts-expect-error: Because "" is not valid or smth, gives an error
+
         if (exercise === null || exercise === "") {
             throw new Error("Exercise cannot be null");
         }
