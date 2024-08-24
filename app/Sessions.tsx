@@ -123,8 +123,9 @@ function useCurrentObjective(objectiveIdentifier: number | null) {
         if (objectiveIdentifier !== null) {
             const fetchCurrentObjective = async () => {
                 try {
-                    const objective =
-                        await getObjectiveByIdentifier(objectiveIdentifier); // this line handles everything, actually
+                    const objective = await getObjectiveByIdentifier(
+                        objectiveIdentifier
+                    ); // this line handles everything, actually
                     setCurrentObjective(objective ?? null); // this sets the gathered objective as the current objective, or null if something happened
                     setLaps(objective?.repetitions || 0); // this ensures "laps" is set correctly
                 } catch (e) {
@@ -281,8 +282,8 @@ export default function Sessions() {
     // however repetititons exist, so a handler is required
     const handleFinish = () => {
         if (laps !== 0) {
-            setLaps(prev => (prev > 0 ? prev - 1 : 0));
-            setTimerKey(prevKey => prevKey + 1);
+            setLaps((prev) => (prev > 0 ? prev - 1 : 0));
+            setTimerKey((prevKey) => prevKey + 1);
         } else {
             finishSession(false);
         }
@@ -334,7 +335,7 @@ export default function Sessions() {
     };
 
     const toggleHelpMenu = (): void => {
-        setIsUserCheckingHelp(prev => !prev);
+        setIsUserCheckingHelp((prev) => !prev);
         toggleTimerStatus(isUserCheckingHelp); // ok, I dont know...
     };
 
@@ -434,7 +435,7 @@ export default function Sessions() {
                     colorsTime={[15, 5]}
                     isSmoothColorTransition={true}
                     onComplete={handleFinish}
-                    onUpdate={remainingTime =>
+                    onUpdate={(remainingTime) =>
                         handleResting(
                             currentObjective.duration * 60,
                             remainingTime,
@@ -472,7 +473,7 @@ export default function Sessions() {
                 <View style={styles.buttonsview}>
                     <Button
                         style={isTimerRunning ? "ACE" : "HMM"}
-                        action={() => setTimerStatus(prev => !prev)}
+                        action={() => setTimerStatus((prev) => !prev)}
                         layout="box"
                     >
                         <Ionicons

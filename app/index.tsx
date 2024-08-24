@@ -285,7 +285,7 @@ export default function Home() {
 
                 if (objectives) {
                     const identifiers = await Promise.all(
-                        Object.keys(objectives).map(async key => {
+                        Object.keys(objectives).map(async (key) => {
                             const objective = objectives[key];
                             const isDailyStatusChecked =
                                 await checkForAnObjectiveDailyStatus(
@@ -396,10 +396,10 @@ export default function Home() {
                 // NOTE: somehow reactnative's fast-refresh (like edit & save your code) actually makes them appear when testing with expo dev build / expo go, so...
                 <>
                     {Object.values(objectives)
-                        .filter(obj =>
+                        .filter((obj) =>
                             dueTodayObjectiveList.includes(obj.identifier)
                         )
-                        .map(obj => renderObjectiveDivision(obj))}
+                        .map((obj) => renderObjectiveDivision(obj))}
                 </>
             );
         } catch (e) {

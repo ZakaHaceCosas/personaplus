@@ -167,14 +167,14 @@ export default function WelcomePage() {
     // pagination
     const gonext = () => {
         if (currentTab > 0 && currentTab <= 3) {
-            setTab(prevPage => prevPage + 1);
+            setTab((prevPage) => prevPage + 1);
         } else {
             router.replace("/");
         }
     };
 
     const goback = () => {
-        setTab(prevPage => prevPage - 1);
+        setTab((prevPage) => prevPage - 1);
     };
 
     useEffect(() => {
@@ -240,7 +240,7 @@ export default function WelcomePage() {
     };
 
     const handleChange = (name: string, value: string) => {
-        setFormData(prevData => ({
+        setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
@@ -357,9 +357,9 @@ export default function WelcomePage() {
                         textContentType="username"
                         key="usernameinput"
                         enterKeyHint="next"
-                        onChangeText={text => handleChange("username", text)}
+                        onChangeText={(text) => handleChange("username", text)}
                         onSubmitEditing={() => focusNextField(0)}
-                        ref={ref => ref && (inputRefs.current[0] = ref)}
+                        ref={(ref) => ref && (inputRefs.current[0] = ref)}
                     />
                     <GapView height={10} />
                     <BetterText
@@ -402,9 +402,9 @@ export default function WelcomePage() {
                         inputMode="numeric"
                         key="heightinput"
                         enterKeyHint="next"
-                        onChangeText={text => handleChange("height", text)}
+                        onChangeText={(text) => handleChange("height", text)}
                         onSubmitEditing={() => focusNextField(1)}
-                        ref={ref => ref && (inputRefs.current[1] = ref)}
+                        ref={(ref) => ref && (inputRefs.current[1] = ref)}
                     />
                     <GapView height={10} />
                     <BetterText
@@ -447,9 +447,9 @@ export default function WelcomePage() {
                         inputMode="numeric"
                         key="weightinput"
                         enterKeyHint="next"
-                        onChangeText={text => handleChange("weight", text)}
+                        onChangeText={(text) => handleChange("weight", text)}
                         onSubmitEditing={() => focusNextField(2)}
-                        ref={ref => ref && (inputRefs.current[2] = ref)}
+                        ref={(ref) => ref && (inputRefs.current[2] = ref)}
                     />
                     <GapView height={10} />
                     <BetterText
@@ -492,9 +492,9 @@ export default function WelcomePage() {
                         inputMode="numeric"
                         key="ageinput"
                         enterKeyHint="done"
-                        onChangeText={text => handleChange("age", text)}
+                        onChangeText={(text) => handleChange("age", text)}
                         onSubmitEditing={() => {}}
-                        ref={ref => ref && (inputRefs.current[3] = ref)}
+                        ref={(ref) => ref && (inputRefs.current[3] = ref)}
                     />
                     <GapView height={10} />
                     <BetterText
@@ -644,7 +644,7 @@ export default function WelcomePage() {
                     <GapView height={10} />
                     <Select
                         selectedValue={sleep}
-                        onValueChange={itemValue => setSleep(itemValue)}
+                        onValueChange={(itemValue) => setSleep(itemValue)}
                         style={styles.picker}
                         mode="dropdown"
                     >
@@ -653,7 +653,7 @@ export default function WelcomePage() {
                             value=""
                             color={colors.MAIN.BLANDITEM.PLACEHOLDER}
                         />
-                        {sleeps.map(sleep => (
+                        {sleeps.map((sleep) => (
                             <Select.Item
                                 key={sleep}
                                 label={sleep}
@@ -674,7 +674,7 @@ export default function WelcomePage() {
                     <GapView height={10} />
                     <Select
                         selectedValue={howActiveTheUserIs}
-                        onValueChange={itemValue =>
+                        onValueChange={(itemValue) =>
                             setHowActiveTheUserIs(itemValue)
                         }
                         style={styles.picker}
@@ -685,7 +685,7 @@ export default function WelcomePage() {
                             value=""
                             color={colors.MAIN.BLANDITEM.PLACEHOLDER}
                         />
-                        {activnessOptions.map(option => (
+                        {activnessOptions.map((option) => (
                             <Select.Item
                                 key={option}
                                 label={option}

@@ -157,7 +157,7 @@ export default function UpdateProfile() {
 
     // Update form data with user input
     const handleChange = (name: string, value: string) => {
-        setFormData(prevData => ({
+        setFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
@@ -258,9 +258,9 @@ export default function UpdateProfile() {
                     textContentType="username"
                     key="usernameinput"
                     enterKeyHint="next"
-                    onChangeText={text => handleChange("username", text)}
+                    onChangeText={(text) => handleChange("username", text)}
                     onSubmitEditing={() => focusNextField(0)}
-                    ref={ref => ref && (inputRefs.current[0] = ref)}
+                    ref={(ref) => ref && (inputRefs.current[0] = ref)}
                 />
                 <GapView height={15} />
                 <BetterText
@@ -302,9 +302,9 @@ export default function UpdateProfile() {
                     inputMode="numeric"
                     key="heightinput"
                     enterKeyHint="next"
-                    onChangeText={text => handleChange("height", text)}
+                    onChangeText={(text) => handleChange("height", text)}
                     onSubmitEditing={() => focusNextField(1)}
-                    ref={ref => ref && (inputRefs.current[1] = ref)}
+                    ref={(ref) => ref && (inputRefs.current[1] = ref)}
                 />
                 <GapView height={15} />
                 <BetterText
@@ -346,9 +346,9 @@ export default function UpdateProfile() {
                     inputMode="numeric"
                     key="weightinput"
                     enterKeyHint="next"
-                    onChangeText={text => handleChange("weight", text)}
+                    onChangeText={(text) => handleChange("weight", text)}
                     onSubmitEditing={() => focusNextField(2)}
-                    ref={ref => ref && (inputRefs.current[2] = ref)}
+                    ref={(ref) => ref && (inputRefs.current[2] = ref)}
                 />
                 <GapView height={15} />
                 <BetterText
@@ -388,9 +388,9 @@ export default function UpdateProfile() {
                     inputMode="numeric"
                     key="ageinput"
                     enterKeyHint="done"
-                    onChangeText={text => handleChange("age", text)}
+                    onChangeText={(text) => handleChange("age", text)}
                     onSubmitEditing={() => {}}
-                    ref={ref => ref && (inputRefs.current[3] = ref)}
+                    ref={(ref) => ref && (inputRefs.current[3] = ref)}
                 />
                 <GapView height={15} />
                 <BetterText
