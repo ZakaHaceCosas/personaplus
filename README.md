@@ -1,13 +1,17 @@
+<!--R6 MD ONLY, remove on merge-->
+# :us: Welcome to PersonaPlus R6 / :es: Bienvenido a PersonaPlus R6
+
+R6 stands for 6th rewrite. / R6 se refiere a reescritura por 6ta vez.
+Hope this works :fire: / Esperemos que funcione :fire:
+
+Ah, by the way, finally the app is `SemVer` compliant. / Ah, por cierto, la app por fin cumple con `SemVer`.
+<!-- <h1 align="center">PersonaPlus</h1> -->
+
+<!-- ![PersonaPlus banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER.png) -->
+
 <!--markdownlint-disable-next-line-->
-<h1 align="center">PersonaPlus</h1>
+<!-- <div align="center">
 
-![PersonaPlus banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER.png)
-
-<!--markdownlint-disable-next-line-->
-<div align="center">
-
-<!--Se destacará el vídeo que a mi me parezca :v-->
-<!--[![YouTube Video Views](https://img.shields.io/youtube/views/cPSmVmsvkeY?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=H2_0d-hLiMw)-->
 [![GitHub last commit](https://img.shields.io/github/last-commit/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github&color=black)](https://github.com/ZakaHaceCosas/personaplus/commits/)
 [![GitHub Repo size](https://img.shields.io/github/repo-size/ZakaHaceCosas/personaplus?style=for-the-badge&logo=visualstudiocode)](https://github.com/ZakaHaceCosas/personaplus/tree/main/app)
 [![GitHub Repo stars](https://img.shields.io/github/stars/ZakaHaceCosas/personaplus?style=for-the-badge&logo=github&color=orange)](https://github.com/ZakaHaceCosas/personaplus/stargazers)
@@ -16,14 +20,9 @@
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fpersonaplus.vercel.app&up_message=WORKING%20%3A%5D&up_color=%2332FF80&down_message=NOT%20WORKING%20%3A%5B&down_color=%23FF3232&style=for-the-badge)](https://personaplus.vercel.app)
 [![App version](https://img.shields.io/github/package-json/v/zakahacecosas/personaplus?style=for-the-badge&labelColor=%23000&color=%23fff)](https://github.com/ZakaHaceCosas/personaplus/blob/main/package.json#L3)
 
-</div>
+</div> -->
 
-<!--R6 MD ONLY, remove on merge-->
-# :en: Welcome to PersonaPlus R6 / :es: Bienvenido a PersonaPlus R6
-
-R6 stands for 6th rewrite. / R6 se refiere a reescritura por 6ta vez.
-
-## DATE UN PLUS
+<!-- ## DATE UN PLUS
 
 **PersonaPlus** es una app de código abierto 3 en 1 para ayudar a los usuarios a cuidar de su salud, dieta, y bienestar digital. A ***darse más***, como nos gusta decir.
 
@@ -77,10 +76,11 @@ Gracias a todo este maravilloso software libre, PersonaPlus es posible. ¡Gracia
 
 ## Únete al club de los que quieren darse más :]
 
-<!--markdownlint-disable-next-line-->
+<!--markdownlint-disable-next-line-- CLOSEME
 <div align="center">
 
 [![YouTube button](https://img.shields.io/badge/YouTube-PersonaPlus-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/playlist?list=PLdif1flfmG__g_a1QSmBNnSh_6pAeRizW)
 [![Discord button](https://img.shields.io/badge/Discord-Servidor_de_Discord-blue?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/invite/euVHrr46c6)
 
 </div>
+ -->
