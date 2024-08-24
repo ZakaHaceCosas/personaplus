@@ -11,7 +11,6 @@ import {
     checkForTodaysObjectives,
     objectiveArrayToObject,
     checkForAnObjectiveDailyStatus,
-    startSessionFromObjective,
 } from "@/src/toolkit/objectives";
 import BetterText, {
     BetterTextHeader,
@@ -19,9 +18,7 @@ import BetterText, {
 } from "@/src/BetterText";
 import Section from "@/src/section/Section";
 import BottomNav from "@/src/BottomNav";
-import Division from "@/src/section/Division";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Button from "@/src/Buttons";
 import GapView from "@/src/GapView";
 import Footer from "@/src/Footer";
 import { termLog } from "@/src/toolkit/debug/console";
@@ -35,11 +32,14 @@ import { adjustedToday } from "@/src/toolkit/today";
 import * as TaskManager from "expo-task-manager";
 import colors from "@/src/toolkit/design/colors";
 import Loading from "@/src/Loading";
-import generateRandomMessage from "@/src/toolkit/design/randomMessages";
 
 // TypeScript, supongo
 import { Objective } from "@/src/types/Objective";
-import { TFunction } from "i18next";
+import {
+    RenderAllObjectivesDoneDivision,
+    RenderNoObjectivesDivision,
+    RenderObjectiveDivision,
+} from "@/src/toolkit/ui/home";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -86,121 +86,16 @@ export default function Home() {
         []
     );
 
-    // To prevent code from being super nested / unreadable, I've moved some things here, so they act as separate components
-    /**
-     * Generates an "All objectives done!" view. Use it inside of the `<Section kind="objectives">`, for when there are objectives for today but are all done.
-     *
-     * @param {TFunction} t Pass the translate function, please.
-     * @returns {ReactElement}
-     */
-    function AllObjectivesDone(t: TFunction): ReactElement {
-        const message: string = generateRandomMessage("all_done", t);
-
-        return (
-            <View
-                style={{
-                    padding: 20,
-                    flex: 1,
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
-                <BetterText
-                    textAlign="center"
-                    fontSize={30}
-                    textColor={colors.BASIC.WHITE}
-                    fontWeight="Bold"
-                >
-                    {t("page_home.no_objectives.all_done")}
-                </BetterText>
-                <GapView height={10} />
-                <BetterText
-                    textAlign="center"
-                    fontSize={15}
-                    textColor={colors.BASIC.WHITE}
-                    fontWeight="Regular"
-                >
-                    {message}
-                </BetterText>
-            </View>
-        );
-    }
-
-    /**
-     * Renders a `<Division>` for a given objective that's due today.
-     *
-     * @param {Objective} obj The `Objective`
-     * @param {TFunction} t Pass here the translate function, please.
-     * @returns {ReactElement} A JSX element (a `<Division>`).
-     */
-    function ObjectiveDivision(obj: Objective, t: TFunction): ReactElement {
-        return (
-            <Division
-                key={obj.identifier}
-                status="REGULAR"
-                preheader={t("sections.divisions.active_objective")}
-                header={t(
-                    `globals.supported_active_objectives.${obj.exercise}`
-                )}
-            >
-                <Button
-                    style="ACE"
-                    action={() => startSessionFromObjective(obj.identifier)}
-                    buttonText={t("globals.lets_go")}
-                />
-                <Button
-                    style="GOD"
-                    action={() => handleMarkingObjectiveAsDone(obj.identifier)}
-                    buttonText={t("globals.already_done_it")}
-                />
-            </Division>
-        );
-    }
-
-    /**
-     * Shows a header and a button, stating that there are no objectives. Use it when there are no created objectives at all.
-     *
-     * @param {TFunction} t Pass here the translate function, please.
-     * @param {() => void} create A void function to create an objective.
-     * @returns {ReactElement} A JSX element.
-     */
-    function NoObjectives(t: TFunction, create: () => void): ReactElement {
-        return (
-            <View
-                style={{
-                    padding: 20,
-                    flex: 1,
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
-                <BetterText
-                    textAlign="center"
-                    fontSize={30}
-                    textColor={colors.BASIC.WHITE}
-                    fontWeight="Bold"
-                >
-                    {t("page_home.no_objectives.not_any_objective")}
-                </BetterText>
-                <GapView height={15} />
-                <Button
-                    width="fill"
-                    style="ACE"
-                    buttonText={t("globals.lets_go")}
-                    action={create}
-                />
-            </View>
-        );
-    }
-
     function renderObjectiveDivision(obj: Objective): ReactElement | null {
         try {
             if (!dueTodayObjectiveList.includes(obj.identifier)) return null;
 
             termLog("Rendering Objective Division:" + obj, "log");
-            return ObjectiveDivision(obj, t);
+            return RenderObjectiveDivision(
+                obj,
+                t,
+                handleMarkingObjectiveAsDone
+            );
         } catch (e) {
             termLog("Error rendering objective division:" + e, "error");
             return null;
@@ -382,13 +277,13 @@ export default function Home() {
             if (loadingObjectives) return null;
 
             if (!objectives || Object.keys(objectives).length === 0) {
-                return NoObjectives(t, () =>
+                return RenderNoObjectivesDivision(t, () =>
                     router.navigate("/CreateObjective")
                 );
             }
 
             if (!dueTodayObjectiveList || dueTodayObjectiveList.length === 0) {
-                return AllObjectivesDone(t);
+                return RenderAllObjectivesDoneDivision(t);
             }
 
             return (
