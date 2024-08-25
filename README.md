@@ -2,9 +2,13 @@
 # :us: Welcome to PersonaPlus R6 / :es: Bienvenido a PersonaPlus R6
 
 R6 stands for 6th rewrite. / R6 se refiere a reescritura por 6ta vez.
+
 Hope this works :fire: / Esperemos que funcione :fire:
 
 Ah, by the way, finally the app is `SemVer` compliant. / Ah, por cierto, la app por fin cumple con `SemVer`.
+
+NOTE: The repository will be inactive for several days, I am rewriting everything locally in a separate folder (so I can start from scratch with `create-expo-app`), that's why this looks dead. / NOTA: Este repositorio estará inactivo por varios días, estoy reescribiendo todo localmente en una carpeta separada (para poder empezar de cero con `create-expo-app`), por eso parece muerto.
+
 <!-- <h1 align="center">PersonaPlus</h1> -->
 
 <!-- ![PersonaPlus banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER.png) -->
