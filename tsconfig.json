@@ -1,11 +1,9 @@
 {
     "extends": "expo/tsconfig.base",
     "compilerOptions": {
-        "jsx": "react",
         "strict": true,
-        "baseUrl": ".",
         "paths": {
-            "@/*": ["*"]
+            "@/*": ["./*"]
         },
         "noImplicitAny": true,
         "noImplicitOverride": true,
@@ -17,8 +15,7 @@
         "forceConsistentCasingInFileNames": true,
         "allowSyntheticDefaultImports": true,
         "strictFunctionTypes": true,
-        "alwaysStrict": true,
-        "allowImportingTsExtensions": true
+        "alwaysStrict": true
     },
-    "include": ["**/*.ts", "**/*.tsx", "jest.config.js"]
+    "include": ["**/*.ts", "**/*.tsx"]
 }
