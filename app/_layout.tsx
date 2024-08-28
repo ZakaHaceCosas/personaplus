@@ -1,101 +1,92 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
-// _layout.tsx
-// Main layout, (something to avoid duplicate code)
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: app/_layout.tsx
+ * Basically: The main _layout of the entire app, AKA the font loader.
+ *
+ * <=============================================================================>
+ */
 
-import React, { Fragment, useEffect, useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import * as SplashScreen from "expo-splash-screen";
-import * as Fonts from "expo-font";
+import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
-import "@/src/toolkit/translations";
-
-export {
-    // Catch any errors thrown by the Layout component.
-    ErrorBoundary,
-} from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { Fragment, useEffect } from "react";
+import "@/translations/translate";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-// We create the function
-export default function Layout() {
-    const [fontsLoaded, setFontsLoaded] = useState(false);
-    // BeVietnamPro y NotoSerif, our fonts
-    // (not our, but we use them xd)
+export default function RootLayout() {
+    const [loaded] = useFonts({
+        "RobotoSerif-Light": require("../assets/fonts/RobotoSerif-Light.ttf"),
+        "BeVietnamPro-ThinItalic": require("../assets/fonts/BeVietnamPro-ThinItalic.ttf"),
+        "RobotoSerif-Regular": require("../assets/fonts/RobotoSerif-Regular.ttf"),
+        "JetBrainsMono-Light": require("../assets/fonts/JetBrainsMono-Light.ttf"),
+        "BeVietnamPro-ExtraBoldItalic": require("../assets/fonts/BeVietnamPro-ExtraBoldItalic.ttf"),
+        "RobotoSerif-Italic": require("../assets/fonts/RobotoSerif-Italic.ttf"),
+        "RobotoSerif-BlackItalic": require("../assets/fonts/RobotoSerif-BlackItalic.ttf"),
+        "JetBrainsMono-ExtraLight": require("../assets/fonts/JetBrainsMono-ExtraLight.ttf"),
+        "RobotoSerif-Medium": require("../assets/fonts/RobotoSerif-Medium.ttf"),
+        "RobotoSerif-ExtraBoldItalic": require("../assets/fonts/RobotoSerif-ExtraBoldItalic.ttf"),
+        "BeVietnamPro-LightItalic": require("../assets/fonts/BeVietnamPro-LightItalic.ttf"),
+        "BeVietnamPro-MediumItalic": require("../assets/fonts/BeVietnamPro-MediumItalic.ttf"),
+        "BeVietnamPro-Medium": require("../assets/fonts/BeVietnamPro-Medium.ttf"),
+        "BeVietnamPro-ExtraBold": require("../assets/fonts/BeVietnamPro-ExtraBold.ttf"),
+        "BeVietnamPro-Black": require("../assets/fonts/BeVietnamPro-Black.ttf"),
+        "BeVietnamPro-BoldItalic": require("../assets/fonts/BeVietnamPro-BoldItalic.ttf"),
+        "BeVietnamPro-Light": require("../assets/fonts/BeVietnamPro-Light.ttf"),
+        "JetBrainsMono-ExtraBold": require("../assets/fonts/JetBrainsMono-ExtraBold.ttf"),
+        "BeVietnamPro-Italic": require("../assets/fonts/BeVietnamPro-Italic.ttf"),
+        "JetBrainsMono-MediumItalic": require("../assets/fonts/JetBrainsMono-MediumItalic.ttf"),
+        "JetBrainsMono-ExtraBoldItalic": require("../assets/fonts/JetBrainsMono-ExtraBoldItalic.ttf"),
+        "JetBrainsMono-ExtraLightItalic": require("../assets/fonts/JetBrainsMono-ExtraLightItalic.ttf"),
+        "BeVietnamPro-Bold": require("../assets/fonts/BeVietnamPro-Bold.ttf"),
+        "JetBrainsMono-ThinItalic": require("../assets/fonts/JetBrainsMono-ThinItalic.ttf"),
+        "JetBrainsMono-Medium": require("../assets/fonts/JetBrainsMono-Medium.ttf"),
+        "RobotoSerif-Bold": require("../assets/fonts/RobotoSerif-Bold.ttf"),
+        "JetBrainsMono-SemiBoldItalic": require("../assets/fonts/JetBrainsMono-SemiBoldItalic.ttf"),
+        "JetBrainsMono-LightItalic": require("../assets/fonts/JetBrainsMono-LightItalic.ttf"),
+        "JetBrainsMono-BoldItalic": require("../assets/fonts/JetBrainsMono-BoldItalic.ttf"),
+        "JetBrainsMono-Thin": require("../assets/fonts/JetBrainsMono-Thin.ttf"),
+        "BeVietnamPro-Regular": require("../assets/fonts/BeVietnamPro-Regular.ttf"),
+        "RobotoSerif-ThinItalic": require("../assets/fonts/RobotoSerif-ThinItalic.ttf"),
+        "RobotoSerif-Thin": require("../assets/fonts/RobotoSerif-Thin.ttf"),
+        "RobotoSerif-SemiBold": require("../assets/fonts/RobotoSerif-SemiBold.ttf"),
+        "JetBrainsMono-Italic": require("../assets/fonts/JetBrainsMono-Italic.ttf"),
+        "RobotoSerif-LightItalic": require("../assets/fonts/RobotoSerif-LightItalic.ttf"),
+        "RobotoSerif-SemiBoldItalic": require("../assets/fonts/RobotoSerif-SemiBoldItalic.ttf"),
+        "RobotoSerif-BoldItalic": require("../assets/fonts/RobotoSerif-BoldItalic.ttf"),
+        "BeVietnamPro-Thin": require("../assets/fonts/BeVietnamPro-Thin.ttf"),
+        "BeVietnamPro-SemiBold": require("../assets/fonts/BeVietnamPro-SemiBold.ttf"),
+        "JetBrainsMono-Regular": require("../assets/fonts/JetBrainsMono-Regular.ttf"),
+        "RobotoSerif-Black": require("../assets/fonts/RobotoSerif-Black.ttf"),
+        "RobotoSerif-ExtraLight": require("../assets/fonts/RobotoSerif-ExtraLight.ttf"),
+        "BeVietnamPro-SemiBoldItalic": require("../assets/fonts/BeVietnamPro-SemiBoldItalic.ttf"),
+        "BeVietnamPro-BlackItalic": require("../assets/fonts/BeVietnamPro-BlackItalic.ttf"),
+        "BeVietnamPro-ExtraLightItalic": require("../assets/fonts/BeVietnamPro-ExtraLightItalic.ttf"),
+        "JetBrainsMono-SemiBold": require("../assets/fonts/JetBrainsMono-SemiBold.ttf"),
+        "BeVietnamPro-ExtraLight": require("../assets/fonts/BeVietnamPro-ExtraLight.ttf"),
+        "RobotoSerif-ExtraBold": require("../assets/fonts/RobotoSerif-ExtraBold.ttf"),
+        "JetBrainsMono-Bold": require("../assets/fonts/JetBrainsMono-Bold.ttf"),
+        "RobotoSerif-ExtraLightItalic": require("../assets/fonts/RobotoSerif-ExtraLightItalic.ttf"),
+    });
+
     useEffect(() => {
-        async function loadTheDamnFonts() {
-            await Fonts.loadAsync({
-                "BeVietnamPro-Black": require("../fonts/BeVietnamPro-Black.ttf"),
-                "BeVietnamPro-BlackItalic": require("../fonts/BeVietnamPro-BlackItalic.ttf"),
-                "BeVietnamPro-Bold": require("../fonts/BeVietnamPro-Bold.ttf"),
-                "BeVietnamPro-BoldItalic": require("../fonts/BeVietnamPro-BoldItalic.ttf"),
-                "BeVietnamPro-ExtraBold": require("../fonts/BeVietnamPro-ExtraBold.ttf"),
-                "BeVietnamPro-ExtraBoldItalic": require("../fonts/BeVietnamPro-ExtraBoldItalic.ttf"),
-                "BeVietnamPro-ExtraLight": require("../fonts/BeVietnamPro-ExtraLight.ttf"),
-                "BeVietnamPro-ExtraLightItalic": require("../fonts/BeVietnamPro-ExtraLightItalic.ttf"),
-                "BeVietnamPro-Italic": require("../fonts/BeVietnamPro-Italic.ttf"),
-                "BeVietnamPro-Light": require("../fonts/BeVietnamPro-Light.ttf"),
-                "BeVietnamPro-LightItalic": require("../fonts/BeVietnamPro-LightItalic.ttf"),
-                "BeVietnamPro-Medium": require("../fonts/BeVietnamPro-Medium.ttf"),
-                "BeVietnamPro-MediumItalic": require("../fonts/BeVietnamPro-MediumItalic.ttf"),
-                "BeVietnamPro-Regular": require("../fonts/BeVietnamPro-Regular.ttf"),
-                "BeVietnamPro-SemiBold": require("../fonts/BeVietnamPro-SemiBold.ttf"),
-                "BeVietnamPro-SemiBoldItalic": require("../fonts/BeVietnamPro-SemiBoldItalic.ttf"),
-                "BeVietnamPro-Thin": require("../fonts/BeVietnamPro-Thin.ttf"),
-                "BeVietnamPro-ThinItalic": require("../fonts/BeVietnamPro-ThinItalic.ttf"),
-                "NotoSerif-Black": require("../fonts/NotoSerif-Black.ttf"),
-                "NotoSerif-BlackItalic": require("../fonts/NotoSerif-BlackItalic.ttf"),
-                "NotoSerif-Bold": require("../fonts/NotoSerif-Bold.ttf"),
-                "NotoSerif-BoldItalic": require("../fonts/NotoSerif-BoldItalic.ttf"),
-                "NotoSerif-ExtraBold": require("../fonts/NotoSerif-ExtraBold.ttf"),
-                "NotoSerif-ExtraBoldItalic": require("../fonts/NotoSerif-ExtraBoldItalic.ttf"),
-                "NotoSerif-ExtraLight": require("../fonts/NotoSerif-ExtraLight.ttf"),
-                "NotoSerif-ExtraLightItalic": require("../fonts/NotoSerif-ExtraLightItalic.ttf"),
-                "NotoSerif-Italic": require("../fonts/NotoSerif-Italic.ttf"),
-                "NotoSerif-Light": require("../fonts/NotoSerif-Light.ttf"),
-                "NotoSerif-LightItalic": require("../fonts/NotoSerif-LightItalic.ttf"),
-                "NotoSerif-Medium": require("../fonts/NotoSerif-Medium.ttf"),
-                "NotoSerif-MediumItalic": require("../fonts/NotoSerif-MediumItalic.ttf"),
-                "NotoSerif-Regular": require("../fonts/NotoSerif-Regular.ttf"),
-                "NotoSerif-SemiBold": require("../fonts/NotoSerif-SemiBold.ttf"),
-                "NotoSerif-SemiBoldItalic": require("../fonts/NotoSerif-SemiBoldItalic.ttf"),
-                "NotoSerif-Thin": require("../fonts/NotoSerif-Thin.ttf"),
-                "NotoSerif-ThinItalic": require("../fonts/NotoSerif-ThinItalic.ttf"),
-            });
-            setFontsLoaded(true);
+        if (loaded) {
+            SplashScreen.hideAsync();
         }
+    }, [loaded]);
 
-        loadTheDamnFonts();
-    }, []);
-
-    // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-    /* useEffect(() => {
-        if (fontError) throw fontError;
-    }, [fontError]); */
-
-    // We load the fonts
-    useEffect(() => {
-        const onLayoutRootView = async () => {
-            if (fontsLoaded) {
-                await SplashScreen.hideAsync(); // Hide the SplashScreen when everything's loaded
-            }
-        };
-
-        onLayoutRootView();
-
-        return () => {
-            // we let this empty
-        };
-    }, [fontsLoaded]);
-
-    if (!fontsLoaded) {
+    if (!loaded) {
         return null;
     }
 
-    // pack it all in a ScrollView, add the android StatusBar, and the <Slot /> where the app will put everything
     return (
         <Fragment>
-            <StatusBar style="auto" animated={true} />
             <Slot />
         </Fragment>
     );
