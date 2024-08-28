@@ -2,11 +2,12 @@
 
 import React, { ReactElement, ReactNode } from "react";
 import { View } from "react-native";
-import BetterText from "@/src/BetterText";
+import BetterText from "@/components/text/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import GapView from "@/src/GapView";
+import GapView from "@/components/ui/GapView";
 import { useTranslation } from "react-i18next";
-import colors from "@/src/toolkit/design/colors";
+import Colors from "@/constants/Colors";
+import FontSizes from "@/constants/FontSizes";
 
 // TypeScript, supongo
 /**
@@ -116,7 +117,7 @@ export default function Section({
         <View
             style={{
                 display: "flex",
-                backgroundColor: colors.MAIN.SECTION,
+                backgroundColor: Colors.MAIN.SECTION,
                 flexDirection: "column",
                 borderRadius: 15,
                 overflow: "hidden",
@@ -131,13 +132,13 @@ export default function Section({
                     justifyContent: "flex-start",
                 }}
             >
-                <Ionicons name={headerIcon} size={15} color={colors.LBLS.SHL} />
+                <Ionicons name={headerIcon} size={15} color={Colors.LBLS.SHL} />
                 <GapView width={10} />
                 <BetterText
                     textAlign="normal"
                     fontWeight="Bold"
-                    fontSize={12}
-                    textColor={colors.LBLS.SHL}
+                    fontSize={FontSizes.SMALL}
+                    textColor={Colors.LBLS.SHL}
                 >
                     {String(label)}
                 </BetterText>
