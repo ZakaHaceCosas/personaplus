@@ -22,6 +22,10 @@
     "terminal.integrated.smoothScrolling": true,
     "editor.cursorBlinking": "expand",
     "redhat.telemetry.enabled": false,
+    "telemetry.enableCrashReporter": false,
+    "gitlens.telemetry.enabled": false,
+    "telemetry.telemetryLevel": 0,
+    "telemetry.enableTelemetry": false,
     "files.autoSave": "off",
     "editor.fontFamily": "'JetBrains Mono', 'Roboto Mono', Consolas, 'Courier New', monospace",
     "editor.fontWeight": 400,
@@ -33,6 +37,7 @@
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
     "editor.insertSpaces": true,
+    "editor.renderWhitespace": "trailing",
     "editor.minimap.enabled": true,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "explorer.confirmDelete": true,
@@ -74,20 +79,26 @@
         "editor.formatOnSave": false
     },
     "workbench.editor.customLabels.patterns": {
-        "**/toolkit/**": "Toolkit, ${filename}.${extname}",
-        "**/toolkit/design/**": "Design toolkit, ${filename}.${extname}",
-        "**/toolkit/debug/**": "Debug toolkit, ${filename}.${extname}",
-        "**/translations/**": "Localization, ${filename}.${extname}",
-        "**/src/hooks/**": "Hooks, ${filename}.${extname}",
         "**/core/**": "Core library, ${filename}.${extname} @ ${dirname}",
+        "**/app/**": "App layout, ${filename}.${extname}",
+        "**/app/(tabs)/**": "App pages, ${filename}.${extname}",
         "**/assets/**": "Assets, ${filename}.${extname}",
-        "**/fonts/**": "Fonts, ${filename}.${extname}",
-        "**/app/**": "App pages, ${filename}.${extname}",
-        "**/src/types/**": "Types, ${filename}.${extname}",
-        "**/src/**": "Source components, ${filename}.${extname}"
+        "**/assets/design/**": "Design assets, ${filename}.${extname}",
+        "**/assets/fonts/**": "Fonts, ${filename}.${extname}",
+        "**/assets/resources/**": "Resources, ${filename}.${extname}",
+        "**/components/**": "Main components, ${filename}.${extname}",
+        "**/constants/**": "Constants, ${filename}.${extname}",
+        "**/hooks/**": "Hooks, ${filename}.${extname}",
+        "**/translations/**": "Localization, ${filename}.${extname}",
+        "**/toolkit/**": "Toolkit, ${filename}.${extname}",
+        "**/toolkit/debug/**": "Debug toolkit, ${filename}.${extname}",
+        "**/types/**": "TS types, ${filename}.${extname}"
     },
     "typescript.tsdk": "node_modules\\typescript\\lib",
     "files.associations": {
         ".easignore": "ignore"
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "always"
     }
 }
