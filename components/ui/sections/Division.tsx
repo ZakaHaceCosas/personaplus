@@ -3,12 +3,14 @@
 
 import React, { ReactElement, ReactNode } from "react";
 import { View } from "react-native";
-import BetterText, {
+import BetterText from "@/components/text/BetterText";
+import {
     BetterTextExtraHeader,
     BetterTextSmallText,
-} from "@/src/BetterText";
-import GapView from "@/src/GapView";
-import colors from "@/src/toolkit/design/colors";
+} from "@/components/text/BetterTextPresets";
+import GapView from "@/components/ui/GapView";
+import Colors from "@/constants/Colors";
+import FontSizes from "@/constants/FontSizes";
 
 // TypeScript, supongo
 /**
@@ -99,7 +101,7 @@ export default function Division({
         <View
             style={{
                 display: "flex",
-                backgroundColor: colors.MAIN.DIVISION,
+                backgroundColor: Colors.MAIN.DIVISION,
                 flexDirection: "row",
                 paddingTop: 20,
                 paddingLeft: 20,
@@ -115,8 +117,8 @@ export default function Division({
                             <BetterText
                                 textAlign="normal"
                                 fontWeight="Bold"
-                                fontSize={10}
-                                textColor={colors.BASIC.WHITE}
+                                fontSize={FontSizes.SMALL}
+                                textColor={Colors.BASIC.WHITE}
                             >
                                 {preheader}
                             </BetterText>
