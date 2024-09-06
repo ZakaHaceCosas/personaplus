@@ -13,7 +13,7 @@
         "pwshCode": false,
         "pwshGit": true
     },
-    "editor.fontSize": 15,
+    "editor.fontSize": 16,
     "editor.fontVariations": true,
     "editor.wordWrap": "on",
     "editor.smoothScrolling": true,
@@ -68,8 +68,7 @@
             "comments": "on",
             "strings": "on",
             "other": "on"
-        },
-        "editor.formatOnSave": true
+        }
     },
     "[yaml]": {
         "editor.insertSpaces": true,
@@ -78,6 +77,10 @@
         "diffEditor.ignoreTrimWhitespace": false,
         "editor.formatOnSave": false
     },
+    "[package.json]": {
+        "editor.formatOnSave": false
+    },
+    "editor.formatOnSaveMode": "file", // TODO: CHANGE TO "modifications" UPON RELEASE
     "workbench.editor.customLabels.patterns": {
         "**/core/**": "Core library, ${filename}.${extname} @ ${dirname}",
         "**/app/**": "App layout, ${filename}.${extname}",
@@ -100,5 +103,14 @@
     },
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "always"
-    }
+    },
+    "editor.inlayHints.enabled": "on",
+    "typescript.inlayHints.variableTypes.enabled": true,
+    "typescript.inlayHints.enumMemberValues.enabled": true,
+    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "typescript.inlayHints.parameterNames.enabled": "all",
+    "typescript.inlayHints.parameterTypes.enabled": true,
+    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+    "typescript.reportStyleChecksAsWarnings": true,
+    "editor.lightbulb.enabled": "on"
 }
