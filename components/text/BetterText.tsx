@@ -29,7 +29,7 @@ export default function BetterText<T extends FontFamily = "BeVietnamPro">({
     isLink = false,
 }: BetterTextProps<T>): ReactElement {
     const fontFamilyName: string = `${fontFamily}-${fontWeight}`;
-    const color: string = textColor || Colors.BASIC.WHITE; // Si el color no se especifica, es blanco
+    const color: string = textColor || Colors.BASIC.WHITE;
     const alignment: "center" | "right" | "left" =
         textAlign === "center"
             ? "center"
@@ -43,16 +43,15 @@ export default function BetterText<T extends FontFamily = "BeVietnamPro">({
     const textStyle: TextStyle = {
         fontFamily: fontFamilyName,
         fontSize: fontSize,
-        lineHeight:
-            fontSize +
-            0.25 /* La altura de línea es igual al tamaño de letra (+ 0.5 para arreglar el texto viendose "recortado") */,
+        lineHeight: children?.toString().includes("Ñ")
+            ? fontSize * 1.25 // prevents spanish "virguilla" from being cut off
+            : fontSize * 1.15,
+        overflow: "visible",
         color: isLink ? Colors.PRIMARIES.ACE.ACE : color,
         textAlign: alignment,
         textDecorationLine: decoration,
         textDecorationColor: color,
         textDecorationStyle: "solid",
-        paddingTop: 1.15, // This fixes text not looking properly
-        paddingBottom: 1.15,
     };
 
     return (
