@@ -122,7 +122,7 @@ export type FontWeight<T extends FontFamily> = T extends "BeVietnamPro"
     ? BrandFontWeights
     : never;
 
-// TODO: use this in BetterText so you dont have to duplicate the font names
+// (perhaps) TODO: use this in BetterText so you dont have to duplicate the font names
 // TODO: move this to constants
 /* const JetBrainsMono = {
     Light: "JetBrainsMono-Light",
