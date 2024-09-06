@@ -241,7 +241,7 @@ export default function WelcomePage() {
             logToConsole("FORM DATA:" + JSON.stringify(formData), "log");
         } catch (e) {
             logToConsole(
-                "Error handling data changes. Happened at Welcome screen.",
+                "Error handling data changes happened at Welcome screen: " + e,
                 "error"
             );
         }
@@ -355,8 +355,10 @@ export default function WelcomePage() {
                     maxLength={lenght}
                     textAlign="left"
                     keyboardType={keyboardType}
+                    inputMode={keyboardType === "default" ? "text" : "numeric"}
                     key={`${name}input`}
                     returnKeyType={nextFieldIndex === 4 ? "done" : "next"}
+                    enterKeyHint={nextFieldIndex === 4 ? "done" : "next"}
                     onChangeText={(text) =>
                         handleChange(
                             name as "username" | "age" | "height" | "weight",
@@ -434,6 +436,7 @@ export default function WelcomePage() {
         } catch (e) {
             logToConsole("Error validating user data: " + e, "error");
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
     /**
@@ -594,7 +597,7 @@ export default function WelcomePage() {
                 }
             } catch (e) {
                 logToConsole(
-                    "Bruh. An error ocurred trying to open an URL.",
+                    "Bruh. An error ocurred trying to open an URL: " + e,
                     "error"
                 );
             }
