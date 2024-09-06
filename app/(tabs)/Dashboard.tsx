@@ -1,6 +1,7 @@
-import Button from "@/components/interaction/Button";
+import BetterButton from "@/components/interaction/BetterButton";
 import {
     BetterTextHeader,
+    BetterTextLicenseHeader,
     BetterTextSubHeader,
 } from "@/components/text/BetterTextPresets";
 import { router } from "expo-router";
@@ -11,13 +12,18 @@ export default function HomeScreen() {
 
     return (
         <>
-            <BetterTextHeader>objetivos creacion epic</BetterTextHeader>
+            <BetterTextHeader>crear objetivos (epico)</BetterTextHeader>
             <BetterTextSubHeader>
                 {t("page_home.header.sublabel")}
             </BetterTextSubHeader>
-            <Button style="GOD" action={() => router.push("objectives/Create")}>
-                crear objetivo
-            </Button>
+            <BetterButton
+                buttonText={"CREATE UR OBJECTIVE HERE !1!"}
+                style="GOD"
+                action={() => router.push("objectives/Create")}
+            />
+            <BetterTextLicenseHeader>
+                (funciona a medias)
+            </BetterTextLicenseHeader>
         </>
     );
 }
