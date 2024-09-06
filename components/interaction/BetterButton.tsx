@@ -6,7 +6,7 @@ import { DimensionValue, Pressable, StyleSheet } from "react-native";
 import BetterText from "@/components/text/BetterText";
 import Colors from "@/constants/Colors";
 import FontSizes from "@/constants/FontSizes";
-import { PressableStyle } from "@/constants/ui/Pressables";
+import { UniversalPressableStyle } from "@/constants/ui/Pressables";
 
 // TypeScript, supongo
 interface ButtonProps {
@@ -19,8 +19,8 @@ interface ButtonProps {
 const styles = StyleSheet.create({
     button: {
         padding: 0,
-        borderRadius: PressableStyle.borderRadius,
-        borderWidth: PressableStyle.borderWidth,
+        borderRadius: UniversalPressableStyle.borderRadius,
+        borderWidth: UniversalPressableStyle.borderWidth,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -83,7 +83,7 @@ export default function BetterButton({
         default:
         case "normal":
             buttonWidth = "100%";
-            buttonHeight = PressableStyle.height;
+            buttonHeight = UniversalPressableStyle.height;
             flexValue = 1;
             break;
     }
