@@ -1,3 +1,5 @@
+import { TodaysDay } from "@/toolkit/debug/Today";
+
 /**
  * A type with all supported active objectives. **Tied to const `SupportedActiveObjectivesList`, note that in case of modifications.**
  *
@@ -13,23 +15,81 @@ export const SupportedActiveObjectivesList = ["Push Ups", "Lifting", "Running", 
  *
  * @typedef {ActiveObjectiveInfo}
  */
-type ActiveObjectiveInfo = {
+/* type ActiveObjectiveInfo = {
     days: [boolean, boolean, boolean, boolean, boolean, boolean, boolean]
     duration: number;
     rests: number | null;
     repetitions: number | null;
 } & (
-        { rests: null; restDuration?: never } |
+        { rests: 0; restDuration?: never } |
         { rests: number; restDuration: number }
-    );
+    ); */
+type ActiveObjectiveInfo = {
+    days: [boolean, boolean, boolean, boolean, boolean, boolean, boolean]
+    duration: number;
+    rests: number | null;
+    repetitions: number | null;
+    restDuration: number
+}
 
 /**
- * Base interface used to construct an Active Objective interface.
+ * Specific objective data for exercises.
  *
- * @interface ActiveObjectiveBase
- * @typedef {ActiveObjectiveBase}
+ * @typedef {ActiveObjectiveSpecificData}
  */
-interface ActiveObjectiveBase {
+
+interface ActiveObjectiveSpecificData {
+    /**
+     * LIFTING - Weight of each ball / thingamabomb that weight
+     *
+     * @type {number}
+     */
+    scaleWeight: number;
+    /**
+     * LIFTING - Weight of the bar
+     *
+     * @type {number}
+     */
+    barWeight: number;
+    /**
+     * LIFTING - How many lifts
+     *
+     * @type {number}
+     */
+    reps: number;
+    /**
+     * LIFTING - Amount of dumbbells
+     *
+     * @type {number}
+     */
+    dumbbells: number;
+    /**
+     * GENERIC - Amount of hands
+     *
+     * @type {(1 | 2)}
+     */
+    amountOfHands: 1 | 2;
+    /**
+     * RUNNING - Speed (value equals the INDEX in the speed array, not the actual speed!)
+     *
+     * @type {number}
+     */
+    estimateSpeed: number;
+    /**
+     * PUSH UPS - Amount of push ups
+     *
+     * @type {number}
+     */
+    amountOfPushUps: number;
+}
+
+/**
+ * A PersonaPlus Active Objective™
+ *
+ * @export
+ * @typedef {ActiveObjective}
+ */
+export interface ActiveObjective {
     /**
      * What exercise is the user supposed to do.
      *
@@ -48,52 +108,48 @@ interface ActiveObjectiveBase {
      * @type {ActiveObjectiveInfo}
      */
     info: ActiveObjectiveInfo;
+    /**
+     * Exercise-specific data for the objective.
+     *
+     * @type {ActiveObjectiveSpecificData}
+     */
+    specificData: ActiveObjectiveSpecificData
 }
 
 /**
- * Specific objective data for Push Ups.
- *
- * @typedef {PushUpsSpecificData}
- */
-type PushUpsSpecificData = {
-    pushUps: number;
-    amountOfHands: 1 | 2;
-};
-
-/**
- * Specific objective data for Running.
- *
- * @typedef {RunningSpecificData}
- */
-type RunningSpecificData = {
-    estimateSpeed: number;
-    amountOfHands: 1 | 2;
-};
-
-/**
- * Specific objective data for Weight Lifting.
- *
- * @typedef {LiftingSpecificData}
- */
-type LiftingSpecificData = {
-    scaleWeight: number;
-    barWeight: number;
-    reps: number;
-    dumbbells: number;
-    amountOfHands: 1 | 2;
-};
-
-/**
- * A PersonaPlus Active Objective™
+ * An objective type but without the ID, so you can create it without type errors (as you're not supposed to provide the ID yourself, it's app-generated).
  *
  * @export
- * @typedef {ActiveObjective}
+ * @typedef {ActiveObjectiveWithoutId}
  */
-export type ActiveObjective =
-    | (ActiveObjectiveBase & { exercise: "Push Ups"; specificData: PushUpsSpecificData })
-    | (ActiveObjectiveBase & { exercise: "Running"; specificData: RunningSpecificData })
-    | (ActiveObjectiveBase & { exercise: "Lifting"; specificData: LiftingSpecificData })
-    | (ActiveObjectiveBase & { exercise: "Walking"; specificData?: never }) // "Walking" does not have specific data tied to it. it's just walking bruh-
-    | (ActiveObjectiveBase & { exercise: ""; }); // this is supposed to fix "" not being considered a valid value
-
 export type ActiveObjectiveWithoutId = Omit<ActiveObjective, "identifier">;
+
+
+/**
+ * **Deprecated. TODO! Update this to comply with the R6 codebase.** A registry of all the objectives, whether they're done or not, when, and their performance stats if they exist.
+ *
+ * @deprecated
+ * @export
+ * @interface ActiveObjectiveDailyLog
+ * @typedef {ActiveObjectiveDailyLog}
+ */
+export interface ActiveObjectiveDailyLog {
+    [date: TodaysDay]: {
+        [id: number]: {
+            wasDone: boolean;
+            performance: "undefined" | string | {
+                result?: number;
+                subject?: {
+                    age: number;
+                    gender: string;
+                    weight: number;
+                    height: number;
+                    speed?: number;
+                    pushUps?: number;
+                    hands?: number;
+                };
+                context?: string;
+            };
+        };
+    };
+}
