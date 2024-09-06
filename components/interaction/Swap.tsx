@@ -4,7 +4,7 @@ import BetterText from "@/components/text/BetterText";
 import Colors from "@/constants/Colors";
 import getCommonScreenSize from "@/constants/Screen";
 import FontSizes from "@/constants/FontSizes";
-import { PressableStyle } from "@/constants/ui/Pressables";
+import { UniversalPressableStyle } from "@/constants/ui/Pressables";
 
 interface Option {
     value: string;
@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     swapOption: {
         flexShrink: 1,
         width: "100%",
-        borderRadius: PressableStyle.borderRadius,
-        borderWidth: PressableStyle.borderWidth,
+        borderRadius: UniversalPressableStyle.borderRadius,
+        borderWidth: UniversalPressableStyle.borderWidth,
         borderColor: Colors.MAIN.BLANDITEM.STRK,
         backgroundColor: Colors.MAIN.BLANDITEM.BACKGROUND,
         display: "flex",
@@ -69,7 +69,7 @@ export default function Swap({
                 setSelectedOption(newSelectedOption);
             }
         }
-    }, [value, options]);
+    }, [value, options, selectedOption]);
 
     const handleOptionPress = (option: Option) => {
         if (selectedOption !== option) {
