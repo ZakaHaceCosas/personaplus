@@ -9,6 +9,7 @@ import type { FullProfile } from "@/types/User";
 import FontSizes from "@/constants/FontSizes";
 import BetterButton from "@/components/interaction/BetterButton";
 import { updateBrm5 } from "@/toolkit/User";
+import { router } from "expo-router";
 
 export default function HomeScreen() {
     const { t } = useTranslation();
@@ -45,6 +46,11 @@ export default function HomeScreen() {
                 buttonText="DO NOT PRESS OR YOU WILL BE FIRED"
                 style="WOR"
                 action={() => updateBrm5(true)}
+            />
+            <BetterButton
+                buttonText="dev interface"
+                style="HMM"
+                action={() => router.navigate("/DevInterface")}
             />
         </>
     );
