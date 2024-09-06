@@ -1,13 +1,27 @@
 <!--R6 MD ONLY, remove on merge-->
 # :us: Welcome to PersonaPlus R6 / :es: Bienvenido a PersonaPlus R6
 
-R6 stands for 6th rewrite. / R6 se refiere a reescritura por 6ta vez.
+:us: R6 stands for 6th rewrite.
 
-Hope this works :fire: / Esperemos que funcione :fire:
+Hope this works :fire:
 
-Ah, by the way, finally the app is `SemVer` compliant. / Ah, por cierto, la app por fin cumple con `SemVer`.
+Ah, by the way, finally the app is `SemVer` compliant.
 
-NOTE: The repository will be inactive for several days, I am rewriting everything locally in a separate folder (so I can start from scratch with `create-expo-app`), that's why this looks dead. / NOTA: Este repositorio estará inactivo por varios días, estoy reescribiendo todo localmente en una carpeta separada (para poder empezar de cero con `create-expo-app`), por eso parece muerto.
+NOTE: The repository will be inactive for several days, I am rewriting everything locally in a separate folder (so I can start from scratch with `create-expo-app`), that's why this looks dead.
+
+NOTE 2: I'm gradually syncronising everything from directory to directory, don't get surprised.
+
+:es:
+
+R6 se refiere a reescritura por 6ta vez.
+
+Esperemos que funcione :fire:
+
+Ah, por cierto, la app por fin cumple con `SemVer`.
+
+NOTA: Este repositorio estará inactivo por varios días, estoy reescribiendo todo localmente en una carpeta separada (para poder empezar de cero con `create-expo-app`), por eso parece muerto.
+
+NOTA 2: Estoy gradualmente sincronizando todo de carpeta a carpeta, que no sorprenda un historial de Git lioso o que se me escape alguna cosa rara / de preuab.
 
 <!-- <h1 align="center">PersonaPlus</h1> -->
 
