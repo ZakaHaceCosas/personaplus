@@ -1,10 +1,8 @@
-import Swap from "@/components/interaction/Swap";
 import {
-    BetterTextExtraHeader,
     BetterTextHeader,
     BetterTextSubHeader,
 } from "@/components/text/BetterTextPresets";
-import GapView from "@/components/ui/GapView";
+import BetterAlert from "@/components/ui/BetterAlert";
 import { orchestrateUserData } from "@/toolkit/User";
 import { logToConsole } from "@/toolkit/debug/Console";
 import { FullProfile } from "@/types/User";
@@ -36,25 +34,11 @@ export default function HomeScreen() {
             <BetterTextSubHeader>
                 {t("pages.home.subheader")}
             </BetterTextSubHeader>
-            {/* BEGIN DELETE ME */}
-            <GapView height={40} />
-            <BetterTextExtraHeader>tests:</BetterTextExtraHeader>
-            <Swap
-                value="a"
-                order="horizontal"
-                onValueChange={() => {}}
-                options={[
-                    {
-                        value: "a",
-                        label: "hola",
-                        default: false,
-                    },
-                    {
-                        value: "c",
-                        label: "adios",
-                        default: false,
-                    },
-                ]}
+            <BetterAlert
+                style="GOD"
+                title="Test"
+                text="This is a test"
+                layout="alert"
             />
         </>
     );
