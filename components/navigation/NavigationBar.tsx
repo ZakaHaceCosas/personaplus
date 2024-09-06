@@ -18,6 +18,19 @@ interface SectionProps {
 
 // We define the styles
 const styles = StyleSheet.create({
+    navBar: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-around",
+        zIndex: 99,
+        height: 100,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        padding: 0,
+        position: "absolute",
+    },
     touchme: {
         display: "flex",
         flexDirection: "column",
@@ -71,20 +84,10 @@ export default function NavigationBar({ currentLocation }: SectionProps) {
     return (
         // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final, salvo en "touchme" ya que este se repite varias veces.
         <View
-            style={{
-                backgroundColor: Colors.MAIN.FOOTER.BACKGROUND,
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-around",
-                zIndex: 99,
-                height: 100,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                padding: 0,
-                position: "absolute",
-            }}
+            style={[
+                styles.navBar,
+                { backgroundColor: Colors.MAIN.FOOTER.BACKGROUND },
+            ]}
         >
             <TouchMe
                 href="/"
