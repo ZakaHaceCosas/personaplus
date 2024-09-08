@@ -9,7 +9,7 @@ const config: ExpoConfig.ExpoConfig = {
     scheme: "personaplus",
     description: "Give yourself a PLUS",
     owner: "zakahacecosas",
-    version: "0.0.6-preapp.1", // SemVer-compliant 0.0.1-R6-bX equivalent. on ALPHA milestone bump the minor version.
+    version: "0.0.26-preapp.6", // SemVer-compliant 0.0.1-R6-bX equivalent. on ALPHA milestone bump the minor version.
     orientation: "portrait",
     githubUrl: "https://github.com/ZakaHaceCosas/personaplus",
     icon: "./assets/resources/icon.png",
