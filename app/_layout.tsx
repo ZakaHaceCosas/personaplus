@@ -16,6 +16,8 @@ import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { Fragment, useEffect } from "react";
 import "@/translations/translate";
+import { StatusBar } from "react-native";
+import Colors from "@/constants/Colors";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -87,6 +89,12 @@ export default function RootLayout() {
 
     return (
         <Fragment>
+            <StatusBar
+                animated={true}
+                barStyle={"light-content"}
+                backgroundColor={Colors.MAIN.APP}
+                translucent={true}
+            />
             <Slot />
         </Fragment>
     );
