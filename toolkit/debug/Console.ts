@@ -14,7 +14,12 @@ export const getLogsFromStorage = async (): Promise<Log[]> => {
         const logsString = await AsyncStorage.getItem("globalLogs");
         if (logsString) {
             try {
-                return JSON.parse(logsString) || [];
+                const parsedLogs = JSON.parse(logsString);
+                if (Array.isArray(parsedLogs)) {
+                    return parsedLogs;
+                } else {
+                    return [];
+                }
             } catch (e) {
                 logToConsole("Error parsing logs from AsyncStorage: " + e, "error");
                 return [];
