@@ -29,6 +29,7 @@ import { validateBasicUserData } from "@/toolkit/User";
 import FontSizes from "@/constants/FontSizes";
 import Select from "@/components/interaction/Select";
 import BetterButton from "@/components/interaction/BetterButton";
+import BetterInputField from "@/components/interaction/BetterInputField";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -182,18 +183,8 @@ export default function WelcomePage() {
         enabled: true,
     }));
 
+    /* for the time picker to be displayed or not */
     const [showPicker, setShowPicker] = useState<boolean>(false);
-
-    /**
-     * Focuses the next `<TextInput>` when the user presses the arrow / continue / next button on mobile keyboard.
-     *
-     * @param {number} index The **target** index - if your input has a `refIndex` of **2**, the *target* (this value) would be **3**. For `refIndex` see `spawnInputField()`.
-     */
-    function focusNextField(index: number): void {
-        if (inputRefs.current[index]) {
-            inputRefs.current[index].focus();
-        }
-    }
 
     // pagination
     /** Goes to the next "page" of the Welcome screen. If there are no more pages, calls `submitUser()`.
@@ -231,7 +222,7 @@ export default function WelcomePage() {
             | "focus"
             | "sleepHours"
             | "theThinkHour",
-        value: string | number
+        value: string | number,
     ): void {
         try {
             setFormData((prevData) => ({
@@ -242,7 +233,7 @@ export default function WelcomePage() {
         } catch (e) {
             logToConsole(
                 "Error handling data changes happened at Welcome screen: " + e,
-                "error"
+                "error",
             );
         }
     }
@@ -256,7 +247,7 @@ export default function WelcomePage() {
     async function submitUser(): Promise<0 | 1> {
         if (
             !Object.values(formData).some(
-                (value) => value === null || value === 0 || value === ""
+                (value) => value === null || value === 0 || value === "",
             ) &&
             isStepOneValid &&
             isStepTwoValid &&
@@ -280,12 +271,12 @@ export default function WelcomePage() {
 
                 logToConsole(
                     "Trying to register: " + JSON.stringify(userData),
-                    "log"
+                    "log",
                 );
 
                 await AsyncStorage.setItem(
                     "userData",
-                    JSON.stringify(userData)
+                    JSON.stringify(userData),
                 );
 
                 await AsyncStorage.setItem("objectives", "{}");
@@ -294,7 +285,7 @@ export default function WelcomePage() {
                     "User " +
                         formData.username +
                         " registered with no erros. Give yourself a plus!",
-                    "success"
+                    "success",
                 );
                 return 0;
             } catch (e) {
@@ -303,7 +294,7 @@ export default function WelcomePage() {
                         e +
                         ". Data: " +
                         JSON.stringify(formData),
-                    "error"
+                    "error",
                 );
                 return 1;
             }
@@ -311,7 +302,7 @@ export default function WelcomePage() {
             logToConsole(
                 "Error saving user data, some data is missing or not valid!",
                 "warn",
-                true
+                true,
             );
             logToConsole("User data: " + JSON.stringify(formData), "log");
             return 1;
@@ -328,7 +319,7 @@ export default function WelcomePage() {
      * @param {number} refIndex It's index. _yes, you have to count all the calls the `spawnInputField` can keep an incremental index_.
      * @param {number} nextFieldIndex `refIndex` + 1, basically.
      * @param {("default" | "numeric")} [keyboardType="default"] Whether to use the normal keyboard or a numeric pad.
-     * @param {number} lenght Max lenght of the input.
+     * @param {number} length Max length of the input.
      * @returns {ReactNode} Returns a Fragment with a `<BetterText>` (label), `<TextInput />`, and a `<GapView />` between them.
      */
     function spawnInputField(
@@ -339,34 +330,26 @@ export default function WelcomePage() {
         refIndex: number,
         nextFieldIndex: number,
         keyboardType: "default" | "numeric" = "default",
-        lenght: number
+        length: number,
     ): ReactNode {
         return (
             <>
-                <BetterTextSmallText>{label}</BetterTextSmallText>
-                <GapView height={5} />
-                <TextInput
+                <BetterInputField
+                    label={label}
                     placeholder={placeholder}
-                    value={typeof value === "string" ? value : String(value)}
-                    placeholderTextColor={Colors.MAIN.BLANDITEM.PLACEHOLDER}
-                    style={styles.textinput}
-                    autoCorrect={false}
-                    multiline={false}
-                    maxLength={lenght}
-                    textAlign="left"
+                    value={value}
+                    name={name}
+                    refIndex={refIndex}
+                    nextFieldIndex={nextFieldIndex}
+                    length={length}
+                    inputRefs={inputRefs}
                     keyboardType={keyboardType}
-                    inputMode={keyboardType === "default" ? "text" : "numeric"}
-                    key={`${name}input`}
-                    returnKeyType={nextFieldIndex === 4 ? "done" : "next"}
-                    enterKeyHint={nextFieldIndex === 4 ? "done" : "next"}
-                    onChangeText={(text) =>
+                    changeAction={(text) =>
                         handleChange(
                             name as "username" | "age" | "height" | "weight",
-                            text
+                            text,
                         )
                     }
-                    onSubmitEditing={() => focusNextField(nextFieldIndex)}
-                    ref={(ref) => ref && (inputRefs.current[refIndex] = ref)}
                 />
             </>
         );
@@ -379,7 +362,7 @@ export default function WelcomePage() {
      * @returns {ReactNode} Returns a Fragment with a `<BetterText>` (label), `<Select />` with the associated options, and a `<GapView />` between them.
      */
     function spawnInputSelect(
-        associatedValue: "activness" | "sleepHours"
+        associatedValue: "activness" | "sleepHours",
     ): ReactNode {
         const options =
             associatedValue === "activness"
@@ -400,7 +383,7 @@ export default function WelcomePage() {
                     changeAction={(value) =>
                         handleChange(
                             associatedValue,
-                            value !== null && value !== undefined ? value : ""
+                            value !== null && value !== undefined ? value : "",
                         )
                     }
                     currentValue={formData[associatedValue] ?? ""}
@@ -419,14 +402,13 @@ export default function WelcomePage() {
                     formData.age,
                     formData.weight,
                     formData.height,
-                    formData.username
-                )
+                    formData.username,
+                ),
             );
-            // @ts-ignore - Comparison looks unintentional to TS because "" and the type of the focus option have no overlap, but the comparison IS intentional, so we just ts-ignore this.
-            validateStepTwo(formData.focus !== "");
+            validateStepTwo(formData.focus !== null && formData.focus !== "");
             validateStepThree(
                 (formData.sleepHours || "") !== "" &&
-                    (formData.activness || "") !== ""
+                    (formData.activness || "") !== "",
             );
             validateStepFour((formData.theThinkHour || "") !== "");
             logToConsole("STEP ONE VALIDATION:" + isStepOneValid, "log");
@@ -448,7 +430,7 @@ export default function WelcomePage() {
      */
     function spawnNavigationButtons(
         step: 1 | 2 | 3 | 4,
-        isTheLastOne: boolean
+        isTheLastOne: boolean,
     ): ReactElement {
         let buttonText: string;
         let style: "ACE" | "HMM";
@@ -583,22 +565,22 @@ export default function WelcomePage() {
             try {
                 if (
                     await Linking.canOpenURL(
-                        "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md"
+                        "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md",
                     )
                 ) {
                     await Linking.openURL(
-                        "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md"
+                        "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md",
                     );
                 } else {
                     logToConsole(
                         "Huh? Can't open the privacy policy URL. What's up?",
-                        "error"
+                        "error",
                     );
                 }
             } catch (e) {
                 logToConsole(
                     "Bruh. An error ocurred trying to open an URL: " + e,
-                    "error"
+                    "error",
                 );
             }
         }
@@ -699,14 +681,14 @@ export default function WelcomePage() {
                     {spawnInputField(
                         t("globals.userData.username.wordShorter"),
                         t(
-                            "pages.welcome.questions.aboutYou.placeholders.username"
+                            "pages.welcome.questions.aboutYou.placeholders.username",
                         ),
                         formData.username,
                         "username",
                         0,
                         1,
                         "default",
-                        30
+                        30,
                     )}
                     <GapView height={5} />
                     {spawnInputField(
@@ -717,33 +699,33 @@ export default function WelcomePage() {
                         1,
                         2,
                         "numeric",
-                        2
+                        2,
                     )}
                     <GapView height={5} />
                     {spawnInputField(
                         t("globals.userData.weight"),
                         t(
-                            "pages.welcome.questions.aboutYou.placeholders.weight"
+                            "pages.welcome.questions.aboutYou.placeholders.weight",
                         ),
                         formData.weight,
                         "weight",
                         2,
                         3,
                         "numeric",
-                        3
+                        3,
                     )}
                     <GapView height={5} />
                     {spawnInputField(
                         t("globals.userData.height"),
                         t(
-                            "pages.welcome.questions.aboutYou.placeholders.height"
+                            "pages.welcome.questions.aboutYou.placeholders.height",
                         ),
                         formData.height,
                         "height",
                         3,
                         4,
                         "numeric",
-                        3
+                        3,
                     )}
                     <GapView height={5} />
                     <BetterText
@@ -811,7 +793,7 @@ export default function WelcomePage() {
                     <BetterButton
                         style="ACE"
                         buttonText={t(
-                            "pages.welcome.questions.theThinkHour.summon"
+                            "pages.welcome.questions.theThinkHour.summon",
                         )}
                         action={() => setShowPicker(!showPicker)}
                     />
@@ -823,7 +805,7 @@ export default function WelcomePage() {
                                 "theThinkHour",
                                 formatTimeString(pickedDuration)
                                     ? formatTimeString(pickedDuration)
-                                    : ""
+                                    : "",
                             );
                             setShowPicker(false);
                         }}
@@ -832,7 +814,7 @@ export default function WelcomePage() {
                         padMinutesWithZero={true}
                         allowFontScaling={true}
                         modalTitle={t(
-                            "pages.welcome.questions.theThinkHour.ask"
+                            "pages.welcome.questions.theThinkHour.ask",
                         )}
                         onCancel={() => setShowPicker(false)}
                         closeOnOverlayPress
