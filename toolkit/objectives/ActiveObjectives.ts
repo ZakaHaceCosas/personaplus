@@ -2,16 +2,7 @@ import { ActiveObjective, ActiveObjectiveDailyLog, ActiveObjectiveWithoutId } fr
 import { logToConsole } from "@/toolkit/debug/Console";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { adjustedToday, getCurrentDate, TodaysDay } from "../debug/Today";
-
-/**
- * The names of the AsyncStorage entries, so there's no confussion with data saving.
- *
- * @type {{ objectives: string; dailylog: string; }}
- */
-const AsyncStorageEntryNames = {
-    objectives: "objectives",
-    dailylog: "activeObjectiveDailyLog",
-}
+import StoredItemNames from "@/constants/StoredItemNames";
 
 /**
  * Returns the objectives from AsyncStorage as an `ActiveObjective[]`, or `null` if there aren't any objectives.
@@ -21,7 +12,7 @@ const AsyncStorageEntryNames = {
  */
 async function GetAllObjectives(): Promise<ActiveObjective[] | null> {
     try {
-        const storedObjectives: string | null = await AsyncStorage.getItem(AsyncStorageEntryNames.objectives);
+        const storedObjectives: string | null = await AsyncStorage.getItem(StoredItemNames.objectives);
         const objectives: ActiveObjective[] = storedObjectives ? JSON.parse(storedObjectives) : [];
 
         if (!Array.isArray(objectives)) {
@@ -41,7 +32,7 @@ async function GetAllObjectives(): Promise<ActiveObjective[] | null> {
  */
 async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog[] | null> {
     try {
-        const response: string | null = await AsyncStorage.getItem(AsyncStorageEntryNames.dailylog)
+        const response: string | null = await AsyncStorage.getItem(StoredItemNames.dailyLog)
         const dailyLog: ActiveObjectiveDailyLog[] = (response !== null) ? JSON.parse(response) : null
         return dailyLog
     } catch (e) {
@@ -63,7 +54,7 @@ async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog[] |
 async function SaveActiveObjectiveToDailyLog(id: number, date: TodaysDay, wasDone: boolean, performance?: string) {
     try {
         // Fetch old data
-        const prevDailySavedData = await AsyncStorage.getItem(AsyncStorageEntryNames.dailylog);
+        const prevDailySavedData = await AsyncStorage.getItem(StoredItemNames.dailyLog);
         const dailyData = prevDailySavedData ? JSON.parse(prevDailySavedData) : {};
 
         // If there's no old data for today, creates an {} for today
@@ -78,7 +69,7 @@ async function SaveActiveObjectiveToDailyLog(id: number, date: TodaysDay, wasDon
         };
 
         // Updates data and puts it back to AsyncStorage
-        await AsyncStorage.setItem(AsyncStorageEntryNames.dailylog, JSON.stringify(dailyData));
+        await AsyncStorage.setItem(StoredItemNames.dailyLog, JSON.stringify(dailyData));
         logToConsole(`Objective ${id} data saved for ${date}`, "success");
     } catch (e) {
         if (id) {
@@ -100,9 +91,9 @@ async function SaveActiveObjectiveToDailyLog(id: number, date: TodaysDay, wasDon
  */
 async function CheckForAnActiveObjectiveDailyStatus(identifier: number): Promise<boolean | null> {
     try {
-        const prevDailySavedData = await AsyncStorage.getItem(AsyncStorageEntryNames.dailylog);
+        const prevDailySavedData = await AsyncStorage.getItem(StoredItemNames.dailyLog);
         if (!prevDailySavedData) {
-            await AsyncStorage.setItem(AsyncStorageEntryNames.dailylog, JSON.stringify({}));
+            await AsyncStorage.setItem(StoredItemNames.dailyLog, JSON.stringify({}));
             return false; // If the log doesn't exist, obviously it's not done
         }
 
@@ -238,7 +229,7 @@ async function CreateActiveObjective(target: ActiveObjectiveWithoutId): Promise<
         objs.push(newObjective);
 
         try {
-            await AsyncStorage.setItem(AsyncStorageEntryNames.objectives, JSON.stringify(objs));
+            await AsyncStorage.setItem(StoredItemNames.objectives, JSON.stringify(objs));
         } catch (e) {
             logToConsole("Failed to save objectives! " + e, "error");
             throw new Error("Failed to save objectives! " + e);
