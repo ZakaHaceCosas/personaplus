@@ -169,7 +169,7 @@ export default function CreateActiveObjectivePage() {
             | "dumbbells"
             | "amountOfHands"
             | "estimateSpeed"
-            | "amountOfPushUps"
+            | "amountOfPushUps",
     ): void {
         if (value !== "amountOfHands") {
             if (action === "increase") {
@@ -309,12 +309,12 @@ export default function CreateActiveObjectivePage() {
             <>
                 <BetterTextSmallHeader>
                     {t(
-                        `pages.createActiveObjective.questions.toggles.${associatedValue}`
+                        `pages.createActiveObjective.questions.toggles.${associatedValue}`,
                     )}
                 </BetterTextSmallHeader>
                 <BetterTextSmallText>
                     {t(
-                        `pages.createActiveObjective.questions.toggles.${associatedValue}Hint`
+                        `pages.createActiveObjective.questions.toggles.${associatedValue}Hint`,
                     )}
                 </BetterTextSmallText>
                 <GapView height={10} />
@@ -327,7 +327,7 @@ export default function CreateActiveObjectivePage() {
                     />
                     <TextInput
                         placeholder={t(
-                            `pages.createActiveObjective.questions.toggles.${associatedValue}Hint`
+                            `pages.createActiveObjective.questions.toggles.${associatedValue}Hint`,
                         )}
                         value={String(objectiveToCreate.info[associatedValue])}
                         placeholderTextColor={Colors.MAIN.BLANDITEM.PLACEHOLDER}
@@ -473,7 +473,7 @@ export default function CreateActiveObjectivePage() {
                 if (response !== 0) {
                     logToConsole(
                         "Error? Got something else than 0 as the CreateActiveObjective() response",
-                        "error"
+                        "error",
                     );
                 }
                 router.navigate("/");
@@ -500,13 +500,13 @@ export default function CreateActiveObjectivePage() {
                 currentValue={objectiveToCreate.exercise}
                 mode="dialog"
                 dialogPrompt={t(
-                    "pages.createActiveObjective.questions.whatToDo.options.title"
+                    "pages.createActiveObjective.questions.whatToDo.options.title",
                 )}
                 selectOptions={exerciseOptions}
                 changeAction={(value: string | number) => {
                     if (
                         SupportedActiveObjectivesList.includes(
-                            value as SupportedActiveObjectives
+                            value as SupportedActiveObjectives,
                         )
                     ) {
                         updateObjectiveToCreate((prev) => {
@@ -515,7 +515,7 @@ export default function CreateActiveObjectivePage() {
                                     JSON.stringify(prev) +
                                     "value:" +
                                     value,
-                                "log"
+                                "log",
                             );
 
                             return {
@@ -526,16 +526,16 @@ export default function CreateActiveObjectivePage() {
                     } else if (value === "") {
                         logToConsole(
                             t(
-                                "errors.pages.createActiveObjective.chooseAnOptionIsNotValid"
+                                "errors.pages.createActiveObjective.chooseAnOptionIsNotValid",
                             ),
                             "warn",
-                            true
+                            true,
                         );
                     } else {
                         logToConsole(
                             "Invalid exercise value: " + value,
                             "error",
-                            false
+                            false,
                         );
                     }
                 }}
@@ -555,16 +555,16 @@ export default function CreateActiveObjectivePage() {
                         index === 0
                             ? t("globals.daysOfTheWeek.monday.key")
                             : index === 1
-                            ? t("globals.daysOfTheWeek.tuesday.key")
-                            : index === 2
-                            ? t("globals.daysOfTheWeek.wednesday.key")
-                            : index === 3
-                            ? t("globals.daysOfTheWeek.thursday.key")
-                            : index === 4
-                            ? t("globals.daysOfTheWeek.friday.key")
-                            : index === 5
-                            ? t("globals.daysOfTheWeek.saturday.key")
-                            : t("globals.daysOfTheWeek.sunday.key");
+                              ? t("globals.daysOfTheWeek.tuesday.key")
+                              : index === 2
+                                ? t("globals.daysOfTheWeek.wednesday.key")
+                                : index === 3
+                                  ? t("globals.daysOfTheWeek.thursday.key")
+                                  : index === 4
+                                    ? t("globals.daysOfTheWeek.friday.key")
+                                    : index === 5
+                                      ? t("globals.daysOfTheWeek.saturday.key")
+                                      : t("globals.daysOfTheWeek.sunday.key");
                     return (
                         <React.Fragment key={index}>
                             <View
@@ -588,7 +588,7 @@ export default function CreateActiveObjectivePage() {
                                                 boolean,
                                                 boolean,
                                                 boolean,
-                                                boolean
+                                                boolean,
                                             ] = [...prev.info.days]; // sorry for this, but otherwise an error (type error actually) happens
                                             updatedDays[index] =
                                                 !updatedDays[index]; // basically reverts
@@ -642,12 +642,12 @@ export default function CreateActiveObjectivePage() {
                 <>
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.pushUps.howManyPushUps.question"
+                            "pages.createActiveObjective.questions.perExercise.pushUps.howManyPushUps.question",
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.pushUps.howManyPushUps.proTip"
+                            "pages.createActiveObjective.questions.perExercise.pushUps.howManyPushUps.proTip",
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -659,13 +659,13 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "decrease",
-                                    "amountOfPushUps"
+                                    "amountOfPushUps",
                                 )
                             }
                         />
                         <TextInput
                             value={String(
-                                objectiveToCreate.specificData.amountOfPushUps
+                                objectiveToCreate.specificData.amountOfPushUps,
                             )}
                             placeholderTextColor={
                                 Colors.MAIN.BLANDITEM.PLACEHOLDER
@@ -701,7 +701,7 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "increase",
-                                    "amountOfPushUps"
+                                    "amountOfPushUps",
                                 )
                             }
                         />
@@ -713,12 +713,12 @@ export default function CreateActiveObjectivePage() {
                 <>
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howManyReps.question"
+                            "pages.createActiveObjective.questions.perExercise.lifting.howManyReps.question",
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howManyReps.proTip"
+                            "pages.createActiveObjective.questions.perExercise.lifting.howManyReps.proTip",
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -749,7 +749,7 @@ export default function CreateActiveObjectivePage() {
                             onChangeText={(value) => {
                                 const cleanedValue = value.replace(
                                     /[^0-9.]/g,
-                                    ""
+                                    "",
                                 );
                                 const numericValue = parseFloat(cleanedValue);
                                 if (
@@ -786,12 +786,12 @@ export default function CreateActiveObjectivePage() {
                     <GapView height={20} />
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.Dumbbells.question"
+                            "pages.createActiveObjective.questions.perExercise.lifting.Dumbbells.question",
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howManyDumbbells.proTip"
+                            "pages.createActiveObjective.questions.perExercise.lifting.howManyDumbbells.proTip",
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -806,7 +806,7 @@ export default function CreateActiveObjectivePage() {
                         />
                         <TextInput
                             value={String(
-                                objectiveToCreate.specificData.dumbbells
+                                objectiveToCreate.specificData.dumbbells,
                             )}
                             placeholderTextColor={
                                 Colors.MAIN.BLANDITEM.PLACEHOLDER
@@ -824,7 +824,7 @@ export default function CreateActiveObjectivePage() {
                             onChangeText={(value) => {
                                 const cleanedValue = value.replace(
                                     /[^0-9.]/g,
-                                    ""
+                                    "",
                                 );
                                 const numericValue = parseFloat(cleanedValue);
                                 if (
@@ -861,12 +861,12 @@ export default function CreateActiveObjectivePage() {
                     <GapView height={20} />
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchDoesThePlateWeight.question"
+                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchDoesThePlateWeight.question",
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchDoesThePlateWeight.proTip"
+                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchDoesThePlateWeight.proTip",
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -881,7 +881,7 @@ export default function CreateActiveObjectivePage() {
                         />
                         <TextInput
                             value={String(
-                                objectiveToCreate.specificData.scaleWeight
+                                objectiveToCreate.specificData.scaleWeight,
                             )}
                             placeholderTextColor={
                                 Colors.MAIN.BLANDITEM.PLACEHOLDER
@@ -899,7 +899,7 @@ export default function CreateActiveObjectivePage() {
                             onChangeText={(value) => {
                                 const cleanedValue = value.replace(
                                     /[^0-9.]/g,
-                                    ""
+                                    "",
                                 );
                                 const numericValue = parseFloat(cleanedValue);
                                 if (
@@ -937,12 +937,12 @@ export default function CreateActiveObjectivePage() {
 
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchDoesTheBarWeight.question"
+                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchDoesTheBarWeight.question",
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchDoesTheBarWeight.proTip"
+                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchDoesTheBarWeight.proTip",
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -957,7 +957,7 @@ export default function CreateActiveObjectivePage() {
                         />
                         <TextInput
                             value={String(
-                                objectiveToCreate.specificData.barWeight
+                                objectiveToCreate.specificData.barWeight,
                             )}
                             placeholderTextColor={
                                 Colors.MAIN.BLANDITEM.PLACEHOLDER
@@ -975,7 +975,7 @@ export default function CreateActiveObjectivePage() {
                             onChangeText={(value) => {
                                 const cleanedValue = value.replace(
                                     /[^0-9.]/g,
-                                    ""
+                                    "",
                                 );
                                 const numericValue = parseFloat(cleanedValue);
                                 if (
@@ -1017,12 +1017,12 @@ export default function CreateActiveObjectivePage() {
                 <>
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.running.howFastToRun.question"
+                            "pages.createActiveObjective.questions.perExercise.running.howFastToRun.question",
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.running.howFastToRun.proTip"
+                            "pages.createActiveObjective.questions.perExercise.running.howFastToRun.proTip",
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -1034,13 +1034,13 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "decrease",
-                                    "estimateSpeed"
+                                    "estimateSpeed",
                                 )
                             }
                         />
                         <TextInput
                             value={String(
-                                objectiveToCreate.specificData.estimateSpeed
+                                objectiveToCreate.specificData.estimateSpeed,
                             )}
                             placeholderTextColor={
                                 Colors.MAIN.BLANDITEM.PLACEHOLDER
@@ -1058,7 +1058,7 @@ export default function CreateActiveObjectivePage() {
                             onChangeText={(value) => {
                                 const cleanedValue = value.replace(
                                     /[^0-9.]/g,
-                                    ""
+                                    "",
                                 );
                                 const numericValue = parseFloat(cleanedValue);
                                 if (
@@ -1090,7 +1090,7 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "increase",
-                                    "estimateSpeed"
+                                    "estimateSpeed",
                                 )
                             }
                         />
@@ -1104,14 +1104,14 @@ export default function CreateActiveObjectivePage() {
                 <>
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.hands"
+                            "pages.createActiveObjective.questions.perExercise.hands",
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
                             objectiveToCreate.exercise === "Lifting"
                                 ? "pages.createActiveObjective.questions.perExercise.lifting.handsProTip"
-                                : "pages.createActiveObjective.questions.perExercise.pushUps.handsProTip"
+                                : "pages.createActiveObjective.questions.perExercise.pushUps.handsProTip",
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -1123,13 +1123,13 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "decrease",
-                                    "amountOfHands"
+                                    "amountOfHands",
                                 )
                             }
                         />
                         <TextInput
                             value={String(
-                                objectiveToCreate.specificData.amountOfHands
+                                objectiveToCreate.specificData.amountOfHands,
                             )}
                             placeholderTextColor={
                                 Colors.MAIN.BLANDITEM.PLACEHOLDER
@@ -1147,7 +1147,7 @@ export default function CreateActiveObjectivePage() {
                             onChangeText={(value) => {
                                 const cleanedValue = value.replace(
                                     /[^1-2]/g,
-                                    ""
+                                    "",
                                 );
                                 const numericValue = parseInt(cleanedValue, 10);
                                 if (
@@ -1183,7 +1183,7 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "increase",
-                                    "amountOfHands"
+                                    "amountOfHands",
                                 )
                             }
                         />
