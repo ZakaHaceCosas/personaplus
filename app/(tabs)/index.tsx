@@ -3,6 +3,8 @@ import {
     BetterTextSubHeader,
 } from "@/components/text/BetterTextPresets";
 import BetterAlert from "@/components/ui/BetterAlert";
+import Section from "@/components/ui/sections/Section";
+import { RenderActiveObjectives } from "@/components/ui/sections/interface/Home";
 import { orchestrateUserData } from "@/toolkit/User";
 import { logToConsole } from "@/toolkit/debug/Console";
 import { FullProfile } from "@/types/User";
@@ -40,6 +42,7 @@ export default function HomeScreen() {
                 text="This is a test"
                 layout="alert"
             />
+            <Section kind="Objectives">{RenderActiveObjectives()}</Section>
         </>
     );
 }
