@@ -39,7 +39,7 @@ export default function PageEnd({ includeText }: PageEndProps): ReactElement {
                     fontSize={FontSizes.REGULAR}
                     textColor={Colors.LBLS.SDD}
                 >
-                    {t("hola chavales")}
+                    {t("globals.pageEnd")}
                 </BetterText>
             )}
         </View>
