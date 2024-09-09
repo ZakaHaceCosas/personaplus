@@ -1,6 +1,11 @@
 <!--R6 MD ONLY, remove on merge-->
 # :us: Welcome to PersonaPlus R6 / :es: Bienvenido a PersonaPlus R6
 
+> [!WARNING]
+> :us: **Currently, no contributions are expected! Please do not make any PR whatsoever until the rewrite is done. More free time for you I guess.**
+>
+> :es: **De momento, ¡no se esperan contribuciones! Por favor no hagas ninguna PR ni nada hasta que la reescritura esté acabada. Más tiempo libre para tí, supongo.**
+
 :us: R6 stands for 6th rewrite.
 
 Hope this works :fire:
