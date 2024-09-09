@@ -9,11 +9,11 @@ Ah, by the way, finally the app is `SemVer` compliant.
 
 NOTE: The repository will be inactive for several days, I am rewriting everything locally in a separate folder (so I can start from scratch with `create-expo-app`), that's why this looks dead.
 
-NOTE 2: I'm gradually syncronising everything from directory to directory, don't get surprised.
+NOTE 2: I'm gradually syncronising everything from directory to directory, don't get surprised if the Git history is a bit messy or some "random" / testing things get committed.
 
-:es:
+---
 
-R6 se refiere a reescritura por 6ta vez.
+:es: R6 se refiere a 6ta reescritura.
 
 Esperemos que funcione :fire:
 
@@ -21,7 +21,7 @@ Ah, por cierto, la app por fin cumple con `SemVer`.
 
 NOTA: Este repositorio estará inactivo por varios días, estoy reescribiendo todo localmente en una carpeta separada (para poder empezar de cero con `create-expo-app`), por eso parece muerto.
 
-NOTA 2: Estoy gradualmente sincronizando todo de carpeta a carpeta, que no sorprenda un historial de Git lioso o que se me escape alguna cosa rara / de preuab.
+NOTA 2: Estoy gradualmente sincronizando todo de carpeta a carpeta, no te sorprendas si el historial de Git está algo lioso o si se cuelan cosas raras / de prueba.
 
 <!-- <h1 align="center">PersonaPlus</h1> -->
 
