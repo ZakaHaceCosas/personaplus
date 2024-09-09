@@ -1,9 +1,10 @@
+import BetterButton from "@/components/interaction/BetterButton";
+import BackButton from "@/components/navigation/GoBack";
 import Loading from "@/components/static/Loading";
 import PageEnd from "@/components/static/PageEnd";
 import {
     BetterTextHeader,
     BetterTextSmallText,
-    BetterTextSmallerText,
     BetterTextSubHeader,
 } from "@/components/text/BetterTextPresets";
 import BetterAlert from "@/components/ui/BetterAlert";
@@ -18,7 +19,9 @@ import { Logs } from "@/types/Logs";
 import { FullProfile } from "@/types/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Device from "expo-device";
+import { router } from "expo-router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
 
 const styles = StyleSheet.create({
@@ -100,17 +103,34 @@ export default function HomeScreen() {
         handler();
     }, []);
 
+    function clearLogs() {
+        async function actuallyClearLogs() {
+            try {
+                await AsyncStorage.setItem(StoredItemNames.consoleLogs, "");
+            } catch (e) {
+                throw e;
+            }
+        }
+
+        actuallyClearLogs();
+        router.replace("/DevInterface");
+    }
+
+    // no i am not translating dev interface. it is just for BackButton to work.
+    const { t } = useTranslation();
+
     if (loading) {
         return <Loading />;
     }
 
     return (
         <>
+            <BackButton t={t} />
             <BetterTextHeader>Dev Interface</BetterTextHeader>
             <BetterTextSubHeader>
                 NOTE: This is ENGLISH only.
             </BetterTextSubHeader>
-            <GapView height={20} />
+            <GapView height={15} />
             <BetterAlert
                 style="DEFAULT"
                 title="Generic info from your device"
@@ -135,50 +155,76 @@ export default function HomeScreen() {
                 layout="alert"
             />
             <GapView height={10} />
-            <BetterTextSubHeader>Console registry</BetterTextSubHeader>
-            <BetterTextSmallText>
-                Note: This block might get very very long over time. It is
-                recommended that you clear logs every once in a while (unless
-                you're experiencing errors with the app!) to avoid taking too
-                much storage + to ensure Dev Interface loads fast.
-            </BetterTextSmallText>
-            <BetterTextSmallerText>
-                Note 2: Logs use MM/DD/YYYY. Sorry, it's not my fault. Blame it
-                on React.
-            </BetterTextSmallerText>
+            <BetterTextSubHeader>
+                Logged errors and warnings
+            </BetterTextSubHeader>
             <GapView height={5} />
+            <BetterButton
+                buttonText="Clear logs"
+                style="HMM"
+                action={clearLogs}
+            />
+            <GapView height={5} />
+            <BetterButton
+                buttonText="See all logs"
+                style="DEFAULT"
+                action={() => router.push("/LogView")}
+            />
             <View style={styles.consoleView}>
-                {logs && Array.isArray(logs) ? (
-                    logs.map((log, index) => {
-                        const logStyle = styles[log.type] || {};
-                        const options = {
-                            day: "2-digit",
-                            month: "2-digit",
-                            year: "numeric",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            second: "2-digit",
-                            hour12: false, // 24h format
-                        };
+                {error ? (
+                    <BetterTextSmallText>{error}</BetterTextSmallText>
+                ) : logs && logs.length > 0 && Array.isArray(logs) ? (
+                    // Filtra los logs para mostrar solo los de tipo "warn" o "error"
+                    logs.filter(
+                        (log) => log.type === "warn" || log.type === "error",
+                    ).length > 0 ? (
+                        logs
+                            .filter(
+                                (log) =>
+                                    log.type === "warn" || log.type === "error",
+                            )
+                            .map((log, index) => {
+                                const logStyle = styles[log.type] || {};
+                                const options = {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    second: "2-digit",
+                                    hour12: false, // 24h format
+                                };
 
-                        // formats date in a more sense-making way than what R5 used to do
-                        const formattedDate = new Date(log.timestamp)
-                            // @ts-expect-error some error idk, but it works fine so yeah
-                            .toLocaleString("es-ES", options)
-                            .replace(",", "");
+                                // formats date in a more sense-making way than what R5 used to do
+                                const formattedDate = new Date(log.timestamp)
+                                    // @ts-expect-error some error idk why, but it works fine so yeah
+                                    .toLocaleString("es-ES", options)
+                                    .replace(",", "");
 
-                        return (
-                            <Text
-                                key={index}
-                                style={[styles.logText, logStyle]}
-                            >
-                                [{formattedDate}] ({log.type.toUpperCase()}){" "}
-                                {String(log.message)}
-                            </Text>
-                        );
-                    })
+                                return (
+                                    <Text
+                                        key={index}
+                                        style={[styles.logText, logStyle]}
+                                    >
+                                        [{formattedDate}] (
+                                        {log.type.toUpperCase()}){" "}
+                                        {String(log.message)}
+                                    </Text>
+                                );
+                            })
+                    ) : (
+                        <BetterTextSmallText>
+                            Great! There are no errors and no warnings! If you
+                            want to see full logs, including regular and success
+                            ones, tap "See all logs".
+                        </BetterTextSmallText>
+                    )
                 ) : (
-                    <BetterTextSmallText>No logs.</BetterTextSmallText>
+                    <BetterTextSmallText>
+                        No logs. If you recently cleared them it's alright, if
+                        not, this shouldn't be empty, so you might be facing a
+                        bug.
+                    </BetterTextSmallText>
                 )}
             </View>
             <PageEnd includeText={true} />
