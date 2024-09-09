@@ -1,8 +1,5 @@
-// section/Division.tsx
-// División
-
 import React, { ReactElement, ReactNode } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import BetterText from "@/components/text/BetterText";
 import {
     BetterTextExtraHeader,
@@ -11,6 +8,7 @@ import {
 import GapView from "@/components/ui/GapView";
 import Colors from "@/constants/Colors";
 import FontSizes from "@/constants/FontSizes";
+import Ionicons from "@expo/vector-icons/MaterialIcons";
 
 // TypeScript, supongo
 /**
@@ -20,18 +18,6 @@ import FontSizes from "@/constants/FontSizes";
  * @typedef {DivisionProps}
  */
 interface DivisionProps {
-    /**
-     * Status. Unused for now. Would define the background color.
-     *
-     * @type {?string}
-     */
-    status?: string; // Estado. No se usa por ahora. Definiría el color de fondo.
-    /**
-     * Whether it has a big icon or not. Unused for now.
-     *
-     * @type {?boolean}
-     */
-    hasIcon?: boolean; // ¿Tiene un icono?
     /**
      * Name of the big icon. Unused for now.
      *
@@ -43,7 +29,7 @@ interface DivisionProps {
      *
      * @type {?string}
      */
-    preheader?: string; // Título
+    preHeader?: string; // Título
     /**
      * The big, main text of the division.
      *
@@ -55,7 +41,7 @@ interface DivisionProps {
      *
      * @type {?string}
      */
-    subheader?: string; // El texto pequeño, de haberlo
+    subHeader?: string; // El texto pequeño, de haberlo
     /**
      * A JSX element you can add inside of the division. Optional.
      *
@@ -63,6 +49,32 @@ interface DivisionProps {
      */
     children?: ReactNode; // Los hijos (botones, básicamente)
 }
+
+const styles = StyleSheet.create({
+    division: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "flex-start",
+        justifyContent: "flex-start",
+        paddingTop: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 20,
+        width: "100%",
+        maxWidth: "100%", // borderRadius fix.
+    },
+    filledView: {
+        width: "100%",
+    },
+    iconContainer: {
+        width: 50,
+        height: 50,
+        display: "flex",
+        alignItems: "flex-start",
+        justifyContent: "flex-start",
+        padding: 0,
+    },
+});
 
 // We create the function
 /**
@@ -72,7 +84,6 @@ interface DivisionProps {
  *
  * @export
  * @param {DivisionProps} param0
- * @param {string} param0.status Status. Unused for now. Would define the background color.
  * @param {string} param0.iconName An optional smaller text before the header.
  * @param {string} param0.preheader The big, main text of the division.
  * @param {string} param0.header The big, main text of the division.
@@ -81,71 +92,63 @@ interface DivisionProps {
  * @returns {ReactElement}
  */
 export default function Division({
-    status,
-    // iconName,
-    preheader,
+    iconName,
+    preHeader,
     header,
-    subheader,
+    subHeader,
     children,
 }: DivisionProps): ReactElement {
-    switch (status) {
-        case "REGULAR":
-            // El color de fondo es el de siempre (#202328)
-            break;
-        default:
-            // Por defecto
-            break;
-    }
-
     return (
         <View
-            style={{
-                display: "flex",
-                backgroundColor: Colors.MAIN.DIVISION,
-                flexDirection: "row",
-                paddingTop: 20,
-                paddingLeft: 20,
-                paddingRight: 20,
-                paddingBottom: 20,
-                width: "100%",
-            }}
+            style={[
+                styles.division,
+                {
+                    backgroundColor: Colors.MAIN.DIVISION,
+                },
+            ]}
         >
-            <View style={{ width: "100%" }}>
-                <View style={{ width: "100%" }}>
-                    <View>
-                        {preheader && (
-                            <BetterText
-                                textAlign="normal"
-                                fontWeight="Bold"
-                                fontSize={FontSizes.SMALL}
-                                textColor={Colors.BASIC.WHITE}
-                            >
-                                {preheader}
-                            </BetterText>
-                        )}
-                        {preheader && <GapView height={10} />}
-                        <BetterTextExtraHeader>{header}</BetterTextExtraHeader>
-                        {subheader && <GapView height={10} />}
-                        {subheader && (
-                            <BetterTextSmallText>
-                                {subheader}
-                            </BetterTextSmallText>
-                        )}
-                        {children && <GapView height={10} />}
-                        {children && (
-                            <View
-                                style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    flex: 1,
-                                    width: "100%",
-                                    gap: 15,
-                                }}
-                            >
-                                {children}
-                            </View>
-                        )}
-                    </View>
+            {iconName && (
+                <View style={styles.iconContainer}>
+                    <Ionicons
+                        // @ts-expect-error TODO: when we know all the possible icons that can be here, update iconName type to "icon1" | "icon2" to avoid a TypeError over here
+                        name={iconName}
+                        size={40}
+                        color={Colors.BASIC.WHITE}
+                    />
+                </View>
+            )}
+            <View style={styles.filledView}>
+                <View>
+                    {preHeader && (
+                        <BetterText
+                            textAlign="normal"
+                            fontWeight="Bold"
+                            fontSize={FontSizes.SMALL}
+                            textColor={Colors.BASIC.WHITE}
+                        >
+                            {preHeader}
+                        </BetterText>
+                    )}
+                    {preHeader && <GapView height={10} />}
+                    <BetterTextExtraHeader>{header}</BetterTextExtraHeader>
+                    {subHeader && <GapView height={10} />}
+                    {subHeader && (
+                        <BetterTextSmallText>{subHeader}</BetterTextSmallText>
+                    )}
+                    {children && <GapView height={10} />}
+                    {children && (
+                        <View
+                            style={{
+                                display: "flex",
+                                flexDirection: "row",
+                                flex: 1,
+                                width: "100%",
+                                gap: 15,
+                            }}
+                        >
+                            {children}
+                        </View>
+                    )}
                 </View>
             </View>
         </View>
