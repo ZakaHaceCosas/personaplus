@@ -119,7 +119,7 @@ export default function Section({
                 display: "flex",
                 backgroundColor: Colors.MAIN.SECTION,
                 flexDirection: "column",
-                borderRadius: 15,
+                borderRadius: 20,
                 overflow: "hidden",
             }}
         >
