@@ -34,10 +34,10 @@ export default function BetterText<T extends FontFamily = "BeVietnamPro">({
         textAlign === "center"
             ? "center"
             : textAlign === "right"
-            ? "right"
-            : textAlign === "normal" || textAlign === "left"
-            ? "left"
-            : "left";
+              ? "right"
+              : textAlign === "normal" || textAlign === "left"
+                ? "left"
+                : "left";
     const decoration: "underline" | "none" = isLink ? "underline" : "none";
 
     const textStyle: TextStyle = {

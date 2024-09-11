@@ -5,7 +5,7 @@
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
  *
- * You are in: app/_layout.tsx
+ * You are in: @/app/_layout.tsx
  * Basically: The main _layout of the entire app, AKA the font loader.
  *
  * <=============================================================================>

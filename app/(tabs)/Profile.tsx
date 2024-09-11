@@ -10,6 +10,7 @@ import FontSizes from "@/constants/FontSizes";
 import BetterButton from "@/components/interaction/BetterButton";
 import { updateBrm5 } from "@/toolkit/User";
 import { router } from "expo-router";
+import { logToConsole } from "@/toolkit/debug/Console";
 
 export default function HomeScreen() {
     const { t } = useTranslation();
@@ -21,8 +22,8 @@ export default function HomeScreen() {
                 profile.language = "es";
                 await AsyncStorage.setItem("userData", JSON.stringify(profile));
             }
-        } catch (error) {
-            console.error("Error changing language:", error);
+        } catch (e) {
+            logToConsole("Error changing language:" + e, "error");
         }
     }
 

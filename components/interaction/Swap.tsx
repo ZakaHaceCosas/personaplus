@@ -57,13 +57,13 @@ export default function Swap({
     const [selectedOption, setSelectedOption] = useState<Option | null>(
         value
             ? options.find((option) => option.value === value) || null
-            : defaultOption || null
+            : defaultOption || null,
     );
 
     useEffect(() => {
         if (value && selectedOption?.value !== value) {
             const newSelectedOption = options.find(
-                (option) => option.value === value
+                (option) => option.value === value,
             );
             if (newSelectedOption) {
                 setSelectedOption(newSelectedOption);
