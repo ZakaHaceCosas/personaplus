@@ -23,9 +23,8 @@ import {
 } from "@/components/text/BetterTextPresets";
 import { TimerPickerModal } from "react-native-timer-picker";
 import { LinearGradient } from "expo-linear-gradient";
-import { Audio } from "expo-av";
 import { getDefaultLocale } from "@/translations/translate";
-import { validateBasicUserData } from "@/toolkit/User";
+import { validateUserData } from "@/toolkit/User";
 import FontSizes from "@/constants/FontSizes";
 import Select from "@/components/interaction/Select";
 import BetterButton from "@/components/interaction/BetterButton";
@@ -302,6 +301,7 @@ export default function WelcomePage() {
             logToConsole(
                 "Error saving user data, some data is missing or not valid!",
                 "warn",
+                undefined,
                 true,
             );
             logToConsole("User data: " + JSON.stringify(formData), "log");
@@ -397,7 +397,7 @@ export default function WelcomePage() {
     useEffect(() => {
         try {
             validateStepOne(
-                validateBasicUserData(
+                validateUserData(
                     formData.gender,
                     formData.age,
                     formData.weight,
@@ -818,7 +818,7 @@ export default function WelcomePage() {
                         )}
                         onCancel={() => setShowPicker(false)}
                         closeOnOverlayPress
-                        Audio={Audio}
+                        Audio={false}
                         LinearGradient={LinearGradient}
                         styles={{
                             backgroundColor: Colors.MAIN.SECTION,
