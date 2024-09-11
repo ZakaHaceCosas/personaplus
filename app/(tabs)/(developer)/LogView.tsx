@@ -81,7 +81,7 @@ export default function HomeScreen() {
             try {
                 await AsyncStorage.setItem(StoredItemNames.consoleLogs, "");
             } catch (e) {
-                throw e;
+                logToConsole("Failed to clear logs: " + e, "error");
             }
         }
 
@@ -101,10 +101,10 @@ export default function HomeScreen() {
             <BackButton t={t} />
             <BetterTextHeader>Full Console View</BetterTextHeader>
             <BetterTextSmallText>
-                Note: This block might get very very long over time. It is
-                recommended that you clear logs every once in a while (unless
-                you're experiencing errors with the app!) to avoid taking too
-                much storage + to ensure Dev Interface loads fast.
+                Note: This might get very long over time. It's recommended that
+                you clear logs every once in a while (unless you're experiencing
+                errors with the app!) to avoid taking too much storage + to
+                ensure Dev Interface loads fast.
             </BetterTextSmallText>
             <BetterTextSmallerText>
                 Note 2: Logs use MM/DD/YYYY. Sorry, it's not my fault. Blame it
@@ -122,7 +122,7 @@ export default function HomeScreen() {
                 ) : logs && logs.length > 0 && Array.isArray(logs) ? (
                     logs.map((log, index) => {
                         const logStyle = styles[log.type] || {};
-                        const options = {
+                        const options: Intl.DateTimeFormatOptions = {
                             day: "2-digit",
                             month: "2-digit",
                             year: "numeric",
@@ -134,7 +134,6 @@ export default function HomeScreen() {
 
                         // formats date in a more sense-making way than what R5 used to do
                         const formattedDate = new Date(log.timestamp)
-                            // @ts-expect-error some error idk why, but it works fine so yeah
                             .toLocaleString("es-ES", options)
                             .replace(",", "");
 
@@ -143,7 +142,8 @@ export default function HomeScreen() {
                                 key={index}
                                 style={[styles.logText, logStyle]}
                             >
-                                [{formattedDate}] ({log.type.toUpperCase()}){" "}
+                                ({log.type.toUpperCase()}) [{formattedDate}]{" "}
+                                {"{" + log.traceback + "}"}{" "}
                                 {String(log.message)}
                             </Text>
                         );
