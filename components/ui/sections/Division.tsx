@@ -11,6 +11,14 @@ import FontSizes from "@/constants/FontSizes";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 
 // TypeScript, supongo
+
+/**
+ * All icons that can be used for Divisions.
+ *
+ * @typedef {icon}
+ */
+type icon = "fastfood" | "sports-score" | "trending-down" | "trending-up";
+
 /**
  * DivisionProps
  *
@@ -21,9 +29,9 @@ interface DivisionProps {
     /**
      * Name of the big icon. Unused for now.
      *
-     * @type {?(string | null)}
+     * @type {?(icon | null)}
      */
-    iconName?: string | null; // Si lo tiene, ¿Cuál es?
+    iconName?: icon | null; // Si lo tiene, ¿Cuál es?
     /**
      * An optional smaller text before the header.
      *
@@ -77,18 +85,20 @@ const styles = StyleSheet.create({
 });
 
 // We create the function
+
 /**
- * A PersonaPlus division.
+ * **A PersonaPlus division.**
  *
  * The PersonaPlus UI operates on a Section-Division basis, with Divisions containing most of the actions and features.
  *
  * @export
- * @param {DivisionProps} param0
- * @param {string} param0.iconName An optional smaller text before the header.
- * @param {string} param0.preheader The big, main text of the division.
- * @param {string} param0.header The big, main text of the division.
- * @param {string} param0.subheader An optional small text below the header.
- * @param {ReactElement} param0.children A JSX element you can add inside of the division. Optional.
+ * @see [Docs](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md)
+ * @param {DivisionProps} p
+ * @param {icon} p.iconName An optional smaller text before the header.
+ * @param {string} p.preHeader An optional smaller text before the header.
+ * @param {string} p.header The big, main text of the Division.
+ * @param {string} p.subHeader An optional small text below the header.
+ * @param {ReactNode} p.children Optional children for the Division.
  * @returns {ReactElement}
  */
 export default function Division({
@@ -110,7 +120,6 @@ export default function Division({
             {iconName && (
                 <View style={styles.iconContainer}>
                     <Ionicons
-                        // @ts-expect-error TODO: when we know all the possible icons that can be here, update iconName type to "icon1" | "icon2" to avoid a TypeError over here
                         name={iconName}
                         size={40}
                         color={Colors.BASIC.WHITE}
