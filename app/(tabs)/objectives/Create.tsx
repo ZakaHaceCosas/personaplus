@@ -529,12 +529,14 @@ export default function CreateActiveObjectivePage() {
                                 "errors.pages.createActiveObjective.chooseAnOptionIsNotValid",
                             ),
                             "warn",
+                            undefined,
                             true,
                         );
                     } else {
                         logToConsole(
                             "Invalid exercise value: " + value,
                             "error",
+                            undefined,
                             false,
                         );
                     }
