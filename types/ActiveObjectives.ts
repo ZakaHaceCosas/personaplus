@@ -126,30 +126,18 @@ export type ActiveObjectiveWithoutId = Omit<ActiveObjective, "identifier">;
 
 
 /**
- * **Deprecated. TODO! Update this to comply with the R6 codebase.** A registry of all the objectives, whether they're done or not, when, and their performance stats if they exist.
+ * A registry of all the objectives, whether they're done or not, when, and their performance stats if they exist.
  *
- * @deprecated
+ * @rawR5code
  * @export
  * @interface ActiveObjectiveDailyLog
  * @typedef {ActiveObjectiveDailyLog}
  */
 export interface ActiveObjectiveDailyLog {
     [date: TodaysDay]: {
-        [id: number]: {
+        [identifier: number]: {
             wasDone: boolean;
-            performance: "undefined" | string | {
-                result?: number;
-                subject?: {
-                    age: number;
-                    gender: string;
-                    weight: number;
-                    height: number;
-                    speed?: number;
-                    pushUps?: number;
-                    hands?: number;
-                };
-                context?: string;
-            };
+            performance: string | undefined
         };
     };
-}
+};
