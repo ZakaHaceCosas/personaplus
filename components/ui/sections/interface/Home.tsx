@@ -1,12 +1,11 @@
 import Loading from "@/components/static/Loading";
 import { logToConsole } from "@/toolkit/debug/Console";
 import { GetAllPendingObjectives } from "@/toolkit/objectives/ActiveObjectives";
-import { ActiveObjective } from "@/types/ActiveObjectives";
 import { ReactNode, useEffect, useState } from "react";
 import Division from "../Division";
 
 export function RenderActiveObjectives(): ReactNode {
-    const [objectives, setObjectives] = useState<ActiveObjective[] | 0 | null>(
+    const [objectives, setObjectives] = useState<number[] | false | 0 | null>(
         null,
     );
     const [loading, setLoading] = useState(true);
@@ -14,9 +13,9 @@ export function RenderActiveObjectives(): ReactNode {
     useEffect(() => {
         async function handler(): Promise<void> {
             try {
-                const pending: ActiveObjective[] | 0 | null =
+                const pending: number[] | 0 | false | null =
                     await GetAllPendingObjectives();
-                logToConsole(JSON.stringify(pending), "log");
+                logToConsole("PENDING STUFF " + JSON.stringify(pending), "log");
                 setObjectives(pending);
             } catch (e) {
                 logToConsole(
