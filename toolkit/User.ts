@@ -1,3 +1,16 @@
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/toolkit/User.ts
+ * Basically: A toolkit to work around with user data.
+ *
+ * <=============================================================================>
+ */
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { logToConsole } from "@/toolkit/debug/Console";
 import { Alert } from "react-native";
@@ -15,7 +28,7 @@ import { router } from "expo-router";
  * @param {(string | null)} username Username
  * @returns {boolean} `true` if everything's valid, `false` otherwise.
  */
-export function validateBasicUserData(
+export function validateUserData(
     gender: string | "male" | "female" | null,
     age: string | number | null,
     weight: string | number | null,
@@ -29,17 +42,6 @@ export function validateBasicUserData(
     const isUsernameValid = username !== null && username !== undefined && username.trim() !== "" && username.trim().length >= 3 && username.trim().length <= 40;
 
     return isGenderValid && isAgeValid && isWeightValid && isHeightValid && isUsernameValid;
-}
-
-/**
- * TODO! make this
- * same as `validateBasicUserData()` but with eberything from profile!1!1!
- *
- * @export
- * @returns {string}
- */
-export function validateFullProfile(): string {
-    return "TODO!"
 }
 
 /**
@@ -59,7 +61,7 @@ export async function orchestrateUserData(): Promise<FullProfile | null> {
 
         await handler()
     } catch (e) {
-        logToConsole("Error orchestrating user data! " + e, "error", false)
+        logToConsole("Error orchestrating user data! " + e, "error", undefined, false)
         throw e
     }
 
@@ -80,7 +82,8 @@ export function updateBrm5(careAboutTheUser: boolean) {
             return 0
         } catch (e) {
             logToConsole("Unknown error removing user data!", "error") // to the user, we show a normal message
-            logToConsole("Error releasing op. Resurgence AKA removing user data: " + e, "error", false) // to the developer, the full error info and the real name of the function
+            logToConsole("Error releasing op. Resurgence AKA removing user data: " + e, "error", undefined, false) // to the developer, the full error info and the real name of the function
+            throw e
         }
     }
 
