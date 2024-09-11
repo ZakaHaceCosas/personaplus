@@ -5,7 +5,7 @@
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
  *
- * You are in: constants/FontSizes.ts
+ * You are in: @/constants/FontSizes.ts
  * Basically: An export of all font sizes, for consistency
  *
  * <=============================================================================>

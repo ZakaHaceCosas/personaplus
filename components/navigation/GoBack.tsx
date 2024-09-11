@@ -32,7 +32,7 @@ function handleGoBack() {
             router.replace("/");
             logToConsole(
                 "GoBack.tsx couldn't find a previous route, so going to index",
-                "log"
+                "log",
             );
         }
     } catch (e) {
