@@ -1,6 +1,7 @@
 import Colors from "@/constants/Colors";
 import { Picker } from "@react-native-picker/picker";
 import { TFunction } from "i18next";
+import { ReactElement } from "react";
 import { StyleSheet, TextStyle } from "react-native";
 
 const styles = StyleSheet.create({
@@ -61,15 +62,15 @@ interface SelectProps {
      *
      * @type {string}
      */
-    dialogPrompt?: string;
+    dialogPrompt: string;
     /**
-     * A `void` that will be called upon the user choosing an option.
+     * A `(value) => void` that will be called upon the user choosing an option. Should set it to the updater of a stateful value, so it can update the value using `currentValue`.
      *
      * @type {(itemValue: string | number) => void}
      */
     changeAction: (itemValue: string | number) => void;
     /**
-     * The Select's current value. Recommended to set it to a stateful value, so it can be updated using `changeAction`.
+     * The Select's current value. Should set it to a stateful value, so it can be updated using `changeAction`.
      *
      * @type {(number | string)}
      */
@@ -92,14 +93,14 @@ interface SelectProps {
  * A homemade Select component (AKA dropdown / modal with options to choose). In the end it's just `@react-native-picker` with everything setup to avoid code duplication (and a name that in my opinion makes more sense). *Due to React's Rules of Hooks, you need to manually pass the `t`(translate) function as a param.*
  *
  * @export
- * @param {SelectProps} param0
- * @param {("dropdown" | "dialog")} param0.mode
- * @param {string} param0.dialogPrompt
- * @param {(itemValue: string | number) => void} param0.changeAction
- * @param {(string | number)} param0.currentValue
- * @param {{}} param0.selectOptions
- * @param {TFunction} param0.t
- * @returns {*}
+ * @param {SelectProps} p
+ * @param {("dropdown" | "dialog")} p.mode
+ * @param {string} p.dialogPrompt
+ * @param {(itemValue: string | number) => void} p.changeAction
+ * @param {(string | number)} p.currentValue
+ * @param {SelectOption[]} p.selectOptions
+ * @param {TFunction} p.t
+ * @returns {ReactElement}
  */
 export default function Select({
     mode,
@@ -108,7 +109,7 @@ export default function Select({
     currentValue,
     selectOptions,
     t,
-}: SelectProps) {
+}: SelectProps): ReactElement {
     return (
         <Picker
             enabled={true}
