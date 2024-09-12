@@ -66,6 +66,8 @@ local.properties
 # deprecated stuff
 **/*.deprecated.*
 *.deprecated.*
+# ignore changelog
+!CHANGELOG.deprecated.md
 
 # archived files
 archive/
