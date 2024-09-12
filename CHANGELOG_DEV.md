@@ -1,13 +1,36 @@
-# PersonaPlus CHANGELOG
+# PersonaPlus Developer CHANGELOG
 <!--
 P.S.: Changelog is managed by the owner only, thanks. One task less for you!
 -->
 
 All changes related to the app's development (codebase and others) will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)[^1],
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 
-## TODO
+<!-- this is a draft, obviously -->
+
+## [0.0.26-preapp.6] - Unreleased
+
+### Added
+
+- Constants: Repeated values, like heights of certain components, font names, font sizes, even the names of the `AsyncStorage` items, and more, have been moved to a `@/constants/` directory with multiple exports.
+- Tracebacks: Now logs can be optionally passed a "traceback" object, including some meaningfull data about where the log is actually happening, to help with debugging - specially with repeated messages across different places like "Error fetching objectives".
+- Many new components:
+  - BetterButton (an iteration of buttons).
+  - Select (a preconfigured `<Picker />`). Based on `react-native-picker`.
+  - BetterInputField (a preconfigured `TextInput`).
+  - BetterAlert (an iteration of notifications).
+
+### Changed
+
+- Fully reorganised the project onto a better, easier to understand file structure.
+- Most components went under revision and refactoring. Some were entirely rebuilt, others were just changed, more or less. But most components have undergone changes.
+- Improved JSDoc for many functions.
+
+### Removed
+
+- The idea of "OpenHealth" as a standalone library. It will be renamed to "CoreLibrary" (`CoreLibrary.physicalHealth.something()`) and will be developed and maintained only inside of the PersonaPlus scope.
+- Background fetching for Active Objectives. Fetching will happen each time an objective is marked as done instead, so reminder notifications get cancelled more efficiently.
