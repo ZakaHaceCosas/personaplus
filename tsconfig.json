@@ -15,7 +15,15 @@
         "forceConsistentCasingInFileNames": true,
         "allowSyntheticDefaultImports": true,
         "strictFunctionTypes": true,
-        "alwaysStrict": true
+        "alwaysStrict": true,
+        "strictPropertyInitialization": true,
+        "noStrictGenericChecks": false,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "exactOptionalPropertyTypes": true,
+        "strictBindCallApply": true
     },
-    "include": ["**/*.ts", "**/*.tsx"]
+    "include": ["**/*.ts", "**/*.tsx"],
+    "exclude": ["**/*.wip.ts"]
 }
