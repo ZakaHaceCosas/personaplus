@@ -90,9 +90,3 @@ export default function BetterInputField({
         </>
     );
 }
-/* (text) =>
-        handleChange(
-            name as "username" | "age" | "height" | "weight",
-            text
-        )
-*/
