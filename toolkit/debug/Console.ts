@@ -9,9 +9,9 @@ import { Platform, ToastAndroid } from "react-native";
  * @async
  * @returns {Promise<Log[]>} A Log array (`Log[]`)
  */
-export const getLogsFromStorage = async (): Promise<Log[]> => {
+export async function getLogsFromStorage(): Promise<Log[]> {
     try {
-        const logsString = await AsyncStorage.getItem("globalLogs");
+        const logsString: string | null = await AsyncStorage.getItem("globalLogs");
         if (logsString) {
             try {
                 const parsedLogs = JSON.parse(logsString);
@@ -27,22 +27,19 @@ export const getLogsFromStorage = async (): Promise<Log[]> => {
                     {
                         location: "toolkit/debug/console",
                         function: "getLogsFromStorage()",
-                        isHandler: false
-                    }
+                        isHandler: false,
+                    },
                 );
                 return [];
             }
         }
         return [];
     } catch (e) {
-        logToConsole(
-            "Error accessing logs from AsyncStorage: " + e,
-            "error",
-            {
-                location: "toolkit/debug/console",
-                function: "getLogsFromStorage()",
-                isHandler: false
-            });
+        logToConsole("Error accessing logs from AsyncStorage: " + e, "error", {
+            location: "toolkit/debug/console",
+            function: "getLogsFromStorage()",
+            isHandler: false,
+        });
         return [];
     }
 };
@@ -54,13 +51,17 @@ export const getLogsFromStorage = async (): Promise<Log[]> => {
  * @param {Log[]} logs An array of logs
  * @returns {0 | 1} 0 if success, 1 if failure.
  */
-const saveLogsToStorage = async (logs: Log[]): Promise<0 | 1> => {
+async function saveLogsToStorage(logs: Log[]): Promise<0 | 1> {
     try {
         await AsyncStorage.setItem("globalLogs", JSON.stringify(logs));
-        return 0
+        return 0;
     } catch (e) {
-        logToConsole("Error saving logs to AsyncStorage: " + e, "error", undefined);
-        return 1
+        logToConsole(
+            "Error saving logs to AsyncStorage: " + e,
+            "error",
+            undefined,
+        );
+        return 1;
     }
 };
 
@@ -73,14 +74,15 @@ const saveLogsToStorage = async (logs: Log[]): Promise<0 | 1> => {
  */
 async function addLogToGlobal(log: Log): Promise<0 | 1> {
     try {
-        const currentLogs = await getLogsFromStorage();
-        const updatedLogs = [...currentLogs, log];
+        const currentLogs: Log[] = await getLogsFromStorage();
+        const updatedLogs: Log[] = [...currentLogs, log];
         await saveLogsToStorage(updatedLogs);
         return 0;
     } catch (e) {
         logToConsole(
             "Error adding log to AsyncStorage: " + e,
-            "error", undefined
+            "error",
+            undefined,
         );
         return 1;
     }
@@ -99,7 +101,7 @@ export function logToConsole(
     message: string,
     type: "log" | "warn" | "error" | "success",
     traceback?: LogTraceback,
-    displayToEndUser?: boolean
+    displayToEndUser?: boolean,
 ): void {
     // Regular console log / warn / error / log again because no one thought about success logs (i'm a fucking genious)
     switch (type) {
@@ -119,22 +121,27 @@ export function logToConsole(
     }
 
     try {
-        const timestamp = Date.now(); // Exact timestamp
+        const timestamp: number = Date.now(); // Exact timestamp
         const newLog: Log = {
             message: message,
             type,
             timestamp,
-            traceback
+            traceback,
         }; // Generates the log
         addLogToGlobal(newLog).then((result) => {
             if (result === 1) {
                 console.error("Failed to save log to storage"); // here, as an exception, we use regualr console.error
             }
         }); // Pushes it so it gets stored
-        if (Platform.OS === "android" && (type === "error" || (typeof displayToEndUser !== 'undefined' && displayToEndUser === true))) {
+        if (
+            Platform.OS === "android" &&
+            (type === "error" ||
+                (typeof displayToEndUser !== "undefined" &&
+                    displayToEndUser === true))
+        ) {
             ToastAndroid.show(message, ToastAndroid.LONG); // Shows a toast if it's an error or if displayToEndUser is explicitly true.
         }
     } catch (e) {
-        console.error("Error with logging:", e)
+        console.error("Error with logging:", e);
     }
-};
+}
