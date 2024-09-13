@@ -15,6 +15,7 @@ import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/Console";
 import { Logs } from "@/types/Logs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
+import React from "react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
@@ -33,8 +34,8 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
     },
     log: {
-        color: Colors.BASIC.WHITE,
-        borderLeftColor: Colors.BASIC.WHITE,
+        color: Colors.LBLS.TBLH,
+        borderLeftColor: Colors.LBLS.TBLH,
     },
     success: {
         color: Colors.PRIMARIES.GOD.GOD,
@@ -138,14 +139,38 @@ export default function HomeScreen() {
                             .replace(",", "");
 
                         return (
-                            <Text
-                                key={index}
-                                style={[styles.logText, logStyle]}
-                            >
-                                ({log.type.toUpperCase()}) [{formattedDate}]{" "}
-                                {"{" + log.traceback + "}"}{" "}
-                                {String(log.message)}
-                            </Text>
+                            <React.Fragment key={index}>
+                                <Text style={[styles.logText, logStyle]}>
+                                    ({log.type.toUpperCase()}) [{formattedDate}]{" "}
+                                    {log.traceback
+                                        ? `{\n  TRACEBACK:\n  location: ${
+                                              log.traceback.location
+                                          },\n  function: ${
+                                              log.traceback.function
+                                          },\n  isHandler: ${
+                                              log.traceback.isHandler
+                                          }\n${
+                                              log.traceback.isHandler &&
+                                              log.traceback.handlerName
+                                                  ? `,\n  handlerName: ${log.traceback.handlerName}`
+                                                  : ""
+                                          }}`
+                                        : "{ TRACEBACKN'T }"}
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.logText,
+                                        logStyle,
+                                        {
+                                            color: "#FFF",
+                                            borderLeftColor: "#FFF",
+                                        },
+                                    ]}
+                                >
+                                    {String(log.message)}
+                                </Text>
+                                <GapView height={10} />
+                            </React.Fragment>
                         );
                     })
                 ) : (
