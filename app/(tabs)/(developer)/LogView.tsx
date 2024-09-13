@@ -111,6 +111,11 @@ export default function HomeScreen() {
                 Note 2: Logs use MM/DD/YYYY. Sorry, it's not my fault. Blame it
                 on React.
             </BetterTextSmallerText>
+            <BetterTextSmallerText>
+                Note 3: Each log takes two "entries": the first one is of its
+                type-specific color, indicating type, timestamp, and traceback,
+                and below, in white, is the log's actual text.
+            </BetterTextSmallerText>
             <GapView height={5} />
             <BetterButton
                 buttonText="Clear logs"
