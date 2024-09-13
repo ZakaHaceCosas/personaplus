@@ -128,11 +128,12 @@ export function logToConsole(
             timestamp,
             traceback,
         }; // Generates the log
-        addLogToGlobal(newLog).then((result) => {
-            if (result === 1) {
-                console.error("Failed to save log to storage"); // here, as an exception, we use regualr console.error
-            }
-        }); // Pushes it so it gets stored
+        addLogToGlobal(newLog).
+            then((result: 0 | 1): void => {
+                if (result === 1) {
+                    console.error("Failed to save log to storage"); // here, as an exception, we use regualr console.error
+                }
+            }); // Pushes it so it gets stored
         if (
             Platform.OS === "android" &&
             (type === "error" ||
