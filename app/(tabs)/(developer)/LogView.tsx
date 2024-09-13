@@ -101,20 +101,22 @@ export default function HomeScreen() {
         <>
             <BackButton t={t} />
             <BetterTextHeader>Full Console View</BetterTextHeader>
-            <BetterTextSmallText>
-                Note: This might get very long over time. It's recommended that
-                you clear logs every once in a while (unless you're experiencing
-                errors with the app!) to avoid taking too much storage + to
-                ensure Dev Interface loads fast.
-            </BetterTextSmallText>
+            <GapView height={5} />
             <BetterTextSmallerText>
-                Note 2: Logs use MM/DD/YYYY. Sorry, it's not my fault. Blame it
-                on React.
+                Note: Logs may grow large over time. It's a good idea to clear
+                them regularly to save storage and keep the Dev Interface
+                responsive (unless troubleshooting errors!).
             </BetterTextSmallerText>
+            <GapView height={5} />
             <BetterTextSmallerText>
-                Note 3: Each log takes two "entries": the first one is of its
-                type-specific color, indicating type, timestamp, and traceback,
-                and below, in white, is the log's actual text.
+                Note 2: Logs are formatted as MM/DD/YYYY due to React's
+                constraints. Apologies for the inconvenience.
+            </BetterTextSmallerText>
+            <GapView height={5} />
+            <BetterTextSmallerText>
+                Note 3: Each log consists of two parts: the first entry is
+                color-coded for type, timestamp, and traceback, while the second
+                entry, in white, contains the log's text.
             </BetterTextSmallerText>
             <GapView height={5} />
             <BetterButton
