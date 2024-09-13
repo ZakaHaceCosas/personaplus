@@ -128,17 +128,23 @@ export function logToConsole(
             timestamp,
             traceback,
         }; // Generates the log
-        addLogToGlobal(newLog).
-            then((result: 0 | 1): void => {
+
+        addLogToGlobal(newLog) // Pushes it so it gets stored
+            .then((result: 0 | 1): void => {
                 if (result === 1) {
                     console.error("Failed to save log to storage"); // here, as an exception, we use regualr console.error
                 }
-            }); // Pushes it so it gets stored
+            })
+            .catch((e: any): void => {
+                console.error("Error saving log:", e);
+            });
+
         if (
             Platform.OS === "android" &&
-            (type === "error" ||
-                (typeof displayToEndUser !== "undefined" &&
-                    displayToEndUser === true))
+            (
+                type === "error"
+                || (typeof displayToEndUser !== "undefined" && displayToEndUser === true)
+            )
         ) {
             ToastAndroid.show(message, ToastAndroid.LONG); // Shows a toast if it's an error or if displayToEndUser is explicitly true.
         }
