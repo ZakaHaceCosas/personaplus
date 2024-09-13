@@ -1,5 +1,5 @@
-import * as ExpoConfig from '@expo/config';
-import dotenv from 'dotenv';
+import * as ExpoConfig from "@expo/config";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -17,23 +17,24 @@ const config: ExpoConfig.ExpoConfig = {
     splash: {
         image: "./assets/resources/splash.png",
         resizeMode: "contain",
-        backgroundColor: "#14171C"
+        backgroundColor: "#14171C",
     },
     notification: {
         color: "#32FF80",
         androidMode: "default",
         icon: "./assets/resources/notification-icon.png",
-        androidCollapsedTitle: "#{unread_notifications} PersonaPlus notifications"
+        androidCollapsedTitle:
+            "#{unread_notifications} PersonaPlus notifications",
     },
-    assetBundlePatterns: [
-        "**/*"
-    ],
+    assetBundlePatterns: ["**/*"],
     android: {
         // icon: process.env.APPICON || undefined, // || undefined, so either the blue dev icon or directly the regular adaptive icon
         adaptiveIcon: {
             foregroundImage: "./assets/resources/adaptive-icon-foreground.png",
-            backgroundImage: process.env.APPADAPTIVEICONBACKGROUND || "./assets/resources/adaptive-icon-background.png",
-            backgroundColor: "#0E1013"
+            backgroundImage:
+                process.env.APPADAPTIVEICONBACKGROUND ||
+                "./assets/resources/adaptive-icon-background.png",
+            backgroundColor: "#0E1013",
         },
         allowBackup: false,
         package: process.env.PACKAGE || "com.zakahacecosas.personaplus",
@@ -41,25 +42,25 @@ const config: ExpoConfig.ExpoConfig = {
             "android.permission.SCHEDULE_EXACT_ALARM",
             "android.permission.POST_NOTIFICATIONS",
             "android.permission.RECEIVE_BOOT_COMPLETED",
-            "android.permission.WAKE_LOCK"
+            "android.permission.WAKE_LOCK",
         ],
         versionCode: 25,
-        backgroundColor: "#0E1013"
+        backgroundColor: "#0E1013",
     },
     ios: {
         // apple is not supported and wont ever be, this is for some dude whos testing from an iphone
-        backgroundColor: "#0E1013"
+        backgroundColor: "#0E1013",
     },
     web: {
         favicon: "./assets/resources/favicon.png",
-        bundler: "metro"
+        bundler: "metro",
     },
     privacy: "public",
     androidStatusBar: {
         barStyle: "light-content",
         hidden: false,
         translucent: false,
-        backgroundColor: "#0E1013"
+        backgroundColor: "#0E1013",
     },
     androidNavigationBar: {
         barStyle: "light-content",
@@ -122,39 +123,41 @@ const config: ExpoConfig.ExpoConfig = {
                     "./assets/fonts/BeVietnamPro-ExtraLight.ttf",
                     "./assets/fonts/RobotoSerif-ExtraBold.ttf",
                     "./assets/fonts/JetBrainsMono-Bold.ttf",
-                    "./assets/fonts/RobotoSerif-ExtraLightItalic.ttf"
-                ]
-            }
+                    "./assets/fonts/RobotoSerif-ExtraLightItalic.ttf",
+                ],
+            },
         ],
         "expo-router",
         [
             "expo-notifications",
             {
-                "icon": "./assets/resources/notification-icon.png",
-                "color": "#32FF80",
-                "defaultChannel": "default"
-            }
+                icon: "./assets/resources/notification-icon.png",
+                color: "#32FF80",
+                defaultChannel: "default",
+            },
         ],
         [
             "expo-build-properties",
             {
-                "android": {
-                    "newArchEnabled": false
-                }
-            }
-        ]
+                android: {
+                    newArchEnabled: false,
+                },
+            },
+        ],
     ],
     extra: {
         router: {
-            origin: false
+            origin: false,
         },
         eas: {
-            projectId: process.env.PID
-        }
+            projectId: process.env.PID,
+        },
     },
 };
 
-export default ({ config: appConfig }: ExpoConfig.ConfigContext): ExpoConfig.ExpoConfig => ({
+export default ({
+    config: appConfig,
+}: ExpoConfig.ConfigContext): ExpoConfig.ExpoConfig => ({
     ...appConfig,
-    ...config
+    ...config,
 });
