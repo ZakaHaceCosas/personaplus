@@ -48,7 +48,7 @@ export default function HomeScreen() {
             </BetterTextSubHeader>
             <GapView height={20} />
             <Section width="total" kind="Objectives">
-                {RenderActiveObjectives()}
+                <RenderActiveObjectives />
             </Section>
         </>
     );
