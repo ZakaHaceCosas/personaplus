@@ -76,10 +76,10 @@ export default function CreateActiveObjectivePage() {
             exercise: "",
             info: {
                 days: [false, false, false, false, false, false, false],
-                duration: 0,
+                durationMinutes: 0,
                 rests: 0,
                 repetitions: 0,
-                restDuration: 0,
+                restDurationMinutes: 0,
             },
             specificData: {
                 scaleWeight: 0,
@@ -105,18 +105,22 @@ export default function CreateActiveObjectivePage() {
 
     // some types to avoid duplication
     type Operation = "increase" | "decrease";
-    type Value = "duration" | "rests" | "restDuration" | "repetitions";
+    type Value =
+        | "durationMinutes"
+        | "rests"
+        | "restDurationMinutes"
+        | "repetitions";
 
     function handleToggle(operation: Operation, value: Value) {
         updateObjectiveToCreate((prev) => {
             let updatedInfo = { ...prev.info };
 
-            if (value === "duration") {
-                const currentDuration = prev.info.duration;
-                updatedInfo.duration =
+            if (value === "durationMinutes") {
+                const currentDurationMinutes = prev.info.durationMinutes;
+                updatedInfo.durationMinutes =
                     operation === "increase"
-                        ? currentDuration + 1
-                        : Math.max(currentDuration - 1, 0);
+                        ? currentDurationMinutes + 1
+                        : Math.max(currentDurationMinutes - 1, 0);
             } else if (value === "rests") {
                 const currentRests = prev.info.rests;
 
@@ -127,21 +131,22 @@ export default function CreateActiveObjectivePage() {
                             : Math.max(currentRests - 1, 0);
                     if (updatedInfo.rests === 0) {
                         updatedInfo.rests = 0;
-                        updatedInfo.restDuration = 0;
+                        updatedInfo.restDurationMinutes = 0;
                     } else {
-                        updatedInfo.restDuration = prev.info.restDuration || 1;
+                        updatedInfo.restDurationMinutes =
+                            prev.info.restDurationMinutes || 1;
                     }
                 } else {
                     updatedInfo.rests = operation === "increase" ? 1 : 0;
                     if (updatedInfo.rests === 0) {
-                        updatedInfo.restDuration = 0;
+                        updatedInfo.restDurationMinutes = 0;
                     } else {
-                        updatedInfo.restDuration = 1;
+                        updatedInfo.restDurationMinutes = 1;
                     }
                 }
-            } else if (value === "restDuration") {
-                const currentRestDuration = prev.info.restDuration ?? 0;
-                updatedInfo.restDuration =
+            } else if (value === "restDurationMinutes") {
+                const currentRestDuration = prev.info.restDurationMinutes ?? 0;
+                updatedInfo.restDurationMinutes =
                     operation === "increase"
                         ? currentRestDuration + 1
                         : Math.max(currentRestDuration - 1, 0);
@@ -352,12 +357,12 @@ export default function CreateActiveObjectivePage() {
 
                             // this thing is to avoid it placing a huge ass "0" if you remove everything to write it yourself
                             if (cleanedValue === "" || isNaN(numericValue)) {
-                                if (associatedValue === "duration") {
+                                if (associatedValue === "durationMinutes") {
                                     updateObjectiveToCreate((prev) => ({
                                         ...prev,
                                         info: {
                                             ...prev.info,
-                                            duration: 0,
+                                            durationMinutes: 0,
                                         },
                                     }));
                                 } else if (associatedValue === "repetitions") {
@@ -368,7 +373,9 @@ export default function CreateActiveObjectivePage() {
                                             repetitions: 0,
                                         },
                                     }));
-                                } else if (associatedValue === "restDuration") {
+                                } else if (
+                                    associatedValue === "restDurationMinutes"
+                                ) {
                                     updateObjectiveToCreate((prev) => ({
                                         ...prev,
                                         info: {
@@ -386,12 +393,12 @@ export default function CreateActiveObjectivePage() {
                                     }));
                                 }
                             } else {
-                                if (associatedValue === "duration") {
+                                if (associatedValue === "durationMinutes") {
                                     updateObjectiveToCreate((prev) => ({
                                         ...prev,
                                         info: {
                                             ...prev.info,
-                                            duration: numericValue,
+                                            durationMinutes: numericValue,
                                         },
                                     }));
                                 } else if (associatedValue === "repetitions") {
@@ -402,7 +409,9 @@ export default function CreateActiveObjectivePage() {
                                             repetitions: numericValue,
                                         },
                                     }));
-                                } else if (associatedValue === "restDuration") {
+                                } else if (
+                                    associatedValue === "restDurationMinutes"
+                                ) {
                                     updateObjectiveToCreate((prev) => ({
                                         ...prev,
                                         info: {
@@ -438,7 +447,7 @@ export default function CreateActiveObjectivePage() {
         function validate() {
             const isInfovalid =
                 !objectiveToCreate.info.days.every((day) => day === false) && // not all 7 days are false
-                objectiveToCreate.info.duration > 0; // no 0 minutes of exercise
+                objectiveToCreate.info.durationMinutes > 0; // no 0 minutes of exercise
 
             let isSpecificDataValid = false;
 
@@ -628,10 +637,10 @@ export default function CreateActiveObjectivePage() {
                 })}
             </View>
             <GapView height={20} />
-            {spawnToggle("duration")}
+            {spawnToggle("durationMinutes")}
             {spawnToggle("rests")}
-            {objectiveToCreate.info.restDuration! > 0 &&
-                spawnToggle("restDuration")}
+            {objectiveToCreate.info.restDurationMinutes! > 0 &&
+                spawnToggle("restDurationMinutes")}
             {spawnToggle("repetitions")}
             {
                 // forgive me for promising that R6 would adress all code duplication and yet making this
