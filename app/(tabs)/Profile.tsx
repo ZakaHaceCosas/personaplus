@@ -11,17 +11,24 @@ import BetterButton from "@/components/interaction/BetterButton";
 import { updateBrm5 } from "@/toolkit/User";
 import { router } from "expo-router";
 import { logToConsole } from "@/toolkit/debug/Console";
+import StoredItemNames from "@/constants/StoredItemNames";
 
 export default function HomeScreen() {
     const { t } = useTranslation();
     async function changeLanguage() {
         try {
-            const userData = await AsyncStorage.getItem("userData");
-            if (userData) {
-                const profile: FullProfile = JSON.parse(userData);
-                profile.language = "es";
-                await AsyncStorage.setItem("userData", JSON.stringify(profile));
+            const userData: string | null = await AsyncStorage.getItem(
+                StoredItemNames.userData,
+            );
+            if (!userData) {
+                throw new Error("Why is userData null?");
             }
+            const profile: FullProfile = JSON.parse(userData);
+            profile.language = "es";
+            await AsyncStorage.setItem(
+                StoredItemNames.userData,
+                JSON.stringify(profile),
+            );
         } catch (e) {
             logToConsole("Error changing language:" + e, "error");
         }
