@@ -1,5 +1,5 @@
 <!--R6 MD ONLY, remove on merge-->
-# :us: Welcome to PersonaPlus R6 / :es: Bienvenido a PersonaPlus R6
+# :us: Welcome to PersonaPlus R6<br />:es: Bienvenido a PersonaPlus R6
 
 > [!WARNING]
 > :us: **Currently, no contributions are expected! Please do not make any PR whatsoever until the rewrite is done. More free time for you I guess.**
@@ -8,9 +8,23 @@
 
 :us: R6 stands for 6th rewrite.
 
+About finishing this:
+
+> [!TIP]
+> **When will this be considered as done?**:
+>
+> As soon as the new codebase is capable of _at least_ all the features the app had with it's previous codebase at it's last version (0.0.1-R5-b24), `R6` will merge with `main`.
+
+And about releasing the new app:
+
+> [!TIP]
+> **Will it inmediatly release?**:
+>
+> No. There are some known errors that I don't really know how to fix, so I'll merge with them and when everything's in place I'll polish them before releasing.
+
 Hope this works :fire:
 
-Ah, by the way, finally the app is `SemVer` compliant.
+Ah, by the way, finally the app is `SemVer` compliant. Next release will be `0.0.26-preapp.6`, being the MINOR number the previous "b`X`" number, and `.6` the previous "`-RX-`" code.
 
 NOTE: The repository will be inactive for several days, I am rewriting everything locally in a separate folder (so I can start from scratch with `create-expo-app`), that's why this looks dead.
 
@@ -20,9 +34,23 @@ NOTE 2: I'm gradually syncronising everything from directory to directory, don't
 
 :es: R6 se refiere a 6ta reescritura.
 
+Respecto a terminar esto:
+
+> [!TIP]
+> **¿Cuándo se considerará lista?**:
+>
+> Tan pronto como la nueva base de código sea capaz de _al menos_ todas las funciones que la app tenía con la anterior base de código en su última versión (0.0.1-R5-b24), `R6` se fusionará con `main`.
+
+Y respecto a sacar la nueva app:
+
+> [!TIP]
+> **¿Se lanzará inmediatamente?**:
+>
+> No. Hay algunos errores conocidos que en realiad no sé como arreglar, así que fusionaré con ellos y cuando todo esté en su lugar los puliré antes de lanzar.
+
 Esperemos que funcione :fire:
 
-Ah, por cierto, la app por fin cumple con `SemVer`.
+Ah, por cierto, la app por fin cumple con `SemVer`. La próxima versión será la `0.0.26-preapp.6`, siendo la MINOR la anterior "b`X`", y `.6` el código "`-RX-`" anterior.
 
 NOTA: Este repositorio estará inactivo por varios días, estoy reescribiendo todo localmente en una carpeta separada (para poder empezar de cero con `create-expo-app`), por eso parece muerto.
 
