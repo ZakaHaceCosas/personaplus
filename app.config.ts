@@ -28,7 +28,7 @@ const config: ExpoConfig.ExpoConfig = {
     },
     assetBundlePatterns: ["**/*"],
     android: {
-        // icon: process.env.APPICON || undefined, // || undefined, so either the blue dev icon or directly the regular adaptive icon
+        ...(process.env.APPICON && { icon: process.env.APPICON }),  // only specify "icon" when it exists
         adaptiveIcon: {
             foregroundImage: "./assets/resources/adaptive-icon-foreground.png",
             backgroundImage:
