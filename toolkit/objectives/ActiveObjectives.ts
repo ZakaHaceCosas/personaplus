@@ -26,7 +26,12 @@ async function GetAllObjectives(): Promise<ActiveObjective[] | null> {
             logToConsole(
                 "Failed to parse stored objectives: " + e,
                 "error",
-                undefined,
+                {
+                    location: "@/toolkit/objectives/ActiveObjectives.ts",
+                    isHandler: false,
+                    function: "GetAllObjectives() @ try-catch #1 @ sub try-catch #1"
+                },
+                false
             );
             return null;
         }
@@ -42,11 +47,6 @@ async function GetAllObjectives(): Promise<ActiveObjective[] | null> {
 
         return objectives;
     } catch (e) {
-        logToConsole(
-            "Got an error getting all objectives! " + e,
-            "error",
-            undefined,
-        );
         throw new Error("Got an error getting all objectives! " + e);
     }
 }
@@ -65,11 +65,7 @@ async function GetActiveObjectiveDailyLog(): Promise<
             response !== null ? JSON.parse(response) : null;
         return dailyLog;
     } catch (e) {
-        logToConsole(
-            "Error accessing active objective daily log! " + e,
-            "error",
-        );
-        throw e;
+        throw new Error("Error accessing active objective daily log! " + e);
     }
 }
 
@@ -181,11 +177,7 @@ async function CheckForAnActiveObjectiveDailyStatus(
             return false; // no interaction with the objective means no data logged.
         }
     } catch (e) {
-        logToConsole(
-            "Error checking if an objective is due today: " + e,
-            "error",
-        );
-        throw e;
+        throw new Error("Error checking if an objective is due today: " + e);
     }
 }
 
@@ -253,7 +245,7 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
             ? 0
             : activeObjectivesDueToday.map((obj) => obj.identifier); // Return 0 if all are done, otherwise return the active objectives due today (well, their identifiers)
     } catch (e) {
-        throw e;
+        throw new Error("Failed to get all pending objectives: " + e);
     }
 }
 
@@ -283,10 +275,6 @@ async function GetActiveObjective(
         }
         return objective;
     } catch (e) {
-        logToConsole(
-            "Got an error fetching objective " + identifier + "! " + e,
-            "error",
-        );
         throw new Error(
             "Got an error fetching objective " + identifier + "! " + e,
         );
@@ -304,7 +292,7 @@ async function CreateActiveObjective(
     target: ActiveObjectiveWithoutId,
 ): Promise<0> {
     try {
-        let objs = await GetAllObjectives();
+        let objs: ActiveObjective[] | null = await GetAllObjectives();
         if (!objs || objs.length === 0 || objs === null) {
             objs = [];
         }
@@ -316,7 +304,7 @@ async function CreateActiveObjective(
 
             let newIdentifier: number = generateObjectiveId();
             // verify there aren't duplicates
-            while (objs.some((obj) => obj.identifier === newIdentifier)) {
+            while (objs.some((obj: ActiveObjective): boolean => obj.identifier === newIdentifier)) {
                 newIdentifier = generateObjectiveId();
             }
             return newIdentifier;
@@ -335,7 +323,6 @@ async function CreateActiveObjective(
                 JSON.stringify(objs),
             );
         } catch (e) {
-            logToConsole("Failed to save objectives! " + e, "error");
             throw new Error("Failed to save objectives! " + e);
         }
 
@@ -347,15 +334,17 @@ async function CreateActiveObjective(
             ") successfully!",
             "success",
             undefined,
+            false
         );
         logToConsole(
             "NOTE: Full JSON of the created objective:" +
             JSON.stringify(newObjective),
             "log",
+            undefined,
+            false
         );
         return 0;
     } catch (e) {
-        logToConsole("Something went wrong creating objetcive: " + e, "error");
         throw new Error("Something went wrong creating objetcive: " + e);
     }
 }
