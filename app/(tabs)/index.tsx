@@ -2,7 +2,7 @@ import {
     BetterTextHeader,
     BetterTextSubHeader,
 } from "@/components/text/BetterTextPresets";
-import BetterAlert from "@/components/ui/BetterAlert";
+import GapView from "@/components/ui/GapView";
 import Section from "@/components/ui/sections/Section";
 import { RenderActiveObjectives } from "@/components/ui/sections/interface/Home";
 import { orchestrateUserData } from "@/toolkit/User";
@@ -36,13 +36,10 @@ export default function HomeScreen() {
             <BetterTextSubHeader>
                 {t("pages.home.subheader")}
             </BetterTextSubHeader>
-            <BetterAlert
-                style="GOD"
-                title="Test"
-                text="This is a test"
-                layout="alert"
-            />
-            <Section kind="Objectives">{RenderActiveObjectives()}</Section>
+            <GapView height={20} />
+            <Section width="total" kind="Objectives">
+                {RenderActiveObjectives()}
+            </Section>
         </>
     );
 }
