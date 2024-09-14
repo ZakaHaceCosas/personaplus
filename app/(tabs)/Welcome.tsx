@@ -29,6 +29,7 @@ import FontSizes from "@/constants/FontSizes";
 import Select from "@/components/interaction/Select";
 import BetterButton from "@/components/interaction/BetterButton";
 import BetterInputField from "@/components/interaction/BetterInputField";
+import StoredItemNames from "@/constants/StoredItemNames";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -278,7 +279,7 @@ export default function WelcomePage() {
                     JSON.stringify(userData),
                 );
 
-                await AsyncStorage.setItem("objectives", "{}");
+                await AsyncStorage.setItem(StoredItemNames.objectives, "[]");
                 router.replace("/");
                 logToConsole(
                     "User " +
