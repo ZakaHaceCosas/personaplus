@@ -1,3 +1,15 @@
 {
-    "recommendations": ["crystal-spider.jsdoc-generator"]
+    "recommendations": [
+        "expo.vscode-expo-tools", // most important one
+        "crystal-spider.jsdoc-generator",
+        "aaron-bond.better-comments",
+        "usernamehw.errorlens",
+        "EditorConfig.EditorConfig",
+        "expo.vscode-expo-tools",
+        "DavidAnson.vscode-markdownlint", // only for MD editing
+        "pmneo.tsimporter",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "christian-kohler.npm-intellisense"
+    ]
 }
