@@ -114,9 +114,9 @@ export default function HomeScreen() {
             </BetterTextSmallerText>
             <GapView height={5} />
             <BetterTextSmallerText>
-                Note 3: Each log consists of two parts: the first entry is
-                color-coded for type, timestamp, and traceback, while the second
-                entry, in white, contains the log's text.
+                Note 3: Each log consists of two parts: the first entry is for
+                type, timestamp, and traceback, while the second entry, contains
+                the log's text. Both entries are color-coded.
             </BetterTextSmallerText>
             <GapView height={5} />
             <BetterButton
@@ -156,24 +156,15 @@ export default function HomeScreen() {
                                               log.traceback.function
                                           },\n  isHandler: ${
                                               log.traceback.isHandler
-                                          }\n${
+                                          },\n${
                                               log.traceback.isHandler &&
                                               log.traceback.handlerName
-                                                  ? `,\n  handlerName: ${log.traceback.handlerName}`
+                                                  ? `  handlerName: ${log.traceback.handlerName}`
                                                   : ""
                                           }}`
                                         : "{ TRACEBACKN'T }"}
                                 </Text>
-                                <Text
-                                    style={[
-                                        styles.logText,
-                                        logStyle,
-                                        {
-                                            color: "#FFF",
-                                            borderLeftColor: "#FFF",
-                                        },
-                                    ]}
-                                >
+                                <Text style={[styles.logText, logStyle]}>
                                     {String(log.message)}
                                 </Text>
                                 <GapView height={10} />
