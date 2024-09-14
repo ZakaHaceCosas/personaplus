@@ -1,3 +1,4 @@
+import Loading from "@/components/static/Loading";
 import {
     BetterTextHeader,
     BetterTextSubHeader,
@@ -14,6 +15,7 @@ import { useTranslation } from "react-i18next";
 export default function HomeScreen() {
     const { t } = useTranslation();
     const [userData, setUserData] = useState<FullProfile | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         async function handler() {
@@ -21,12 +23,20 @@ export default function HomeScreen() {
                 const response = await orchestrateUserData();
                 setUserData(response);
             } catch (e) {
-                logToConsole("Error accessing user data! " + e, "error");
+                logToConsole("Error accessing user data! " + e, "error", {
+                    location: "@/app/(tabs)/index.tsx",
+                    function: "handler()",
+                    isHandler: false,
+                });
+            } finally {
+                setLoading(false);
             }
         }
 
         handler();
     }, []);
+
+    if (loading) return <Loading />;
 
     return (
         <>
