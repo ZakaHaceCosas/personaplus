@@ -58,7 +58,6 @@
         "editor.insertSpaces": true
     },
     "prettier.tabWidth": 4,
-    "prettier.bracketSpacing": true,
     "[markdown]": {
         "editor.unicodeHighlight.ambiguousCharacters": true,
         "editor.unicodeHighlight.invisibleCharacters": false,
@@ -112,5 +111,52 @@
     "typescript.inlayHints.parameterTypes.enabled": true,
     "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
     "typescript.reportStyleChecksAsWarnings": true,
-    "editor.lightbulb.enabled": "on"
+    "editor.lightbulb.enabled": "on",
+    "better-comments.tags": [
+        {
+            "tag": "FAILING",
+            "color": "#FF2D00",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": true,
+            "italic": false
+        },
+        {
+            "tag": "WATCHOUT",
+            "color": "#EF7E22",
+            "strikethrough": false,
+            "underline": true,
+            "backgroundColor": "transparent",
+            "bold": true,
+            "italic": false
+        },
+        {
+            "tag": "NOTE",
+            "color": "#676767",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": true
+        },
+        {
+            "tag": "TODO",
+            "color": "#45AAFF",
+            "strikethrough": false,
+            "underline": true,
+            "backgroundColor": "transparent",
+            "bold": true,
+            "italic": false
+        },
+        {
+            "tag": "FIXME",
+            "color": "#FF6347",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": true,
+            "italic": true
+        }
+    ]
 }
