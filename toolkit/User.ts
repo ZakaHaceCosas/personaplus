@@ -16,6 +16,7 @@ import { logToConsole } from "@/toolkit/debug/Console";
 import { Alert } from "react-native";
 import { FullProfile } from "@/types/User";
 import { router } from "expo-router";
+import StoredItemNames from "@/constants/StoredItemNames";
 
 /**
  * Validates the basic user data, to ensure the gender, age, height, weight, and username values are valid. This doesn't just check for types, but actually does some extra validation, like username lenght or "normal limits" (e.g. returning invalid if the user wants to set his weight to 999kg).
@@ -55,7 +56,7 @@ export async function orchestrateUserData(): Promise<FullProfile | null> {
     let response: FullProfile | null = null
     try {
         async function handler(): Promise<void> {
-            const data = await AsyncStorage.getItem("userData")
+            const data: string | null = await AsyncStorage.getItem(StoredItemNames.userData)
             response = (data !== null && data !== "" && Object.keys(JSON.parse(data)).length > 0) ? JSON.parse(data) : null
         }
 

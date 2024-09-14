@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Log, LogTraceback } from "@/types/Logs";
 import { Platform, ToastAndroid } from "react-native";
+import StoredItemNames from "@/constants/StoredItemNames";
 
 // Función para obtener logs desde AsyncStorage
 /**
@@ -11,7 +12,7 @@ import { Platform, ToastAndroid } from "react-native";
  */
 export async function getLogsFromStorage(): Promise<Log[]> {
     try {
-        const logsString: string | null = await AsyncStorage.getItem("globalLogs");
+        const logsString: string | null = await AsyncStorage.getItem(StoredItemNames.consoleLogs);
         if (logsString) {
             try {
                 const parsedLogs = JSON.parse(logsString);
@@ -53,7 +54,7 @@ export async function getLogsFromStorage(): Promise<Log[]> {
  */
 async function saveLogsToStorage(logs: Log[]): Promise<0 | 1> {
     try {
-        await AsyncStorage.setItem("globalLogs", JSON.stringify(logs));
+        await AsyncStorage.setItem(StoredItemNames.consoleLogs, JSON.stringify(logs));
         return 0;
     } catch (e) {
         logToConsole(
