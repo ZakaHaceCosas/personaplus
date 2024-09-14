@@ -1,13 +1,14 @@
 // src/section/Section.tsx
 
 import React, { ReactElement, ReactNode } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import BetterText from "@/components/text/BetterText";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/ui/GapView";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/Colors";
 import FontSizes from "@/constants/FontSizes";
+import getCommonScreenSize from "@/constants/Screen";
 
 // TypeScript, supongo
 /**
@@ -39,6 +40,12 @@ interface SectionProps {
         | "About"
         | "Developer";
     /**
+     * Whether the width should be `"total"` (full screen) or `"parent"` (width of 100% to fill it's parent).
+     *
+     * @type {?("total" | "parent")}
+     */
+    width?: "total" | "parent";
+    /**
      * Children that you can append to the section (one or more). While any `ReactNode` is valid, it's expected that you use a `<Division />` or more.
      *
      * @type {ReactNode}
@@ -46,7 +53,23 @@ interface SectionProps {
     children: ReactNode;
 }
 
-// We create the function
+const styles = StyleSheet.create({
+    section: {
+        display: "flex",
+        backgroundColor: Colors.MAIN.SECTION,
+        flexDirection: "column",
+        borderRadius: 20,
+        overflow: "hidden",
+    },
+    sectionChild: {
+        display: "flex",
+        flexDirection: "row",
+        padding: 15,
+        alignItems: "center",
+        justifyContent: "flex-start",
+    },
+});
+
 /**
  * A PersonaPlus section.
  *
@@ -60,6 +83,7 @@ interface SectionProps {
  */
 export default function Section({
     kind,
+    width,
     children,
 }: SectionProps): ReactElement {
     const { t } = useTranslation();
@@ -73,6 +97,7 @@ export default function Section({
         | "settings"
         | "code"
         | "question-mark"; // If you add a new icon, add it here
+    let sectionWidth: number | `${number}%`;
 
     switch (kind) {
         case "Objectives":
@@ -113,25 +138,26 @@ export default function Section({
             break;
     }
 
+    switch (width) {
+        case "parent":
+            sectionWidth = "100%";
+            break;
+        case "total":
+        default:
+            sectionWidth = getCommonScreenSize("width");
+            break;
+    }
+
     return (
         <View
-            style={{
-                display: "flex",
-                backgroundColor: Colors.MAIN.SECTION,
-                flexDirection: "column",
-                borderRadius: 20,
-                overflow: "hidden",
-            }}
+            style={[
+                styles.section,
+                {
+                    width: sectionWidth,
+                },
+            ]}
         >
-            <View
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    padding: 15,
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                }}
-            >
+            <View style={styles.sectionChild}>
                 <Ionicons name={headerIcon} size={15} color={Colors.LBLS.SHL} />
                 <GapView width={10} />
                 <BetterText
