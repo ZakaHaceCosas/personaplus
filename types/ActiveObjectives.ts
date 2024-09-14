@@ -26,10 +26,10 @@ export const SupportedActiveObjectivesList = ["Push Ups", "Lifting", "Running", 
     ); */
 type ActiveObjectiveInfo = {
     days: [boolean, boolean, boolean, boolean, boolean, boolean, boolean]
-    duration: number;
+    durationMinutes: number;
     rests: number | null;
     repetitions: number | null;
-    restDuration: number
+    restDurationMinutes: number
 }
 
 /**
