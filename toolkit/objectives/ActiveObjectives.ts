@@ -52,17 +52,22 @@ async function GetAllObjectives(): Promise<ActiveObjective[] | null> {
 }
 
 /**
+ * Returns the ActiveObjectiveDailyLog. **Async function.**
+ *
  * @rawR5code
+ * @returns {ActiveObjectiveDailyLog} The entire daily log.
  */
 async function GetActiveObjectiveDailyLog(): Promise<
-    ActiveObjectiveDailyLog[] | null
+    ActiveObjectiveDailyLog | null
 > {
     try {
         const response: string | null = await AsyncStorage.getItem(
             StoredItemNames.dailyLog,
         );
-        const dailyLog: ActiveObjectiveDailyLog[] =
-            response !== null ? JSON.parse(response) : null;
+        if (!response) {
+            return {}
+        }
+        const dailyLog: ActiveObjectiveDailyLog = JSON.parse(response);
         return dailyLog;
     } catch (e) {
         throw new Error("Error accessing active objective daily log! " + e);
@@ -77,32 +82,28 @@ async function GetActiveObjectiveDailyLog(): Promise<
  * @param {number} id ID of the objective
  * @param {TodaysDay} date Today's date. Use `getCurrentDate()` to get it.
  * @param {boolean} wasDone Whether the objective was done or not.
- * @param {?string} [performance] Results for the session from OpenHealth. Optional (the user could have not done the objective, so no data would exist).
+ * @param {any} [performance] Results for the session from CoreLibrary. Optional (the user could have not done the objective, so no data would exist).
  */
 async function SaveActiveObjectiveToDailyLog(
     id: number,
-    date: TodaysDay,
     wasDone: boolean,
-    performance?: string,
+    performance: any,
 ) {
     try {
         // Fetch old data
-        const prevDailySavedData: string | null = await AsyncStorage.getItem(
-            StoredItemNames.dailyLog,
-        );
-        const dailyData: ActiveObjectiveDailyLog = prevDailySavedData
-            ? JSON.parse(prevDailySavedData)
-            : {};
+        const prevDailySavedData: ActiveObjectiveDailyLog | null = await GetActiveObjectiveDailyLog()
+        const dailyData: ActiveObjectiveDailyLog = prevDailySavedData ?? {};
+        const today = getCurrentDate()
 
         // If there's no old data for today, creates an {} for today
-        if (!dailyData[date]) {
-            dailyData[date] = {};
+        if (!dailyData[today]) {
+            dailyData[today] = {};
         }
 
         // Saves the objective data
-        dailyData[date][id] = {
+        dailyData[today][id] = {
             wasDone: wasDone,
-            performance: performance !== undefined ? performance : undefined,
+            performance: performance !== undefined ? performance : 0,
         };
 
         // Updates data and puts it back to AsyncStorage
@@ -110,7 +111,7 @@ async function SaveActiveObjectiveToDailyLog(
             StoredItemNames.dailyLog,
             JSON.stringify(dailyData),
         );
-        logToConsole(`Objective ${id} data saved for ${date}`, "success");
+        logToConsole(`Objective ${id} data saved for ${today}`, "success");
     } catch (e) {
         if (id) {
             logToConsole(

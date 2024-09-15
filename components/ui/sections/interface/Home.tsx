@@ -3,10 +3,16 @@ import { logToConsole } from "@/toolkit/debug/Console";
 import {
     GetAllPendingObjectives,
     GetActiveObjective,
+    SaveActiveObjectiveToDailyLog,
 } from "@/toolkit/objectives/ActiveObjectives";
 import { ReactNode, useEffect, useState } from "react";
 import Division from "../Division";
-import { ActiveObjective } from "@/types/ActiveObjectives";
+import {
+    ActiveObjective,
+    SupportedActiveObjectives,
+} from "@/types/ActiveObjectives";
+import { useTranslation } from "react-i18next";
+import BetterButton from "@/components/interaction/BetterButton";
 
 export function RenderActiveObjectives(): ReactNode {
     const [identifiers, setIdentifiers] = useState<number[] | false | 0 | null>(
@@ -16,6 +22,8 @@ export function RenderActiveObjectives(): ReactNode {
     const [renderedObjectives, setRenderedObjectives] = useState<
         ActiveObjective[] | null
     >(null);
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         async function handler(): Promise<void> {
@@ -115,6 +123,28 @@ export function RenderActiveObjectives(): ReactNode {
         renderActiveObjectives();
     }, [identifiers]);
 
+    function generateDescription(obj: ActiveObjective): string {
+        const exercise: SupportedActiveObjectives = obj.exercise;
+        if (exercise === "Lifting") {
+            return t(
+                obj.specificData.reps +
+                    " lifts of " +
+                    (obj.specificData.scaleWeight * 2 +
+                        obj.specificData.barWeight) +
+                    " kg each.",
+            );
+        } else if (exercise === "Push Ups") {
+            return t(
+                obj.specificData.amountOfPushUps +
+                    " push ups with " +
+                    obj.specificData.amountOfHands,
+            );
+            // TODO: finish these
+        } else {
+            return "";
+        }
+    }
+
     if (loading) {
         return <Loading />;
     }
@@ -141,8 +171,24 @@ export function RenderActiveObjectives(): ReactNode {
                         key={obj.identifier}
                         header={obj.exercise}
                         preHeader="ACTIVE OBJECTIVE"
-                        subHeader="IT WORKS"
-                    />
+                        subHeader={
+                            generateDescription(obj) !== ""
+                                ? generateDescription(obj)
+                                : /* undefined */ "?"
+                        }
+                    >
+                        <BetterButton
+                            buttonText="Already done it!"
+                            style="GOD"
+                            action={() =>
+                                SaveActiveObjectiveToDailyLog(
+                                    obj.identifier,
+                                    true,
+                                    undefined,
+                                )
+                            }
+                        />
+                    </Division>
                 );
             })}
         </>
