@@ -1,3 +1,5 @@
+const reactsFunnyDate = new Date();
+
 /**
  * Gets the current day of the week, adjusted to start on Monday.
  *
@@ -10,18 +12,18 @@
  * (React for real thinks it's funny to start weeks on Sunday bruh)
  * @constant {number} adjustedToday - The adjusted index for today with Monday as 0 and Sunday as 6.
  */
-export const adjustedToday: number = new Date().getDay() === 0 ? 6 : new Date().getDay() - 1; // Adjust Sunday to index 6, otherwise shift back by one
+export const adjustedToday: number = reactsFunnyDate.getDay() === 0 ? 6 : new Date().getDay() - 1; // Adjust Sunday to index 6, otherwise shift back by one
 
 /**
  * Returns current day as a string in the DD/MM/YYYY format
  *
  * @returns {string} Today's date in DD/MM/YYYY format
  */
-export const getCurrentDate = (): TodaysDay => {
-    const today = new Date();
-    const day = String(today.getDate()).padStart(2, '0');
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const year = today.getFullYear();
+export function getCurrentDate(): TodaysDay {
+
+    const day: string = String(reactsFunnyDate.getDate()).padStart(2, '0');
+    const month: string = String(reactsFunnyDate.getMonth() + 1).padStart(2, '0');
+    const year: number = reactsFunnyDate.getFullYear();
     return `${day}/${month}/${year}`;
 };
 
