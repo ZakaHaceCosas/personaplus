@@ -1,6 +1,6 @@
-name: Hacer una sugerencia
-description: "¿Se te ocurren formas de mejorar la app? ¡Estoy encantado de oírlas!"
-title: "[SUGERENCIA]: "
+name: Make a suggestion
+description: "Any ideas on how to improve the app? We'll love to hear them!"
+title: "[SUGGESTION]: "
 labels: ["sugerencia"]
 assignees:
   - ZakaHaceCosas
@@ -8,25 +8,24 @@ body:
   - type: textarea
     id: suggestion-details
     attributes:
-      label: Detalles de la sugerencia
-      description: Explica en detalle tu sugerencia para mejorar la app
-      placeholder: Escribe aquí tu sugerencia
+      label: Your suggestion
+      description: Explain your suggestion in detail
+      placeholder: What is exactly about that great idea you had?
     validations:
       required: true
   - type: textarea
     id: benefits
     attributes:
-      label: Beneficios de la sugerencia
-      description: Describe cómo esta sugerencia mejorará la app
-      placeholder: Con tus propias palabras, ¿por qué tu idea es una gran idea?
+      label: Benefits of the suggestion
+      description: Describe how this suggestion will improve the app
+      placeholder: In your own words, why is your idea a great one?
     validations:
       required: true
   - type: textarea
     id: implementation-ideas
     attributes:
-      label: Ideas para la implementación (opcional)
-      description: ¿Se te ocurre alguna idea de como podríamos implementar esta sugerencia?
-      placeholder: Escribe aquí tus ideas. ¿De qué manera podemos añadir tu idea a la app?
+      label: Implementation ideas (optional)
+      description: Do you have any ideas on how we could implement this suggestion?
+      placeholder: Write your ideas here. How can we add your idea to the app?
     validations:
       required: false
-
