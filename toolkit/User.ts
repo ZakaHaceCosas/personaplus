@@ -78,12 +78,25 @@ export async function orchestrateUserData(): Promise<FullProfile | null> {
 export function updateBrm5(careAboutTheUser: boolean) {
     async function releaseOperationResurgence() {
         try {
-            await AsyncStorage.removeItem("userData")
+            await AsyncStorage.multiRemove([
+                StoredItemNames.userData,
+                StoredItemNames.objectives,
+                StoredItemNames.dailyLog
+            ])
             router.replace("/Welcome")
             return 0
         } catch (e) {
-            logToConsole("Unknown error removing user data!", "error") // to the user, we show a normal message
-            logToConsole("Error releasing op. Resurgence AKA removing user data: " + e, "error", undefined, false) // to the developer, the full error info and the real name of the function
+            logToConsole("Unknown error removing user data!", "error", undefined, true) // to the user, we show a normal message
+            logToConsole(
+                "Error releasing op. Resurgence AKA removing user data: " + e,
+                "error",
+                {
+                    function: "updateBrm5()",
+                    location: "@/toolkit/User.ts",
+                    isHandler: true,
+                    handlerName: "releaseOperationResurgence()"
+                },
+                false) // to the developer, the full error info and the real name of the function
             throw e
         }
     }
