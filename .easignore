@@ -83,3 +83,10 @@ assets/PP_BANNER_DEV.png
 
 # .vscode
 .vscode/**
+
+# deprecated stuff
+**/*.deprecated.*
+*.deprecated.*
+
+# archived files
+archive/
