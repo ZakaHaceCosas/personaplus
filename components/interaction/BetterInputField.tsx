@@ -1,8 +1,8 @@
-import GapView from "../ui/GapView";
+import GapView from "@/components/ui/GapView";
 import { TextInput, StyleSheet } from "react-native";
 import { ReactNode } from "react";
 import Colors from "@/constants/Colors";
-import { BetterTextSmallText } from "../text/BetterTextPresets";
+import { BetterTextSmallText } from "@/components/text/BetterTextPresets";
 import { UniversalPressableStyle } from "@/constants/ui/Pressables";
 
 const styles = StyleSheet.create({

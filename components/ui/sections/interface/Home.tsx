@@ -6,7 +6,7 @@ import {
     SaveActiveObjectiveToDailyLog,
 } from "@/toolkit/objectives/ActiveObjectives";
 import { ReactNode, useEffect, useState } from "react";
-import Division from "../Division";
+import Division from "@/components/ui/sections/Division";
 import {
     ActiveObjective,
     SupportedActiveObjectives,

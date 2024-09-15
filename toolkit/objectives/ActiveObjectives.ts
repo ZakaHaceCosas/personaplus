@@ -5,7 +5,7 @@ import {
 } from "@/types/ActiveObjectives";
 import { logToConsole } from "@/toolkit/debug/Console";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { adjustedToday, getCurrentDate, TodaysDay } from "../debug/Today";
+import { adjustedToday, getCurrentDate, TodaysDay } from "@/toolkit/debug/Today";
 import StoredItemNames from "@/constants/StoredItemNames";
 
 /**
