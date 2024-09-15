@@ -124,16 +124,14 @@ export interface ActiveObjective {
  */
 export type ActiveObjectiveWithoutId = Omit<ActiveObjective, "identifier">;
 
-
 /**
  * A registry of all the objectives, whether they're done or not, when, and their performance stats if they exist.
  *
  * @rawR5code
  * @export
- * @interface ActiveObjectiveDailyLog
  * @typedef {ActiveObjectiveDailyLog}
  */
-export interface ActiveObjectiveDailyLog {
+export type ActiveObjectiveDailyLog = {
     [date: TodaysDay]: {
         [identifier: number]: {
             wasDone: boolean;
