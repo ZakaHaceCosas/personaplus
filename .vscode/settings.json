@@ -158,5 +158,26 @@
             "bold": true,
             "italic": true
         }
+    ],
+    "editor.tabCompletion": "on",
+    "editor.snippetSuggestions": "top",
+    "cSpell.language": "en-US,es-ES",
+    "cSpell.words": [
+        "bruh",
+        "Hagámoslo",
+        "Nevermind",
+        "personaplus",
+        "preapp",
+        "preconfigured",
+        "privadísimos",
+        "toolkified",
+        "toolkify",
+        "toolkits",
+        "traceback",
+        "Tranqui",
+        "Zaka",
+        "zakahacecosas",
+        "pressable",
+        "pressables"
     ]
 }

@@ -104,7 +104,7 @@ export function logToConsole(
     traceback?: LogTraceback,
     displayToEndUser?: boolean,
 ): void {
-    // Regular console log / warn / error / log again because no one thought about success logs (i'm a fucking genious)
+    // Regular console log / warn / error / log again because no one thought about success logs (i'm a fucking genius)
     switch (type) {
         default:
         case "log":
@@ -117,7 +117,7 @@ export function logToConsole(
             console.error(message); // Regular console error
             break;
         case "success":
-            console.log(message); // Not-regular console success (PersonaPlus exclusive :literallyogering:)
+            console.log(message); // Not-regular console success (PersonaPlus exclusive :mrbeast:)
             break;
     }
 
@@ -133,7 +133,7 @@ export function logToConsole(
         addLogToGlobal(newLog) // Pushes it so it gets stored
             .then((result: 0 | 1): void => {
                 if (result === 1) {
-                    console.error("Failed to save log to storage"); // here, as an exception, we use regualr console.error
+                    console.error("Failed to save log to storage"); // here, as an exception, we use regular console.error
                 }
             })
             .catch((e: any): void => {

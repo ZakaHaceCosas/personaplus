@@ -172,8 +172,8 @@ async function CheckForAnActiveObjectiveDailyStatus(
             }
         } else {
             const log = dailyData[date]
-                ? `Warning: No data exists for objective ${identifier} on date ${date}. Note: This warning is actually a normal behaviour most of the time: if you didn't interact with the objective at all, it won't be logged. most ineractions will mark it as done, but until those interactions happen, this warning will occur.`
-                : `Warning: No data exists for date ${date} at all. Note: This warning is actually a normal behaviour most of the time: if you didn't interact with the objective at all, it won't be logged. most ineractions will mark it as done, but until those interactions happen, this warning will occur.`;
+                ? `Warning: No data exists for objective ${identifier} on date ${date}. Note: This warning is actually a normal behavior most of the time: if you didn't interact with the objective at all, it won't be logged. most interactions will mark it as done, but until those interactions happen, this warning will occur.`
+                : `Warning: No data exists for date ${date} at all. Note: This warning is actually a normal behavior most of the time: if you didn't interact with the objective at all, it won't be logged. most interactions will mark it as done, but until those interactions happen, this warning will occur.`;
             logToConsole(log, "warn");
             return false; // no interaction with the objective means no data logged.
         }
@@ -229,7 +229,7 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
             return false; // there are objectives, but none are due today
         }
 
-        // okay i dont get whats going on in here
+        // okay i don't get whats going on in here
         // only thing i know is 0 equals "there are objetives, but no one's due *today*" while null means there are no existing objectives at all
         // (maybe)
         /* const objectivesToDo = dueTodayObjectives.filter(obj => obj && !obj.status);
@@ -346,7 +346,7 @@ async function CreateActiveObjective(
         );
         return 0;
     } catch (e) {
-        throw new Error("Something went wrong creating objetcive: " + e);
+        throw new Error("Something went wrong creating objective: " + e);
     }
 }
 
