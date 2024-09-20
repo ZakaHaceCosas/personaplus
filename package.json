@@ -40,7 +40,7 @@
   "description": "Give yourself a plus!",
   "repository": "https://github.com/ZakaHaceCosas/personaplus",
   "dependencies": {
-    "@expo/vector-icons": "^14.0.2",
+    "@expo/vector-icons": "^14.0.3",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-picker/picker": "2.7.5",
     "@react-navigation/native": "^6.0.2",
@@ -54,7 +54,7 @@
     "expo-linear-gradient": "~13.0.2",
     "expo-linking": "~6.3.1",
     "expo-localization": "~15.0.3",
-    "expo-notifications": "~0.28.16",
+    "expo-notifications": "~0.28.17",
     "expo-router": "~3.5.23",
     "expo-splash-screen": "~0.27.5",
     "expo-status-bar": "~1.12.1",
