@@ -62,7 +62,7 @@ b25 was cancelled (due to the huge amount of problems that were on top of each o
 - Finally!! Fixed the Bottom navigation bar! It's now actually at the bottom.
   - This change implied visual changes to many components (all the pages that use the BottomNav, also the Footer component).
 - Also fixed Swap's layout. It looks mostly correct now.
-- Simplified CreateObjective page (revomed the "Nevermind" button, use "< Go back" instead).
+- Simplified CreateObjective page (removed the "Nevermind" button, use "< Go back" instead).
 - Instead of a "change to English / Spanish" button on WelcomeScreen, now PersonaPlus auto-detects your language (if you don't use a supported lang defaults to English just like always).
 - Changed some in-app texts to be shorter.
 - Add a Results page after a session.
@@ -91,7 +91,7 @@ b25 was cancelled (due to the huge amount of problems that were on top of each o
 
 - Removed the useless easter egg from WelcomeScreen (which I never got the chance to see, by the way). Also removed the "time to push up" question.
 - Fixed typos.
-- Removed the `isDevelopmentBuild()` comprobation in Dev Interface. It didn't work anyway.
+- Removed the `isDevelopmentBuild()` check in Dev Interface. It didn't work anyway.
 - Now the repo also comes with a `lockb` file, for Bun.
 - Added a lot of explanatory comments (and more).
 - Tried to use React Native's New Architecture - bad idea.
@@ -148,7 +148,7 @@ b25 was cancelled (due to the huge amount of problems that were on top of each o
 - Toolkified objectives' descriptions, saving a lot of code in the Dashboard.
 - Toolkified `adjustedToday`.
 - General code quality improvements, specially within Sessions.
-- Imrpoved some comments for better code understandability.
+- Improved some comments for better code understandability.
 - Now PersonaPlus will check daily for your active objectives' due days. If you've done an objective today, and tomorrow you have to do it again, it's `wasDone` (_boolean_) value will change to `false` again so it's shown again on the app's homepage.
 - Added Expo's `expo-background-fetch` and `expo-task-manager` for that. Also fixed a few deps.
 - Improved detection of invalid user data (age, weight, height...).
@@ -157,9 +157,9 @@ b25 was cancelled (due to the huge amount of problems that were on top of each o
 
 - Fixed a _stupid_ mistake: sometimes THIS `{}` was used as an "array" instead of THIS `[]`, causing problems with objectives and their logic.
 - Updated `app.config.ts` for Android stuff.
-- Updated Expo and added some packages that apparently were required but weren't installed (`expo-system-ui` and `expo-device`). Also added `expo-navigation-bar` to customise the Android navbar's behavior, and `expo-file-system` and `uuid`, which are (currently) unused.
+- Updated Expo and added some packages that apparently were required but weren't installed (`expo-system-ui` and `expo-device`). Also added `expo-navigation-bar` to customize the Android navbar's behavior, and `expo-file-system` and `uuid`, which are (currently) unused.
 - Fixed the status bar not looking properly.
-- Now objectives' type is global (`components/types/Objective.ts`). Some of the functions related to them have been made global aswell (`components/toolkit/objectives.ts`). Types have been updated, by the way.
+- Now objectives' type is global (`components/types/Objective.ts`). Some of the functions related to them have been made global as well (`components/toolkit/objectives.ts`). Types have been updated, by the way.
 - Finally (in favour of code-understandability) decided to rename the AsyncStorage item used for objectives, from "`objs`" to "`objectives`".
 - Updated the ID system for objectives, now it works properly (and also, uses 10 digits instead of 3).
 - Changed back `AsyncStorage.clear()` with `multiRemove`, mainly because now objectives should be set as `[]` instead of `""` to "clear" them.
@@ -277,7 +277,7 @@ Note:
 ## 0.0.1-R5-b19
 
 - Renamed most variables to take a more descriptive and easy to understand approach.
-- Decided to set an internal standard for console logging: `termLog` (imported from `DeveloperInterface.tsx`). This will `console.log` and log for Dev interface aswell.
+- Decided to set an internal standard for console logging: `termLog` (imported from `DeveloperInterface.tsx`). This will `console.log` and log for Dev interface as well.
 
 ## 0.0.1-R5-b18
 
@@ -292,7 +292,7 @@ Note:
 - Added a function to remove an OBJ from the Dashboard (`/Dash`).
 - Fixed app not refreshing when marked an OBJ as done.
 - Made several improvements to types.
-- Fixed many visual mistakes and improved layouts. _Particullary, for some reason using `vertical` `order` on `<BeSwap>` caused a really hard to explain visual bug on the Welcome ("`/Welc`") screen. It was "fixed" by changing the order prop to `horizontal`._
+- Fixed many visual mistakes and improved layouts. _Particularly, for some reason using `vertical` `order` on `<BeSwap>` caused a really hard to explain visual bug on the Welcome ("`/Welc`") screen. It was "fixed" by changing the order prop to `horizontal`._
 - Improved the flow of username changes.
 - Added React & PersonaPlus versions to the Dev interface.
 - Made Dev interface opt-in, via `useDevTools` item in AsyncStorage.
@@ -385,7 +385,7 @@ Note:
 > `b11:` For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. Don't know it's origin & only happens sometimes, making it hard to replicate. Will look onto it.
 
 **Note:**
-> Now that it was finally possible to test on mobile, a LOT of visual issues were found. Will be adressed progressively.
+> Now that it was finally possible to test on mobile, a LOT of visual issues were found. Will be addressed progressively.
 
 ## 0.0.1-R5-b13
 
@@ -460,7 +460,7 @@ Note:
 - Added icons to the app.
 
 > [!NOTE]
-> **KNWON ISSUE:** For some reason, I didn't managed to make Microsoft's Fluent Icons (the ones used in the UI design) React package work, so I used Material Design Icons instead, via Expo's `@expo/vectoricons`
+> **KNOWN ISSUE:** For some reason, I didn't managed to make Microsoft's Fluent Icons (the ones used in the UI design) React package work, so I used Material Design Icons instead, via Expo's `@expo/vectoricons`
 
 - Now the documentation is fully usable, can be considered "done". _Of course, it is still subject to changes at any time._
 - Licensed under Apache 2.0.
@@ -494,7 +494,7 @@ Note:
 - Replaced `console.log` and `console.error` with Notis in `/prof`.
 - Updated the documentation. While still unfinished, it's now in a state where it's usable as if it was.
 - Added React's `StrictMode`.
-- Organised some components and made the code a little cleaner.
+- Organized some components and made the code a little cleaner.
 
 ## 0.0.1-R5-b6
 
@@ -520,7 +520,7 @@ Note:
 ## 0.0.1-R5-b2
 
 - Changed the code style used for imports.
-- AsyncStorage! + username, which is preserved in the AS. It can be edited aswell.
+- AsyncStorage! + username, which is preserved in the AS. It can be edited as well.
 
 ## 0.0.1-R5-b1
 
@@ -550,4 +550,4 @@ Note:
 
 ## PREVIOUS
 
-Not loged.
+Not logged.

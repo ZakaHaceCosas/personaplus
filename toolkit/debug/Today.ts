@@ -20,7 +20,6 @@ export const adjustedToday: number = reactsFunnyDate.getDay() === 0 ? 6 : new Da
  * @returns {string} Today's date in DD/MM/YYYY format
  */
 export function getCurrentDate(): TodaysDay {
-
     const day: string = String(reactsFunnyDate.getDate()).padStart(2, '0');
     const month: string = String(reactsFunnyDate.getMonth() + 1).padStart(2, '0');
     const year: number = reactsFunnyDate.getFullYear();

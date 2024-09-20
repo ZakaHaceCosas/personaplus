@@ -26,7 +26,6 @@ interface GapViewProps {
     width?: number; // Tamaño horizontal.
 }
 
-// Creamos la funcion
 /**
  * Homemade custom gap component. Think of it as an invisible box that creates empty space. It renders an empty `<View>` component with custom width and/or height, replicating gap to space items.
  *

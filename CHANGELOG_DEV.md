@@ -17,7 +17,7 @@ For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 ### Added
 
 - Constants: Repeated values, like heights of certain components, font names, font sizes, even the names of the `AsyncStorage` items, and more, have been moved to a `@/constants/` directory with multiple exports.
-- Tracebacks: Now logs can be optionally passed a "traceback" object, including some meaningfull data about where the log is actually happening, to help with debugging - specially with repeated messages across different places like "Error fetching objectives".
+- Tracebacks: Now logs can be optionally passed a "traceback" object, including some meaningful data about where the log is actually happening, to help with debugging - specially with repeated messages across different places like "Error fetching objectives".
 - Many new components:
   - BetterButton (an iteration of buttons).
   - Select (a preconfigured `<Picker />`). Based on `react-native-picker`.
@@ -26,7 +26,7 @@ For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 
 ### Changed
 
-- Fully reorganised the project onto a better, easier to understand file structure.
+- Fully reorganized the project onto a better, easier to understand file structure.
 - Most components went under revision and refactoring. Some were entirely rebuilt, others were just changed, more or less. But most components have undergone changes.
 - Improved JSDoc for many functions.
 
