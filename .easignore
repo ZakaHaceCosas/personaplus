@@ -1,4 +1,5 @@
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+# and https://github.com/expo/fyi/blob/main/eas-build-archive.md
 
 # dependencies
 node_modules/
@@ -63,21 +64,6 @@ local.properties
 **/*.testing.*
 *.testing.*
 
-# specific-files to be ignored by EAS Build
-# markdown, only meant for public repo, not the app
-README.md
-PRIVACY.md
-SECURITY.md
-LICENSE.md
-# (license still ships to production, dont worry (see app/License.tsx))
-DOCS.md
-CONTRIBUTING.md
-CODE_OF_CONDUCT.md
-
-# assets also meant for public repo
-assets/PP_BANNER.png
-assets/PP_BANNER_DEV.png
-
 # .github
 .github/**
 
@@ -90,3 +76,23 @@ assets/PP_BANNER_DEV.png
 
 # archived files
 archive/
+
+# EASIGNORE
+# NOTE: please keep this at the bottom of the file. the rest (top) is copy pasted from .gitignore
+# specific-files to be ignored by EAS Build
+
+# assets meant for public repo
+assets/design
+
+# markdown, only meant for public repo, not the app
+README.md
+PRIVACY.md
+SECURITY.md
+LICENSE.md
+# (license still ships to production, dont worry (see app/License.tsx))
+DOCS.md
+CONTRIBUTING.md
+FIXED_ERROR_LOG.md
+CODE_OF_CONDUCT.md
+CHANGELOG.md
+CHANGELOG_DEV.md
