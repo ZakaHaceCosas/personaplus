@@ -92,19 +92,14 @@ export function RenderActiveObjectives(): ReactNode {
                     await Promise.all(objectivePromises);
 
                 // filter null results to update the state
-                // (i didnt write this but uhh it seems to work just fine)
+                // (i didn't write this but uhh it seems to work just fine)
                 const filteredObjectives: ActiveObjective[] = objectives.filter(
                     (obj: ActiveObjective | null): obj is ActiveObjective =>
                         obj !== null,
                 );
 
                 // update state once
-                setRenderedObjectives(
-                    (prev: ActiveObjective[] | null): ActiveObjective[] => [
-                        ...(prev || []), // empty [] in case of this being empty AKA initial null state
-                        ...filteredObjectives,
-                    ],
-                );
+                setRenderedObjectives(filteredObjectives);
             } catch (e) {
                 logToConsole(
                     "Error rendering objectives: " + e,
@@ -141,7 +136,7 @@ export function RenderActiveObjectives(): ReactNode {
             );
             // TODO: finish these
         } else {
-            return "";
+            return "(There was an error reading this objective's data)";
         }
     }
 
@@ -171,12 +166,13 @@ export function RenderActiveObjectives(): ReactNode {
                         key={obj.identifier}
                         header={obj.exercise}
                         preHeader="ACTIVE OBJECTIVE"
-                        subHeader={
-                            generateDescription(obj) !== ""
-                                ? generateDescription(obj)
-                                : /* undefined */ "?"
-                        }
+                        subHeader={generateDescription(obj)}
                     >
+                        <BetterButton
+                            buttonText="Let's go!"
+                            style="ACE"
+                            action={() => {}}
+                        />
                         <BetterButton
                             buttonText="Already done it!"
                             style="GOD"
