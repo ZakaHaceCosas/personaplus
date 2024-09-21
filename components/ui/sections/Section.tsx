@@ -21,8 +21,8 @@ interface SectionProps {
     /**
      * The kind of section. Depending on this, the section will display a title and icon, or another one.
      *
-     * @type {(| "Objectives"
-     *         | "PassiveObjs"
+     * @type {(| "ActiveObjectives"
+     *         | "PassiveObjectives"
      *         | "HowYouAreDoing"
      *         | "Unknown"
      *         | "Settings"
@@ -31,8 +31,8 @@ interface SectionProps {
      *         | "Developer")}
      */
     kind:
-        | "Objectives"
-        | "PassiveObjs"
+        | "ActiveObjectives"
+        | "PassiveObjectives"
         | "HowYouAreDoing"
         | "Unknown"
         | "Settings"
@@ -100,11 +100,11 @@ export default function Section({
     let sectionWidth: number | `${number}%`;
 
     switch (kind) {
-        case "Objectives":
+        case "ActiveObjectives":
             label = t("sections.headers.your_active_objectives");
             headerIcon = "timer";
             break;
-        case "PassiveObjs":
+        case "PassiveObjectives":
             label = t("sections.headers.your_passive_objectives");
             headerIcon = "calendar-today";
             break;
@@ -158,13 +158,17 @@ export default function Section({
             ]}
         >
             <View style={styles.sectionChild}>
-                <Ionicons name={headerIcon} size={15} color={Colors.LBLS.SHL} />
+                <Ionicons
+                    name={headerIcon}
+                    size={15}
+                    color={Colors.LABELS.SHL}
+                />
                 <GapView width={10} />
                 <BetterText
                     textAlign="normal"
                     fontWeight="Bold"
                     fontSize={FontSizes.SMALL}
-                    textColor={Colors.LBLS.SHL}
+                    textColor={Colors.LABELS.SHL}
                 >
                     {String(label)}
                 </BetterText>
