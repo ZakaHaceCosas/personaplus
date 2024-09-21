@@ -24,15 +24,15 @@ interface FooterColors {
 /**
  * Bland, dimmed colors.
  *
- * @interface BlandColors
- * @typedef {BlandColors}
+ * @interface DefaultColors
+ * @typedef {DefaultColors}
  */
-interface BlandColors {
-    /** Input background */
+interface DefaultColors {
+    /** Item background */
     BACKGROUND: Color;
-    /** Input placeholder */
-    PLACEHOLDER: Color;
-    /** Input stroke / border */
+    /** Item text / placeholder */
+    TEXT: Color;
+    /** Item stroke / border */
     STROKE: Color;
 }
 
@@ -53,8 +53,8 @@ interface MainColors {
     DIVISION_BORDER: Color;
     /** Color for the bottom navigation */
     FOOTER: FooterColors;
-    /** Colors for input elements */
-    DEFAULT_ITEM: BlandColors;
+    /** Colors for "default" elements, like inputs, secondary buttons, etc... */
+    DEFAULT_ITEM: DefaultColors;
 }
 
 /**
