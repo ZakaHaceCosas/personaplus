@@ -5,7 +5,7 @@ export interface FullProfile {
     weight: number | "";
     gender: "male" | "female" | null;
     language: "es" | "en";
-    activness: "poor" | "small" | "normal" | "intense" | "super" | null;
+    activeness: "poor" | "small" | "normal" | "intense" | "super" | null;
     focus:
     | "noPriority"
     | "assistMePls"
@@ -21,6 +21,6 @@ export interface FullProfile {
 
 export type BasicUserData = Omit<
     FullProfile,
-    "focus" | "sleepHours" | "activness" | "language"
+    "focus" | "sleepHours" | "activeness" | "language"
 >;
 export type BasicUserHealthData = Omit<BasicUserData, "username">;
