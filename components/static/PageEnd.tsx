@@ -37,7 +37,7 @@ export default function PageEnd({ includeText }: PageEndProps): ReactElement {
                     textAlign="center"
                     fontWeight="Regular"
                     fontSize={FontSizes.REGULAR}
-                    textColor={Colors.LBLS.SDD}
+                    textColor={Colors.LABELS.SDD}
                 >
                     {t("globals.pageEnd")}
                 </BetterText>

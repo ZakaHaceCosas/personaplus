@@ -21,7 +21,7 @@ export default function Loading(): ReactElement {
             fontWeight="Regular"
             fontSize={FontSizes.REGULAR}
             textAlign="center"
-            textColor={Colors.LBLS.SDD}
+            textColor={Colors.LABELS.SDD}
         >
             {t("globals.loading")}
         </BetterText>

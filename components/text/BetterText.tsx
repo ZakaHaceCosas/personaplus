@@ -44,7 +44,7 @@ export default function BetterText<T extends FontFamily = "BeVietnamPro">({
         fontFamily: fontFamilyName,
         fontSize: fontSize,
         lineHeight: children?.toString().includes("Ñ")
-            ? fontSize * 1.25 // prevents spanish "virguilla" from being cut off
+            ? fontSize * 1.25 // prevents Spanish "virgulilla" from being cut off
             : fontSize * 1.15,
         overflow: "visible",
         color: isLink ? Colors.PRIMARIES.ACE.ACE : color,

@@ -34,8 +34,8 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
     },
     log: {
-        color: Colors.LBLS.TBLH,
-        borderLeftColor: Colors.LBLS.TBLH,
+        color: Colors.LABELS.TABLE_HEADER,
+        borderLeftColor: Colors.LABELS.TABLE_HEADER,
     },
     success: {
         color: Colors.PRIMARIES.GOD.GOD,

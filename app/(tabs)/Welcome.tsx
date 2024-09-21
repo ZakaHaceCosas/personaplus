@@ -495,7 +495,7 @@ export default function WelcomePage() {
                         backgroundColor:
                             currentTab >= 1
                                 ? Colors.PRIMARIES.ACE.ACE
-                                : Colors.MAIN.DIVISIONBORDER,
+                                : Colors.MAIN.DIVISION_BORDER,
                     }}
                 />
                 <GapView width={5} />
@@ -506,7 +506,7 @@ export default function WelcomePage() {
                         backgroundColor:
                             currentTab >= 2
                                 ? Colors.PRIMARIES.ACE.ACE
-                                : Colors.MAIN.DIVISIONBORDER,
+                                : Colors.MAIN.DIVISION_BORDER,
                     }}
                 />
                 <GapView width={5} />
@@ -517,7 +517,7 @@ export default function WelcomePage() {
                         backgroundColor:
                             currentTab >= 3
                                 ? Colors.PRIMARIES.ACE.ACE
-                                : Colors.MAIN.DIVISIONBORDER,
+                                : Colors.MAIN.DIVISION_BORDER,
                     }}
                 />
                 <GapView width={5} />
@@ -528,7 +528,7 @@ export default function WelcomePage() {
                         backgroundColor:
                             currentTab >= 4
                                 ? Colors.PRIMARIES.ACE.ACE
-                                : Colors.MAIN.DIVISIONBORDER,
+                                : Colors.MAIN.DIVISION_BORDER,
                     }}
                 />
             </View>
@@ -699,7 +699,7 @@ export default function WelcomePage() {
                         textAlign="normal"
                         fontWeight="Regular"
                         fontSize={FontSizes.REGULAR}
-                        textColor={Colors.LBLS.SDD}
+                        textColor={Colors.LABELS.SDD}
                     >
                         {t("globals.userData.gender.word")}
                     </BetterText>
