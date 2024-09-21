@@ -6,7 +6,7 @@ import React, {
     useState,
 } from "react";
 import { router } from "expo-router";
-import { StyleSheet, Dimensions, View, TextInput, Linking } from "react-native";
+import { StyleSheet, View, TextInput, Linking } from "react-native";
 import Swap from "@/components/interaction/Swap";
 import GapView from "@/components/ui/GapView";
 import BetterText from "@/components/text/BetterText";
@@ -33,20 +33,14 @@ import StoredItemNames from "@/constants/StoredItemNames";
 
 // We define the styles
 const styles = StyleSheet.create({
-    mainview: {
-        width: Dimensions.get("screen").width,
-        height: Dimensions.get("screen").height,
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: Colors.MAIN.APP,
-    },
-    fragmentview: {
+    mainView: {
+        height: getCommonScreenSize("height"),
+        width: getCommonScreenSize("width"),
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
         justifyContent: "center",
-        height: Dimensions.get("screen").height,
-        width: Dimensions.get("screen").width - 40,
+        backgroundColor: Colors.MAIN.APP,
     },
     buttonWrapper: {
         display: "flex",
@@ -55,25 +49,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
     },
-    picker: {
-        padding: 12,
-        width: "100%",
-        backgroundColor: Colors.MAIN.BLANDITEM.BACKGROUND,
-        borderColor: Colors.MAIN.BLANDITEM.STRK,
-        borderWidth: 2,
-        borderRadius: 10,
-        color: Colors.BASIC.WHITE,
-    },
-    textinput: {
-        backgroundColor: Colors.MAIN.BLANDITEM.BACKGROUND,
-        borderRadius: 10,
-        padding: 15,
-        borderWidth: 4,
-        borderColor: Colors.MAIN.BLANDITEM.STRK,
-        width: "100%",
-        color: Colors.BASIC.WHITE,
-        fontFamily: "BeVietnamPro-Regular",
-    },
 });
 
 // We create the function
@@ -81,7 +56,7 @@ export default function WelcomePage() {
     const { t } = useTranslation();
     // what "tab" of the page the user's on
     const [currentTab, setTab] = useState(0);
-    // mhmm i dont know how to explain this one (but it works)
+    // hmm i don't know how to explain this one (but it works)
     const inputRefs = useRef<TextInput[]>([]);
 
     // formData
@@ -92,7 +67,7 @@ export default function WelcomePage() {
         age: "",
         language: "en",
         sleepHours: "",
-        activness: null,
+        activeness: null,
         focus: null,
         gender: null,
         theThinkHour: "",
@@ -141,7 +116,7 @@ export default function WelcomePage() {
         },
         // both options below equal no priority
         // then why create two options?
-        // if user says he doesnt know, no focus will be used and he'll see the assistant feature (when it gets developed lol)
+        // if user says he doesn't know, no focus will be used and he'll see the assistant feature (when it gets developed lol)
         // if user says he has everything as a priority, no focus will be used and he'll be free to do whatever by himself
         {
             value: "noPriority",
@@ -170,14 +145,14 @@ export default function WelcomePage() {
         value: option,
         enabled: true,
     }));
-    const activnessOptions = [
-        t("pages.welcome.questions.activness.options.poor"),
-        t("pages.welcome.questions.activness.options.small"),
-        t("pages.welcome.questions.activness.options.normal"),
-        t("pages.welcome.questions.activness.options.intense"),
-        t("pages.welcome.questions.activness.options.super"),
+    const activenessOptions = [
+        t("pages.welcome.questions.activeness.options.poor"),
+        t("pages.welcome.questions.activeness.options.small"),
+        t("pages.welcome.questions.activeness.options.normal"),
+        t("pages.welcome.questions.activeness.options.intense"),
+        t("pages.welcome.questions.activeness.options.super"),
     ];
-    const activnessSelectOptions = activnessOptions.map((option) => ({
+    const activenessSelectOptions = activenessOptions.map((option) => ({
         label: option,
         value: option,
         enabled: true,
@@ -203,11 +178,11 @@ export default function WelcomePage() {
     }
 
     /**
-     * Handles the change of the value of a variable that's associated with `formData`. In other words, if you have a `<TextInput>` for the username, upon it's change you would call this function, being `item` `"username"` and `value` the string vaule of that `<TextInput>`.
+     * Handles the change of the value of a variable that's associated with `formData`. In other words, if you have a `<TextInput>` for the username, upon it's change you would call this function, being `item` `"username"` and `value` the string value of that `<TextInput>`.
      *
      * **Note:** Pass just the _name_ of the property, not the entire variable (e.g. **username**, NOT ~~formData.username~~).
      *
-     * @param {"username" | "age" | "height" | "weight" | "gender" | "language" | "activness" | "focus" | "sleepHours" | "theThinkHour"} item The _name_ of the property you wish to edit.
+     * @param {"username" | "age" | "height" | "weight" | "gender" | "language" | "activeness" | "focus" | "sleepHours" | "theThinkHour"} item The _name_ of the property you wish to edit.
      * @param {string | number} value The value you want to set the `item` to.
      */
     function handleChange(
@@ -218,7 +193,7 @@ export default function WelcomePage() {
             | "weight"
             | "gender"
             | "language"
-            | "activness"
+            | "activeness"
             | "focus"
             | "sleepHours"
             | "theThinkHour",
@@ -263,7 +238,7 @@ export default function WelcomePage() {
                     gender: formData.gender,
                     focus: formData.focus,
                     sleepHours: formData.sleepHours,
-                    activness: formData.activness,
+                    activeness: formData.activeness,
                     language: await getDefaultLocale(),
                     theThinkHour: formData.theThinkHour,
                     isNewUser: false,
@@ -284,7 +259,7 @@ export default function WelcomePage() {
                 logToConsole(
                     "User " +
                         formData.username +
-                        " registered with no erros. Give yourself a plus!",
+                        " registered with no errors. Give yourself a plus!",
                     "success",
                 );
                 return 0;
@@ -357,24 +332,24 @@ export default function WelcomePage() {
     }
 
     /**
-     * Spawns an input picker _based on_ the given parameters.
+     * Spawns an input select _based on_ the given parameters.
      *
-     * @param {("activness" | "sleepHours")} associatedValue What is this picker related to. Only two fixed options, `"activness"` and `"sleepHours"`, so you don't have to specify all the values / options. It's done by the function itself ;].
+     * @param {("activeness" | "sleepHours")} associatedValue What is this select related to. Only two fixed options, `"activeness"` and `"sleepHours"`, so you don't have to specify all the values / options. It's done by the function itself ;].
      * @returns {ReactNode} Returns a Fragment with a `<BetterText>` (label), `<Select />` with the associated options, and a `<GapView />` between them.
      */
     function spawnInputSelect(
-        associatedValue: "activness" | "sleepHours",
+        associatedValue: "activeness" | "sleepHours",
     ): ReactNode {
         const options =
-            associatedValue === "activness"
-                ? activnessSelectOptions
+            associatedValue === "activeness"
+                ? activenessSelectOptions
                 : sleepTimeSelectOptions;
 
         return (
             <>
                 <BetterTextSmallText>
-                    {associatedValue === "activness"
-                        ? t("pages.welcome.questions.activness.ask")
+                    {associatedValue === "activeness"
+                        ? t("pages.welcome.questions.activeness.ask")
                         : t("pages.welcome.questions.sleepTime.ask")}
                 </BetterTextSmallText>
                 <GapView height={5} />
@@ -409,7 +384,7 @@ export default function WelcomePage() {
             validateStepTwo(formData.focus !== null && formData.focus !== "");
             validateStepThree(
                 (formData.sleepHours || "") !== "" &&
-                    (formData.activness || "") !== "",
+                    (formData.activeness || "") !== "",
             );
             validateStepFour((formData.theThinkHour || "") !== "");
             logToConsole("STEP ONE VALIDATION:" + isStepOneValid, "log");
@@ -600,7 +575,7 @@ export default function WelcomePage() {
      * @param {number} time.hours Hours.
      * @param {number} time.minutes Minutes.
      * @param {number} time.seconds Seconds.
-     * @returns {string} A formated "HH:MM:SS" string.
+     * @returns {string} A formatted "HH:MM:SS" string.
      */
     function formatTimeString({
         hours,
@@ -627,16 +602,7 @@ export default function WelcomePage() {
     }
 
     return (
-        <View
-            style={{
-                height: getCommonScreenSize("height"),
-                width: getCommonScreenSize("width"),
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                justifyContent: "center",
-            }}
-        >
+        <View style={styles.mainView}>
             {spawnProgressBar()}
             {currentTab === 0 && (
                 <>
@@ -778,7 +744,7 @@ export default function WelcomePage() {
                     <GapView height={10} />
                     {spawnInputSelect("sleepHours")}
                     <GapView height={10} />
-                    {spawnInputSelect("activness")}
+                    {spawnInputSelect("activeness")}
                     <GapView height={10} />
                     {spawnNavigationButtons(3, false)}
                 </>
