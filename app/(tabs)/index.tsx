@@ -1,4 +1,5 @@
 import Loading from "@/components/static/Loading";
+import PageEnd from "@/components/static/PageEnd";
 import {
     BetterTextHeader,
     BetterTextSubHeader,
@@ -47,9 +48,10 @@ export default function HomeScreen() {
                 {t("pages.home.subheader")}
             </BetterTextSubHeader>
             <GapView height={20} />
-            <Section width="total" kind="Objectives">
+            <Section width="total" kind="ActiveObjectives">
                 <RenderActiveObjectives />
             </Section>
+            <PageEnd includeText={true} />
         </>
     );
 }
