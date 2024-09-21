@@ -214,12 +214,6 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
             }),
         );
 
-        logToConsole(
-            "WATCHOUT: dueTodayObjectives: " +
-            JSON.stringify(dueTodayObjectives),
-            "error",
-        );
-
         // filter out null entries and separate the dueToday objectives based on their status
         const activeObjectivesDueToday = dueTodayObjectives.filter(
             (obj) => obj !== null,
@@ -241,10 +235,10 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
             .every(
                 obj => obj === null || obj.status === true);
         return allDone ? 0 : null; */
-        const allDone = activeObjectivesDueToday.every((obj) => obj.status);
+        const allDone: boolean = activeObjectivesDueToday.every((obj: { identifier: number, status: boolean }): boolean => obj.status);
         return allDone
             ? 0
-            : activeObjectivesDueToday.map((obj) => obj.identifier); // Return 0 if all are done, otherwise return the active objectives due today (well, their identifiers)
+            : activeObjectivesDueToday.map((obj: { identifier: number, status: boolean }): number => obj.identifier); // Return 0 if all are done, otherwise return the active objectives due today (well, their identifiers)
     } catch (e) {
         throw new Error("Failed to get all pending objectives: " + e);
     }
