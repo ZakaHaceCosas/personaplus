@@ -1,5 +1,5 @@
-name: Reportar un bug/error
-description: "¿Encontraste un error? ¡Repórtalo y ayúdanos a mejorar!"
+name: Report a bug / error
+description: "Found an error? Tell us so we can fix it!"
 title: "[BUG]: "
 labels: ["bug"]
 assignees:
@@ -8,48 +8,44 @@ body:
   - type: textarea
     id: what-happened
     attributes:
-      label: ¿Qué pasó?
-      description: Explica en detalle que fue lo que salió mal
-      placeholder: Explica el error
+      label: What happened?
+      description: Explain in detail what went wrong.
+      placeholder: "\"I clicked this button and that happened!\""
     validations:
       required: true
   - type: textarea
     id: how-it-happened
     attributes:
-      label: Pasos para replicar el bug
-      description: Explica en detalle que tuviste que hacer para encontrar el fallo
-      placeholder: ¿Cómo encontraste el bug?
+      label: How did it happen?
+      description: Explain the steps to replicate the error.
+      placeholder: "\"Go to this page, search for this button, and click it.\""
     validations:
       required: true
   - type: textarea
-    id: what-didnt-happen
+    id: what-did-not-happen
     attributes:
-      label: Resultado esperado
-      description: Explica que es lo que tendría que haber sucedido en vez del error
-      placeholder: Si hubiera salido bien, ¿qué habría pasado?
+      label: Expected result
+      description: Explain what were you actually expecting to happen.
+      placeholder: "If everything went okay, what should \"this button\" have done?"
     validations:
       required: true
   - type: dropdown
-    id: browsers
+    id: device
     attributes:
-      label: ¿En qué navegador / dispositivo estabas probando?
+      label: On what device(s) did you find the error?
       multiple: true
       options:
-        - Firefox
-        - Chrome
-        - Safari
-        - Microsoft Edge
+        - Android (production APK / installed app)
         - Android (Expo Go)
-        - Android (Expo Development Server)
+        - Android (Expo Development Build)
         - iOS (Expo Go)
-        - iOS (Expo Development Server)
-        - Otro...
+        - iOS (Expo Development Build)
     validations:
       required: true
   - type: textarea
     id: logs
     attributes:
-      label: Logs de la consola
-      description: A poder ser, copia y pega aquí cualquier log de error que hubieras visto en la consola. (Se formatea solo, así que tranqui)
-      placeholder: Por ejemplo, "10:52:41 LOG Couldn't get OBJS fetched due to error e", o algo así. Como hayan salido.
+      label: Console logs
+      description: If you can, paste here any console log.
+      placeholder: "You can find them at Profile -> Dev Interface -> See all logs."
       render: shell
