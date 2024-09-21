@@ -46,11 +46,11 @@ const Colors: ColorsObject = {
             FOOTER_SEL: "#FFFFFF"
         },
         DEFAULT_ITEM: {
-            /** Input background */
+            /** Item background */
             BACKGROUND: "#2A2D32",
-            /** Input placeholder */
-            PLACEHOLDER: "#949698",
-            /** Input stroke / border */
+            /** Item text / placeholder */
+            TEXT: "#949698",
+            /** Item stroke / border */
             STROKE: "#3E4146"
         }
     },
