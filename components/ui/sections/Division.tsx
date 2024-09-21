@@ -82,6 +82,12 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         padding: 0,
     },
+    childView: {
+        display: "flex",
+        flexDirection: "row",
+        width: "100%",
+        gap: 10,
+    },
 });
 
 // We create the function
@@ -146,17 +152,7 @@ export default function Division({
                     )}
                     {children && <GapView height={10} />}
                     {children && (
-                        <View
-                            style={{
-                                display: "flex",
-                                flexDirection: "row",
-                                flex: 1,
-                                width: "100%",
-                                gap: 15,
-                            }}
-                        >
-                            {children}
-                        </View>
+                        <View style={styles.childView}>{children}</View>
                     )}
                 </View>
             </View>
