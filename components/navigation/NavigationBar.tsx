@@ -1,7 +1,7 @@
 // src/BottomNav.tsx
 // Navegación "de abajo" (está arriba, pero bueno)
 
-import React from "react";
+import React, { ReactElement } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import BetterText from "@/components/text/BetterText";
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         padding: 0,
         position: "absolute",
     },
-    touchme: {
+    navItem: {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const TouchMe = ({
+function NavItem({
     href,
     iconName,
     label,
@@ -50,58 +50,51 @@ const TouchMe = ({
     iconName: "home" | "dashboard" | "person";
     label: string;
     isSelected: boolean;
-}) => (
-    <Pressable onPress={() => router.push(href)} style={styles.touchme}>
-        <Ionicons
-            name={iconName}
-            size={25}
-            color={
-                isSelected
-                    ? Colors.MAIN.FOOTER.FOOTERSEL
-                    : Colors.MAIN.FOOTER.FOOTERUNS
-            }
-        />
-        <GapView height={5} />
-        <BetterText
-            textAlign="normal"
-            fontWeight="Bold"
-            fontSize={FontSizes.SMALL}
-            textColor={
-                isSelected
-                    ? Colors.MAIN.FOOTER.FOOTERSEL
-                    : Colors.MAIN.FOOTER.FOOTERUNS
-            }
-        >
-            {label}
-        </BetterText>
-    </Pressable>
-);
+}): ReactElement {
+    const color = isSelected
+        ? Colors.MAIN.FOOTER.FOOTER_SEL
+        : Colors.MAIN.FOOTER.FOOTER_UNS;
+
+    return (
+        <Pressable onPress={() => router.push(href)} style={styles.navItem}>
+            <Ionicons name={iconName} size={25} color={color} />
+            <GapView height={5} />
+            <BetterText
+                textAlign="normal"
+                fontWeight="Bold"
+                fontSize={FontSizes.SMALL}
+                textColor={color}
+            >
+                {label}
+            </BetterText>
+        </Pressable>
+    );
+}
 
 // We create the function
 export default function NavigationBar({ currentLocation }: SectionProps) {
     const { t } = useTranslation();
 
     return (
-        // Usamos estilos en línea ya que tienen un efecto pequeño pero positivo en el rendimiento final, salvo en "touchme" ya que este se repite varias veces.
         <View
             style={[
                 styles.navBar,
                 { backgroundColor: Colors.MAIN.FOOTER.BACKGROUND },
             ]}
         >
-            <TouchMe
+            <NavItem
                 href="/"
                 iconName="home"
                 label={t("navbar.home")}
                 isSelected={currentLocation === "/"}
             />
-            <TouchMe
+            <NavItem
                 href="/Dashboard"
                 iconName="dashboard"
                 label={t("navbar.dashboard")}
                 isSelected={currentLocation === "/Dashboard"}
             />
-            <TouchMe
+            <NavItem
                 href="/Profile"
                 iconName="person"
                 label={t("navbar.profile")}
