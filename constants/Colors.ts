@@ -36,32 +36,32 @@ const Colors: ColorsObject = {
         /** Default background of divisions */
         DIVISION: "#202328",
         /** In case of a floating division, the color of its border */
-        DIVISIONBORDER: "#26282B",
+        DIVISION_BORDER: "#26282B",
         FOOTER: {
             /** Background for the bottom navigation */
             BACKGROUND: "#16191E",
             /** Non-selected footer items */
-            FOOTERUNS: "#8A8C8E",
+            FOOTER_UNS: "#8A8C8E",
             /** Selected footer items */
-            FOOTERSEL: "#FFFFFF"
+            FOOTER_SEL: "#FFFFFF"
         },
-        BLANDITEM: {
+        DEFAULT_ITEM: {
             /** Input background */
             BACKGROUND: "#2A2D32",
             /** Input placeholder */
             PLACEHOLDER: "#949698",
             /** Input stroke / border */
-            STRK: "#3E4146"
+            STROKE: "#3E4146"
         }
     },
     /** Colors for labels */
-    LBLS: {
+    LABELS: {
         /** Used for the title of sections */
         SHL: "#DDDDDD",
         /** Small labels giving extra details */
         SDD: "#C8C8C8",
         /** In a table, the row headers */
-        TBLH: "#8D8E91"
+        TABLE_HEADER: "#8D8E91"
     },
     /** Primary colors */
     PRIMARIES: {
@@ -69,27 +69,27 @@ const Colors: ColorsObject = {
             /** Main color */
             GOD: "#32FF80",
             /** Stroke color for GOD */
-            GODSTRK: "#198040"
+            GOD_STROKE: "#198040"
         },
         ACE: {
             /** Main color */
             ACE: "#3280FF",
             /** Stroke color for ACE */
-            ACESTRK: "#194080",
+            ACE_STROKE: "#194080",
             /** Special color used for sliders */
-            ACESCROLL: "#2A61BB"
+            ACE_SCROLL: "#2A61BB"
         },
         WOR: {
             /** Main color */
             WOR: "#FF3232",
             /** Stroke color for WOR */
-            WORSTRK: "#801919"
+            WOR_STROKE: "#801919"
         },
         HMM: {
             /** Main color */
             HMM: "#FFC832",
             /** Stroke color for HMM */
-            HMMSTRK: "#806419"
+            HMM_STROKE: "#806419"
         }
     }
 };
