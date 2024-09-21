@@ -1,5 +1,5 @@
 /**
- * A type for colors. A string preceeded with a `#` (HEX color).
+ * A type for colors. A string preceded with a `#` (HEX color).
  *
  * @export
  * @typedef {Color}
@@ -16,9 +16,9 @@ interface FooterColors {
     /** Background for the bottom navigation */
     BACKGROUND: Color;
     /** Non-selected footer items */
-    FOOTERUNS: Color;
+    FOOTER_UNS: Color;
     /** Selected footer items */
-    FOOTERSEL: Color;
+    FOOTER_SEL: Color;
 }
 
 /**
@@ -33,7 +33,7 @@ interface BlandColors {
     /** Input placeholder */
     PLACEHOLDER: Color;
     /** Input stroke / border */
-    STRK: Color;
+    STROKE: Color;
 }
 
 /**
@@ -50,11 +50,11 @@ interface MainColors {
     /** Default background of divisions */
     DIVISION: Color;
     /** In case of a floating division, the color of its border */
-    DIVISIONBORDER: Color;
+    DIVISION_BORDER: Color;
     /** Color for the bottom navigation */
     FOOTER: FooterColors;
     /** Colors for input elements */
-    BLANDITEM: BlandColors;
+    DEFAULT_ITEM: BlandColors;
 }
 
 /**
@@ -69,7 +69,7 @@ interface LabelColors {
     /** Small labels giving extra details */
     SDD: Color;
     /** In a table, the row headers */
-    TBLH: Color;
+    TABLE_HEADER: Color;
 }
 
 /**
@@ -82,7 +82,7 @@ interface GodColors {
     /** Main color */
     GOD: Color;
     /** Stroke color for GOD */
-    GODSTRK: Color;
+    GOD_STROKE: Color;
 }
 
 /**
@@ -95,9 +95,9 @@ interface AceColors {
     /** Main color */
     ACE: Color;
     /** Stroke color for ACE */
-    ACESTRK: Color;
+    ACE_STROKE: Color;
     /** Special color used for sliders */
-    ACESCROLL: Color;
+    ACE_SCROLL: Color;
 }
 
 /**
@@ -110,7 +110,7 @@ interface WorColors {
     /** Main color */
     WOR: Color;
     /** Stroke color for WOR */
-    WORSTRK: Color;
+    WOR_STROKE: Color;
 }
 
 /**
@@ -123,7 +123,7 @@ interface HmmColors {
     /** Main color */
     HMM: Color;
     /** Stroke color for HMM */
-    HMMSTRK: Color;
+    HMM_STROKE: Color;
 }
 
 /**
@@ -167,7 +167,7 @@ export interface ColorsObject {
     /** Main color palette */
     MAIN: MainColors;
     /** Colors for labels */
-    LBLS: LabelColors;
+    LABELS: LabelColors;
     /** Primary colors */
     PRIMARIES: PrimaryColors;
     /** Black & white. Use them as a variable, as the app plans to add theming. */
