@@ -8,13 +8,14 @@ const styles = StyleSheet.create({
     picker: {
         padding: 10,
         width: "100%",
-        backgroundColor: Colors.MAIN.BLANDITEM.BACKGROUND,
-        borderColor: Colors.MAIN.BLANDITEM.STRK,
+        backgroundColor: Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
+        borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
         borderWidth: 2,
         borderRadius: 10,
         color: Colors.BASIC.WHITE,
         fontFamily: "BeVietnamPro-Regular",
     } as TextStyle,
+    background: { backgroundColor: Colors.MAIN.DEFAULT_ITEM.BACKGROUND },
 });
 
 /**
@@ -130,10 +131,8 @@ export default function Select({
                 value=""
                 fontFamily="BeVietnamPro-Regular"
                 enabled={true}
-                color={Colors.MAIN.BLANDITEM.PLACEHOLDER}
-                style={{
-                    backgroundColor: Colors.MAIN.BLANDITEM.BACKGROUND,
-                }}
+                color={Colors.MAIN.DEFAULT_ITEM.TEXT}
+                style={styles.background}
             />
             {selectOptions.map((option) => (
                 <Picker.Item
@@ -143,9 +142,7 @@ export default function Select({
                     fontFamily="BeVietnamPro-Regular"
                     enabled={option.enabled}
                     color={Colors.BASIC.WHITE}
-                    style={{
-                        backgroundColor: Colors.MAIN.BLANDITEM.BACKGROUND,
-                    }}
+                    style={styles.background}
                 />
             ))}
         </Picker>
