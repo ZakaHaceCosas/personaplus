@@ -1,7 +1,7 @@
 name: Make a suggestion
 description: "Any ideas on how to improve the app? We'll love to hear them!"
 title: "[SUGGESTION]: "
-labels: ["sugerencia"]
+labels: ["suggestion"]
 assignees:
   - ZakaHaceCosas
 body:
