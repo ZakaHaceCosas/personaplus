@@ -64,16 +64,16 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: "row",
-        backgroundColor: Colors.MAIN.BLANDITEM.BACKGROUND,
+        backgroundColor: Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
         padding: 10,
         borderBottomWidth: 1,
-        borderBottomColor: Colors.MAIN.BLANDITEM.PLACEHOLDER,
+        borderBottomColor: Colors.MAIN.DEFAULT_ITEM.TEXT,
     },
     row: {
         flexDirection: "row",
         padding: 10,
         borderBottomWidth: 1,
-        borderBottomColor: Colors.MAIN.BLANDITEM.PLACEHOLDER,
+        borderBottomColor: Colors.MAIN.DEFAULT_ITEM.TEXT,
     },
     cell: {
         flex: 1,

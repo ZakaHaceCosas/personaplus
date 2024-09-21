@@ -7,11 +7,11 @@ import { UniversalPressableStyle } from "@/constants/ui/Pressables";
 
 const styles = StyleSheet.create({
     textInput: {
-        backgroundColor: Colors.MAIN.BLANDITEM.BACKGROUND,
+        backgroundColor: Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
         borderRadius: UniversalPressableStyle.borderRadius,
         padding: UniversalPressableStyle.padding,
         borderWidth: UniversalPressableStyle.borderWidth,
-        borderColor: Colors.MAIN.BLANDITEM.STRK,
+        borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
         width: "100%",
         color: Colors.BASIC.WHITE,
         fontFamily: "BeVietnamPro-Regular",
@@ -74,7 +74,7 @@ export default function BetterInputField({
             <TextInput
                 placeholder={placeholder}
                 value={typeof value === "string" ? value : String(value)}
-                placeholderTextColor={Colors.MAIN.BLANDITEM.PLACEHOLDER}
+                placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                 style={styles.textInput}
                 autoCorrect={false}
                 multiline={false}

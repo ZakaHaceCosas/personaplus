@@ -13,8 +13,8 @@ import { UniversalPressableStyle } from "@/constants/ui/Pressables";
 interface BetterAlertProps {
     style: "DEFAULT" | "ACE" | "GOD" | "WOR" | "HMM"; // Tipo (color)
     title: string; // Título de la notificación
-    text: string; // Texto de la misma
-    subtext?: string; // De haberlo, subtexto de la misma
+    text: string; // Texto principal de la misma
+    subtext?: string; // De haberlo, texto inferior de la misma
     layout: "alert" | "notification";
 }
 
@@ -43,29 +43,29 @@ export default function BetterAlert({
 
     switch (style) {
         case "ACE":
-            borderColor = Colors.PRIMARIES.ACE.ACESTRK;
+            borderColor = Colors.PRIMARIES.ACE.ACE_STROKE;
             backgroundColor = Colors.PRIMARIES.ACE.ACE;
             textColor = Colors.BASIC.WHITE;
             break;
         case "GOD":
-            borderColor = Colors.PRIMARIES.GOD.GODSTRK;
+            borderColor = Colors.PRIMARIES.GOD.GOD_STROKE;
             backgroundColor = Colors.PRIMARIES.GOD.GOD;
             textColor = Colors.BASIC.BLACK;
             break;
         case "WOR":
-            borderColor = Colors.PRIMARIES.WOR.WORSTRK;
+            borderColor = Colors.PRIMARIES.WOR.WOR_STROKE;
             backgroundColor = Colors.PRIMARIES.WOR.WOR;
             textColor = Colors.BASIC.WHITE;
             break;
         case "HMM":
-            borderColor = Colors.PRIMARIES.HMM.HMMSTRK;
+            borderColor = Colors.PRIMARIES.HMM.HMM_STROKE;
             backgroundColor = Colors.PRIMARIES.HMM.HMM;
             textColor = Colors.BASIC.BLACK;
             break;
         case "DEFAULT":
         default:
-            borderColor = Colors.MAIN.BLANDITEM.STRK;
-            backgroundColor = Colors.MAIN.BLANDITEM.BACKGROUND;
+            borderColor = Colors.MAIN.DEFAULT_ITEM.STROKE;
+            backgroundColor = Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
             textColor = Colors.BASIC.WHITE;
             break;
     }

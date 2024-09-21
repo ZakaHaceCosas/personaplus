@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
         width: "100%",
         borderRadius: UniversalPressableStyle.borderRadius,
         borderWidth: UniversalPressableStyle.borderWidth,
-        borderColor: Colors.MAIN.BLANDITEM.STRK,
-        backgroundColor: Colors.MAIN.BLANDITEM.BACKGROUND,
+        borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
+        backgroundColor: Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
         display: "flex",
         justifyContent: "center",
         alignSelf: "stretch",
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         paddingBottom: 0,
     },
     selectedSwapOption: {
-        borderColor: Colors.PRIMARIES.ACE.ACESTRK,
+        borderColor: Colors.PRIMARIES.ACE.ACE_STROKE,
         backgroundColor: Colors.PRIMARIES.ACE.ACE,
     },
 });

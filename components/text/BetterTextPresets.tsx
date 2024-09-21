@@ -117,7 +117,7 @@ export function BetterTextSmallerText({
             textAlign="normal"
             fontWeight="Regular"
             fontSize={FontSizes.SMALL}
-            textColor={Colors.LBLS.SDD}
+            textColor={Colors.LABELS.SDD}
         >
             {children}
         </BetterText>
@@ -142,7 +142,7 @@ export function BetterTextSmallText({
             textAlign="normal"
             fontWeight="Regular"
             fontSize={FontSizes.REGULAR}
-            textColor={Colors.LBLS.SDD}
+            textColor={Colors.LABELS.SDD}
         >
             {children}
         </BetterText>
