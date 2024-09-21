@@ -18,7 +18,7 @@ import {
     SupportedActiveObjectivesList,
     SupportedActiveObjectives,
 } from "@/types/ActiveObjectives";
-import generateRandomMessage from "@/toolkit/RandomSenteces";
+import generateRandomMessage from "@/toolkit/RandomMessage";
 import BetterText from "@/components/text/BetterText";
 import Colors from "@/constants/Colors";
 import FontSizes from "@/constants/FontSizes";
@@ -57,6 +57,14 @@ const styles = StyleSheet.create({
         fontSize: FontSizes.LARGE,
         flex: 1,
         textAlign: "center",
+    },
+    dayActualContainer: {
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flex: 1,
     },
 });
 
@@ -335,7 +343,7 @@ export default function CreateActiveObjectivePage() {
                             `pages.createActiveObjective.questions.toggles.${associatedValue}Hint`,
                         )}
                         value={String(objectiveToCreate.info[associatedValue])}
-                        placeholderTextColor={Colors.MAIN.BLANDITEM.PLACEHOLDER}
+                        placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                         style={styles.textInput}
                         autoCorrect={false}
                         multiline={false}
@@ -350,7 +358,7 @@ export default function CreateActiveObjectivePage() {
                         // adding the ability to write custom numbers was Alvaro's idea, i'll tell him to fix it
                         // Alvaro842DEV do your magic here pls!!1!1
                         onChangeText={(value) => {
-                            // i didnt write this regex, but hopefully it works
+                            // i didn't write this regex, but hopefully it works
                             // (it does not)
                             const cleanedValue = value.replace(/[^0-9.]/g, "");
                             const numericValue = parseFloat(cleanedValue);
@@ -445,7 +453,7 @@ export default function CreateActiveObjectivePage() {
 
     useEffect(() => {
         function validate() {
-            const isInfovalid =
+            const isInfoValid =
                 !objectiveToCreate.info.days.every((day) => day === false) && // not all 7 days are false
                 objectiveToCreate.info.durationMinutes > 0; // no 0 minutes of exercise
 
@@ -467,7 +475,7 @@ export default function CreateActiveObjectivePage() {
                 isSpecificDataValid = true; // validate directly, as there's nothing to validate...
             }
 
-            return isInfovalid && isSpecificDataValid;
+            return isInfoValid && isSpecificDataValid;
         }
 
         setCanCreateObjective(validate());
@@ -562,7 +570,7 @@ export default function CreateActiveObjectivePage() {
             <GapView height={10} />
             <View style={styles.dayContainer}>
                 {objectiveToCreate.info.days.map((day, index) => {
-                    const thisday: string =
+                    const thisDay: string =
                         index === 0
                             ? t("globals.daysOfTheWeek.monday.key")
                             : index === 1
@@ -582,11 +590,11 @@ export default function CreateActiveObjectivePage() {
                                 style={{
                                     ...styles.day,
                                     borderColor: day
-                                        ? Colors.PRIMARIES.ACE.ACESTRK
-                                        : Colors.MAIN.BLANDITEM.STRK,
+                                        ? Colors.PRIMARIES.ACE.ACE_STROKE
+                                        : Colors.MAIN.DEFAULT_ITEM.STROKE,
                                     backgroundColor: day
                                         ? Colors.PRIMARIES.ACE.ACE
-                                        : Colors.MAIN.BLANDITEM.BACKGROUND,
+                                        : Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
                                 }}
                             >
                                 <Pressable
@@ -613,21 +621,14 @@ export default function CreateActiveObjectivePage() {
                                             };
                                         })
                                     }
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        flex: 1,
-                                    }}
+                                    style={styles.dayActualContainer}
                                 >
                                     <BetterText
                                         textColor={Colors.BASIC.WHITE}
                                         fontSize={FontSizes.REGULAR}
                                         fontWeight="Medium"
                                     >
-                                        {thisday.toUpperCase()}
+                                        {thisDay.toUpperCase()}
                                     </BetterText>
                                 </Pressable>
                             </View>
@@ -643,10 +644,10 @@ export default function CreateActiveObjectivePage() {
                 spawnToggle("restDurationMinutes")}
             {spawnToggle("repetitions")}
             {
-                // forgive me for promising that R6 would adress all code duplication and yet making this
-                // i got no fkng spare time to deal with this
-                // this is still my first react / typescript actual project, hope you dont expect more than this :[
-                // (im writing this like weeks before making this public, who am i asking forgivness too)
+                // forgive me for promising that R6 would address all code duplication and yet making this
+                // i got no fucking spare time to deal with this
+                // this is still my first react / typescript actual project, hope you don't expect more than this :[
+                // (im writing this like weeks before making this public, who am i asking forgiveness too)
                 // (javascript made me go weird :skull:)
             }
             {objectiveToCreate.exercise === "Push Ups" && (
@@ -678,9 +679,7 @@ export default function CreateActiveObjectivePage() {
                             value={String(
                                 objectiveToCreate.specificData.amountOfPushUps,
                             )}
-                            placeholderTextColor={
-                                Colors.MAIN.BLANDITEM.PLACEHOLDER
-                            }
+                            placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
                             autoCorrect={false}
                             multiline={false}
@@ -744,9 +743,7 @@ export default function CreateActiveObjectivePage() {
                         />
                         <TextInput
                             value={String(objectiveToCreate.specificData.reps)}
-                            placeholderTextColor={
-                                Colors.MAIN.BLANDITEM.PLACEHOLDER
-                            }
+                            placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
                             autoCorrect={false}
                             multiline={false}
@@ -819,9 +816,7 @@ export default function CreateActiveObjectivePage() {
                             value={String(
                                 objectiveToCreate.specificData.dumbbells,
                             )}
-                            placeholderTextColor={
-                                Colors.MAIN.BLANDITEM.PLACEHOLDER
-                            }
+                            placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
                             autoCorrect={false}
                             multiline={false}
@@ -894,9 +889,7 @@ export default function CreateActiveObjectivePage() {
                             value={String(
                                 objectiveToCreate.specificData.scaleWeight,
                             )}
-                            placeholderTextColor={
-                                Colors.MAIN.BLANDITEM.PLACEHOLDER
-                            }
+                            placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
                             autoCorrect={false}
                             multiline={false}
@@ -970,9 +963,7 @@ export default function CreateActiveObjectivePage() {
                             value={String(
                                 objectiveToCreate.specificData.barWeight,
                             )}
-                            placeholderTextColor={
-                                Colors.MAIN.BLANDITEM.PLACEHOLDER
-                            }
+                            placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
                             autoCorrect={false}
                             multiline={false}
@@ -1053,9 +1044,7 @@ export default function CreateActiveObjectivePage() {
                             value={String(
                                 objectiveToCreate.specificData.estimateSpeed,
                             )}
-                            placeholderTextColor={
-                                Colors.MAIN.BLANDITEM.PLACEHOLDER
-                            }
+                            placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
                             autoCorrect={false}
                             multiline={false}
@@ -1142,9 +1131,7 @@ export default function CreateActiveObjectivePage() {
                             value={String(
                                 objectiveToCreate.specificData.amountOfHands,
                             )}
-                            placeholderTextColor={
-                                Colors.MAIN.BLANDITEM.PLACEHOLDER
-                            }
+                            placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
                             autoCorrect={false}
                             multiline={false}
