@@ -14,7 +14,7 @@ const samplesValidProfile: FullProfile = {
     weight: 60,
     height: 185,
     language: "es",
-    activness: "intense",
+    activeness: "intense",
     theThinkHour: "19:00:00",
     focus: "exercising",
     isNewUser: false,
@@ -51,9 +51,9 @@ describe('orchestrateUserData', () => {
     });
 
     test('should throw an error when AsyncStorage throws', async () => {
-        mockGetItem.mockRejectedValueOnce(new Error('Failed to fetch'));
+        mockGetItem.mockRejectedValueOnce(new Error('This is a sample error. Everything works!'));
 
-        await expect(orchestrateUserData()).rejects.toThrow('Failed to fetch');
+        await expect(orchestrateUserData()).rejects.toThrow('This is a sample error. Everything works!');
     });
 });
 
