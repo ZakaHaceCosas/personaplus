@@ -43,33 +43,29 @@ export default function BetterButton({
 
     switch (style) {
         case "ACE":
-            borderColor = Colors.PRIMARIES.ACE.ACESTRK;
+            borderColor = Colors.PRIMARIES.ACE.ACE_STROKE;
             backgroundColor = Colors.PRIMARIES.ACE.ACE;
             textColor = Colors.BASIC.WHITE;
             break;
         case "GOD":
-            borderColor = Colors.PRIMARIES.GOD.GODSTRK;
+            borderColor = Colors.PRIMARIES.GOD.GOD_STROKE;
             backgroundColor = Colors.PRIMARIES.GOD.GOD;
             textColor = Colors.BASIC.BLACK;
             break;
         case "WOR":
-            borderColor = Colors.PRIMARIES.WOR.WORSTRK;
+            borderColor = Colors.PRIMARIES.WOR.WOR_STROKE;
             backgroundColor = Colors.PRIMARIES.WOR.WOR;
             textColor = Colors.BASIC.WHITE;
             break;
         case "HMM":
-            borderColor = Colors.PRIMARIES.HMM.HMMSTRK;
+            borderColor = Colors.PRIMARIES.HMM.HMM_STROKE;
             backgroundColor = Colors.PRIMARIES.HMM.HMM;
             textColor = Colors.BASIC.BLACK;
             break;
         case "DEFAULT":
-            borderColor = Colors.MAIN.BLANDITEM.STRK;
-            backgroundColor = Colors.MAIN.BLANDITEM.BACKGROUND;
-            textColor = Colors.BASIC.WHITE;
-            break;
         default:
-            borderColor = Colors.MAIN.BLANDITEM.STRK;
-            backgroundColor = Colors.MAIN.BLANDITEM.BACKGROUND;
+            borderColor = Colors.MAIN.DEFAULT_ITEM.STROKE;
+            backgroundColor = Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
             textColor = Colors.BASIC.WHITE;
             break;
     }
