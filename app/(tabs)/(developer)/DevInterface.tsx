@@ -13,8 +13,14 @@ import Colors from "@/constants/Colors";
 import getCommonScreenSize from "@/constants/Screen";
 import StoredItemNames from "@/constants/StoredItemNames";
 import { logToConsole } from "@/toolkit/debug/Console";
-import { GetAllObjectives } from "@/toolkit/objectives/ActiveObjectives";
-import { ActiveObjective } from "@/types/ActiveObjectives";
+import {
+    GetActiveObjectiveDailyLog,
+    GetAllObjectives,
+} from "@/toolkit/objectives/ActiveObjectives";
+import {
+    ActiveObjective,
+    ActiveObjectiveDailyLog,
+} from "@/types/ActiveObjectives";
 import { FullProfile } from "@/types/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Device from "expo-device";
@@ -58,16 +64,16 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: "row",
-        backgroundColor: "#ddd",
+        backgroundColor: Colors.MAIN.BLANDITEM.BACKGROUND,
         padding: 10,
         borderBottomWidth: 1,
-        borderBottomColor: "#ccc",
+        borderBottomColor: Colors.MAIN.BLANDITEM.PLACEHOLDER,
     },
     row: {
         flexDirection: "row",
         padding: 10,
         borderBottomWidth: 1,
-        borderBottomColor: "#ccc",
+        borderBottomColor: Colors.MAIN.BLANDITEM.PLACEHOLDER,
     },
     cell: {
         flex: 1,
@@ -79,6 +85,7 @@ export default function HomeScreen() {
     const [loading, setLoading] = useState<boolean>(true);
     const [userData, setUserData] = useState<string | null>(null);
     const [objectives, setObjectives] = useState<string | null>(null);
+    const [dailyLog, setDailyLog] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -103,6 +110,14 @@ export default function HomeScreen() {
                 setObjectives(
                     bareObjectives ? JSON.stringify(bareObjectives) : null,
                 );
+
+                // dailyLog
+                const bareDailyLog: ActiveObjectiveDailyLog | null =
+                    await GetActiveObjectiveDailyLog();
+                if (!bareDailyLog) {
+                    setObjectives("No daily log (null)");
+                }
+                setDailyLog(bareDailyLog ? JSON.stringify(bareDailyLog) : null);
             } catch (e) {
                 const err = "Error fetching data at DevInterface: " + e;
                 logToConsole(err, "error");
@@ -134,7 +149,25 @@ export default function HomeScreen() {
                 style="DEFAULT"
                 title="Generic info from your device"
                 text={`Client details`}
-                subtext={`Manufacturer: ${Device.manufacturer}\nBrand: ${Device.brand}\nCodename: ${Device.designName}\nDevice name: ${Device.deviceName}\nDevice type: ${Device.deviceType} - Expo's DeviceType Enum\nYear: ${Device.deviceYearClass}\nIs device or is emulator: ${Device.isDevice ? "is device" : "is emulator"}\nModel name: ${Device.modelName}\nOS BUILD ID: ${Device.osBuildId}\nOS NAME + VERSION: ${Device.osName} ${Device.osVersion}\nANDROID API LEVEL: ${Device.platformApiLevel}\nProduct name: ${Device.productName}\nTotal memory: ${Device.totalMemory} (in bytes)`}
+                subtext={`Manufacturer: ${Device.manufacturer}\nBrand: ${
+                    Device.brand
+                }\nCodename: ${Device.designName}\nDevice name: ${
+                    Device.deviceName
+                }\nDevice type: ${
+                    Device.deviceType
+                } - Expo's DeviceType Enum\nYear: ${
+                    Device.deviceYearClass
+                }\nIs device or is emulator: ${
+                    Device.isDevice ? "is device" : "is emulator"
+                }\nModel name: ${Device.modelName}\nOS BUILD ID: ${
+                    Device.osBuildId
+                }\nOS NAME + VERSION: ${Device.osName} ${
+                    Device.osVersion
+                }\nANDROID API LEVEL: ${
+                    Device.platformApiLevel
+                }\nProduct name: ${Device.productName}\nTotal memory: ${
+                    Device.totalMemory
+                } (in bytes)`}
                 layout="alert"
             />
             <GapView height={10} />
@@ -154,10 +187,18 @@ export default function HomeScreen() {
                 layout="alert"
             />
             <GapView height={10} />
+            <BetterAlert
+                style="DEFAULT"
+                title={"AsyncStorage item: " + StoredItemNames.dailyLog}
+                text={error ? "An error happened:" : "Daily log (raw JSON)"}
+                subtext={error ? error : dailyLog ? dailyLog : "null"}
+                layout="alert"
+            />
+            <GapView height={10} />
             <View style={styles.container}>
                 <View style={styles.header}>
-                    <BetterTextSmallText>Exercise</BetterTextSmallText>
-                    <BetterTextSmallText>ID</BetterTextSmallText>
+                    <BetterTextSmallText>Exercise{"  "}</BetterTextSmallText>
+                    <BetterTextSmallText>ID{"  "}</BetterTextSmallText>
                 </View>
                 {(objectives
                     ? (JSON.parse(objectives) as ActiveObjective[])
@@ -166,9 +207,11 @@ export default function HomeScreen() {
                     <View key={objective.identifier} style={styles.row}>
                         <BetterTextSmallText>
                             {objective.exercise}
+                            {"  "}
                         </BetterTextSmallText>
                         <BetterTextSmallText>
                             {objective.identifier}
+                            {"  "}
                         </BetterTextSmallText>
                     </View>
                 ))}
