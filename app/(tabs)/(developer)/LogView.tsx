@@ -162,7 +162,7 @@ export default function HomeScreen() {
                                                   ? `  handlerName: ${log.traceback.handlerName}`
                                                   : ""
                                           }}`
-                                        : "{ TRACEBACKN'T }"}
+                                        : "{ NO TRACEBACK }"}
                                 </Text>
                                 <Text style={[styles.logText, logStyle]}>
                                     {String(log.message)}

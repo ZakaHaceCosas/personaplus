@@ -90,8 +90,6 @@ const styles = StyleSheet.create({
     },
 });
 
-// We create the function
-
 /**
  * **A PersonaPlus division.**
  *

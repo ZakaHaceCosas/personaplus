@@ -48,7 +48,7 @@ const config: ExpoConfig.ExpoConfig = {
         backgroundColor: "#0E1013",
     },
     ios: {
-        // apple is not supported and wont ever be, this is for some dude whos testing from an iphone
+        // apple is not supported and wont ever be, this is for some dude who's testing from an iphone
         backgroundColor: "#0E1013",
     },
     web: {
