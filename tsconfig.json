@@ -22,8 +22,9 @@
         "noImplicitReturns": true,
         "noFallthroughCasesInSwitch": true,
         "exactOptionalPropertyTypes": true,
-        "strictBindCallApply": true
+        "strictBindCallApply": true,
+        "useUnknownInCatchVariables": true
     },
     "include": ["**/*.ts", "**/*.tsx"],
-    "exclude": ["**/*.wip.ts"]
+    "exclude": ["**/*.wip.ts", "**/*.deprecated.ts"]
 }
