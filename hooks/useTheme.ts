@@ -4,14 +4,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { logToConsole } from '@/toolkit/debug/Console';
 import StoredItemNames from '@/constants/StoredItemNames';
 
-export function useTheme() {
+export function useTheme(): "light" | "dark" {
     const systemTheme = useColorScheme();
     const [theme, setTheme] = useState<"light" | "dark">("dark");
 
-    useEffect(() => {
-        async function fetchTheme() {
+    useEffect((): void => {
+        async function fetchTheme(): Promise<void> {
             try {
-                const savedTheme = await AsyncStorage.getItem(StoredItemNames.colorTheme);
+                const savedTheme: string | null = await AsyncStorage.getItem(StoredItemNames.colorTheme);
                 setTheme(savedTheme ? (savedTheme as "light" | "dark") : systemTheme ?? "dark");
             } catch (e) {
                 logToConsole('Error fetching theme:' + e, "error");
