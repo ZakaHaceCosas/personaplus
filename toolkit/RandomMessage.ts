@@ -9,20 +9,23 @@ import { TFunction } from "i18next";
  * @param {TFunction} t Pass the translate function
  * @returns {string} A random message string.
  */
-export default function generateRandomMessage(target: "allObjectivesDone" | "sessionCompleted" | "activeObjectiveReminders" | "createActiveObjective", t: TFunction): string {
+export default function generateRandomMessage(
+    target: "allObjectivesDone" | "sessionCompleted" | "activeObjectiveReminders" | "createActiveObjective",
+    t: TFunction
+): string {
     // Get all messages for the specified target
     // so the app feels more friendly :D
-    const allMessages: string[] = t(`coolRandomMessages.${target}`, {
+    const allMessages = t(`coolRandomMessages.${target}`, {
         returnObjects: true,
     });
 
     // Handle case where no messages are found
     if (!Array.isArray(allMessages) || allMessages.length === 0) {
         logToConsole(`No messages found for target: ${target}`, "warn");
-        throw new Error(`No messages found for target: ${target}`)
+        throw new Error(`No messages found for target: ${target}`);
     }
 
     // Choose a random message
-    const randomIndex = Math.floor(Math.random() * allMessages.length);
+    const randomIndex: number = Math.floor(Math.random() * allMessages.length);
     return allMessages[randomIndex];
 }

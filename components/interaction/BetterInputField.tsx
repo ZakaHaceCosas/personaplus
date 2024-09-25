@@ -62,8 +62,11 @@ export default function BetterInputField({
      * @param {number} index The **target** index - if your input has a `refIndex` of **2**, the *target* (this value) would be **3**. For `refIndex` see `spawnInputField()`.
      */
     function focusNextField(index: number): void {
-        if (inputRefs.current[index]) {
-            inputRefs.current[index].focus();
+        const inputRef = inputRefs.current[index];
+        if (inputRef) {
+            inputRef.focus();
+        } else {
+            throw new Error("No inputRef");
         }
     }
 
