@@ -19,7 +19,7 @@ import { router } from "expo-router";
 import StoredItemNames from "@/constants/StoredItemNames";
 
 /**
- * Validates the basic user data, to ensure the gender, age, height, weight, and username values are valid. This doesn't just check for types, but actually does some extra validation, like username lenght or "normal limits" (e.g. returning invalid if the user wants to set his weight to 999kg).
+ * Validates the basic user data, to ensure the gender, age, height, weight, and username values are valid. This doesn't just check for types, but actually does some extra validation, like username length or "normal limits" (e.g. returning invalid if the user wants to set his weight to 999kg).
  *
  * @export
  * @param {(string | "male" | "female" | null)} gender Gender value
@@ -75,8 +75,8 @@ export async function orchestrateUserData(): Promise<FullProfile | null> {
  * @export
  * @param {boolean} careAboutTheUser Whether you care about the user or not in the specific context you're calling this. Basically: if `true`, a confirmation modal is shown, otherwise (`false`) data's just deleted without asking.
  */
-export function updateBrm5(careAboutTheUser: boolean) {
-    async function releaseOperationResurgence() {
+export function updateBrm5(careAboutTheUser: boolean): void {
+    async function releaseOperationResurgence(): Promise<number> {
         try {
             await AsyncStorage.multiRemove([
                 StoredItemNames.userData,
