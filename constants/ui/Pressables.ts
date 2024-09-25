@@ -6,24 +6,29 @@
  */
 interface UniversalPressableStyleProps {
     /**
-     * The height. `55`.
+     * The height.
      *
-     * @type {55}
+     * @type {number}
      */
-    height: 55,
+    height: number,
     /**
-     * The border radius (AKA how round it is). `10`.
+     * The border radius (AKA how round it is).
      *
-     * @type {10}
+     * @type {number}
      */
-    borderRadius: 14,
+    borderRadius: number,
     /**
-     * The border width (AKA how big the border is). `4`.
+     * The border width (AKA how big the border is).
      *
-     * @type {4}
+     * @type {number}
      */
-    borderWidth: 4
-    padding: 15
+    borderWidth: number
+    /**
+     * The padding (AKA how much inner-space in pixels exists from the actual content to the item's borders).
+     *
+     * @type {number}
+     */
+    padding: number
 }
 
 /**
