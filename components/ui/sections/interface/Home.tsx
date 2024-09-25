@@ -1,3 +1,4 @@
+// FIXME:  this is broken
 import Loading from "@/components/static/Loading";
 import { logToConsole } from "@/toolkit/debug/Console";
 import {
@@ -5,7 +6,7 @@ import {
     GetActiveObjective,
     SaveActiveObjectiveToDailyLog,
 } from "@/toolkit/objectives/ActiveObjectives";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import Division from "@/components/ui/sections/Division";
 import {
     ActiveObjective,
@@ -13,6 +14,7 @@ import {
 } from "@/types/ActiveObjectives";
 import { useTranslation } from "react-i18next";
 import BetterButton from "@/components/interaction/BetterButton";
+import GapView from "../../GapView";
 
 export function RenderActiveObjectives(): ReactNode {
     const [identifiers, setIdentifiers] = useState<number[] | false | 0 | null>(
@@ -25,66 +27,51 @@ export function RenderActiveObjectives(): ReactNode {
 
     const { t } = useTranslation();
 
-    useEffect(() => {
-        async function handler(): Promise<void> {
-            try {
-                const pending: number[] | 0 | false | null =
-                    await GetAllPendingObjectives();
-                logToConsole("PENDING STUFF " + JSON.stringify(pending), "log");
-                setIdentifiers(pending);
-            } catch (e) {
-                logToConsole(
-                    "Error with RenderActiveObjective 1st handler(), " + e,
-                    "error",
-                );
-            } finally {
-                setLoading(false);
-            }
+    async function handler(): Promise<void> {
+        try {
+            const pending: number[] | 0 | false | null =
+                await GetAllPendingObjectives();
+            setIdentifiers(pending);
+        } catch (e) {
+            logToConsole(
+                "Error with RenderActiveObjective 1st handler(), " + e,
+                "error",
+            );
+        } finally {
+            setLoading(false);
         }
+    }
 
+    useEffect(() => {
         handler();
     }, []);
 
-    useEffect(() => {
-        logToConsole(
-            "Identifiers: " + JSON.stringify(identifiers),
-            "warn",
-            {
-                location: "@/components/ui/sections/interface/Home.tsx",
-                isHandler: false,
-                function: "RenderActiveObjectives()",
-            },
-            true,
-        );
-    }, [identifiers]);
-
     // handles rendering objectives (to get an active objective we use async functions so yeah)
-    useEffect(() => {
-        async function renderActiveObjectives(): Promise<void> {
-            if (!identifiers) {
-                const message =
-                    "This should not have been called. No identifiers.";
-                // throw new Error(message);
-                logToConsole(
-                    message,
-                    "warn",
-                    {
-                        location: "@/components/ui/sections/interface/Home.tsx",
-                        isHandler: true,
-                        handlerName: "renderObjectives() @ if (!identifiers)",
-                        function: "RenderActiveObjectives()",
-                    },
-                    false,
-                );
-                return;
-            }
+    const renderActiveObjectives: () => Promise<void> =
+        useCallback(async (): Promise<void> => {
             try {
+                if (!identifiers) {
+                    logToConsole(
+                        "No identifiers.",
+                        "warn",
+                        {
+                            location:
+                                "@/components/ui/sections/interface/Home.tsx",
+                            isHandler: true,
+                            handlerName:
+                                "renderObjectives() @ if (!identifiers)",
+                            function: "RenderActiveObjectives()",
+                        },
+                        false,
+                    );
+                    return;
+                }
                 const objectivePromises: Promise<ActiveObjective | null>[] =
                     identifiers.map(
                         async (
                             identifier: number,
                         ): Promise<ActiveObjective | null> => {
-                            return await GetActiveObjective(identifier); // directly return the value
+                            return await GetActiveObjective(identifier);
                         },
                     );
 
@@ -112,13 +99,16 @@ export function RenderActiveObjectives(): ReactNode {
                     },
                     false,
                 );
+            } finally {
+                setLoading(false);
             }
-        }
+        }, [identifiers]);
 
+    useEffect(() => {
         renderActiveObjectives();
-    }, [identifiers]);
+    }, [renderActiveObjectives]);
 
-    function generateDescription(obj: ActiveObjective): string {
+    function generateDescriptionOfObjective(obj: ActiveObjective): string {
         const exercise: SupportedActiveObjectives = obj.exercise;
         if (exercise === "Lifting") {
             return t(
@@ -132,7 +122,8 @@ export function RenderActiveObjectives(): ReactNode {
             return t(
                 obj.specificData.amountOfPushUps +
                     " push ups with " +
-                    obj.specificData.amountOfHands,
+                    obj.specificData.amountOfHands +
+                    " hands.",
             );
             // TODO: finish these
         } else {
@@ -140,8 +131,19 @@ export function RenderActiveObjectives(): ReactNode {
         }
     }
 
+    async function handleMarkingObjectiveAsDone(identifier: number) {
+        await SaveActiveObjectiveToDailyLog(identifier, true, undefined);
+        await handler();
+        await renderActiveObjectives();
+    }
+
     if (loading) {
-        return <Loading />;
+        return (
+            <>
+                <Loading />
+                <GapView height={10} />
+            </>
+        );
     }
 
     if (identifiers === 0) {
@@ -166,7 +168,7 @@ export function RenderActiveObjectives(): ReactNode {
                         key={obj.identifier}
                         header={obj.exercise}
                         preHeader="ACTIVE OBJECTIVE"
-                        subHeader={generateDescription(obj)}
+                        subHeader={generateDescriptionOfObjective(obj)}
                     >
                         <BetterButton
                             buttonText="Let's go!"
@@ -177,11 +179,7 @@ export function RenderActiveObjectives(): ReactNode {
                             buttonText="Already done it!"
                             style="GOD"
                             action={() =>
-                                SaveActiveObjectiveToDailyLog(
-                                    obj.identifier,
-                                    true,
-                                    undefined,
-                                )
+                                handleMarkingObjectiveAsDone(obj.identifier)
                             }
                         />
                     </Division>
