@@ -1,29 +1,28 @@
-# Usage of OpenHealth within PersonaPlus
+# Usage of CoreLibrary within PersonaPlus
 
-> Tambien disponible en [Español (Spanish)](USAGE.es.md)
+> También disponible en [Español (Spanish)](USAGE.es.md)
 
-While the long term aim is to create a full, free and open source independant library and source of information, at the moment OpenHealth is being developed within the scope of PersonaPlus, and the usage should also be explained within that scope.
+Initially, the long term aim was to create a full, free and open source independent library and source of information, which is why the CoreLibrary structure is a bit more complex than what you'd expect.
+
+At the moment CoreLibrary (formerly "_OpenHealth_") is being developed within the scope of PersonaPlus, and the usage should also be explained within that scope.
 
 This document is basically a short guide onto
 
-a) How to create OH functions
-
-and
-
-b) What functions should you use, where, and why
+1. How to create CL (CoreLibrary) functions
+2. What functions should you use, where, and why
 
 ## Creating a function
 
-That's basically how OpenHealth works, in the end it's just a lot of functions that do a bunch of calculations.
+That's basically how CL works in the end, it's just a lot of functions that do a bunch of calculations.
 
-An OpenHealth function is designed like this:
+A CoreLibrary function is designed like this:
 
 ```ts
-// First, the imports. More onto that later.
-import CreateComponentDataUtilities from "@/core/tools/OpenHealthDataBuilder";
-import { OpenHealthResponseVersatile } from "@/core/types/OpenHealthResponse";
+// First, the imports. More onto this later.
+import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
+import { CoreLibraryResponseVersatile } from "@/core/types/CoreLibraryResponse";
 
-// Then, construct the data function. More onto that later.
+// Then, construct the data function. More onto this later.
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "date",
     "sources"
@@ -37,19 +36,19 @@ export default function yourFunction(
     gender: "male" | "female",
     height: number,
     weight: number,
-    // additional params (if neded)
+    // additional params (if needed)
     provideContext?: boolean,
     provideExplanation?: boolean
-): OpenHealthResponseVersatile /* or the response type. More onto that later. */ {
+): CoreLibraryResponseVersatile /* or the response type. More onto that later. */ {
 
 
     // your stuff here :D
 
 
-    const samleResult = 24
+    const sampleResult = 24
 
-    const response: OpenHealthResponseVersatile = {
-        result: samleResult,
+    const response: CoreLibraryResponseVersatile = {
+        result: sampleResult,
     };
 
     if (provideContext) {
@@ -58,7 +57,7 @@ export default function yourFunction(
             gender,
             height,
             weight,
-            // additional params (if neded)
+            // additional params (if needed)
         };
         response.context = "context";
     }
@@ -81,7 +80,7 @@ Then there's source, a single string with all the sources you've used. Think of 
 
 Just `export const { getSource, getLastUpdate }` the data utilities function and they will work out of the box.
 
-Then, you just need to create your main function and make it the **default** export. Be sure to give it the correct params and return one of the three valid OpenHealth Responses. You can just copy & paste from other functions for that.
+Then, you just need to create your main function and make it the **default** export. Be sure to give it the correct params and return one of the three valid CoreLibrary Responses. You can just copy & paste from other functions for that.
 
 Whatever you choose as a response, though, you should note that you'll have to define `context` and `explanation`, being both explanatory texts. `context` briefly explaining the received result and `explanation` explaining what does the calculation by itself mean.
 > You can always just write "FIXME" or "TODO" as a value, and let someone else (like me) take care of it.
