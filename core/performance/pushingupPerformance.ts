@@ -9,7 +9,7 @@ export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "https://fitnessvolt.com/calories-burned-push-up-calculator/"
 )
 
-interface PUSHINGUP_Response {
+interface PUSHING_UP_Response {
     result: number;
     subject?: {
         age: number;
@@ -35,7 +35,7 @@ interface PUSHINGUP_Response {
  * @param pushUps The amount of push ups that were done.
  * @param provideContext Whether to provide a brief contextualization about the result.
  * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
- * @returns The calories burnt if neither provideContext nor provideExplanation are true, otherwise returns a PUSHINGUP_Response object.
+ * @returns The calories burnt if neither provideContext nor provideExplanation are true, otherwise returns a PUSHING_UP_Response object.
 */
 
 export default function calculateLiftingPerformance(
@@ -48,7 +48,7 @@ export default function calculateLiftingPerformance(
     hands: number,
     provideContext?: boolean,
     provideExplanation?: boolean
-): PUSHINGUP_Response {
+): PUSHING_UP_Response {
     const calcMet = (): number => {
         // General MET values, according to source
         const moderateMET = 3.8;
@@ -80,10 +80,10 @@ export default function calculateLiftingPerformance(
 
         const calculateCaloriesBurntPerMinute = () => {
             // (3.5 * MET * WEIGHT[kg]) / 200
-            const firststep = 3.5 * met
-            const secondstep = firststep * weight
-            const thirdstep = secondstep / 200 // CALORIES FOR ONE MINUTE
-            return thirdstep
+            const firstStep = 3.5 * met
+            const secondStep = firstStep * weight
+            const thirdStep = secondStep / 200 // CALORIES FOR ONE MINUTE
+            return thirdStep
         }
         const caloriesBurnt: number = calculateCaloriesBurntPerMinute() * time
         return caloriesBurnt
@@ -91,7 +91,7 @@ export default function calculateLiftingPerformance(
 
     const caloriesBurnt = calculatePerformance()
 
-    const response: PUSHINGUP_Response = {
+    const response: PUSHING_UP_Response = {
         result: caloriesBurnt,
     };
 

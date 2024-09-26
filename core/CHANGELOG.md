@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0
+
+- **Renamed from OpenHealthJS to CoreLibrary.**
+
+> [!INFO]
+> The idea of "OpenHealth" as a standalone library is being left behind. It will be renamed to "CoreLibrary" (`CoreLibrary.physicalHealth.something()`) and will be developed and maintained only inside of the PersonaPlus scope.
+>
+> This is because of how complicated it would be to develop an entire library. Plus, it would require a lot of code we would probably not use, and it would require a structure that's made for general usage instead of something designed specifically for this project.
+>
+> I still like the idea of a standalone library, but if that happens it will be a completely separate project _borrowing_ code from here. Until then, CoreLibrary is nothing else than an internal library.
+
+- Updated documentation and some comments to fix typos.
+
 ## 0.0.3
 
 - (WIP) Replace having an interface for each function with a generic `OpenHealthResponse`.
@@ -11,7 +24,7 @@
 
 ## 0.0.2
 
-- Removed `docs/`. It was planned to be given a usage, but that will be postposed.
+- Removed `docs/`. It was planned to be given a usage, but that will be postponed.
 - Fix `provideContext` and `provideExplanation` texts where required.
 - Implement push ups performance calculation.
 

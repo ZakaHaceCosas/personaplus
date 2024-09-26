@@ -98,7 +98,7 @@ And then there's `getLastUpdated()`, which returns a string with the last time t
 
 Great, you got it all!
 
-Now, let's move onto the reference manual: a list of all available functions, categorised, and with explanations.
+Now, let's move onto the reference manual: a list of all available functions, categorized, and with explanations.
 
 > [!TIP]
 > This reference is only for the `calculate()` function of each utility, as `getLastUpdated()` and `getSource()` are always the same.
@@ -116,11 +116,11 @@ Now, let's move onto the reference manual: a list of all available functions, ca
 
 > The BMR is the rate of energy expenditure per unit time by endothermic animals at rest.
 
-In an easier vocabulary: BMR is used to calculate the ammount of energy the human body spends on a day to stay alive.
+In an easier vocabulary: BMR is used to calculate the amount of energy the human body spends on a day to stay alive.
 
 **What purpose does the function serve?**
 
-You use it by passing the data needed to calculate the BMR plus the activness of the subject, to calculate (based on the Harris-Benedict equation) the estimated amount of kilocaries the subject should get in a daily basis.
+You use it by passing the data needed to calculate the BMR plus the activeness of the subject, to calculate (based on the Harris-Benedict equation) the estimated amount of kilocalories the subject should get in a daily basis.
 
 For extra info about how this should be used within PersonaPlus' scope, see [USAGE.md](USAGE.md#basalMetabolicRate).
 
@@ -130,7 +130,7 @@ For extra info about how this should be used within PersonaPlus' scope, see [USA
 | `gender` | "male" or "female" | The **gender** of the subject |
 | `weight` | Number | The weight of the subject in **kilograms** |
 | `height` | Height | The height of the subject in **centimeters** |
-| `activness` | "poor" or "light" or "moderate" or "intense" or "extreme" | Aproximetly, how active the subject is in terms of exercising, being "poor" very little or no exercise, light 1 to 3 days of exercise a week (being one time each day), moderate 3 to 5 days a week, intense 6 or seven days a week, and extreme being very intense exercies and/or more than once a day. |
+| `activeness` | "poor" or "light" or "moderate" or "intense" or "extreme" | Approximately, how active the subject is in terms of exercising, being "poor" very little or no exercise, light 1 to 3 days of exercise a week (being one time each day), moderate 3 to 5 days a week, intense 6 or seven days a week, and extreme being very intense exercises and/or more than once a day. |
 
 ## getMetabolicEquivalentOfTask.`calculate()`
 
@@ -152,13 +152,13 @@ For extra info about how this should be used within PersonaPlus' scope, see [USA
 | --------- | ---- | ----------- |
 | `age` | Number | The **age** of the subject in years |
 | `gender` | "male" or "female" | The **gender** of the subject |
-| `intensity` | "superlow" or "very_low" or "low" or "low_to_mid" or "mid" or "mid_to_high" or "not_too_high" or "high" or "higher" or "very_high" or "very_high_to_intense" or "not_too_intense" or "a_bit_intense" or "intense" or "pretty_intense" or "very_intense" or "really_intense" | The intensity of the activity. |
+| `intensity` | "super_low" or "very_low" or "low" or "low_to_mid" or "mid" or "mid_to_high" or "not_too_high" or "high" or "higher" or "very_high" or "very_high_to_intense" or "not_too_intense" or "a_bit_intense" or "intense" or "pretty_intense" or "very_intense" or "really_intense" | The intensity of the activity. |
 
 Each `intensity` value is associated to a fixed, approximated MET value, as seen in the table that follows.
 
 | Value | Equivalent | MET value |
 | ----- | ---------- | --------- |
-| `superlow` | writing, desk work, using computer | 1.5 |
+| `super_low` | writing, desk work, using computer | 1.5 |
 | `very_low` | walking slowly | 2.0 |
 | `low` | walking, 4.8 km/h | 3.0 |
 | `low_to_mid` | sweeping or mopping floors, vacuuming carpets | 3 to 3.5 (3.5 in code) |
@@ -197,7 +197,7 @@ For extra info about how this should be used within PersonaPlus' scope, see [USA
 | `weight` | Number | The weight of the subject in **kilograms** |
 | `height` | Height | The height of the subject in **centimeters** |
 
-## bodyfatpercentage.`calculate()`
+## BodyFatPercentage.`calculate()`
 
 **What's this?**
 
@@ -209,7 +209,7 @@ In an easier vocabulary: BFP gives you the percentage of your body's weight that
 
 You use it by passing the data needed to calculate the BFP, to calculate the estimated percentage of your weight that's fat, and whether that BFP represents a healthy weight or an unhealthy one, either by underweight or overweight / obesity.
 
-For extra info about how this should be used within PersonaPlus' scope, see [USAGE.md](USAGE.md#bodyfatpercentage).
+For extra info about how this should be used within PersonaPlus' scope, see [USAGE.md](USAGE.md#BodyFatPercentage).
 
 | Parameter | Type | Explanation |
 | --------- | ---- | ----------- |
