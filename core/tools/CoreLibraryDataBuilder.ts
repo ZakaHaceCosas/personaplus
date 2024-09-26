@@ -1,13 +1,13 @@
 /**
  * A type with the `getSource` and `getLastUpdate` data.
  */
-type OpenHealthComponentData = {
+type CoreLibraryComponentData = {
     updated: `${string}/${string}/${string}`;
     source: string;
 };
 
 /**
- * Creates the functions to get component data from an OpenHealth function. **See docs for more info (Component Data).**
+ * Creates the functions to get component data from a CoreLibrary function. **See docs for more info (Component Data).**
  *
  * @export
  * @param {string} updated - The date of the last update in DD/MM/YYYY format.
@@ -22,7 +22,7 @@ export default function CreateComponentDataUtilities(updated: string, source: st
     }
 
     // construction
-    const componentData: OpenHealthComponentData = {
+    const componentData: CoreLibraryComponentData = {
         updated: updated as `${string}/${string}/${string}`,
         source
     };
