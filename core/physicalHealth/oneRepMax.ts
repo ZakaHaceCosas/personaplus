@@ -33,11 +33,17 @@ interface ONERM_Response {
 export default function calculateOneRepetitionMax(
     weightLiftedPerRep: number, amountOfReps: number, providePercentage?: boolean, provideContext?: boolean,
     provideExplanation?: boolean): ONERM_Response {
-    const firstoperation_firststep: number = amountOfReps / 30
-    const firstoperation_secondstep: number = 1 + firstoperation_firststep
-    const firstoperation_thirdstep: number = weightLiftedPerRep * firstoperation_secondstep
+    const repsTimesThirty: number = amountOfReps / 30
 
-    const result: number = firstoperation_thirdstep
+    function firstOperation(): number {
+        const secondStep: number = 1 + repsTimesThirty
+        const thirdStep: number = weightLiftedPerRep * secondStep
+
+        const result: number = thirdStep
+        return result
+    }
+
+    const result: number = firstOperation()
 
     const response: ONERM_Response = {
         result: result
@@ -56,10 +62,14 @@ export default function calculateOneRepetitionMax(
     }
 
     if (providePercentage) {
-        const secondoperation_firststep: number = firstoperation_secondstep
-        const secondoperation_secondstep: number = 1 / secondoperation_firststep
-        const secondoperation_thirdstep: number = secondoperation_secondstep * 100
-        response.percentage = secondoperation_thirdstep
+        function secondOperation(): number {
+            const firstStep: number = repsTimesThirty
+            const secondStep: number = 1 / firstStep
+            const result: number = secondStep * 100
+
+            return result
+        }
+        response.percentage = secondOperation()
     }
 
     return response

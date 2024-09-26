@@ -23,53 +23,53 @@ export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
 export default function calculateMetabolicEquivalentOfTask(
     age: number,
     gender: "male" | "female",
-    intensity: "superlow" | "very_low" | "low" | "low_to_mid" | "mid" | "mid_to_high" | "not_too_high" | "high" | "higher" | "very_high" | "very_high_to_intense" | "not_too_intense" | "a_bit_intense" | "intense" | "pretty_intense" | "very_intense" | "really_intense",
+    intensity: "super_low" | "very_low" | "low" | "low_to_mid" | "mid" | "mid_to_high" | "not_too_high" | "high" | "higher" | "very_high" | "very_high_to_intense" | "not_too_intense" | "a_bit_intense" | "intense" | "pretty_intense" | "very_intense" | "really_intense",
     provideContext?: boolean,
     provideExplanation?: boolean
 ): CoreLibraryResponseVersatile {
-    let mets: number; // MET - Metabolic Equivalent of Task
+    let METs: number; // MET - Metabolic Equivalent of Task
 
     // Assign METs based on intensity level
-    if (intensity === "superlow") {
-        mets = 1.5;
+    if (intensity === "super_low") {
+        METs = 1.5;
     } else if (intensity === "very_low") {
-        mets = 2.0;
+        METs = 2.0;
     } else if (intensity === "low") {
-        mets = 3.0;
+        METs = 3.0;
     } else if (intensity === "low_to_mid") {
-        mets = 3.5;
+        METs = 3.5;
     } else if (intensity === "mid") {
-        mets = 5.0;
+        METs = 5.0;
     } else if (intensity === "mid_to_high") {
-        mets = 5.0;
+        METs = 5.0;
     } else if (intensity === "not_too_high") {
-        mets = 5.8;
+        METs = 5.8;
     } else if (intensity === "high") {
-        mets = 6.0;
+        METs = 6.0;
     } else if (intensity === "higher") {
-        mets = 6.5; // Adjusted for >6.0
+        METs = 6.5; // Adjusted for >6.0
     } else if (intensity === "very_high") {
-        mets = 7.4;
+        METs = 7.4;
     } else if (intensity === "very_high_to_intense") {
-        mets = 8.0;
+        METs = 8.0;
     } else if (intensity === "not_too_intense") {
-        mets = 8.8;
+        METs = 8.8;
     } else if (intensity === "a_bit_intense") {
-        mets = 9.8;
+        METs = 9.8;
     } else if (intensity === "intense") {
-        mets = 10.3;
+        METs = 10.3;
     } else if (intensity === "pretty_intense") {
-        mets = 10.5;
+        METs = 10.5;
     } else if (intensity === "very_intense") {
-        mets = 11.0;
+        METs = 11.0;
     } else if (intensity === "really_intense") {
-        mets = 11.2;
+        METs = 11.2;
     } else {
-        throw new Error("CALCULATION ERROR! Intensinty is not valid")
+        throw new Error("CALCULATION ERROR! Intensity is not valid")
     }
 
     const response: CoreLibraryResponseVersatile = {
-        result: mets,
+        result: METs,
     };
 
     if (provideContext) {
@@ -78,7 +78,7 @@ export default function calculateMetabolicEquivalentOfTask(
             gender,
             intensity
         };
-        response.context = "The MET is a value that helps measure the intensity of a task. For this context, MET value is " + mets + " and the intensity would be " + intensity + ".";
+        response.context = "The MET is a value that helps measure the intensity of a task. For this context, MET value is " + METs + " and the intensity would be " + intensity + ".";
     }
 
     if (provideExplanation) {

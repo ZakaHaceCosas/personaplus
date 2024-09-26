@@ -1,5 +1,5 @@
 // TODO: NOT DONE YET!!!!
-// zaka no seas vago y trabaja
+// Zaka don't be lazy and work
 
 /*
 CALCULATE RUNNING / WALKING PERFORMANCE
@@ -21,8 +21,8 @@ interface LIFTING_Response {
         weight: number;
         height: number;
         time: number;
-        barweight: number;
-        liftweight: number;
+        barWeight: number;
+        liftWeight: number;
         scales: number,
         repetitions: number;
     };
@@ -48,23 +48,23 @@ export default function calculateLiftingPerformance(
     weight: number,
     height: number,
     time: number,
-    barweight: number,
-    liftweight: number,
+    barWeight: number,
+    liftWeight: number,
     scales: number,
     repetitions: number,
     provideContext?: boolean,
     provideExplanation?: boolean
 ): LIFTING_Response {
     // Get the Metabolic Equivalent of Task for this
-    const calculateMET = (w: number, onerm: number, a: number, g: "male" | "female", r: number, t: number): number => {
+    const calculateMET = (w: number, oneRepMax: number, a: number, g: "male" | "female", r: number, t: number): number => {
         const GENDER_COEFFICIENT = g === "male" ? 1 : 0.85;
         const AGE_ADJUSTMENT = 1 / (1 + 0.01 * (a - 22));
         const BASE_MET = 5.0;
 
-        return (BASE_MET * (w / onerm) * r * AGE_ADJUSTMENT * GENDER_COEFFICIENT) * t / 60;
+        return (BASE_MET * (w / oneRepMax) * r * AGE_ADJUSTMENT * GENDER_COEFFICIENT) * t / 60;
     };
 
-    const weightLifted = (barweight + (2 * liftweight)) * scales;
+    const weightLifted = (barWeight + (2 * liftWeight)) * scales;
     const OneRepMaxObject = OneRepetitionMax(weightLifted, repetitions, true, false, false);
 
     const oneRepMax = OneRepMaxObject.result;
@@ -86,8 +86,8 @@ export default function calculateLiftingPerformance(
             weight,
             height,
             time,
-            barweight,
-            liftweight,
+            barWeight,
+            liftWeight,
             scales,
             repetitions
         };

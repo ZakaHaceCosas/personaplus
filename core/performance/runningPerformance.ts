@@ -51,35 +51,35 @@ export default function calculateRunningOrWalkingPerformance(
     provideContext?: boolean,
     provideExplanation?: boolean
 ): RUNNING_WALKING_Response {
-    let mets: number | null; // MET - Metabolic Equivalent of Task
+    let METs: number | null; // MET - Metabolic Equivalent of Task
 
     // Assign METs based on speed in km/h
     if (speed > 1.6092 && speed < 3.2181) {
-        mets = 2;
+        METs = 2;
     } else if (speed >= 3.2181 && speed <= 4.023) {
-        mets = 2.5;
+        METs = 2.5;
     } else if (speed > 4.023 && speed <= 4.8276) {
-        mets = 3.5;
+        METs = 3.5;
     } else if (speed > 4.8276 && speed <= 5.51) {
-        mets = 4;
+        METs = 4;
     } else if (speed > 5.51 && speed <= 6.44) {
-        mets = 5;
+        METs = 5;
     } else if (speed > 6.44 && speed <= 8.05) {
-        mets = 6;
+        METs = 6;
     } else if (speed > 8.05 && speed <= 9.65) {
-        mets = 8;
+        METs = 8;
     } else if (speed > 9.65 && speed <= 11.27) {
-        mets = 10;
+        METs = 10;
     } else if (speed > 11.27 && speed <= 12.87) {
-        mets = 11;
+        METs = 11;
     } else if (speed > 12.87 && speed <= 14.48) {
-        mets = 11.5;
+        METs = 11.5;
     } else if (speed > 14.48 && speed <= 16.09) {
-        mets = 12.5;
+        METs = 12.5;
     } else if (speed > 16.09) {
-        mets = 16;
+        METs = 16;
     } else {
-        mets = null;
+        METs = null;
     }
 
     // Constant factor for calories burnt calculation
@@ -88,10 +88,10 @@ export default function calculateRunningOrWalkingPerformance(
     // Calculate calories burnt
     let caloriesBurnt: number
 
-    if (mets) {
-        caloriesBurnt = mets * caloriesBurntPerKgPerHour * weight * time;
+    if (METs) {
+        caloriesBurnt = METs * caloriesBurntPerKgPerHour * weight * time;
     } else {
-        caloriesBurnt = 0 // if mets is not calculable, it returns 0.
+        caloriesBurnt = 0 // if the MET is not calculable, it returns 0.
     }
 
     const response: RUNNING_WALKING_Response = {
