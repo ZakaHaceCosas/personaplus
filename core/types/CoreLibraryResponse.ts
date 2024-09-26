@@ -1,24 +1,26 @@
-import { UserHealthData } from "@/src/toolkit/userData";
+import { BasicUserHealthData } from "@/types/User";
 
-interface SubjectData extends UserHealthData {
+interface SubjectDataPrev extends BasicUserHealthData {
     [key: string]: string | number | boolean | null | undefined;
 }
 
-export interface OpenHealthResponse {
+type SubjectData = Omit<SubjectDataPrev, "sleepHours" | "theThinkHour" | "isNewUser">;
+
+export interface CoreLibraryResponse {
     result: number,
     subject?: SubjectData,
     context?: string,
     explanation?: string
 }
 
-export interface OpenHealthResponsePredictable {
+export interface CoreLibraryResponsePredictable {
     result: number,
-    subject: UserHealthData,
+    subject: BasicUserHealthData,
     context?: string,
     explanation?: string
 }
 
-export interface OpenHealthResponseVersatile {
+export interface CoreLibraryResponseVersatile {
     result: number,
     subject?: {
         age?: number | null,
