@@ -2,8 +2,8 @@
 CALCULATE BODY MASS INDEX
 */
 
-import { OpenHealthResponse } from "@/core/types/OpenHealthResponse";
-import CreateComponentDataUtilities from "@/core/tools/OpenHealthDataBuilder";
+import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
+import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
 
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "10/08/2024",
@@ -61,7 +61,7 @@ interface BMIPercentiles {
 // TODO: move this to separate component for code readability
 
 // (send help)
-// UNREVISED - UNPRECISE
+// UNREVISED - MAY NOT BE PRECISE
 const male_percentiles: BMIPercentiles = {
     2: {
         5: 14.73,
@@ -479,12 +479,12 @@ export function getPercentile(bmi: number, age: number, gender: "male" | "female
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
  * @param height The height of the subject in centimeters (CM).
- * @param provideContext Whether to provide a brief contextualisation about the result.
+ * @param provideContext Whether to provide a brief contextualization about the result.
  * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
  * @returns The BMI value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the BMI value.
 */
 
-export default function calculateBodyMassIndex(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): OpenHealthResponse {
+export default function calculateBodyMassIndex(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): CoreLibraryResponse {
     // You MUST pass weight as KG (kilograms) and height as CM (centimeters)
     const bmi = weight / ((height / 100) ** 2);
 
@@ -503,8 +503,8 @@ export default function calculateBodyMassIndex(age: number, gender: "male" | "fe
             context = "overweight";
         } else if (percentile >= 85 && percentile <= 95) {
             context = "obesity";
-        } else if (percentile >= 95) {
-            context = "severe obesity"
+        } else {
+            context = "severe obesity";
         }
     } else {
         if (bmi < 18.5) {
@@ -518,7 +518,7 @@ export default function calculateBodyMassIndex(age: number, gender: "male" | "fe
         }
     }
 
-    const response: OpenHealthResponse = {
+    const response: CoreLibraryResponse = {
         result: bmi,
     };
 
