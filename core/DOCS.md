@@ -1,21 +1,21 @@
-# OpenHealth documentation
+# CoreLibrary documentation
 
 > [!TIP]
 > También disponible en [Español (Spanish)](DOCS.es.md)
 
 ## First thing first: categories
 
-The entry point of the library is `OpenHealth` (`@/core/openhealth.ts`).
+The entry point of the library is `CoreLibrary` (`@/core/CoreLibrary.ts`).
 
 ```tsx
-import OpenHealth from "@/core/openhealth"
+import CoreLibrary from "@/core/CoreLibrary"
 ```
 
 From there, you have different categories to access functions, like the following:
 
 ```tsx
-OpenHealth.physicalHealth // phisical health related features
-OpenHealth.performance // performance measuring related features
+CoreLibrary.physicalHealth // physical health related features
+CoreLibrary.performance // performance measuring related features
 ...
 ```
 
@@ -23,7 +23,7 @@ Currently, these are all the categories available:
 
 | CATEGORY | EXPLANATION |
 | -------- | ----------- |
-| `physicalHealth` | Phisical health related functions and calculations. |
+| `physicalHealth` | Physical health related functions and calculations. |
 | `performance` | Sport & activity performance related functions and calculations. |
 | `mentalHealth` | **(Not yet implemented)** Mental health related functions and calculations. |
 
@@ -32,9 +32,9 @@ Currently, these are all the categories available:
 Each function is different, but they all follow a standard:
 
 ```tsx
-OpenHealth.physicalHealth.BodyMassIndex.calculate({params});
-OpenHealth.physicalHealth.BodyMassIndex.getSource();
-OpenHealth.physicalHealth.BodyMassIndex.getLastUpdated();
+CoreLibrary.physicalHealth.BodyMassIndex.calculate({params});
+CoreLibrary.physicalHealth.BodyMassIndex.getSource();
+CoreLibrary.physicalHealth.BodyMassIndex.getLastUpdated();
 ```
 
 **`Calculate`** is the most important thing, where you pass all the arguments required by the calculation function to work, plus **two extra booleans:** `provideContext` and `provideExplanation`. It can ask for data like the weight, height, age, or gender of the subject, among others.
@@ -57,12 +57,12 @@ OpenHealth.physicalHealth.BodyMassIndex.getLastUpdated();
 
 Calculation functions always follow the same structure for returns, or almost:
 
-There are three possible kinds of response, being all of them defined interfaces: `OpenHealthResponse`, `OpenHealthResponsePredictable`, and `OpenHealthResponseVersatile`.
+There are three possible kinds of response, being all of them defined interfaces: `CoreLibraryResponse`, `CoreLibraryResponsePredictable`, and `CoreLibraryResponseVersatile`.
 
 Basically, the basic response looks like this:
 
 ```tsx
-interface OpenHealthResponse {
+interface CoreLibraryResponse {
     result: number;
     subject?: {
         age: number;
@@ -83,13 +83,13 @@ interface OpenHealthResponse {
 >
 > In those cases, the number will be returned as part of the object, not as a standalone number.
 
-Then there's the `OpenHealthResponsePredictable`, which - as the name implies - is a *predictable* version of the OH response. In other words, there are no optional params and subject? is not optional (subject).
+Then there's the `CoreLibraryResponsePredictable`, which - as the name implies - is a *predictable* version of the CL response. In other words, there are no optional params and subject? is not optional (subject).
 
-And lastly, there's `OpenHealthResponseVersatile`, which is the opposite: more params are optional, meaning you can, for example, not get a `subject.weight` value returned, in the case it's not required by the function in the 1st place.
+And lastly, there's `CoreLibraryResponseVersatile`, which is the opposite: more params are optional, meaning you can, for example, not get a `subject.weight` value returned, in the case it's not required by the function in the 1st place.
 
 ## What to expect from the other functions?
 
-There's `getSource()`, which returns a string with the URLs to all the sources of knoweledge used to develop the function, write it's explanation, and so on. The string will look like this: `"https://website-one.gov and https://website-two.org`.
+There's `getSource()`, which returns a string with the URLs to all the sources of knowledge used to develop the function, write it's explanation, and so on. The string will look like this: `"https://website-one.gov and https://website-two.org`.
 
 And then there's `getLastUpdated()`, which returns a string with the last time the function ITSELF was updated (using the DD/MM/YYYY format).
 
@@ -106,9 +106,9 @@ Now, let's move onto the reference manual: a list of all available functions, ca
 > `provideContext` and `provideExplanation` are boolean values that are universal and always available, so they are not included on each table to save on page's size.
 
 <!--markdownlint-disable-next-line-->
-# OpenHealth reference manual
+# CoreLibrary reference manual
 
-`OpenHealth.physicalHealth`
+`CoreLibrary.physicalHealth`
 
 ## basalMetabolicRate.`calculate()`
 
