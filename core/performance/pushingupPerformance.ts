@@ -2,7 +2,7 @@
 CALCULATE RUNNING / WALKING PERFORMANCE
 */
 
-import CreateComponentDataUtilities from "@/core/tools/OpenHealthDataBuilder";
+import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
 
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "03/08/2024",

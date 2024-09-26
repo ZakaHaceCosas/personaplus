@@ -1,9 +1,9 @@
-import OpenHealth from "@/core/openhealth";
+import CoreLibrary from "@/core/CoreLibrary";
 import { expect } from '@jest/globals';
 import type { MatcherFunction } from 'expect';
 import { getPercentile } from "@/core/physicalHealth/BodyMassIndex";
 
-// there is a possible error margin for OpenHealth's calculations, so this custom function allows for minimal errors within an acceptable range to pass the tests
+// there is a possible error margin for CoreLibrary's calculations, so this custom function allows for minimal errors within an acceptable range to pass the tests
 const toBeWithinMargin: MatcherFunction<[expected: number, margin?: number]> =
     function (received, expected, margin = 0.3) {
         if (typeof received !== 'number' || typeof expected !== 'number' || typeof margin !== 'number') {
@@ -39,7 +39,7 @@ declare module 'expect' {
     }
 }
 
-const calculateBodyMassIndex = OpenHealth.physicalHealth.BodyMassIndex.calculate
+const calculateBodyMassIndex = CoreLibrary.physicalHealth.BodyMassIndex.calculate
 
 describe("body mass index calculations", () => {
     // expected results are provided from the CDC's calculator
@@ -98,7 +98,7 @@ describe("body mass index function handling", () => {
 })
 
 describe("body mass index underage calculations", () => {
-    // under 20 years of age, calculations are more strict / require of more precission,
+    // under 20 years of age, calculations are more strict / require of more precision,
     // hence they got additional tests
 
     test("should return accurate BMI value for age 14, male", () => {

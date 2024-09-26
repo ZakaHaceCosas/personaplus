@@ -2,8 +2,8 @@
 CALCULATE THE METABOLIC EQUIVALENT OF A TASK
 */
 
-import CreateComponentDataUtilities from "@/core/tools/OpenHealthDataBuilder";
-import { OpenHealthResponseVersatile } from "@/core/types/OpenHealthResponse";
+import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
+import { CoreLibraryResponseVersatile } from "@/core/types/CoreLibraryResponse";
 
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "01/07/2024",
@@ -17,7 +17,7 @@ export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
  * @param intensity The intensity of the activity. It's a very long array of options, see the documentation for more info on which one to choose.
  * @param provideContext Whether to provide a brief contextualization about the result.
  * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
- * @returns A number with the Metabolic Equivalent of the Task if neither provideContext nor provideExplanation are true, otherwise returns a `OpenHealthResponseVersatile` object.
+ * @returns A number with the Metabolic Equivalent of the Task if neither provideContext nor provideExplanation are true, otherwise returns a `CoreLibraryResponseVersatile` object.
 */
 
 export default function calculateMetabolicEquivalentOfTask(
@@ -26,7 +26,7 @@ export default function calculateMetabolicEquivalentOfTask(
     intensity: "superlow" | "very_low" | "low" | "low_to_mid" | "mid" | "mid_to_high" | "not_too_high" | "high" | "higher" | "very_high" | "very_high_to_intense" | "not_too_intense" | "a_bit_intense" | "intense" | "pretty_intense" | "very_intense" | "really_intense",
     provideContext?: boolean,
     provideExplanation?: boolean
-): OpenHealthResponseVersatile {
+): CoreLibraryResponseVersatile {
     let mets: number; // MET - Metabolic Equivalent of Task
 
     // Assign METs based on intensity level
@@ -68,7 +68,7 @@ export default function calculateMetabolicEquivalentOfTask(
         throw new Error("CALCULATION ERROR! Intensinty is not valid")
     }
 
-    const response: OpenHealthResponseVersatile = {
+    const response: CoreLibraryResponseVersatile = {
         result: mets,
     };
 

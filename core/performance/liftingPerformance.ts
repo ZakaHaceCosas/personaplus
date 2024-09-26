@@ -6,7 +6,7 @@ CALCULATE RUNNING / WALKING PERFORMANCE
 */
 
 import { default as OneRepetitionMax } from "@/core/physicalHealth/OneRepMax"
-import CreateComponentDataUtilities from "@/core/tools/OpenHealthDataBuilder";
+import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
 
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "01/07/2024",

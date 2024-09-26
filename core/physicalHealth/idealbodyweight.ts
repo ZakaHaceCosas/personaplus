@@ -2,9 +2,9 @@
 CALCULATE IDEAL BODY WEIGHT
 */
 
-import { OpenHealthResponse } from "@/core/types/OpenHealthResponse";
+import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 import calculateBodyMassIndex from "@/core/physicalHealth/BodyMassIndex";
-import CreateComponentDataUtilities from "@/core/tools/OpenHealthDataBuilder";
+import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
 
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "26/06/2024",
@@ -17,12 +17,12 @@ export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
  * @param height The height of the subject in centimeters (CM).
- * @param provideContext Whether to provide a brief contextualisation about the result.
+ * @param provideContext Whether to provide a brief contextualization about the result.
  * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
  * @returns The IBW value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the IBW value.
 */
 
-export default function calculateIdealBodyWeight(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): OpenHealthResponse {
+export default function calculateIdealBodyWeight(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): CoreLibraryResponse {
     // This is calculated using the BMI method, so the BMI is required.
     /*
     NOTE: ORIGINAL FORMULA IN AMERICAN: IBW [lb] = 5 × BMI + ((BMI ÷ 5) × (height − 60 [in]))
@@ -31,16 +31,16 @@ export default function calculateIdealBodyWeight(age: number, gender: "male" | "
     */
     const bmi = calculateBodyMassIndex(age, gender, weight, height, false, false);
 
-    const firststep = 60 * 2.54
-    const secondstep = height - firststep
-    const thirdstep = Number(bmi) / 5
-    const fourthstep = thirdstep * secondstep
-    const fifthstep = fourthstep / 2.20462
-    const ibw: number = fifthstep
+    const firstStep = 60 * 2.54
+    const secondStep = height - firstStep
+    const thirdStep = Number(bmi) / 5
+    const fourthStep = thirdStep * secondStep
+    const fifthStep = fourthStep / 2.20462
+    const ibw: number = fifthStep
 
     const context: string | undefined = "The ideal body weight for the given profile, based on the BMI, would be of " + ibw + "kg."
 
-    const response: OpenHealthResponse = {
+    const response: CoreLibraryResponse = {
         result: ibw,
     };
 

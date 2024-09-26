@@ -2,8 +2,8 @@
 CALCULATE BASAL METABOLIC RATE
 */
 
-import { OpenHealthResponse } from "@/core/types/OpenHealthResponse";
-import CreateComponentDataUtilities from "@/core/tools/OpenHealthDataBuilder";
+import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
+import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
 
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "26/06/2024",
@@ -16,29 +16,29 @@ export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
  * @param height The height of the subject in centimeters (CM).
- * @param activness From "poor" to "extreme", how active the subject is in terms of exercising, being "poor" very little or no exercise, light 1 to 3 days of exercise a week (being one time each day), moderate 3 to 5 days a week, intense 6 or seven days a week, and extreme being very intense exercies and/or more than once a day.
- * @param provideContext Whether to provide a brief contextualisation about the result.
+ * @param activeness From "poor" to "extreme", how active the subject is in terms of exercising, being "poor" very little or no exercise, light 1 to 3 days of exercise a week (being one time each day), moderate 3 to 5 days a week, intense 6 or seven days a week, and extreme being very intense exercises and/or more than once a day.
+ * @param provideContext Whether to provide a brief contextualization about the result.
  * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
- * @returns The BMR value if neither provideContext nor provideExplanation are true, otherwise returns an `OpenHealthResponse` with "result" as the BMR value.
+ * @returns The BMR value if neither provideContext nor provideExplanation are true, otherwise returns an `CoreLibraryResponse` with "result" as the BMR value.
 */
 
-export default function calculateBasalMetabolicRate(age: number, gender: "male" | "female", weight: number, height: number, activness: "poor" | "light" | "moderate" | "intense" | "extreme", provideContext?: boolean, provideExplanation?: boolean): OpenHealthResponse {
-    const firststep: number = 10 * weight
-    const secondstep: number = 6.25 * height
-    const thirdstep: number = 5 * age
-    const fourthstep: number = firststep + secondstep
-    const fifthstep: number = fourthstep - thirdstep
-    let sixthstep: number;
+export default function calculateBasalMetabolicRate(age: number, gender: "male" | "female", weight: number, height: number, activeness: "poor" | "light" | "moderate" | "intense" | "extreme", provideContext?: boolean, provideExplanation?: boolean): CoreLibraryResponse {
+    const firstStep: number = 10 * weight
+    const secondStep: number = 6.25 * height
+    const thirdStep: number = 5 * age
+    const fourthStep: number = firstStep + secondStep
+    const fifthStep: number = fourthStep - thirdStep
+    let sixthStep: number;
     if (gender === "male") {
-        sixthstep = fifthstep + 5
+        sixthStep = fifthStep + 5
     } else { // female
-        sixthstep = fifthstep - 161
+        sixthStep = fifthStep - 161
     }
-    const bmr: number = sixthstep;
+    const bmr: number = sixthStep;
 
     const context: string | undefined = "The basal metabolic rate would be " + bmr + ".";
 
-    const response: OpenHealthResponse = {
+    const response: CoreLibraryResponse = {
         result: bmr,
     };
 
@@ -48,7 +48,7 @@ export default function calculateBasalMetabolicRate(age: number, gender: "male" 
             gender,
             weight,
             height,
-            activness
+            activeness: activeness
         };
         response.context = context;
     }

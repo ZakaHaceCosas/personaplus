@@ -2,7 +2,7 @@
 CALCULATE ONE REPETITION MAX
 */
 
-import CreateComponentDataUtilities from "@/core/tools/OpenHealthDataBuilder";
+import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
 
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "08/07/2024",

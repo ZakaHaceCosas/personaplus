@@ -1,9 +1,9 @@
 /*
 CALCULATE BODY FAT PERCENTAGE
 */
-import { OpenHealthResponse } from "@/core/types/OpenHealthResponse";
+import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 import calculateBodyMassIndex from "@/core/physicalHealth/BodyMassIndex";
-import CreateComponentDataUtilities from "@/core/tools/OpenHealthDataBuilder";
+import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
 
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "26/06/2024",
@@ -16,28 +16,28 @@ export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
  * @param height The height of the subject in centimeters (CM).
- * @param provideContext Whether to provide a brief contextualisation about the result.
+ * @param provideContext Whether to provide a brief contextualization about the result.
  * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
  * @returns The BFP value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the BFP value.
 */
 
-export default function calculateBodyFatPercentage(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): OpenHealthResponse {
+export default function calculateBodyFatPercentage(age: number, gender: "male" | "female", weight: number, height: number, provideContext?: boolean, provideExplanation?: boolean): CoreLibraryResponse {
     // This is calculated using the BMI method, so the BMI is required.
     const bmi = calculateBodyMassIndex(age, gender, weight, height, false, false);
     let bfp: number;
 
     if (gender === "male") { // male
-        const firststep = 1.20 * Number(bmi)
-        const secondstep = 0.23 * age
-        const thirdstep = firststep + secondstep
-        const fourthstep = thirdstep - 16.2
-        bfp = fourthstep
+        const firstStep = 1.20 * Number(bmi)
+        const secondStep = 0.23 * age
+        const thirdStep = firstStep + secondStep
+        const fourthStep = thirdStep - 16.2
+        bfp = fourthStep
     } else { // female
-        const firststep = 1.20 * Number(bmi)
-        const secondstep = 0.23 * age
-        const thirdstep = firststep + secondstep
-        const fourthstep = thirdstep - 5.4
-        bfp = fourthstep
+        const firstStep = 1.20 * Number(bmi)
+        const secondStep = 0.23 * age
+        const thirdStep = firstStep + secondStep
+        const fourthStep = thirdStep - 5.4
+        bfp = fourthStep
     }
 
     let context: string | undefined;
@@ -72,7 +72,7 @@ export default function calculateBodyFatPercentage(age: number, gender: "male" |
         }
     }
 
-    const response: OpenHealthResponse = {
+    const response: CoreLibraryResponse = {
         result: bfp,
     };
 
