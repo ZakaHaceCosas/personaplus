@@ -90,8 +90,7 @@ export default function CreateActiveObjectivePage() {
                 restDurationMinutes: 0,
             },
             specificData: {
-                scaleWeight: 0,
-                barWeight: 0,
+                dumbbellWeight: 0,
                 reps: 0,
                 dumbbells: 0,
                 amountOfHands: 2,
@@ -176,13 +175,12 @@ export default function CreateActiveObjectivePage() {
     function handleSpecificToggle(
         action: "increase" | "decrease",
         value:
-            | "scaleWeight"
-            | "barWeight"
+            | "dumbbellWeight"
             | "reps"
             | "dumbbells"
             | "amountOfHands"
             | "estimateSpeed"
-            | "amountOfPushUps",
+            | "amountOfPushUps"
     ): void {
         if (value !== "amountOfHands") {
             if (action === "increase") {
@@ -195,12 +193,12 @@ export default function CreateActiveObjectivePage() {
                                 prev.specificData.amountOfPushUps + 1,
                         },
                     }));
-                } else if (value === "barWeight") {
+                } else if (value === "dumbbellWeight") {
                     updateObjectiveToCreate((prev) => ({
                         ...prev,
                         specificData: {
                             ...prev.specificData,
-                            barWeight: prev.specificData.barWeight + 1,
+                            barWeight: prev.specificData.dumbbellWeight + 1,
                         },
                     }));
                 } else if (value === "dumbbells") {
@@ -227,14 +225,6 @@ export default function CreateActiveObjectivePage() {
                             reps: prev.specificData.reps + 1,
                         },
                     }));
-                } else if (value === "scaleWeight") {
-                    updateObjectiveToCreate((prev) => ({
-                        ...prev,
-                        specificData: {
-                            ...prev.specificData,
-                            scaleWeight: prev.specificData.scaleWeight + 1,
-                        },
-                    }));
                 }
             } else if (action === "decrease") {
                 if (value === "amountOfPushUps") {
@@ -246,12 +236,12 @@ export default function CreateActiveObjectivePage() {
                                 prev.specificData.amountOfPushUps - 1,
                         },
                     }));
-                } else if (value === "barWeight") {
+                } else if (value === "dumbbellWeight") {
                     updateObjectiveToCreate((prev) => ({
                         ...prev,
                         specificData: {
                             ...prev.specificData,
-                            barWeight: prev.specificData.barWeight - 1,
+                            barWeight: prev.specificData.dumbbellWeight - 1,
                         },
                     }));
                 } else if (value === "dumbbells") {
@@ -276,14 +266,6 @@ export default function CreateActiveObjectivePage() {
                         specificData: {
                             ...prev.specificData,
                             reps: prev.specificData.reps - 1,
-                        },
-                    }));
-                } else if (value === "scaleWeight") {
-                    updateObjectiveToCreate((prev) => ({
-                        ...prev,
-                        specificData: {
-                            ...prev.specificData,
-                            scaleWeight: prev.specificData.scaleWeight - 1,
                         },
                     }));
                 }
@@ -322,12 +304,12 @@ export default function CreateActiveObjectivePage() {
             <>
                 <BetterTextSmallHeader>
                     {t(
-                        `pages.createActiveObjective.questions.toggles.${associatedValue}`,
+                        `pages.createActiveObjective.questions.toggles.${associatedValue}`
                     )}
                 </BetterTextSmallHeader>
                 <BetterTextSmallText>
                     {t(
-                        `pages.createActiveObjective.questions.toggles.${associatedValue}Hint`,
+                        `pages.createActiveObjective.questions.toggles.${associatedValue}Hint`
                     )}
                 </BetterTextSmallText>
                 <GapView height={10} />
@@ -340,7 +322,7 @@ export default function CreateActiveObjectivePage() {
                     />
                     <TextInput
                         placeholder={t(
-                            `pages.createActiveObjective.questions.toggles.${associatedValue}Hint`,
+                            `pages.createActiveObjective.questions.toggles.${associatedValue}Hint`
                         )}
                         value={String(objectiveToCreate.info[associatedValue])}
                         placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
@@ -461,8 +443,7 @@ export default function CreateActiveObjectivePage() {
 
             if (objectiveToCreate.exercise === "Lifting") {
                 isSpecificDataValid =
-                    (objectiveToCreate.specificData?.barWeight || 0) > 0 &&
-                    (objectiveToCreate.specificData?.scaleWeight || 0) > 0 &&
+                    (objectiveToCreate.specificData?.dumbbellWeight || 0) > 0 &&
                     (objectiveToCreate.specificData?.dumbbells || 0) > 0 &&
                     (objectiveToCreate.specificData?.reps || 0) > 0;
             } else if (objectiveToCreate.exercise === "Push Ups") {
@@ -490,7 +471,7 @@ export default function CreateActiveObjectivePage() {
                 if (response !== 0) {
                     logToConsole(
                         "Error? Got something else than 0 as the CreateActiveObjective() response",
-                        "error",
+                        "error"
                     );
                 }
                 router.navigate("/");
@@ -517,13 +498,13 @@ export default function CreateActiveObjectivePage() {
                 currentValue={objectiveToCreate.exercise}
                 mode="dialog"
                 dialogPrompt={t(
-                    "pages.createActiveObjective.questions.whatToDo.options.title",
+                    "pages.createActiveObjective.questions.whatToDo.options.title"
                 )}
                 selectOptions={exerciseOptions}
                 changeAction={(value: string | number) => {
                     if (
                         SupportedActiveObjectivesList.includes(
-                            value as SupportedActiveObjectives,
+                            value as SupportedActiveObjectives
                         )
                     ) {
                         updateObjectiveToCreate((prev) => {
@@ -532,7 +513,7 @@ export default function CreateActiveObjectivePage() {
                                     JSON.stringify(prev) +
                                     "value:" +
                                     value,
-                                "log",
+                                "log"
                             );
 
                             return {
@@ -543,18 +524,18 @@ export default function CreateActiveObjectivePage() {
                     } else if (value === "") {
                         logToConsole(
                             t(
-                                "errors.pages.createActiveObjective.chooseAnOptionIsNotValid",
+                                "errors.pages.createActiveObjective.chooseAnOptionIsNotValid"
                             ),
                             "warn",
                             undefined,
-                            true,
+                            true
                         );
                     } else {
                         logToConsole(
                             "Invalid exercise value: " + value,
                             "error",
                             undefined,
-                            false,
+                            false
                         );
                     }
                 }}
@@ -574,16 +555,16 @@ export default function CreateActiveObjectivePage() {
                         index === 0
                             ? t("globals.daysOfTheWeek.monday.key")
                             : index === 1
-                              ? t("globals.daysOfTheWeek.tuesday.key")
-                              : index === 2
-                                ? t("globals.daysOfTheWeek.wednesday.key")
-                                : index === 3
-                                  ? t("globals.daysOfTheWeek.thursday.key")
-                                  : index === 4
-                                    ? t("globals.daysOfTheWeek.friday.key")
-                                    : index === 5
-                                      ? t("globals.daysOfTheWeek.saturday.key")
-                                      : t("globals.daysOfTheWeek.sunday.key");
+                            ? t("globals.daysOfTheWeek.tuesday.key")
+                            : index === 2
+                            ? t("globals.daysOfTheWeek.wednesday.key")
+                            : index === 3
+                            ? t("globals.daysOfTheWeek.thursday.key")
+                            : index === 4
+                            ? t("globals.daysOfTheWeek.friday.key")
+                            : index === 5
+                            ? t("globals.daysOfTheWeek.saturday.key")
+                            : t("globals.daysOfTheWeek.sunday.key");
                     return (
                         <React.Fragment key={index}>
                             <View
@@ -607,7 +588,7 @@ export default function CreateActiveObjectivePage() {
                                                 boolean,
                                                 boolean,
                                                 boolean,
-                                                boolean,
+                                                boolean
                                             ] = [...prev.info.days]; // sorry for this, but otherwise an error (type error actually) happens
                                             updatedDays[index] =
                                                 !updatedDays[index]; // basically reverts
@@ -654,12 +635,12 @@ export default function CreateActiveObjectivePage() {
                 <>
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.pushUps.howManyPushUps.question",
+                            "pages.createActiveObjective.questions.perExercise.pushUps.howManyPushUps.question"
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.pushUps.howManyPushUps.proTip",
+                            "pages.createActiveObjective.questions.perExercise.pushUps.howManyPushUps.proTip"
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -671,13 +652,13 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "decrease",
-                                    "amountOfPushUps",
+                                    "amountOfPushUps"
                                 )
                             }
                         />
                         <TextInput
                             value={String(
-                                objectiveToCreate.specificData.amountOfPushUps,
+                                objectiveToCreate.specificData.amountOfPushUps
                             )}
                             placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
@@ -711,7 +692,7 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "increase",
-                                    "amountOfPushUps",
+                                    "amountOfPushUps"
                                 )
                             }
                         />
@@ -723,12 +704,12 @@ export default function CreateActiveObjectivePage() {
                 <>
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howManyReps.question",
+                            "pages.createActiveObjective.questions.perExercise.lifting.howManyReps.question"
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howManyReps.proTip",
+                            "pages.createActiveObjective.questions.perExercise.lifting.howManyReps.proTip"
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -757,7 +738,7 @@ export default function CreateActiveObjectivePage() {
                             onChangeText={(value) => {
                                 const cleanedValue = value.replace(
                                     /[^0-9.]/g,
-                                    "",
+                                    ""
                                 );
                                 const numericValue = parseFloat(cleanedValue);
                                 if (
@@ -794,12 +775,12 @@ export default function CreateActiveObjectivePage() {
                     <GapView height={20} />
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.Dumbbells.question",
+                            "pages.createActiveObjective.questions.perExercise.lifting.Dumbbells.question"
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howManyDumbbells.proTip",
+                            "pages.createActiveObjective.questions.perExercise.lifting.howManyDumbbells.proTip"
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -814,7 +795,7 @@ export default function CreateActiveObjectivePage() {
                         />
                         <TextInput
                             value={String(
-                                objectiveToCreate.specificData.dumbbells,
+                                objectiveToCreate.specificData.dumbbells
                             )}
                             placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
@@ -830,7 +811,7 @@ export default function CreateActiveObjectivePage() {
                             onChangeText={(value) => {
                                 const cleanedValue = value.replace(
                                     /[^0-9.]/g,
-                                    "",
+                                    ""
                                 );
                                 const numericValue = parseFloat(cleanedValue);
                                 if (
@@ -867,164 +848,12 @@ export default function CreateActiveObjectivePage() {
                     <GapView height={20} />
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchDoesThePlateWeight.question",
+                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchWeight.question"
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchDoesThePlateWeight.proTip",
-                        )}
-                    </BetterTextSmallText>
-                    <GapView height={10} />
-                    <View style={styles.toggleView}>
-                        <BetterButton
-                            layout="box"
-                            buttonText="-"
-                            style="ACE"
-                            action={() =>
-                                handleSpecificToggle("decrease", "scaleWeight")
-                            }
-                        />
-                        <TextInput
-                            value={String(
-                                objectiveToCreate.specificData.scaleWeight,
-                            )}
-                            placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
-                            style={styles.textInput}
-                            autoCorrect={false}
-                            multiline={false}
-                            maxLength={5}
-                            textAlign="center"
-                            keyboardType="decimal-pad"
-                            inputMode="decimal"
-                            key={`${objectiveToCreate.specificData.scaleWeight}input`}
-                            returnKeyType="done"
-                            enterKeyHint="done"
-                            onChangeText={(value) => {
-                                const cleanedValue = value.replace(
-                                    /[^0-9.]/g,
-                                    "",
-                                );
-                                const numericValue = parseFloat(cleanedValue);
-                                if (
-                                    cleanedValue === "" ||
-                                    isNaN(numericValue)
-                                ) {
-                                    updateObjectiveToCreate((prev) => ({
-                                        ...prev,
-                                        specificData: {
-                                            ...prev.specificData,
-                                            scaleWeight: 0,
-                                        },
-                                    }));
-                                } else {
-                                    updateObjectiveToCreate((prev) => ({
-                                        ...prev,
-                                        specificData: {
-                                            ...prev.specificData,
-                                            scaleWeight: numericValue,
-                                        },
-                                    }));
-                                }
-                            }}
-                        />
-                        <BetterButton
-                            layout="box"
-                            buttonText="+"
-                            style="ACE"
-                            action={() =>
-                                handleSpecificToggle("increase", "scaleWeight")
-                            }
-                        />
-                    </View>
-                    <GapView height={20} />
-
-                    <BetterTextSmallHeader>
-                        {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchDoesTheBarWeight.question",
-                        )}
-                    </BetterTextSmallHeader>
-                    <BetterTextSmallText>
-                        {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchDoesTheBarWeight.proTip",
-                        )}
-                    </BetterTextSmallText>
-                    <GapView height={10} />
-                    <View style={styles.toggleView}>
-                        <BetterButton
-                            layout="box"
-                            buttonText="-"
-                            style="ACE"
-                            action={() =>
-                                handleSpecificToggle("decrease", "barWeight")
-                            }
-                        />
-                        <TextInput
-                            value={String(
-                                objectiveToCreate.specificData.barWeight,
-                            )}
-                            placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
-                            style={styles.textInput}
-                            autoCorrect={false}
-                            multiline={false}
-                            maxLength={5}
-                            textAlign="center"
-                            keyboardType="decimal-pad"
-                            inputMode="decimal"
-                            key={`${objectiveToCreate.specificData.barWeight}input`}
-                            returnKeyType="done"
-                            enterKeyHint="done"
-                            onChangeText={(value) => {
-                                const cleanedValue = value.replace(
-                                    /[^0-9.]/g,
-                                    "",
-                                );
-                                const numericValue = parseFloat(cleanedValue);
-                                if (
-                                    cleanedValue === "" ||
-                                    isNaN(numericValue)
-                                ) {
-                                    updateObjectiveToCreate((prev) => ({
-                                        ...prev,
-                                        specificData: {
-                                            ...prev.specificData,
-                                            barWeight: 0,
-                                        },
-                                    }));
-                                } else {
-                                    updateObjectiveToCreate((prev) => ({
-                                        ...prev,
-                                        specificData: {
-                                            ...prev.specificData,
-                                            barWeight: numericValue,
-                                        },
-                                    }));
-                                }
-                            }}
-                        />
-                        <BetterButton
-                            layout="box"
-                            buttonText="+"
-                            style="ACE"
-                            action={() =>
-                                handleSpecificToggle("increase", "barWeight")
-                            }
-                        />
-                    </View>
-                    <GapView height={20} />
-                </>
-            )}
-
-            {objectiveToCreate.exercise === "Running" && (
-                <>
-                    <BetterTextSmallHeader>
-                        {t(
-                            "pages.createActiveObjective.questions.perExercise.running.howFastToRun.question",
-                        )}
-                    </BetterTextSmallHeader>
-                    <BetterTextSmallText>
-                        {t(
-                            "pages.createActiveObjective.questions.perExercise.running.howFastToRun.proTip",
+                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchWeight.proTip"
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -1036,13 +865,97 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "decrease",
-                                    "estimateSpeed",
+                                    "dumbbellWeight"
                                 )
                             }
                         />
                         <TextInput
                             value={String(
-                                objectiveToCreate.specificData.estimateSpeed,
+                                objectiveToCreate.specificData.dumbbellWeight
+                            )}
+                            placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
+                            style={styles.textInput}
+                            autoCorrect={false}
+                            multiline={false}
+                            maxLength={5}
+                            textAlign="center"
+                            keyboardType="decimal-pad"
+                            inputMode="decimal"
+                            key={`${objectiveToCreate.specificData.dumbbellWeight}input`}
+                            returnKeyType="done"
+                            enterKeyHint="done"
+                            onChangeText={(value) => {
+                                const cleanedValue = value.replace(
+                                    /[^0-9.]/g,
+                                    ""
+                                );
+                                const numericValue = parseFloat(cleanedValue);
+                                if (
+                                    cleanedValue === "" ||
+                                    isNaN(numericValue)
+                                ) {
+                                    updateObjectiveToCreate((prev) => ({
+                                        ...prev,
+                                        specificData: {
+                                            ...prev.specificData,
+                                            dumbbellWeight: 0,
+                                        },
+                                    }));
+                                } else {
+                                    updateObjectiveToCreate((prev) => ({
+                                        ...prev,
+                                        specificData: {
+                                            ...prev.specificData,
+                                            dumbbellWeight: numericValue,
+                                        },
+                                    }));
+                                }
+                            }}
+                        />
+                        <BetterButton
+                            layout="box"
+                            buttonText="+"
+                            style="ACE"
+                            action={() =>
+                                handleSpecificToggle(
+                                    "increase",
+                                    "dumbbellWeight"
+                                )
+                            }
+                        />
+                    </View>
+                    <GapView height={20} />
+                </>
+            )}
+
+            {objectiveToCreate.exercise === "Running" && (
+                <>
+                    <BetterTextSmallHeader>
+                        {t(
+                            "pages.createActiveObjective.questions.perExercise.running.howFastToRun.question"
+                        )}
+                    </BetterTextSmallHeader>
+                    <BetterTextSmallText>
+                        {t(
+                            "pages.createActiveObjective.questions.perExercise.running.howFastToRun.proTip"
+                        )}
+                    </BetterTextSmallText>
+                    <GapView height={10} />
+                    <View style={styles.toggleView}>
+                        <BetterButton
+                            layout="box"
+                            buttonText="-"
+                            style="ACE"
+                            action={() =>
+                                handleSpecificToggle(
+                                    "decrease",
+                                    "estimateSpeed"
+                                )
+                            }
+                        />
+                        <TextInput
+                            value={String(
+                                objectiveToCreate.specificData.estimateSpeed
                             )}
                             placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
@@ -1058,7 +971,7 @@ export default function CreateActiveObjectivePage() {
                             onChangeText={(value) => {
                                 const cleanedValue = value.replace(
                                     /[^0-9.]/g,
-                                    "",
+                                    ""
                                 );
                                 const numericValue = parseFloat(cleanedValue);
                                 if (
@@ -1090,7 +1003,7 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "increase",
-                                    "estimateSpeed",
+                                    "estimateSpeed"
                                 )
                             }
                         />
@@ -1104,14 +1017,14 @@ export default function CreateActiveObjectivePage() {
                 <>
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.hands",
+                            "pages.createActiveObjective.questions.perExercise.hands"
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
                             objectiveToCreate.exercise === "Lifting"
                                 ? "pages.createActiveObjective.questions.perExercise.lifting.handsProTip"
-                                : "pages.createActiveObjective.questions.perExercise.pushUps.handsProTip",
+                                : "pages.createActiveObjective.questions.perExercise.pushUps.handsProTip"
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -1123,13 +1036,13 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "decrease",
-                                    "amountOfHands",
+                                    "amountOfHands"
                                 )
                             }
                         />
                         <TextInput
                             value={String(
-                                objectiveToCreate.specificData.amountOfHands,
+                                objectiveToCreate.specificData.amountOfHands
                             )}
                             placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
@@ -1145,7 +1058,7 @@ export default function CreateActiveObjectivePage() {
                             onChangeText={(value) => {
                                 const cleanedValue = value.replace(
                                     /[^1-2]/g,
-                                    "",
+                                    ""
                                 );
                                 const numericValue = parseInt(cleanedValue, 10);
                                 if (
@@ -1181,7 +1094,7 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "increase",
-                                    "amountOfHands",
+                                    "amountOfHands"
                                 )
                             }
                         />
