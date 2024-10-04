@@ -2,7 +2,7 @@
 <!--
 P.S.: Changelog is managed by the owner only, thanks. One task less for you!
 
-TODO: ensure all WIPs are handled before publical release
+TODO: ensure all WIPs are handled before public release
 -->
 
 All notable changes will be documented in this file.
@@ -41,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Known errors <!-- not part of the Keep A Changelog standard -->
 
-- (WIP) Active objective creation page's input fields have turned unprecise, and tend to fail.
+- (WIP) Active objective creation page's input fields have turned not precise, and tend to fail.
 
 > For versions prior to 0.0.6, see [the deprecated changelog](CHANGELOG.deprecated.md).
 > P.S. Versions prior to 0.0.6 are not SemVer compliant and follow a different format.

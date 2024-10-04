@@ -197,7 +197,7 @@ export default function WelcomePage() {
             | "focus"
             | "sleepHours"
             | "theThinkHour",
-        value: string | number,
+        value: string | number
     ): void {
         try {
             setFormData((prevData) => ({
@@ -208,7 +208,7 @@ export default function WelcomePage() {
         } catch (e) {
             logToConsole(
                 "Error handling data changes happened at Welcome screen: " + e,
-                "error",
+                "error"
             );
         }
     }
@@ -222,7 +222,7 @@ export default function WelcomePage() {
     async function submitUser(): Promise<0 | 1> {
         if (
             !Object.values(formData).some(
-                (value) => value === null || value === 0 || value === "",
+                (value) => value === null || value === 0 || value === ""
             ) &&
             isStepOneValid &&
             isStepTwoValid &&
@@ -246,12 +246,12 @@ export default function WelcomePage() {
 
                 logToConsole(
                     "Trying to register: " + JSON.stringify(userData),
-                    "log",
+                    "log"
                 );
 
                 await AsyncStorage.setItem(
                     "userData",
-                    JSON.stringify(userData),
+                    JSON.stringify(userData)
                 );
 
                 await AsyncStorage.setItem(StoredItemNames.objectives, "[]");
@@ -260,7 +260,7 @@ export default function WelcomePage() {
                     "User " +
                         formData.username +
                         " registered with no errors. Give yourself a plus!",
-                    "success",
+                    "success"
                 );
                 return 0;
             } catch (e) {
@@ -269,7 +269,7 @@ export default function WelcomePage() {
                         e +
                         ". Data: " +
                         JSON.stringify(formData),
-                    "error",
+                    "error"
                 );
                 return 1;
             }
@@ -278,7 +278,7 @@ export default function WelcomePage() {
                 "Error saving user data, some data is missing or not valid!",
                 "warn",
                 undefined,
-                true,
+                true
             );
             logToConsole("User data: " + JSON.stringify(formData), "log");
             return 1;
@@ -306,7 +306,7 @@ export default function WelcomePage() {
         refIndex: number,
         nextFieldIndex: number,
         keyboardType: "default" | "numeric" = "default",
-        length: number,
+        length: number
     ): ReactNode {
         return (
             <>
@@ -323,7 +323,7 @@ export default function WelcomePage() {
                     changeAction={(text) =>
                         handleChange(
                             name as "username" | "age" | "height" | "weight",
-                            text,
+                            text
                         )
                     }
                 />
@@ -338,7 +338,7 @@ export default function WelcomePage() {
      * @returns {ReactNode} Returns a Fragment with a `<BetterText>` (label), `<Select />` with the associated options, and a `<GapView />` between them.
      */
     function spawnInputSelect(
-        associatedValue: "activeness" | "sleepHours",
+        associatedValue: "activeness" | "sleepHours"
     ): ReactNode {
         const options =
             associatedValue === "activeness"
@@ -359,7 +359,7 @@ export default function WelcomePage() {
                     changeAction={(value) =>
                         handleChange(
                             associatedValue,
-                            value !== null && value !== undefined ? value : "",
+                            value !== null && value !== undefined ? value : ""
                         )
                     }
                     currentValue={formData[associatedValue] ?? ""}
@@ -378,13 +378,13 @@ export default function WelcomePage() {
                     formData.age,
                     formData.weight,
                     formData.height,
-                    formData.username,
-                ),
+                    formData.username
+                )
             );
             validateStepTwo(formData.focus !== null && formData.focus !== "");
             validateStepThree(
                 (formData.sleepHours || "") !== "" &&
-                    (formData.activeness || "") !== "",
+                    (formData.activeness || "") !== ""
             );
             validateStepFour((formData.theThinkHour || "") !== "");
             logToConsole("STEP ONE VALIDATION:" + isStepOneValid, "log");
@@ -406,7 +406,7 @@ export default function WelcomePage() {
      */
     function spawnNavigationButtons(
         step: 1 | 2 | 3 | 4,
-        isTheLastOne: boolean,
+        isTheLastOne: boolean
     ): ReactElement {
         let buttonText: string;
         let style: "ACE" | "HMM";
@@ -541,22 +541,22 @@ export default function WelcomePage() {
             try {
                 if (
                     await Linking.canOpenURL(
-                        "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md",
+                        "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md"
                     )
                 ) {
                     await Linking.openURL(
-                        "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md",
+                        "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md"
                     );
                 } else {
                     logToConsole(
                         "Huh? Can't open the privacy policy URL. What's up?",
-                        "error",
+                        "error"
                     );
                 }
             } catch (e) {
                 logToConsole(
                     "Bruh. An error ocurred trying to open an URL: " + e,
-                    "error",
+                    "error"
                 );
             }
         }
@@ -648,14 +648,14 @@ export default function WelcomePage() {
                     {spawnInputField(
                         t("globals.userData.username.wordShorter"),
                         t(
-                            "pages.welcome.questions.aboutYou.placeholders.username",
+                            "pages.welcome.questions.aboutYou.placeholders.username"
                         ),
                         formData.username,
                         "username",
                         0,
                         1,
                         "default",
-                        30,
+                        30
                     )}
                     <GapView height={5} />
                     {spawnInputField(
@@ -666,33 +666,33 @@ export default function WelcomePage() {
                         1,
                         2,
                         "numeric",
-                        2,
+                        2
                     )}
                     <GapView height={5} />
                     {spawnInputField(
                         t("globals.userData.weight"),
                         t(
-                            "pages.welcome.questions.aboutYou.placeholders.weight",
+                            "pages.welcome.questions.aboutYou.placeholders.weight"
                         ),
                         formData.weight,
                         "weight",
                         2,
                         3,
                         "numeric",
-                        3,
+                        3
                     )}
                     <GapView height={5} />
                     {spawnInputField(
                         t("globals.userData.height"),
                         t(
-                            "pages.welcome.questions.aboutYou.placeholders.height",
+                            "pages.welcome.questions.aboutYou.placeholders.height"
                         ),
                         formData.height,
                         "height",
                         3,
                         4,
                         "numeric",
-                        3,
+                        3
                     )}
                     <GapView height={5} />
                     <BetterText
@@ -760,7 +760,7 @@ export default function WelcomePage() {
                     <BetterButton
                         style="ACE"
                         buttonText={t(
-                            "pages.welcome.questions.theThinkHour.summon",
+                            "pages.welcome.questions.theThinkHour.summon"
                         )}
                         action={() => setShowPicker(!showPicker)}
                     />
@@ -772,7 +772,7 @@ export default function WelcomePage() {
                                 "theThinkHour",
                                 formatTimeString(pickedDuration)
                                     ? formatTimeString(pickedDuration)
-                                    : "",
+                                    : ""
                             );
                             setShowPicker(false);
                         }}
@@ -781,7 +781,7 @@ export default function WelcomePage() {
                         padMinutesWithZero={true}
                         allowFontScaling={true}
                         modalTitle={t(
-                            "pages.welcome.questions.theThinkHour.ask",
+                            "pages.welcome.questions.theThinkHour.ask"
                         )}
                         onCancel={() => setShowPicker(false)}
                         closeOnOverlayPress
