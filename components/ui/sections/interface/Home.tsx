@@ -18,7 +18,7 @@ import GapView from "../../GapView";
 
 export function RenderActiveObjectives(): ReactNode {
     const [identifiers, setIdentifiers] = useState<number[] | false | 0 | null>(
-        null,
+        null
     );
     const [loading, setLoading] = useState(true);
     const [renderedObjectives, setRenderedObjectives] = useState<
@@ -35,7 +35,7 @@ export function RenderActiveObjectives(): ReactNode {
         } catch (e) {
             logToConsole(
                 "Error with RenderActiveObjective 1st handler(), " + e,
-                "error",
+                "error"
             );
         } finally {
             setLoading(false);
@@ -62,17 +62,17 @@ export function RenderActiveObjectives(): ReactNode {
                                 "renderObjectives() @ if (!identifiers)",
                             function: "RenderActiveObjectives()",
                         },
-                        false,
+                        false
                     );
                     return;
                 }
                 const objectivePromises: Promise<ActiveObjective | null>[] =
                     identifiers.map(
                         async (
-                            identifier: number,
+                            identifier: number
                         ): Promise<ActiveObjective | null> => {
                             return await GetActiveObjective(identifier);
-                        },
+                        }
                     );
 
                 const objectives: (ActiveObjective | null)[] =
@@ -82,7 +82,7 @@ export function RenderActiveObjectives(): ReactNode {
                 // (i didn't write this but uhh it seems to work just fine)
                 const filteredObjectives: ActiveObjective[] = objectives.filter(
                     (obj: ActiveObjective | null): obj is ActiveObjective =>
-                        obj !== null,
+                        obj !== null
                 );
 
                 // update state once
@@ -97,7 +97,7 @@ export function RenderActiveObjectives(): ReactNode {
                         handlerName: "renderObjectives() @ try-catch #1",
                         function: "RenderActiveObjectives()",
                     },
-                    false,
+                    false
                 );
             } finally {
                 setLoading(false);
@@ -114,16 +114,16 @@ export function RenderActiveObjectives(): ReactNode {
             return t(
                 obj.specificData.reps +
                     " lifts of " +
-                    (obj.specificData.scaleWeight * 2 +
-                        obj.specificData.barWeight) +
-                    " kg each.",
+                    obj.specificData.dumbbellWeight *
+                        obj.specificData.amountOfHands +
+                    " kg each."
             );
         } else if (exercise === "Push Ups") {
             return t(
                 obj.specificData.amountOfPushUps +
                     " push ups with " +
                     obj.specificData.amountOfHands +
-                    " hands.",
+                    " hands."
             );
             // TODO: finish these
         } else {

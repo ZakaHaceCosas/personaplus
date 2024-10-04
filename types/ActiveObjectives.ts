@@ -40,17 +40,11 @@ type ActiveObjectiveInfo = {
 
 interface ActiveObjectiveSpecificData {
     /**
-     * LIFTING - Weight of each ball / thingamabomb that weight
+     * LIFTING - Weight of each thingamabob that weights
      *
      * @type {number}
      */
-    scaleWeight: number;
-    /**
-     * LIFTING - Weight of the bar
-     *
-     * @type {number}
-     */
-    barWeight: number;
+    dumbbellWeight: number;
     /**
      * LIFTING - How many lifts
      *
