@@ -34,18 +34,16 @@ export default function BetterText<T extends FontFamily = "BeVietnamPro">({
         textAlign === "center"
             ? "center"
             : textAlign === "right"
-              ? "right"
-              : textAlign === "normal" || textAlign === "left"
-                ? "left"
-                : "left";
+            ? "right"
+            : textAlign === "normal" || textAlign === "left"
+            ? "left"
+            : "left";
     const decoration: "underline" | "none" = isLink ? "underline" : "none";
 
     const textStyle: TextStyle = {
         fontFamily: fontFamilyName,
         fontSize: fontSize,
-        lineHeight: children?.toString().includes("Ñ")
-            ? fontSize * 1.25 // prevents Spanish "virgulilla" from being cut off
-            : fontSize * 1.15,
+        lineHeight: fontSize * 1.25,
         overflow: "visible",
         color: isLink ? Colors.PRIMARIES.ACE.ACE : color,
         textAlign: alignment,
