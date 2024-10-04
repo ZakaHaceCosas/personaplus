@@ -5,6 +5,7 @@ import Colors from "@/constants/Colors";
 import getCommonScreenSize from "@/constants/Screen";
 import FontSizes from "@/constants/FontSizes";
 import { UniversalPressableStyle } from "@/constants/ui/Pressables";
+import { logToConsole } from "@/toolkit/debug/Console";
 
 interface Option {
     value: string;
@@ -17,6 +18,7 @@ interface SwapProps {
     value: string | null;
     order: "horizontal" | "vertical";
     onValueChange: (value: string) => void;
+    style?: "ACE" | "GOD";
 }
 
 const styles = StyleSheet.create({
@@ -40,10 +42,6 @@ const styles = StyleSheet.create({
         paddingTop: 0,
         paddingBottom: 0,
     },
-    selectedSwapOption: {
-        borderColor: Colors.PRIMARIES.ACE.ACE_STROKE,
-        backgroundColor: Colors.PRIMARIES.ACE.ACE,
-    },
 });
 
 export default function Swap({
@@ -51,8 +49,18 @@ export default function Swap({
     value,
     order,
     onValueChange,
+    style = "ACE",
 }: SwapProps): ReactElement {
-    const defaultOption = options.find((option) => option.default);
+    const defaultOption: Option | undefined = options.find(
+        (option): boolean => option.default
+    );
+
+    if (!defaultOption) {
+        logToConsole(
+            "A default option for Swap elements is highly recommended. Bugs can happen otherwise.",
+            "warn"
+        );
+    }
 
     const [selectedOption, setSelectedOption] = useState<Option | null>(
         value
@@ -60,7 +68,7 @@ export default function Swap({
             : defaultOption || null
     );
 
-    useEffect(() => {
+    useEffect((): void => {
         if (value && selectedOption?.value !== value) {
             const newSelectedOption = options.find(
                 (option) => option.value === value
@@ -71,7 +79,7 @@ export default function Swap({
         }
     }, [value, options, selectedOption]);
 
-    const handleOptionPress = (option: Option) => {
+    const handleOptionPress = (option: Option): void => {
         if (selectedOption !== option) {
             setSelectedOption(option);
             if (onValueChange) {
@@ -80,16 +88,17 @@ export default function Swap({
         }
     };
 
-    const orderString = order === "horizontal" ? "row" : "column";
+    const orderString: "row" | "column" =
+        order === "horizontal" ? "row" : "column";
 
     return (
         <View style={[styles.container, { flexDirection: orderString }]}>
-            {options.map((option) => (
+            {options.map((option: Option) => (
                 <Pressable
                     key={option.value}
                     style={[
+                        styles.swapOption,
                         {
-                            ...styles.swapOption,
                             height: order === "vertical" ? 65 : 55,
                             paddingRight: order === "vertical" ? 10 : 0,
                             paddingLeft: order === "vertical" ? 10 : 0,
@@ -97,17 +106,34 @@ export default function Swap({
                                 order === "horizontal"
                                     ? "center"
                                     : "flex-start",
+                            backgroundColor:
+                                selectedOption?.value === option.value
+                                    ? style === "ACE"
+                                        ? Colors.PRIMARIES.ACE.ACE
+                                        : Colors.PRIMARIES.GOD.GOD
+                                    : Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
+                            borderColor:
+                                selectedOption?.value === option.value
+                                    ? style === "ACE"
+                                        ? Colors.PRIMARIES.ACE.ACE_STROKE
+                                        : Colors.PRIMARIES.GOD.GOD_STROKE
+                                    : Colors.MAIN.DEFAULT_ITEM.STROKE,
                         },
-                        selectedOption?.value === option.value &&
-                            styles.selectedSwapOption,
                     ]}
                     accessibilityLabel={option.label}
-                    onPress={() => handleOptionPress(option)}
+                    onPress={(): void => handleOptionPress(option)}
                 >
                     <BetterText
                         textAlign={order === "horizontal" ? "center" : "left"}
                         fontSize={FontSizes.ALMOST_REGULAR}
                         fontWeight="SemiBold"
+                        textColor={
+                            style === "ACE"
+                                ? Colors.BASIC.WHITE
+                                : selectedOption?.value === option.value
+                                ? Colors.BASIC.BLACK
+                                : Colors.BASIC.WHITE
+                        }
                     >
                         {option.label}
                     </BetterText>

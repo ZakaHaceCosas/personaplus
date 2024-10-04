@@ -409,7 +409,7 @@ export default function WelcomePage() {
         isTheLastOne: boolean
     ): ReactElement {
         let buttonText: string;
-        let style: "ACE" | "HMM";
+        let style: "GOD" | "HMM";
         let action: () => void;
 
         switch (step) {
@@ -419,7 +419,7 @@ export default function WelcomePage() {
                         ? t("globals.interaction.goAheadGood")
                         : t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
-                style = isStepOneValid ? "ACE" : "HMM";
+                style = isStepOneValid ? "GOD" : "HMM";
                 action = isStepOneValid ? goNext : () => {};
                 break;
             case 2:
@@ -428,7 +428,7 @@ export default function WelcomePage() {
                         ? t("globals.interaction.goAheadGood")
                         : t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
-                style = isStepTwoValid ? "ACE" : "HMM";
+                style = isStepTwoValid ? "GOD" : "HMM";
                 action = isStepTwoValid ? goNext : () => {};
                 break;
             case 3:
@@ -437,7 +437,7 @@ export default function WelcomePage() {
                         ? t("globals.interaction.goAheadGood")
                         : t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
-                style = isStepThreeValid ? "ACE" : "HMM";
+                style = isStepThreeValid ? "GOD" : "HMM";
                 action = isStepThreeValid ? goNext : () => {};
                 break;
             case 4:
@@ -446,7 +446,7 @@ export default function WelcomePage() {
                         ? t("globals.interaction.goAheadGood")
                         : t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
-                style = isStepFourValid ? "ACE" : "HMM";
+                style = isStepFourValid ? "GOD" : "HMM";
                 action = isStepFourValid ? goNext : () => {};
                 break;
         }
@@ -494,7 +494,7 @@ export default function WelcomePage() {
                         flex: 1,
                         backgroundColor:
                             currentTab >= 1
-                                ? Colors.PRIMARIES.ACE.ACE
+                                ? Colors.PRIMARIES.GOD.GOD
                                 : Colors.MAIN.DIVISION_BORDER,
                     }}
                 />
@@ -505,7 +505,7 @@ export default function WelcomePage() {
                         flex: 1,
                         backgroundColor:
                             currentTab >= 2
-                                ? Colors.PRIMARIES.ACE.ACE
+                                ? Colors.PRIMARIES.GOD.GOD
                                 : Colors.MAIN.DIVISION_BORDER,
                     }}
                 />
@@ -516,7 +516,7 @@ export default function WelcomePage() {
                         flex: 1,
                         backgroundColor:
                             currentTab >= 3
-                                ? Colors.PRIMARIES.ACE.ACE
+                                ? Colors.PRIMARIES.GOD.GOD
                                 : Colors.MAIN.DIVISION_BORDER,
                     }}
                 />
@@ -527,7 +527,7 @@ export default function WelcomePage() {
                         flex: 1,
                         backgroundColor:
                             currentTab >= 4
-                                ? Colors.PRIMARIES.ACE.ACE
+                                ? Colors.PRIMARIES.GOD.GOD
                                 : Colors.MAIN.DIVISION_BORDER,
                     }}
                 />
@@ -623,7 +623,7 @@ export default function WelcomePage() {
                     <GapView height={10} />
                     <BetterButton
                         buttonText={t("globals.interaction.goAheadGood")}
-                        style="ACE"
+                        style="GOD"
                         action={goNext}
                     />
                 </>
@@ -709,6 +709,7 @@ export default function WelcomePage() {
                         value={formData.gender}
                         order="horizontal"
                         onValueChange={(value) => handleChange("gender", value)}
+                        style="GOD"
                     />
                     <GapView height={10} />
                     {spawnNavigationButtons(1, false)}
@@ -728,6 +729,7 @@ export default function WelcomePage() {
                         value={formData.focus}
                         order="vertical"
                         onValueChange={(value) => handleChange("focus", value)}
+                        style="GOD"
                     />
                     <GapView height={10} />
                     {spawnNavigationButtons(2, false)}
@@ -758,7 +760,7 @@ export default function WelcomePage() {
                         {t("pages.welcome.questions.theThinkHour.description")}
                     </BetterTextSubHeader>
                     <BetterButton
-                        style="ACE"
+                        style="GOD"
                         buttonText={t(
                             "pages.welcome.questions.theThinkHour.summon"
                         )}
