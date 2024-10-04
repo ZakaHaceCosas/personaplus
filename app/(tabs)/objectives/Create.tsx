@@ -92,7 +92,6 @@ export default function CreateActiveObjectivePage() {
             specificData: {
                 dumbbellWeight: 0,
                 reps: 0,
-                dumbbells: 0,
                 amountOfHands: 2,
                 amountOfPushUps: 0,
                 estimateSpeed: 0,
@@ -177,7 +176,6 @@ export default function CreateActiveObjectivePage() {
         value:
             | "dumbbellWeight"
             | "reps"
-            | "dumbbells"
             | "amountOfHands"
             | "estimateSpeed"
             | "amountOfPushUps"
@@ -199,14 +197,6 @@ export default function CreateActiveObjectivePage() {
                         specificData: {
                             ...prev.specificData,
                             barWeight: prev.specificData.dumbbellWeight + 1,
-                        },
-                    }));
-                } else if (value === "dumbbells") {
-                    updateObjectiveToCreate((prev) => ({
-                        ...prev,
-                        specificData: {
-                            ...prev.specificData,
-                            dumbbells: prev.specificData.dumbbells + 1,
                         },
                     }));
                 } else if (value === "estimateSpeed") {
@@ -242,14 +232,6 @@ export default function CreateActiveObjectivePage() {
                         specificData: {
                             ...prev.specificData,
                             barWeight: prev.specificData.dumbbellWeight - 1,
-                        },
-                    }));
-                } else if (value === "dumbbells") {
-                    updateObjectiveToCreate((prev) => ({
-                        ...prev,
-                        specificData: {
-                            ...prev.specificData,
-                            dumbbells: prev.specificData.dumbbells - 1,
                         },
                     }));
                 } else if (value === "estimateSpeed") {
@@ -444,7 +426,9 @@ export default function CreateActiveObjectivePage() {
             if (objectiveToCreate.exercise === "Lifting") {
                 isSpecificDataValid =
                     (objectiveToCreate.specificData?.dumbbellWeight || 0) > 0 &&
-                    (objectiveToCreate.specificData?.dumbbells || 0) > 0 &&
+                    [1, 2].includes(
+                        objectiveToCreate.specificData?.amountOfHands || 0
+                    ) &&
                     (objectiveToCreate.specificData?.reps || 0) > 0;
             } else if (objectiveToCreate.exercise === "Push Ups") {
                 isSpecificDataValid =
@@ -769,79 +753,6 @@ export default function CreateActiveObjectivePage() {
                             style="ACE"
                             action={() =>
                                 handleSpecificToggle("increase", "reps")
-                            }
-                        />
-                    </View>
-                    <GapView height={20} />
-                    <BetterTextSmallHeader>
-                        {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.Dumbbells.question"
-                        )}
-                    </BetterTextSmallHeader>
-                    <BetterTextSmallText>
-                        {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howManyDumbbells.proTip"
-                        )}
-                    </BetterTextSmallText>
-                    <GapView height={10} />
-                    <View style={styles.toggleView}>
-                        <BetterButton
-                            layout="box"
-                            buttonText="-"
-                            style="ACE"
-                            action={() =>
-                                handleSpecificToggle("decrease", "dumbbells")
-                            }
-                        />
-                        <TextInput
-                            value={String(
-                                objectiveToCreate.specificData.dumbbells
-                            )}
-                            placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
-                            style={styles.textInput}
-                            autoCorrect={false}
-                            multiline={false}
-                            maxLength={3}
-                            textAlign="center"
-                            keyboardType="decimal-pad"
-                            inputMode="decimal"
-                            key={`${objectiveToCreate.specificData.dumbbells}input`}
-                            returnKeyType="done"
-                            enterKeyHint="done"
-                            onChangeText={(value) => {
-                                const cleanedValue = value.replace(
-                                    /[^0-9.]/g,
-                                    ""
-                                );
-                                const numericValue = parseFloat(cleanedValue);
-                                if (
-                                    cleanedValue === "" ||
-                                    isNaN(numericValue)
-                                ) {
-                                    updateObjectiveToCreate((prev) => ({
-                                        ...prev,
-                                        specificData: {
-                                            ...prev.specificData,
-                                            dumbbells: 0,
-                                        },
-                                    }));
-                                } else {
-                                    updateObjectiveToCreate((prev) => ({
-                                        ...prev,
-                                        specificData: {
-                                            ...prev.specificData,
-                                            dumbbells: numericValue,
-                                        },
-                                    }));
-                                }
-                            }}
-                        />
-                        <BetterButton
-                            layout="box"
-                            buttonText="+"
-                            style="ACE"
-                            action={() =>
-                                handleSpecificToggle("increase", "dumbbells")
                             }
                         />
                     </View>
