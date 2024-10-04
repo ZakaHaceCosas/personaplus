@@ -9,10 +9,42 @@ import FontSizes from "@/constants/FontSizes";
 import { UniversalPressableStyle } from "@/constants/ui/Pressables";
 
 // TypeScript, supongo
-interface ButtonProps {
+/**
+ * BetterButtonProperties
+ *
+ * @interface BetterButtonProps
+ * @typedef {BetterButtonProps}
+ */
+interface BetterButtonProps {
+    /**
+     * The color style of the button.
+     *
+     * @type {("ACE" | "GOD" | "WOR" | "HMM" | "DEFAULT")}
+     */
     style: "ACE" | "GOD" | "WOR" | "HMM" | "DEFAULT";
+    /**
+     * The text of the button.
+     *
+     * @type {string}
+     */
     buttonText: string;
+    /**
+     * A hint, explaining in detail what is the button supposed to do. Use it for accessibility purposes.
+     *
+     * @type {string}
+     */
+    buttonHint: string;
+    /**
+     * A function. The action the button will perform.
+     *
+     * @type {() => void}
+     */
     action: () => void;
+    /**
+     * Whether it's a normal button or a box (50x50) button.
+     *
+     * @type {?("normal" | "box")}
+     */
     layout?: "normal" | "box";
 }
 
@@ -28,12 +60,25 @@ const styles = StyleSheet.create({
     },
 });
 
+/**
+ * A UI button. Keep in mind it's self closed.
+ *
+ * @export
+ * @param {BetterButtonProps} p
+ * @param {("ACE" | "GOD" | "WOR" | "HMM" | "DEFAULT")} p.style The color style of the button.
+ * @param {string} p.buttonText The text of the button.
+ * @param {() => void} p.action A function. The action the button will perform.
+ * @param {("normal" | "box")} [p.layout="normal"] Whether it's a normal button or a box (50x50) button.
+ * @param {string} p.buttonHint A hint, explaining in detail what is the button supposed to do. Use it for accessibility purposes.
+ * @returns {ReactElement} The button.
+ */
 export default function BetterButton({
     style,
     buttonText,
     action,
     layout = "normal",
-}: ButtonProps): ReactElement {
+    buttonHint,
+}: BetterButtonProps): ReactElement {
     let borderColor: string;
     let backgroundColor: string;
     let textColor: string;
@@ -103,9 +148,12 @@ export default function BetterButton({
                     backgroundColor: backgroundColor,
                 },
             ]}
+            accessible={true}
             accessibilityRole="button"
             accessibilityLabel={buttonText}
+            accessibilityHint={buttonHint}
             importantForAccessibility="yes"
+            hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}
         >
             <BetterText
                 fontWeight="Medium"
