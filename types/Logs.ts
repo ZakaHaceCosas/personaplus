@@ -26,7 +26,7 @@ export interface Log {
      */
     message: string;
     /**
-     * Wheter it's a regular log, a warning, an error, or a success message.
+     * Whether it's a regular log, a warning, an error, or a success message.
      *
      * @type {("log" | "warn" | "error" | "success")}
      */
