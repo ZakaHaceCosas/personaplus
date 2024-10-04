@@ -52,11 +52,13 @@ export default function HomeScreen() {
             </BetterText>
             <BetterButton
                 buttonText="DO NOT PRESS OR YOU WILL BE FIRED"
+                buttonHint="makes your account go boom"
                 style="WOR"
                 action={() => updateBrm5(true)}
             />
             <BetterButton
                 buttonText="dev interface"
+                buttonHint="doxxes you"
                 style="HMM"
                 action={() => router.navigate("/DevInterface")}
             />

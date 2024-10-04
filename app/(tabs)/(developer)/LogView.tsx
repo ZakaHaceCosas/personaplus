@@ -121,6 +121,7 @@ export default function HomeScreen() {
             <GapView height={5} />
             <BetterButton
                 buttonText="Clear logs"
+                buttonHint="Removes all saved console logs from storage."
                 style="HMM"
                 action={clearLogs}
             />

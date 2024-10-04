@@ -455,12 +455,18 @@ export default function WelcomePage() {
             <View style={styles.buttonWrapper}>
                 <BetterButton
                     buttonText={t("globals.interaction.goBack")}
+                    buttonHint="Goes one page back"
                     style="DEFAULT"
                     action={goBack}
                 />
                 <GapView width={10} />
                 <BetterButton
                     buttonText={buttonText}
+                    buttonHint={
+                        isTheLastOne
+                            ? "Registers the user and redirects to the home page"
+                            : "Goes one page forward"
+                    }
                     style={style}
                     action={action}
                 />
@@ -623,6 +629,7 @@ export default function WelcomePage() {
                     <GapView height={10} />
                     <BetterButton
                         buttonText={t("globals.interaction.goAheadGood")}
+                        buttonHint="Begins the on-boarding process"
                         style="GOD"
                         action={goNext}
                     />
@@ -764,6 +771,7 @@ export default function WelcomePage() {
                         buttonText={t(
                             "pages.welcome.questions.theThinkHour.summon"
                         )}
+                        buttonHint="Summons a modal where the user can pick an hour of the day for The Think Hour."
                         action={() => setShowPicker(!showPicker)}
                     />
                     <TimerPickerModal
