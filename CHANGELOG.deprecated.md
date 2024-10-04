@@ -134,7 +134,7 @@ b25 was cancelled (due to the huge amount of problems that were on top of each o
 
 ### Trivial changes - b23
 
-- Removed the preheader on the about page to save space.
+- Removed the preHeader on the about page to save space.
 - Fixed an issue with spacing among the "CLEAR ALL" button in Dev Interface.
 
 ## 0.0.1-R5-b22
@@ -499,7 +499,7 @@ Note:
 ## 0.0.1-R5-b6
 
 - Fixed some errors
-- Removed the custom `Input.tsx` component, will reuse proped default `Native.Input`.
+- Removed the custom `Input.tsx` component, will reuse propped default `Native.Input`.
 
 ## 0.0.1-R5-b5
 

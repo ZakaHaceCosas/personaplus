@@ -93,7 +93,7 @@ export default function HomeScreen() {
             try {
                 // user data
                 const bareUserData: string | null = await AsyncStorage.getItem(
-                    StoredItemNames.userData,
+                    StoredItemNames.userData
                 );
                 if (!bareUserData) {
                     throw new Error("userData is null!");
@@ -108,7 +108,7 @@ export default function HomeScreen() {
                     setObjectives("No objectives (null)");
                 }
                 setObjectives(
-                    bareObjectives ? JSON.stringify(bareObjectives) : null,
+                    bareObjectives ? JSON.stringify(bareObjectives) : null
                 );
 
                 // dailyLog

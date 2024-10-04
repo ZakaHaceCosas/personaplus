@@ -18,7 +18,7 @@ export default function HomeScreen() {
     async function changeLanguage() {
         try {
             const userData: string | null = await AsyncStorage.getItem(
-                StoredItemNames.userData,
+                StoredItemNames.userData
             );
             if (!userData) {
                 throw new Error("Why is userData null?");
@@ -27,7 +27,7 @@ export default function HomeScreen() {
             profile.language = "es";
             await AsyncStorage.setItem(
                 StoredItemNames.userData,
-                JSON.stringify(profile),
+                JSON.stringify(profile)
             );
         } catch (e) {
             logToConsole("Error changing language:" + e, "error");
@@ -37,10 +37,10 @@ export default function HomeScreen() {
     return (
         <>
             <BetterTextHeader>
-                {t("page_home.header.label")}, {"username"}!
+                {t("pages.profile.label")}, {"username"}!
             </BetterTextHeader>
             <BetterTextSubHeader>
-                {t("page_home.header.sublabel")}
+                {t("pages.profile.subheader")}
             </BetterTextSubHeader>
             <BetterText
                 fontSize={FontSizes.LARGER}

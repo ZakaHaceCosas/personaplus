@@ -12,6 +12,7 @@
 > I still like the idea of a standalone library, but if that happens it will be a completely separate project _borrowing_ code from here. Until then, CoreLibrary is nothing else than an internal library.
 
 - Updated documentation and some comments to fix typos.
+- Simplified typing at entry point using an alias thingy.
 
 ## 0.0.3
 

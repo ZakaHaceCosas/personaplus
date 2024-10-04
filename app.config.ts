@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const config: ExpoConfig.ExpoConfig = {
-    name: process.env.APPNAME || "PersonaPlus",
+    name: process.env.APP_NAME || "PersonaPlus",
     slug: "PersonaPlus",
     scheme: "personaplus",
     description: "Give yourself a PLUS",
@@ -32,7 +32,7 @@ const config: ExpoConfig.ExpoConfig = {
         adaptiveIcon: {
             foregroundImage: "./assets/resources/adaptive-icon-foreground.png",
             backgroundImage:
-                process.env.APPADAPTIVEICONBACKGROUND ||
+                process.env.APP_ADAPTIVE_ICON_BACKGROUND ||
                 "./assets/resources/adaptive-icon-background.png",
             backgroundColor: "#0E1013",
         },
