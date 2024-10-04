@@ -52,13 +52,7 @@ interface ActiveObjectiveSpecificData {
      */
     reps: number;
     /**
-     * LIFTING - Amount of dumbbells
-     *
-     * @type {number}
-     */
-    dumbbells: number;
-    /**
-     * GENERIC - Amount of hands
+     * GENERIC - Amount of hands - AKA amount of dumbbells for lifting - AKA amount of hands to be used when pushing up (<- this one is why it defaults to two).
      *
      * @type {(1 | 2)}
      */
