@@ -223,6 +223,7 @@ export default function HomeScreen() {
             <GapView height={5} />
             <BetterButton
                 buttonText="See all logs"
+                buttonHint="Opens up a dedicated page for viewing all console logs."
                 style="DEFAULT"
                 action={() => router.push("/LogView")}
             />

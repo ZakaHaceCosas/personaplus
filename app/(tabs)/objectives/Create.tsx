@@ -299,6 +299,7 @@ export default function CreateActiveObjectivePage() {
                     <BetterButton
                         layout="box"
                         buttonText="-"
+                        buttonHint="Reduces the value this button is associated to"
                         style="ACE"
                         action={() => handleToggle("decrease", associatedValue)}
                     />
@@ -406,6 +407,7 @@ export default function CreateActiveObjectivePage() {
                     <BetterButton
                         layout="box"
                         buttonText="+"
+                        buttonHint="Increases the value this button is associated to"
                         style="ACE"
                         action={() => handleToggle("increase", associatedValue)}
                     />
@@ -632,6 +634,7 @@ export default function CreateActiveObjectivePage() {
                         <BetterButton
                             layout="box"
                             buttonText="-"
+                            buttonHint="Reduces the value this button is associated to"
                             style="ACE"
                             action={() =>
                                 handleSpecificToggle(
@@ -672,6 +675,7 @@ export default function CreateActiveObjectivePage() {
                         <BetterButton
                             layout="box"
                             buttonText="+"
+                            buttonHint="Increases the value this button is associated to"
                             style="ACE"
                             action={() =>
                                 handleSpecificToggle(
@@ -701,6 +705,7 @@ export default function CreateActiveObjectivePage() {
                         <BetterButton
                             layout="box"
                             buttonText="-"
+                            buttonHint="Reduces the value this button is associated to"
                             style="ACE"
                             action={() =>
                                 handleSpecificToggle("decrease", "reps")
@@ -750,6 +755,7 @@ export default function CreateActiveObjectivePage() {
                         <BetterButton
                             layout="box"
                             buttonText="+"
+                            buttonHint="Increases the value this button is associated to"
                             style="ACE"
                             action={() =>
                                 handleSpecificToggle("increase", "reps")
@@ -772,6 +778,7 @@ export default function CreateActiveObjectivePage() {
                         <BetterButton
                             layout="box"
                             buttonText="-"
+                            buttonHint="Reduces the value this button is associated to"
                             style="ACE"
                             action={() =>
                                 handleSpecificToggle(
@@ -826,6 +833,7 @@ export default function CreateActiveObjectivePage() {
                         <BetterButton
                             layout="box"
                             buttonText="+"
+                            buttonHint="Increases the value this button is associated to"
                             style="ACE"
                             action={() =>
                                 handleSpecificToggle(
@@ -856,6 +864,7 @@ export default function CreateActiveObjectivePage() {
                         <BetterButton
                             layout="box"
                             buttonText="-"
+                            buttonHint="Reduces the value this button is associated to"
                             style="ACE"
                             action={() =>
                                 handleSpecificToggle(
@@ -910,6 +919,7 @@ export default function CreateActiveObjectivePage() {
                         <BetterButton
                             layout="box"
                             buttonText="+"
+                            buttonHint="Increases the value this button is associated to"
                             style="ACE"
                             action={() =>
                                 handleSpecificToggle(
@@ -943,6 +953,7 @@ export default function CreateActiveObjectivePage() {
                         <BetterButton
                             layout="box"
                             buttonText="-"
+                            buttonHint="Reduces the value this button is associated to"
                             style="ACE"
                             action={() =>
                                 handleSpecificToggle(
@@ -1001,6 +1012,7 @@ export default function CreateActiveObjectivePage() {
                         <BetterButton
                             layout="box"
                             buttonText="+"
+                            buttonHint="Increases the value this button is associated to"
                             style="ACE"
                             action={() =>
                                 handleSpecificToggle(
@@ -1020,6 +1032,7 @@ export default function CreateActiveObjectivePage() {
                         ? t("globals.interaction.goAheadGood")
                         : t("globals.interaction.somethingIsWrong")
                 }
+                buttonHint="Creates the desired active objective. In case of missing or invalid fields, it won't do anything."
                 action={canCreateObjective ? () => handleCreation() : () => {}}
             />
             <PageEnd includeText={false} />
