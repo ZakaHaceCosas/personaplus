@@ -27,13 +27,8 @@ function handleGoBack() {
     try {
         if (router.canGoBack()) {
             router.back();
-            logToConsole("GoBack.tsx is going back!", "success");
         } else {
             router.replace("/");
-            logToConsole(
-                "GoBack.tsx couldn't find a previous route, so going to index",
-                "log",
-            );
         }
     } catch (e) {
         logToConsole("Error with GoBack.tsx!" + e, "error");
@@ -43,8 +38,8 @@ function handleGoBack() {
 /**
  * A **< Go back** button for the top of the UI in certain pages.
  *
- * @param {{ t: TFunction; }} param0
- * @param {TranslateFunction} param0.t Pass here the translate function, please.
+ * @param {{ t: TFunction; }} p
+ * @param {TranslateFunction} p.t Pass here the translate function, please.
  * @returns {ReactElement} A JSX element
  */
 const BackButtonComponent: React.FC<BackButtonProps> = ({
