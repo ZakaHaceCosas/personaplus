@@ -14,10 +14,38 @@
 import NavigationBar from "@/components/navigation/NavigationBar";
 import Colors from "@/constants/Colors";
 import * as Router from "expo-router";
-import React, { useEffect, useState } from "react";
-import { ScrollView } from "react-native";
+import React, { ReactNode, useEffect, useState } from "react";
+import { ScrollView, StyleSheet } from "react-native";
 
-export default function TabLayout() {
+const styles = StyleSheet.create({
+    mainScrollView: {
+        padding: 20,
+        paddingTop: 40,
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: Colors.MAIN.APP,
+    },
+});
+
+interface LayoutContainerProps {
+    children: ReactNode;
+}
+
+export function LayoutContainer({ children }: LayoutContainerProps) {
+    return (
+        <ScrollView
+            style={styles.mainScrollView}
+            contentContainerStyle={{
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
+            }}
+            horizontal={false}
+        >
+            {children}
+        </ScrollView>
+    );
+}
+export default function Layout() {
     // Get the current route (directly in the top-level function so it updates on each redraw)
     const currentRoute = Router.usePathname();
     // Save it as a stateful value
@@ -29,28 +57,16 @@ export default function TabLayout() {
         setCurrentLocation(currentRoute);
     }, [currentRoute]);
 
+    const noNavigationRoutes = ["/Welcome", "/objectives/Create", "/LogView"];
+
     return (
         <>
-            <ScrollView
-                style={{
-                    padding: 20,
-                    paddingTop: 40,
-                    display: "flex",
-                    flexDirection: "column",
-                    backgroundColor: Colors.MAIN.APP,
-                }}
-                contentContainerStyle={{
-                    alignItems: "flex-start",
-                    justifyContent: "flex-start",
-                }}
-                horizontal={false}
-            >
+            <LayoutContainer>
                 <Router.Slot />
-            </ScrollView>
-            {currentLocation !== "/Welcome" &&
-                currentLocation !== "/objectives/Create" && (
-                    <NavigationBar currentLocation={currentLocation} />
-                )}
+            </LayoutContainer>
+            {!noNavigationRoutes.includes(currentLocation) && (
+                <NavigationBar currentLocation={currentLocation} />
+            )}
         </>
     );
 }
