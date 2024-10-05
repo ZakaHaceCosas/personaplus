@@ -1,10 +1,9 @@
 import React, { ReactElement } from "react";
 import BetterText from "@/components/text/BetterText";
 import { useTranslation } from "react-i18next";
-import { router } from "expo-router";
 import FontSizes from "@/constants/FontSizes";
 import { TFunction } from "i18next";
-import { logToConsole } from "@/toolkit/debug/Console";
+import SafelyGoBack from "@/toolkit/Routing";
 
 type TranslateFunction = ReturnType<typeof useTranslation>["t"];
 
@@ -23,18 +22,6 @@ interface BackButtonProps {
     t: TranslateFunction;
 }
 
-function handleGoBack() {
-    try {
-        if (router.canGoBack()) {
-            router.back();
-        } else {
-            router.replace("/");
-        }
-    } catch (e) {
-        logToConsole("Error with GoBack.tsx!" + e, "error");
-    }
-}
-
 /**
  * A **< Go back** button for the top of the UI in certain pages.
  *
@@ -51,7 +38,7 @@ const BackButtonComponent: React.FC<BackButtonProps> = ({
         fontFamily="JetBrainsMono"
         fontSize={FontSizes.REGULAR}
         fontWeight="Light"
-        onTap={() => handleGoBack()}
+        onTap={() => SafelyGoBack()}
     >
         {"< " + t("globals.interaction.goBackNoSad")}
     </BetterText>
