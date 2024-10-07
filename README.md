@@ -1,3 +1,3 @@
-# README has been hidden while the app is being rewritten
+# The app is being rewritten
 
-Please use the `R6` branch instead.
+Please check the [`R6`](https://github.com/ZakaHaceCosas/personaplus/tree/R6) branch instead.
