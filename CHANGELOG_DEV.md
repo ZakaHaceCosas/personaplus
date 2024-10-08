@@ -23,6 +23,7 @@ For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
   - Select (a preconfigured `<Picker />`). Based on `react-native-picker`.
   - BetterInputField (a preconfigured `TextInput`).
   - BetterAlert (an iteration of notifications).
+- Usage of Prettier within the codebase.
 
 ### Changed
 
