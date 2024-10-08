@@ -57,7 +57,6 @@
         "editor.tabSize": 4,
         "editor.insertSpaces": true
     },
-    "prettier.tabWidth": 4,
     "[markdown]": {
         "editor.unicodeHighlight.ambiguousCharacters": true,
         "editor.unicodeHighlight.invisibleCharacters": false,
@@ -76,10 +75,7 @@
         "diffEditor.ignoreTrimWhitespace": false,
         "editor.formatOnSave": false
     },
-    "[package.json]": {
-        "editor.formatOnSave": false
-    },
-    "editor.formatOnSaveMode": "file", // TODO: CHANGE TO "modifications" UPON RELEASE
+    "editor.formatOnSaveMode": "modifications",
     "workbench.editor.customLabels.patterns": {
         "**/core/**": "Core library, ${filename}.${extname} @ ${dirname}",
         "**/app/**": "App layout, ${filename}.${extname}",
@@ -174,6 +170,7 @@
         "nevermind",
         "Nevermind",
         "ONERM",
+        "Parens",
         "personaplus",
         "preapp",
         "preconfigured",
