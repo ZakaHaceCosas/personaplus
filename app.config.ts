@@ -14,6 +14,8 @@ const config: ExpoConfig.ExpoConfig = {
     githubUrl: "https://github.com/ZakaHaceCosas/personaplus",
     icon: "./assets/resources/icon.png",
     userInterfaceStyle: "dark",
+    platforms: ["android"],
+    backgroundColor: "#0E1013",
     splash: {
         image: "./assets/resources/splash.png",
         resizeMode: "contain",
@@ -28,7 +30,7 @@ const config: ExpoConfig.ExpoConfig = {
     },
     assetBundlePatterns: ["**/*"],
     android: {
-        ...(process.env.APPICON && { icon: process.env.APPICON }),  // only specify "icon" when it exists
+        ...(process.env.APPICON && { icon: process.env.APPICON }), // only specify "icon" when it exists
         adaptiveIcon: {
             foregroundImage: "./assets/resources/adaptive-icon-foreground.png",
             backgroundImage:
