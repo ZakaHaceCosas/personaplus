@@ -5,18 +5,18 @@
 
 // PHYSICAL HEALTH
 
-import * as BodyMassIndex from './physicalHealth/BodyMassIndex';
-import * as BodyFatPercentage from './physicalHealth/BodyFatPercentage';
-import * as IdealBodyWeight from './physicalHealth/IdealBodyWeight';
-import * as BasalMetabolicRate from "./physicalHealth/BasalMetabolicRate";
-import * as MetabolicEquivalentOfTask from './physicalHealth/MetabolicEquivalentOfTask';
-import * as OneRepMax from './physicalHealth/OneRepMax';
+import * as BodyMassIndex from "@/core/physicalHealth/BodyMassIndex";
+import * as BodyFatPercentage from "@/core/physicalHealth/BodyFatPercentage";
+import * as IdealBodyWeight from "@/core/physicalHealth/IdealBodyWeight";
+import * as BasalMetabolicRate from "@/core/physicalHealth/BasalMetabolicRate";
+import * as MetabolicEquivalentOfTask from "@/core/physicalHealth/MetabolicEquivalentOfTask";
+import * as OneRepMax from "@/core/physicalHealth/OneRepMax";
 
 // PERFORMANCE
 
-import * as RunningPerformance from './performance/RunningPerformance';
-import * as LiftingPerformance from './performance/LiftingPerformance';
-import * as PushingUpPerformance from "./performance/PushingUpPerformance";
+import * as RunningPerformance from "@/core/performance/RunningPerformance";
+import * as LiftingPerformance from "@/core/performance/LiftingPerformance";
+import * as PushingUpPerformance from "@/core/performance/PushingUpPerformance";
 
 // Interface for all CoreLibraryModules
 interface CoreLibraryModule<T = unknown> {
@@ -33,10 +33,12 @@ type ModuleReturn<T> = {
 };
 
 // Helper function to create each module
-const CreateModule: <T>(module: CoreLibraryModule<T>) => ModuleReturn<T> = <T>(module: CoreLibraryModule<T>): ModuleReturn<T> => ({
+const CreateModule: <T>(module: CoreLibraryModule<T>) => ModuleReturn<T> = <T>(
+    module: CoreLibraryModule<T>,
+): ModuleReturn<T> => ({
     calculate: module.default,
     getSource: module.getSource,
-    getLastUpdate: module.getLastUpdate
+    getLastUpdate: module.getLastUpdate,
 });
 
 // DEFINITION

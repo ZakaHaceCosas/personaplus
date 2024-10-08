@@ -32,7 +32,7 @@ export default function HomeScreen() {
         ActiveObjective[] | null
     >(null);
     const [identifiers, setIdentifiers] = useState<number[] | false | 0 | null>(
-        null
+        null,
     );
 
     async function fetchObjectives(): Promise<void> {
@@ -46,11 +46,11 @@ export default function HomeScreen() {
             }
 
             const objectives = await Promise.all(
-                pending.map((identifier) => GetActiveObjective(identifier))
+                pending.map((identifier) => GetActiveObjective(identifier)),
             );
 
             const filteredObjectives = objectives.filter(
-                (obj): obj is ActiveObjective => obj !== null
+                (obj): obj is ActiveObjective => obj !== null,
             );
             setRenderedObjectives(filteredObjectives);
         } catch (e) {
@@ -63,7 +63,7 @@ export default function HomeScreen() {
                     handlerName: "renderObjectives() @ try-catch #1",
                     function: "RenderActiveObjectives()",
                 },
-                false
+                false,
             );
         }
     }
@@ -107,14 +107,14 @@ export default function HomeScreen() {
                     " lifts of " +
                     obj.specificData.dumbbellWeight *
                         obj.specificData.amountOfHands +
-                    " kg each."
+                    " kg each.",
             );
         } else if (exercise === "Push Ups") {
             return t(
                 obj.specificData.amountOfPushUps +
                     " push ups with " +
                     obj.specificData.amountOfHands +
-                    " hands."
+                    " hands.",
             );
             // TODO: finish these
         } else {
@@ -127,8 +127,8 @@ export default function HomeScreen() {
         // update & redraw without re-fetching everything upon update
         setRenderedObjectives(
             renderedObjectives?.filter(
-                (obj) => obj.identifier !== identifier
-            ) || null
+                (obj) => obj.identifier !== identifier,
+            ) || null,
         );
     }
 
@@ -143,7 +143,10 @@ export default function HomeScreen() {
                 {t("pages.home.subheader")}
             </BetterTextSubHeader>
             <GapView height={20} />
-            <Section width="total" kind="ActiveObjectives">
+            <Section
+                width="total"
+                kind="ActiveObjectives"
+            >
                 <>
                     {identifiers === 0 && (
                         <Division header="Guess you've done everything!" />
@@ -172,7 +175,7 @@ export default function HomeScreen() {
                                     header={obj.exercise}
                                     preHeader="ACTIVE OBJECTIVE"
                                     subHeader={generateDescriptionOfObjective(
-                                        obj
+                                        obj,
                                     )}
                                 >
                                     <BetterButton
@@ -187,7 +190,7 @@ export default function HomeScreen() {
                                         style="GOD"
                                         action={() =>
                                             handleMarkingObjectiveAsDone(
-                                                obj.identifier
+                                                obj.identifier,
                                             )
                                         }
                                     />

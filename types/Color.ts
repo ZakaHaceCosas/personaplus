@@ -151,9 +151,9 @@ interface PrimaryColors {
  */
 interface BasicColors {
     /** Pure black */
-    BLACK: Color
+    BLACK: Color;
     /** Pure white */
-    WHITE: Color
+    WHITE: Color;
 }
 
 /**

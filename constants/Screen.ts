@@ -1,6 +1,8 @@
 import { Dimensions } from "react-native";
 
-export default function getCommonScreenSize(request: "width" | "height"): number {
+export default function getCommonScreenSize(
+    request: "width" | "height",
+): number {
     const CommonWidth = Dimensions.get("screen").width - 40;
     const CommonHeight = Dimensions.get("screen").height - 40 - 20;
     /*
@@ -9,5 +11,5 @@ export default function getCommonScreenSize(request: "width" | "height"): number
     then height has an additional - 20 to compensate the extra 20 of padding thats applied to the top
     */
 
-    return (request === "width") ? CommonWidth : CommonHeight
-};
+    return request === "width" ? CommonWidth : CommonHeight;
+}

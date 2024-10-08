@@ -12,7 +12,9 @@ import StoredItemNames from "@/constants/StoredItemNames";
  */
 export async function getLogsFromStorage(): Promise<Log[]> {
     try {
-        const logsString: string | null = await AsyncStorage.getItem(StoredItemNames.consoleLogs);
+        const logsString: string | null = await AsyncStorage.getItem(
+            StoredItemNames.consoleLogs,
+        );
         if (logsString) {
             try {
                 const parsedLogs = JSON.parse(logsString);
@@ -43,7 +45,7 @@ export async function getLogsFromStorage(): Promise<Log[]> {
         });
         return [];
     }
-};
+}
 
 /**
  * Saves a given array of Logs (`Log[]`) to the AsyncStorage.
@@ -54,7 +56,10 @@ export async function getLogsFromStorage(): Promise<Log[]> {
  */
 async function saveLogsToStorage(logs: Log[]): Promise<0 | 1> {
     try {
-        await AsyncStorage.setItem(StoredItemNames.consoleLogs, JSON.stringify(logs));
+        await AsyncStorage.setItem(
+            StoredItemNames.consoleLogs,
+            JSON.stringify(logs),
+        );
         return 0;
     } catch (e) {
         logToConsole(
@@ -64,7 +69,7 @@ async function saveLogsToStorage(logs: Log[]): Promise<0 | 1> {
         );
         return 1;
     }
-};
+}
 
 /**
  * Securely updates logs in the AsyncStorage. ("securely" means if you used the `saveLogsToStorage()` function directly it would overwrite the file, while this one will keep the past logs).
@@ -117,7 +122,7 @@ export function logToConsole(
             console.error(message); // Regular console error
             break;
         case "success":
-            console.log(message); // Not-regular console success (PersonaPlus exclusive :mrbeast:)
+            console.log(message); // Not-regular console success (PersonaPlus exclusive :mrBeast:)
             break;
     }
 
@@ -142,10 +147,9 @@ export function logToConsole(
 
         if (
             Platform.OS === "android" &&
-            (
-                type === "error"
-                || (typeof displayToEndUser !== "undefined" && displayToEndUser === true)
-            )
+            (type === "error" ||
+                (typeof displayToEndUser !== "undefined" &&
+                    displayToEndUser === true))
         ) {
             ToastAndroid.show(message, ToastAndroid.LONG); // Shows a toast if it's an error or if displayToEndUser is explicitly true.
         }

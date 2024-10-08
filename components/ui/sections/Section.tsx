@@ -76,9 +76,9 @@ const styles = StyleSheet.create({
  * The PersonaPlus UI operates on a Section-Division basis, with Sections containing Divisions, being each Section of a different "kind", so it groups stuff by topics.
  *
  * @export
- * @param {SectionProps} param0
- * @param {("Objectives" | "PassiveObjs" | "HowYouAreDoing" | "Unknown" | "Settings" | "Profile" | "About" | "Developer")} param0.kind The kind of section. Depending on this, the section will display a title and icon, or another one.
- * @param {ReactElement} param0.children Children that you can append to the section (one or more). While any `ReactElement` is valid, it's expected that you use a `<Division />` or more.
+ * @param {SectionProps} p
+ * @param {("Objectives" | "PassiveObjs" | "HowYouAreDoing" | "Unknown" | "Settings" | "Profile" | "About" | "Developer")} p.kind The kind of section. Depending on this, the section will display a title and icon, or another one.
+ * @param {ReactElement} p.children Children that you can append to the section (one or more). While any `ReactElement` is valid, it's expected that you use a `<Division />` or more.
  * @returns {ReactElement}
  */
 export default function Section({

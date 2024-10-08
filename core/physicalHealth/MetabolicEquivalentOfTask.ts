@@ -7,8 +7,8 @@ import { CoreLibraryResponseVersatile } from "@/core/types/CoreLibraryResponse";
 
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "01/07/2024",
-    "https://en.wikipedia.org/wiki/Metabolic_equivalent_of_task > https://www.ahajournals.org/doi/10.1161/CIRCULATIONAHA.107.185649 and https://www.inchcalculator.com/calories-burned-weight-lifting-calculator/"
-)
+    "https://en.wikipedia.org/wiki/Metabolic_equivalent_of_task > https://www.ahajournals.org/doi/10.1161/CIRCULATIONAHA.107.185649 and https://www.inchcalculator.com/calories-burned-weight-lifting-calculator/",
+);
 
 /**
  * Returns the Metabolic Equivalent of a Task
@@ -18,14 +18,31 @@ export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
  * @param provideContext Whether to provide a brief contextualization about the result.
  * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
  * @returns A number with the Metabolic Equivalent of the Task if neither provideContext nor provideExplanation are true, otherwise returns a `CoreLibraryResponseVersatile` object.
-*/
+ */
 
 export default function calculateMetabolicEquivalentOfTask(
     age: number,
     gender: "male" | "female",
-    intensity: "super_low" | "very_low" | "low" | "low_to_mid" | "mid" | "mid_to_high" | "not_too_high" | "high" | "higher" | "very_high" | "very_high_to_intense" | "not_too_intense" | "a_bit_intense" | "intense" | "pretty_intense" | "very_intense" | "really_intense",
+    intensity:
+        | "super_low"
+        | "very_low"
+        | "low"
+        | "low_to_mid"
+        | "mid"
+        | "mid_to_high"
+        | "not_too_high"
+        | "high"
+        | "higher"
+        | "very_high"
+        | "very_high_to_intense"
+        | "not_too_intense"
+        | "a_bit_intense"
+        | "intense"
+        | "pretty_intense"
+        | "very_intense"
+        | "really_intense",
     provideContext?: boolean,
-    provideExplanation?: boolean
+    provideExplanation?: boolean,
 ): CoreLibraryResponseVersatile {
     let METs: number; // MET - Metabolic Equivalent of Task
 
@@ -65,7 +82,7 @@ export default function calculateMetabolicEquivalentOfTask(
     } else if (intensity === "really_intense") {
         METs = 11.2;
     } else {
-        throw new Error("CALCULATION ERROR! Intensity is not valid")
+        throw new Error("CALCULATION ERROR! Intensity is not valid");
     }
 
     const response: CoreLibraryResponseVersatile = {
@@ -76,13 +93,19 @@ export default function calculateMetabolicEquivalentOfTask(
         response.subject = {
             age,
             gender,
-            intensity
+            intensity,
         };
-        response.context = "The MET is a value that helps measure the intensity of a task. For this context, MET value is " + METs + " and the intensity would be " + intensity + ".";
+        response.context =
+            "The MET is a value that helps measure the intensity of a task. For this context, MET value is " +
+            METs +
+            " and the intensity would be " +
+            intensity +
+            ".";
     }
 
     if (provideExplanation) {
-        response.explanation = "The performance can be measured in burnt calories, which are obtained by calculating the time spent on the exercise, the subject's weight, and the Metabolic Equivalent of Task (MET).";
+        response.explanation =
+            "The performance can be measured in burnt calories, which are obtained by calculating the time spent on the exercise, the subject's weight, and the Metabolic Equivalent of Task (MET).";
     }
 
     return response;

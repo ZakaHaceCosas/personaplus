@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useColorScheme } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { logToConsole } from '@/toolkit/debug/Console';
-import StoredItemNames from '@/constants/StoredItemNames';
+import { useState, useEffect } from "react";
+import { useColorScheme } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { logToConsole } from "@/toolkit/debug/Console";
+import StoredItemNames from "@/constants/StoredItemNames";
 
 export function useTheme(): "light" | "dark" {
     const systemTheme = useColorScheme();
@@ -11,10 +11,16 @@ export function useTheme(): "light" | "dark" {
     useEffect((): void => {
         async function fetchTheme(): Promise<void> {
             try {
-                const savedTheme: string | null = await AsyncStorage.getItem(StoredItemNames.colorTheme);
-                setTheme(savedTheme ? (savedTheme as "light" | "dark") : systemTheme ?? "dark");
+                const savedTheme: string | null = await AsyncStorage.getItem(
+                    StoredItemNames.colorTheme,
+                );
+                setTheme(
+                    savedTheme ?
+                        (savedTheme as "light" | "dark")
+                        : (systemTheme ?? "dark"),
+                );
             } catch (e) {
-                logToConsole('Error fetching theme:' + e, "error");
+                logToConsole("Error fetching theme:" + e, "error");
                 setTheme(systemTheme ?? "dark");
             }
         }

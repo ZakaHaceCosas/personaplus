@@ -76,7 +76,7 @@ export interface LogTraceback {
      *
      * @type {?string}
      */
-    handlerName?: string
+    handlerName?: string;
 }
 
 /**
