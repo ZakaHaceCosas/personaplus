@@ -6,7 +6,7 @@ const StoredItemNames = {
     objectives: "objectives",
     dailyLog: "activeObjectiveDailyLog",
     consoleLogs: "globalLogs",
-    colorTheme: "colorTheme"
-}
+    colorTheme: "colorTheme",
+};
 
-export default StoredItemNames
+export default StoredItemNames;

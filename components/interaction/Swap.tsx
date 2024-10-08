@@ -52,26 +52,26 @@ export default function Swap({
     style = "ACE",
 }: SwapProps): ReactElement {
     const defaultOption: Option | undefined = options.find(
-        (option): boolean => option.default
+        (option): boolean => option.default,
     );
 
     if (!defaultOption) {
         logToConsole(
             "A default option for Swap elements is highly recommended. Bugs can happen otherwise.",
-            "warn"
+            "warn",
         );
     }
 
     const [selectedOption, setSelectedOption] = useState<Option | null>(
-        value
-            ? options.find((option) => option.value === value) || null
-            : defaultOption || null
+        value ?
+            options.find((option) => option.value === value) || null
+        :   defaultOption || null,
     );
 
     useEffect((): void => {
         if (value && selectedOption?.value !== value) {
             const newSelectedOption = options.find(
-                (option) => option.value === value
+                (option) => option.value === value,
             );
             if (newSelectedOption) {
                 setSelectedOption(newSelectedOption);
@@ -103,21 +103,21 @@ export default function Swap({
                             paddingRight: order === "vertical" ? 10 : 0,
                             paddingLeft: order === "vertical" ? 10 : 0,
                             alignItems:
-                                order === "horizontal"
-                                    ? "center"
-                                    : "flex-start",
+                                order === "horizontal" ? "center" : (
+                                    "flex-start"
+                                ),
                             backgroundColor:
-                                selectedOption?.value === option.value
-                                    ? style === "ACE"
-                                        ? Colors.PRIMARIES.ACE.ACE
-                                        : Colors.PRIMARIES.GOD.GOD
-                                    : Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
+                                selectedOption?.value === option.value ?
+                                    style === "ACE" ?
+                                        Colors.PRIMARIES.ACE.ACE
+                                    :   Colors.PRIMARIES.GOD.GOD
+                                :   Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
                             borderColor:
-                                selectedOption?.value === option.value
-                                    ? style === "ACE"
-                                        ? Colors.PRIMARIES.ACE.ACE_STROKE
-                                        : Colors.PRIMARIES.GOD.GOD_STROKE
-                                    : Colors.MAIN.DEFAULT_ITEM.STROKE,
+                                selectedOption?.value === option.value ?
+                                    style === "ACE" ?
+                                        Colors.PRIMARIES.ACE.ACE_STROKE
+                                    :   Colors.PRIMARIES.GOD.GOD_STROKE
+                                :   Colors.MAIN.DEFAULT_ITEM.STROKE,
                         },
                     ]}
                     accessibilityLabel={option.label}
@@ -128,11 +128,10 @@ export default function Swap({
                         fontSize={FontSizes.ALMOST_REGULAR}
                         fontWeight="SemiBold"
                         textColor={
-                            style === "ACE"
-                                ? Colors.BASIC.WHITE
-                                : selectedOption?.value === option.value
-                                ? Colors.BASIC.BLACK
-                                : Colors.BASIC.WHITE
+                            style === "ACE" ? Colors.BASIC.WHITE
+                            : selectedOption?.value === option.value ?
+                                Colors.BASIC.BLACK
+                            :   Colors.BASIC.WHITE
                         }
                     >
                         {option.label}

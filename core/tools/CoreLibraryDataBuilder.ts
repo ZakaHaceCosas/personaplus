@@ -14,7 +14,13 @@ type CoreLibraryComponentData = {
  * @param {string} source - The sources of information used.
  * @returns {{ getSource: () => string; getLastUpdate: () => `${string}/${string}/${string}`; }}
  */
-export default function CreateComponentDataUtilities(updated: string, source: string): { getSource: () => string; getLastUpdate: () => `${string}/${string}/${string}`; } {
+export default function CreateComponentDataUtilities(
+    updated: string,
+    source: string,
+): {
+    getSource: () => string;
+    getLastUpdate: () => `${string}/${string}/${string}`;
+} {
     // data validation
     const datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
     if (!datePattern.test(updated)) {
@@ -24,15 +30,15 @@ export default function CreateComponentDataUtilities(updated: string, source: st
     // construction
     const componentData: CoreLibraryComponentData = {
         updated: updated as `${string}/${string}/${string}`,
-        source
+        source,
     };
 
     // function creation
     /**
-    * Retrieves the sources of information used in the component's calculations.
-    *
-    * @returns {string} A single string with all the URLs, separated by "and" if there is more than one.
-    */
+     * Retrieves the sources of information used in the component's calculations.
+     *
+     * @returns {string} A single string with all the URLs, separated by "and" if there is more than one.
+     */
     function getSource(): string {
         return componentData.source;
     }
@@ -48,6 +54,6 @@ export default function CreateComponentDataUtilities(updated: string, source: st
 
     return {
         getSource,
-        getLastUpdate
+        getLastUpdate,
     };
 }

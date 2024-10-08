@@ -124,17 +124,17 @@ export default function CreateActiveObjectivePage() {
             if (value === "durationMinutes") {
                 const currentDurationMinutes = prev.info.durationMinutes;
                 updatedInfo.durationMinutes =
-                    operation === "increase"
-                        ? currentDurationMinutes + 1
-                        : Math.max(currentDurationMinutes - 1, 0);
+                    operation === "increase" ?
+                        currentDurationMinutes + 1
+                    :   Math.max(currentDurationMinutes - 1, 0);
             } else if (value === "rests") {
                 const currentRests = prev.info.rests;
 
                 if (currentRests !== null) {
                     updatedInfo.rests =
-                        operation === "increase"
-                            ? currentRests + 1
-                            : Math.max(currentRests - 1, 0);
+                        operation === "increase" ?
+                            currentRests + 1
+                        :   Math.max(currentRests - 1, 0);
                     if (updatedInfo.rests === 0) {
                         updatedInfo.rests = 0;
                         updatedInfo.restDurationMinutes = 0;
@@ -153,15 +153,15 @@ export default function CreateActiveObjectivePage() {
             } else if (value === "restDurationMinutes") {
                 const currentRestDuration = prev.info.restDurationMinutes ?? 0;
                 updatedInfo.restDurationMinutes =
-                    operation === "increase"
-                        ? currentRestDuration + 1
-                        : Math.max(currentRestDuration - 1, 0);
+                    operation === "increase" ?
+                        currentRestDuration + 1
+                    :   Math.max(currentRestDuration - 1, 0);
             } else if (value === "repetitions") {
                 const currentRepetitions = prev.info.repetitions;
                 updatedInfo.repetitions =
-                    operation === "increase"
-                        ? (currentRepetitions ?? 0) + 1
-                        : Math.max((currentRepetitions ?? 0) - 1, 0);
+                    operation === "increase" ?
+                        (currentRepetitions ?? 0) + 1
+                    :   Math.max((currentRepetitions ?? 0) - 1, 0);
             }
 
             return {
@@ -178,7 +178,7 @@ export default function CreateActiveObjectivePage() {
             | "reps"
             | "amountOfHands"
             | "estimateSpeed"
-            | "amountOfPushUps"
+            | "amountOfPushUps",
     ): void {
         if (value !== "amountOfHands") {
             if (action === "increase") {
@@ -286,12 +286,12 @@ export default function CreateActiveObjectivePage() {
             <>
                 <BetterTextSmallHeader>
                     {t(
-                        `pages.createActiveObjective.questions.toggles.${associatedValue}`
+                        `pages.createActiveObjective.questions.toggles.${associatedValue}`,
                     )}
                 </BetterTextSmallHeader>
                 <BetterTextSmallText>
                     {t(
-                        `pages.createActiveObjective.questions.toggles.${associatedValue}Hint`
+                        `pages.createActiveObjective.questions.toggles.${associatedValue}Hint`,
                     )}
                 </BetterTextSmallText>
                 <GapView height={10} />
@@ -305,7 +305,7 @@ export default function CreateActiveObjectivePage() {
                     />
                     <TextInput
                         placeholder={t(
-                            `pages.createActiveObjective.questions.toggles.${associatedValue}Hint`
+                            `pages.createActiveObjective.questions.toggles.${associatedValue}Hint`,
                         )}
                         value={String(objectiveToCreate.info[associatedValue])}
                         placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
@@ -429,7 +429,7 @@ export default function CreateActiveObjectivePage() {
                 isSpecificDataValid =
                     (objectiveToCreate.specificData?.dumbbellWeight || 0) > 0 &&
                     [1, 2].includes(
-                        objectiveToCreate.specificData?.amountOfHands || 0
+                        objectiveToCreate.specificData?.amountOfHands || 0,
                     ) &&
                     (objectiveToCreate.specificData?.reps || 0) > 0;
             } else if (objectiveToCreate.exercise === "Push Ups") {
@@ -457,7 +457,7 @@ export default function CreateActiveObjectivePage() {
                 if (response !== 0) {
                     logToConsole(
                         "Error? Got something else than 0 as the CreateActiveObjective() response",
-                        "error"
+                        "error",
                     );
                 }
                 router.navigate("/");
@@ -484,13 +484,13 @@ export default function CreateActiveObjectivePage() {
                 currentValue={objectiveToCreate.exercise}
                 mode="dialog"
                 dialogPrompt={t(
-                    "pages.createActiveObjective.questions.whatToDo.options.title"
+                    "pages.createActiveObjective.questions.whatToDo.options.title",
                 )}
                 selectOptions={exerciseOptions}
                 changeAction={(value: string | number) => {
                     if (
                         SupportedActiveObjectivesList.includes(
-                            value as SupportedActiveObjectives
+                            value as SupportedActiveObjectives,
                         )
                     ) {
                         updateObjectiveToCreate((prev) => {
@@ -499,7 +499,7 @@ export default function CreateActiveObjectivePage() {
                                     JSON.stringify(prev) +
                                     "value:" +
                                     value,
-                                "log"
+                                "log",
                             );
 
                             return {
@@ -510,18 +510,18 @@ export default function CreateActiveObjectivePage() {
                     } else if (value === "") {
                         logToConsole(
                             t(
-                                "errors.pages.createActiveObjective.chooseAnOptionIsNotValid"
+                                "errors.pages.createActiveObjective.chooseAnOptionIsNotValid",
                             ),
                             "warn",
                             undefined,
-                            true
+                            true,
                         );
                     } else {
                         logToConsole(
                             "Invalid exercise value: " + value,
                             "error",
                             undefined,
-                            false
+                            false,
                         );
                     }
                 }}
@@ -538,30 +538,26 @@ export default function CreateActiveObjectivePage() {
             <View style={styles.dayContainer}>
                 {objectiveToCreate.info.days.map((day, index) => {
                     const thisDay: string =
-                        index === 0
-                            ? t("globals.daysOfTheWeek.monday.key")
-                            : index === 1
-                            ? t("globals.daysOfTheWeek.tuesday.key")
-                            : index === 2
-                            ? t("globals.daysOfTheWeek.wednesday.key")
-                            : index === 3
-                            ? t("globals.daysOfTheWeek.thursday.key")
-                            : index === 4
-                            ? t("globals.daysOfTheWeek.friday.key")
-                            : index === 5
-                            ? t("globals.daysOfTheWeek.saturday.key")
-                            : t("globals.daysOfTheWeek.sunday.key");
+                        index === 0 ? t("globals.daysOfTheWeek.monday.key")
+                        : index === 1 ? t("globals.daysOfTheWeek.tuesday.key")
+                        : index === 2 ? t("globals.daysOfTheWeek.wednesday.key")
+                        : index === 3 ? t("globals.daysOfTheWeek.thursday.key")
+                        : index === 4 ? t("globals.daysOfTheWeek.friday.key")
+                        : index === 5 ? t("globals.daysOfTheWeek.saturday.key")
+                        : t("globals.daysOfTheWeek.sunday.key");
                     return (
                         <React.Fragment key={index}>
                             <View
                                 style={{
                                     ...styles.day,
-                                    borderColor: day
-                                        ? Colors.PRIMARIES.ACE.ACE_STROKE
-                                        : Colors.MAIN.DEFAULT_ITEM.STROKE,
-                                    backgroundColor: day
-                                        ? Colors.PRIMARIES.ACE.ACE
-                                        : Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
+                                    borderColor:
+                                        day ?
+                                            Colors.PRIMARIES.ACE.ACE_STROKE
+                                        :   Colors.MAIN.DEFAULT_ITEM.STROKE,
+                                    backgroundColor:
+                                        day ?
+                                            Colors.PRIMARIES.ACE.ACE
+                                        :   Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
                                 }}
                             >
                                 <Pressable
@@ -574,7 +570,7 @@ export default function CreateActiveObjectivePage() {
                                                 boolean,
                                                 boolean,
                                                 boolean,
-                                                boolean
+                                                boolean,
                                             ] = [...prev.info.days]; // sorry for this, but otherwise an error (type error actually) happens
                                             updatedDays[index] =
                                                 !updatedDays[index]; // basically reverts
@@ -621,12 +617,12 @@ export default function CreateActiveObjectivePage() {
                 <>
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.pushUps.howManyPushUps.question"
+                            "pages.createActiveObjective.questions.perExercise.pushUps.howManyPushUps.question",
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.pushUps.howManyPushUps.proTip"
+                            "pages.createActiveObjective.questions.perExercise.pushUps.howManyPushUps.proTip",
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -639,13 +635,13 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "decrease",
-                                    "amountOfPushUps"
+                                    "amountOfPushUps",
                                 )
                             }
                         />
                         <TextInput
                             value={String(
-                                objectiveToCreate.specificData.amountOfPushUps
+                                objectiveToCreate.specificData.amountOfPushUps,
                             )}
                             placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
@@ -680,7 +676,7 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "increase",
-                                    "amountOfPushUps"
+                                    "amountOfPushUps",
                                 )
                             }
                         />
@@ -692,12 +688,12 @@ export default function CreateActiveObjectivePage() {
                 <>
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howManyReps.question"
+                            "pages.createActiveObjective.questions.perExercise.lifting.howManyReps.question",
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howManyReps.proTip"
+                            "pages.createActiveObjective.questions.perExercise.lifting.howManyReps.proTip",
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -727,7 +723,7 @@ export default function CreateActiveObjectivePage() {
                             onChangeText={(value) => {
                                 const cleanedValue = value.replace(
                                     /[^0-9.]/g,
-                                    ""
+                                    "",
                                 );
                                 const numericValue = parseFloat(cleanedValue);
                                 if (
@@ -765,12 +761,12 @@ export default function CreateActiveObjectivePage() {
                     <GapView height={20} />
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchWeight.question"
+                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchWeight.question",
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchWeight.proTip"
+                            "pages.createActiveObjective.questions.perExercise.lifting.howMuchWeight.proTip",
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -783,13 +779,13 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "decrease",
-                                    "dumbbellWeight"
+                                    "dumbbellWeight",
                                 )
                             }
                         />
                         <TextInput
                             value={String(
-                                objectiveToCreate.specificData.dumbbellWeight
+                                objectiveToCreate.specificData.dumbbellWeight,
                             )}
                             placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
@@ -805,7 +801,7 @@ export default function CreateActiveObjectivePage() {
                             onChangeText={(value) => {
                                 const cleanedValue = value.replace(
                                     /[^0-9.]/g,
-                                    ""
+                                    "",
                                 );
                                 const numericValue = parseFloat(cleanedValue);
                                 if (
@@ -838,7 +834,7 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "increase",
-                                    "dumbbellWeight"
+                                    "dumbbellWeight",
                                 )
                             }
                         />
@@ -851,12 +847,12 @@ export default function CreateActiveObjectivePage() {
                 <>
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.running.howFastToRun.question"
+                            "pages.createActiveObjective.questions.perExercise.running.howFastToRun.question",
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.running.howFastToRun.proTip"
+                            "pages.createActiveObjective.questions.perExercise.running.howFastToRun.proTip",
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -869,13 +865,13 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "decrease",
-                                    "estimateSpeed"
+                                    "estimateSpeed",
                                 )
                             }
                         />
                         <TextInput
                             value={String(
-                                objectiveToCreate.specificData.estimateSpeed
+                                objectiveToCreate.specificData.estimateSpeed,
                             )}
                             placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
@@ -891,7 +887,7 @@ export default function CreateActiveObjectivePage() {
                             onChangeText={(value) => {
                                 const cleanedValue = value.replace(
                                     /[^0-9.]/g,
-                                    ""
+                                    "",
                                 );
                                 const numericValue = parseFloat(cleanedValue);
                                 if (
@@ -924,7 +920,7 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "increase",
-                                    "estimateSpeed"
+                                    "estimateSpeed",
                                 )
                             }
                         />
@@ -938,14 +934,14 @@ export default function CreateActiveObjectivePage() {
                 <>
                     <BetterTextSmallHeader>
                         {t(
-                            "pages.createActiveObjective.questions.perExercise.hands"
+                            "pages.createActiveObjective.questions.perExercise.hands",
                         )}
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            objectiveToCreate.exercise === "Lifting"
-                                ? "pages.createActiveObjective.questions.perExercise.lifting.handsProTip"
-                                : "pages.createActiveObjective.questions.perExercise.pushUps.handsProTip"
+                            objectiveToCreate.exercise === "Lifting" ?
+                                "pages.createActiveObjective.questions.perExercise.lifting.handsProTip"
+                            :   "pages.createActiveObjective.questions.perExercise.pushUps.handsProTip",
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -958,13 +954,13 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "decrease",
-                                    "amountOfHands"
+                                    "amountOfHands",
                                 )
                             }
                         />
                         <TextInput
                             value={String(
-                                objectiveToCreate.specificData.amountOfHands
+                                objectiveToCreate.specificData.amountOfHands,
                             )}
                             placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
                             style={styles.textInput}
@@ -980,7 +976,7 @@ export default function CreateActiveObjectivePage() {
                             onChangeText={(value) => {
                                 const cleanedValue = value.replace(
                                     /[^1-2]/g,
-                                    ""
+                                    "",
                                 );
                                 const numericValue = parseInt(cleanedValue, 10);
                                 if (
@@ -1017,7 +1013,7 @@ export default function CreateActiveObjectivePage() {
                             action={() =>
                                 handleSpecificToggle(
                                     "increase",
-                                    "amountOfHands"
+                                    "amountOfHands",
                                 )
                             }
                         />
@@ -1028,9 +1024,9 @@ export default function CreateActiveObjectivePage() {
             <BetterButton
                 style={canCreateObjective ? "GOD" : "DEFAULT"}
                 buttonText={
-                    canCreateObjective
-                        ? t("globals.interaction.goAheadGood")
-                        : t("globals.interaction.somethingIsWrong")
+                    canCreateObjective ?
+                        t("globals.interaction.goAheadGood")
+                    :   t("globals.interaction.somethingIsWrong")
                 }
                 buttonHint="Creates the desired active objective. In case of missing or invalid fields, it won't do anything."
                 action={canCreateObjective ? () => handleCreation() : () => {}}

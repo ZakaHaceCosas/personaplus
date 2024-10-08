@@ -6,9 +6,19 @@ import { TodaysDay } from "@/toolkit/debug/Today";
  * @export
  * @typedef {SupportedActiveObjectives}
  */
-export type SupportedActiveObjectives = "" | "Push Ups" | "Lifting" | "Running" | "Walking";
+export type SupportedActiveObjectives =
+    | ""
+    | "Push Ups"
+    | "Lifting"
+    | "Running"
+    | "Walking";
 
-export const SupportedActiveObjectivesList = ["Push Ups", "Lifting", "Running", "Walking"]
+export const SupportedActiveObjectivesList = [
+    "Push Ups",
+    "Lifting",
+    "Running",
+    "Walking",
+];
 
 /**
  * Info from an active objective, like what days should it be done, it's duration, etc...
@@ -25,12 +35,12 @@ export const SupportedActiveObjectivesList = ["Push Ups", "Lifting", "Running", 
         { rests: number; restDuration: number }
     ); */
 type ActiveObjectiveInfo = {
-    days: [boolean, boolean, boolean, boolean, boolean, boolean, boolean]
+    days: [boolean, boolean, boolean, boolean, boolean, boolean, boolean];
     durationMinutes: number;
     rests: number | null;
     repetitions: number | null;
-    restDurationMinutes: number
-}
+    restDurationMinutes: number;
+};
 
 /**
  * Specific objective data for exercises.
@@ -101,7 +111,7 @@ export interface ActiveObjective {
      *
      * @type {ActiveObjectiveSpecificData}
      */
-    specificData: ActiveObjectiveSpecificData
+    specificData: ActiveObjectiveSpecificData;
 }
 
 /**
@@ -123,7 +133,7 @@ export type ActiveObjectiveDailyLog = {
     [date: TodaysDay]: {
         [identifier: number]: {
             wasDone: boolean;
-            performance: string | undefined
+            performance: string | undefined;
         };
     };
 };

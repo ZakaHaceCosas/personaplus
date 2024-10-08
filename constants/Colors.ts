@@ -25,7 +25,7 @@ const Colors: ColorsObject = {
         /** Pure black */
         BLACK: "#000000",
         /** Pure white */
-        WHITE: "#FFFFFF"
+        WHITE: "#FFFFFF",
     },
     /** Main color palette */
     MAIN: {
@@ -43,7 +43,7 @@ const Colors: ColorsObject = {
             /** Non-selected footer items */
             FOOTER_UNS: "#8A8C8E",
             /** Selected footer items */
-            FOOTER_SEL: "#FFFFFF"
+            FOOTER_SEL: "#FFFFFF",
         },
         DEFAULT_ITEM: {
             /** Item background */
@@ -51,8 +51,8 @@ const Colors: ColorsObject = {
             /** Item text / placeholder */
             TEXT: "#949698",
             /** Item stroke / border */
-            STROKE: "#3E4146"
-        }
+            STROKE: "#3E4146",
+        },
     },
     /** Colors for labels */
     LABELS: {
@@ -61,7 +61,7 @@ const Colors: ColorsObject = {
         /** Small labels giving extra details */
         SDD: "#C8C8C8",
         /** In a table, the row headers */
-        TABLE_HEADER: "#8D8E91"
+        TABLE_HEADER: "#8D8E91",
     },
     /** Primary colors */
     PRIMARIES: {
@@ -69,7 +69,7 @@ const Colors: ColorsObject = {
             /** Main color */
             GOD: "#32FF80",
             /** Stroke color for GOD */
-            GOD_STROKE: "#198040"
+            GOD_STROKE: "#198040",
         },
         ACE: {
             /** Main color */
@@ -77,21 +77,21 @@ const Colors: ColorsObject = {
             /** Stroke color for ACE */
             ACE_STROKE: "#194080",
             /** Special color used for sliders */
-            ACE_SCROLL: "#2A61BB"
+            ACE_SCROLL: "#2A61BB",
         },
         WOR: {
             /** Main color */
             WOR: "#FF3232",
             /** Stroke color for WOR */
-            WOR_STROKE: "#801919"
+            WOR_STROKE: "#801919",
         },
         HMM: {
             /** Main color */
             HMM: "#FFC832",
             /** Stroke color for HMM */
-            HMM_STROKE: "#806419"
-        }
-    }
+            HMM_STROKE: "#806419",
+        },
+    },
 };
 
-export default Colors
+export default Colors;

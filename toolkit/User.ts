@@ -34,15 +34,44 @@ export function validateUserData(
     age: string | number | null,
     weight: string | number | null,
     height: string | number | null,
-    username: string | null
+    username: string | null,
 ): boolean {
     const isGenderValid = gender === "male" || gender === "female";
-    const isAgeValid = age !== null && age !== undefined && age !== "" && !isNaN(Number(age)) && Number(age) >= 5 && Number(age) <= 99;
-    const isWeightValid = weight !== null && weight !== undefined && weight !== "" && !isNaN(Number(weight)) && Number(weight) >= 15 && Number(weight) <= 300;
-    const isHeightValid = height !== null && height !== undefined && height !== "" && !isNaN(Number(height)) && Number(height) >= 45 && Number(height) <= 260;
-    const isUsernameValid = username !== null && username !== undefined && username.trim() !== "" && username.trim().length >= 3 && username.trim().length <= 40;
+    const isAgeValid =
+        age !== null &&
+        age !== undefined &&
+        age !== "" &&
+        !isNaN(Number(age)) &&
+        Number(age) >= 5 &&
+        Number(age) <= 99;
+    const isWeightValid =
+        weight !== null &&
+        weight !== undefined &&
+        weight !== "" &&
+        !isNaN(Number(weight)) &&
+        Number(weight) >= 15 &&
+        Number(weight) <= 300;
+    const isHeightValid =
+        height !== null &&
+        height !== undefined &&
+        height !== "" &&
+        !isNaN(Number(height)) &&
+        Number(height) >= 45 &&
+        Number(height) <= 260;
+    const isUsernameValid =
+        username !== null &&
+        username !== undefined &&
+        username.trim() !== "" &&
+        username.trim().length >= 3 &&
+        username.trim().length <= 40;
 
-    return isGenderValid && isAgeValid && isWeightValid && isHeightValid && isUsernameValid;
+    return (
+        isGenderValid &&
+        isAgeValid &&
+        isWeightValid &&
+        isHeightValid &&
+        isUsernameValid
+    );
 }
 
 /**
@@ -53,20 +82,34 @@ export function validateUserData(
  * @returns {Promise<FullProfile | null>} A `FullProfile` if a profile exists and the function succeeds in orchestrating it, `null` otherwise.
  */
 export async function orchestrateUserData(): Promise<FullProfile | null> {
-    let response: FullProfile | null = null
+    let response: FullProfile | null = null;
     try {
         async function handler(): Promise<void> {
-            const data: string | null = await AsyncStorage.getItem(StoredItemNames.userData)
-            response = (data !== null && data !== "" && Object.keys(JSON.parse(data)).length > 0) ? JSON.parse(data) : null
+            const data: string | null = await AsyncStorage.getItem(
+                StoredItemNames.userData,
+            );
+            response =
+                (
+                    data !== null &&
+                    data !== "" &&
+                    Object.keys(JSON.parse(data)).length > 0
+                ) ?
+                    JSON.parse(data)
+                    : null;
         }
 
-        await handler()
+        await handler();
     } catch (e) {
-        logToConsole("Error orchestrating user data! " + e, "error", undefined, false)
-        throw e
+        logToConsole(
+            "Error orchestrating user data! " + e,
+            "error",
+            undefined,
+            false,
+        );
+        throw e;
     }
 
-    return response
+    return response;
 }
 
 /**
@@ -81,12 +124,17 @@ export function updateBrm5(careAboutTheUser: boolean): void {
             await AsyncStorage.multiRemove([
                 StoredItemNames.userData,
                 StoredItemNames.objectives,
-                StoredItemNames.dailyLog
-            ])
-            router.replace("/Welcome")
-            return 0
+                StoredItemNames.dailyLog,
+            ]);
+            router.replace("/Welcome");
+            return 0;
         } catch (e) {
-            logToConsole("Unknown error removing user data!", "error", undefined, true) // to the user, we show a normal message
+            logToConsole(
+                "Unknown error removing user data!",
+                "error",
+                undefined,
+                true,
+            ); // to the user, we show a normal message
             logToConsole(
                 "Error releasing op. Resurgence AKA removing user data: " + e,
                 "error",
@@ -94,10 +142,11 @@ export function updateBrm5(careAboutTheUser: boolean): void {
                     function: "updateBrm5()",
                     location: "@/toolkit/User.ts",
                     isHandler: true,
-                    handlerName: "releaseOperationResurgence()"
+                    handlerName: "releaseOperationResurgence()",
                 },
-                false) // to the developer, the full error info and the real name of the function
-            throw e
+                false,
+            ); // to the developer, the full error info and the real name of the function
+            throw e;
         }
     }
 
@@ -110,17 +159,20 @@ export function updateBrm5(careAboutTheUser: boolean): void {
                     isPreferred: false,
                     text: "Go ahead",
                     style: "destructive",
-                    onPress: () => releaseOperationResurgence()
+                    onPress: () => releaseOperationResurgence(),
                 },
                 {
                     isPreferred: true,
                     text: "Nevermind",
-                    style: "cancel"
-                }
-            ]
-        )
+                    style: "cancel",
+                },
+            ],
+        );
     } else {
-        logToConsole("WATCHOUT! BAD PRACTICE SUMMONED!! (someone called `updateBrm5` with param `careAboutTheUser` set to `false`)", "warn")
-        releaseOperationResurgence()
+        logToConsole(
+            "WATCHOUT! BAD PRACTICE SUMMONED!! (someone called `updateBrm5` with param `careAboutTheUser` set to `false`)",
+            "warn",
+        );
+        releaseOperationResurgence();
     }
 }

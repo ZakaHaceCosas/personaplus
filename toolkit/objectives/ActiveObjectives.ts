@@ -5,7 +5,11 @@ import {
 } from "@/types/ActiveObjectives";
 import { logToConsole } from "@/toolkit/debug/Console";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { adjustedToday, getCurrentDate, TodaysDay } from "@/toolkit/debug/Today";
+import {
+    adjustedToday,
+    getCurrentDate,
+    TodaysDay,
+} from "@/toolkit/debug/Today";
 import StoredItemNames from "@/constants/StoredItemNames";
 
 /**
@@ -29,9 +33,10 @@ async function GetAllObjectives(): Promise<ActiveObjective[] | null> {
                 {
                     location: "@/toolkit/objectives/ActiveObjectives.ts",
                     isHandler: false,
-                    function: "GetAllObjectives() @ try-catch #1 @ sub try-catch #1"
+                    function:
+                        "GetAllObjectives() @ try-catch #1 @ sub try-catch #1",
                 },
-                false
+                false,
             );
             return null;
         }
@@ -57,15 +62,13 @@ async function GetAllObjectives(): Promise<ActiveObjective[] | null> {
  * @rawR5code
  * @returns {ActiveObjectiveDailyLog} The entire daily log.
  */
-async function GetActiveObjectiveDailyLog(): Promise<
-    ActiveObjectiveDailyLog | null
-> {
+async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog | null> {
     try {
         const response: string | null = await AsyncStorage.getItem(
             StoredItemNames.dailyLog,
         );
         if (!response) {
-            return {}
+            return {};
         }
         const dailyLog: ActiveObjectiveDailyLog = JSON.parse(response);
         return dailyLog;
@@ -91,9 +94,10 @@ async function SaveActiveObjectiveToDailyLog(
 ) {
     try {
         // Fetch old data
-        const prevDailySavedData: ActiveObjectiveDailyLog | null = await GetActiveObjectiveDailyLog()
+        const prevDailySavedData: ActiveObjectiveDailyLog | null =
+            await GetActiveObjectiveDailyLog();
         const dailyData: ActiveObjectiveDailyLog = prevDailySavedData ?? {};
-        const today = getCurrentDate()
+        const today = getCurrentDate();
 
         // If there's no old data for today, creates an {} for today
         if (!dailyData[today]) {
@@ -171,9 +175,10 @@ async function CheckForAnActiveObjectiveDailyStatus(
                 );
             }
         } else {
-            const log = dailyData[date]
-                ? `Warning: No data exists for objective ${identifier} on date ${date}. Note: This warning is actually a normal behavior most of the time: if you didn't interact with the objective at all, it won't be logged. most interactions will mark it as done, but until those interactions happen, this warning will occur.`
-                : `Warning: No data exists for date ${date} at all. Note: This warning is actually a normal behavior most of the time: if you didn't interact with the objective at all, it won't be logged. most interactions will mark it as done, but until those interactions happen, this warning will occur.`;
+            const log =
+                dailyData[date] ?
+                    `Warning: No data exists for objective ${identifier} on date ${date}. Note: This warning is actually a normal behavior most of the time: if you didn't interact with the objective at all, it won't be logged. most interactions will mark it as done, but until those interactions happen, this warning will occur.`
+                    : `Warning: No data exists for date ${date} at all. Note: This warning is actually a normal behavior most of the time: if you didn't interact with the objective at all, it won't be logged. most interactions will mark it as done, but until those interactions happen, this warning will occur.`;
             logToConsole(log, "warn");
             return false; // no interaction with the objective means no data logged.
         }
@@ -235,10 +240,16 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
             .every(
                 obj => obj === null || obj.status === true);
         return allDone ? 0 : null; */
-        const allDone: boolean = activeObjectivesDueToday.every((obj: { identifier: number, status: boolean }): boolean => obj.status);
-        return allDone
-            ? 0
-            : activeObjectivesDueToday.map((obj: { identifier: number, status: boolean }): number => obj.identifier); // Return 0 if all are done, otherwise return the active objectives due today (well, their identifiers)
+        const allDone: boolean = activeObjectivesDueToday.every(
+            (obj: { identifier: number; status: boolean }): boolean =>
+                obj.status,
+        );
+        return allDone ? 0 : (
+            activeObjectivesDueToday.map(
+                (obj: { identifier: number; status: boolean }): number =>
+                    obj.identifier,
+            )
+        ); // Return 0 if all are done, otherwise return the active objectives due today (well, their identifiers)
     } catch (e) {
         throw new Error("Failed to get all pending objectives: " + e);
     }
@@ -299,7 +310,12 @@ async function CreateActiveObjective(
 
             let newIdentifier: number = generateObjectiveId();
             // verify there aren't duplicates
-            while (objs.some((obj: ActiveObjective): boolean => obj.identifier === newIdentifier)) {
+            while (
+                objs.some(
+                    (obj: ActiveObjective): boolean =>
+                        obj.identifier === newIdentifier,
+                )
+            ) {
                 newIdentifier = generateObjectiveId();
             }
             return newIdentifier;
@@ -329,14 +345,14 @@ async function CreateActiveObjective(
             ") successfully!",
             "success",
             undefined,
-            false
+            false,
         );
         logToConsole(
             "NOTE: Full JSON of the created objective:" +
             JSON.stringify(newObjective),
             "log",
             undefined,
-            false
+            false,
         );
         return 0;
     } catch (e) {

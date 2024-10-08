@@ -10,25 +10,25 @@ interface UniversalPressableStyleProps {
      *
      * @type {number}
      */
-    height: number,
+    height: number;
     /**
      * The border radius (AKA how round it is).
      *
      * @type {number}
      */
-    borderRadius: number,
+    borderRadius: number;
     /**
      * The border width (AKA how big the border is).
      *
      * @type {number}
      */
-    borderWidth: number
+    borderWidth: number;
     /**
      * The padding (AKA how much inner-space in pixels exists from the actual content to the item's borders).
      *
      * @type {number}
      */
-    padding: number
+    padding: number;
 }
 
 /**
@@ -41,4 +41,4 @@ export const UniversalPressableStyle: UniversalPressableStyleProps = {
     borderRadius: 14,
     borderWidth: 4,
     padding: 15,
-}
+};

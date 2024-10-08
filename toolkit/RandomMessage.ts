@@ -10,8 +10,12 @@ import { TFunction } from "i18next";
  * @returns {string} A random message string.
  */
 export default function generateRandomMessage(
-    target: "allObjectivesDone" | "sessionCompleted" | "activeObjectiveReminders" | "createActiveObjective",
-    t: TFunction
+    target:
+        | "allObjectivesDone"
+        | "sessionCompleted"
+        | "activeObjectiveReminders"
+        | "createActiveObjective",
+    t: TFunction,
 ): string {
     // Get all messages for the specified target
     // so the app feels more friendly :D

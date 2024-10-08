@@ -93,7 +93,7 @@ export default function HomeScreen() {
             try {
                 // user data
                 const bareUserData: string | null = await AsyncStorage.getItem(
-                    StoredItemNames.userData
+                    StoredItemNames.userData,
                 );
                 if (!bareUserData) {
                     throw new Error("userData is null!");
@@ -108,7 +108,7 @@ export default function HomeScreen() {
                     setObjectives("No objectives (null)");
                 }
                 setObjectives(
-                    bareObjectives ? JSON.stringify(bareObjectives) : null
+                    bareObjectives ? JSON.stringify(bareObjectives) : null,
                 );
 
                 // dailyLog
@@ -175,7 +175,12 @@ export default function HomeScreen() {
                 style="DEFAULT"
                 title={"AsyncStorage item: " + StoredItemNames.userData}
                 text={error ? "An error happened:" : "User data (raw JSON)"}
-                subtext={error ? error : userData ? userData : "null"}
+                subtext={
+                    error ? error
+                    : userData ?
+                        userData
+                    :   "null"
+                }
                 layout="alert"
             />
             <GapView height={10} />
@@ -183,7 +188,12 @@ export default function HomeScreen() {
                 style="DEFAULT"
                 title={"AsyncStorage item: " + StoredItemNames.objectives}
                 text={error ? "An error happened:" : "Objectives (raw JSON)"}
-                subtext={error ? error : objectives ? objectives : "null"}
+                subtext={
+                    error ? error
+                    : objectives ?
+                        objectives
+                    :   "null"
+                }
                 layout="alert"
             />
             <GapView height={10} />
@@ -191,7 +201,12 @@ export default function HomeScreen() {
                 style="DEFAULT"
                 title={"AsyncStorage item: " + StoredItemNames.dailyLog}
                 text={error ? "An error happened:" : "Daily log (raw JSON)"}
-                subtext={error ? error : dailyLog ? dailyLog : "null"}
+                subtext={
+                    error ? error
+                    : dailyLog ?
+                        dailyLog
+                    :   "null"
+                }
                 layout="alert"
             />
             <GapView height={10} />
@@ -200,11 +215,14 @@ export default function HomeScreen() {
                     <BetterTextSmallText>Exercise{"  "}</BetterTextSmallText>
                     <BetterTextSmallText>ID{"  "}</BetterTextSmallText>
                 </View>
-                {(objectives
-                    ? (JSON.parse(objectives) as ActiveObjective[])
-                    : []
+                {(objectives ?
+                    (JSON.parse(objectives) as ActiveObjective[])
+                :   []
                 ).map((objective) => (
-                    <View key={objective.identifier} style={styles.row}>
+                    <View
+                        key={objective.identifier}
+                        style={styles.row}
+                    >
                         <BetterTextSmallText>
                             {objective.exercise}
                             {"  "}

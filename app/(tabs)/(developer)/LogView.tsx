@@ -126,9 +126,9 @@ export default function HomeScreen() {
                 action={clearLogs}
             />
             <View style={styles.consoleView}>
-                {error ? (
+                {error ?
                     <BetterTextSmallText>{error}</BetterTextSmallText>
-                ) : logs && logs.length > 0 && Array.isArray(logs) ? (
+                : logs && logs.length > 0 && Array.isArray(logs) ?
                     logs.map((log, index) => {
                         const logStyle = styles[log.type] || {};
                         const options: Intl.DateTimeFormatOptions = {
@@ -150,20 +150,22 @@ export default function HomeScreen() {
                             <React.Fragment key={index}>
                                 <Text style={[styles.logText, logStyle]}>
                                     ({log.type.toUpperCase()}) [{formattedDate}]{" "}
-                                    {log.traceback
-                                        ? `{\n  TRACEBACK:\n  location: ${
-                                              log.traceback.location
-                                          },\n  function: ${
-                                              log.traceback.function
-                                          },\n  isHandler: ${
-                                              log.traceback.isHandler
-                                          },\n${
-                                              log.traceback.isHandler &&
-                                              log.traceback.handlerName
-                                                  ? `  handlerName: ${log.traceback.handlerName}`
-                                                  : ""
-                                          }}`
-                                        : "{ NO TRACEBACK }"}
+                                    {log.traceback ?
+                                        `{\n  TRACEBACK:\n  location: ${
+                                            log.traceback.location
+                                        },\n  function: ${
+                                            log.traceback.function
+                                        },\n  isHandler: ${
+                                            log.traceback.isHandler
+                                        },\n${
+                                            (
+                                                log.traceback.isHandler &&
+                                                log.traceback.handlerName
+                                            ) ?
+                                                `  handlerName: ${log.traceback.handlerName}`
+                                            :   ""
+                                        }}`
+                                    :   "{ NO TRACEBACK }"}
                                 </Text>
                                 <Text style={[styles.logText, logStyle]}>
                                     {String(log.message)}
@@ -172,13 +174,12 @@ export default function HomeScreen() {
                             </React.Fragment>
                         );
                     })
-                ) : (
-                    <BetterTextSmallText>
+                :   <BetterTextSmallText>
                         No logs. If you recently cleared them it's alright, if
                         not, this shouldn't be empty, so you might be facing a
                         bug.
                     </BetterTextSmallText>
-                )}
+                }
             </View>
             <PageEnd includeText={true} />
         </>

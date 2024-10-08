@@ -77,4 +77,4 @@ const FontSizes: FontSizesProps = {
     EXTRA_LARGE: 30,
 };
 
-export default FontSizes
+export default FontSizes;

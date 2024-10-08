@@ -6,7 +6,7 @@ import {
 } from "@/components/text/BetterTextPresets";
 import SafelyGoBack from "@/toolkit/Routing";
 import * as Router from "expo-router";
-import { LayoutContainer } from "./(tabs)/_layout";
+import { LayoutContainer } from "@/app/(tabs)/_layout";
 import GapView from "@/components/ui/GapView";
 
 export default function NotFoundScreen() {

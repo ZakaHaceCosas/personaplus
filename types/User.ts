@@ -7,13 +7,13 @@ export interface FullProfile {
     language: "es" | "en";
     activeness: "poor" | "small" | "normal" | "intense" | "super" | null;
     focus:
-    | "noPriority"
-    | "assistMePls"
-    | "wellbeing"
-    | "diet"
-    | "exercising"
-    | ""
-    | null; // both "" and null serve as a "null" / invalid value
+        | "noPriority"
+        | "assistMePls"
+        | "wellbeing"
+        | "diet"
+        | "exercising"
+        | ""
+        | null; // both "" and null serve as a "null" / invalid value
     sleepHours: 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | "";
     theThinkHour: string;
     isNewUser: boolean;
