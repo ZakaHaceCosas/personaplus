@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const config: ExpoConfig.ExpoConfig = {
-    name: process.env.APP_NAME || "PersonaPlus",
+    name: process.env.PERSONAPLUS_ENV_APP_NAME || "PersonaPlus",
     slug: "PersonaPlus",
     scheme: "personaplus",
     description: "Give yourself a PLUS",
@@ -30,16 +30,20 @@ const config: ExpoConfig.ExpoConfig = {
     },
     assetBundlePatterns: ["**/*"],
     android: {
-        ...(process.env.APPICON && { icon: process.env.APPICON }), // only specify "icon" when it exists
+        ...(process.env.PERSONAPLUS_ENV_APP_ICON && {
+            icon: process.env.PERSONAPLUS_ENV_APP_ICON,
+        }), // only specify "icon" when it exists
         adaptiveIcon: {
             foregroundImage: "./assets/resources/adaptive-icon-foreground.png",
             backgroundImage:
-                process.env.APP_ADAPTIVE_ICON_BACKGROUND ||
+                process.env.PERSONAPLUS_ENV_APP_ADAPTIVE_ICON_BACKGROUND ||
                 "./assets/resources/adaptive-icon-background.png",
             backgroundColor: "#0E1013",
         },
         allowBackup: false,
-        package: process.env.PACKAGE || "com.zakahacecosas.personaplus",
+        package:
+            process.env.PERSONAPLUS_ENV_PACKAGE ||
+            "com.zakahacecosas.personaplus",
         permissions: [
             "android.permission.SCHEDULE_EXACT_ALARM",
             "android.permission.POST_NOTIFICATIONS",
