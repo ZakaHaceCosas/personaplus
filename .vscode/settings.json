@@ -41,21 +41,9 @@
     "editor.minimap.enabled": true,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "explorer.confirmDelete": true,
-    "[javascript]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": true
-    },
-    "[typescript]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": true
-    },
-    "[typescriptreact]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": true
-    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[json]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": true
+        "editor.defaultFormatter": "vscode.json-language-features"
     },
     "[markdown]": {
         "editor.unicodeHighlight.ambiguousCharacters": true,
@@ -75,7 +63,7 @@
         "diffEditor.ignoreTrimWhitespace": false,
         "editor.formatOnSave": false
     },
-    "editor.formatOnSaveMode": "modifications",
+    "editor.formatOnSaveMode": "file",
     "workbench.editor.customLabels.patterns": {
         "**/core/**": "Core library, ${filename}.${extname} @ ${dirname}",
         "**/app/**": "App layout, ${filename}.${extname}",
