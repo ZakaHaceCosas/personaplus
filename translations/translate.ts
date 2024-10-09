@@ -57,14 +57,14 @@ export async function getDefaultLocale(): Promise<"es" | "en"> {
         const defaultLanguage: "es" | "en" =
             savedLanguageValue === "es" || savedLanguageValue === "en" ?
                 savedLanguageValue
-                : "en";
+            :   "en";
 
         return defaultLanguage;
     } catch (e) {
         logToConsole(
             "Error handling getDefaultLocale(): " +
-            e +
-            ". This is a warning and not an error because it doesn't have severe side effects. Fallback to English.",
+                e +
+                ". This is a warning and not an error because it doesn't have severe side effects. Fallback to English.",
             "warn",
             {
                 location: "@/translations/translate.ts",
