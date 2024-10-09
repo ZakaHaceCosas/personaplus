@@ -34,9 +34,9 @@ interface SelectOption {
     /**
      * Its value. It is what the code sees as the option. Do not set it to `""` for a default / null option, that's already done by default.
      *
-     * @type {string}
+     * @type {string | number}
      */
-    value: string;
+    value: string | number;
     /**
      * Whether it is enabled or not. Defaults to `true`.
      *
