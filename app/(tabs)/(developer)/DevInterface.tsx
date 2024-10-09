@@ -235,9 +235,7 @@ export default function HomeScreen() {
                 ))}
             </View>
             <GapView height={10} />
-            <BetterTextSubHeader>
-                Logged errors and warnings
-            </BetterTextSubHeader>
+            <BetterTextSubHeader>Console logs</BetterTextSubHeader>
             <GapView height={5} />
             <BetterButton
                 buttonText="See all logs"
@@ -245,7 +243,13 @@ export default function HomeScreen() {
                 style="DEFAULT"
                 action={() => router.push("/LogView")}
             />
-
+            <GapView height={5} />
+            <BetterButton
+                buttonText="See error logs"
+                buttonHint="Opens up a dedicated page for viewing warning and error console logs."
+                style="DEFAULT"
+                action={() => router.push("/ErrorLogger")}
+            />
             <PageEnd includeText={true} />
         </>
     );

@@ -87,7 +87,7 @@ export default function HomeScreen() {
         }
 
         actuallyClearLogs();
-        router.replace("/DevInterface");
+        router.replace("/LogView");
     }
 
     // no i am not translating dev interface. it is just for BackButton to work.
@@ -109,8 +109,8 @@ export default function HomeScreen() {
             </BetterTextSmallerText>
             <GapView height={5} />
             <BetterTextSmallerText>
-                Note 2: Logs are formatted as MM/DD/YYYY due to React's
-                constraints. Apologies for the inconvenience.
+                Note 2: Logs are SOMETIMES formatted as MM/DD/YYYY due to
+                React's constraints. Apologies for the inconvenience.
             </BetterTextSmallerText>
             <GapView height={5} />
             <BetterTextSmallerText>
