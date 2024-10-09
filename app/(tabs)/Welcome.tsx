@@ -30,6 +30,7 @@ import Select from "@/components/interaction/Select";
 import BetterButton from "@/components/interaction/BetterButton";
 import BetterInputField from "@/components/interaction/BetterInputField";
 import StoredItemNames from "@/constants/StoredItemNames";
+import { formatTimeString } from "@/toolkit/Time";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -66,7 +67,7 @@ export default function WelcomePage() {
         weight: "",
         age: "",
         language: "en",
-        sleepHours: "",
+        sleepHours: null,
         activeness: null,
         focus: null,
         gender: null,
@@ -95,7 +96,7 @@ export default function WelcomePage() {
     ];
     const focusOptions = [
         {
-            value: "",
+            value: null,
             label: t("globals.interaction.chooseAnOption"),
             default: true,
         },
@@ -129,32 +130,32 @@ export default function WelcomePage() {
             default: false,
         },
     ];
-    const sleepTimeOptions = [
-        t("pages.welcome.questions.sleepTime.options.threeOrLess"),
-        t("pages.welcome.questions.sleepTime.options.four"),
-        t("pages.welcome.questions.sleepTime.options.five"),
-        t("pages.welcome.questions.sleepTime.options.six"),
-        t("pages.welcome.questions.sleepTime.options.seven"),
-        t("pages.welcome.questions.sleepTime.options.eight"),
-        t("pages.welcome.questions.sleepTime.options.nine"),
-        t("pages.welcome.questions.sleepTime.options.ten"),
-        t("pages.welcome.questions.sleepTime.options.moreThanTen"),
+    const sleepTimeOptions: [string, number][] = [
+        [t("pages.welcome.questions.sleepTime.options.threeOrLess"), 3],
+        [t("pages.welcome.questions.sleepTime.options.four"), 4],
+        [t("pages.welcome.questions.sleepTime.options.five"), 5],
+        [t("pages.welcome.questions.sleepTime.options.six"), 6],
+        [t("pages.welcome.questions.sleepTime.options.seven"), 7],
+        [t("pages.welcome.questions.sleepTime.options.eight"), 8],
+        [t("pages.welcome.questions.sleepTime.options.nine"), 9],
+        [t("pages.welcome.questions.sleepTime.options.ten"), 10],
+        [t("pages.welcome.questions.sleepTime.options.moreThanTen"), 11],
     ];
     const sleepTimeSelectOptions = sleepTimeOptions.map((option) => ({
-        label: option,
-        value: option,
+        label: option[0],
+        value: option[1],
         enabled: true,
     }));
-    const activenessOptions = [
-        t("pages.welcome.questions.activeness.options.poor"),
-        t("pages.welcome.questions.activeness.options.small"),
-        t("pages.welcome.questions.activeness.options.normal"),
-        t("pages.welcome.questions.activeness.options.intense"),
-        t("pages.welcome.questions.activeness.options.super"),
+    const activenessOptions: string[][] = [
+        [t("pages.welcome.questions.activeness.options.poor"), "poor"],
+        [t("pages.welcome.questions.activeness.options.small"), "small"],
+        [t("pages.welcome.questions.activeness.options.normal"), "normal"],
+        [t("pages.welcome.questions.activeness.options.intense"), "intense"],
+        [t("pages.welcome.questions.activeness.options.super"), "super"],
     ];
     const activenessSelectOptions = activenessOptions.map((option) => ({
-        label: option,
-        value: option,
+        label: option[0],
+        value: option[1],
         enabled: true,
     }));
 
@@ -197,14 +198,13 @@ export default function WelcomePage() {
             | "focus"
             | "sleepHours"
             | "theThinkHour",
-        value: string | number,
+        value: string | number | null,
     ): void {
         try {
             setFormData((prevData) => ({
                 ...prevData,
                 [item]: value,
             }));
-            logToConsole("FORM DATA:" + JSON.stringify(formData), "log");
         } catch (e) {
             logToConsole(
                 "Error handling data changes happened at Welcome screen: " + e,
@@ -359,7 +359,9 @@ export default function WelcomePage() {
                     changeAction={(value) =>
                         handleChange(
                             associatedValue,
-                            value !== null && value !== undefined ? value : "",
+                            value !== null && value !== undefined ?
+                                value
+                            :   null,
                         )
                     }
                     currentValue={formData[associatedValue] ?? ""}
@@ -370,7 +372,7 @@ export default function WelcomePage() {
         );
     }
 
-    useEffect(() => {
+    useEffect((): void => {
         try {
             validateStepOne(
                 validateUserData(
@@ -381,16 +383,14 @@ export default function WelcomePage() {
                     formData.username,
                 ),
             );
-            validateStepTwo(formData.focus !== null && formData.focus !== "");
+            validateStepTwo(formData.focus !== null);
             validateStepThree(
-                (formData.sleepHours || "") !== "" &&
-                    (formData.activeness || "") !== "",
+                formData.sleepHours !== null &&
+                    formData.sleepHours > 0 &&
+                    formData.sleepHours < 12 &&
+                    formData.activeness !== null,
             );
-            validateStepFour((formData.theThinkHour || "") !== "");
-            logToConsole("STEP ONE VALIDATION:" + isStepOneValid, "log");
-            logToConsole("STEP TWO VALIDATION:" + isStepTwoValid, "log");
-            logToConsole("STEP THREE VALIDATION:" + isStepThreeValid, "log");
-            logToConsole("STEP FOUR VALIDATION:" + isStepFourValid, "log");
+            validateStepFour(formData.theThinkHour !== "");
         } catch (e) {
             logToConsole("Error validating user data: " + e, "error");
         }
@@ -570,43 +570,6 @@ export default function WelcomePage() {
         handle();
     }
 
-    /**
-     * Formats a time string, from the `{ hours?: number; minutes?: number; seconds?: number; }` object provided by `react-native-timer-picker` to a "HH:MM:SS" string.
-     *
-     * @param {{
-     *  hours?: number;
-     *  minutes?: number;
-     *  seconds?: number;
-     * }} time The time object.
-     * @param {number} time.hours Hours.
-     * @param {number} time.minutes Minutes.
-     * @param {number} time.seconds Seconds.
-     * @returns {string} A formatted "HH:MM:SS" string.
-     */
-    function formatTimeString({
-        hours,
-        minutes,
-        seconds,
-    }: {
-        hours?: number;
-        minutes?: number;
-        seconds?: number;
-    }): string {
-        const timeParts = [];
-
-        if (hours !== undefined) {
-            timeParts.push(hours.toString().padStart(2, "0"));
-        }
-        if (minutes !== undefined) {
-            timeParts.push(minutes.toString().padStart(2, "0"));
-        }
-        if (seconds !== undefined) {
-            timeParts.push(seconds.toString().padStart(2, "0"));
-        }
-
-        return timeParts.join(":");
-    }
-
     return (
         <View style={styles.mainView}>
             {spawnProgressBar()}
@@ -769,6 +732,7 @@ export default function WelcomePage() {
                     <BetterTextSubHeader>
                         {t("pages.welcome.questions.theThinkHour.description")}
                     </BetterTextSubHeader>
+                    <GapView height={10} />
                     <BetterButton
                         style="GOD"
                         buttonText={t(
@@ -783,9 +747,7 @@ export default function WelcomePage() {
                         onConfirm={(pickedDuration) => {
                             handleChange(
                                 "theThinkHour",
-                                formatTimeString(pickedDuration) ?
-                                    formatTimeString(pickedDuration)
-                                :   "",
+                                formatTimeString(pickedDuration),
                             );
                             setShowPicker(false);
                         }}
@@ -815,6 +777,14 @@ export default function WelcomePage() {
                         }}
                     />
                     <GapView height={10} />
+                    {formData.theThinkHour && (
+                        <>
+                            <BetterTextSmallText>
+                                Has elegido las {formData.theThinkHour}.
+                            </BetterTextSmallText>
+                            <GapView height={10} />
+                        </>
+                    )}
                     {spawnNavigationButtons(4, true)}
                 </>
             )}
