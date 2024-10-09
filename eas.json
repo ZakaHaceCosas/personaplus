@@ -1,0 +1,36 @@
+{
+    "cli": {
+        "requireCommit": false,
+        "promptToConfigurePushNotifications": true
+    },
+    "build": {
+        "preview-assembleDebug": {
+            "android": {
+                "gradleCommand": ":app:assembleDebug"
+            }
+        },
+        "development": {
+            "developmentClient": true,
+            "distribution": "internal",
+            "android": {
+                "buildType": "apk",
+                "withoutCredentials": true
+            },
+            "env": {
+                "PERSONAPLUS_ENV_PACKAGE": "com.zakahacecosas.personaplus.development",
+                "PERSONAPLUS_ENV_APP_ICON": "./assets/icon-5050.png",
+                "PERSONAPLUS_ENV_APP_NAME": "PP Dev Build",
+                "PERSONAPLUS_ENV_APP_ADAPTIVE_ICON_BACKGROUND": "./assets/aib-5050.png"
+            }
+        },
+        "production": {
+            "android": {
+                "buildType": "apk"
+            },
+            "distribution": "store",
+            "env": {
+                "PERSONAPLUS_ENV_PACKAGE": "com.zakahacecosas.personaplus"
+            }
+        }
+    }
+}
