@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import Colors from "@/constants/Colors";
 import { BetterTextSmallText } from "@/components/text/BetterTextPresets";
 import { UniversalPressableStyle } from "@/constants/ui/Pressables";
+import { logToConsole } from "@/toolkit/debug/Console";
 
 const styles = StyleSheet.create({
     textInput: {
@@ -66,7 +67,7 @@ export default function BetterInputField({
         if (inputRef) {
             inputRef.focus();
         } else {
-            throw new Error("No inputRef");
+            logToConsole("No inputRef.", "warn");
         }
     }
 
