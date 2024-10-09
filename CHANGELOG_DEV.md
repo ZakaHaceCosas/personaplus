@@ -18,11 +18,15 @@ For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 
 - Constants: Repeated values, like heights of certain components, font names, font sizes, even the names of the `AsyncStorage` items, and more, have been moved to a `@/constants/` directory with multiple exports.
 - Tracebacks: Now logs can be optionally passed a "traceback" object, including some meaningful data about where the log is actually happening, to help with debugging - specially with repeated messages across different places like "Error fetching objectives".
-- Many new components:
+- New components:
   - BetterButton (an iteration of buttons).
   - Select (a preconfigured `<Picker />`). Based on `react-native-picker`.
   - BetterInputField (a preconfigured `TextInput`).
   - BetterAlert (an iteration of notifications).
+- New toolkit elements:
+  - Routing toolkit (to safely work around with app routing).
+  - Time (to better handle daily hours).
+- Separate log views and error views to Dev Interface, alongside displaying device data, raw JSON data from the app, and more.
 - Usage of Prettier within the codebase.
 
 ### Changed
@@ -35,3 +39,9 @@ For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 
 - The idea of "OpenHealth" as a standalone library. It will be renamed to "CoreLibrary" (`CoreLibrary.physicalHealth.something()`) and will be developed and maintained only inside of the PersonaPlus scope.
 - Background fetching for Active Objectives. Fetching will happen each time an objective is marked as done instead, so reminder notifications get cancelled more efficiently.
+- Removed some debug `logToConsole` calls that were no longer needed.
+
+### Fixed
+
+- Welcome screen
+  - Saving values the wrong way, using the display sentence (e.g. "Not too active...") instead of a `"poor" | "small" | ...` value.
