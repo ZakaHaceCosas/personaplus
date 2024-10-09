@@ -8,7 +8,7 @@ import { UniversalPressableStyle } from "@/constants/ui/Pressables";
 import { logToConsole } from "@/toolkit/debug/Console";
 
 interface Option {
-    value: string;
+    value: string | null; // null for invalid values
     label: string;
     default: boolean;
 }
@@ -17,7 +17,7 @@ interface SwapProps {
     options: Option[];
     value: string | null;
     order: "horizontal" | "vertical";
-    onValueChange: (value: string) => void;
+    onValueChange: (value: string | null) => void;
     style?: "ACE" | "GOD";
 }
 
@@ -79,7 +79,9 @@ export default function Swap({
         }
     }, [value, options, selectedOption]);
 
-    const handleOptionPress = (option: Option): void => {
+    const handleOptionPress: (option: Option) => void = (
+        option: Option,
+    ): void => {
         if (selectedOption !== option) {
             setSelectedOption(option);
             if (onValueChange) {
