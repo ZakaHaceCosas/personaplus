@@ -95,7 +95,7 @@ export async function orchestrateUserData(): Promise<FullProfile | null> {
                     Object.keys(JSON.parse(data)).length > 0
                 ) ?
                     JSON.parse(data)
-                    : null;
+                :   null;
         }
 
         await handler();

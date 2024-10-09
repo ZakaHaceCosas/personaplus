@@ -17,7 +17,7 @@ export function useTheme(): "light" | "dark" {
                 setTheme(
                     savedTheme ?
                         (savedTheme as "light" | "dark")
-                        : (systemTheme ?? "dark"),
+                    :   (systemTheme ?? "dark"),
                 );
             } catch (e) {
                 logToConsole("Error fetching theme:" + e, "error");
