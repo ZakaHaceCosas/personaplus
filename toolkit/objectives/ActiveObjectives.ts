@@ -178,7 +178,7 @@ async function CheckForAnActiveObjectiveDailyStatus(
             const log =
                 dailyData[date] ?
                     `Warning: No data exists for objective ${identifier} on date ${date}. Note: This warning is actually a normal behavior most of the time: if you didn't interact with the objective at all, it won't be logged. most interactions will mark it as done, but until those interactions happen, this warning will occur.`
-                    : `Warning: No data exists for date ${date} at all. Note: This warning is actually a normal behavior most of the time: if you didn't interact with the objective at all, it won't be logged. most interactions will mark it as done, but until those interactions happen, this warning will occur.`;
+                :   `Warning: No data exists for date ${date} at all. Note: This warning is actually a normal behavior most of the time: if you didn't interact with the objective at all, it won't be logged. most interactions will mark it as done, but until those interactions happen, this warning will occur.`;
             logToConsole(log, "warn");
             return false; // no interaction with the objective means no data logged.
         }
@@ -245,11 +245,11 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
                 obj.status,
         );
         return allDone ? 0 : (
-            activeObjectivesDueToday.map(
-                (obj: { identifier: number; status: boolean }): number =>
-                    obj.identifier,
-            )
-        ); // Return 0 if all are done, otherwise return the active objectives due today (well, their identifiers)
+                activeObjectivesDueToday.map(
+                    (obj: { identifier: number; status: boolean }): number =>
+                        obj.identifier,
+                )
+            ); // Return 0 if all are done, otherwise return the active objectives due today (well, their identifiers)
     } catch (e) {
         throw new Error("Failed to get all pending objectives: " + e);
     }
@@ -339,17 +339,17 @@ async function CreateActiveObjective(
 
         logToConsole(
             "Created objective " +
-            newObjective.identifier +
-            " (exercise: " +
-            newObjective.exercise +
-            ") successfully!",
+                newObjective.identifier +
+                " (exercise: " +
+                newObjective.exercise +
+                ") successfully!",
             "success",
             undefined,
             false,
         );
         logToConsole(
             "NOTE: Full JSON of the created objective:" +
-            JSON.stringify(newObjective),
+                JSON.stringify(newObjective),
             "log",
             undefined,
             false,

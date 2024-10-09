@@ -57,8 +57,8 @@ export default function HomeScreen() {
                 action={() => updateBrm5(true)}
             />
             <BetterButton
-                buttonText="dev interface"
-                buttonHint="doxxes you"
+                buttonText="Dev Interface"
+                buttonHint="Launches Dev Interface (doxxes you)"
                 style="HMM"
                 action={() => router.navigate("/DevInterface")}
             />
