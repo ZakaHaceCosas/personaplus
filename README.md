@@ -13,12 +13,12 @@ About finishing this:
 > [!TIP]
 > **When will this be considered as done?**:
 >
-> As soon as the new codebase is capable of _at least_ all the features the app had with it's previous codebase at it's last version (0.0.1-R5-b24), `R6` will merge with `main`.
+> As soon as the new codebase is capable of _at least_ all the features the app had with its previous codebase at its last version (0.0.1-R5-b24), `R6` will merge with `main`.
 
 And about releasing the new app:
 
 > [!TIP]
-> **Will it inmediatly release?**:
+> **Will it immediately release?**:
 >
 > No. There are some known errors that I don't really know how to fix, so I'll merge with them and when everything's in place I'll polish them before releasing.
 
@@ -46,7 +46,7 @@ Y respecto a sacar la nueva app:
 > [!TIP]
 > **¿Se lanzará inmediatamente?**:
 >
-> No. Hay algunos errores conocidos que en realiad no sé como arreglar, así que fusionaré con ellos y cuando todo esté en su lugar los puliré antes de lanzar.
+> No. Hay algunos errores conocidos que en realidad no sé cómo arreglar, así que fusionaré con ellos y cuando todo esté en su lugar los puliré antes de lanzar.
 
 Esperemos que funcione :fire:
 
