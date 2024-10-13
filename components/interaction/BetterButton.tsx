@@ -7,8 +7,16 @@ import BetterText from "@/components/text/BetterText";
 import Colors from "@/constants/Colors";
 import FontSizes from "@/constants/FontSizes";
 import { UniversalPressableStyle } from "@/constants/ui/Pressables";
+import { Color } from "@/types/Color";
+import Ionicons from "@expo/vector-icons/MaterialIcons";
 
 // TypeScript, supongo
+interface BetterButtonIcon {
+    name: string;
+    size: number;
+    color: Color;
+}
+
 /**
  * BetterButtonProperties
  *
@@ -25,9 +33,9 @@ interface BetterButtonProps {
     /**
      * The text of the button.
      *
-     * @type {string}
+     * @type {string | null}
      */
-    buttonText: string;
+    buttonText: string | null;
     /**
      * A hint, explaining in detail what is the button supposed to do. Use it for accessibility purposes.
      *
@@ -46,6 +54,7 @@ interface BetterButtonProps {
      * @type {?("normal" | "box")}
      */
     layout?: "normal" | "box";
+    icon?: BetterButtonIcon;
 }
 
 const styles = StyleSheet.create({
@@ -66,9 +75,10 @@ const styles = StyleSheet.create({
  * @export
  * @param {BetterButtonProps} p
  * @param {("ACE" | "GOD" | "WOR" | "HMM" | "DEFAULT")} p.style The color style of the button.
- * @param {string} p.buttonText The text of the button.
+ * @param {string | null} p.buttonText The text of the button.
  * @param {() => void} p.action A function. The action the button will perform.
  * @param {("normal" | "box")} [p.layout="normal"] Whether it's a normal button or a box (50x50) button.
+ * @param {BetterButtonIcon} p.icon An icon, in case you wanted to use one.
  * @param {string} p.buttonHint A hint, explaining in detail what is the button supposed to do. Use it for accessibility purposes.
  * @returns {ReactElement} The button.
  */
@@ -78,6 +88,7 @@ export default function BetterButton({
     action,
     layout = "normal",
     buttonHint,
+    icon,
 }: BetterButtonProps): ReactElement {
     let borderColor: string;
     let backgroundColor: string;
@@ -150,19 +161,29 @@ export default function BetterButton({
             ]}
             accessible={true}
             accessibilityRole="button"
-            accessibilityLabel={buttonText}
+            accessibilityLabel={buttonText ?? icon?.name ?? buttonHint}
             accessibilityHint={buttonHint}
             importantForAccessibility="yes"
             hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}
         >
-            <BetterText
-                fontWeight="Medium"
-                fontSize={FontSizes.ALMOST_REGULAR}
-                textColor={textColor}
-                textAlign="center"
-            >
-                {buttonText}
-            </BetterText>
+            {icon && (
+                <Ionicons
+                    // @ts-expect-error It's because of a simple type error. Nothing's actually wrong.
+                    name={icon.name}
+                    size={icon.size}
+                    color={icon.color}
+                />
+            )}
+            {buttonText && (
+                <BetterText
+                    fontWeight="Medium"
+                    fontSize={FontSizes.ALMOST_REGULAR}
+                    textColor={textColor}
+                    textAlign="center"
+                >
+                    {buttonText}
+                </BetterText>
+            )}
         </Pressable>
     );
 }
