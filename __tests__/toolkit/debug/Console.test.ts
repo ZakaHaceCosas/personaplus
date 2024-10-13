@@ -17,7 +17,9 @@ jest.mock("react-native", () => ({
 }));
 
 // if this gets removed, type error happens :v
-const mockGetItem = AsyncStorage.getItem as jest.MockedFunction<typeof AsyncStorage.getItem>;
+const mockGetItem = AsyncStorage.getItem as jest.MockedFunction<
+    typeof AsyncStorage.getItem
+>;
 
 const sampleLogs: Logs = [
     {
@@ -27,8 +29,8 @@ const sampleLogs: Logs = [
         traceback: {
             location: "@/somewhere.ts",
             function: "something()",
-            isHandler: false
-        }
+            isHandler: false,
+        },
     },
     {
         message: "error: 404",
@@ -38,8 +40,8 @@ const sampleLogs: Logs = [
             location: "@/someplace/somewhereElse.ts",
             function: "somethingFailing()",
             isHandler: true,
-            handlerName: "handleSomeChange()"
-        }
+            handlerName: "handleSomeChange()",
+        },
     },
 ];
 
@@ -85,7 +87,9 @@ describe("logToConsole Toolkit", () => {
         // on error / log with displayToEndUser=true, does the same with ToastAndroid
         // expect one console.error() warning by JEST when testing error logs, it is normal.
         test("should log a message with 'log' type", () => {
-            const consoleLogSpy = jest.spyOn(console, "log").mockImplementation();
+            const consoleLogSpy = jest
+                .spyOn(console, "log")
+                .mockImplementation();
             logToConsole("hi", "log");
 
             expect(consoleLogSpy).toHaveBeenCalledWith("hi");
@@ -93,7 +97,9 @@ describe("logToConsole Toolkit", () => {
         });
 
         test("should log a message with 'warn' type", () => {
-            const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+            const consoleWarnSpy = jest
+                .spyOn(console, "warn")
+                .mockImplementation();
             logToConsole("Warning: hi", "warn");
 
             expect(consoleWarnSpy).toHaveBeenCalledWith("Warning: hi");
@@ -101,16 +107,23 @@ describe("logToConsole Toolkit", () => {
         });
 
         test("should log a message with 'error' type and display a toast", () => {
-            const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
+            const consoleErrorSpy = jest
+                .spyOn(console, "error")
+                .mockImplementation();
             logToConsole("Error: yes", "error");
 
             expect(consoleErrorSpy).toHaveBeenCalledWith("Error: yes");
-            expect(ToastAndroid.show).toHaveBeenCalledWith("Error: yes", ToastAndroid.LONG);
+            expect(ToastAndroid.show).toHaveBeenCalledWith(
+                "Error: yes",
+                ToastAndroid.LONG,
+            );
             consoleErrorSpy.mockRestore();
         });
 
         test("should log a message with 'success' type", () => {
-            const consoleLogSpy = jest.spyOn(console, "log").mockImplementation();
+            const consoleLogSpy = jest
+                .spyOn(console, "log")
+                .mockImplementation();
             logToConsole("it works :D", "success");
 
             expect(consoleLogSpy).toHaveBeenCalledWith("it works :D");
@@ -118,16 +131,16 @@ describe("logToConsole Toolkit", () => {
         });
 
         test("should log a message and display a toast if displayToEndUser is true", () => {
-            const consoleLogSpy = jest.spyOn(console, "log").mockImplementation();
-            logToConsole(
-                "this is a toast",
-                "log",
-                undefined,
-                true
-            );
+            const consoleLogSpy = jest
+                .spyOn(console, "log")
+                .mockImplementation();
+            logToConsole("this is a toast", "log", undefined, true);
 
             expect(consoleLogSpy).toHaveBeenCalledWith("this is a toast");
-            expect(ToastAndroid.show).toHaveBeenCalledWith("this is a toast", ToastAndroid.LONG);
+            expect(ToastAndroid.show).toHaveBeenCalledWith(
+                "this is a toast",
+                ToastAndroid.LONG,
+            );
             consoleLogSpy.mockRestore();
         });
     });
