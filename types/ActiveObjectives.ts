@@ -25,15 +25,6 @@ export const SupportedActiveObjectivesList = [
  *
  * @typedef {ActiveObjectiveInfo}
  */
-/* type ActiveObjectiveInfo = {
-    days: [boolean, boolean, boolean, boolean, boolean, boolean, boolean]
-    duration: number;
-    rests: number | null;
-    repetitions: number | null;
-} & (
-        { rests: 0; restDuration?: never } |
-        { rests: number; restDuration: number }
-    ); */
 type ActiveObjectiveInfo = {
     days: [boolean, boolean, boolean, boolean, boolean, boolean, boolean];
     durationMinutes: number;
@@ -133,7 +124,7 @@ export type ActiveObjectiveDailyLog = {
     [date: TodaysDay]: {
         [identifier: number]: {
             wasDone: boolean;
-            performance: string | undefined;
+            performance: object;
         };
     };
 };
