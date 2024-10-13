@@ -1031,7 +1031,10 @@ export default function CreateActiveObjectivePage() {
                 buttonHint="Creates the desired active objective. In case of missing or invalid fields, it won't do anything."
                 action={canCreateObjective ? () => handleCreation() : () => {}}
             />
-            <PageEnd includeText={false} />
+            <PageEnd
+                includeText={false}
+                size="tiny"
+            />
         </>
     );
 }
