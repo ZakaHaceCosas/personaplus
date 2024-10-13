@@ -9,7 +9,7 @@ import { TFunction } from "i18next";
  * @param {TFunction} t Pass the translate function
  * @returns {string} A random message string.
  */
-export default function generateRandomMessage(
+export default function GenerateRandomMessage(
     target:
         | "allObjectivesDone"
         | "sessionCompleted"

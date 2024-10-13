@@ -172,7 +172,7 @@ export const MALE_PERCENTILES: BMIPercentiles = {
         95: 25.17,
     },
     14: {
-    // REVISED, ALRIGHT
+        // REVISED, ALRIGHT
         5: 15.99,
         10: 16.54,
         25: 17.63,

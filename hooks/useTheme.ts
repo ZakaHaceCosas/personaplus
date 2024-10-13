@@ -15,9 +15,9 @@ export function useTheme(): "light" | "dark" {
                     StoredItemNames.colorTheme,
                 );
                 setTheme(
-                    savedTheme ?
-                        (savedTheme as "light" | "dark")
-                    :   (systemTheme ?? "dark"),
+                    savedTheme
+                        ? (savedTheme as "light" | "dark")
+                        : (systemTheme ?? "dark"),
                 );
             } catch (e) {
                 logToConsole("Error fetching theme:" + e, "error");

@@ -55,9 +55,9 @@ export async function getDefaultLocale(): Promise<"es" | "en"> {
         const savedLanguageValue: "es" | "en" =
             savedDataValue?.language ?? "es"; // TODO: change to "en" upon release
         const defaultLanguage: "es" | "en" =
-            savedLanguageValue === "es" || savedLanguageValue === "en" ?
-                savedLanguageValue
-            :   "en";
+            savedLanguageValue === "es" || savedLanguageValue === "en"
+                ? savedLanguageValue
+                : "en";
 
         return defaultLanguage;
     } catch (e) {
