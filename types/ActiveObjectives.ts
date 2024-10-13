@@ -13,7 +13,7 @@ export type SupportedActiveObjectives =
     | "Running"
     | "Walking";
 
-export const SupportedActiveObjectivesList = [
+export const SupportedActiveObjectivesList: string[] = [
     "Push Ups",
     "Lifting",
     "Running",
@@ -114,17 +114,34 @@ export interface ActiveObjective {
 export type ActiveObjectiveWithoutId = Omit<ActiveObjective, "identifier">;
 
 /**
+ * An entry within the ActiveObjectiveDailyLog
+ *
+ * @interface ActiveObjectiveDailyLogEntry
+ * @typedef {ActiveObjectiveDailyLogEntry}
+ */
+interface ActiveObjectiveDailyLogEntry {
+    /**
+     * Whether the objective was done or not.
+     *
+     * @type {boolean}
+     */
+    wasDone: boolean;
+    /**
+     * The performance data for this session (as it's an ActiveObjective). Due to the fact CoreLibrary's responses are a bit unpredictable, it's a generic `object` where anything's valid. `0` represents a null / empty value (usually when `wasDone` is false).
+     *
+     * @type {(object | 0)}
+     */
+    performance: object | 0;
+}
+
+/**
  * A registry of all the objectives, whether they're done or not, when, and their performance stats if they exist.
  *
- * @rawR5code
  * @export
  * @typedef {ActiveObjectiveDailyLog}
  */
 export type ActiveObjectiveDailyLog = {
     [date: TodaysDay]: {
-        [identifier: number]: {
-            wasDone: boolean;
-            performance: object;
-        };
+        [identifier: number]: ActiveObjectiveDailyLogEntry;
     };
 };
