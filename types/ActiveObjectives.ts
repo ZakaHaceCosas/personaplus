@@ -6,18 +6,12 @@ import { TodaysDay } from "@/toolkit/debug/Today";
  * @export
  * @typedef {SupportedActiveObjectives}
  */
-export type SupportedActiveObjectives =
-    | ""
-    | "Push Ups"
-    | "Lifting"
-    | "Running"
-    | "Walking";
+export type SupportedActiveObjectives = "" | "push_ups" | "lifting" | "running";
 
 export const SupportedActiveObjectivesList: string[] = [
     "Push Ups",
     "Lifting",
     "Running",
-    "Walking",
 ];
 
 /**
