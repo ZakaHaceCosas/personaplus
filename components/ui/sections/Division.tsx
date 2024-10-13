@@ -31,31 +31,31 @@ interface DivisionProps {
      *
      * @type {?(icon | null)}
      */
-    iconName?: icon | null; // Si lo tiene, ¿Cuál es?
+    iconName?: icon | null;
     /**
      * An optional smaller text before the header.
      *
      * @type {?string}
      */
-    preHeader?: string; // Título
+    preHeader?: string;
     /**
      * The big, main text of the division.
      *
      * @type {string}
      */
-    header: string; // Texto grande
+    header: string;
     /**
      * An optional small text below the header.
      *
      * @type {?string}
      */
-    subHeader?: string; // El texto pequeño, de haberlo
+    subHeader?: string;
     /**
      * A JSX element you can add inside of the division. Optional.
      *
      * @type {?ReactNode}
      */
-    children?: ReactNode; // Los hijos (botones, básicamente)
+    children?: ReactNode;
 }
 
 const styles = StyleSheet.create({
@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
  * The PersonaPlus UI operates on a Section-Division basis, with Divisions containing most of the actions and features.
  *
  * @export
- * @see [Docs](https://github.com/ZakaHaceCosas/personaplus/blob/main/DOCS.md)
  * @param {DivisionProps} p
  * @param {icon} p.iconName An optional smaller text before the header.
  * @param {string} p.preHeader An optional smaller text before the header.
