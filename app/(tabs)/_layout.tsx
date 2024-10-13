@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         backgroundColor: Colors.MAIN.APP,
+        overflow: "visible",
     },
 });
 
