@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { View, StyleSheet } from "react-native";
 import BetterText from "@/components/text/BetterText";
 import GapView from "../GapView";
@@ -6,6 +6,33 @@ import { TFunction } from "i18next";
 import BetterButton from "@/components/interaction/BetterButton";
 import { ActiveObjective } from "@/types/ActiveObjectives";
 import Colors from "@/constants/Colors";
+
+/**
+ * HelpViewProps
+ *
+ * @interface HelpViewProps
+ * @typedef {HelpViewProps}
+ */
+interface HelpViewProps {
+    /**
+     * The ActiveObjective you want help with.
+     *
+     * @type {ActiveObjective}
+     */
+    objective: ActiveObjective;
+    /**
+     * The stateful function you'll use to close / toggle this menu.
+     *
+     * @type {() => void}
+     */
+    toggleHelpMenu: () => void;
+    /**
+     * Pass here the `t` function, please.
+     *
+     * @type {TFunction}
+     */
+    t: TFunction;
+}
 
 const styles = StyleSheet.create({
     helpContainer: {
@@ -25,11 +52,21 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function SessionsPageHelpView(
-    t: TFunction,
-    objective: ActiveObjective,
-    toggleHelpMenu: () => void,
-) {
+/**
+ * A view with helpful info for the user during a session.
+ *
+ * @export
+ * @param {HelpViewProps} p HelpViewProps
+ * @param {ActiveObjective} p.objective The ActiveObjective you want help with.
+ * @param {() => void} p.toggleHelpMenu The stateful function you'll use to close / toggle this menu.
+ * @param {TFunction} p.t Pass here the `t` function, please.
+ * @returns {ReactElement}
+ */
+export default function SessionsPageHelpView({
+    objective,
+    toggleHelpMenu,
+    t,
+}: HelpViewProps): ReactElement {
     return (
         <View style={styles.helpContainer}>
             <BetterText fontSize={18} fontWeight="Regular">
