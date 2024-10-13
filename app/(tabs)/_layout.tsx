@@ -13,7 +13,8 @@
 
 import NavigationBar from "@/components/navigation/NavigationBar";
 import Colors from "@/constants/Colors";
-import Routes from "@/constants/Routes";
+import ROUTES from "@/constants/Routes";
+
 import * as Router from "expo-router";
 import React, { ReactNode, useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
@@ -59,12 +60,12 @@ export default function Layout() {
     }, [currentRoute]);
 
     const noNavigationRoutes: string[] = [
-        Routes.Main.WelcomeScreen,
-        Routes.Objectives.Create,
-        Routes.Objectives.LiveSession,
-        Routes.Developer.LogViewer,
-        Routes.Developer.ErrorLogViewer,
-        Routes.Developer.Home,
+        ROUTES.MAIN.WELCOME_SCREEN,
+        ROUTES.ACTIVE_OBJECTIVES.CREATE,
+        ROUTES.ACTIVE_OBJECTIVES.SESSION,
+        ROUTES.DEV_INTERFACE.LOG_VIEW,
+        ROUTES.DEV_INTERFACE.ERROR_LOG_VIEW,
+        ROUTES.DEV_INTERFACE.HOME,
     ];
 
     return (

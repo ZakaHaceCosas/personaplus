@@ -10,6 +10,8 @@ import {
 import BetterAlert from "@/components/ui/BetterAlert";
 import GapView from "@/components/ui/GapView";
 import Colors from "@/constants/Colors";
+import ROUTES from "@/constants/Routes";
+
 import getCommonScreenSize from "@/constants/Screen";
 import StoredItemNames from "@/constants/StoredItemNames";
 import { logToConsole } from "@/toolkit/debug/Console";
@@ -175,12 +177,7 @@ export default function HomeScreen() {
                 style="DEFAULT"
                 title={"AsyncStorage item: " + StoredItemNames.userData}
                 text={error ? "An error happened:" : "User data (raw JSON)"}
-                subtext={
-                    error ? error
-                    : userData ?
-                        userData
-                    :   "null"
-                }
+                subtext={error ? error : userData ? userData : "null"}
                 layout="alert"
             />
             <GapView height={10} />
@@ -188,12 +185,7 @@ export default function HomeScreen() {
                 style="DEFAULT"
                 title={"AsyncStorage item: " + StoredItemNames.objectives}
                 text={error ? "An error happened:" : "Objectives (raw JSON)"}
-                subtext={
-                    error ? error
-                    : objectives ?
-                        objectives
-                    :   "null"
-                }
+                subtext={error ? error : objectives ? objectives : "null"}
                 layout="alert"
             />
             <GapView height={10} />
@@ -201,12 +193,7 @@ export default function HomeScreen() {
                 style="DEFAULT"
                 title={"AsyncStorage item: " + StoredItemNames.dailyLog}
                 text={error ? "An error happened:" : "Daily log (raw JSON)"}
-                subtext={
-                    error ? error
-                    : dailyLog ?
-                        dailyLog
-                    :   "null"
-                }
+                subtext={error ? error : dailyLog ? dailyLog : "null"}
                 layout="alert"
             />
             <GapView height={10} />
@@ -215,14 +202,11 @@ export default function HomeScreen() {
                     <BetterTextSmallText>Exercise{"  "}</BetterTextSmallText>
                     <BetterTextSmallText>ID{"  "}</BetterTextSmallText>
                 </View>
-                {(objectives ?
-                    (JSON.parse(objectives) as ActiveObjective[])
-                :   []
+                {(objectives
+                    ? (JSON.parse(objectives) as ActiveObjective[])
+                    : []
                 ).map((objective) => (
-                    <View
-                        key={objective.identifier}
-                        style={styles.row}
-                    >
+                    <View key={objective.identifier} style={styles.row}>
                         <BetterTextSmallText>
                             {objective.exercise}
                             {"  "}
@@ -241,16 +225,16 @@ export default function HomeScreen() {
                 buttonText="See all logs"
                 buttonHint="Opens up a dedicated page for viewing all console logs."
                 style="DEFAULT"
-                action={() => router.push("/LogView")}
+                action={() => router.push(ROUTES.DEV_INTERFACE.LOG_VIEW)}
             />
             <GapView height={5} />
             <BetterButton
                 buttonText="See error logs"
                 buttonHint="Opens up a dedicated page for viewing warning and error console logs."
                 style="DEFAULT"
-                action={() => router.push("/ErrorLogger")}
+                action={() => router.push(ROUTES.DEV_INTERFACE.ERROR_LOG_VIEW)}
             />
-            <PageEnd includeText={true} />
+            <PageEnd includeText={true} size="tiny" />
         </>
     );
 }

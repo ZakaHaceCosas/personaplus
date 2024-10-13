@@ -8,8 +8,9 @@ import {
 import GapView from "@/components/ui/GapView";
 import Division from "@/components/ui/sections/Division";
 import Section from "@/components/ui/sections/Section";
-import Routes from "@/constants/Routes";
-import { orchestrateUserData } from "@/toolkit/User";
+import ROUTES from "@/constants/Routes";
+
+import { OrchestrateUserData } from "@/toolkit/User";
 import { logToConsole } from "@/toolkit/debug/Console";
 import {
     GetActiveObjective,
@@ -70,7 +71,7 @@ export default function HomeScreen() {
 
     async function fetchUserData(): Promise<void> {
         try {
-            const response = await orchestrateUserData();
+            const response = await OrchestrateUserData();
             setUserData(response);
         } catch (e) {
             logToConsole("Error accessing user data! " + e, "error", {
@@ -101,7 +102,7 @@ export default function HomeScreen() {
 
     function generateDescriptionOfObjective(obj: ActiveObjective): string {
         const exercise: SupportedActiveObjectives = obj.exercise;
-        if (exercise === "Lifting") {
+        if (exercise === "lifting") {
             return t(
                 obj.specificData.reps +
                     " lifts of " +
@@ -109,7 +110,7 @@ export default function HomeScreen() {
                         obj.specificData.amountOfHands +
                     " kg each.",
             );
-        } else if (exercise === "Push Ups") {
+        } else if (exercise === "push_ups") {
             return t(
                 obj.specificData.amountOfPushUps +
                     " push ups with " +
@@ -125,7 +126,7 @@ export default function HomeScreen() {
     function handleLaunchObjective(identifier: number): void {
         try {
             router.replace({
-                pathname: Routes.Objectives.LiveSession,
+                pathname: ROUTES.ACTIVE_OBJECTIVES.SESSION,
                 params: { id: identifier },
             });
         } catch (e) {
@@ -161,7 +162,7 @@ export default function HomeScreen() {
                             <BetterButton
                                 style="GOD"
                                 action={() =>
-                                    router.push(Routes.Objectives.Create)
+                                    router.push(ROUTES.ACTIVE_OBJECTIVES.CREATE)
                                 }
                                 buttonText="Create active objective"
                                 buttonHint="Redirects the user to a page where he can create an active objective"
