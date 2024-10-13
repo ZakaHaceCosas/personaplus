@@ -23,14 +23,14 @@ import BetterText from "@/components/text/BetterText";
 import Colors from "@/constants/Colors";
 import FontSizes from "@/constants/FontSizes";
 import { UniversalPressableStyle } from "@/constants/ui/Pressables";
-import Select from "@/components/interaction/Select";
+import Select, { SelectOption } from "@/components/interaction/Select";
 import { logToConsole } from "@/toolkit/debug/Console";
 import BetterButton from "@/components/interaction/BetterButton";
 import getCommonScreenSize from "@/constants/Screen";
 import PageEnd from "@/components/static/PageEnd";
 import { CreateActiveObjective } from "@/toolkit/objectives/ActiveObjectives";
 import { router } from "expo-router";
-import Routes from "@/constants/Routes";
+import ROUTES from "@/constants/Routes";
 
 const styles = StyleSheet.create({
     dayContainer: {
@@ -74,12 +74,14 @@ export default function CreateActiveObjectivePage() {
     const { t } = useTranslation(); // translate function
 
     // objective and stuff
-    const exercises = SupportedActiveObjectivesList;
-    const exerciseOptions = exercises.map((option) => ({
-        label: option,
-        value: option,
-        enabled: true,
-    }));
+    const exercises: string[] = SupportedActiveObjectivesList;
+    const exerciseOptions: SelectOption[] = exercises.map(
+        (option: string): SelectOption => ({
+            label: option,
+            value: option,
+            enabled: true,
+        }),
+    );
     const [objectiveToCreate, updateObjectiveToCreate] =
         useState<ActiveObjectiveWithoutId>({
             exercise: "",
@@ -105,7 +107,7 @@ export default function CreateActiveObjectivePage() {
 
     // random message
     const [randomMessage, setRandomMessage] = useState<string>("");
-    useEffect(() => {
+    useEffect((): void => {
         setRandomMessage(GenerateRandomMessage("createActiveObjective", t));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -118,8 +120,8 @@ export default function CreateActiveObjectivePage() {
         | "restDurationMinutes"
         | "repetitions";
 
-    function handleToggle(operation: Operation, value: Value) {
-        updateObjectiveToCreate((prev) => {
+    function handleToggle(operation: Operation, value: Value): void {
+        updateObjectiveToCreate((prev: ActiveObjectiveWithoutId) => {
             let updatedInfo = { ...prev.info };
 
             if (value === "durationMinutes") {
@@ -184,73 +186,91 @@ export default function CreateActiveObjectivePage() {
         if (value !== "amountOfHands") {
             if (action === "increase") {
                 if (value === "amountOfPushUps") {
-                    updateObjectiveToCreate((prev) => ({
-                        ...prev,
-                        specificData: {
-                            ...prev.specificData,
-                            amountOfPushUps:
-                                prev.specificData.amountOfPushUps + 1,
-                        },
-                    }));
+                    updateObjectiveToCreate(
+                        (prev: ActiveObjectiveWithoutId) => ({
+                            ...prev,
+                            specificData: {
+                                ...prev.specificData,
+                                amountOfPushUps:
+                                    prev.specificData.amountOfPushUps + 1,
+                            },
+                        }),
+                    );
                 } else if (value === "dumbbellWeight") {
-                    updateObjectiveToCreate((prev) => ({
-                        ...prev,
-                        specificData: {
-                            ...prev.specificData,
-                            barWeight: prev.specificData.dumbbellWeight + 1,
-                        },
-                    }));
+                    updateObjectiveToCreate(
+                        (prev: ActiveObjectiveWithoutId) => ({
+                            ...prev,
+                            specificData: {
+                                ...prev.specificData,
+                                barWeight: prev.specificData.dumbbellWeight + 1,
+                            },
+                        }),
+                    );
                 } else if (value === "estimateSpeed") {
-                    updateObjectiveToCreate((prev) => ({
-                        ...prev,
-                        specificData: {
-                            ...prev.specificData,
-                            estimateSpeed: prev.specificData.estimateSpeed + 1,
-                        },
-                    }));
+                    updateObjectiveToCreate(
+                        (prev: ActiveObjectiveWithoutId) => ({
+                            ...prev,
+                            specificData: {
+                                ...prev.specificData,
+                                estimateSpeed:
+                                    prev.specificData.estimateSpeed + 1,
+                            },
+                        }),
+                    );
                 } else if (value === "reps") {
-                    updateObjectiveToCreate((prev) => ({
-                        ...prev,
-                        specificData: {
-                            ...prev.specificData,
-                            reps: prev.specificData.reps + 1,
-                        },
-                    }));
+                    updateObjectiveToCreate(
+                        (prev: ActiveObjectiveWithoutId) => ({
+                            ...prev,
+                            specificData: {
+                                ...prev.specificData,
+                                reps: prev.specificData.reps + 1,
+                            },
+                        }),
+                    );
                 }
             } else if (action === "decrease") {
                 if (value === "amountOfPushUps") {
-                    updateObjectiveToCreate((prev) => ({
-                        ...prev,
-                        specificData: {
-                            ...prev.specificData,
-                            amountOfPushUps:
-                                prev.specificData.amountOfPushUps - 1,
-                        },
-                    }));
+                    updateObjectiveToCreate(
+                        (prev: ActiveObjectiveWithoutId) => ({
+                            ...prev,
+                            specificData: {
+                                ...prev.specificData,
+                                amountOfPushUps:
+                                    prev.specificData.amountOfPushUps - 1,
+                            },
+                        }),
+                    );
                 } else if (value === "dumbbellWeight") {
-                    updateObjectiveToCreate((prev) => ({
-                        ...prev,
-                        specificData: {
-                            ...prev.specificData,
-                            barWeight: prev.specificData.dumbbellWeight - 1,
-                        },
-                    }));
+                    updateObjectiveToCreate(
+                        (prev: ActiveObjectiveWithoutId) => ({
+                            ...prev,
+                            specificData: {
+                                ...prev.specificData,
+                                barWeight: prev.specificData.dumbbellWeight - 1,
+                            },
+                        }),
+                    );
                 } else if (value === "estimateSpeed") {
-                    updateObjectiveToCreate((prev) => ({
-                        ...prev,
-                        specificData: {
-                            ...prev.specificData,
-                            estimateSpeed: prev.specificData.estimateSpeed - 1,
-                        },
-                    }));
+                    updateObjectiveToCreate(
+                        (prev: ActiveObjectiveWithoutId) => ({
+                            ...prev,
+                            specificData: {
+                                ...prev.specificData,
+                                estimateSpeed:
+                                    prev.specificData.estimateSpeed - 1,
+                            },
+                        }),
+                    );
                 } else if (value === "reps") {
-                    updateObjectiveToCreate((prev) => ({
-                        ...prev,
-                        specificData: {
-                            ...prev.specificData,
-                            reps: prev.specificData.reps - 1,
-                        },
-                    }));
+                    updateObjectiveToCreate(
+                        (prev: ActiveObjectiveWithoutId) => ({
+                            ...prev,
+                            specificData: {
+                                ...prev.specificData,
+                                reps: prev.specificData.reps - 1,
+                            },
+                        }),
+                    );
                 }
             }
         } else if (value === "amountOfHands") {
@@ -258,7 +278,7 @@ export default function CreateActiveObjectivePage() {
                 action === "increase" &&
                 objectiveToCreate.specificData.amountOfHands < 2
             ) {
-                updateObjectiveToCreate((prev) => ({
+                updateObjectiveToCreate((prev: ActiveObjectiveWithoutId) => ({
                     ...prev,
                     specificData: {
                         ...prev.specificData,
@@ -270,7 +290,7 @@ export default function CreateActiveObjectivePage() {
                 action === "decrease" &&
                 objectiveToCreate.specificData.amountOfHands > 1
             ) {
-                updateObjectiveToCreate((prev) => ({
+                updateObjectiveToCreate((prev: ActiveObjectiveWithoutId) => ({
                     ...prev,
                     specificData: {
                         ...prev.specificData,
@@ -426,21 +446,19 @@ export default function CreateActiveObjectivePage() {
 
             let isSpecificDataValid = false;
 
-            if (objectiveToCreate.exercise === "Lifting") {
+            if (objectiveToCreate.exercise === "lifting") {
                 isSpecificDataValid =
                     (objectiveToCreate.specificData?.dumbbellWeight || 0) > 0 &&
                     [1, 2].includes(
                         objectiveToCreate.specificData?.amountOfHands || 0,
                     ) &&
                     (objectiveToCreate.specificData?.reps || 0) > 0;
-            } else if (objectiveToCreate.exercise === "Push Ups") {
+            } else if (objectiveToCreate.exercise === "push_ups") {
                 isSpecificDataValid =
                     objectiveToCreate.specificData.amountOfPushUps > 0;
-            } else if (objectiveToCreate.exercise === "Running") {
+            } else if (objectiveToCreate.exercise === "running") {
                 isSpecificDataValid =
                     !!objectiveToCreate.specificData.estimateSpeed; // ensure it's boolean
-            } else if (objectiveToCreate.exercise === "Walking") {
-                isSpecificDataValid = true; // validate directly, as there's nothing to validate...
             }
 
             return isInfoValid && isSpecificDataValid;
@@ -461,7 +479,7 @@ export default function CreateActiveObjectivePage() {
                         "error",
                     );
                 }
-                router.navigate(Routes.Main.Home);
+                router.navigate(ROUTES.MAIN.HOME);
             }
         }
 
@@ -618,7 +636,7 @@ export default function CreateActiveObjectivePage() {
                 // (im writing this like weeks before making this public, who am i asking forgiveness too)
                 // (javascript made me go weird :skull:)
             }
-            {objectiveToCreate.exercise === "Push Ups" && (
+            {objectiveToCreate.exercise === "push_ups" && (
                 <>
                     <BetterTextSmallHeader>
                         {t(
@@ -689,7 +707,7 @@ export default function CreateActiveObjectivePage() {
                     <GapView height={20} />
                 </>
             )}
-            {objectiveToCreate.exercise === "Lifting" && (
+            {objectiveToCreate.exercise === "lifting" && (
                 <>
                     <BetterTextSmallHeader>
                         {t(
@@ -848,7 +866,7 @@ export default function CreateActiveObjectivePage() {
                 </>
             )}
 
-            {objectiveToCreate.exercise === "Running" && (
+            {objectiveToCreate.exercise === "running" && (
                 <>
                     <BetterTextSmallHeader>
                         {t(
@@ -934,8 +952,8 @@ export default function CreateActiveObjectivePage() {
                 </>
             )}
 
-            {(objectiveToCreate.exercise === "Lifting" ||
-                objectiveToCreate.exercise === "Push Ups") && (
+            {(objectiveToCreate.exercise === "lifting" ||
+                objectiveToCreate.exercise === "push_ups") && (
                 <>
                     <BetterTextSmallHeader>
                         {t(
@@ -944,7 +962,7 @@ export default function CreateActiveObjectivePage() {
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            objectiveToCreate.exercise === "Lifting"
+                            objectiveToCreate.exercise === "lifting"
                                 ? "pages.createActiveObjective.questions.perExercise.lifting.handsProTip"
                                 : "pages.createActiveObjective.questions.perExercise.pushUps.handsProTip",
                         )}
