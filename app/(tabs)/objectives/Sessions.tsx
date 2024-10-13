@@ -26,7 +26,20 @@ import { ActiveObjective } from "@/types/ActiveObjectives";
 import getCommonScreenSize from "@/constants/Screen";
 import IslandDivision from "@/components/ui/sections/IslandDivision";
 import GenerateRandomMessage from "@/toolkit/RandomMessage";
-import Routes from "@/constants/Routes";
+import ROUTES from "@/constants/Routes";
+
+// TypeScript, supongo
+export interface SessionParams {
+    speed: number;
+    time: number;
+    id: number;
+    exercise: string;
+    repetitions: number;
+    lifts: number;
+    dumbbellWeight: number;
+    pushups: number;
+    hands: number;
+}
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -106,7 +119,7 @@ export default function Sessions() {
                     text: t("page_sessions.give_up_yes"),
                     style: "destructive",
                     onPress: () => {
-                        router.navigate(Routes.Main.Home); // basically goes home without saving, easy.
+                        router.navigate(ROUTES.MAIN.HOME); // basically goes home without saving, easy.
                     },
                 },
             ],
@@ -188,19 +201,23 @@ export default function Sessions() {
                     ToastAndroid.LONG,
                 );
             }
+
+            const params: SessionParams = {
+                speed: objective.specificData.estimateSpeed,
+                time: totalTime ?? 0,
+                id: objective.identifier,
+                exercise: objective.exercise,
+                repetitions: objective.info.repetitions ?? 0,
+                lifts: objective.specificData.reps,
+                dumbbellWeight: objective.specificData.dumbbellWeight,
+                pushups: objective.specificData.amountOfPushUps,
+                hands: objective.specificData.amountOfHands,
+            };
+
             router.replace({
-                pathname: "/Results",
-                params: {
-                    speed: objective.specificData.estimateSpeed,
-                    time: totalTime,
-                    id: objective.identifier,
-                    exercise: objective.exercise,
-                    repetitions: objective.info.repetitions,
-                    lifts: objective.specificData.reps,
-                    dumbbellWeight: objective.specificData.dumbbellWeight,
-                    pushups: objective.specificData.amountOfPushUps,
-                    hands: objective.specificData.amountOfHands,
-                },
+                pathname: ROUTES.ACTIVE_OBJECTIVES.RESULTS,
+                // NOTE - any to avoid type error.
+                params: params as any,
             });
         } catch (e) {
             logToConsole(
