@@ -2,7 +2,7 @@
 // Zaka don't be lazy and work
 
 /*
-CALCULATE RUNNING / WALKING PERFORMANCE
+CALCULATE LIFTING PERFORMANCE
 */
 
 import { default as OneRepetitionMax } from "@/core/physicalHealth/OneRepMax";
@@ -21,8 +21,7 @@ interface LIFTING_Response {
         weight: number;
         height: number;
         time: number;
-        barWeight: number;
-        liftWeight: number;
+        dumbbellWeight: number;
         scales: number;
         repetitions: number;
     };
@@ -31,7 +30,7 @@ interface LIFTING_Response {
 }
 
 /**
- * Calculate the calories burnt during running or walking based on given parameters.
+ * Calculate the calories burnt during a weight lifting based on given parameters.
  * @param age The age of the subject.
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
@@ -48,8 +47,7 @@ export default function calculateLiftingPerformance(
     weight: number,
     height: number,
     time: number,
-    barWeight: number,
-    liftWeight: number,
+    dumbbellWeight: number,
     scales: number,
     repetitions: number,
     provideContext?: boolean,
@@ -79,7 +77,7 @@ export default function calculateLiftingPerformance(
         );
     };
 
-    const weightLifted = (barWeight + 2 * liftWeight) * scales;
+    const weightLifted = dumbbellWeight * scales;
     const OneRepMaxObject = OneRepetitionMax(
         weightLifted,
         repetitions,
@@ -115,8 +113,7 @@ export default function calculateLiftingPerformance(
             weight,
             height,
             time,
-            barWeight,
-            liftWeight,
+            dumbbellWeight,
             scales,
             repetitions,
         };

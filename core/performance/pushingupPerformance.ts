@@ -1,5 +1,5 @@
 /*
-CALCULATE RUNNING / WALKING PERFORMANCE
+CALCULATE PUSHING UP PERFORMANCE
 */
 
 import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
@@ -25,7 +25,7 @@ interface PUSHING_UP_Response {
 }
 
 /**
- * Calculate the calories burnt during running or walking based on given parameters.
+ * Calculate the calories burnt during a push up session based on given parameters.
  * @param age The age of the subject.
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).

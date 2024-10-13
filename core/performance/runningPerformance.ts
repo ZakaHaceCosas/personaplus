@@ -3,7 +3,7 @@
 // los cálculos *NO* están bien
 
 /*
-CALCULATE RUNNING / WALKING PERFORMANCE
+CALCULATE RUNNING PERFORMANCE
 */
 
 import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
@@ -13,7 +13,7 @@ export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "https://downhilltodowntown.com/how-to-calculate-your-caloric-burn-while-running/ and https://scielo.isciii.es/scielo.php?script=sci_arttext&pid=S0212-16112012000400040 and https://eresdeportista.com/salud/como-calcular-calorias-quemadas-ejercicio/ and https://www.topendsports.com/weight-loss/energy-met.htm andhttps://journals.lww.com/acsm-msse/fulltext/2000/09001/compendium_of_physical_activities__an_update_of.9.aspx and https://www.cmu.edu/common-cold-project/measures-by-study/health-practices/physical-activity/index.html",
 );
 
-interface RUNNING_WALKING_Response {
+interface RUNNING_Response {
     result: number;
     subject?: {
         age: number;
@@ -28,7 +28,7 @@ interface RUNNING_WALKING_Response {
 }
 
 /**
- * Calculate the calories burnt during running or walking based on given parameters.
+ * Calculate the calories burnt during a running session based on given parameters.
  * @param age The age of the subject.
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
@@ -37,10 +37,10 @@ interface RUNNING_WALKING_Response {
  * @param time The duration in MINUTES of the exercise performed by the subject.
  * @param provideContext Whether to provide a brief contextualization about the result.
  * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
- * @returns The calories burnt if neither provideContext nor provideExplanation are true, otherwise returns a RUNNING_WALKING_Response object.
+ * @returns The calories burnt if neither provideContext nor provideExplanation are true, otherwise returns a `RUNNING_Response` object.
  */
 
-export default function calculateRunningOrWalkingPerformance(
+export default function calculateRunningPerformance(
     age: number,
     gender: "male" | "female",
     weight: number,
@@ -49,7 +49,7 @@ export default function calculateRunningOrWalkingPerformance(
     time: number,
     provideContext?: boolean,
     provideExplanation?: boolean,
-): RUNNING_WALKING_Response {
+): RUNNING_Response {
     let METs: number | null; // MET - Metabolic Equivalent of Task
 
     // Assign METs based on speed in km/h
@@ -93,7 +93,7 @@ export default function calculateRunningOrWalkingPerformance(
         caloriesBurnt = 0; // if the MET is not calculable, it returns 0.
     }
 
-    const response: RUNNING_WALKING_Response = {
+    const response: RUNNING_Response = {
         result: caloriesBurnt,
     };
 
@@ -114,7 +114,7 @@ export default function calculateRunningOrWalkingPerformance(
 
     if (provideExplanation) {
         response.explanation =
-            "The 'performance' of a running (or walking) session can be measured in burnt calories, which are obtained with a series of generic calculations using age, weight, height, gender of the subject, and other parameters like the estimate speed, time duration of the session, and the MET.";
+            "The 'performance' of a running session can be measured in burnt calories, which are obtained with a series of generic calculations using age, weight, height, gender of the subject, and other parameters like the estimate speed, time duration of the session, and the MET.";
     }
 
     return response;
