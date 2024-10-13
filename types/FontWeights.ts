@@ -114,8 +114,10 @@ export type BrandFontWeights =
 
 export type FontFamily = "BeVietnamPro" | "RobotoSerif" | "JetBrainsMono";
 
-export type FontWeight<T extends FontFamily> =
-    T extends "BeVietnamPro" ? SansFontWeights
-    : T extends "RobotoSerif" ? SerifFontWeights
-    : T extends "JetBrainsMono" ? BrandFontWeights
-    : never;
+export type FontWeight<T extends FontFamily> = T extends "BeVietnamPro"
+    ? SansFontWeights
+    : T extends "RobotoSerif"
+      ? SerifFontWeights
+      : T extends "JetBrainsMono"
+        ? BrandFontWeights
+        : never;

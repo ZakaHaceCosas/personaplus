@@ -83,7 +83,6 @@ async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog | n
  * @rawR5code
  * @async
  * @param {number} id ID of the objective
- * @param {TodaysDay} date Today's date. Use `getCurrentDate()` to get it.
  * @param {boolean} wasDone Whether the objective was done or not.
  * @param {any} [performance] Results for the session from CoreLibrary. Optional (the user could have not done the objective, so no data would exist).
  */
@@ -175,10 +174,9 @@ async function CheckForAnActiveObjectiveDailyStatus(
                 );
             }
         } else {
-            const log =
-                dailyData[date] ?
-                    `Warning: No data exists for objective ${identifier} on date ${date}. Note: This warning is actually a normal behavior most of the time: if you didn't interact with the objective at all, it won't be logged. most interactions will mark it as done, but until those interactions happen, this warning will occur.`
-                :   `Warning: No data exists for date ${date} at all. Note: This warning is actually a normal behavior most of the time: if you didn't interact with the objective at all, it won't be logged. most interactions will mark it as done, but until those interactions happen, this warning will occur.`;
+            const log = dailyData[date]
+                ? `Warning: No data exists for objective ${identifier} on date ${date}. Note: This warning is actually a normal behavior most of the time: if you didn't interact with the objective at all, it won't be logged. most interactions will mark it as done, but until those interactions happen, this warning will occur.`
+                : `Warning: No data exists for date ${date} at all. Note: This warning is actually a normal behavior most of the time: if you didn't interact with the objective at all, it won't be logged. most interactions will mark it as done, but until those interactions happen, this warning will occur.`;
             logToConsole(log, "warn");
             return false; // no interaction with the objective means no data logged.
         }
@@ -244,12 +242,12 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
             (obj: { identifier: number; status: boolean }): boolean =>
                 obj.status,
         );
-        return allDone ? 0 : (
-                activeObjectivesDueToday.map(
-                    (obj: { identifier: number; status: boolean }): number =>
-                        obj.identifier,
-                )
-            ); // Return 0 if all are done, otherwise return the active objectives due today (well, their identifiers)
+        return allDone
+            ? 0
+            : activeObjectivesDueToday.map(
+                  (obj: { identifier: number; status: boolean }): number =>
+                      obj.identifier,
+              ); // Return 0 if all are done, otherwise return the active objectives due today (well, their identifiers)
     } catch (e) {
         throw new Error("Failed to get all pending objectives: " + e);
     }

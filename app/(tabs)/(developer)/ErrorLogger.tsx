@@ -94,16 +94,13 @@ export default function ErrorLogger() {
                 the log's text. Both entries are color-coded.
             </BetterTextSmallerText>
             <View style={styles.consoleView}>
-                {error ?
+                {error ? (
                     <BetterTextSmallText>{error}</BetterTextSmallText>
-                : logs && logs.length > 0 && Array.isArray(logs) ?
+                ) : logs && logs.length > 0 && Array.isArray(logs) ? (
                     // Filtra los logs para mostrar solo los de tipo "warn" o "error"
-                    (
-                        logs.filter(
-                            (log) =>
-                                log.type === "warn" || log.type === "error",
-                        ).length > 0
-                    ) ?
+                    logs.filter(
+                        (log) => log.type === "warn" || log.type === "error",
+                    ).length > 0 ? (
                         logs
                             .filter(
                                 (log) =>
@@ -137,18 +134,20 @@ export default function ErrorLogger() {
                                     </Text>
                                 );
                             })
-                    :   <BetterTextSmallText>
+                    ) : (
+                        <BetterTextSmallText>
                             Great! There are no errors and no warnings! If you
                             want to see full logs, including regular and success
                             ones, tap "See all logs".
                         </BetterTextSmallText>
-
-                :   <BetterTextSmallText>
+                    )
+                ) : (
+                    <BetterTextSmallText>
                         No logs. If you recently cleared them it's alright, if
                         not, this shouldn't be empty, so you might be facing a
                         bug.
                     </BetterTextSmallText>
-                }
+                )}
             </View>
         </>
     );
