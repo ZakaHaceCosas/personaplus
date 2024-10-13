@@ -446,17 +446,17 @@ export default function CreateActiveObjectivePage() {
 
             let isSpecificDataValid = false;
 
-            if (objectiveToCreate.exercise === "lifting") {
+            if (objectiveToCreate.exercise === "Lifting") {
                 isSpecificDataValid =
                     (objectiveToCreate.specificData?.dumbbellWeight || 0) > 0 &&
                     [1, 2].includes(
                         objectiveToCreate.specificData?.amountOfHands || 0,
                     ) &&
                     (objectiveToCreate.specificData?.reps || 0) > 0;
-            } else if (objectiveToCreate.exercise === "push_ups") {
+            } else if (objectiveToCreate.exercise === "Push Ups") {
                 isSpecificDataValid =
                     objectiveToCreate.specificData.amountOfPushUps > 0;
-            } else if (objectiveToCreate.exercise === "running") {
+            } else if (objectiveToCreate.exercise === "Running") {
                 isSpecificDataValid =
                     !!objectiveToCreate.specificData.estimateSpeed; // ensure it's boolean
             }
@@ -467,8 +467,8 @@ export default function CreateActiveObjectivePage() {
         setCanCreateObjective(validate());
     }, [objectiveToCreate]);
 
-    function handleCreation() {
-        async function createObjective() {
+    function handleCreation(): void {
+        async function createObjective(): Promise<void> {
             if (canCreateObjective) {
                 // TODO: this function is tied to the toolkit, which is also a TODO
                 const response = await CreateActiveObjective(objectiveToCreate);
@@ -636,7 +636,7 @@ export default function CreateActiveObjectivePage() {
                 // (im writing this like weeks before making this public, who am i asking forgiveness too)
                 // (javascript made me go weird :skull:)
             }
-            {objectiveToCreate.exercise === "push_ups" && (
+            {objectiveToCreate.exercise === "Push Ups" && (
                 <>
                     <BetterTextSmallHeader>
                         {t(
@@ -707,7 +707,7 @@ export default function CreateActiveObjectivePage() {
                     <GapView height={20} />
                 </>
             )}
-            {objectiveToCreate.exercise === "lifting" && (
+            {objectiveToCreate.exercise === "Lifting" && (
                 <>
                     <BetterTextSmallHeader>
                         {t(
@@ -866,7 +866,7 @@ export default function CreateActiveObjectivePage() {
                 </>
             )}
 
-            {objectiveToCreate.exercise === "running" && (
+            {objectiveToCreate.exercise === "Running" && (
                 <>
                     <BetterTextSmallHeader>
                         {t(
@@ -952,8 +952,8 @@ export default function CreateActiveObjectivePage() {
                 </>
             )}
 
-            {(objectiveToCreate.exercise === "lifting" ||
-                objectiveToCreate.exercise === "push_ups") && (
+            {(objectiveToCreate.exercise === "Lifting" ||
+                objectiveToCreate.exercise === "Push Ups") && (
                 <>
                     <BetterTextSmallHeader>
                         {t(
@@ -962,7 +962,7 @@ export default function CreateActiveObjectivePage() {
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            objectiveToCreate.exercise === "lifting"
+                            objectiveToCreate.exercise === "Lifting"
                                 ? "pages.createActiveObjective.questions.perExercise.lifting.handsProTip"
                                 : "pages.createActiveObjective.questions.perExercise.pushUps.handsProTip",
                         )}
