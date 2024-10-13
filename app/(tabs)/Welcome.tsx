@@ -31,7 +31,7 @@ import BetterButton from "@/components/interaction/BetterButton";
 import BetterInputField from "@/components/interaction/BetterInputField";
 import StoredItemNames from "@/constants/StoredItemNames";
 import { formatTimeString } from "@/toolkit/Time";
-import Routes from "@/constants/Routes";
+import ROUTES from "@/constants/Routes";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         backgroundColor: Colors.MAIN.APP,
     },
     buttonWrapper: {
@@ -50,6 +50,8 @@ const styles = StyleSheet.create({
         width: getCommonScreenSize("width"),
         alignItems: "center",
         justifyContent: "center",
+        bottom: 20,
+        position: "absolute",
     },
 });
 
@@ -256,7 +258,7 @@ export default function WelcomePage() {
                 );
 
                 await AsyncStorage.setItem(StoredItemNames.objectives, "[]");
-                router.replace(Routes.Main.Home);
+                router.replace(ROUTES.MAIN.HOME);
                 logToConsole(
                     "User " +
                         formData.username +
