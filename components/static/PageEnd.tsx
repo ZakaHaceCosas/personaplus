@@ -8,6 +8,7 @@ import getCommonScreenSize from "@/constants/Screen";
 
 interface PageEndProps {
     includeText: boolean;
+    size?: "normal" | "tiny";
 }
 
 const styles = StyleSheet.create({
@@ -19,7 +20,10 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function PageEnd({ includeText }: PageEndProps): ReactElement {
+export default function PageEnd({
+    includeText,
+    size = "normal",
+}: PageEndProps): ReactElement {
     const { t } = useTranslation();
 
     return (
@@ -27,7 +31,10 @@ export default function PageEnd({ includeText }: PageEndProps): ReactElement {
             style={[
                 styles.pageEnd,
                 {
-                    height: includeText ? 180 : 160,
+                    height:
+                        includeText ? 180
+                        : size === "normal" ? 160
+                        : 60,
                     marginTop: includeText ? 20 : 0,
                 },
             ]}
