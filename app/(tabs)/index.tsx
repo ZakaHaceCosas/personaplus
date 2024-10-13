@@ -102,7 +102,7 @@ export default function HomeScreen() {
 
     function generateDescriptionOfObjective(obj: ActiveObjective): string {
         const exercise: SupportedActiveObjectives = obj.exercise;
-        if (exercise === "lifting") {
+        if (exercise === "Lifting") {
             return t(
                 obj.specificData.reps +
                     " lifts of " +
@@ -110,7 +110,7 @@ export default function HomeScreen() {
                         obj.specificData.amountOfHands +
                     " kg each.",
             );
-        } else if (exercise === "push_ups") {
+        } else if (exercise === "Push Ups") {
             return t(
                 obj.specificData.amountOfPushUps +
                     " push ups with " +
@@ -132,12 +132,6 @@ export default function HomeScreen() {
         } catch (e) {
             logToConsole("Error starting session: " + e, "error");
         }
-        // update & redraw without re-fetching everything upon update. unused, but keep it just in case
-        /* setRenderedObjectives(
-            renderedObjectives?.filter(
-                (obj) => obj.identifier !== identifier,
-            ) || null,
-        ); */
     }
 
     if (loading) return <Loading />;
