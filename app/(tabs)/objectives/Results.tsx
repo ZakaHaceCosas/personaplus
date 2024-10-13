@@ -2,43 +2,31 @@
 // Results page for when a session is done.
 
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet } from "react-native";
 import CoreLibrary from "@/core/CoreLibrary";
+import { router, useGlobalSearchParams } from "expo-router";
+import { useTranslation } from "react-i18next";
+import Colors from "@/constants/Colors";
 import { logToConsole } from "@/toolkit/debug/Console";
-import BetterText from "@/components/text/BetterText";
+import { BasicUserHealthData } from "@/types/User";
+import { SaveActiveObjectiveToDailyLog } from "@/toolkit/objectives/ActiveObjectives";
+import GenerateRandomMessage from "@/toolkit/RandomMessage";
 import {
     BetterTextHeader,
     BetterTextSubHeader,
 } from "@/components/text/BetterTextPresets";
-import { router, useGlobalSearchParams } from "expo-router";
-import { BasicUserHealthData } from "@/types/User";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useTranslation } from "react-i18next";
+import GapView from "@/components/ui/GapView";
 import Section from "@/components/ui/sections/Section";
 import Division from "@/components/ui/sections/Division";
-import GapView from "@/components/ui/GapView";
-import { SaveActiveObjectiveToDailyLog } from "@/toolkit/objectives/ActiveObjectives";
+import BetterText from "@/components/text/BetterText";
 import BetterButton from "@/components/interaction/BetterButton";
-import GenerateRandomMessage from "@/toolkit/RandomMessage";
-import Colors from "@/constants/Colors";
-
-// TypeScript, supongo
-interface Params {
-    speed: number;
-    time: number;
-    id: number;
-    exercise: string;
-    repetitions: number;
-    lifts: number;
-    barWeight: number;
-    liftWeight: number;
-    pushups: number;
-    hands: number;
-}
+import ROUTES from "@/constants/Routes";
+import { SessionParams } from "./Sessions";
+import { OrchestrateUserData } from "@/toolkit/User";
 
 // We define the styles
 const styles = StyleSheet.create({
-    mainview: {
+    mainView: {
         backgroundColor: Colors.MAIN.APP,
         padding: 20,
         paddingTop: 40,
@@ -46,7 +34,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         minHeight: "100%",
     },
-    thirdview: {
+    thirdView: {
         display: "flex",
         flexDirection: "column",
     },
@@ -55,30 +43,19 @@ const styles = StyleSheet.create({
 export default function Results() {
     // Params
     const originalParams = useGlobalSearchParams();
-    // logToConsole(params, "log");
-    const params: Params = {
-        speed: Number(originalParams.speed) || 0,
-        time: Number(originalParams.time) || 0,
-        id: Number(originalParams.id) || 0,
+    const parseNumber = (value: any) => Number(value) || 0;
+
+    const params: SessionParams = {
+        speed: parseNumber(originalParams.speed),
+        time: parseNumber(originalParams.time),
+        id: parseNumber(originalParams.id),
+        repetitions: parseNumber(originalParams.repetitions),
+        lifts: parseNumber(originalParams.lifts),
+        dumbbellWeight: parseNumber(originalParams.dumbbellWeight),
+        pushups: parseNumber(originalParams.pushups),
+        hands: parseNumber(originalParams.hands),
         exercise: (originalParams.exercise as string) || "",
-        repetitions: Number(originalParams.repetitions) || 0,
-        lifts: Number(originalParams.lifts) || 0,
-        barWeight: Number(originalParams.barWeight) || 0,
-        liftWeight: Number(originalParams.liftWeight) || 0,
-        pushups: Number(originalParams.pushups) || 0,
-        hands: Number(originalParams.hands) || 0,
     };
-    // Global params
-    const sessionElapsedTime: number = params.time;
-    const objectiveExercise: string = params.exercise;
-    const objectiveIdentifier: number = params.id;
-    const repetitions: number = params.repetitions;
-    const multiobjective_hands: number = params.hands;
-    // Objective-specific params
-    const objectiveRunning_Speed: number = params.speed;
-    const objectiveLifting_barWeight: number = params.barWeight;
-    const objectiveLifting_liftWeight: number = params.liftWeight;
-    const objectivePushups_Pushups: number = params.pushups;
 
     const [userData, setUserData] = useState<BasicUserHealthData | null>(null);
     const [result, setResult] = useState<{ result: number } | null>(null);
@@ -90,22 +67,15 @@ export default function Results() {
         // Async function to fetch user data from storage
         const fetchUserData = async () => {
             try {
-                const data = await AsyncStorage.multiGet([
-                    "age",
-                    "height",
-                    "weight",
-                    "gender",
-                ]);
+                const data = await OrchestrateUserData();
+                if (!data) throw new Error("No user data.");
 
                 // Process and clean up the fetched data
                 const processedData: BasicUserHealthData = {
-                    age: data[0][1] ? Number(data[0][1]) : null,
-                    height: data[1][1] ? Number(data[1][1]) : null,
-                    weight: data[2][1] ? Number(data[2][1]) : null,
-                    gender:
-                        data[3][1] === "male" || data[3][1] === "female"
-                            ? (data[3][1] as "male" | "female")
-                            : null,
+                    age: data.age,
+                    height: data.height,
+                    weight: data.weight,
+                    gender: data.gender,
                 };
 
                 setUserData(processedData); // Update state with user data
@@ -117,91 +87,88 @@ export default function Results() {
         fetchUserData();
     }, []);
 
-    useEffect(() => {
-        // Function to handle exercise performance calculations
-        const handleExerciseCalculation = () => {
-            try {
-                // ok, I know nesting too much is a bad practice
-                // but uhh it has to be a different function with different params for each scenario
-                // so yeah i cant think of a better approach
-                if (
-                    !isNaN(sessionElapsedTime) &&
-                    !isNaN(objectiveRunning_Speed) &&
-                    userData?.age &&
-                    userData?.gender &&
-                    userData?.weight &&
-                    userData?.height
-                ) {
-                    const exercise = objectiveExercise.toLowerCase();
+    // Function to handle exercise performance calculations
+    const handleExerciseCalculation = () => {
+        try {
+            // ok, I know nesting too much is a bad practice
+            // but uhh it has to be a different function with different params for each scenario
+            // so yeah i cant think of a better approach
+            if (
+                !isNaN(params.time) &&
+                !isNaN(params.speed) &&
+                userData &&
+                userData.age !== "" &&
+                userData.gender &&
+                userData.weight !== "" &&
+                userData.height !== ""
+            ) {
+                const exercise = params.exercise.toLowerCase();
 
-                    switch (exercise) {
-                        case "running":
-                            return CoreLibrary.performance.RunningPerformance.calculate(
-                                userData.age,
-                                userData.gender,
-                                userData.weight,
-                                userData.height,
-                                objectiveRunning_Speed,
-                                sessionElapsedTime,
-                                true,
-                                false,
-                            );
-                        case "lifting":
-                            return CoreLibrary.performance.LiftingPerformance.calculate(
-                                userData.age,
-                                userData.gender,
-                                userData.weight,
-                                userData.height,
-                                sessionElapsedTime,
-                                objectiveLifting_barWeight,
-                                objectiveLifting_liftWeight,
-                                multiobjective_hands,
-                                repetitions,
-                                true,
-                                false,
-                            );
-                        case "push up":
-                            return CoreLibrary.performance.PushingUpPerformance.calculate(
-                                userData.age,
-                                userData.gender,
-                                userData.weight,
-                                userData.height,
-                                sessionElapsedTime,
-                                multiobjective_hands,
-                                objectivePushups_Pushups * repetitions,
-                                true,
-                                false,
-                            );
-                        default:
-                            throw new Error("Unknown or invalid exercise type");
-                    }
-                } else {
-                    throw new Error("Invalid input data");
+                switch (exercise) {
+                    case "running":
+                        return CoreLibrary.performance.RunningPerformance.calculate(
+                            userData.age,
+                            userData.gender,
+                            userData.weight,
+                            userData.height,
+                            params.speed,
+                            params.time,
+                            true,
+                            true,
+                        );
+                    case "lifting":
+                        return CoreLibrary.performance.LiftingPerformance.calculate(
+                            userData.age,
+                            userData.gender,
+                            userData.weight,
+                            userData.height,
+                            params.time,
+                            params.dumbbellWeight,
+                            params.hands,
+                            params.repetitions,
+                            true,
+                            true,
+                        );
+                    case "push ups":
+                        return CoreLibrary.performance.PushingUpPerformance.calculate(
+                            userData.age,
+                            userData.gender,
+                            userData.weight,
+                            userData.height,
+                            params.time,
+                            params.repetitions > 0
+                                ? params.repetitions * params.pushups
+                                : params.pushups,
+                            params.hands,
+                            true,
+                            true,
+                        );
+                    default:
+                        throw new Error("Unknown or invalid exercise type");
                 }
-            } catch (e) {
-                logToConsole(
-                    "Error handling post-session calculations (@ handleExerciseCalculation): " +
-                        e,
-                    "error",
-                );
-                return undefined;
+            } else {
+                throw new Error("Invalid input data");
             }
-        };
+        } catch (e) {
+            logToConsole(
+                "Error handling post-session calculations (@ handleExerciseCalculation): " +
+                    e,
+                "error",
+            );
+            return undefined;
+        }
+    };
 
+    useEffect(() => {
         try {
             const response = handleExerciseCalculation();
-            // logToConsole(response, "log");
-            if (response !== undefined) {
+            if (response) {
                 setResult(response);
                 logToConsole(
                     "(RESULTS.TSX) Result of session passed to state value",
                     "log",
                 );
-                SaveActiveObjectiveToDailyLog(
-                    objectiveIdentifier,
-                    true,
-                    response,
-                );
+                SaveActiveObjectiveToDailyLog(params.id, true, response);
                 logToConsole(
                     "(RESULTS.TSX) Success! Session's results set & saved",
                     "success",
@@ -212,21 +179,11 @@ export default function Results() {
         } catch (e) {
             logToConsole("Error getting your results! " + e, "error");
         }
-    }, [
-        objectiveExercise,
-        objectiveRunning_Speed,
-        sessionElapsedTime,
-        userData,
-        objectiveIdentifier,
-        objectiveLifting_barWeight,
-        objectiveLifting_liftWeight,
-        repetitions,
-        multiobjective_hands,
-        objectivePushups_Pushups,
-    ]);
+        // eslint-disable-next-line
+    }, [params.id]);
 
     // Speed options for running exercises
-    const speedOptions = [
+    const speedOptions: string[][] = [
         [t("Brisk Walk"), t("1.6 - 3.2 km/h")],
         [t("Light Jog"), t("3.2 - 4.0 km/h")],
         [t("Moderate Run"), t("4.0 - 4.8 km/h")],
@@ -243,22 +200,23 @@ export default function Results() {
 
     let resultsInfoText: string;
 
-    if (objectiveExercise.toLowerCase() === "running") {
+    if (params.exercise.toLowerCase() === "running") {
         resultsInfoText = t("page_session_results.results.body_running", {
-            speed: speedOptions[objectiveRunning_Speed]?.[1] || "??",
-            time: sessionElapsedTime || "??",
+            speed: speedOptions[params.speed]?.[1] || "??",
+            time: params.time || "??",
         });
-    } else if (objectiveExercise.toLowerCase() === "push up") {
+    } else if (params.exercise.toLowerCase() === "push up") {
         resultsInfoText = t("page_session_results.results.body_pushups", {
-            amount: objectivePushups_Pushups || "??",
-            hands: multiobjective_hands || "??",
+            amount: params.pushups || "??",
+            hands: params.hands || "??",
         });
-    } else if (objectiveExercise.toLowerCase() === "lifting") {
+    } else if (params.exercise.toLowerCase() === "lifting") {
         resultsInfoText = t("page_session_results.results.body_lifting", {
-            amount: objectivePushups_Pushups || "??",
+            amount: params.pushups || "??",
             weight:
-                objectiveLifting_barWeight + objectiveLifting_liftWeight * 2 ||
-                "??",
+                params.dumbbellWeight && params.hands
+                    ? params.dumbbellWeight * params.hands
+                    : "??",
         });
     } else {
         resultsInfoText = "Error."; // lol
@@ -266,52 +224,44 @@ export default function Results() {
 
     return (
         <>
-            <ScrollView
-                style={styles.mainview}
-                contentContainerStyle={{ flexGrow: 1 }}
-                horizontal={false}
-            >
-                <View style={styles.thirdview}>
-                    <BetterTextHeader>
-                        {t("globals.session_done")}
-                    </BetterTextHeader>
-                    <BetterTextSubHeader>
-                        {GenerateRandomMessage("sessionCompleted", t)}
-                    </BetterTextSubHeader>
-                    <GapView height={10} />
-                    {result?.result && (
-                        <Section kind="HowYouAreDoing">
-                            <Division
-                                preHeader={t(
-                                    "page_session_results.results.burnt_calories",
-                                )}
-                                header={parseFloat(
-                                    result?.result.toFixed(2),
-                                ).toString()}
-                            />
-                            <Division
-                                preHeader={t(
-                                    "page_session_results.results.header_more",
-                                )}
-                                header={resultsInfoText}
-                            />
-                        </Section>
-                    )}
-                    <GapView height={10} />
-                    <BetterText fontSize={20} fontWeight="Regular">
-                        {t("page_session_results.well_done_bud")}
-                    </BetterText>
-                </View>
+            <View style={styles.thirdView}>
+                <BetterTextHeader>{t("globals.session_done")}</BetterTextHeader>
+                <BetterTextSubHeader>
+                    {GenerateRandomMessage("sessionCompleted", t)}
+                </BetterTextSubHeader>
                 <GapView height={10} />
-                <BetterButton
-                    action={() => {
-                        router.replace("/");
-                    }}
-                    style="ACE"
-                    buttonText={t("globals.success")}
-                    buttonHint="TODO"
-                />
-            </ScrollView>
+                {result?.result && (
+                    <Section kind="HowYouAreDoing">
+                        <Division
+                            preHeader={t(
+                                "page_session_results.results.burnt_calories",
+                            )}
+                            header={parseFloat(
+                                result?.result.toFixed(2),
+                            ).toString()}
+                        />
+                        <Division
+                            preHeader={t(
+                                "page_session_results.results.header_more",
+                            )}
+                            header={resultsInfoText}
+                        />
+                    </Section>
+                )}
+                <GapView height={10} />
+                <BetterText fontSize={20} fontWeight="Regular">
+                    {t("page_session_results.well_done_bud")}
+                </BetterText>
+            </View>
+            <GapView height={10} />
+            <BetterButton
+                action={() => {
+                    router.replace(ROUTES.MAIN.HOME);
+                }}
+                style="ACE"
+                buttonText={t("globals.success")}
+                buttonHint="TODO"
+            />
         </>
     );
 }
