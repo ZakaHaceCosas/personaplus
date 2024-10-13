@@ -283,7 +283,7 @@ export default function Sessions() {
                 </BetterText>
                 <GapView height={10} />
                 <BetterText fontWeight="Bold" fontSize={25} textAlign="center">
-                    {!isUserResting
+                    {/*  {!isUserResting
                         ? objective.info.durationMinutes > 1
                             ? currentObjectiveVerbalName +
                               " " +
@@ -294,7 +294,8 @@ export default function Sessions() {
                             : currentObjectiveVerbalName +
                               " " +
                               objective.info.durationMinutes
-                        : t("page_sessions.resting")}
+                        : t("page_sessions.resting")} */}
+                    Doing something
                 </BetterText>
                 <GapView height={10} />
                 <SessionsPageInfoIcons
@@ -356,7 +357,9 @@ export default function Sessions() {
                             textAlign="center"
                             textColor={timerColor}
                         >
-                            {`${minutes}:${seconds}`}
+                            {seconds < 10
+                                ? `${minutes}:0${seconds}`
+                                : `${minutes}:${seconds}`}
                         </BetterText>
                     );
                 }}
