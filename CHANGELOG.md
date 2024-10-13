@@ -43,5 +43,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - (WIP) Active objective creation page's input fields have turned not precise, and tend to fail.
 
-> For versions prior to 0.0.6, see [the deprecated changelog](CHANGELOG.deprecated.md).
-> P.S. Versions prior to 0.0.6 are not SemVer compliant and follow a different format.
+> For versions prior to 0.0.26, see [the deprecated changelog](CHANGELOG.deprecated.md).
+> P.S. Versions prior to 0.0.26 are not SemVer compliant and follow a different format.

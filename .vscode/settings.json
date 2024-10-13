@@ -82,7 +82,8 @@
     },
     "typescript.tsdk": "node_modules\\typescript\\lib",
     "files.associations": {
-        ".easignore": "ignore"
+        ".easignore": "ignore",
+        "*.json": "json"
     },
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": "always"

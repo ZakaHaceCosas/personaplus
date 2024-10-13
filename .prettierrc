@@ -7,7 +7,5 @@
     "arrowParens": "always",
     "jsxSingleQuote": false,
     "useTabs": false,
-    "parser": "typescript",
-    "experimentalTernaries": true,
-    "singleAttributePerLine": true
+    "parser": "typescript"
 }

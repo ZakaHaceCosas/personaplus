@@ -3,7 +3,9 @@
     "compilerOptions": {
         "strict": true,
         "paths": {
-            "@/*": ["./*"]
+            "@/*": [
+                "./*"
+            ]
         },
         "noImplicitAny": true,
         "noImplicitOverride": true,
@@ -23,8 +25,20 @@
         "noFallthroughCasesInSwitch": true,
         "exactOptionalPropertyTypes": true,
         "strictBindCallApply": true,
-        "useUnknownInCatchVariables": true
+        "useUnknownInCatchVariables": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "suppressExcessPropertyErrors": false,
+        "suppressImplicitAnyIndexErrors": false,
+        "diagnostics": true,
+        "downlevelIteration": false
     },
-    "include": ["**/*.ts", "**/*.tsx"],
-    "exclude": ["**/*.wip.ts", "**/*.deprecated.ts"]
+    "include": [
+        "**/*.ts",
+        "**/*.tsx"
+    ],
+    "exclude": [
+        "**/*.wip.ts",
+        "**/*.deprecated.ts"
+    ]
 }
