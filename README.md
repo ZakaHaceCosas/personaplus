@@ -4,7 +4,7 @@
 > [!WARNING]
 > :us: **Currently, no contributions are expected! Please do not make any PR whatsoever until the rewrite is done. More free time for you I guess.**
 >
-> :es: **De momento, ¡no se esperan contribuciones! Por favor no hagas ninguna PR ni nada hasta que la reescritura esté acabada. Más tiempo libre para tí, supongo.**
+> :es: **De momento, ¡no se esperan contribuciones! Por favor no hagas ninguna PR ni nada hasta que la re-escritura esté acabada. Más tiempo libre para tí, supongo.**
 
 :us: R6 stands for 6th rewrite.
 
@@ -28,11 +28,11 @@ Ah, by the way, finally the app is `SemVer` compliant. Next release will be `0.0
 
 NOTE: The repository will be inactive for several days, I am rewriting everything locally in a separate folder (so I can start from scratch with `create-expo-app`), that's why this looks dead.
 
-NOTE 2: I'm gradually syncronising everything from directory to directory, don't get surprised if the Git history is a bit messy or some "random" / testing things get committed.
+NOTE 2: I'm gradually synchronizing everything from directory to directory, don't get surprised if the Git history is a bit messy or some "random" / testing things get committed.
 
 ---
 
-:es: R6 se refiere a 6ta reescritura.
+:es: R6 se refiere a 6ta re-escritura.
 
 Respecto a terminar esto:
 
@@ -77,7 +77,7 @@ NOTA 2: Estoy gradualmente sincronizando todo de carpeta a carpeta, no te sorpre
 
 **PersonaPlus** es una app de código abierto 3 en 1 para ayudar a los usuarios a cuidar de su salud, dieta, y bienestar digital. A ***darse más***, como nos gusta decir.
 
-Este repositorio es un *monorepo*, aloja la app PersonaPlus y la libreria [OpenHealthJS](https://github.com/ZakaHaceCosas/personaplus/blob/main/core/README.md), creada por nosotrs para obtener datos de salud precisos con los que ayudar al usuario.
+Este repositorio es un *monorepo*, aloja la app PersonaPlus y la librería [OpenHealthJS](https://github.com/ZakaHaceCosas/personaplus/blob/main/core/README.md), creada por nosotros para obtener datos de salud precisos con los que ayudar al usuario.
 
 ## Descargar la app
 
@@ -85,7 +85,7 @@ Prueba la app descargando una *Pre-Release* desde la [página de lanzamientos](h
 
 ### Testing
 
-PersonaPlus está en su primera fase, codename "*PRE-APP*", con varios errores conocidos. Si encuentras algún problema, por favor [repórtalo aquí](https://github.com/ZakaHaceCosas/personaplus/issues). ¡Cada aporte cuenta!
+PersonaPlus está en su primera fase, codename "*PRE-APP*", con varios errores conocidos. Si encuentras algún problema, por favor [reporta aquí](https://github.com/ZakaHaceCosas/personaplus/issues). ¡Cada aporte cuenta!
 
 ## Funciones planeadas, hoja de ruta, y más
 
@@ -109,7 +109,7 @@ Asegúrate de que cualquier software de terceros utilizado que esté bajo difere
 
 #### Creador y contribuidores
 
-Creado por Zakaria ([@ZakaHaceCosas](https://bento.me/zakahacecosas)).
+Creado por [@ZakaHaceCosas](https://zakahacecosas.github.io).
 
 [Todos los contribuidores aparecen en esta pestaña](https://github.com/zakaHaceCosas/personaplus/graphs/contributors). Los que hagan aportes significativos, aparecerán también aquí. ¡Gracias por contribuir!
 
@@ -127,7 +127,7 @@ Gracias a todo este maravilloso software libre, PersonaPlus es posible. ¡Gracia
 
 ## Únete al club de los que quieren darse más :]
 
-<!--markdownlint-disable-next-line-- CLOSEME
+<!--markdownlint-disable-next-line-- CLOSE ME
 <div align="center">
 
 [![YouTube button](https://img.shields.io/badge/YouTube-PersonaPlus-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/playlist?list=PLdif1flfmG__g_a1QSmBNnSh_6pAeRizW)
