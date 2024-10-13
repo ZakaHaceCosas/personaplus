@@ -31,7 +31,13 @@ export default function PageEnd({
             style={[
                 styles.pageEnd,
                 {
-                    height: includeText ? 180 : size === "normal" ? 160 : 60,
+                    height: includeText
+                        ? size === "normal"
+                            ? 180
+                            : 80
+                        : size === "normal"
+                          ? 160
+                          : 60,
                     marginTop: includeText ? 20 : 0,
                 },
             ]}
