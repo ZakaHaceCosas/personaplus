@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
  * @interface SelectOption
  * @typedef {SelectOption}
  */
-interface SelectOption {
+export interface SelectOption {
     /**
      * Its label. It is what the user sees as the option.
      *
