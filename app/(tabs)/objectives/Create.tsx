@@ -18,7 +18,7 @@ import {
     SupportedActiveObjectivesList,
     SupportedActiveObjectives,
 } from "@/types/ActiveObjectives";
-import generateRandomMessage from "@/toolkit/RandomMessage";
+import GenerateRandomMessage from "@/toolkit/RandomMessage";
 import BetterText from "@/components/text/BetterText";
 import Colors from "@/constants/Colors";
 import FontSizes from "@/constants/FontSizes";
@@ -30,6 +30,7 @@ import getCommonScreenSize from "@/constants/Screen";
 import PageEnd from "@/components/static/PageEnd";
 import { CreateActiveObjective } from "@/toolkit/objectives/ActiveObjectives";
 import { router } from "expo-router";
+import Routes from "@/constants/Routes";
 
 const styles = StyleSheet.create({
     dayContainer: {
@@ -105,7 +106,7 @@ export default function CreateActiveObjectivePage() {
     // random message
     const [randomMessage, setRandomMessage] = useState<string>("");
     useEffect(() => {
-        setRandomMessage(generateRandomMessage("createActiveObjective", t));
+        setRandomMessage(GenerateRandomMessage("createActiveObjective", t));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -124,17 +125,17 @@ export default function CreateActiveObjectivePage() {
             if (value === "durationMinutes") {
                 const currentDurationMinutes = prev.info.durationMinutes;
                 updatedInfo.durationMinutes =
-                    operation === "increase" ?
-                        currentDurationMinutes + 1
-                    :   Math.max(currentDurationMinutes - 1, 0);
+                    operation === "increase"
+                        ? currentDurationMinutes + 1
+                        : Math.max(currentDurationMinutes - 1, 0);
             } else if (value === "rests") {
                 const currentRests = prev.info.rests;
 
                 if (currentRests !== null) {
                     updatedInfo.rests =
-                        operation === "increase" ?
-                            currentRests + 1
-                        :   Math.max(currentRests - 1, 0);
+                        operation === "increase"
+                            ? currentRests + 1
+                            : Math.max(currentRests - 1, 0);
                     if (updatedInfo.rests === 0) {
                         updatedInfo.rests = 0;
                         updatedInfo.restDurationMinutes = 0;
@@ -153,15 +154,15 @@ export default function CreateActiveObjectivePage() {
             } else if (value === "restDurationMinutes") {
                 const currentRestDuration = prev.info.restDurationMinutes ?? 0;
                 updatedInfo.restDurationMinutes =
-                    operation === "increase" ?
-                        currentRestDuration + 1
-                    :   Math.max(currentRestDuration - 1, 0);
+                    operation === "increase"
+                        ? currentRestDuration + 1
+                        : Math.max(currentRestDuration - 1, 0);
             } else if (value === "repetitions") {
                 const currentRepetitions = prev.info.repetitions;
                 updatedInfo.repetitions =
-                    operation === "increase" ?
-                        (currentRepetitions ?? 0) + 1
-                    :   Math.max((currentRepetitions ?? 0) - 1, 0);
+                    operation === "increase"
+                        ? (currentRepetitions ?? 0) + 1
+                        : Math.max((currentRepetitions ?? 0) - 1, 0);
             }
 
             return {
@@ -460,7 +461,7 @@ export default function CreateActiveObjectivePage() {
                         "error",
                     );
                 }
-                router.navigate("/");
+                router.navigate(Routes.Main.Home);
             }
         }
 
@@ -538,26 +539,30 @@ export default function CreateActiveObjectivePage() {
             <View style={styles.dayContainer}>
                 {objectiveToCreate.info.days.map((day, index) => {
                     const thisDay: string =
-                        index === 0 ? t("globals.daysOfTheWeek.monday.key")
-                        : index === 1 ? t("globals.daysOfTheWeek.tuesday.key")
-                        : index === 2 ? t("globals.daysOfTheWeek.wednesday.key")
-                        : index === 3 ? t("globals.daysOfTheWeek.thursday.key")
-                        : index === 4 ? t("globals.daysOfTheWeek.friday.key")
-                        : index === 5 ? t("globals.daysOfTheWeek.saturday.key")
-                        : t("globals.daysOfTheWeek.sunday.key");
+                        index === 0
+                            ? t("globals.daysOfTheWeek.monday.key")
+                            : index === 1
+                              ? t("globals.daysOfTheWeek.tuesday.key")
+                              : index === 2
+                                ? t("globals.daysOfTheWeek.wednesday.key")
+                                : index === 3
+                                  ? t("globals.daysOfTheWeek.thursday.key")
+                                  : index === 4
+                                    ? t("globals.daysOfTheWeek.friday.key")
+                                    : index === 5
+                                      ? t("globals.daysOfTheWeek.saturday.key")
+                                      : t("globals.daysOfTheWeek.sunday.key");
                     return (
                         <React.Fragment key={index}>
                             <View
                                 style={{
                                     ...styles.day,
-                                    borderColor:
-                                        day ?
-                                            Colors.PRIMARIES.ACE.ACE_STROKE
-                                        :   Colors.MAIN.DEFAULT_ITEM.STROKE,
-                                    backgroundColor:
-                                        day ?
-                                            Colors.PRIMARIES.ACE.ACE
-                                        :   Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
+                                    borderColor: day
+                                        ? Colors.PRIMARIES.ACE.ACE_STROKE
+                                        : Colors.MAIN.DEFAULT_ITEM.STROKE,
+                                    backgroundColor: day
+                                        ? Colors.PRIMARIES.ACE.ACE
+                                        : Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
                                 }}
                             >
                                 <Pressable
@@ -939,9 +944,9 @@ export default function CreateActiveObjectivePage() {
                     </BetterTextSmallHeader>
                     <BetterTextSmallText>
                         {t(
-                            objectiveToCreate.exercise === "Lifting" ?
-                                "pages.createActiveObjective.questions.perExercise.lifting.handsProTip"
-                            :   "pages.createActiveObjective.questions.perExercise.pushUps.handsProTip",
+                            objectiveToCreate.exercise === "Lifting"
+                                ? "pages.createActiveObjective.questions.perExercise.lifting.handsProTip"
+                                : "pages.createActiveObjective.questions.perExercise.pushUps.handsProTip",
                         )}
                     </BetterTextSmallText>
                     <GapView height={10} />
@@ -1024,17 +1029,14 @@ export default function CreateActiveObjectivePage() {
             <BetterButton
                 style={canCreateObjective ? "GOD" : "DEFAULT"}
                 buttonText={
-                    canCreateObjective ?
-                        t("globals.interaction.goAheadGood")
-                    :   t("globals.interaction.somethingIsWrong")
+                    canCreateObjective
+                        ? t("globals.interaction.goAheadGood")
+                        : t("globals.interaction.somethingIsWrong")
                 }
                 buttonHint="Creates the desired active objective. In case of missing or invalid fields, it won't do anything."
                 action={canCreateObjective ? () => handleCreation() : () => {}}
             />
-            <PageEnd
-                includeText={false}
-                size="tiny"
-            />
+            <PageEnd includeText={false} size="tiny" />
         </>
     );
 }

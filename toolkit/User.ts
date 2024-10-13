@@ -17,6 +17,7 @@ import { Alert } from "react-native";
 import { FullProfile } from "@/types/User";
 import { router } from "expo-router";
 import StoredItemNames from "@/constants/StoredItemNames";
+import Routes from "@/constants/Routes";
 
 /**
  * Validates the basic user data, to ensure the gender, age, height, weight, and username values are valid. This doesn't just check for types, but actually does some extra validation, like username length or "normal limits" (e.g. returning invalid if the user wants to set his weight to 999kg).
@@ -89,13 +90,11 @@ export async function orchestrateUserData(): Promise<FullProfile | null> {
                 StoredItemNames.userData,
             );
             response =
-                (
-                    data !== null &&
-                    data !== "" &&
-                    Object.keys(JSON.parse(data)).length > 0
-                ) ?
-                    JSON.parse(data)
-                :   null;
+                data !== null &&
+                data !== "" &&
+                Object.keys(JSON.parse(data)).length > 0
+                    ? JSON.parse(data)
+                    : null;
         }
 
         await handler();
@@ -126,7 +125,7 @@ export function updateBrm5(careAboutTheUser: boolean): void {
                 StoredItemNames.objectives,
                 StoredItemNames.dailyLog,
             ]);
-            router.replace("/Welcome");
+            router.replace(Routes.Main.WelcomeScreen);
             return 0;
         } catch (e) {
             logToConsole(

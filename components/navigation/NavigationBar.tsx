@@ -10,6 +10,7 @@ import GapView from "@/components/ui/GapView";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/Colors";
 import FontSizes from "@/constants/FontSizes";
+import Routes from "@/constants/Routes";
 
 // TypeScript, supongo
 interface SectionProps {
@@ -51,21 +52,13 @@ function NavItem({
     label: string;
     isSelected: boolean;
 }): ReactElement {
-    const color =
-        isSelected ?
-            Colors.MAIN.FOOTER.FOOTER_SEL
-        :   Colors.MAIN.FOOTER.FOOTER_UNS;
+    const color = isSelected
+        ? Colors.MAIN.FOOTER.FOOTER_SEL
+        : Colors.MAIN.FOOTER.FOOTER_UNS;
 
     return (
-        <Pressable
-            onPress={() => router.push(href)}
-            style={styles.navItem}
-        >
-            <Ionicons
-                name={iconName}
-                size={25}
-                color={color}
-            />
+        <Pressable onPress={() => router.push(href)} style={styles.navItem}>
+            <Ionicons name={iconName} size={25} color={color} />
             <GapView height={5} />
             <BetterText
                 textAlign="normal"
@@ -97,16 +90,16 @@ export default function NavigationBar({ currentLocation }: SectionProps) {
                 isSelected={currentLocation === "/"}
             />
             <NavItem
-                href="/Dashboard"
+                href={Routes.Main.Dashboard}
                 iconName="dashboard"
                 label={t("navbar.dashboard")}
-                isSelected={currentLocation === "/Dashboard"}
+                isSelected={currentLocation === Routes.Main.Dashboard}
             />
             <NavItem
-                href="/Profile"
+                href={Routes.Main.Profile}
                 iconName="person"
                 label={t("navbar.profile")}
-                isSelected={currentLocation === "/Profile"}
+                isSelected={currentLocation === Routes.Main.Profile}
             />
         </View>
     );

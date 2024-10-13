@@ -31,6 +31,7 @@ import BetterButton from "@/components/interaction/BetterButton";
 import BetterInputField from "@/components/interaction/BetterInputField";
 import StoredItemNames from "@/constants/StoredItemNames";
 import { formatTimeString } from "@/toolkit/Time";
+import Routes from "@/constants/Routes";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -255,7 +256,7 @@ export default function WelcomePage() {
                 );
 
                 await AsyncStorage.setItem(StoredItemNames.objectives, "[]");
-                router.replace("/");
+                router.replace(Routes.Main.Home);
                 logToConsole(
                     "User " +
                         formData.username +
@@ -341,16 +342,16 @@ export default function WelcomePage() {
         associatedValue: "activeness" | "sleepHours",
     ): ReactNode {
         const options =
-            associatedValue === "activeness" ?
-                activenessSelectOptions
-            :   sleepTimeSelectOptions;
+            associatedValue === "activeness"
+                ? activenessSelectOptions
+                : sleepTimeSelectOptions;
 
         return (
             <>
                 <BetterTextSmallText>
-                    {associatedValue === "activeness" ?
-                        t("pages.welcome.questions.activeness.ask")
-                    :   t("pages.welcome.questions.sleepTime.ask")}
+                    {associatedValue === "activeness"
+                        ? t("pages.welcome.questions.activeness.ask")
+                        : t("pages.welcome.questions.sleepTime.ask")}
                 </BetterTextSmallText>
                 <GapView height={5} />
                 <Select
@@ -359,9 +360,9 @@ export default function WelcomePage() {
                     changeAction={(value) =>
                         handleChange(
                             associatedValue,
-                            value !== null && value !== undefined ?
-                                value
-                            :   null,
+                            value !== null && value !== undefined
+                                ? value
+                                : null,
                         )
                     }
                     currentValue={formData[associatedValue] ?? ""}
@@ -414,38 +415,38 @@ export default function WelcomePage() {
 
         switch (step) {
             case 1:
-                buttonText =
-                    isStepOneValid ?
-                        isTheLastOne ? t("globals.interaction.goAheadGood")
-                        :   t("globals.interaction.continue")
-                    :   t("globals.interaction.somethingIsWrong");
+                buttonText = isStepOneValid
+                    ? isTheLastOne
+                        ? t("globals.interaction.goAheadGood")
+                        : t("globals.interaction.continue")
+                    : t("globals.interaction.somethingIsWrong");
                 style = isStepOneValid ? "GOD" : "HMM";
                 action = isStepOneValid ? goNext : () => {};
                 break;
             case 2:
-                buttonText =
-                    isStepTwoValid ?
-                        isTheLastOne ? t("globals.interaction.goAheadGood")
-                        :   t("globals.interaction.continue")
-                    :   t("globals.interaction.somethingIsWrong");
+                buttonText = isStepTwoValid
+                    ? isTheLastOne
+                        ? t("globals.interaction.goAheadGood")
+                        : t("globals.interaction.continue")
+                    : t("globals.interaction.somethingIsWrong");
                 style = isStepTwoValid ? "GOD" : "HMM";
                 action = isStepTwoValid ? goNext : () => {};
                 break;
             case 3:
-                buttonText =
-                    isStepThreeValid ?
-                        isTheLastOne ? t("globals.interaction.goAheadGood")
-                        :   t("globals.interaction.continue")
-                    :   t("globals.interaction.somethingIsWrong");
+                buttonText = isStepThreeValid
+                    ? isTheLastOne
+                        ? t("globals.interaction.goAheadGood")
+                        : t("globals.interaction.continue")
+                    : t("globals.interaction.somethingIsWrong");
                 style = isStepThreeValid ? "GOD" : "HMM";
                 action = isStepThreeValid ? goNext : () => {};
                 break;
             case 4:
-                buttonText =
-                    isStepFourValid ?
-                        isTheLastOne ? t("globals.interaction.goAheadGood")
-                        :   t("globals.interaction.continue")
-                    :   t("globals.interaction.somethingIsWrong");
+                buttonText = isStepFourValid
+                    ? isTheLastOne
+                        ? t("globals.interaction.goAheadGood")
+                        : t("globals.interaction.continue")
+                    : t("globals.interaction.somethingIsWrong");
                 style = isStepFourValid ? "GOD" : "HMM";
                 action = isStepFourValid ? goNext : () => {};
                 break;
@@ -463,9 +464,9 @@ export default function WelcomePage() {
                 <BetterButton
                     buttonText={buttonText}
                     buttonHint={
-                        isTheLastOne ?
-                            "Registers the user and redirects to the home page"
-                        :   "Goes one page forward"
+                        isTheLastOne
+                            ? "Registers the user and redirects to the home page"
+                            : "Goes one page forward"
                     }
                     style={style}
                     action={action}
@@ -499,9 +500,9 @@ export default function WelcomePage() {
                         borderRadius: 20,
                         flex: 1,
                         backgroundColor:
-                            currentTab >= 1 ?
-                                Colors.PRIMARIES.GOD.GOD
-                            :   Colors.MAIN.DIVISION_BORDER,
+                            currentTab >= 1
+                                ? Colors.PRIMARIES.GOD.GOD
+                                : Colors.MAIN.DIVISION_BORDER,
                     }}
                 />
                 <GapView width={5} />
@@ -510,9 +511,9 @@ export default function WelcomePage() {
                         borderRadius: 20,
                         flex: 1,
                         backgroundColor:
-                            currentTab >= 2 ?
-                                Colors.PRIMARIES.GOD.GOD
-                            :   Colors.MAIN.DIVISION_BORDER,
+                            currentTab >= 2
+                                ? Colors.PRIMARIES.GOD.GOD
+                                : Colors.MAIN.DIVISION_BORDER,
                     }}
                 />
                 <GapView width={5} />
@@ -521,9 +522,9 @@ export default function WelcomePage() {
                         borderRadius: 20,
                         flex: 1,
                         backgroundColor:
-                            currentTab >= 3 ?
-                                Colors.PRIMARIES.GOD.GOD
-                            :   Colors.MAIN.DIVISION_BORDER,
+                            currentTab >= 3
+                                ? Colors.PRIMARIES.GOD.GOD
+                                : Colors.MAIN.DIVISION_BORDER,
                     }}
                 />
                 <GapView width={5} />
@@ -532,9 +533,9 @@ export default function WelcomePage() {
                         borderRadius: 20,
                         flex: 1,
                         backgroundColor:
-                            currentTab >= 4 ?
-                                Colors.PRIMARIES.GOD.GOD
-                            :   Colors.MAIN.DIVISION_BORDER,
+                            currentTab >= 4
+                                ? Colors.PRIMARIES.GOD.GOD
+                                : Colors.MAIN.DIVISION_BORDER,
                     }}
                 />
             </View>
@@ -575,10 +576,7 @@ export default function WelcomePage() {
             {spawnProgressBar()}
             {currentTab === 0 && (
                 <>
-                    <BetterText
-                        fontSize={40}
-                        fontWeight="Bold"
-                    >
+                    <BetterText fontSize={40} fontWeight="Bold">
                         {t("pages.welcome.beginning.welcomeTo")}{" "}
                         <BetterText
                             fontFamily="JetBrainsMono"
