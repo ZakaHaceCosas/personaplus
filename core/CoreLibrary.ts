@@ -52,7 +52,7 @@ const CoreLibrary = {
         OneRepetitionMax: CreateModule(OneRepMax),
     },
     performance: {
-        RunningOrWalkingPerformance: CreateModule(RunningPerformance),
+        RunningPerformance: CreateModule(RunningPerformance),
         LiftingPerformance: CreateModule(LiftingPerformance),
         PushingUpPerformance: CreateModule(PushingUpPerformance),
     },

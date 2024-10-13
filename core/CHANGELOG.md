@@ -13,6 +13,9 @@
 
 - Updated documentation and some comments to fix typos.
 - Simplified typing at entry point using an alias thingy.
+- Update functions to match new data types (like new `dumbbellWeight`).
+- Remove walking as an exercise. "Running" will supply that instead.
+- Fix some outdated JSDocs comments.
 
 ## 0.0.3
 
