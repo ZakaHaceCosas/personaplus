@@ -1,4 +1,4 @@
-import { orchestrateUserData, validateUserData } from "@/toolkit/User";
+import { OrchestrateUserData, validateUserData } from "@/toolkit/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FullProfile } from "@/types/User";
 
@@ -25,7 +25,7 @@ const mockGetItem = AsyncStorage.getItem as jest.MockedFunction<
     typeof AsyncStorage.getItem
 >;
 
-describe("orchestrateUserData", () => {
+describe("OrchestrateUserData", () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
@@ -33,21 +33,21 @@ describe("orchestrateUserData", () => {
     test("should return a valid FullProfile object when data is present", async () => {
         mockGetItem.mockResolvedValueOnce(JSON.stringify(samplesValidProfile));
 
-        const result = await orchestrateUserData();
+        const result = await OrchestrateUserData();
         expect(result).toEqual(samplesValidProfile);
     });
 
     test("should return null if AsyncStorage has no data", async () => {
         mockGetItem.mockResolvedValueOnce(null);
 
-        const result = await orchestrateUserData();
+        const result = await OrchestrateUserData();
         expect(result).toBeNull();
     });
 
     test("should return null for empty or invalid JSON data", async () => {
         mockGetItem.mockResolvedValueOnce("");
 
-        const result = await orchestrateUserData();
+        const result = await OrchestrateUserData();
         expect(result).toBeNull();
     });
 
@@ -56,7 +56,7 @@ describe("orchestrateUserData", () => {
             new Error("This is a sample error. Everything works!"),
         );
 
-        await expect(orchestrateUserData()).rejects.toThrow(
+        await expect(OrchestrateUserData()).rejects.toThrow(
             "This is a sample error. Everything works!",
         );
     });
