@@ -397,6 +397,29 @@ function CalculateSessionFragmentsDuration(
     return duration / (rests + 1);
 }
 
+/**
+ * Deletes a specific objective from the AsyncStorage, given it's identifier.
+ *
+ * @async
+ * @param {number} identifier The identifier.
+ * @returns {Promise<void>}
+ */
+async function DeleteActiveObjective(identifier: number): Promise<void> {
+    try {
+        const objectives: ActiveObjective[] | null = await GetAllObjectives();
+        if (!objectives) return;
+        const updatedObjectives: ActiveObjective[] = objectives.filter(
+            (obj: ActiveObjective): boolean => obj.identifier !== identifier,
+        );
+        await AsyncStorage.setItem(
+            StoredItemNames.objectives,
+            JSON.stringify(updatedObjectives),
+        );
+    } catch (e) {
+        logToConsole("Error in deleteObjective: " + e, "error");
+    }
+}
+
 export {
     CreateActiveObjective,
     GetAllObjectives,
@@ -406,4 +429,5 @@ export {
     GetAllPendingObjectives,
     CheckForAnActiveObjectiveDailyStatus,
     CalculateSessionFragmentsDuration,
+    DeleteActiveObjective,
 };
