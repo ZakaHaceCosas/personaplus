@@ -8,6 +8,7 @@ import {
 import GapView from "@/components/ui/GapView";
 import Division from "@/components/ui/sections/Division";
 import Section from "@/components/ui/sections/Section";
+import Routes from "@/constants/Routes";
 import { orchestrateUserData } from "@/toolkit/User";
 import { logToConsole } from "@/toolkit/debug/Console";
 import {
@@ -124,7 +125,7 @@ export default function HomeScreen() {
     function handleLaunchObjective(identifier: number): void {
         try {
             router.replace({
-                pathname: "objectives/Sessions",
+                pathname: Routes.Objectives.LiveSession,
                 params: { id: identifier },
             });
         } catch (e) {
@@ -149,10 +150,7 @@ export default function HomeScreen() {
                 {t("pages.home.subheader")}
             </BetterTextSubHeader>
             <GapView height={20} />
-            <Section
-                width="total"
-                kind="ActiveObjectives"
-            >
+            <Section width="total" kind="ActiveObjectives">
                 <>
                     {identifiers === 0 && (
                         <Division header="Guess you've done everything!" />
@@ -162,7 +160,9 @@ export default function HomeScreen() {
                         <Division header="You don't have any objectives... Let's create one!">
                             <BetterButton
                                 style="GOD"
-                                action={() => router.push("/objectives/Create")}
+                                action={() =>
+                                    router.push(Routes.Objectives.Create)
+                                }
                                 buttonText="Create active objective"
                                 buttonHint="Redirects the user to a page where he can create an active objective"
                             />
