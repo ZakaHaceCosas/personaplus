@@ -3,24 +3,24 @@
 
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import OpenHealth from "@/core/openhealth";
-import { termLog } from "@/src/toolkit/debug/console";
-import BetterText, {
+import CoreLibrary from "@/core/CoreLibrary";
+import { logToConsole } from "@/toolkit/debug/Console";
+import BetterText from "@/components/text/BetterText";
+import {
     BetterTextHeader,
     BetterTextSubHeader,
-} from "@/src/BetterText";
+} from "@/components/text/BetterTextPresets";
 import { router, useGlobalSearchParams } from "expo-router";
-import { UserHealthData } from "@/src/toolkit/userData";
+import { BasicUserHealthData } from "@/types/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
-import Section from "@/src/section/Section";
-import Division from "@/src/section/Division";
-import GapView from "@/src/GapView";
-import { saveDailyObjectivePerformance } from "@/src/toolkit/objectives";
-import { getCurrentDate } from "@/src/toolkit/today";
-import Button from "@/src/Buttons";
-import generateRandomMessage from "@/src/toolkit/design/randomMessages";
-import colors from "@/src/toolkit/design/colors";
+import Section from "@/components/ui/sections/Section";
+import Division from "@/components/ui/sections/Division";
+import GapView from "@/components/ui/GapView";
+import { SaveActiveObjectiveToDailyLog } from "@/toolkit/objectives/ActiveObjectives";
+import BetterButton from "@/components/interaction/BetterButton";
+import GenerateRandomMessage from "@/toolkit/RandomMessage";
+import Colors from "@/constants/Colors";
 
 // TypeScript, supongo
 interface Params {
@@ -39,7 +39,7 @@ interface Params {
 // We define the styles
 const styles = StyleSheet.create({
     mainview: {
-        backgroundColor: colors.MAIN.APP,
+        backgroundColor: Colors.MAIN.APP,
         padding: 20,
         paddingTop: 40,
         display: "flex",
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
 export default function Results() {
     // Params
     const originalParams = useGlobalSearchParams();
-    // termLog(params, "log");
+    // logToConsole(params, "log");
     const params: Params = {
         speed: Number(originalParams.speed) || 0,
         time: Number(originalParams.time) || 0,
@@ -80,7 +80,7 @@ export default function Results() {
     const objectiveLifting_liftWeight: number = params.liftWeight;
     const objectivePushups_Pushups: number = params.pushups;
 
-    const [userData, setUserData] = useState<UserHealthData | null>(null);
+    const [userData, setUserData] = useState<BasicUserHealthData | null>(null);
     const [result, setResult] = useState<{ result: number } | null>(null);
 
     // Get translation function for multilingual support
@@ -98,7 +98,7 @@ export default function Results() {
                 ]);
 
                 // Process and clean up the fetched data
-                const processedData: UserHealthData = {
+                const processedData: BasicUserHealthData = {
                     age: data[0][1] ? Number(data[0][1]) : null,
                     height: data[1][1] ? Number(data[1][1]) : null,
                     weight: data[2][1] ? Number(data[2][1]) : null,
@@ -110,7 +110,7 @@ export default function Results() {
 
                 setUserData(processedData); // Update state with user data
             } catch (e) {
-                termLog("Error fetching user data: " + e, "error");
+                logToConsole("Error fetching user data: " + e, "error");
             }
         };
 
@@ -136,7 +136,7 @@ export default function Results() {
 
                     switch (exercise) {
                         case "running":
-                            return OpenHealth.performance.RunningOrWalkingPerformance.calculate(
+                            return CoreLibrary.performance.RunningPerformance.calculate(
                                 userData.age,
                                 userData.gender,
                                 userData.weight,
@@ -147,7 +147,7 @@ export default function Results() {
                                 false,
                             );
                         case "lifting":
-                            return OpenHealth.performance.LiftingPerformance.calculate(
+                            return CoreLibrary.performance.LiftingPerformance.calculate(
                                 userData.age,
                                 userData.gender,
                                 userData.weight,
@@ -161,7 +161,7 @@ export default function Results() {
                                 false,
                             );
                         case "push up":
-                            return OpenHealth.performance.PushingUpPerformance.calculate(
+                            return CoreLibrary.performance.PushingUpPerformance.calculate(
                                 userData.age,
                                 userData.gender,
                                 userData.weight,
@@ -179,7 +179,7 @@ export default function Results() {
                     throw new Error("Invalid input data");
                 }
             } catch (e) {
-                termLog(
+                logToConsole(
                     "Error handling post-session calculations (@ handleExerciseCalculation): " +
                         e,
                     "error",
@@ -190,20 +190,19 @@ export default function Results() {
 
         try {
             const response = handleExerciseCalculation();
-            // termLog(response, "log");
+            // logToConsole(response, "log");
             if (response !== undefined) {
                 setResult(response);
-                termLog(
+                logToConsole(
                     "(RESULTS.TSX) Result of session passed to state value",
                     "log",
                 );
-                saveDailyObjectivePerformance(
+                SaveActiveObjectiveToDailyLog(
                     objectiveIdentifier,
-                    getCurrentDate(),
                     true,
-                    JSON.stringify(response),
+                    response,
                 );
-                termLog(
+                logToConsole(
                     "(RESULTS.TSX) Success! Session's results set & saved",
                     "success",
                 );
@@ -211,7 +210,7 @@ export default function Results() {
                 throw new Error("Response is null or undefined");
             }
         } catch (e) {
-            termLog("Error getting your results! " + e, "error");
+            logToConsole("Error getting your results! " + e, "error");
         }
     }, [
         objectiveExercise,
@@ -277,13 +276,13 @@ export default function Results() {
                         {t("globals.session_done")}
                     </BetterTextHeader>
                     <BetterTextSubHeader>
-                        {generateRandomMessage("session_done", t)}
+                        {GenerateRandomMessage("sessionCompleted", t)}
                     </BetterTextSubHeader>
                     <GapView height={10} />
                     {result?.result && (
                         <Section kind="HowYouAreDoing">
                             <Division
-                                preheader={t(
+                                preHeader={t(
                                     "page_session_results.results.burnt_calories",
                                 )}
                                 header={parseFloat(
@@ -291,7 +290,7 @@ export default function Results() {
                                 ).toString()}
                             />
                             <Division
-                                preheader={t(
+                                preHeader={t(
                                     "page_session_results.results.header_more",
                                 )}
                                 header={resultsInfoText}
@@ -304,13 +303,13 @@ export default function Results() {
                     </BetterText>
                 </View>
                 <GapView height={10} />
-                <Button
-                    layout="fixed"
+                <BetterButton
                     action={() => {
                         router.replace("/");
                     }}
                     style="ACE"
                     buttonText={t("globals.success")}
+                    buttonHint="TODO"
                 />
             </ScrollView>
         </>
