@@ -1,22 +1,24 @@
 /**
  * The name of each route / path, so you don't mess up.
  */
-const Routes = {
-    Main: {
-        Home: "/",
-        Profile: "/Profile",
-        Dashboard: "/Dashboard",
-        WelcomeScreen: "/Welcome",
+const ROUTES = {
+    MAIN: {
+        HOME: "/",
+        PROFILE: "/Profile",
+        DASHBOARD: "/Dashboard",
+        WELCOME_SCREEN: "/Welcome",
+        REPORT: "/Report", // 👀 what's this?
     },
-    Developer: {
-        Home: "/DevInterface",
-        LogViewer: "/LogView",
-        ErrorLogViewer: "/ErrorLogger",
+    DEV_INTERFACE: {
+        HOME: "/DevInterface",
+        LOG_VIEW: "/LogView",
+        ERROR_LOG_VIEW: "/ErrorLogger",
     },
-    Objectives: {
-        Create: "/objectives/Create",
-        LiveSession: "/objectives/Sessions",
+    ACTIVE_OBJECTIVES: {
+        CREATE: "/objectives/Create",
+        SESSION: "/objectives/Sessions",
+        RESULTS: "/objectives/Results",
     },
 };
 
-export default Routes;
+export default ROUTES;
