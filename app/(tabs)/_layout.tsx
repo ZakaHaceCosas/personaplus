@@ -57,7 +57,12 @@ export default function Layout() {
         setCurrentLocation(currentRoute);
     }, [currentRoute]);
 
-    const noNavigationRoutes = ["/Welcome", "/objectives/Create", "/LogView"];
+    const noNavigationRoutes = [
+        "/Welcome",
+        "/objectives/Create",
+        "/LogView",
+        "/objectives/Sessions",
+    ];
 
     return (
         <>
