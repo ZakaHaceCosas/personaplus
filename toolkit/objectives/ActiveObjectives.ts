@@ -360,6 +360,38 @@ async function CreateActiveObjective(
     }
 }
 
+/**
+ * Calculates the duration of each fragment of a session. Let me explain: Sessions support rests, which - as the name implies - are pauses of a fixed duration between a session, for the user to rest.
+ * While the duration of a rest is specified by the user, it's position is not, instead PersonaPlus will (thanks to this function) distribute evenly each rest between all the duration of the session. This implies splitting the session's duration into **fragments**, separated by rests.
+ *
+ * @rawR5code
+ * @param {number | null} duration The duration (in seconds) of the whole session.
+ * @param {number | null} rests The amount of rests of the session.
+ * @returns {number} A number, the amount of seconds each fragment shall last. If any of the params is null / invalid, throws an error.
+ */
+function CalculateSessionFragmentsDuration(
+    duration: number | null,
+    rests: number | null,
+): number {
+    if (rests === null || duration === null) {
+        logToConsole(
+            "React error: Got a null value. Objective is not getting fetched correctly? Check your code",
+            "error",
+        );
+        throw new Error(
+            "React error: Got a null value. Objective is not getting fetched correctly? Check your code",
+        );
+    }
+    if (rests < 0) {
+        logToConsole(
+            "React error: Negative rests? Seriously? Check your code",
+            "error",
+        );
+        throw new Error("Negative rests? Seriously? Check your code"); // heh~
+    }
+    return duration / (rests + 1);
+}
+
 export {
     CreateActiveObjective,
     GetAllObjectives,
@@ -368,4 +400,5 @@ export {
     SaveActiveObjectiveToDailyLog,
     GetAllPendingObjectives,
     CheckForAnActiveObjectiveDailyStatus,
+    CalculateSessionFragmentsDuration,
 };
