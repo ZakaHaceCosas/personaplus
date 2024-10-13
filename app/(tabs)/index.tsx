@@ -13,7 +13,6 @@ import { logToConsole } from "@/toolkit/debug/Console";
 import {
     GetActiveObjective,
     GetAllPendingObjectives,
-    SaveActiveObjectiveToDailyLog,
 } from "@/toolkit/objectives/ActiveObjectives";
 import {
     ActiveObjective,
@@ -122,14 +121,21 @@ export default function HomeScreen() {
         }
     }
 
-    async function handleMarkingObjectiveAsDone(identifier: number) {
-        await SaveActiveObjectiveToDailyLog(identifier, true, undefined);
-        // update & redraw without re-fetching everything upon update
-        setRenderedObjectives(
+    function handleLaunchObjective(identifier: number): void {
+        try {
+            router.replace({
+                pathname: "objectives/Sessions",
+                params: { id: identifier },
+            });
+        } catch (e) {
+            logToConsole("Error starting session: " + e, "error");
+        }
+        // update & redraw without re-fetching everything upon update. unused, but keep it just in case
+        /* setRenderedObjectives(
             renderedObjectives?.filter(
                 (obj) => obj.identifier !== identifier,
             ) || null,
-        );
+        ); */
     }
 
     if (loading) return <Loading />;
@@ -182,14 +188,8 @@ export default function HomeScreen() {
                                         buttonText="Let's go!"
                                         buttonHint="Starts a session for the given objective"
                                         style="ACE"
-                                        action={() => {}}
-                                    />
-                                    <BetterButton
-                                        buttonText="Already done it!"
-                                        buttonHint="Marks the given objective as done"
-                                        style="GOD"
                                         action={() =>
-                                            handleMarkingObjectiveAsDone(
+                                            handleLaunchObjective(
                                                 obj.identifier,
                                             )
                                         }
