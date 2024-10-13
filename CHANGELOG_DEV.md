@@ -14,9 +14,16 @@ For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 
 ## [0.0.26-preapp.6] - Unreleased
 
+There've been A LOT of changes. I'll take my time to view the `diff` and update this when the rewrite is done. For now, this is outdated.
+
 ### Added
 
 - Constants: Repeated values, like heights of certain components, font names, font sizes, even the names of the `AsyncStorage` items, and more, have been moved to a `@/constants/` directory with multiple exports.
+  - `Colors.ts` = the app's color palette.
+  - `FontSizes.ts` = reusable font sizes, for visual consistency.
+  - `Routes.ts` = all routes the user can navigate to.
+  - `Screen.ts` = width and height of the screen (with some required calculations done by default).
+  - `StoredItemNames.ts` = names of AsyncStorage entries.
 - Tracebacks: Now logs can be optionally passed a "traceback" object, including some meaningful data about where the log is actually happening, to help with debugging - specially with repeated messages across different places like "Error fetching objectives".
 - New components:
   - BetterButton (an iteration of buttons).
