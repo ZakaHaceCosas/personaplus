@@ -8,7 +8,7 @@ import SafelyGoBack from "@/toolkit/Routing";
 import * as Router from "expo-router";
 import { LayoutContainer } from "@/app/(tabs)/_layout";
 import GapView from "@/components/ui/GapView";
-import Routes from "@/constants/Routes";
+import ROUTES from "@/constants/Routes";
 
 export default function NotFoundScreen() {
     const currentRoute: string = Router.usePathname();
@@ -33,7 +33,7 @@ export default function NotFoundScreen() {
                     style="DEFAULT"
                     buttonText="Go home directly"
                     buttonHint="Directly redirects the user to the home page"
-                    action={() => Router.router.replace(Routes.Main.Home)}
+                    action={() => Router.router.replace(ROUTES.MAIN.HOME)}
                 />
                 <GapView height={20} />
                 <BetterTextSmallText>

@@ -12,7 +12,7 @@ import { updateBrm5 } from "@/toolkit/User";
 import { router } from "expo-router";
 import { logToConsole } from "@/toolkit/debug/Console";
 import StoredItemNames from "@/constants/StoredItemNames";
-import Routes from "@/constants/Routes";
+import ROUTES from "@/constants/Routes";
 
 export default function HomeScreen() {
     const { t } = useTranslation();
@@ -61,7 +61,7 @@ export default function HomeScreen() {
                 buttonText="Dev Interface"
                 buttonHint="Launches Dev Interface (doxxes you)"
                 style="HMM"
-                action={() => router.navigate(Routes.Developer.Home)}
+                action={() => router.navigate(ROUTES.DEV_INTERFACE.HOME)}
             />
         </>
     );

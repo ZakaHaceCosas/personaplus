@@ -9,6 +9,8 @@ import {
 } from "@/components/text/BetterTextPresets";
 import GapView from "@/components/ui/GapView";
 import Colors from "@/constants/Colors";
+import ROUTES from "@/constants/Routes";
+
 import getCommonScreenSize from "@/constants/Screen";
 import StoredItemNames from "@/constants/StoredItemNames";
 import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/Console";
@@ -87,7 +89,7 @@ export default function HomeScreen() {
         }
 
         actuallyClearLogs();
-        router.replace("/LogView");
+        router.replace(ROUTES.DEV_INTERFACE.LOG_VIEW);
     }
 
     // no i am not translating dev interface. it is just for BackButton to work.
