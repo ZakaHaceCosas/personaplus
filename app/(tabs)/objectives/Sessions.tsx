@@ -1,6 +1,9 @@
 // FIXME - THERE'S A LOT OF WRONG STUFF IN HERE
 // TODO - HANDLE ALL TODOs FROM THIS PAGE
 
+// FIXME: KNOWN ERRORS
+// FIXME 1: When it "enters" rest state colors change but the timer keeps going
+
 // Sessions.tsx
 // Page for live exercising sessions
 
@@ -59,7 +62,7 @@ export default function Sessions() {
     // Stateful values and stuff
     const { t } = useTranslation();
     const params = useGlobalSearchParams();
-    const objectiveIdentifier = params.id ? Number(params.id) : null;
+    const objectiveIdentifier = Number(params.id);
     const [loading, setLoading] = useState<boolean>(true);
     const [objective, setObjective] = useState<ActiveObjective | null>(null);
     /*
@@ -70,7 +73,7 @@ export default function Sessions() {
 
     useEffect(() => {
         try {
-            if (!objectiveIdentifier) {
+            if (objectiveIdentifier === null) {
                 throw new Error("objectiveIdentifier is null.");
             }
 
@@ -92,7 +95,7 @@ export default function Sessions() {
     const [isUserCheckingHelp, setIsUserCheckingHelp] = useState(false);
     const [isUserResting, setIsUserResting] = useState(false);
 
-    const [totalTime, setTotalTime] = useState<number>();
+    const [totalTime, setTotalTime] = useState<number>(0);
 
     // the verbal version of the objective name (i don't know how to call it)
     // like if the exercise is "Push ups" this variable is "Pushing up" (or "Doing pushups"? i don't remember)
@@ -130,7 +133,7 @@ export default function Sessions() {
     // pauses/plays the timer
     // you can pass a specific boolean value (true = play, false = pause), or don't pass anything for it to revert (true to false / false to true)
     const toggleTimerStatus = (target?: boolean): void => {
-        setTimerStatus((prev) => (target !== undefined ? target : !prev));
+        setTimerStatus((prev) => target ?? !prev);
     };
 
     // total duration of the session, including rests
@@ -169,7 +172,11 @@ export default function Sessions() {
         alright?
         */
 
-        if (elapsedTime % fragmentDuration === 0 && currentFragment <= rests) {
+        if (
+            elapsedTime !== 0 &&
+            elapsedTime % fragmentDuration === 0 &&
+            currentFragment <= rests
+        ) {
             handleRestState(true); // Pauses
             setTimeout(
                 () => {
@@ -177,22 +184,19 @@ export default function Sessions() {
                 },
                 restDuration * 60 * 1000, // Convert seconds to milliseconds
             );
-        } else {
-            // logToConsole("Session working... Elapsed: " + elapsedTime, "log"); // Just do a console log if it's not time to rest
-            // Commented (aka removed) for performance. Even the terminal lags a bit.
         }
     };
 
     const toggleHelpMenu = (): void => {
-        setIsUserCheckingHelp((prev) => !prev);
-        toggleTimerStatus(isUserCheckingHelp); // Pause if checking help, play otherwise
+        const isChecking: boolean = !isUserCheckingHelp; // maybe this fixes an issue i was having
+        setIsUserCheckingHelp(isChecking);
+        toggleTimerStatus(isChecking); // Pause if checking help, play otherwise
     };
 
     // this function is basically to finish the session
     // will mark the obj as done, save it, and head to the results page
-    // UNLESS you specify it to skip that step, heading to home page in that case
-    const finishSession = async () => {
-        if (!objective) return;
+    const finishSession = async (): Promise<void> => {
+        if (!objective || objective === null) return;
 
         try {
             if (Platform.OS === "android") {
@@ -216,8 +220,8 @@ export default function Sessions() {
 
             router.replace({
                 pathname: ROUTES.ACTIVE_OBJECTIVES.RESULTS,
-                // NOTE - any to avoid type error.
-                params: params as any,
+                // @ts-expect-error TypeError
+                params: params,
             });
         } catch (e) {
             logToConsole(
@@ -283,7 +287,7 @@ export default function Sessions() {
                 </BetterText>
                 <GapView height={10} />
                 <BetterText fontWeight="Bold" fontSize={25} textAlign="center">
-                    {/*  {!isUserResting
+                    {!isUserResting
                         ? objective.info.durationMinutes > 1
                             ? currentObjectiveVerbalName +
                               " " +
@@ -294,8 +298,7 @@ export default function Sessions() {
                             : currentObjectiveVerbalName +
                               " " +
                               objective.info.durationMinutes
-                        : t("page_sessions.resting")} */}
-                    Doing something
+                        : t("page_sessions.resting")}
                 </BetterText>
                 <GapView height={10} />
                 <SessionsPageInfoIcons
@@ -328,16 +331,16 @@ export default function Sessions() {
                 colorsTime={[15, 5]}
                 isSmoothColorTransition={true}
                 onComplete={handleFinish}
-                onUpdate={(remainingTime) =>
+                onUpdate={(remainingTime: number): void =>
                     handleResting(
                         objective.info.durationMinutes * 60,
                         remainingTime,
-                        objective.info.rests ?? 0,
-                        objective.info.restDurationMinutes,
                         CalculateSessionFragmentsDuration(
                             objective.info.durationMinutes * 60,
                             objective.info.rests,
                         ),
+                        objective.info.restDurationMinutes,
+                        objective.info.rests ?? 0,
                     )
                 }
                 isGrowing={true}
@@ -401,7 +404,7 @@ export default function Sessions() {
                 <SessionsPageHelpView
                     t={t}
                     objective={objective}
-                    toggleHelpMenu={toggleHelpMenu}
+                    toggleHelpMenu={() => toggleHelpMenu}
                 />
             )}
         </View>
