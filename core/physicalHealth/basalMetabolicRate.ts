@@ -4,6 +4,7 @@ CALCULATE BASAL METABOLIC RATE
 
 import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
+import { CoreLibraryType_Activeness } from "../types/MiscTypes";
 
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "26/06/2024",
@@ -27,7 +28,7 @@ export default function calculateBasalMetabolicRate(
     gender: "male" | "female",
     weight: number,
     height: number,
-    activeness: "poor" | "light" | "normal" | "intense" | "super",
+    activeness: CoreLibraryType_Activeness,
     provideContext?: boolean,
     provideExplanation?: boolean,
 ): CoreLibraryResponse {
