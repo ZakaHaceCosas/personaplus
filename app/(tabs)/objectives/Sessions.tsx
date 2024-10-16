@@ -64,11 +64,6 @@ export default function Sessions() {
     const objectiveIdentifier = Number(params.id);
     const [loading, setLoading] = useState<boolean>(true);
     const [objective, setObjective] = useState<ActiveObjective | null>(null);
-    /*
-    If you wonder why there are two variables for the timer's loops, one of them is to keep account of many times repeat (laps) and other one is to set the "key" attribute of the circle timer (timerKey), which is required for the timer to loop itself.
-    */
-    const [laps, setLaps] = useState<number>(0);
-    const [timerKey, setTimerKey] = useState<number>(0);
 
     useEffect(() => {
         try {
@@ -232,12 +227,7 @@ export default function Sessions() {
     // however repetitions exist, so a handler is required
     // NOTE - repetitions have been deprecated as of now so uh i don't think we'll need this anymore?
     const handleFinish = () => {
-        if (laps !== 0) {
-            setLaps((prev) => (prev > 0 ? prev - 1 : 0));
-            setTimerKey((prevKey) => prevKey + 1);
-        } else {
-            finishSession();
-        }
+        finishSession();
     };
 
     if (loading || !objective) {
@@ -303,7 +293,6 @@ export default function Sessions() {
             </IslandDivision>
             <GapView height={20} />
             <CountdownCircleTimer
-                key={timerKey}
                 duration={objective.info.durationMinutes * 60}
                 size={160}
                 isPlaying={isTimerRunning}
