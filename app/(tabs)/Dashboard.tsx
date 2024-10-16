@@ -74,9 +74,10 @@ export default function HomeScreen() {
                 {activeObjectives === null || activeObjectives.length === 0 ? (
                     <Division header="You don't have any objectives... Let's create one!" />
                 ) : (
-                    activeObjectives.map((obj) => {
+                    activeObjectives.map((obj: ActiveObjective) => {
                         return (
                             <Division
+                                key={obj.identifier}
                                 preHeader="ACTIVE OBJECTIVE"
                                 header={obj.exercise}
                                 subHeader="A cool objective. TODO: add metadata here"
