@@ -9,7 +9,6 @@ import Ionicons from "@expo/vector-icons/MaterialIcons";
 import BetterText from "@/components/text/BetterText";
 import Colors from "@/constants/Colors";
 import { TFunction } from "i18next";
-import FontSizes from "@/constants/FontSizes";
 
 // TypeScript, supongo...
 /**
@@ -17,12 +16,10 @@ import FontSizes from "@/constants/FontSizes";
  *
  * @typedef {Object} InfoIconsProps
  * @property {ActiveObjective} objective The objective of the current session.
- * @property {1 | 2} row Whether to show the 1st row (generic data) or the 2nd row (exercise-specific) data.
  * @property {TFunction} t The translate function.
  */
 type InfoIconsProps = {
     objective: ActiveObjective;
-    row: 1 | 2;
     t: TFunction;
 };
 
@@ -39,7 +36,6 @@ type InfoIconsProps = {
  */
 const SessionsPageInfoIcons: React.FC<InfoIconsProps> = ({
     objective,
-    row,
     t,
 }: InfoIconsProps): ReactElement => {
     const speedOptions: [string, string][] = [
@@ -56,8 +52,8 @@ const SessionsPageInfoIcons: React.FC<InfoIconsProps> = ({
         [t("Full Speed Sprinting"), t("14.5 - 16.1 km/h")],
         [t("Maximum Speed"), t("more than 16.1 km/h")],
     ];
-    if (row === 1) {
-        return (
+    return (
+        <>
             <View
                 style={{
                     display: "flex",
@@ -76,128 +72,107 @@ const SessionsPageInfoIcons: React.FC<InfoIconsProps> = ({
                           : `${objective.info.rests} rests (${objective.info.restDurationMinutes} mins)`}
                 </BetterText>
             </View>
-        );
-    } else if (row === 2) {
-        return (
-            <>
-                {objective.exercise.toLowerCase() === "running" && (
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <Ionicons
-                            name="speed"
-                            size={15}
-                            color={Colors.BASIC.WHITE}
-                        />
-                        <GapView width={5} />
-                        <BetterText
-                            fontWeight="Regular"
-                            textColor={Colors.BASIC.WHITE}
-                            fontSize={15}
-                        >
-                            {objective.specificData.estimateSpeed !==
-                                undefined &&
-                            objective.specificData.estimateSpeed >= 0 &&
-                            objective.specificData.estimateSpeed <
-                                speedOptions.length
-                                ? `${speedOptions[objective.specificData.estimateSpeed][0]} (${speedOptions[objective.specificData.estimateSpeed][1]})`
-                                : "N/A"}
-                        </BetterText>
-                    </View>
-                )}
-                {objective.exercise.toLowerCase() === "lifting" && (
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <Ionicons
-                            name="keyboard-double-arrow-down"
-                            size={15}
-                            color={Colors.BASIC.WHITE}
-                        />
-                        <BetterText
-                            fontWeight="Regular"
-                            textColor={Colors.BASIC.WHITE}
-                            fontSize={15}
-                        >
-                            {objective?.specificData?.amountOfHands !==
-                            undefined
-                                ? String(objective.specificData.amountOfHands)
-                                : "N/A"}{" "}
-                            hand
-                        </BetterText>
-                    </View>
-                )}
-                {objective.exercise.toLowerCase() === "push up" && (
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            marginTop: 10,
-                        }}
-                    >
-                        <Ionicons
-                            name="repeat"
-                            size={15}
-                            color={Colors.BASIC.WHITE}
-                        />
-                        <GapView width={5} />
-                        <BetterText
-                            fontWeight="Regular"
-                            textColor={Colors.BASIC.WHITE}
-                            fontSize={15}
-                        >
-                            {objective?.specificData?.amountOfPushUps !==
-                            undefined
-                                ? String(objective.specificData.amountOfPushUps)
-                                : "N/A"}{" "}
-                            push-ups
-                        </BetterText>
-                        <GapView width={10} />
-                        <Ionicons
-                            name="front-hand"
-                            size={15}
-                            color={Colors.BASIC.WHITE}
-                        />
-                        <GapView width={5} />
-                        <BetterText
-                            fontWeight="Regular"
-                            textColor={Colors.BASIC.WHITE}
-                            fontSize={15}
-                        >
-                            {objective?.specificData?.amountOfHands !==
-                            undefined
-                                ? String(objective.specificData.amountOfHands)
-                                : "N/A"}{" "}
-                            hand
-                        </BetterText>
-                    </View>
-                )}
-            </>
-        );
-    } else {
-        return (
-            <View>
-                <BetterText
-                    fontSize={FontSizes.SMALL}
-                    textColor={Colors.LABELS.SDD}
-                    fontWeight="Regular"
+            {objective.exercise.toLowerCase() === "running" && (
+                <View
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: 10,
+                    }}
                 >
-                    Error. Invalid `row` parameter.
-                </BetterText>
-            </View>
-        );
-    }
+                    <Ionicons
+                        name="speed"
+                        size={15}
+                        color={Colors.BASIC.WHITE}
+                    />
+                    <GapView width={5} />
+                    <BetterText
+                        fontWeight="Regular"
+                        textColor={Colors.BASIC.WHITE}
+                        fontSize={15}
+                    >
+                        {objective.specificData.estimateSpeed !== undefined &&
+                        objective.specificData.estimateSpeed >= 0 &&
+                        objective.specificData.estimateSpeed <
+                            speedOptions.length
+                            ? `${speedOptions[objective.specificData.estimateSpeed][0]} (${speedOptions[objective.specificData.estimateSpeed][1]})`
+                            : "N/A"}
+                    </BetterText>
+                </View>
+            )}
+            {objective.exercise.toLowerCase() === "lifting" && (
+                <View
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: 10,
+                    }}
+                >
+                    <Ionicons
+                        name="keyboard-double-arrow-down"
+                        size={15}
+                        color={Colors.BASIC.WHITE}
+                    />
+                    <BetterText
+                        fontWeight="Regular"
+                        textColor={Colors.BASIC.WHITE}
+                        fontSize={15}
+                    >
+                        {objective?.specificData?.amountOfHands !== undefined
+                            ? String(objective.specificData.amountOfHands)
+                            : "N/A"}{" "}
+                        hand
+                    </BetterText>
+                </View>
+            )}
+            {objective.exercise.toLowerCase() === "push up" && (
+                <View
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: 10,
+                    }}
+                >
+                    <Ionicons
+                        name="repeat"
+                        size={15}
+                        color={Colors.BASIC.WHITE}
+                    />
+                    <GapView width={5} />
+                    <BetterText
+                        fontWeight="Regular"
+                        textColor={Colors.BASIC.WHITE}
+                        fontSize={15}
+                    >
+                        {objective?.specificData?.amountOfPushUps !== undefined
+                            ? String(objective.specificData.amountOfPushUps)
+                            : "N/A"}{" "}
+                        push-ups
+                    </BetterText>
+                    <GapView width={10} />
+                    <Ionicons
+                        name="front-hand"
+                        size={15}
+                        color={Colors.BASIC.WHITE}
+                    />
+                    <GapView width={5} />
+                    <BetterText
+                        fontWeight="Regular"
+                        textColor={Colors.BASIC.WHITE}
+                        fontSize={15}
+                    >
+                        {objective?.specificData?.amountOfHands !== undefined
+                            ? String(objective.specificData.amountOfHands)
+                            : "N/A"}{" "}
+                        hand
+                    </BetterText>
+                </View>
+            )}
+        </>
+    );
 };
 
 export default SessionsPageInfoIcons;
