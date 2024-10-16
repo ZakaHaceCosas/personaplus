@@ -14,13 +14,23 @@ export const SupportedActiveObjectivesList: string[] = [
     "Running",
 ];
 
+export type WeekTuple = [
+    boolean,
+    boolean,
+    boolean,
+    boolean,
+    boolean,
+    boolean,
+    boolean,
+];
+
 /**
  * Info from an active objective, like what days should it be done, it's duration, etc...
  *
  * @typedef {ActiveObjectiveInfo}
  */
 type ActiveObjectiveInfo = {
-    days: [boolean, boolean, boolean, boolean, boolean, boolean, boolean];
+    days: WeekTuple;
     durationMinutes: number;
     rests: number | null;
     restDurationMinutes: number;
