@@ -30,6 +30,7 @@ import getCommonScreenSize from "@/constants/Screen";
 import IslandDivision from "@/components/ui/sections/IslandDivision";
 import GenerateRandomMessage from "@/toolkit/RandomMessage";
 import ROUTES from "@/constants/Routes";
+import { Color } from "@/types/Color";
 
 // TypeScript, supongo
 export interface SessionParams {
@@ -66,22 +67,25 @@ export default function Sessions() {
     const [objective, setObjective] = useState<ActiveObjective | null>(null);
 
     useEffect(() => {
-        try {
-            if (objectiveIdentifier === null) {
-                throw new Error("objectiveIdentifier is null.");
-            }
+        const handler = async () => {
+            try {
+                if (objectiveIdentifier === null) {
+                    throw new Error("objectiveIdentifier is null.");
+                }
 
-            const handler = async () => {
                 const obj = await GetActiveObjective(objectiveIdentifier);
                 setObjective(obj);
-            };
+                setLoading(false);
+            } catch (e) {
+                logToConsole(
+                    "Error fetching objective for session! " + e,
+                    "error",
+                );
+                setLoading(false);
+            }
+        };
 
-            handler();
-        } catch (e) {
-            logToConsole("Error fetching objective for session! " + e, "error");
-        } finally {
-            setLoading(false);
-        }
+        handler();
     }, [objectiveIdentifier]);
 
     const [isTimerRunning, setTimerStatus] = useState(true);
@@ -96,8 +100,28 @@ export default function Sessions() {
         ? t(`globals.supported_active_objectives_verbal.${objective.exercise}`) // TODO - rename vars accordingly
         : "Doing something";
 
+    const [currentObjectiveDescription, setObjectiveDescription] =
+        useState<string>(t("page_sessions.resting"));
+
+    useEffect(() => {
+        if (!objective) return;
+
+        const { durationMinutes } = objective.info;
+        const result = !isUserResting
+            ? `${currentObjectiveVerbalName} ${durationMinutes}${durationMinutes > 1 ? ` ${t("globals.minute")}s` : ""}`
+            : t("page_sessions.resting");
+
+        setObjectiveDescription(result);
+    }, [
+        currentObjectiveVerbalName,
+        isUserResting,
+        objective,
+        objective?.info.durationMinutes,
+        t,
+    ]);
+
     // the color of the timer
-    const timerColor = isTimerRunning
+    const timerColor: Color = isTimerRunning
         ? Colors.PRIMARIES.GOD.GOD
         : Colors.PRIMARIES.HMM.HMM;
 
@@ -275,18 +299,7 @@ export default function Sessions() {
                 </BetterText>
                 <GapView height={10} />
                 <BetterText fontWeight="Bold" fontSize={25} textAlign="center">
-                    {!isUserResting
-                        ? objective.info.durationMinutes > 1
-                            ? currentObjectiveVerbalName +
-                              " " +
-                              objective.info.durationMinutes +
-                              " " +
-                              t("globals.minute") +
-                              "s"
-                            : currentObjectiveVerbalName +
-                              " " +
-                              objective.info.durationMinutes
-                        : t("page_sessions.resting")}
+                    {currentObjectiveDescription}
                 </BetterText>
                 <GapView height={10} />
                 <SessionsPageInfoIcons objective={objective} t={t} />
@@ -296,14 +309,7 @@ export default function Sessions() {
                 duration={objective.info.durationMinutes * 60}
                 size={160}
                 isPlaying={isTimerRunning}
-                colors={[
-                    timerColor === Colors.PRIMARIES.GOD.GOD
-                        ? Colors.PRIMARIES.GOD.GOD
-                        : Colors.PRIMARIES.HMM.HMM,
-                    timerColor === Colors.PRIMARIES.GOD.GOD
-                        ? Colors.PRIMARIES.GOD.GOD
-                        : Colors.PRIMARIES.HMM.HMM,
-                ]}
+                colors={[timerColor, timerColor]}
                 colorsTime={[15, 5]}
                 isSmoothColorTransition={true}
                 onComplete={handleFinish}
@@ -380,7 +386,7 @@ export default function Sessions() {
                 <SessionsPageHelpView
                     t={t}
                     objective={objective}
-                    toggleHelpMenu={() => toggleHelpMenu}
+                    toggleHelpMenu={() => toggleHelpMenu()}
                 />
             )}
         </View>
