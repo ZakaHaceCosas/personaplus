@@ -299,8 +299,7 @@ export default function Sessions() {
                         : t("page_sessions.resting")}
                 </BetterText>
                 <GapView height={10} />
-                <SessionsPageInfoIcons row={1} objective={objective} t={t} />
-                <SessionsPageInfoIcons row={2} objective={objective} t={t} />
+                <SessionsPageInfoIcons objective={objective} t={t} />
             </IslandDivision>
             <GapView height={20} />
             <CountdownCircleTimer
