@@ -35,6 +35,7 @@ There've been A LOT of changes. I'll take my time to view the `diff` and update 
 
 - "Mark as done" - now the app won't offer the ability to just mark a session as done. You _will_ have to actually get of your chair for the app to note your progress.
 - Reminder notifications. They will be added back when the app gets to a more stable point, as notifications have been a little bit of a headache to be honest.
+- Repetitions. As the app currently supports nothing but sessions of a single, long-paced exercise, it doesn't really make sense to have "repetitions".
 
 ### Fixed
 
