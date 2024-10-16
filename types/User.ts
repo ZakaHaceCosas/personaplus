@@ -1,3 +1,5 @@
+import { CoreLibraryType_Activeness } from "@/core/types/MiscTypes";
+
 export interface FullProfile {
     username: string;
     age: number | "";
@@ -5,7 +7,7 @@ export interface FullProfile {
     weight: number | "";
     gender: "male" | "female" | null;
     language: "es" | "en";
-    activeness: "poor" | "light" | "normal" | "intense" | "super" | null;
+    activeness: CoreLibraryType_Activeness | null;
     focus:
         | "noPriority"
         | "assistMePls"

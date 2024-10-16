@@ -5,6 +5,7 @@ CALCULATE TOTAL DAILY ENERGY EXPENDITURE
 import CoreLibrary from "@/core/CoreLibrary";
 import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
+import { CoreLibraryType_Activeness } from "../types/MiscTypes";
 
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "07/07/2024",
@@ -28,7 +29,7 @@ export default function calculateTotalDailyEnergyExpenditure(
     gender: "male" | "female",
     weight: number,
     height: number,
-    activeness: "poor" | "light" | "moderate" | "intense" | "extreme",
+    activeness: CoreLibraryType_Activeness,
     provideContext?: boolean,
     provideExplanation?: boolean,
 ): CoreLibraryResponse {

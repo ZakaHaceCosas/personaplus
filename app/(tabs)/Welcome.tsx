@@ -32,6 +32,7 @@ import BetterInputField from "@/components/interaction/BetterInputField";
 import StoredItemNames from "@/constants/StoredItemNames";
 import { formatTimeString } from "@/toolkit/Time";
 import ROUTES from "@/constants/Routes";
+import { CoreLibraryType_Activeness } from "@/core/types/MiscTypes";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -149,10 +150,10 @@ export default function WelcomePage() {
         value: option[1],
         enabled: true,
     }));
-    const activenessOptions: string[][] = [
+    const activenessOptions: [string, CoreLibraryType_Activeness][] = [
         [t("pages.welcome.questions.activeness.options.poor"), "poor"],
-        [t("pages.welcome.questions.activeness.options.small"), "small"],
-        [t("pages.welcome.questions.activeness.options.normal"), "normal"],
+        [t("pages.welcome.questions.activeness.options.small"), "light"],
+        [t("pages.welcome.questions.activeness.options.normal"), "moderate"],
         [t("pages.welcome.questions.activeness.options.intense"), "intense"],
         [t("pages.welcome.questions.activeness.options.super"), "super"],
     ];
