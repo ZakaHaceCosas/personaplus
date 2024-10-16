@@ -12,6 +12,7 @@ import { View, StyleSheet, Alert, ToastAndroid, Platform } from "react-native";
 import {
     GetActiveObjective,
     CalculateSessionFragmentsDuration,
+    SaveActiveObjectiveToDailyLog,
 } from "@/toolkit/objectives/ActiveObjectives";
 import { router, useGlobalSearchParams } from "expo-router";
 import BetterText from "@/components/text/BetterText";
@@ -31,17 +32,15 @@ import IslandDivision from "@/components/ui/sections/IslandDivision";
 import GenerateRandomMessage from "@/toolkit/RandomMessage";
 import ROUTES from "@/constants/Routes";
 import { Color } from "@/types/Color";
+import CoreLibrary from "@/core/CoreLibrary";
+import { BasicUserHealthData } from "@/types/User";
+import { OrchestrateUserData } from "@/toolkit/User";
 
 // TypeScript, supongo
 export interface SessionParams {
-    speed: number;
-    time: number;
+    burntCalories: number;
+    elapsedTime: number;
     id: number;
-    exercise: string;
-    lifts: number;
-    dumbbellWeight: number;
-    pushups: number;
-    hands: number;
 }
 
 // We define the styles
@@ -65,6 +64,19 @@ export default function Sessions() {
     const objectiveIdentifier = Number(params.id);
     const [loading, setLoading] = useState<boolean>(true);
     const [objective, setObjective] = useState<ActiveObjective | null>(null);
+
+    const [userData, setUserData] = useState<BasicUserHealthData>();
+
+    useEffect(() => {
+        const h = async () => {
+            const d = await OrchestrateUserData();
+            if (!d) throw new Error("Error obtaining user data. Null.");
+            const { age, weight, height, gender } = d;
+            setUserData({ age, weight, height, gender });
+        };
+
+        h();
+    }, []);
 
     useEffect(() => {
         const handler = async () => {
@@ -212,7 +224,7 @@ export default function Sessions() {
 
     // this function is basically to finish the session
     // will mark the obj as done, save it, and head to the results page
-    const finishSession = async (): Promise<void> => {
+    const finishSession: () => Promise<void> = async (): Promise<void> => {
         if (!objective || objective === null) return;
 
         try {
@@ -223,15 +235,97 @@ export default function Sessions() {
                 );
             }
 
+            function handleExerciseCalculation() {
+                try {
+                    // ok, I know nesting too much is a bad practice
+                    // but uhh it has to be a different function with different params for each scenario
+                    // so yeah i cant think of a better approach
+                    if (
+                        objective &&
+                        !isNaN(totalTime) &&
+                        !isNaN(objective.specificData.estimateSpeed) &&
+                        userData &&
+                        userData.age !== "" &&
+                        userData.gender &&
+                        userData.weight !== "" &&
+                        userData.height !== ""
+                    ) {
+                        const exercise = objective.exercise.toLowerCase();
+
+                        switch (exercise) {
+                            case "running":
+                                return CoreLibrary.performance.RunningPerformance.calculate(
+                                    userData.age,
+                                    userData.gender,
+                                    userData.weight,
+                                    userData.height,
+                                    objective.specificData.estimateSpeed,
+                                    totalTime,
+                                    true,
+                                    true,
+                                );
+                            case "lifting":
+                                return CoreLibrary.performance.LiftingPerformance.calculate(
+                                    userData.age,
+                                    userData.gender,
+                                    userData.weight,
+                                    userData.height,
+                                    totalTime,
+                                    objective.specificData.dumbbellWeight,
+                                    objective.specificData.amountOfHands,
+                                    objective.specificData.reps,
+                                    true,
+                                    true,
+                                );
+                            case "push ups":
+                                return CoreLibrary.performance.PushingUpPerformance.calculate(
+                                    userData.age,
+                                    userData.gender,
+                                    userData.weight,
+                                    userData.height,
+                                    totalTime,
+                                    objective.specificData.amountOfPushUps,
+                                    objective.specificData.amountOfHands,
+                                    true,
+                                    true,
+                                );
+                            default:
+                                throw new Error(
+                                    "Unknown or invalid exercise type",
+                                );
+                        }
+                    } else {
+                        throw new Error("Invalid input data");
+                    }
+                } catch (e) {
+                    logToConsole(
+                        "Error handling post-session calculations (@ handleExerciseCalculation): " +
+                            e,
+                        "error",
+                    );
+                    return undefined;
+                }
+            }
+
+            const response = handleExerciseCalculation();
+            if (response) {
+                SaveActiveObjectiveToDailyLog(
+                    objectiveIdentifier,
+                    true,
+                    response,
+                );
+                logToConsole(
+                    "Success! Session's results set & saved",
+                    "success",
+                );
+            } else {
+                throw new Error("Response is null or undefined");
+            }
+
             const params: SessionParams = {
-                speed: objective.specificData.estimateSpeed,
-                time: totalTime ?? 0,
+                burntCalories: response.result,
+                elapsedTime: totalTime ?? 0,
                 id: objective.identifier,
-                exercise: objective.exercise,
-                lifts: objective.specificData.reps,
-                dumbbellWeight: objective.specificData.dumbbellWeight,
-                pushups: objective.specificData.amountOfPushUps,
-                hands: objective.specificData.amountOfHands,
             };
 
             router.replace({
