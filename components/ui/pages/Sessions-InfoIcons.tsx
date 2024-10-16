@@ -19,13 +19,11 @@ import FontSizes from "@/constants/FontSizes";
  * @property {ActiveObjective} objective The objective of the current session.
  * @property {1 | 2} row Whether to show the 1st row (generic data) or the 2nd row (exercise-specific) data.
  * @property {TFunction} t The translate function.
- * @property {number} laps The `laps` stateful value.
  */
 type InfoIconsProps = {
     objective: ActiveObjective;
     row: 1 | 2;
     t: TFunction;
-    laps: number;
 };
 
 // I don't usually use React.FC, I prefer export default function
@@ -37,14 +35,12 @@ type InfoIconsProps = {
  * @param {Objective} props.objective The objective of the current session.
  * @param {1 | 2} props.row Whether to show the 1st row (generic data) or the 2nd row (exercise-specific) data.
  * @param {TFunction} props.t The translate function.
- * @param {number} props.laps The `laps` stateful value.
  * @returns {ReactElement} The JSX component displaying the icons.
  */
 const SessionsPageInfoIcons: React.FC<InfoIconsProps> = ({
     objective,
     row,
     t,
-    laps,
 }: InfoIconsProps): ReactElement => {
     const speedOptions: [string, string][] = [
         [t("Brisk Walk"), t("1.6 - 3.2 km/h")],
@@ -70,16 +66,6 @@ const SessionsPageInfoIcons: React.FC<InfoIconsProps> = ({
                     justifyContent: "center",
                 }}
             >
-                <Ionicons name="loop" size={15} color={Colors.BASIC.WHITE} />
-                <GapView width={5} />
-                <BetterText fontWeight="Regular" fontSize={15}>
-                    {laps === 0
-                        ? t("globals.none")
-                        : laps === 1
-                          ? `${laps} repetition`
-                          : `${laps} repetitions`}
-                </BetterText>
-                <GapView width={15} />
                 <Ionicons name="snooze" size={15} color={Colors.BASIC.WHITE} />
                 <GapView width={5} />
                 <BetterText fontWeight="Regular" fontSize={15}>

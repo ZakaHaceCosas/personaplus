@@ -1,4 +1,3 @@
-// TODO: finish this thing
 // app/CreateObjective.tsx
 // Objective creation
 
@@ -89,7 +88,6 @@ export default function CreateActiveObjectivePage() {
                 days: [false, false, false, false, false, false, false],
                 durationMinutes: 0,
                 rests: 0,
-                repetitions: 0,
                 restDurationMinutes: 0,
             },
             specificData: {
@@ -114,11 +112,7 @@ export default function CreateActiveObjectivePage() {
 
     // some types to avoid duplication
     type Operation = "increase" | "decrease";
-    type Value =
-        | "durationMinutes"
-        | "rests"
-        | "restDurationMinutes"
-        | "repetitions";
+    type Value = "durationMinutes" | "rests" | "restDurationMinutes";
 
     function handleToggle(operation: Operation, value: Value): void {
         updateObjectiveToCreate((prev: ActiveObjectiveWithoutId) => {
@@ -159,12 +153,6 @@ export default function CreateActiveObjectivePage() {
                     operation === "increase"
                         ? currentRestDuration + 1
                         : Math.max(currentRestDuration - 1, 0);
-            } else if (value === "repetitions") {
-                const currentRepetitions = prev.info.repetitions;
-                updatedInfo.repetitions =
-                    operation === "increase"
-                        ? (currentRepetitions ?? 0) + 1
-                        : Math.max((currentRepetitions ?? 0) - 1, 0);
             }
 
             return {
@@ -359,14 +347,6 @@ export default function CreateActiveObjectivePage() {
                                             durationMinutes: 0,
                                         },
                                     }));
-                                } else if (associatedValue === "repetitions") {
-                                    updateObjectiveToCreate((prev) => ({
-                                        ...prev,
-                                        info: {
-                                            ...prev.info,
-                                            repetitions: 0,
-                                        },
-                                    }));
                                 } else if (
                                     associatedValue === "restDurationMinutes"
                                 ) {
@@ -393,14 +373,6 @@ export default function CreateActiveObjectivePage() {
                                         info: {
                                             ...prev.info,
                                             durationMinutes: numericValue,
-                                        },
-                                    }));
-                                } else if (associatedValue === "repetitions") {
-                                    updateObjectiveToCreate((prev) => ({
-                                        ...prev,
-                                        info: {
-                                            ...prev.info,
-                                            repetitions: numericValue,
                                         },
                                     }));
                                 } else if (
@@ -470,8 +442,8 @@ export default function CreateActiveObjectivePage() {
     function handleCreation(): void {
         async function createObjective(): Promise<void> {
             if (canCreateObjective) {
-                // TODO: this function is tied to the toolkit, which is also a TODO
-                const response = await CreateActiveObjective(objectiveToCreate);
+                const response: 0 =
+                    await CreateActiveObjective(objectiveToCreate);
 
                 if (response !== 0) {
                     logToConsole(
@@ -628,7 +600,6 @@ export default function CreateActiveObjectivePage() {
             {spawnToggle("rests")}
             {objectiveToCreate.info.restDurationMinutes! > 0 &&
                 spawnToggle("restDurationMinutes")}
-            {spawnToggle("repetitions")}
             {
                 // forgive me for promising that R6 would address all code duplication and yet making this
                 // i got no fucking spare time to deal with this

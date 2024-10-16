@@ -49,7 +49,6 @@ export default function Results() {
         speed: parseNumber(originalParams.speed),
         time: parseNumber(originalParams.time),
         id: parseNumber(originalParams.id),
-        repetitions: parseNumber(originalParams.repetitions),
         lifts: parseNumber(originalParams.lifts),
         dumbbellWeight: parseNumber(originalParams.dumbbellWeight),
         pushups: parseNumber(originalParams.pushups),
@@ -125,7 +124,7 @@ export default function Results() {
                             params.time,
                             params.dumbbellWeight,
                             params.hands,
-                            params.repetitions,
+                            params.lifts,
                             true,
                             true,
                         );
@@ -136,9 +135,7 @@ export default function Results() {
                             userData.weight,
                             userData.height,
                             params.time,
-                            params.repetitions > 0
-                                ? params.repetitions * params.pushups
-                                : params.pushups,
+                            params.pushups,
                             params.hands,
                             true,
                             true,

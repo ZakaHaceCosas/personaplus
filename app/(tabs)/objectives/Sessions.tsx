@@ -37,7 +37,6 @@ export interface SessionParams {
     time: number;
     id: number;
     exercise: string;
-    repetitions: number;
     lifts: number;
     dumbbellWeight: number;
     pushups: number;
@@ -80,7 +79,6 @@ export default function Sessions() {
             const handler = async () => {
                 const obj = await GetActiveObjective(objectiveIdentifier);
                 setObjective(obj);
-                setLaps(obj?.info.repetitions ?? 0);
             };
 
             handler();
@@ -211,7 +209,6 @@ export default function Sessions() {
                 time: totalTime ?? 0,
                 id: objective.identifier,
                 exercise: objective.exercise,
-                repetitions: objective.info.repetitions ?? 0,
                 lifts: objective.specificData.reps,
                 dumbbellWeight: objective.specificData.dumbbellWeight,
                 pushups: objective.specificData.amountOfPushUps,
@@ -233,6 +230,7 @@ export default function Sessions() {
 
     // handles finishing. this is called whenever the timer runs out of time
     // however repetitions exist, so a handler is required
+    // NOTE - repetitions have been deprecated as of now so uh i don't think we'll need this anymore?
     const handleFinish = () => {
         if (laps !== 0) {
             setLaps((prev) => (prev > 0 ? prev - 1 : 0));
@@ -301,18 +299,8 @@ export default function Sessions() {
                         : t("page_sessions.resting")}
                 </BetterText>
                 <GapView height={10} />
-                <SessionsPageInfoIcons
-                    row={1}
-                    objective={objective}
-                    t={t}
-                    laps={laps}
-                />
-                <SessionsPageInfoIcons
-                    row={2}
-                    objective={objective}
-                    t={t}
-                    laps={laps}
-                />
+                <SessionsPageInfoIcons row={1} objective={objective} t={t} />
+                <SessionsPageInfoIcons row={2} objective={objective} t={t} />
             </IslandDivision>
             <GapView height={20} />
             <CountdownCircleTimer

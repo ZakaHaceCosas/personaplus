@@ -23,7 +23,6 @@ type ActiveObjectiveInfo = {
     days: [boolean, boolean, boolean, boolean, boolean, boolean, boolean];
     durationMinutes: number;
     rests: number | null;
-    repetitions: number | null;
     restDurationMinutes: number;
 };
 
