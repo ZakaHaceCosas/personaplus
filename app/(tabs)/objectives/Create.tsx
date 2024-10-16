@@ -16,6 +16,7 @@ import {
     ActiveObjectiveWithoutId,
     SupportedActiveObjectivesList,
     SupportedActiveObjectives,
+    WeekTuple,
 } from "@/types/ActiveObjectives";
 import GenerateRandomMessage from "@/toolkit/RandomMessage";
 import BetterText from "@/components/text/BetterText";
@@ -473,7 +474,7 @@ export default function CreateActiveObjectivePage() {
             <GapView height={10} />
             <Select
                 currentValue={objectiveToCreate.exercise}
-                mode="dialog"
+                mode="dropdown"
                 dialogPrompt={t(
                     "pages.createActiveObjective.questions.whatToDo.options.title",
                 )}
@@ -528,48 +529,41 @@ export default function CreateActiveObjectivePage() {
             <GapView height={10} />
             <View style={styles.dayContainer}>
                 {objectiveToCreate.info.days.map((day, index) => {
-                    const thisDay: string =
-                        index === 0
-                            ? t("globals.daysOfTheWeek.monday.key")
-                            : index === 1
-                              ? t("globals.daysOfTheWeek.tuesday.key")
-                              : index === 2
-                                ? t("globals.daysOfTheWeek.wednesday.key")
-                                : index === 3
-                                  ? t("globals.daysOfTheWeek.thursday.key")
-                                  : index === 4
-                                    ? t("globals.daysOfTheWeek.friday.key")
-                                    : index === 5
-                                      ? t("globals.daysOfTheWeek.saturday.key")
-                                      : t("globals.daysOfTheWeek.sunday.key");
+                    const daysOfWeek: string[] = [
+                        t("globals.daysOfTheWeek.monday.key"),
+                        t("globals.daysOfTheWeek.tuesday.key"),
+                        t("globals.daysOfTheWeek.wednesday.key"),
+                        t("globals.daysOfTheWeek.thursday.key"),
+                        t("globals.daysOfTheWeek.friday.key"),
+                        t("globals.daysOfTheWeek.saturday.key"),
+                        t("globals.daysOfTheWeek.sunday.key"),
+                    ];
+                    const thisDay = daysOfWeek[index];
+
                     return (
                         <React.Fragment key={index}>
                             <View
-                                style={{
-                                    ...styles.day,
-                                    borderColor: day
-                                        ? Colors.PRIMARIES.ACE.ACE_STROKE
-                                        : Colors.MAIN.DEFAULT_ITEM.STROKE,
-                                    backgroundColor: day
-                                        ? Colors.PRIMARIES.ACE.ACE
-                                        : Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
-                                }}
+                                style={[
+                                    styles.day,
+                                    {
+                                        borderColor: day
+                                            ? Colors.PRIMARIES.ACE.ACE_STROKE
+                                            : Colors.MAIN.DEFAULT_ITEM.STROKE,
+                                        backgroundColor: day
+                                            ? Colors.PRIMARIES.ACE.ACE
+                                            : Colors.MAIN.DEFAULT_ITEM
+                                                  .BACKGROUND,
+                                    },
+                                ]}
                             >
                                 <Pressable
                                     onPress={() =>
                                         updateObjectiveToCreate((prev) => {
-                                            const updatedDays: [
-                                                boolean,
-                                                boolean,
-                                                boolean,
-                                                boolean,
-                                                boolean,
-                                                boolean,
-                                                boolean,
-                                            ] = [...prev.info.days]; // sorry for this, but otherwise an error (type error actually) happens
+                                            const updatedDays: WeekTuple = [
+                                                ...prev.info.days,
+                                            ];
                                             updatedDays[index] =
-                                                !updatedDays[index]; // basically reverts
-
+                                                !updatedDays[index];
                                             return {
                                                 ...prev,
                                                 info: {
