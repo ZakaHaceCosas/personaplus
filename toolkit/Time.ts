@@ -11,7 +11,7 @@ export interface Time {
  * @returns {string} A formatted "HH:MM:SS" string.
  */
 export function formatTimeString({ hours, minutes, seconds }: Time): string {
-    const timeParts = [];
+    const timeParts: string[] = [];
 
     if (hours !== undefined) {
         timeParts.push(hours.toString().padStart(2, "0"));
@@ -33,7 +33,7 @@ export function formatTimeString({ hours, minutes, seconds }: Time): string {
  * @returns {Time} The corresponding Time object.
  */
 export function parseTimeString(timeString: string): Time {
-    const parts = timeString.split(":").map(Number);
+    const parts: number[] = timeString.split(":").map(Number);
     const time: Time = {};
 
     if (parts.length === 3) {
