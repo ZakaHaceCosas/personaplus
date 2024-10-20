@@ -1,5 +1,15 @@
-// src/Notification.tsx
-// Notificaciones, para alertar al usuario de cosas que pasan
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/components/ui/BetterAlert.tsx
+ * Basically: Alerts and notifications, to tell the user about important stuff.
+ *
+ * <=============================================================================>
+ */
 
 import React, { ReactElement } from "react";
 import { StyleSheet, View } from "react-native";
@@ -8,13 +18,45 @@ import GapView from "@/components/ui/GapView";
 import Colors from "@/constants/Colors";
 import getCommonScreenSize from "@/constants/Screen";
 import { UniversalPressableStyle } from "@/constants/ui/Pressables";
+import { PrimaryColorsType } from "@/types/Color";
 
 // TypeScript, supongo
+/**
+ * BetterAlertProps
+ *
+ * @interface BetterAlertProps
+ * @typedef {BetterAlertProps}
+ */
 interface BetterAlertProps {
-    style: "DEFAULT" | "ACE" | "GOD" | "WOR" | "HMM"; // Tipo (color)
-    title: string; // Título de la notificación
-    text: string; // Texto principal de la misma
-    subtext?: string; // De haberlo, texto inferior de la misma
+    /**
+     * The color of the notification.
+     *
+     * @type {PrimaryColorsType}
+     */
+    style: PrimaryColorsType;
+    /**
+     * A small text to show before the title / main text of the notification.
+     *
+     * @type {?string}
+     */
+    preTitle?: string;
+    /**
+     * Title / main big text of the notification.
+     *
+     * @type {string}
+     */
+    title: string;
+    /**
+     * An optional long text for the notification's content.
+     *
+     * @type {?string}
+     */
+    bodyText?: string;
+    /**
+     * Whether it's an alert (a normal item) or a notification (a fixed, floating element).
+     *
+     * @type {("alert" | "notification")}
+     */
     layout: "alert" | "notification";
 }
 
@@ -31,15 +73,15 @@ const styles = StyleSheet.create({
 
 export default function BetterAlert({
     style,
+    preTitle,
     title,
-    text,
-    subtext,
+    bodyText,
     layout,
 }: BetterAlertProps): ReactElement {
-    let borderColor: string; // Color del borde
-    let backgroundColor: string; // Color del fondo
-    let textColor: string; // Color del texto
-    let itemLayout: "absolute" | "static";
+    let borderColor: string; // Border color
+    let backgroundColor: string; // Background color
+    let textColor: string; // Text color
+    let itemLayout: "absolute" | "static"; // Position of the notification
 
     switch (style) {
         case "ACE":
@@ -92,33 +134,39 @@ export default function BetterAlert({
                 styles.betterAlert,
             ]}
         >
-            <BetterText
-                fontWeight="Medium"
-                fontSize={12}
-                textColor={textColor}
-                textAlign="normal"
-            >
-                {String(title)}
-            </BetterText>
-            <GapView height={5} />
+            {preTitle && (
+                <>
+                    <BetterText
+                        fontWeight="Medium"
+                        fontSize={12}
+                        textColor={textColor}
+                        textAlign="normal"
+                    >
+                        {preTitle}
+                    </BetterText>
+                    <GapView height={5} />
+                </>
+            )}
             <BetterText
                 fontWeight="SemiBold"
                 fontSize={20}
                 textColor={textColor}
                 textAlign="normal"
             >
-                {String(text)}
+                {title}
             </BetterText>
-            {subtext && <GapView height={5} />}
-            {subtext && (
-                <BetterText
-                    fontWeight="Regular"
-                    fontSize={12}
-                    textColor={textColor}
-                    textAlign="normal"
-                >
-                    {String(subtext)}
-                </BetterText>
+            {bodyText && (
+                <>
+                    <GapView height={5} />
+                    <BetterText
+                        fontWeight="Regular"
+                        fontSize={12}
+                        textColor={textColor}
+                        textAlign="normal"
+                    >
+                        {bodyText}
+                    </BetterText>
+                </>
             )}
         </View>
     );
