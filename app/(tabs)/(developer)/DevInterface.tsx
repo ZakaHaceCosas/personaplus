@@ -149,9 +149,9 @@ export default function HomeScreen() {
             <GapView height={15} />
             <BetterAlert
                 style="DEFAULT"
-                title="Generic info from your device"
-                text={`Client details`}
-                subtext={`Manufacturer: ${Device.manufacturer}\nBrand: ${
+                preTitle="Generic info from your device"
+                title={`Client details`}
+                bodyText={`Manufacturer: ${Device.manufacturer}\nBrand: ${
                     Device.brand
                 }\nCodename: ${Device.designName}\nDevice name: ${
                     Device.deviceName
@@ -175,25 +175,25 @@ export default function HomeScreen() {
             <GapView height={10} />
             <BetterAlert
                 style="DEFAULT"
-                title={"AsyncStorage item: " + StoredItemNames.userData}
-                text={error ? "An error happened:" : "User data (raw JSON)"}
-                subtext={error ? error : userData ? userData : "null"}
+                preTitle={"AsyncStorage item: " + StoredItemNames.userData}
+                title={error ? "An error happened:" : "User data (raw JSON)"}
+                bodyText={error ? error : userData ? userData : "null"}
                 layout="alert"
             />
             <GapView height={10} />
             <BetterAlert
                 style="DEFAULT"
-                title={"AsyncStorage item: " + StoredItemNames.objectives}
-                text={error ? "An error happened:" : "Objectives (raw JSON)"}
-                subtext={error ? error : objectives ? objectives : "null"}
+                preTitle={"AsyncStorage item: " + StoredItemNames.objectives}
+                title={error ? "An error happened:" : "Objectives (raw JSON)"}
+                bodyText={error ? error : objectives ? objectives : "null"}
                 layout="alert"
             />
             <GapView height={10} />
             <BetterAlert
                 style="DEFAULT"
-                title={"AsyncStorage item: " + StoredItemNames.dailyLog}
-                text={error ? "An error happened:" : "Daily log (raw JSON)"}
-                subtext={error ? error : dailyLog ? dailyLog : "null"}
+                preTitle={"AsyncStorage item: " + StoredItemNames.dailyLog}
+                title={error ? "An error happened:" : "Daily log (raw JSON)"}
+                bodyText={error ? error : dailyLog ? dailyLog : "null"}
                 layout="alert"
             />
             <GapView height={10} />
