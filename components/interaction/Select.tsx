@@ -1,4 +1,5 @@
 import Colors from "@/constants/Colors";
+import GenerateRandomKey from "@/toolkit/KeyGenerator";
 import { Picker } from "@react-native-picker/picker";
 import { TFunction } from "i18next";
 import { ReactElement } from "react";
@@ -124,9 +125,7 @@ export default function Select({
             style={styles.picker}
         >
             <Picker.Item
-                key={
-                    "__PERSONAPLUS_SELECT__EMPTY_VALUE__DO_NOT_REMOVE_OR_YOU_WILL_BE_FIRED"
-                } // learning from react, heh~
+                key={GenerateRandomKey("SELECT_EMPTY_ITEM")}
                 label={t("globals.interaction.chooseAnOption")}
                 value=""
                 fontFamily="BeVietnamPro-Regular"
