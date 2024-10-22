@@ -2,6 +2,7 @@ import {
     ActiveObjective,
     ActiveObjectiveDailyLog,
     ActiveObjectiveWithoutId,
+    SupportedActiveObjectives,
 } from "@/types/ActiveObjectives";
 import { logToConsole } from "@/toolkit/debug/Console";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -11,6 +12,7 @@ import {
     TodaysDay,
 } from "@/toolkit/debug/Today";
 import StoredItemNames from "@/constants/StoredItemNames";
+import { TFunction } from "i18next";
 
 /**
  * Returns the objectives from AsyncStorage as an `ActiveObjective[]`, or `null` if there aren't any objectives.
@@ -420,6 +422,33 @@ async function DeleteActiveObjective(identifier: number): Promise<void> {
     }
 }
 
+function GenerateDescriptionOfObjective(
+    obj: ActiveObjective,
+    t: TFunction,
+): string {
+    const exercise: SupportedActiveObjectives = obj.exercise;
+    const minuteWord =
+        obj.info.durationMinutes === 1 ? " minute." : " minutes.";
+    if (exercise === "Lifting")
+        return t(
+            obj.specificData.reps +
+                " lifts of " +
+                obj.specificData.dumbbellWeight *
+                    obj.specificData.amountOfHands +
+                " kg each.",
+        );
+    else if (exercise === "Push Ups")
+        return t(
+            obj.specificData.amountOfPushUps +
+                " push ups with " +
+                obj.specificData.amountOfHands +
+                " hands.",
+        );
+    else if (exercise === "Running")
+        return t("For " + obj.info.durationMinutes + minuteWord);
+    return "(There was an error reading this objective's data)";
+}
+
 export {
     CreateActiveObjective,
     GetAllObjectives,
@@ -430,4 +459,5 @@ export {
     CheckForAnActiveObjectiveDailyStatus,
     CalculateSessionFragmentsDuration,
     DeleteActiveObjective,
+    GenerateDescriptionOfObjective,
 };
