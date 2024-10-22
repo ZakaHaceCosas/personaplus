@@ -7,7 +7,7 @@ const ROUTES = {
         PROFILE: "/Profile",
         DASHBOARD: "/Dashboard",
         WELCOME_SCREEN: "/Welcome",
-        REPORT: "/Report", // 👀 what's this?
+        REPORT: "/Report",
     },
     DEV_INTERFACE: {
         HOME: "/DevInterface",
