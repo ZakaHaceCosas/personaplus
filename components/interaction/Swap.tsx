@@ -4,7 +4,7 @@ import BetterText from "@/components/text/BetterText";
 import Colors from "@/constants/Colors";
 import getCommonScreenSize from "@/constants/Screen";
 import FontSizes from "@/constants/FontSizes";
-import { UniversalPressableStyle } from "@/constants/ui/Pressables";
+import { UniversalItemStyle } from "@/constants/ui/Pressables";
 import { logToConsole } from "@/toolkit/debug/Console";
 
 interface Option {
@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     swapOption: {
         flexShrink: 1,
         width: "100%",
-        borderRadius: UniversalPressableStyle.borderRadius,
-        borderWidth: UniversalPressableStyle.borderWidth,
+        borderRadius: UniversalItemStyle.borderRadius,
+        borderWidth: UniversalItemStyle.borderWidth,
         borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
         backgroundColor: Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
         display: "flex",

@@ -17,7 +17,7 @@ import BetterText from "@/components/text/BetterText";
 import GapView from "@/components/ui/GapView";
 import Colors from "@/constants/Colors";
 import getCommonScreenSize from "@/constants/Screen";
-import { UniversalPressableStyle } from "@/constants/ui/Pressables";
+import { UniversalItemStyle } from "@/constants/ui/Pressables";
 import { PrimaryColorsType } from "@/types/Color";
 
 // TypeScript, supongo
@@ -62,9 +62,9 @@ interface BetterAlertProps {
 
 const styles = StyleSheet.create({
     betterAlert: {
-        padding: UniversalPressableStyle.padding,
-        borderRadius: UniversalPressableStyle.borderRadius,
-        borderWidth: UniversalPressableStyle.borderWidth,
+        padding: UniversalItemStyle.padding,
+        borderRadius: UniversalItemStyle.borderRadius,
+        borderWidth: UniversalItemStyle.borderWidth,
         width: getCommonScreenSize("width"),
         display: "flex",
         flexDirection: "column",
