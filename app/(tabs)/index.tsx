@@ -3,8 +3,10 @@ import Loading from "@/components/static/Loading";
 import PageEnd from "@/components/static/PageEnd";
 import {
     BetterTextHeader,
+    BetterTextSmallerText,
     BetterTextSubHeader,
 } from "@/components/text/BetterTextPresets";
+import BetterTable, { BetterTableItem } from "@/components/ui/BetterTable";
 import GapView from "@/components/ui/GapView";
 import Division from "@/components/ui/sections/Division";
 import Section from "@/components/ui/sections/Section";
@@ -13,13 +15,13 @@ import ROUTES from "@/constants/Routes";
 import { OrchestrateUserData } from "@/toolkit/User";
 import { logToConsole } from "@/toolkit/debug/Console";
 import {
+    CheckForAnActiveObjectiveDailyStatus,
+    GenerateDescriptionOfObjective,
     GetActiveObjective,
+    GetAllObjectives,
     GetAllPendingObjectives,
 } from "@/toolkit/objectives/ActiveObjectives";
-import {
-    ActiveObjective,
-    SupportedActiveObjectives,
-} from "@/types/ActiveObjectives";
+import { ActiveObjective } from "@/types/ActiveObjectives";
 import { FullProfile } from "@/types/User";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -29,6 +31,9 @@ export default function HomeScreen() {
     const { t } = useTranslation();
     const [userData, setUserData] = useState<FullProfile | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    const [allObjectivesForTable, setAllObjectivesForTable] = useState<
+        BetterTableItem[]
+    >([]);
     const [renderedObjectives, setRenderedObjectives] = useState<
         ActiveObjective[] | null
     >(null);
@@ -36,92 +41,66 @@ export default function HomeScreen() {
         null,
     );
 
-    async function fetchObjectives(): Promise<void> {
+    async function fetchData(): Promise<void> {
         try {
+            // user data
+            const userData: FullProfile | null = await OrchestrateUserData();
+            setUserData(userData);
+
+            // objectives for UI
             const pending: number[] | 0 | false | null =
                 await GetAllPendingObjectives();
             setIdentifiers(pending);
 
-            if (!Array.isArray(pending)) {
-                if (!pending || pending === 0 || pending === false) return;
+            if (Array.isArray(pending)) {
+                const objectives: (ActiveObjective | null)[] =
+                    await Promise.all(
+                        pending.map(
+                            (
+                                identifier: number,
+                            ): Promise<ActiveObjective | null> =>
+                                GetActiveObjective(identifier),
+                        ),
+                    );
+
+                const filteredObjectives: ActiveObjective[] = objectives.filter(
+                    (obj: ActiveObjective | null): obj is ActiveObjective =>
+                        obj !== null,
+                );
+                setRenderedObjectives(filteredObjectives);
             }
 
-            const objectives = await Promise.all(
-                pending.map((identifier) => GetActiveObjective(identifier)),
-            );
-
-            const filteredObjectives = objectives.filter(
-                (obj): obj is ActiveObjective => obj !== null,
-            );
-            setRenderedObjectives(filteredObjectives);
+            // objectives for table
+            const allObjectives: ActiveObjective[] | null =
+                await GetAllObjectives();
+            if (allObjectives) {
+                const objectivesForTable: BetterTableItem[] = await Promise.all(
+                    allObjectives.map(
+                        async (
+                            obj: ActiveObjective,
+                        ): Promise<BetterTableItem> => ({
+                            name: obj.exercise,
+                            value: (await CheckForAnActiveObjectiveDailyStatus(
+                                obj.identifier,
+                            ))
+                                ? "Done"
+                                : "Pending",
+                        }),
+                    ),
+                );
+                setAllObjectivesForTable(objectivesForTable);
+            }
         } catch (e) {
-            logToConsole(
-                "Error rendering objectives: " + e,
-                "error",
-                {
-                    location: "@/components/ui/sections/interface/Home.tsx",
-                    isHandler: true,
-                    handlerName: "renderObjectives() @ try-catch #1",
-                    function: "RenderActiveObjectives()",
-                },
-                false,
-            );
-        }
-    }
-
-    async function fetchUserData(): Promise<void> {
-        try {
-            const response = await OrchestrateUserData();
-            setUserData(response);
-        } catch (e) {
-            logToConsole("Error accessing user data! " + e, "error", {
-                location: "@/app/(tabs)/index.tsx",
-                function: "fetchUserData()",
-                isHandler: false,
-            });
-        }
-    }
-
-    async function handler() {
-        try {
-            await fetchUserData();
-            await fetchObjectives();
-        } catch (e) {
-            throw e;
+            logToConsole("Error fetching data: " + e, "error");
         } finally {
             setLoading(false);
         }
     }
 
-    useEffect(() => {
-        // load both user data and objectives at the same time
+    useEffect((): void => {
         setLoading(true);
-        Promise.all([handler()]);
-        // eslint-disable-next-line
+        Promise.all([fetchData()]);
     }, []);
-
-    function generateDescriptionOfObjective(obj: ActiveObjective): string {
-        const exercise: SupportedActiveObjectives = obj.exercise;
-        if (exercise === "Lifting") {
-            return t(
-                obj.specificData.reps +
-                    " lifts of " +
-                    obj.specificData.dumbbellWeight *
-                        obj.specificData.amountOfHands +
-                    " kg each.",
-            );
-        } else if (exercise === "Push Ups") {
-            return t(
-                obj.specificData.amountOfPushUps +
-                    " push ups with " +
-                    obj.specificData.amountOfHands +
-                    " hands.",
-            );
-            // TODO: finish these
-        } else {
-            return "(There was an error reading this objective's data)";
-        }
-    }
 
     function handleLaunchObjective(identifier: number): void {
         try {
@@ -147,43 +126,39 @@ export default function HomeScreen() {
             <GapView height={20} />
             <Section width="total" kind="ActiveObjectives">
                 <>
-                    {identifiers === 0 && (
+                    {identifiers === 0 ? (
                         <Division header="Guess you've done everything!" />
-                    )}
-
-                    {identifiers === null && (
+                    ) : identifiers === null ? (
                         <Division header="You don't have any objectives... Let's create one!">
                             <BetterButton
                                 style="GOD"
-                                action={() =>
+                                action={(): void =>
                                     router.push(ROUTES.ACTIVE_OBJECTIVES.CREATE)
                                 }
                                 buttonText="Create active objective"
                                 buttonHint="Redirects the user to a page where he can create an active objective"
                             />
                         </Division>
-                    )}
-
-                    {identifiers === false && (
+                    ) : identifiers === false ? (
                         <Division header="No objectives for today. Have a good rest!" />
-                    )}
-
-                    {renderedObjectives &&
+                    ) : (
+                        renderedObjectives &&
                         renderedObjectives.map((obj: ActiveObjective) => {
                             return (
                                 <Division
                                     key={obj.identifier}
                                     header={obj.exercise}
                                     preHeader="ACTIVE OBJECTIVE"
-                                    subHeader={generateDescriptionOfObjective(
+                                    subHeader={GenerateDescriptionOfObjective(
                                         obj,
+                                        t,
                                     )}
                                 >
                                     <BetterButton
                                         buttonText="Let's go!"
                                         buttonHint="Starts a session for the given objective"
                                         style="ACE"
-                                        action={() =>
+                                        action={(): void =>
                                             handleLaunchObjective(
                                                 obj.identifier,
                                             )
@@ -191,9 +166,20 @@ export default function HomeScreen() {
                                     />
                                 </Division>
                             );
-                        })}
+                        })
+                    )}
                 </>
             </Section>
+            <GapView height={20} />
+            <BetterTable
+                headers={["Objective", "Status"]}
+                items={allObjectivesForTable}
+            />
+            <GapView height={5} />
+            <BetterTextSmallerText>
+                This table is temporary, as the app is a WIP. It will be
+                overhauled and moved to the Dashboard.
+            </BetterTextSmallerText>
             <PageEnd includeText={true} />
         </>
     );

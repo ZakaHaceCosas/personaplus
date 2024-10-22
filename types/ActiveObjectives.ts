@@ -8,12 +8,23 @@ import { TodaysDay } from "@/toolkit/debug/Today";
  */
 export type SupportedActiveObjectives = "" | "Push Ups" | "Lifting" | "Running";
 
+/**
+ * A list with all supported active objectives as a `string[]`.
+ *
+ * @type {string[]}
+ */
 export const SupportedActiveObjectivesList: string[] = [
     "Push Ups",
     "Lifting",
     "Running",
 ];
 
+/**
+ * A tuple of booleans for the days of the week. Use within active objectives.
+ *
+ * @export
+ * @typedef {WeekTuple}
+ */
 export type WeekTuple = [
     boolean,
     boolean,

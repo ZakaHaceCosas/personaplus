@@ -1,5 +1,6 @@
 import BetterButton from "@/components/interaction/BetterButton";
 import Loading from "@/components/static/Loading";
+import PageEnd from "@/components/static/PageEnd";
 import {
     BetterTextHeader,
     BetterTextSubHeader,
@@ -10,11 +11,13 @@ import ROUTES from "@/constants/Routes";
 import { logToConsole } from "@/toolkit/debug/Console";
 import {
     DeleteActiveObjective,
+    GenerateDescriptionOfObjective,
     GetAllObjectives,
 } from "@/toolkit/objectives/ActiveObjectives";
 import { ActiveObjective } from "@/types/ActiveObjectives";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { View, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -23,7 +26,9 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function HomeScreen() {
+export default function Dashboard() {
+    const { t } = useTranslation();
+
     const [activeObjectives, setActiveObjectives] = useState<
         ActiveObjective[] | null
     >(null);
@@ -80,7 +85,10 @@ export default function HomeScreen() {
                                 key={obj.identifier}
                                 preHeader="ACTIVE OBJECTIVE"
                                 header={obj.exercise}
-                                subHeader="A cool objective. TODO: add metadata here"
+                                subHeader={GenerateDescriptionOfObjective(
+                                    obj,
+                                    t,
+                                )}
                             >
                                 <BetterButton
                                     style="WOR"
@@ -105,6 +113,7 @@ export default function HomeScreen() {
                     />
                 </View>
             </Section>
+            <PageEnd includeText={true} />
         </>
     );
 }
