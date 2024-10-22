@@ -6,8 +6,8 @@ import { DimensionValue, Pressable, StyleSheet } from "react-native";
 import BetterText from "@/components/text/BetterText";
 import Colors from "@/constants/Colors";
 import FontSizes from "@/constants/FontSizes";
-import { UniversalPressableStyle } from "@/constants/ui/Pressables";
-import { Color } from "@/types/Color";
+import { UniversalItemStyle } from "@/constants/ui/Pressables";
+import { Color, PrimaryColorsType } from "@/types/Color";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 
 // TypeScript, supongo
@@ -27,9 +27,9 @@ interface BetterButtonProps {
     /**
      * The color style of the button.
      *
-     * @type {("ACE" | "GOD" | "WOR" | "HMM" | "DEFAULT")}
+     * @type {PrimaryColorsType}
      */
-    style: "ACE" | "GOD" | "WOR" | "HMM" | "DEFAULT";
+    style: PrimaryColorsType;
     /**
      * The text of the button.
      *
@@ -60,8 +60,8 @@ interface BetterButtonProps {
 const styles = StyleSheet.create({
     button: {
         padding: 0,
-        borderRadius: UniversalPressableStyle.borderRadius,
-        borderWidth: UniversalPressableStyle.borderWidth,
+        borderRadius: UniversalItemStyle.borderRadius,
+        borderWidth: UniversalItemStyle.borderWidth,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
  *
  * @export
  * @param {BetterButtonProps} p
- * @param {("ACE" | "GOD" | "WOR" | "HMM" | "DEFAULT")} p.style The color style of the button.
+ * @param {PrimaryColorsType} p.style The color style of the button.
  * @param {string | null} p.buttonText The text of the button.
  * @param {() => void} p.action A function. The action the button will perform.
  * @param {("normal" | "box")} [p.layout="normal"] Whether it's a normal button or a box (50x50) button.
@@ -135,7 +135,7 @@ export default function BetterButton({
         default:
         case "normal":
             buttonWidth = "100%";
-            buttonHeight = UniversalPressableStyle.height;
+            buttonHeight = UniversalItemStyle.height;
             flexValue = 1;
             break;
     }

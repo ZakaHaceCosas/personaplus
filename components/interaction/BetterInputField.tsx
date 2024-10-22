@@ -3,15 +3,15 @@ import { TextInput, StyleSheet } from "react-native";
 import { ReactNode } from "react";
 import Colors from "@/constants/Colors";
 import { BetterTextSmallText } from "@/components/text/BetterTextPresets";
-import { UniversalPressableStyle } from "@/constants/ui/Pressables";
+import { UniversalItemStyle } from "@/constants/ui/Pressables";
 import { logToConsole } from "@/toolkit/debug/Console";
 
 const styles = StyleSheet.create({
     textInput: {
         backgroundColor: Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
-        borderRadius: UniversalPressableStyle.borderRadius,
-        padding: UniversalPressableStyle.padding,
-        borderWidth: UniversalPressableStyle.borderWidth,
+        borderRadius: UniversalItemStyle.borderRadius,
+        padding: UniversalItemStyle.padding,
+        borderWidth: UniversalItemStyle.borderWidth,
         borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
         width: "100%",
         color: Colors.BASIC.WHITE,

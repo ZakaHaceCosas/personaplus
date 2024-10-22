@@ -173,3 +173,19 @@ export interface ColorsObject {
     /** Black & white. Use them as a variable, as the app plans to add theming. */
     BASIC: BasicColors;
 }
+
+/**
+ * All primary colors (their code-name) as a type.
+ *
+ * @export
+ * @typedef {PrimaryColorsType}
+ */
+export type PrimaryColorsType = "DEFAULT" | "ACE" | "GOD" | "WOR" | "HMM";
+
+/**
+ * All primary colors (their code-name) as a type. Omits `"DEFAULT"`.
+ *
+ * @export
+ * @typedef {PrimaryColorsTypeBasic}
+ */
+export type PrimaryColorsTypeBasic = Omit<PrimaryColorsType, "DEFAULT">;

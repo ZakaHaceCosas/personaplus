@@ -22,7 +22,7 @@ import GenerateRandomMessage from "@/toolkit/RandomMessage";
 import BetterText from "@/components/text/BetterText";
 import Colors from "@/constants/Colors";
 import FontSizes from "@/constants/FontSizes";
-import { UniversalPressableStyle } from "@/constants/ui/Pressables";
+import { UniversalItemStyle } from "@/constants/ui/Pressables";
 import Select, { SelectOption } from "@/components/interaction/Select";
 import { logToConsole } from "@/toolkit/debug/Console";
 import BetterButton from "@/components/interaction/BetterButton";
@@ -38,8 +38,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     day: {
-        borderRadius: UniversalPressableStyle.borderRadius,
-        borderWidth: UniversalPressableStyle.borderWidth,
+        borderRadius: UniversalItemStyle.borderRadius,
+        borderWidth: UniversalItemStyle.borderWidth,
         height: 45, // stupid yet functional visual fix.
         alignItems: "center",
         justifyContent: "center",

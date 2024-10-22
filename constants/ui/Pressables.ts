@@ -1,10 +1,10 @@
 /**
- * A set of common, universal styles for pressable items, like buttons, swap elements, etc... Some "non-pressables" may use these styles as well, such as notification alerts.
+ * A set of common, universal styles for different items, like buttons, swap elements, notification alerts, etc...
  *
- * @interface UniversalPressableStyleProps
- * @typedef {UniversalPressableStyleProps}
+ * @interface UniversalItemStyleProps
+ * @typedef {UniversalItemStyleProps}
  */
-interface UniversalPressableStyleProps {
+interface UniversalItemStyleProps {
     /**
      * The height.
      *
@@ -32,11 +32,11 @@ interface UniversalPressableStyleProps {
 }
 
 /**
- * A set of common, universal styles for pressable items, like buttons, swap elements, etc... Some "non-pressables" may use these styles as well, such as notification alerts.
+ * A set of common, universal styles for different items, like buttons, swap elements, notification alerts, etc...
  *
- * @type {UniversalPressableStyleProps}
+ * @type {UniversalItemStyleProps}
  */
-export const UniversalPressableStyle: UniversalPressableStyleProps = {
+export const UniversalItemStyle: UniversalItemStyleProps = {
     height: 55,
     borderRadius: 14,
     borderWidth: 4,
