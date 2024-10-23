@@ -5,6 +5,7 @@ import Colors from "@/constants/Colors";
 import { BetterTextSmallText } from "@/components/text/BetterTextPresets";
 import { UniversalItemStyle } from "@/constants/ui/Pressables";
 import { logToConsole } from "@/toolkit/debug/Console";
+import GenerateRandomKey from "@/toolkit/KeyGenerator";
 
 const styles = StyleSheet.create({
     textInput: {
@@ -30,6 +31,7 @@ interface BetterInputFieldProps {
     length: number;
     changeAction: (text: string) => void;
     inputRefs: { current: TextInput[] };
+    readOnly: boolean;
 }
 
 /**
@@ -56,6 +58,7 @@ export default function BetterInputField({
     length,
     changeAction,
     inputRefs,
+    readOnly = false,
 }: BetterInputFieldProps): ReactNode {
     /**
      * Focuses the next `<TextInput>` when the user presses the arrow / continue / next button on mobile keyboard.
@@ -85,11 +88,15 @@ export default function BetterInputField({
                 maxLength={length}
                 textAlign="left"
                 keyboardType={keyboardType}
-                key={`${name}input`}
+                key={GenerateRandomKey(name)}
                 returnKeyType={nextFieldIndex === 4 ? "done" : "next"}
                 onChangeText={changeAction}
                 onSubmitEditing={() => focusNextField(nextFieldIndex)}
                 ref={(ref) => ref && (inputRefs.current[refIndex] = ref)}
+                readOnly={readOnly}
+                textContentType="none"
+                enterKeyHint={nextFieldIndex === 4 ? "done" : "next"}
+                // inputMode={keyboardType}
             />
         </>
     );
