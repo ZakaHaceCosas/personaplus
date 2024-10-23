@@ -7,14 +7,14 @@ import FontSizes from "@/constants/FontSizes";
 import { UniversalItemStyle } from "@/constants/ui/Pressables";
 import { logToConsole } from "@/toolkit/debug/Console";
 
-interface Option {
+export interface SwapOption {
     value: string | null; // null for invalid values
     label: string;
     default: boolean;
 }
 
 interface SwapProps {
-    options: Option[];
+    options: SwapOption[];
     value: string | null;
     order: "horizontal" | "vertical";
     onValueChange: (value: string | null) => void;
@@ -51,7 +51,7 @@ export default function Swap({
     onValueChange,
     style = "ACE",
 }: SwapProps): ReactElement {
-    const defaultOption: Option | undefined = options.find(
+    const defaultOption: SwapOption | undefined = options.find(
         (option): boolean => option.default,
     );
 
@@ -62,7 +62,7 @@ export default function Swap({
         );
     }
 
-    const [selectedOption, setSelectedOption] = useState<Option | null>(
+    const [selectedOption, setSelectedOption] = useState<SwapOption | null>(
         value
             ? options.find((option) => option.value === value) || null
             : defaultOption || null,
@@ -79,8 +79,8 @@ export default function Swap({
         }
     }, [value, options, selectedOption]);
 
-    const handleOptionPress: (option: Option) => void = (
-        option: Option,
+    const handleOptionPress: (option: SwapOption) => void = (
+        option: SwapOption,
     ): void => {
         if (selectedOption !== option) {
             setSelectedOption(option);
@@ -95,7 +95,7 @@ export default function Swap({
 
     return (
         <View style={[styles.container, { flexDirection: orderString }]}>
-            {options.map((option: Option) => (
+            {options.map((option: SwapOption) => (
                 <Pressable
                     key={option.value}
                     style={[
