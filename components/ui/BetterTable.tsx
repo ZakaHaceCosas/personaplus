@@ -2,7 +2,6 @@ import { ReactElement } from "react";
 import { View, StyleSheet } from "react-native";
 import { BetterTextSmallText } from "../text/BetterTextPresets";
 import Colors from "@/constants/Colors";
-import getCommonScreenSize from "@/constants/Screen";
 import GenerateRandomKey from "@/toolkit/KeyGenerator";
 
 /**
@@ -50,9 +49,12 @@ interface BetterTableProps {
 
 const styles = StyleSheet.create({
     table: {
-        width: getCommonScreenSize("width"),
+        width: "100%",
         height: "auto",
         borderRadius: 10,
+        overflow: "hidden",
+        borderWidth: 1,
+        borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
     },
     header: {
         display: "flex",
@@ -60,9 +62,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
         padding: 10,
-        borderBottomWidth: 1,
-        height: 50,
-        borderBottomColor: Colors.MAIN.DEFAULT_ITEM.TEXT,
+        height: 40,
     },
     item: {
         flex: 1,
@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         padding: 10,
         height: 45,
-        borderBottomWidth: 1,
-        borderBottomColor: Colors.MAIN.DEFAULT_ITEM.TEXT,
+        borderTopWidth: 1,
+        borderTopColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
     },
     cell: {
         flex: 1,
