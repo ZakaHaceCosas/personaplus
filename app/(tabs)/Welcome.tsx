@@ -315,6 +315,7 @@ export default function WelcomePage() {
         return (
             <>
                 <BetterInputField
+                    readOnly={false}
                     label={label}
                     placeholder={placeholder}
                     value={value}
