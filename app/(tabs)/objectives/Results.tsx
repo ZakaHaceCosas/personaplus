@@ -87,7 +87,7 @@ export default function Results() {
                 }}
                 style="ACE"
                 buttonText={t("globals.success")}
-                buttonHint="TODO"
+                buttonHint="Go home"
             />
         </>
     );
