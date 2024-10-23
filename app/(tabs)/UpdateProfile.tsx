@@ -5,7 +5,7 @@
 // Update your profile.
 
 import React, { useRef, useState, useEffect } from "react";
-import { StyleSheet, TextInput, View, ScrollView } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useTranslation } from "react-i18next";
@@ -21,7 +21,9 @@ import {
 } from "@/components/text/BetterTextPresets";
 import BetterText from "@/components/text/BetterText";
 import BetterButton from "@/components/interaction/BetterButton";
-import Swap from "@/components/interaction/Swap";
+import Swap, { SwapOption } from "@/components/interaction/Swap";
+import BetterInputField from "@/components/interaction/BetterInputField";
+import PageEnd from "@/components/static/PageEnd";
 
 // TypeScript, supongo (should use toolkified ver instead?)
 interface UserData {
@@ -34,14 +36,6 @@ interface UserData {
 
 // We define the styles
 const styles = StyleSheet.create({
-    mainView: {
-        backgroundColor: Colors.MAIN.APP,
-        padding: 20,
-        paddingTop: 40,
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100%",
-    },
     flexButtons: {
         display: "flex",
         flexDirection: "row",
@@ -134,11 +128,11 @@ export default function UpdateProfile() {
         previousGender,
     );
 
-    const handleGenderChange = (value: string) => {
+    const handleGenderChange = (value: string | null) => {
         setGenderValue(value);
     };
 
-    const genderoptions = [
+    const genderOptions: SwapOption[] = [
         {
             value: "male",
             label: t("page_welcome.fragment_one.questions.gender.male"),
@@ -151,13 +145,6 @@ export default function UpdateProfile() {
         },
     ];
     const inputRefs = useRef<TextInput[]>([]);
-
-    // when tapping the Next button on android keyboard, focus the next input field
-    const focusNextField = (index: number): void => {
-        if (inputRefs.current[index + 1]) {
-            inputRefs.current[index + 1].focus();
-        }
-    };
 
     // Update form data with user input
     const handleChange = (name: string, value: string) => {
@@ -203,7 +190,7 @@ export default function UpdateProfile() {
             logToConsole(
                 "Error saving user data, some data is missing!",
                 "error",
-            ); // bro forgor to add data
+            ); // bro forgot to add data
         }
     };
 
@@ -211,242 +198,117 @@ export default function UpdateProfile() {
 
     return (
         <>
-            <ScrollView
-                style={styles.mainView}
-                contentContainerStyle={{ flexGrow: 1 }}
-                horizontal={false}
+            <BackButton t={t} />
+            <BetterTextHeader>
+                {t("subPage_edit_profile.title")}
+            </BetterTextHeader>
+            <BetterTextSubHeader>
+                {t("subPage_edit_profile.subtitle")}
+            </BetterTextSubHeader>
+            <GapView height={15} />
+            <BetterInputField
+                label={t("page_welcome.fragment_one.questions.username")}
+                placeholder={t("page_welcome.fragment_one.questions.username")}
+                value={formData.username}
+                name="PROFILE_EDITOR__USERNAME_INPUT_FIELD"
+                changeAction={(text) => handleChange("username", text)}
+                refIndex={0}
+                inputRefs={inputRefs}
+                nextFieldIndex={1}
+                length={40}
+                readOnly={false}
+            />
+            <GapView height={15} />
+            <BetterInputField
+                label={t("page_welcome.fragment_one.questions.height")}
+                placeholder={t("page_welcome.fragment_one.questions.height")}
+                name="PROFILE_EDITOR__HEIGHT_INPUT_FIELD"
+                value={formData.height}
+                changeAction={(text) => handleChange("height", text)}
+                refIndex={1}
+                inputRefs={inputRefs}
+                nextFieldIndex={2}
+                length={3}
+                readOnly={false}
+            />
+            <GapView height={15} />
+            <BetterInputField
+                label={t("page_welcome.fragment_one.questions.weight")}
+                placeholder={t("page_welcome.fragment_one.questions.weight")}
+                name="PROFILE_EDITOR__WEIGHT_INPUT_FIELD"
+                value={formData.weight}
+                changeAction={(text) => handleChange("weight", text)}
+                refIndex={2}
+                inputRefs={inputRefs}
+                nextFieldIndex={3}
+                length={3}
+                readOnly={false}
+            />
+            <GapView height={15} />
+            <BetterInputField
+                label={t("page_welcome.fragment_one.questions.age")}
+                placeholder={t("page_welcome.fragment_one.questions.age")}
+                name="PROFILE_EDITOR__AGE_INPUT_FIELD"
+                value={formData.age}
+                changeAction={(text) => handleChange("age", text)}
+                refIndex={2}
+                inputRefs={inputRefs}
+                nextFieldIndex={3}
+                length={3}
+                readOnly={false}
+            />
+            <GapView height={15} />
+            <BetterText
+                textAlign="normal"
+                fontWeight="Regular"
+                fontSize={15}
+                textColor={Colors.LABELS.SDD}
             >
-                <BackButton t={t} />
-                <GapView height={20} />
-                <BetterTextHeader>
-                    {t("subpage_edit_profile.title")}
-                </BetterTextHeader>
-                <BetterTextSubHeader>
-                    {t("subpage_edit_profile.subtitle")}
-                </BetterTextSubHeader>
-                <GapView height={15} />
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={15}
-                    textColor={Colors.LBLS.SDD}
-                >
-                    {t("page_welcome.fragment_one.questions.username")}
-                </BetterText>
-                <GapView height={5} />
-                <TextInput
-                    placeholder={t(
-                        "page_welcome.fragment_one.questions.username",
-                    )}
-                    value={formData.username}
-                    readOnly={false}
-                    placeholderTextColor={Colors.MAIN.BLANDITEM.PLACEHOLDER}
-                    style={[
-                        {
-                            backgroundColor: Colors.MAIN.BLANDITEM.BACKGROUND,
-                            borderRadius: 10,
-                            padding: 15,
-                            borderWidth: 4,
-                            borderColor: Colors.MAIN.BLANDITEM.STRK,
-                            width: "100%",
-                            color: Colors.BASIC.WHITE,
-                            // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
-                            outline: "none",
-                            fontFamily: "BeVietnamPro-Regular",
-                        },
-                    ]}
-                    autoCorrect={false}
-                    multiline={false}
-                    maxLength={40}
-                    textAlign="left"
-                    fontFamily="BeVietnamPro-Regular"
-                    textContentType="username"
-                    key="usernameinput"
-                    enterKeyHint="next"
-                    onChangeText={(text) => handleChange("username", text)}
-                    onSubmitEditing={() => focusNextField(0)}
-                    ref={(ref) => ref && (inputRefs.current[0] = ref)}
+                {t("page_profile.your_profile_division.gender")}
+            </BetterText>
+            <GapView height={5} />
+            <Swap
+                key="genderSwap"
+                options={genderOptions}
+                value={genderValue}
+                onValueChange={(value: string | null): void =>
+                    handleGenderChange(value)
+                }
+                order="horizontal"
+            />
+            <GapView height={5} />
+            <View style={styles.flexButtons}>
+                <BetterButton
+                    style="DEFAULT"
+                    action={router.back}
+                    buttonText={t("globals.go_back")}
+                    buttonHint="TODO"
                 />
-                <GapView height={15} />
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={15}
-                    textColor={Colors.LBLS.SDD}
-                >
-                    {t("page_welcome.fragment_one.questions.height")}
-                </BetterText>
-                <GapView height={5} />
-                <TextInput
-                    placeholder={t(
-                        "page_welcome.fragment_one.questions.height",
-                    )}
-                    value={formData.height}
-                    readOnly={false}
-                    placeholderTextColor={Colors.MAIN.BLANDITEM.PLACEHOLDER}
-                    style={[
-                        {
-                            backgroundColor: Colors.MAIN.BLANDITEM.BACKGROUND,
-                            borderRadius: 10,
-                            padding: 15,
-                            borderWidth: 4,
-                            borderColor: Colors.MAIN.BLANDITEM.STRK,
-                            width: "100%",
-                            color: Colors.BASIC.WHITE,
-                            // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
-                            outline: "none",
-                            fontFamily: "BeVietnamPro-Regular",
-                        },
-                    ]}
-                    autoCorrect={false}
-                    multiline={false}
-                    maxLength={3}
-                    textAlign="left"
-                    fontFamily="BeVietnamPro-Regular"
-                    textContentType="none"
-                    inputMode="numeric"
-                    key="heightinput"
-                    enterKeyHint="next"
-                    onChangeText={(text) => handleChange("height", text)}
-                    onSubmitEditing={() => focusNextField(1)}
-                    ref={(ref) => ref && (inputRefs.current[1] = ref)}
-                />
-                <GapView height={15} />
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={15}
-                    textColor={Colors.LBLS.SDD}
-                >
-                    {t("page_welcome.fragment_one.questions.weight")}
-                </BetterText>
-                <GapView height={5} />
-                <TextInput
-                    placeholder={t(
-                        "page_welcome.fragment_one.questions.weight",
-                    )}
-                    value={formData.weight}
-                    readOnly={false}
-                    placeholderTextColor={Colors.MAIN.BLANDITEM.PLACEHOLDER}
-                    style={[
-                        {
-                            backgroundColor: Colors.MAIN.BLANDITEM.BACKGROUND,
-                            borderRadius: 10,
-                            padding: 15,
-                            borderWidth: 4,
-                            borderColor: Colors.MAIN.BLANDITEM.STRK,
-                            width: "100%",
-                            color: Colors.BASIC.WHITE,
-                            // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
-                            outline: "none",
-                            fontFamily: "BeVietnamPro-Regular",
-                        },
-                    ]}
-                    autoCorrect={false}
-                    multiline={false}
-                    maxLength={3}
-                    textAlign="left"
-                    fontFamily="BeVietnamPro-Regular"
-                    textContentType="none"
-                    inputMode="numeric"
-                    key="weightinput"
-                    enterKeyHint="next"
-                    onChangeText={(text) => handleChange("weight", text)}
-                    onSubmitEditing={() => focusNextField(2)}
-                    ref={(ref) => ref && (inputRefs.current[2] = ref)}
-                />
-                <GapView height={15} />
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={15}
-                    textColor={Colors.LBLS.SDD}
-                >
-                    {t("page_welcome.fragment_one.questions.age")}
-                </BetterText>
-                <GapView height={5} />
-                <TextInput
-                    placeholder={t("page_welcome.fragment_one.questions.age")}
-                    value={formData.age}
-                    readOnly={false}
-                    placeholderTextColor={Colors.MAIN.BLANDITEM.PLACEHOLDER}
-                    style={[
-                        {
-                            backgroundColor: Colors.MAIN.BLANDITEM.BACKGROUND,
-                            borderRadius: 10,
-                            padding: 15,
-                            borderWidth: 4,
-                            borderColor: Colors.MAIN.BLANDITEM.STRK,
-                            width: "100%",
-                            color: Colors.BASIC.WHITE,
-                            // @ts-expect-error: For some reason appears as "non supported property", but it does work properly.
-                            outline: "none",
-                            fontFamily: "BeVietnamPro-Regular",
-                        },
-                    ]}
-                    autoCorrect={false}
-                    multiline={false}
-                    maxLength={3}
-                    textAlign="left"
-                    fontFamily="BeVietnamPro-Regular"
-                    textContentType="none"
-                    inputMode="numeric"
-                    key="ageinput"
-                    enterKeyHint="done"
-                    onChangeText={(text) => handleChange("age", text)}
-                    onSubmitEditing={() => {}}
-                    ref={(ref) => ref && (inputRefs.current[3] = ref)}
-                />
-                <GapView height={15} />
-                <BetterText
-                    textAlign="normal"
-                    fontWeight="Regular"
-                    fontSize={15}
-                    textColor={Colors.LBLS.SDD}
-                >
-                    {t("page_profile.your_profile_division.gender")}
-                </BetterText>
-                <GapView height={5} />
-                <Swap
-                    key="genderswap"
-                    options={genderoptions}
-                    value={genderValue}
-                    onValueChange={handleGenderChange}
-                    order="horizontal"
-                />
-                <GapView height={5} />
-                <View style={styles.flexButtons}>
+                <GapView width={15} />
+                {isFirstStepDone && (
                     <BetterButton
-                        style="DEFAULT"
-                        action={router.back}
-                        buttonText={t("globals.go_back")}
+                        style="ACE"
+                        action={submit}
+                        buttonText={t("globals.save")}
                         buttonHint="TODO"
                     />
-                    <GapView width={15} />
-                    {isFirstStepDone && (
-                        <BetterButton
-                            style="ACE"
-                            action={submit}
-                            buttonText={t("globals.save")}
-                            buttonHint="TODO"
-                        />
-                    )}
-                    {!isFirstStepDone && (
-                        <BetterButton
-                            style="HMM"
-                            action={() => {}}
-                            buttonText={
-                                !(Number(formData.age) > 99)
-                                    ? t("globals.fill_all_items")
-                                    : t("page_welcome.you_aint_that_old", {
-                                          age: formData.age,
-                                      })
-                            }
-                            buttonHint="TODO"
-                        />
-                    )}
-                </View>
-            </ScrollView>
+                )}
+                {!isFirstStepDone && (
+                    <BetterButton
+                        style="HMM"
+                        action={() => {}}
+                        buttonText={
+                            !(Number(formData.age) > 99)
+                                ? t("globals.fill_all_items")
+                                : t("page_welcome.you_are_not_that_old", {
+                                      age: formData.age,
+                                  })
+                        }
+                        buttonHint="TODO"
+                    />
+                )}
+            </View>
+            <PageEnd includeText={false} />
         </>
     );
 }
