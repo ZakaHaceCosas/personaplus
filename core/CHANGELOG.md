@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0
+
+- Partially user-data-related params from all functions.
+  <!-- - As CoreLibrary is fully integrated into the app, for code quality's sake, CL functions themselves will fetch user data as needed. -->
+  - Now only required data will be asked for. There's no need to ask for all data just to re-return it into a response, especially when that data can be orchestrated directly using the toolkit.
+- (Derived from that change), deprecated all response types except standard `CoreLibraryResponse`, as now all responses should follow the same structure (result, context, & explanation).
+- For code simplicity, also removed the ability to stop getting the context & the explanation. Now all code will look the same, always getting `result.response` instead of sometimes `result.response` and others just `result` (because of the return type being just the number and not the CLResponse object).
+
 ## 0.1.0
 
 - **Renamed from OpenHealthJS to CoreLibrary.**

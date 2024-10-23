@@ -7,52 +7,34 @@ CALCULATE LIFTING PERFORMANCE
 
 import { default as OneRepetitionMax } from "@/core/physicalHealth/OneRepMax";
 import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
+import { CoreLibraryResponse } from "../types/CoreLibraryResponse";
 
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "01/07/2024",
     "", // FIXME: NEED TO PROVIDE SOURCE
 );
 
-interface LIFTING_Response {
-    result: number;
-    subject?: {
-        age: number;
-        gender: "male" | "female";
-        weight: number;
-        height: number;
-        time: number;
-        dumbbellWeight: number;
-        scales: number;
-        repetitions: number;
-    };
-    context?: string;
-    explanation?: string;
-}
-
 /**
  * Calculate the calories burnt during a weight lifting based on given parameters.
  * @param age The age of the subject.
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
- * @param height The height of the subject in centimeters (CM).
+ * @param dumbbellWeight The weight of the dumbbell in kilograms (KG). If two, the weight of one individual scale.
+ * @param scales The amount of scales / dumbbells the subject has been working out with.
  * @param time The duration in MINUTES of the exercise performed by the subject.
- * @param provideContext Whether to provide a brief contextualization about the result.
- * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
- * @returns The calories burnt if neither provideContext nor provideExplanation are true, otherwise returns a LIFTING_Response object.
+ * @param repetitions The amount of lifts the subject has done.
+ * @returns A standard `CoreLibraryResponse` with the desired results.
  */
 
 export default function calculateLiftingPerformance(
     age: number,
     gender: "male" | "female",
     weight: number,
-    height: number,
     time: number,
     dumbbellWeight: number,
     scales: number,
     repetitions: number,
-    provideContext?: boolean,
-    provideExplanation?: boolean,
-): LIFTING_Response {
+): CoreLibraryResponse {
     // Get the Metabolic Equivalent of Task for this
     const calculateMET = (
         w: number,
@@ -78,13 +60,7 @@ export default function calculateLiftingPerformance(
     };
 
     const weightLifted = dumbbellWeight * scales;
-    const OneRepMaxObject = OneRepetitionMax(
-        weightLifted,
-        repetitions,
-        true,
-        false,
-        false,
-    );
+    const OneRepMaxObject = OneRepetitionMax(weightLifted, repetitions, true);
 
     const oneRepMax = OneRepMaxObject.result;
 
@@ -102,31 +78,16 @@ export default function calculateLiftingPerformance(
     const caloriesBurnt =
         metabolicEquivOfTask * caloriesBurntPerKgPerHour * weight * time;
 
-    const response: LIFTING_Response = {
+    const response: CoreLibraryResponse = {
         result: caloriesBurnt,
-    };
 
-    if (provideContext) {
-        response.subject = {
-            age,
-            gender,
-            weight,
-            height,
-            time,
-            dumbbellWeight,
-            scales,
-            repetitions,
-        };
-        response.context =
+        context:
             "The performance of a weight lifting session is measured in burnt calories, being an estimated " +
             caloriesBurnt +
-            "cal for this session.";
-    }
-
-    if (provideExplanation) {
-        response.explanation =
-            "The 'performance' of a weight lifting session can be measured in burnt calories, which are obtained with a series of generic calculations using age, weight, height, gender of the subject, and other parameters weight lifted, time duration of the session, and the One Repetition Max.";
-    }
+            "cal for this session.",
+        explanation:
+            "The 'performance' of a weight lifting session can be measured in burnt calories, which are obtained with a series of generic calculations using age, weight, height, gender of the subject, and other parameters weight lifted, time duration of the session, and the One Repetition Max.",
+    };
 
     return response;
 }

@@ -18,9 +18,7 @@ export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
  * @param weight The weight of the subject in kilograms (KG).
  * @param height The height of the subject in centimeters (CM).
  * @param activeness From "poor" to "super", how active the subject is in terms of exercising, being "poor" very little or no exercise, light 1 to 3 days of exercise a week (being one time each day), normal 3 to 5 days a week, intense 6 or seven days a week, and super being very intense exercises and/or more than once a day.
- * @param provideContext Whether to provide a brief contextualization about the result.
- * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
- * @returns The BMR value if neither provideContext nor provideExplanation are true, otherwise returns an `CoreLibraryResponse` with "result" as the BMR value.
+ * @returns A standard `CoreLibraryResponse` with the desired results.
  */
 
 export default function calculateBasalMetabolicRate(
@@ -28,9 +26,7 @@ export default function calculateBasalMetabolicRate(
     gender: "male" | "female",
     weight: number,
     height: number,
-    activeness: CoreLibraryType_Activeness,
-    provideContext?: boolean,
-    provideExplanation?: boolean,
+    _activeness: CoreLibraryType_Activeness, // TODO - as far as I know there's an index from 1.2 to 1.whatever you've got to multiply your result by to get the real BMR. that index is based on how active you are. we are currently returning the raw BMR without taking this into account, so we aren't really being precise.
 ): CoreLibraryResponse {
     const firstStep: number = 10 * weight;
     const secondStep: number = 6.25 * height;
@@ -51,23 +47,10 @@ export default function calculateBasalMetabolicRate(
 
     const response: CoreLibraryResponse = {
         result: bmr,
+        context: context,
+        explanation:
+            "The BMR (Basal Metabolic Rate) is the rate of energy expenditure per unit time by endothermic animals at rest. It is used to approximate how much energy (in calories) the human body requires to stay alive on a daily basis. This value is necessary to calculate the TDEE (Total Daily Energy Expenditure), which provides a more precise estimation of the daily energy requirement by taking into account the individual's level of physical activity.",
     };
-
-    if (provideContext) {
-        response.subject = {
-            age,
-            gender,
-            weight,
-            height,
-            activeness: activeness,
-        };
-        response.context = context;
-    }
-
-    if (provideExplanation) {
-        response.explanation =
-            "The BMR (Basal Metabolic Rate) is the rate of energy expenditure per unit time by endothermic animals at rest. It is used to approximate how much energy (in calories) the human body requires to stay alive on a daily basis. This value is necessary to calculate the TDEE (Total Daily Energy Expenditure), which provides a more precise estimation of the daily energy requirement by taking into account the individual's level of physical activity.";
-    }
 
     return response;
 }

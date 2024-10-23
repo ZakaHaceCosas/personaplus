@@ -17,9 +17,7 @@ export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
  * @param height The height of the subject in centimeters (CM).
- * @param provideContext Whether to provide a brief contextualization about the result.
- * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
- * @returns The IBW value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the IBW value.
+ * @returns A standard `CoreLibraryResponse` with the desired results.
  */
 
 export default function calculateIdealBodyWeight(
@@ -27,8 +25,6 @@ export default function calculateIdealBodyWeight(
     gender: "male" | "female",
     weight: number,
     height: number,
-    provideContext?: boolean,
-    provideExplanation?: boolean,
 ): CoreLibraryResponse {
     // This is calculated using the BMI method, so the BMI is required.
     /*
@@ -36,13 +32,11 @@ export default function calculateIdealBodyWeight(
     Converted by myself (@ZakaHaceCosas) to American't - will check if it's correct.
     IBW [kg]=2.204625×BMI+(5BMI x (height [cm]−60×2.54)))
     */
-    const bmi = calculateBodyMassIndex(
+    const bmi: CoreLibraryResponse = calculateBodyMassIndex(
         age,
         gender,
         weight,
         height,
-        false,
-        false,
     );
 
     const firstStep = 60 * 2.54;
@@ -59,22 +53,10 @@ export default function calculateIdealBodyWeight(
 
     const response: CoreLibraryResponse = {
         result: ibw,
+        context: context,
+        explanation:
+            "The Ideal Body Weight (IDW) is an estimate of what the ideal weight would be for a person. There are several ways of calculating it, e.g. using the Body Mass Index of the subject, his basic data like age, gender, weight and height, and a series of calculations.",
     };
-
-    if (provideContext) {
-        response.subject = {
-            age,
-            gender,
-            weight,
-            height,
-        };
-        response.context = context;
-    }
-
-    if (provideExplanation) {
-        response.explanation =
-            "The Ideal Body Weight (IDW) is an estimate of what the ideal weight would be for a person. There are several ways of calculating it, e.g. using the Body Mass Index of the subject, his basic data like age, gender, weight and height, and a series of calculations.";
-    }
 
     return response;
 }

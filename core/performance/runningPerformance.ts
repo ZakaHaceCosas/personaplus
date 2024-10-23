@@ -7,49 +7,26 @@ CALCULATE RUNNING PERFORMANCE
 */
 
 import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
+import { CoreLibraryResponse } from "../types/CoreLibraryResponse";
 
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "26/06/2024",
     "https://downhilltodowntown.com/how-to-calculate-your-caloric-burn-while-running/ and https://scielo.isciii.es/scielo.php?script=sci_arttext&pid=S0212-16112012000400040 and https://eresdeportista.com/salud/como-calcular-calorias-quemadas-ejercicio/ and https://www.topendsports.com/weight-loss/energy-met.htm andhttps://journals.lww.com/acsm-msse/fulltext/2000/09001/compendium_of_physical_activities__an_update_of.9.aspx and https://www.cmu.edu/common-cold-project/measures-by-study/health-practices/physical-activity/index.html",
 );
 
-interface RUNNING_Response {
-    result: number;
-    subject?: {
-        age: number;
-        gender: "male" | "female";
-        weight: number;
-        height: number;
-        speed: number;
-        time: number;
-    };
-    context?: string;
-    explanation?: string;
-}
-
 /**
  * Calculate the calories burnt during a running session based on given parameters.
- * @param age The age of the subject.
- * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
- * @param height The height of the subject in centimeters (CM).
  * @param speed The speed in KM/h the subject was running to.
  * @param time The duration in MINUTES of the exercise performed by the subject.
- * @param provideContext Whether to provide a brief contextualization about the result.
- * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
- * @returns The calories burnt if neither provideContext nor provideExplanation are true, otherwise returns a `RUNNING_Response` object.
+ * @returns A standard `CoreLibraryResponse` with the desired results.
  */
 
 export default function calculateRunningPerformance(
-    age: number,
-    gender: "male" | "female",
     weight: number,
-    height: number,
     speed: number,
     time: number,
-    provideContext?: boolean,
-    provideExplanation?: boolean,
-): RUNNING_Response {
+): CoreLibraryResponse {
     let METs: number | null; // MET - Metabolic Equivalent of Task
 
     // Assign METs based on speed in km/h
@@ -93,29 +70,15 @@ export default function calculateRunningPerformance(
         caloriesBurnt = 0; // if the MET is not calculable, it returns 0.
     }
 
-    const response: RUNNING_Response = {
+    const response: CoreLibraryResponse = {
         result: caloriesBurnt,
-    };
-
-    if (provideContext) {
-        response.subject = {
-            age,
-            gender,
-            weight,
-            height,
-            speed,
-            time,
-        };
-        response.context =
+        context:
             "The performance of a weight lifting session is measured in burnt calories, being an estimated " +
             caloriesBurnt +
-            "cal for this session.";
-    }
-
-    if (provideExplanation) {
-        response.explanation =
-            "The 'performance' of a running session can be measured in burnt calories, which are obtained with a series of generic calculations using age, weight, height, gender of the subject, and other parameters like the estimate speed, time duration of the session, and the MET.";
-    }
+            "cal for this session.",
+        explanation:
+            "The 'performance' of a running session can be measured in burnt calories, which are obtained with a series of generic calculations using age, weight, height, gender of the subject, and other parameters like the estimate speed, time duration of the session, and the MET.",
+    };
 
     return response;
 }
