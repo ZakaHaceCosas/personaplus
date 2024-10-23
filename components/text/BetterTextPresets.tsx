@@ -105,7 +105,7 @@ export function BetterTextSmallHeader({
  * @export
  * @param {{ children: ReactNode }} props - The props object.
  * @param {ReactNode} props.children - The text you want to display. You can also pass other `<BetterText>` components to act as "spans" with separate styles, similar to `<span>` in HTML5.
- * @returns {ReactElement} The rendered subheader component.
+ * @returns {ReactElement} The rendered smaller text component.
  */
 export function BetterTextSmallerText({
     children,
@@ -130,7 +130,7 @@ export function BetterTextSmallerText({
  * @export
  * @param {{ children: ReactNode }} props - The props object.
  * @param {ReactNode} props.children - The text you want to display. You can also pass other `<BetterText>` components to act as "spans" with separate styles, similar to `<span>` in HTML5.
- * @returns {ReactElement} The rendered subheader component.
+ * @returns {ReactElement} The rendered small text component.
  */
 export function BetterTextSmallText({
     children,
@@ -155,7 +155,7 @@ export function BetterTextSmallText({
  * @export
  * @param {{ children: ReactNode }} props - The props object.
  * @param {ReactNode} props.children - The text you want to display. You can also pass other `<BetterText>` components to act as "spans" with separate styles, similar to `<span>` in HTML5.
- * @returns {ReactElement} The rendered subheader component.
+ * @returns {ReactElement} The rendered license text component.
  */
 export function BetterTextLicenseText({
     children,
@@ -180,7 +180,7 @@ export function BetterTextLicenseText({
  * @export
  * @param {{ children: ReactNode }} props - The props object.
  * @param {ReactNode} props.children - The text you want to display. You can also pass other `<BetterText>` components to act as "spans" with separate styles, similar to `<span>` in HTML5.
- * @returns {ReactElement} The rendered subheader component.
+ * @returns {ReactElement} The rendered license header component.
  */
 export function BetterTextLicenseHeader({
     children,
@@ -190,6 +190,31 @@ export function BetterTextLicenseHeader({
     return (
         <BetterText
             fontFamily="RobotoSerif"
+            textAlign="normal"
+            fontWeight="Regular"
+            fontSize={FontSizes.REGULAR}
+        >
+            {children}
+        </BetterText>
+    );
+}
+
+/**
+ * A pre-made **normal text**, based on `<BetterText>` and with default styles for design consistency.
+ *
+ * @export
+ * @param {{ children: ReactNode }} props - The props object.
+ * @param {ReactNode} props.children - The text you want to display. You can also pass other `<BetterText>` components to act as "spans" with separate styles, similar to `<span>` in HTML5.
+ * @returns {ReactElement} The rendered normal text component.
+ */
+export function BetterTextNormalText({
+    children,
+}: {
+    children: ReactNode;
+}): ReactElement {
+    return (
+        <BetterText
+            fontFamily="BeVietnamPro"
             textAlign="normal"
             fontWeight="Regular"
             fontSize={FontSizes.REGULAR}
