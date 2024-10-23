@@ -3,7 +3,6 @@ import Loading from "@/components/static/Loading";
 import PageEnd from "@/components/static/PageEnd";
 import {
     BetterTextHeader,
-    BetterTextSmallerText,
     BetterTextSubHeader,
 } from "@/components/text/BetterTextPresets";
 import BetterTable, { BetterTableItem } from "@/components/ui/BetterTable";
@@ -171,15 +170,18 @@ export default function HomeScreen() {
                 </>
             </Section>
             <GapView height={20} />
-            <BetterTable
-                headers={["Objective", "Status"]}
-                items={allObjectivesForTable}
-            />
-            <GapView height={5} />
-            <BetterTextSmallerText>
-                This table is temporary, as the app is a WIP. It will be
-                overhauled and moved to the Dashboard.
-            </BetterTextSmallerText>
+            <Section kind="HowYouAreDoing">
+                <Division
+                    header="Today"
+                    subHeader="This table is temporary, as the app is a WIP. It will be overhauled and moved to the Dashboard."
+                >
+                    <BetterTable
+                        headers={["Objective", "Status"]}
+                        items={allObjectivesForTable}
+                    />
+                    <GapView height={5} />
+                </Division>
+            </Section>
             <PageEnd includeText={true} />
         </>
     );
