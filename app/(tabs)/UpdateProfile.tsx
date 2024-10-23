@@ -282,15 +282,14 @@ export default function UpdateProfile() {
                     buttonHint="TODO"
                 />
                 <GapView width={15} />
-                {isFirstStepDone && (
+                {isFirstStepDone ? (
                     <BetterButton
                         style="ACE"
                         action={submit}
                         buttonText={t("globals.save")}
                         buttonHint="TODO"
                     />
-                )}
-                {!isFirstStepDone && (
+                ) : (
                     <BetterButton
                         style="HMM"
                         action={() => {}}
