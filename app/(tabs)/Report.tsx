@@ -67,8 +67,6 @@ export default function Report() {
                     userData.gender,
                     userData.weight,
                     userData.height,
-                    true,
-                    true,
                 );
             const BMI: number = BMISource.result;
             const BMIContext: string | undefined = BMISource.context;
@@ -80,8 +78,6 @@ export default function Report() {
                     userData.weight,
                     userData.height,
                     userData.activeness,
-                    true,
-                    true,
                 );
             const BMR: number = BMRSource.result;
             const BMRContext: string | undefined = BMRSource.context;

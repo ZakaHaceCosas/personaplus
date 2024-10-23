@@ -255,39 +255,27 @@ export default function Sessions() {
                         switch (exercise) {
                             case "running":
                                 return CoreLibrary.performance.RunningPerformance.calculate(
-                                    userData.age,
-                                    userData.gender,
                                     userData.weight,
-                                    userData.height,
                                     objective.specificData.estimateSpeed,
                                     totalTime,
-                                    true,
-                                    true,
                                 );
                             case "lifting":
                                 return CoreLibrary.performance.LiftingPerformance.calculate(
                                     userData.age,
                                     userData.gender,
                                     userData.weight,
-                                    userData.height,
-                                    totalTime,
                                     objective.specificData.dumbbellWeight,
                                     objective.specificData.amountOfHands,
+                                    totalTime,
                                     objective.specificData.reps,
-                                    true,
-                                    true,
                                 );
                             case "push ups":
                                 return CoreLibrary.performance.PushingUpPerformance.calculate(
-                                    userData.age,
                                     userData.gender,
                                     userData.weight,
-                                    userData.height,
                                     totalTime,
                                     objective.specificData.amountOfPushUps,
                                     objective.specificData.amountOfHands,
-                                    true,
-                                    true,
                                 );
                             default:
                                 throw new Error(

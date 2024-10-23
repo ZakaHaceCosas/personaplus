@@ -54,9 +54,7 @@ export function getPercentile(
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
  * @param height The height of the subject in centimeters (CM).
- * @param provideContext Whether to provide a brief contextualization about the result.
- * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
- * @returns The BMI value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the BMI value.
+ * @returns A standard `CoreLibraryResponse` with the desired results.
  */
 
 export default function calculateBodyMassIndex(
@@ -64,8 +62,6 @@ export default function calculateBodyMassIndex(
     gender: "male" | "female",
     weight: number,
     height: number,
-    provideContext?: boolean,
-    provideExplanation?: boolean,
 ): CoreLibraryResponse {
     // You MUST pass weight as KG (kilograms) and height as CM (centimeters)
     const bmi = weight / (height / 100) ** 2;
@@ -102,22 +98,10 @@ export default function calculateBodyMassIndex(
 
     const response: CoreLibraryResponse = {
         result: bmi,
+        context: context,
+        explanation:
+            "(According to CDC) Body mass index (BMI) is a person's weight in kilograms divided by the square of height in meters. BMI is an inexpensive and easy screening method for weight category—underweight, healthy weight, overweight, and obesity. BMI does not measure body fat directly, but BMI is moderately correlated with more direct measures of body fat. Furthermore, BMI appears to be as strongly correlated with various metabolic and disease outcomes as are these more direct measures of body fatness.",
     };
-
-    if (provideContext) {
-        response.subject = {
-            age,
-            gender,
-            weight,
-            height,
-        };
-        response.context = context;
-    }
-
-    if (provideExplanation) {
-        response.explanation =
-            "(According to CDC) Body mass index (BMI) is a person's weight in kilograms divided by the square of height in meters. BMI is an inexpensive and easy screening method for weight category—underweight, healthy weight, overweight, and obesity. BMI does not measure body fat directly, but BMI is moderately correlated with more direct measures of body fat. Furthermore, BMI appears to be as strongly correlated with various metabolic and disease outcomes as are these more direct measures of body fatness.";
-    }
 
     return response;
 }

@@ -53,38 +53,17 @@ describe("body mass index calculations", () => {
     // allowed error margin is of 0.1
 
     test("should return accurate BMI value for age 19, female", () => {
-        const calculation = calculateBodyMassIndex(
-            19,
-            "female",
-            50,
-            160,
-            false,
-            false,
-        );
+        const calculation = calculateBodyMassIndex(19, "female", 50, 160);
         expect(calculation.result).toBeWithinMargin(19.5, 0.1);
     });
 
     test("should return accurate BMI value for age 21, male", () => {
-        const calculation = calculateBodyMassIndex(
-            21,
-            "male",
-            70,
-            175,
-            false,
-            false,
-        );
+        const calculation = calculateBodyMassIndex(21, "male", 70, 175);
         expect(calculation.result).toBeWithinMargin(22.9, 0.1);
     });
 
     test("should return accurate BMI value for age 30, female", () => {
-        const calculation = calculateBodyMassIndex(
-            30,
-            "female",
-            60,
-            165,
-            false,
-            false,
-        );
+        const calculation = calculateBodyMassIndex(30, "female", 60, 165);
         expect(calculation.result).toBeWithinMargin(22.0, 0.1);
     });
 
@@ -102,8 +81,6 @@ describe("body mass index calculations", () => {
                 "female",
                 weight,
                 height,
-                true,
-                false,
             );
             expect(calculation.context).toBe(expected);
         });
@@ -111,15 +88,8 @@ describe("body mass index calculations", () => {
 });
 
 describe("body mass index function handling", () => {
-    test("should include explanation when provideExplanation is true", (): void => {
-        const calculation = calculateBodyMassIndex(
-            25,
-            "female",
-            60,
-            165,
-            false,
-            true,
-        );
+    test("should include explanation", (): void => {
+        const calculation = calculateBodyMassIndex(25, "female", 60, 165);
         expect(calculation.explanation).toBe(
             "(According to CDC) Body mass index (BMI) is a person's weight in kilograms divided by the square of height in meters. BMI is an inexpensive and easy screening method for weight category—underweight, healthy weight, overweight, and obesity. BMI does not measure body fat directly, but BMI is moderately correlated with more direct measures of body fat. Furthermore, BMI appears to be as strongly correlated with various metabolic and disease outcomes as are these more direct measures of body fatness.",
         );
@@ -127,25 +97,12 @@ describe("body mass index function handling", () => {
 
     test("should handle invalid age input", () => {
         expect(() => {
-            calculateBodyMassIndex(-5, "male", 70, 175, true, true);
+            calculateBodyMassIndex(-5, "male", 70, 175);
         }).toThrowError("Invalid age provided.");
     });
 
-    test("should return context when provideContext is true", () => {
-        const calculation = calculateBodyMassIndex(
-            25,
-            "male",
-            70,
-            175,
-            true,
-            false,
-        );
-        expect(calculation.subject).toEqual({
-            age: 25,
-            gender: "male",
-            weight: 70,
-            height: 175,
-        });
+    test("should return context", () => {
+        const calculation = calculateBodyMassIndex(25, "male", 70, 175);
         expect(calculation.context).toBe("healthy weight");
     });
 });
@@ -155,14 +112,7 @@ describe("body mass index underage calculations", () => {
     // hence they got additional tests
 
     test("should return accurate BMI value for age 14, male", () => {
-        const calculation = calculateBodyMassIndex(
-            14,
-            "male",
-            45,
-            170,
-            true,
-            false,
-        );
+        const calculation = calculateBodyMassIndex(14, "male", 45, 170);
         expect(calculation.result).toBeWithinMargin(15.6, 0.1);
         expect(calculation.context).toBe("underweight");
     });

@@ -20,7 +20,7 @@ A CoreLibrary function is designed like this:
 ```ts
 // First, the imports. More onto this later.
 import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
-import { CoreLibraryResponseVersatile } from "@/core/types/CoreLibraryResponse";
+import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 
 // Then, construct the data function. More onto this later.
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
@@ -37,9 +37,7 @@ export default function yourFunction(
     height: number,
     weight: number,
     // additional params (if needed)
-    provideContext?: boolean,
-    provideExplanation?: boolean
-): CoreLibraryResponseVersatile /* or the response type. More onto that later. */ {
+): CoreLibraryResponse {
 
 
     // your stuff here :D
@@ -47,23 +45,11 @@ export default function yourFunction(
 
     const sampleResult = 24
 
-    const response: CoreLibraryResponseVersatile = {
+    const response: CoreLibraryResponse = {
         result: sampleResult,
-    };
-
-    if (provideContext) {
-        response.subject = {
-            age,
-            gender,
-            height,
-            weight,
-            // additional params (if needed)
-        };
-        response.context = "context";
-    }
-
-    if (provideExplanation) {
-        response.explanation = "explanation.";
+        alternate: sampleAlternateResult, // only if needed
+        context = "context",
+        explanation = "explanation."
     }
 
     return response;

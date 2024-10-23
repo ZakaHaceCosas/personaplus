@@ -3,7 +3,7 @@ CALCULATE THE METABOLIC EQUIVALENT OF A TASK
 */
 
 import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
-import { CoreLibraryResponseVersatile } from "@/core/types/CoreLibraryResponse";
+import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 
 export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
     "01/07/2024",
@@ -15,14 +15,10 @@ export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
  * @param age The age of the subject.
  * @param gender The gender of the subject (either "male" or "female").
  * @param intensity The intensity of the activity. It's a very long array of options, see the documentation for more info on which one to choose.
- * @param provideContext Whether to provide a brief contextualization about the result.
- * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
- * @returns A number with the Metabolic Equivalent of the Task if neither provideContext nor provideExplanation are true, otherwise returns a `CoreLibraryResponseVersatile` object.
+ * @returns A standard `CoreLibraryResponse` with the desired results.
  */
 
 export default function calculateMetabolicEquivalentOfTask(
-    age: number,
-    gender: "male" | "female",
     intensity:
         | "super_low"
         | "very_low"
@@ -41,9 +37,7 @@ export default function calculateMetabolicEquivalentOfTask(
         | "pretty_intense"
         | "very_intense"
         | "really_intense",
-    provideContext?: boolean,
-    provideExplanation?: boolean,
-): CoreLibraryResponseVersatile {
+): CoreLibraryResponse {
     let METs: number; // MET - Metabolic Equivalent of Task
 
     // Assign METs based on intensity level
@@ -85,28 +79,17 @@ export default function calculateMetabolicEquivalentOfTask(
         throw new Error("CALCULATION ERROR! Intensity is not valid");
     }
 
-    const response: CoreLibraryResponseVersatile = {
+    const response: CoreLibraryResponse = {
         result: METs,
-    };
-
-    if (provideContext) {
-        response.subject = {
-            age,
-            gender,
-            intensity,
-        };
-        response.context =
+        context:
             "The MET is a value that helps measure the intensity of a task. For this context, MET value is " +
             METs +
             " and the intensity would be " +
             intensity +
-            ".";
-    }
-
-    if (provideExplanation) {
-        response.explanation =
-            "The performance can be measured in burnt calories, which are obtained by calculating the time spent on the exercise, the subject's weight, and the Metabolic Equivalent of Task (MET).";
-    }
+            ".",
+        explanation:
+            "The performance can be measured in burnt calories, which are obtained by calculating the time spent on the exercise, the subject's weight, and the Metabolic Equivalent of Task (MET).",
+    };
 
     return response;
 }

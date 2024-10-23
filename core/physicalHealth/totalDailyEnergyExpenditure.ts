@@ -19,9 +19,7 @@ export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
  * @param weight The weight of the subject in kilograms (KG).
  * @param height The height of the subject in centimeters (CM).
  * @param activeness From "poor" to "extreme", how active the subject is in terms of exercising, being "poor" very little or no exercise, light 1 to 3 days of exercise a week (being one time each day), moderate 3 to 5 days a week, intense 6 or seven days a week, and extreme being very intense exercises and/or more than once a day.
- * @param provideContext Whether to provide a brief contextualization about the result.
- * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
- * @returns The TDEE value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the TDEE value.
+ * @returns A standard `CoreLibraryResponse` with the desired results.
  */
 
 export default function calculateTotalDailyEnergyExpenditure(
@@ -30,8 +28,6 @@ export default function calculateTotalDailyEnergyExpenditure(
     weight: number,
     height: number,
     activeness: CoreLibraryType_Activeness,
-    provideContext?: boolean,
-    provideExplanation?: boolean,
 ): CoreLibraryResponse {
     const bmrSource: CoreLibraryResponse =
         CoreLibrary.physicalHealth.BasalMetabolicRate.calculate(
@@ -40,8 +36,6 @@ export default function calculateTotalDailyEnergyExpenditure(
             weight,
             height,
             activeness,
-            true,
-            true,
         );
 
     const bmr = bmrSource.result;
@@ -99,23 +93,10 @@ export default function calculateTotalDailyEnergyExpenditure(
 
     const response: CoreLibraryResponse = {
         result: calc,
+        context: context,
+        explanation:
+            "The TDEE (Total Daily Energy Expenditure) is an estimate of the amount of energy (in calories) an individual needs to sustain themselves daily. It is calculated using the BMR (Basal Metabolic Rate) formula and an estimate of the individual's physical activity level. This value serves as a recommendation for the amount of calories the individual should consume daily.",
     };
-
-    if (provideContext) {
-        response.subject = {
-            age,
-            gender,
-            weight,
-            height,
-            activeness,
-        };
-        response.context = context;
-    }
-
-    if (provideExplanation) {
-        response.explanation =
-            "The TDEE (Total Daily Energy Expenditure) is an estimate of the amount of energy (in calories) an individual needs to sustain themselves daily. It is calculated using the BMR (Basal Metabolic Rate) formula and an estimate of the individual's physical activity level. This value serves as a recommendation for the amount of calories the individual should consume daily.";
-    }
 
     return response;
 }

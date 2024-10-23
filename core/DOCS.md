@@ -37,7 +37,7 @@ CoreLibrary.physicalHealth.BodyMassIndex.getSource();
 CoreLibrary.physicalHealth.BodyMassIndex.getLastUpdated();
 ```
 
-**`Calculate`** is the most important thing, where you pass all the arguments required by the calculation function to work, plus **two extra booleans:** `provideContext` and `provideExplanation`. It can ask for data like the weight, height, age, or gender of the subject, among others.
+**`Calculate`** is the most important thing, where you pass all the arguments required by the calculation function to work. It can ask for data like the weight, height, age, or gender of the subject, among others.
 
 > [!NOTE]
 >
@@ -45,47 +45,30 @@ CoreLibrary.physicalHealth.BodyMassIndex.getLastUpdated();
 >
 > We adhere to the international system and do not support the imperial system, nor do we have intentions to implement it. Thank you for your understanding!
 
-`provideContext` gives a small context (sometimes just a word) about how the result should be interpreted. E.g., in the BMI (Body Mass Index) function, `context` would a string saying if the result value does represent "healthy weight", "underweight", "obesity", and so on.
+## What should I expect as a return?
 
-`provideExplanation` gives a small explanation of what the calculation means. For example, in the BMI function it returns the following:
+Calculation functions always follow the same structure for returns. Basically, an average CL response looks like this:
+
+```tsx
+interface CoreLibraryResponse {
+    result: number;
+    alternate?: number; // (this is usually not provided)
+    context: string;
+    explanation: string;
+}
+```
+
+`result` is the result of the calculation itself you've just done.
+
+`context` gives a small context (sometimes just a word) about how the result should be interpreted. E.g., in the BMI (Body Mass Index) function, `context` would a string saying if the result value does represent "healthy weight", "underweight", "obesity", and so on.
+
+`explanation` gives a small explanation of what the calculation means. For example, in the BMI function it returns the following:
 
 ```tsx
 "(According to CDC) Body mass index (BMI) is a person's weight in kilograms divided by the square of height in meters. BMI is an inexpensive and easy screening method for weight category—underweight, healthy weight, overweight, and obesity. BMI does not measure body fat directly, but BMI is moderately correlated with more direct measures of body fat. Furthermore, BMI appears to be as strongly correlated with various metabolic and disease outcomes as are these more direct measures of body fatness."
 ```
 
-## What should I expect as a return?
-
-Calculation functions always follow the same structure for returns, or almost:
-
-There are three possible kinds of response, being all of them defined interfaces: `CoreLibraryResponse`, `CoreLibraryResponsePredictable`, and `CoreLibraryResponseVersatile`.
-
-Basically, the basic response looks like this:
-
-```tsx
-interface CoreLibraryResponse {
-    result: number;
-    subject?: {
-        age: number;
-        gender: "male" | "female";
-        weight: number;
-        height: number;
-        [key: string]: string | number | boolean | null | undefined;
-    };
-    context?: string;
-    explanation?: string;
-}
-```
-
-`result` is the result of the calculation. `subject` is basically the data you provided to the function, with the option of additional params. And context & explanation are those two texts that can be optionally returned.
-
-> [!WARNING]
-> If both `provideContext` and `provideExplanation` are set to `false`, you will be returned an object that contains JUST the "`result`". This is because the `subject` is considered part of the context, therefore `provideContext` must be set to true if you wanted to retrieve it for any reason. Anyways all the content from the `subject` are arguments you pass to the function, so in theory you'll always have access to those even if you don't explicitly ask for the `subject` AND the `context`.
->
-> In those cases, the number will be returned as part of the object, not as a standalone number.
-
-Then there's the `CoreLibraryResponsePredictable`, which - as the name implies - is a *predictable* version of the CL response. In other words, there are no optional params and subject? is not optional (subject).
-
-And lastly, there's `CoreLibraryResponseVersatile`, which is the opposite: more params are optional, meaning you can, for example, not get a `subject.weight` value returned, in the case it's not required by the function in the 1st place.
+In some cases, like the OneRM calculation, you can opt in to get an additional (`alternate`) result. OneRM offers the boolean param `providePercentage`, and when set to true, the return will also include the `alternate` prop, being its value the OneRM percentage in this case.
 
 ## What to expect from the other functions?
 
@@ -102,8 +85,6 @@ Now, let's move onto the reference manual: a list of all available functions, ca
 
 > [!TIP]
 > This reference is only for the `calculate()` function of each utility, as `getLastUpdated()` and `getSource()` are always the same.
-> [!TIP]
-> `provideContext` and `provideExplanation` are boolean values that are universal and always available, so they are not included on each table to save on page's size.
 
 <!--markdownlint-disable-next-line-->
 # CoreLibrary reference manual

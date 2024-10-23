@@ -16,9 +16,7 @@ export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
  * @param height The height of the subject in centimeters (CM).
- * @param provideContext Whether to provide a brief contextualization about the result.
- * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
- * @returns The BFP value if neither provideContext nor provideExplanation are true, otherwise returns an object with "result" as the BFP value.
+ * @returns A standard `CoreLibraryResponse` with the desired results.
  */
 
 export default function calculateBodyFatPercentage(
@@ -26,17 +24,13 @@ export default function calculateBodyFatPercentage(
     gender: "male" | "female",
     weight: number,
     height: number,
-    provideContext?: boolean,
-    provideExplanation?: boolean,
 ): CoreLibraryResponse {
     // This is calculated using the BMI method, so the BMI is required.
-    const bmi = calculateBodyMassIndex(
+    const bmi: CoreLibraryResponse = calculateBodyMassIndex(
         age,
         gender,
         weight,
         height,
-        false,
-        false,
     );
     let bfp: number;
 
@@ -91,25 +85,13 @@ export default function calculateBodyFatPercentage(
 
     const response: CoreLibraryResponse = {
         result: bfp,
-    };
-
-    if (provideContext) {
-        response.subject = {
-            age,
-            gender,
-            weight,
-            height,
-        };
-        response.context =
+        context:
             "Based on the Body Fat Percentage calculations, in this case we're talking of an " +
             context +
-            " BFP.";
-    }
-
-    if (provideExplanation) {
-        response.explanation =
-            "Body Fat Percentage, usually calculated as a percentage of body weight. There are several methods for measuring it, and based on the percentage, it's possible to estimate whether the subject has normal weight, overweight, or underweight.";
-    }
+            " BFP.",
+        explanation:
+            "Body Fat Percentage, usually calculated as a percentage of body weight. There are several methods for measuring it, and based on the percentage, it's possible to estimate whether the subject has normal weight, overweight, or underweight.",
+    };
 
     return response;
 }
