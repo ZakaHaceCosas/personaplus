@@ -8,6 +8,9 @@ const ROUTES = {
         DASHBOARD: "/Dashboard",
         WELCOME_SCREEN: "/Welcome",
         REPORT: "/Report",
+        SETTINGS: {
+            UPDATE_PROFILE: "/UpdateProfile",
+        },
     },
     DEV_INTERFACE: {
         HOME: "/DevInterface",
