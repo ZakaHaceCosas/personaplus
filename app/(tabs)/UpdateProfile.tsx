@@ -1,6 +1,3 @@
-// TODO - migrate from RAWR5
-// (DONE - updating import paths and var names)
-// (TODO - the rest)
 // UpdateProfile.tsx
 // Update your profile.
 
