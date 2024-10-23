@@ -175,3 +175,22 @@ export function updateBrm5(careAboutTheUser: boolean): void {
         releaseOperationResurgence();
     }
 }
+
+/**
+ * Use this only as placeholder data for when an error happens while fetching user data.
+ *
+ * @type {FullProfile}
+ */
+export const ErrorUserData: FullProfile = {
+    username: "Error",
+    age: "",
+    height: "",
+    weight: "",
+    theThinkHour: "",
+    gender: "female",
+    language: "en",
+    activeness: "poor",
+    focus: "noPriority",
+    sleepHours: null,
+    isNewUser: false,
+};
