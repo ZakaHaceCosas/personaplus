@@ -56,6 +56,18 @@ interface DivisionProps {
      * @type {?ReactNode}
      */
     children?: ReactNode;
+    /**
+     * Direction the children of the Division will follow.
+     *
+     * @type {?("horizontal" | "vertical")}
+     */
+    direction?: "horizontal" | "vertical";
+    /**
+     * The gap between the children of the Division.
+     *
+     * @type {?number}
+     */
+    gap?: number;
 }
 
 const styles = StyleSheet.create({
@@ -84,9 +96,7 @@ const styles = StyleSheet.create({
     },
     childView: {
         display: "flex",
-        flexDirection: "row",
         width: "100%",
-        gap: 10,
     },
 });
 
@@ -102,6 +112,8 @@ const styles = StyleSheet.create({
  * @param {string} p.header The big, main text of the Division.
  * @param {string} p.subHeader An optional small text below the header.
  * @param {ReactNode} p.children Optional children for the Division.
+ * @param {"horizontal" | "vertical"} p.direction Direction the children of the Division will follow.
+ * @param {number} p.gap The gap between the children of the Division.
  * @returns {ReactElement}
  */
 export default function Division({
@@ -110,6 +122,8 @@ export default function Division({
     header,
     subHeader,
     children,
+    direction,
+    gap,
 }: DivisionProps): ReactElement {
     return (
         <View
@@ -149,7 +163,21 @@ export default function Division({
                     )}
                     {children && <GapView height={10} />}
                     {children && (
-                        <View style={styles.childView}>{children}</View>
+                        <View
+                            style={[
+                                styles.childView,
+                                {
+                                    flexDirection: direction
+                                        ? direction === "vertical"
+                                            ? "column"
+                                            : "row"
+                                        : "row",
+                                    gap: gap ?? 10,
+                                },
+                            ]}
+                        >
+                            {children}
+                        </View>
                     )}
                 </View>
             </View>

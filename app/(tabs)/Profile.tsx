@@ -18,7 +18,6 @@ import Division from "@/components/ui/sections/Division";
 import Loading from "@/components/static/Loading";
 import BetterText from "@/components/text/BetterText";
 import FontSizes from "@/constants/FontSizes";
-import { View } from "react-native";
 import GapView from "@/components/ui/GapView";
 
 export default function HomeScreen() {
@@ -76,29 +75,31 @@ export default function HomeScreen() {
                 SET LANGUAGE TO SPANISH HERE (dev purposes)
             </BetterText>
             <Section kind="Profile">
-                <Division header={userData.username}>
-                    <View>
-                        <BetterTextNormalText>
-                            {t("Age: {{age}} years old", { age: userData.age })}
-                        </BetterTextNormalText>
-                        <GapView height={5} />
-                        <BetterTextNormalText>
-                            {t("Weight: {{w}}kg", { w: userData.weight })}
-                        </BetterTextNormalText>
-                        <GapView height={5} />
-                        <BetterTextNormalText>
-                            {t("Height: {{h}}cm", { h: userData.height })}
-                        </BetterTextNormalText>
-                        <GapView height={10} />
-                        <BetterButton
-                            buttonText="Update profile"
-                            buttonHint="Takes you to a page from where you can update your profile"
-                            style="DEFAULT"
-                            action={() =>
-                                router.push(ROUTES.MAIN.SETTINGS.UPDATE_PROFILE)
-                            }
-                        />
-                    </View>
+                <Division
+                    header={userData.username}
+                    direction="vertical"
+                    gap={0}
+                >
+                    <BetterTextNormalText>
+                        {t("Age: {{age}} years old", { age: userData.age })}
+                    </BetterTextNormalText>
+                    <GapView height={5} />
+                    <BetterTextNormalText>
+                        {t("Weight: {{w}}kg", { w: userData.weight })}
+                    </BetterTextNormalText>
+                    <GapView height={5} />
+                    <BetterTextNormalText>
+                        {t("Height: {{h}}cm", { h: userData.height })}
+                    </BetterTextNormalText>
+                    <GapView height={10} />
+                    <BetterButton
+                        buttonText="Update profile"
+                        buttonHint="Takes you to a page from where you can update your profile"
+                        style="DEFAULT"
+                        action={() =>
+                            router.push(ROUTES.MAIN.SETTINGS.UPDATE_PROFILE)
+                        }
+                    />
                 </Division>
             </Section>
             <GapView height={20} />
