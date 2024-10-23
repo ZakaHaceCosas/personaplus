@@ -37,10 +37,10 @@ export default function NotFoundScreen() {
                 />
                 <GapView height={20} />
                 <BetterTextSmallText>
-                    PS. The requested path was: {currentRoute}. If you think
-                    this route is correct and you should not be lost, we kindly
-                    ask you to submit a GitHub issue so we can fix this. Thank
-                    you!
+                    The requested path was:{"\n"}
+                    {currentRoute}.{"\n\n"}If you think this route is correct
+                    and you should not be lost, we kindly ask you to submit a
+                    GitHub issue so we can fix this. Thank you!
                 </BetterTextSmallText>
             </LayoutContainer>
         </>
