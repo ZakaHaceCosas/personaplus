@@ -304,7 +304,7 @@ export default function UpdateProfile() {
                     />
                 )}
             </View>
-            <PageEnd includeText={false} />
+            <PageEnd includeText={false} size="tiny" />
         </>
     );
 }
