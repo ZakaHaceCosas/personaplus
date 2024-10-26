@@ -79,17 +79,13 @@ export default function HomeScreen() {
         handler();
     }, []);
 
-    function clearLogs() {
-        async function actuallyClearLogs() {
-            try {
-                await AsyncStorage.setItem(StoredItemNames.consoleLogs, "");
-            } catch (e) {
-                logToConsole("Failed to clear logs: " + e, "error");
-            }
+    async function clearLogs() {
+        try {
+            await AsyncStorage.setItem(StoredItemNames.consoleLogs, "");
+            router.replace(ROUTES.DEV_INTERFACE.LOG_VIEW);
+        } catch (e) {
+            logToConsole("Failed to clear logs: " + e, "error");
         }
-
-        actuallyClearLogs();
-        router.replace(ROUTES.DEV_INTERFACE.LOG_VIEW);
     }
 
     // no i am not translating dev interface. it is just for BackButton to work.
