@@ -8,11 +8,9 @@ import {
     BetterTextSubHeader,
 } from "@/components/text/BetterTextPresets";
 import BetterAlert from "@/components/ui/BetterAlert";
+import BetterTable, { BetterTableItem } from "@/components/ui/BetterTable";
 import GapView from "@/components/ui/GapView";
-import Colors from "@/constants/Colors";
 import ROUTES from "@/constants/Routes";
-
-import getCommonScreenSize from "@/constants/Screen";
 import StoredItemNames from "@/constants/StoredItemNames";
 import { logToConsole } from "@/toolkit/debug/Console";
 import {
@@ -29,65 +27,16 @@ import * as Device from "expo-device";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { StyleSheet, View } from "react-native";
-
-const styles = StyleSheet.create({
-    consoleView: {
-        backgroundColor: Colors.BASIC.BLACK,
-        padding: 10,
-        width: getCommonScreenSize("width"),
-    },
-    logText: {
-        marginBottom: 5,
-        fontFamily: "monospace",
-        fontSize: 11,
-        borderLeftWidth: 2,
-        paddingLeft: 10,
-    },
-    log: {
-        color: Colors.BASIC.WHITE,
-        borderLeftColor: Colors.BASIC.WHITE,
-    },
-    success: {
-        color: Colors.PRIMARIES.GOD.GOD,
-        borderLeftColor: Colors.PRIMARIES.GOD.GOD,
-    },
-    warn: {
-        color: Colors.PRIMARIES.HMM.HMM,
-        borderLeftColor: Colors.PRIMARIES.HMM.HMM,
-    },
-    error: {
-        color: Colors.PRIMARIES.WOR.WOR,
-        borderLeftColor: Colors.PRIMARIES.WOR.WOR,
-    },
-    container: {
-        flex: 1,
-        padding: 10,
-    },
-    header: {
-        flexDirection: "row",
-        backgroundColor: Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
-        padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: Colors.MAIN.DEFAULT_ITEM.TEXT,
-    },
-    row: {
-        flexDirection: "row",
-        padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: Colors.MAIN.DEFAULT_ITEM.TEXT,
-    },
-    cell: {
-        flex: 1,
-        textAlign: "center",
-    },
-});
+import { Platform, ToastAndroid } from "react-native";
 
 export default function HomeScreen() {
     const [loading, setLoading] = useState<boolean>(true);
     const [userData, setUserData] = useState<string | null>(null);
     const [objectives, setObjectives] = useState<string | null>(null);
     const [dailyLog, setDailyLog] = useState<string | null>(null);
+    const [allObjectivesForTable, setAllObjectivesForTable] = useState<
+        BetterTableItem[]
+    >([]);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -120,6 +69,24 @@ export default function HomeScreen() {
                     setObjectives("No daily log (null)");
                 }
                 setDailyLog(bareDailyLog ? JSON.stringify(bareDailyLog) : null);
+
+                // objectives for table
+                const allObjectives: ActiveObjective[] | null =
+                    await GetAllObjectives();
+                if (allObjectives) {
+                    const objectivesForTable: BetterTableItem[] =
+                        await Promise.all(
+                            allObjectives.map(
+                                async (
+                                    obj: ActiveObjective,
+                                ): Promise<BetterTableItem> => ({
+                                    name: obj.exercise,
+                                    value: String(obj.identifier),
+                                }),
+                            ),
+                        );
+                    setAllObjectivesForTable(objectivesForTable);
+                }
             } catch (e) {
                 const err = "Error fetching data at DevInterface: " + e;
                 logToConsole(err, "error");
@@ -134,6 +101,17 @@ export default function HomeScreen() {
 
     // no i am not translating dev interface. it is just for BackButton to work.
     const { t } = useTranslation();
+
+    async function clearLogs() {
+        try {
+            await AsyncStorage.setItem(StoredItemNames.consoleLogs, "");
+            if (Platform.OS === "android") {
+                ToastAndroid.show("Clear!", ToastAndroid.LONG);
+            }
+        } catch (e) {
+            logToConsole("Failed to clear logs: " + e, "error");
+        }
+    }
 
     if (loading) {
         return <Loading />;
@@ -189,6 +167,11 @@ export default function HomeScreen() {
                 layout="alert"
             />
             <GapView height={10} />
+            <BetterTable
+                headers={["Objective", "ID"]}
+                items={allObjectivesForTable}
+            />
+            <GapView height={10} />
             <BetterAlert
                 style="DEFAULT"
                 preTitle={"AsyncStorage item: " + StoredItemNames.dailyLog}
@@ -196,43 +179,33 @@ export default function HomeScreen() {
                 bodyText={error ? error : dailyLog ? dailyLog : "null"}
                 layout="alert"
             />
-            <GapView height={10} />
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <BetterTextSmallText>Exercise{"  "}</BetterTextSmallText>
-                    <BetterTextSmallText>ID{"  "}</BetterTextSmallText>
-                </View>
-                {(objectives
-                    ? (JSON.parse(objectives) as ActiveObjective[])
-                    : []
-                ).map((objective) => (
-                    <View key={objective.identifier} style={styles.row}>
-                        <BetterTextSmallText>
-                            {objective.exercise}
-                            {"  "}
-                        </BetterTextSmallText>
-                        <BetterTextSmallText>
-                            {objective.identifier}
-                            {"  "}
-                        </BetterTextSmallText>
-                    </View>
-                ))}
-            </View>
-            <GapView height={10} />
+            <GapView height={20} />
             <BetterTextSubHeader>Console logs</BetterTextSubHeader>
-            <GapView height={5} />
+            <GapView height={10} />
             <BetterButton
                 buttonText="See all logs"
                 buttonHint="Opens up a dedicated page for viewing all console logs."
-                style="DEFAULT"
+                style="ACE"
                 action={() => router.push(ROUTES.DEV_INTERFACE.LOG_VIEW)}
             />
-            <GapView height={5} />
+            <GapView height={10} />
             <BetterButton
-                buttonText="See error logs"
+                buttonText="See error logs only"
                 buttonHint="Opens up a dedicated page for viewing warning and error console logs."
                 style="DEFAULT"
                 action={() => router.push(ROUTES.DEV_INTERFACE.ERROR_LOG_VIEW)}
+            />
+            <GapView height={10} />
+            <BetterTextSmallText>
+                If log viewers take too much to load or you simply want to
+                reduce storage usage, you can directly flush them from here.
+            </BetterTextSmallText>
+            <GapView height={10} />
+            <BetterButton
+                buttonText="Clear logs"
+                buttonHint="Removes all saved console logs from storage."
+                style="HMM"
+                action={clearLogs}
             />
             <PageEnd includeText={true} size="tiny" />
         </>
