@@ -28,7 +28,8 @@ interface SectionProps {
      *         | "Settings"
      *         | "Profile"
      *         | "About"
-     *         | "Developer")}
+     *         | "Developer"
+     *         | "Danger")}
      */
     kind:
         | "ActiveObjectives"
@@ -38,7 +39,8 @@ interface SectionProps {
         | "Settings"
         | "Profile"
         | "About"
-        | "Developer";
+        | "Developer"
+        | "Danger";
     /**
      * Whether the width should be `"total"` (full screen) or `"parent"` (width of 100% to fill it's parent).
      *
@@ -56,7 +58,6 @@ interface SectionProps {
 const styles = StyleSheet.create({
     section: {
         display: "flex",
-        backgroundColor: Colors.MAIN.SECTION,
         flexDirection: "column",
         borderRadius: 20,
         overflow: "hidden",
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
  *
  * @export
  * @param {SectionProps} p
- * @param {("Objectives" | "PassiveObjs" | "HowYouAreDoing" | "Unknown" | "Settings" | "Profile" | "About" | "Developer")} p.kind The kind of section. Depending on this, the section will display a title and icon, or another one.
+ * @param {("Objectives" | "PassiveObjs" | "HowYouAreDoing" | "Unknown" | "Settings" | "Profile" | "About" | "Developer" | "Danger")} p.kind The kind of section. Depending on this, the section will display a title and icon, or another one.
  * @param {ReactElement} p.children Children that you can append to the section (one or more). While any `ReactElement` is valid, it's expected that you use a `<Division />` or more.
  * @returns {ReactElement}
  */
@@ -96,8 +97,11 @@ export default function Section({
         | "info"
         | "settings"
         | "code"
-        | "question-mark"; // If you add a new icon, add it here
+        | "question-mark"
+        | "warning"; // If you add a new icon, add it here
     let sectionWidth: number | `${number}%`;
+    let backgroundColor = Colors.MAIN.SECTION;
+    let foregroundColor = Colors.LABELS.SHL;
 
     switch (kind) {
         case "ActiveObjectives":
@@ -132,6 +136,12 @@ export default function Section({
             label = t("sections.headers.about");
             headerIcon = "info";
             break;
+        case "Danger":
+            label = t("sections.headers.your_active_objectives");
+            headerIcon = "warning";
+            backgroundColor = Colors.PRIMARIES.WOR.WOR;
+            foregroundColor = Colors.MAIN.APP;
+            break;
         default:
             label = "UNKNOWN";
             headerIcon = "question-mark";
@@ -154,21 +164,18 @@ export default function Section({
                 styles.section,
                 {
                     width: sectionWidth,
+                    backgroundColor: backgroundColor,
                 },
             ]}
         >
             <View style={styles.sectionChild}>
-                <Ionicons
-                    name={headerIcon}
-                    size={15}
-                    color={Colors.LABELS.SHL}
-                />
+                <Ionicons name={headerIcon} size={15} color={foregroundColor} />
                 <GapView width={10} />
                 <BetterText
                     textAlign="normal"
                     fontWeight="Bold"
                     fontSize={FontSizes.SMALL}
-                    textColor={Colors.LABELS.SHL}
+                    textColor={foregroundColor}
                 >
                     {String(label)}
                 </BetterText>
