@@ -16,9 +16,8 @@ import { useEffect, useState } from "react";
 import Section from "@/components/ui/sections/Section";
 import Division from "@/components/ui/sections/Division";
 import Loading from "@/components/static/Loading";
-import BetterText from "@/components/text/BetterText";
-import FontSizes from "@/constants/FontSizes";
 import GapView from "@/components/ui/GapView";
+import PageEnd from "@/components/static/PageEnd";
 
 export default function HomeScreen() {
     const [userData, setUserData] = useState<FullProfile>(ErrorUserData);
@@ -48,11 +47,12 @@ export default function HomeScreen() {
     async function changeLanguage(): Promise<void> {
         try {
             if (!userData) throw new Error("Why is userData (still) null?");
-            userData.language = "es";
+            userData.language = userData.language === "es" ? "en" : "es";
             await AsyncStorage.setItem(
                 StoredItemNames.userData,
                 JSON.stringify(userData),
             );
+            router.replace(ROUTES.MAIN.PROFILE);
         } catch (e) {
             logToConsole("Error changing language:" + e, "error");
         }
@@ -66,14 +66,6 @@ export default function HomeScreen() {
             <BetterTextSubHeader>
                 {t("pages.profile.subheader", { username: userData?.username })}
             </BetterTextSubHeader>
-            <BetterText
-                fontSize={FontSizes.LARGER}
-                isLink={true}
-                fontWeight="Regular"
-                onTap={changeLanguage}
-            >
-                SET LANGUAGE TO SPANISH HERE (dev purposes)
-            </BetterText>
             <Section kind="Profile">
                 <Division
                     header={userData.username}
@@ -104,19 +96,55 @@ export default function HomeScreen() {
             </Section>
             <GapView height={20} />
             <Section kind="Settings">
-                <BetterButton
-                    buttonText="DO NOT PRESS OR YOU WILL BE FIRED"
-                    buttonHint="makes your account go boom"
-                    style="WOR"
-                    action={() => updateBrm5(true)}
-                />
-                <BetterButton
-                    buttonText="Dev Interface"
-                    buttonHint="Launches Dev Interface"
-                    style="HMM"
-                    action={() => router.navigate(ROUTES.DEV_INTERFACE.HOME)}
-                />
+                <Division
+                    preHeader="Preferences"
+                    header="Change language"
+                    subHeader={`Your current language is "${userData.language}"`}
+                    direction="vertical"
+                    gap={0}
+                >
+                    <BetterButton
+                        buttonText="Change language"
+                        buttonHint="Changes your language."
+                        style="DEFAULT"
+                        action={changeLanguage}
+                    />
+                </Division>
+                <Division
+                    preHeader="Advanced"
+                    header="Launch Dev Interface"
+                    subHeader="An interface for contributors to see what's up from the inside of the app."
+                    direction="vertical"
+                    gap={0}
+                >
+                    <BetterButton
+                        buttonText="Dev Interface"
+                        buttonHint="Launches Dev Interface"
+                        style="HMM"
+                        action={() =>
+                            router.navigate(ROUTES.DEV_INTERFACE.HOME)
+                        }
+                    />
+                </Division>
             </Section>
+            <GapView height={20} />
+            <Section kind="Danger">
+                <Division
+                    preHeader="Dangerous"
+                    header="Reset app"
+                    subHeader="It will permanently remove all of your user data, with no way to go back. Use it at your own will."
+                    direction="vertical"
+                    gap={0}
+                >
+                    <BetterButton
+                        buttonText="Reset PersonaPlus"
+                        buttonHint="makes your account go boom"
+                        style="WOR"
+                        action={() => updateBrm5(true)}
+                    />
+                </Division>
+            </Section>
+            <PageEnd includeText={true} />
         </>
     );
 }
