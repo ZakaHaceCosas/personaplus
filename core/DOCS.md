@@ -1,5 +1,10 @@
 # CoreLibrary documentation
 
+> [!CAUTION]
+> This is absolutely outdated, CoreLibrary has undergone some big refactoring and I am a bit lazy to take care of this right now. I'll do it shortly after merging the R6 rewrite.
+
+----
+
 > [!TIP]
 > También disponible en [Español (Spanish)](DOCS.es.md)
 
