@@ -217,9 +217,8 @@ export default function Sessions() {
     };
 
     const toggleHelpMenu = (): void => {
-        const isChecking: boolean = !isUserCheckingHelp; // maybe this fixes an issue i was having
-        setIsUserCheckingHelp(isChecking);
-        toggleTimerStatus(isChecking); // Pause if checking help, play otherwise
+        setIsUserCheckingHelp(!isUserCheckingHelp);
+        toggleTimerStatus(isUserCheckingHelp); // Pause if checking help, play otherwise
     };
 
     // this function is basically to finish the session
