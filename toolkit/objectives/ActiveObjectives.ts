@@ -164,10 +164,10 @@ async function CheckForAnActiveObjectiveDailyStatus(
                 );
             }
         } else {
-            const log = dailyLog[date]
+            /* const log = dailyLog[date]
                 ? `Warning: No data exists for objective ${identifier} on date ${date}. This is actually a normal behavior most of the time: if there wasn't any interaction with the objective, there's no data saved for it.`
                 : `Warning: No data exists for date ${date} at all. This is actually a normal behavior most of the time: if there wasn't any interaction with any objective, there's no data saved today.`;
-            logToConsole(log, "warn");
+            logToConsole(log, "warn"); */
             return false; // no interaction with the objective means no data logged.
         }
     } catch (e) {
