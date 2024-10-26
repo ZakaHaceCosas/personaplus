@@ -5,7 +5,7 @@
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
  *
- * You are in: assets/fonts/FontParser.lua
+ * You are in: @/assets/fonts/FontParser.lua
  * Basically: A Lua script to convert all those font files onto a JSON
  *
  * <=============================================================================>
