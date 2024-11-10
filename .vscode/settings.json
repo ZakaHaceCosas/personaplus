@@ -1,12 +1,12 @@
 {
     "files.exclude": {
-        "**/node_modules": true,
-        "**/.git": true,
+        "**/node_modules": false,
+        "**/.git": false,
         "**/.svn": true,
         "**/.hg": true,
         "**/CVS": true,
         "**/.DS_Store": true,
-        "**/android": true
+        "**/android": false
     },
     "terminal.integrated.suggest.enabled": true,
     "terminal.integrated.suggest.builtinCompletions": {
@@ -159,6 +159,7 @@
         "bruh",
         "Epley's",
         "friday",
+        "geolocation",
         "Hagámoslo",
         "haptics",
         "Ionicons",
