@@ -22,6 +22,12 @@ const ROUTES = {
         SESSION: "/objectives/Sessions",
         RESULTS: "/objectives/Results",
     },
+    /**
+     * Experimental features should live in separate pages, listed here.
+     */
+    EXPERIMENTS: {
+        TRACKER: "/objectives/exp_tracker",
+    },
 };
 
 export default ROUTES;

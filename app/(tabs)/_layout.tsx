@@ -69,6 +69,7 @@ export default function Layout() {
         ROUTES.DEV_INTERFACE.ERROR_LOG_VIEW,
         ROUTES.DEV_INTERFACE.HOME,
         ROUTES.MAIN.SETTINGS.UPDATE_PROFILE,
+        ROUTES.EXPERIMENTS.TRACKER,
     ];
 
     return (

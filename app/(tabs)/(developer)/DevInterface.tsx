@@ -207,6 +207,24 @@ export default function HomeScreen() {
                 style="HMM"
                 action={clearLogs}
             />
+            <GapView height={20} />
+            <BetterTextSubHeader>WIP Pages</BetterTextSubHeader>
+            <BetterTextSmallText>
+                Pages / features that are still WIP, and hence hidden behind a
+                test wall.
+            </BetterTextSmallText>
+            <GapView height={10} />
+            <BetterButton
+                buttonText="_TRACKER"
+                buttonHint="Opens up a page for testing the TRACKER feature."
+                style="DEFAULT"
+                action={() => router.push(ROUTES.EXPERIMENTS.TRACKER)}
+            />
+            <BetterTextSmallText>
+                The tracker feature turns this app into an actual sport app by
+                tracking the user's movement during certain sessions, e.g.
+                running, to get reliable stats.
+            </BetterTextSmallText>
             <PageEnd includeText={true} size="tiny" />
         </>
     );
