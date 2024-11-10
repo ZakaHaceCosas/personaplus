@@ -146,38 +146,46 @@ export default function Division({
             <View style={styles.filledView}>
                 <View>
                     {preHeader && (
-                        <BetterText
-                            textAlign="normal"
-                            fontWeight="Bold"
-                            fontSize={FontSizes.SMALL}
-                            textColor={Colors.BASIC.WHITE}
-                        >
-                            {preHeader}
-                        </BetterText>
+                        <>
+                            <BetterText
+                                textAlign="normal"
+                                fontWeight="Bold"
+                                fontSize={FontSizes.SMALL}
+                                textColor={Colors.BASIC.WHITE}
+                            >
+                                {preHeader}
+                            </BetterText>
+                            <GapView height={10} />
+                        </>
                     )}
-                    {preHeader && <GapView height={10} />}
                     <BetterTextExtraHeader>{header}</BetterTextExtraHeader>
-                    {subHeader && <GapView height={10} />}
                     {subHeader && (
-                        <BetterTextSmallText>{subHeader}</BetterTextSmallText>
+                        <>
+                            <GapView height={10} />
+                            <BetterTextSmallText>
+                                {subHeader}
+                            </BetterTextSmallText>
+                        </>
                     )}
-                    {children && <GapView height={10} />}
                     {children && (
-                        <View
-                            style={[
-                                styles.childView,
-                                {
-                                    flexDirection: direction
-                                        ? direction === "vertical"
-                                            ? "column"
-                                            : "row"
-                                        : "row",
-                                    gap: gap ?? 10,
-                                },
-                            ]}
-                        >
-                            {children}
-                        </View>
+                        <>
+                            <GapView height={10} />
+                            <View
+                                style={[
+                                    styles.childView,
+                                    {
+                                        flexDirection: direction
+                                            ? direction === "vertical"
+                                                ? "column"
+                                                : "row"
+                                            : "row",
+                                        gap: gap ?? 10,
+                                    },
+                                ]}
+                            >
+                                {children}
+                            </View>
+                        </>
                     )}
                 </View>
             </View>
