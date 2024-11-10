@@ -1,7 +1,8 @@
 {
     "cli": {
         "requireCommit": false,
-        "promptToConfigurePushNotifications": true
+        "promptToConfigurePushNotifications": true,
+        "appVersionSource": "local"
     },
     "build": {
         "preview-assembleDebug": {
