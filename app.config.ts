@@ -19,7 +19,7 @@ const config: ExpoConfig.ExpoConfig = {
     splash: {
         image: "./assets/resources/splash.png",
         resizeMode: "contain",
-        backgroundColor: "#14171C",
+        backgroundColor: "#0E1013",
     },
     notification: {
         color: "#32FF80",
@@ -49,6 +49,7 @@ const config: ExpoConfig.ExpoConfig = {
             "android.permission.POST_NOTIFICATIONS",
             "android.permission.RECEIVE_BOOT_COMPLETED",
             "android.permission.WAKE_LOCK",
+            "android.permission.ACCESS_FINE_LOCATION",
         ],
         versionCode: 25,
         backgroundColor: "#0E1013",
@@ -61,7 +62,6 @@ const config: ExpoConfig.ExpoConfig = {
         favicon: "./assets/resources/favicon.png",
         bundler: "metro",
     },
-    privacy: "public",
     androidStatusBar: {
         barStyle: "light-content",
         hidden: false,
@@ -146,8 +146,15 @@ const config: ExpoConfig.ExpoConfig = {
             "expo-build-properties",
             {
                 android: {
-                    newArchEnabled: false,
+                    newArchEnabled: true,
                 },
+            },
+        ],
+        [
+            "expo-location",
+            {
+                isAndroidBackgroundLocationEnabled: true,
+                isAndroidForegroundServiceEnabled: true,
             },
         ],
     ],
