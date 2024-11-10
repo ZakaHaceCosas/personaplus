@@ -18,7 +18,7 @@ import { router, useGlobalSearchParams } from "expo-router";
 import BetterText from "@/components/text/BetterText";
 import GapView from "@/components/ui/GapView";
 import { logToConsole } from "@/toolkit/debug/Console";
-import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
+import { CountdownCircleTimer } from "rn-countdown-timer";
 import { useTranslation } from "react-i18next";
 import BetterButton from "@/components/interaction/BetterButton";
 import SessionsPageInfoIcons from "@/components/ui/pages/Sessions-InfoIcons";
