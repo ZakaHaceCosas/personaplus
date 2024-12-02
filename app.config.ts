@@ -7,7 +7,7 @@ const config: ExpoConfig.ExpoConfig = {
     name: process.env.PERSONAPLUS_ENV_APP_NAME || "PersonaPlus",
     slug: "PersonaPlus",
     scheme: "personaplus",
-    description: "Give yourself a PLUS",
+    description: "Give yourself a plus!",
     owner: "zakahacecosas",
     version: "0.0.26-preapp.6", // SemVer-compliant 0.0.1-R6-bX equivalent. on ALPHA milestone bump the minor version.
     orientation: "portrait",
@@ -51,7 +51,7 @@ const config: ExpoConfig.ExpoConfig = {
             "android.permission.WAKE_LOCK",
             "android.permission.ACCESS_FINE_LOCATION",
         ],
-        versionCode: 25,
+        versionCode: 26,
         backgroundColor: "#0E1013",
     },
     ios: {
@@ -143,18 +143,19 @@ const config: ExpoConfig.ExpoConfig = {
             },
         ],
         [
-            "expo-build-properties",
-            {
-                android: {
-                    newArchEnabled: false,
-                },
-            },
-        ],
-        [
             "expo-location",
             {
                 isAndroidBackgroundLocationEnabled: true,
                 isAndroidForegroundServiceEnabled: true,
+            },
+        ],
+        "expo-sqlite",
+        [
+            "expo-splash-screen",
+            {
+                image: "./assets/resources/splash.png",
+                resizeMode: "contain",
+                backgroundColor: "#0E1013",
             },
         ],
     ],
@@ -166,6 +167,7 @@ const config: ExpoConfig.ExpoConfig = {
             projectId: process.env.PID,
         },
     },
+    newArchEnabled: true,
 };
 
 export default ({
