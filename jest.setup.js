@@ -1,5 +1,6 @@
 /* eslint-env jest */
 
-jest.mock("@react-native-async-storage/async-storage", () =>
-    require("@react-native-async-storage/async-storage/jest/async-storage-mock"),
+jest.mock(
+    "expo-sqlite/kv-store",
+    () => require("expo-sqlite/kv-store/jest/kv-store-mock"), // idk if it even exists but okay
 );
