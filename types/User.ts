@@ -28,3 +28,17 @@ export type BasicUserHealthData = Omit<
     BasicUserData,
     "username" | "theThinkHour"
 >;
+
+/**
+ * All experiments, and whether they're enabled (`true`) or disabled (`false`).
+ *
+ * @export
+ * @interface Experiments
+ * @typedef {Experiments}
+ */
+export interface Experiments {
+    exp_tracker: boolean;
+    exp_think: boolean;
+}
+
+export type Experiment = "exp_tracker" | "exp_think";

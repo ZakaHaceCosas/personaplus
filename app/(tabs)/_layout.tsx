@@ -70,6 +70,7 @@ export default function Layout() {
         ROUTES.DEV_INTERFACE.HOME,
         ROUTES.MAIN.SETTINGS.UPDATE_PROFILE,
         ROUTES.EXPERIMENTS.TRACKER,
+        ROUTES.DEV_INTERFACE.EXPERIMENTS,
     ];
 
     return (
