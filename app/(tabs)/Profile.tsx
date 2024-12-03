@@ -4,7 +4,7 @@ import {
     BetterTextSubHeader,
 } from "@/components/text/BetterTextPresets";
 import { useTranslation } from "react-i18next";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "expo-sqlite/kv-store";
 import type { FullProfile } from "@/types/User";
 import BetterButton from "@/components/interaction/BetterButton";
 import { ErrorUserData, OrchestrateUserData, updateBrm5 } from "@/toolkit/User";
@@ -66,6 +66,7 @@ export default function HomeScreen() {
             <BetterTextSubHeader>
                 {t("pages.profile.subheader", { username: userData?.username })}
             </BetterTextSubHeader>
+            <GapView height={10} />
             <Section kind="Profile">
                 <Division
                     header={userData.username}
@@ -99,7 +100,7 @@ export default function HomeScreen() {
                 <Division
                     preHeader="Preferences"
                     header="Change language"
-                    subHeader={`Your current language is "${userData.language}"`}
+                    subHeader={`You're currently using ${t(`globals.languages.${userData.language}`)}`}
                     direction="vertical"
                     gap={0}
                 >
@@ -108,6 +109,22 @@ export default function HomeScreen() {
                         buttonHint="Changes your language."
                         style="DEFAULT"
                         action={changeLanguage}
+                    />
+                </Division>
+                <Division
+                    preHeader="Advanced"
+                    header="Experiments"
+                    subHeader="Features still in progress. Test them early, share feedback, and help us improve—but note they're unstable."
+                    direction="vertical"
+                    gap={0}
+                >
+                    <BetterButton
+                        buttonText="Open Experiments"
+                        buttonHint="Opens a page where experiments can be enabled or disabled."
+                        style="HMM"
+                        action={() =>
+                            router.push(ROUTES.DEV_INTERFACE.EXPERIMENTS)
+                        }
                     />
                 </Division>
                 <Division
@@ -121,9 +138,7 @@ export default function HomeScreen() {
                         buttonText="Dev Interface"
                         buttonHint="Launches Dev Interface"
                         style="HMM"
-                        action={() =>
-                            router.navigate(ROUTES.DEV_INTERFACE.HOME)
-                        }
+                        action={() => router.push(ROUTES.DEV_INTERFACE.HOME)}
                     />
                 </Division>
             </Section>
