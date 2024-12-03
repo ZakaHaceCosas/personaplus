@@ -1,4 +1,4 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "expo-sqlite/kv-store";
 import { Log, LogTraceback } from "@/types/Logs";
 import { Platform, ToastAndroid } from "react-native";
 import StoredItemNames from "@/constants/StoredItemNames";
@@ -38,7 +38,7 @@ export async function getLogsFromStorage(): Promise<Log[]> {
         }
         return [];
     } catch (e) {
-        logToConsole("Error accessing logs from AsyncStorage: " + e, "error", {
+        console.error("Error accessing logs from AsyncStorage: " + e, "error", {
             location: "toolkit/debug/console",
             function: "getLogsFromStorage()",
             isHandler: false,
@@ -62,7 +62,7 @@ async function saveLogsToStorage(logs: Log[]): Promise<0 | 1> {
         );
         return 0;
     } catch (e) {
-        logToConsole(
+        console.error(
             "Error saving logs to AsyncStorage: " + e,
             "error",
             undefined,
@@ -85,7 +85,7 @@ async function addLogToGlobal(log: Log): Promise<0 | 1> {
         await saveLogsToStorage(updatedLogs);
         return 0;
     } catch (e) {
-        logToConsole(
+        console.error(
             "Error adding log to AsyncStorage: " + e,
             "error",
             undefined,
@@ -109,24 +109,23 @@ export function logToConsole(
     traceback?: LogTraceback,
     displayToEndUser?: boolean,
 ): void {
-    // Regular console log / warn / error / log again because no one thought about success logs (i'm a fucking genius)
-    switch (type) {
-        default:
-        case "log":
-            console.log(message); // Regular console log (AKA default)
-            break;
-        case "warn":
-            console.warn(message); // Regular console warn
-            break;
-        case "error":
-            console.error(message); // Regular console error
-            break;
-        case "success":
-            console.log(message); // Not-regular console success (PersonaPlus exclusive :mrBeast:)
-            break;
-    }
-
     try {
+        // Regular console log / warn / error / log again because no one thought about success logs (i'm a fucking genius)
+        switch (type) {
+            default:
+            case "log":
+                console.log(message); // Regular console log (AKA default)
+                break;
+            case "warn":
+                console.warn(message); // Regular console warn
+                break;
+            case "error":
+                console.error(message); // Regular console error
+                break;
+            case "success":
+                console.log(message); // Not-regular console success (PersonaPlus exclusive :mrBeast:)
+                break;
+        }
         const timestamp: number = Date.now(); // Exact timestamp
         const newLog: Log = {
             message: message,
