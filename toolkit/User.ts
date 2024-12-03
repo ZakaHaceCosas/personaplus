@@ -11,10 +11,15 @@
  * <=============================================================================>
  */
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "expo-sqlite/kv-store";
 import { logToConsole } from "@/toolkit/debug/Console";
 import { Alert } from "react-native";
-import { FullProfile } from "@/types/User";
+import {
+    BasicUserData,
+    BasicUserHealthData,
+    FullProfile,
+    FullProfileForCreation,
+} from "@/types/User";
 import { router } from "expo-router";
 import StoredItemNames from "@/constants/StoredItemNames";
 import ROUTES from "@/constants/Routes";
@@ -30,7 +35,7 @@ import ROUTES from "@/constants/Routes";
  * @param {(string | null)} username Username
  * @returns {boolean} `true` if everything's valid, `false` otherwise.
  */
-export function validateUserData(
+export function ValidateUserData(
     gender: string | "male" | "female" | null,
     age: string | number | null,
     weight: string | number | null,
@@ -75,29 +80,66 @@ export function validateUserData(
     );
 }
 
+// i think this is called overloading or something
+// it fixes a type error
+type Filter = "basic" | "health";
+
+export async function OrchestrateUserData(
+    filter: "basic",
+): Promise<BasicUserData>;
+export async function OrchestrateUserData(
+    filter: "health",
+): Promise<BasicUserHealthData>;
+export async function OrchestrateUserData(
+    filter?: undefined,
+): Promise<FullProfile>;
 /**
- * Fetches and orchestrates all of the user's data onto a `FullProfile` object. **Async function.**
+ * Fetches and orchestrates all of the user's data onto a `FullProfile` object. Throws an error if no data exists, which is really strange to be honest.
  *
  * @export
  * @async
- * @returns {Promise<FullProfile | null>} A `FullProfile` if a profile exists and the function succeeds in orchestrating it, `null` otherwise.
+ * @param {"basic" | "health"} filter If passed, it will instead return the specified (basic data or health data).
+ * @returns {Promise<FullProfile | BasicUserData | BasicUserHealthData>} A `FullProfile` if a profile exists and the function succeeds in orchestrating it, throws an error otherwise.
  */
-export async function OrchestrateUserData(): Promise<FullProfile | null> {
-    let response: FullProfile | null = null;
+export async function OrchestrateUserData(
+    filter?: Filter,
+): Promise<FullProfile | BasicUserData | BasicUserHealthData> {
     try {
-        async function handler(): Promise<void> {
-            const data: string | null = await AsyncStorage.getItem(
-                StoredItemNames.userData,
-            );
-            response =
-                data !== null &&
-                data !== "" &&
-                Object.keys(JSON.parse(data)).length > 0
-                    ? JSON.parse(data)
-                    : null;
+        const data: string | null = await AsyncStorage.getItem(
+            StoredItemNames.userData,
+        );
+
+        if (
+            !data ||
+            data === "" ||
+            Object.keys(JSON.parse(data)).length === 0
+        ) {
+            throw new Error("UserData appears to be null.");
         }
 
-        await handler();
+        const fullData: FullProfile = JSON.parse(data);
+
+        if (filter === "basic") {
+            return {
+                username: fullData.username,
+                age: fullData.age,
+                weight: fullData.weight,
+                height: fullData.height,
+                gender: fullData.gender,
+                theThinkHour: fullData.theThinkHour,
+            };
+        }
+
+        if (filter === "health") {
+            return {
+                age: fullData.age,
+                weight: fullData.weight,
+                height: fullData.height,
+                gender: fullData.gender,
+            };
+        }
+
+        return fullData;
     } catch (e) {
         logToConsole(
             "Error orchestrating user data! " + e,
@@ -107,8 +149,6 @@ export async function OrchestrateUserData(): Promise<FullProfile | null> {
         );
         throw e;
     }
-
-    return response;
 }
 
 /**
@@ -179,9 +219,9 @@ export function updateBrm5(careAboutTheUser: boolean): void {
 /**
  * Use this only as placeholder data for when an error happens while fetching user data.
  *
- * @type {FullProfile}
+ * @type {FullProfileForCreation}
  */
-export const ErrorUserData: FullProfile = {
+export const ErrorUserData: FullProfileForCreation = {
     username: "Error",
     age: "",
     height: "",
