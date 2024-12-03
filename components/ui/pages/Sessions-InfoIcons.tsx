@@ -52,6 +52,7 @@ const SessionsPageInfoIcons: React.FC<InfoIconsProps> = ({
         [t("Full Speed Sprinting"), t("14.5 - 16.1 km/h")],
         [t("Maximum Speed"), t("more than 16.1 km/h")],
     ];
+
     return (
         <>
             <View

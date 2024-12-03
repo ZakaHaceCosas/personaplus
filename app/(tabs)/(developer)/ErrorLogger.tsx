@@ -13,6 +13,7 @@ import Colors from "@/constants/Colors";
 import getCommonScreenSize from "@/constants/Screen";
 import BackButton from "@/components/navigation/GoBack";
 import GapView from "@/components/ui/GapView";
+import PageEnd from "@/components/static/PageEnd";
 
 const styles = StyleSheet.create({
     consoleView: {
@@ -149,6 +150,7 @@ export default function ErrorLogger() {
                     </BetterTextSmallText>
                 )}
             </View>
+            <PageEnd includeText={true} size="tiny" />
         </>
     );
 }

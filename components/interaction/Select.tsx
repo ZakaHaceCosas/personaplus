@@ -3,11 +3,10 @@ import GenerateRandomKey from "@/toolkit/KeyGenerator";
 import { Picker } from "@react-native-picker/picker";
 import { TFunction } from "i18next";
 import { ReactElement } from "react";
-import { StyleSheet, TextStyle } from "react-native";
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     picker: {
-        padding: 10,
         width: "100%",
         backgroundColor: Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
         borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
@@ -15,8 +14,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         color: Colors.BASIC.WHITE,
         fontFamily: "BeVietnamPro-Regular",
-    } as TextStyle,
-    background: { backgroundColor: Colors.MAIN.DEFAULT_ITEM.BACKGROUND },
+    },
+    background: {
+        backgroundColor: Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
+    },
 });
 
 /**

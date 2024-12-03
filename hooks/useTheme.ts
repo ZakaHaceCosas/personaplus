@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useColorScheme } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "expo-sqlite/kv-store";
 import { logToConsole } from "@/toolkit/debug/Console";
 import StoredItemNames from "@/constants/StoredItemNames";
 
