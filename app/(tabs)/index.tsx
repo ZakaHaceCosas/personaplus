@@ -3,6 +3,7 @@ import Loading from "@/components/static/Loading";
 import PageEnd from "@/components/static/PageEnd";
 import {
     BetterTextHeader,
+    BetterTextNormalText,
     BetterTextSubHeader,
 } from "@/components/text/BetterTextPresets";
 import BetterTable, { BetterTableItem } from "@/components/ui/BetterTable";
@@ -19,6 +20,7 @@ import {
     GetActiveObjective,
     GetAllObjectives,
     GetAllPendingObjectives,
+    LaunchActiveObjective,
 } from "@/toolkit/objectives/ActiveObjectives";
 import { ActiveObjective } from "@/types/ActiveObjectives";
 import { FullProfile } from "@/types/User";
@@ -28,7 +30,7 @@ import { useTranslation } from "react-i18next";
 
 export default function HomeScreen() {
     const { t } = useTranslation();
-    const [userData, setUserData] = useState<FullProfile | null>(null);
+    const [userData, setUserData] = useState<FullProfile>();
     const [loading, setLoading] = useState<boolean>(true);
     const [allObjectivesForTable, setAllObjectivesForTable] = useState<
         BetterTableItem[]
@@ -44,6 +46,10 @@ export default function HomeScreen() {
         try {
             // user data
             const userData: FullProfile | null = await OrchestrateUserData();
+            if (!userData) {
+                router.replace(ROUTES.MAIN.WELCOME_SCREEN);
+                return;
+            }
             setUserData(userData);
 
             // objectives for UI
@@ -82,8 +88,8 @@ export default function HomeScreen() {
                             value: (await CheckForAnActiveObjectiveDailyStatus(
                                 obj.identifier,
                             ))
-                                ? "Done"
-                                : "Pending",
+                                ? "Done!"
+                                : "Pending...",
                         }),
                     ),
                 );
@@ -101,17 +107,6 @@ export default function HomeScreen() {
         Promise.all([fetchData()]);
     }, []);
 
-    function handleLaunchObjective(identifier: number): void {
-        try {
-            router.replace({
-                pathname: ROUTES.ACTIVE_OBJECTIVES.SESSION,
-                params: { id: identifier },
-            });
-        } catch (e) {
-            logToConsole("Error starting session: " + e, "error");
-        }
-    }
-
     if (loading) return <Loading />;
 
     return (
@@ -122,7 +117,7 @@ export default function HomeScreen() {
             <BetterTextSubHeader>
                 {t("pages.home.subheader")}
             </BetterTextSubHeader>
-            <GapView height={20} />
+            <GapView height={10} />
             <Section width="total" kind="ActiveObjectives">
                 <>
                     {identifiers === 0 ? (
@@ -157,8 +152,8 @@ export default function HomeScreen() {
                                         buttonText="Let's go!"
                                         buttonHint="Starts a session for the given objective"
                                         style="ACE"
-                                        action={(): void =>
-                                            handleLaunchObjective(
+                                        action={async (): Promise<void> =>
+                                            await LaunchActiveObjective(
                                                 obj.identifier,
                                             )
                                         }
@@ -170,18 +165,31 @@ export default function HomeScreen() {
                 </>
             </Section>
             <GapView height={20} />
+
             <Section kind="HowYouAreDoing">
-                <Division
-                    header="Today"
-                    subHeader="This table is temporary, as the app is a WIP. It will be overhauled and moved to the Dashboard."
-                >
-                    <BetterTable
-                        headers={["Objective", "Status"]}
-                        items={allObjectivesForTable}
-                    />
-                    <GapView height={5} />
-                </Division>
+                {identifiers &&
+                Array.isArray(identifiers) &&
+                identifiers.length >= 1 ? (
+                    <Division
+                        header="Today"
+                        subHeader="This table is temporary, as the app is a WIP. It will be overhauled and moved to the Dashboard."
+                    >
+                        <BetterTable
+                            headers={["Objective", "Status"]}
+                            items={allObjectivesForTable}
+                        />
+                        <GapView height={5} />
+                    </Division>
+                ) : (
+                    <Division header="Today">
+                        <BetterTextNormalText>
+                            Here you'll always see today's progress (as long as
+                            you have objectives due today).
+                        </BetterTextNormalText>
+                    </Division>
+                )}
             </Section>
+
             <PageEnd includeText={true} />
         </>
     );
