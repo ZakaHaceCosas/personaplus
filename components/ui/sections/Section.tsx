@@ -29,7 +29,8 @@ interface SectionProps {
      *         | "Profile"
      *         | "About"
      *         | "Developer"
-     *         | "Danger")}
+     *         | "Danger"
+     *         | "Experiments")}
      */
     kind:
         | "ActiveObjectives"
@@ -40,7 +41,8 @@ interface SectionProps {
         | "Profile"
         | "About"
         | "Developer"
-        | "Danger";
+        | "Danger"
+        | "Experiments";
     /**
      * Whether the width should be `"total"` (full screen) or `"parent"` (width of 100% to fill it's parent).
      *
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
  *
  * @export
  * @param {SectionProps} p
- * @param {("Objectives" | "PassiveObjectives" | "HowYouAreDoing" | "Unknown" | "Settings" | "Profile" | "About" | "Developer" | "Danger")} p.kind The kind of section. Depending on this, the section will display a title and icon, or another one.
+ * @param {("Objectives" | "PassiveObjectives" | "HowYouAreDoing" | "Unknown" | "Settings" | "Profile" | "About" | "Developer" | "Danger" | "Experiments")} p.kind The kind of section. Depending on this, the section will display a title and icon, or another one.
  * @param {ReactElement} p.children Children that you can append to the section (one or more). While any `ReactElement` is valid, it's expected that you use a `<Division />` or more.
  * @returns {ReactElement}
  */
@@ -98,22 +100,23 @@ export default function Section({
         | "settings"
         | "code"
         | "question-mark"
-        | "warning"; // If you add a new icon, add it here
+        | "warning"
+        | "science"; // If you add a new icon, add it here
     let sectionWidth: number | `${number}%`;
     let backgroundColor = Colors.MAIN.SECTION;
     let foregroundColor = Colors.LABELS.SHL;
 
     switch (kind) {
         case "ActiveObjectives":
-            label = t("sections.headers.your_active_objectives");
+            label = t("sections.headers.activeObjectives");
             headerIcon = "timer";
             break;
         case "PassiveObjectives":
-            label = t("sections.headers.your_passive_objectives");
+            label = t("sections.headers.passiveObjectives");
             headerIcon = "calendar-today";
             break;
         case "HowYouAreDoing":
-            label = t("sections.headers.how_you_are_doing");
+            label = t("sections.headers.howYouAreDoing");
             headerIcon = "space-dashboard";
             break;
         case "Unknown":
@@ -129,7 +132,7 @@ export default function Section({
             headerIcon = "code";
             break;
         case "Profile":
-            label = t("sections.headers.your_profile");
+            label = t("sections.headers.profile");
             headerIcon = "person";
             break;
         case "About":
@@ -137,9 +140,15 @@ export default function Section({
             headerIcon = "info";
             break;
         case "Danger":
-            label = t("sections.headers.your_active_objectives");
+            label = t("sections.headers.danger");
             headerIcon = "warning";
             backgroundColor = Colors.PRIMARIES.WOR.WOR;
+            foregroundColor = Colors.MAIN.APP;
+            break;
+        case "Experiments":
+            label = t("sections.headers.experiments");
+            headerIcon = "science";
+            backgroundColor = Colors.PRIMARIES.HMM.HMM;
             foregroundColor = Colors.MAIN.APP;
             break;
         default:
