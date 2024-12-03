@@ -22,7 +22,7 @@ import {
     ActiveObjectiveDailyLog,
 } from "@/types/ActiveObjectives";
 import { FullProfile } from "@/types/User";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "expo-sqlite/kv-store";
 import * as Device from "expo-device";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -31,12 +31,9 @@ import { Platform, ToastAndroid } from "react-native";
 
 export default function HomeScreen() {
     const [loading, setLoading] = useState<boolean>(true);
-    const [userData, setUserData] = useState<string | null>(null);
-    const [objectives, setObjectives] = useState<string | null>(null);
+    const [userData, setUserData] = useState<BetterTableItem[]>([]);
+    const [objectives, setObjectives] = useState<BetterTableItem[]>([]);
     const [dailyLog, setDailyLog] = useState<string | null>(null);
-    const [allObjectivesForTable, setAllObjectivesForTable] = useState<
-        BetterTableItem[]
-    >([]);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -50,42 +47,34 @@ export default function HomeScreen() {
                     throw new Error("userData is null!");
                 }
                 const readyData: FullProfile = JSON.parse(bareUserData);
-                setUserData(JSON.stringify(readyData));
-
-                // objectives
-                const bareObjectives: ActiveObjective[] | null =
-                    await GetAllObjectives();
-                if (!bareObjectives) {
-                    setObjectives("No objectives (null)");
-                }
-                setObjectives(
-                    bareObjectives ? JSON.stringify(bareObjectives) : null,
+                const mappedArray = Object.entries(readyData).map(
+                    ([key, value]) =>
+                        ({
+                            name: key,
+                            value: String(value),
+                        }) as BetterTableItem,
                 );
+                setUserData(mappedArray);
 
                 // dailyLog
                 const bareDailyLog: ActiveObjectiveDailyLog | null =
                     await GetActiveObjectiveDailyLog();
                 if (!bareDailyLog) {
-                    setObjectives("No daily log (null)");
+                    setDailyLog("No daily log (null)");
                 }
                 setDailyLog(bareDailyLog ? JSON.stringify(bareDailyLog) : null);
 
-                // objectives for table
-                const allObjectives: ActiveObjective[] | null =
+                // objectives
+                const objectives: ActiveObjective[] | null =
                     await GetAllObjectives();
-                if (allObjectives) {
-                    const objectivesForTable: BetterTableItem[] =
-                        await Promise.all(
-                            allObjectives.map(
-                                async (
-                                    obj: ActiveObjective,
-                                ): Promise<BetterTableItem> => ({
-                                    name: obj.exercise,
-                                    value: String(obj.identifier),
-                                }),
-                            ),
-                        );
-                    setAllObjectivesForTable(objectivesForTable);
+
+                if (objectives) {
+                    setObjectives(
+                        objectives.map((obj) => ({
+                            name: obj.exercise,
+                            value: String(obj.identifier),
+                        })),
+                    );
                 }
             } catch (e) {
                 const err = "Error fetching data at DevInterface: " + e;
@@ -97,7 +86,7 @@ export default function HomeScreen() {
         }
 
         handler();
-    }, []);
+    }, [objectives]);
 
     // no i am not translating dev interface. it is just for BackButton to work.
     const { t } = useTranslation();
@@ -151,26 +140,30 @@ export default function HomeScreen() {
                 layout="alert"
             />
             <GapView height={10} />
-            <BetterAlert
-                style="DEFAULT"
-                preTitle={"AsyncStorage item: " + StoredItemNames.userData}
-                title={error ? "An error happened:" : "User data (raw JSON)"}
-                bodyText={error ? error : userData ? userData : "null"}
-                layout="alert"
-            />
+            {userData.length > 0 && (
+                <>
+                    <BetterTextSmallText>
+                        Your user data object. Some data is only used internally
+                        and nowhere else shown to you.
+                    </BetterTextSmallText>
+                    <GapView height={5} />
+                    <BetterTable headers={["Key", "Value"]} items={userData} />
+                </>
+            )}
             <GapView height={10} />
-            <BetterAlert
-                style="DEFAULT"
-                preTitle={"AsyncStorage item: " + StoredItemNames.objectives}
-                title={error ? "An error happened:" : "Objectives (raw JSON)"}
-                bodyText={error ? error : objectives ? objectives : "null"}
-                layout="alert"
-            />
-            <GapView height={10} />
-            <BetterTable
-                headers={["Objective", "ID"]}
-                items={allObjectivesForTable}
-            />
+            {objectives.length > 0 && (
+                <>
+                    <BetterTextSmallText>
+                        All your objectives. The ID is just used by the app, to
+                        differentiate objectives.
+                    </BetterTextSmallText>
+                    <GapView height={5} />
+                    <BetterTable
+                        headers={["Objective", "ID"]}
+                        items={objectives}
+                    />
+                </>
+            )}
             <GapView height={10} />
             <BetterAlert
                 style="DEFAULT"
@@ -207,24 +200,6 @@ export default function HomeScreen() {
                 style="HMM"
                 action={clearLogs}
             />
-            <GapView height={20} />
-            <BetterTextSubHeader>WIP Pages</BetterTextSubHeader>
-            <BetterTextSmallText>
-                Pages / features that are still WIP, and hence hidden behind a
-                test wall.
-            </BetterTextSmallText>
-            <GapView height={10} />
-            <BetterButton
-                buttonText="_TRACKER"
-                buttonHint="Opens up a page for testing the TRACKER feature."
-                style="DEFAULT"
-                action={() => router.push(ROUTES.EXPERIMENTS.TRACKER)}
-            />
-            <BetterTextSmallText>
-                The tracker feature turns this app into an actual sport app by
-                tracking the user's movement during certain sessions, e.g.
-                running, to get reliable stats.
-            </BetterTextSmallText>
             <PageEnd includeText={true} size="tiny" />
         </>
     );
