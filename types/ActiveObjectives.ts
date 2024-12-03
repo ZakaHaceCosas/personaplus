@@ -51,7 +51,7 @@ export type WeekTuple = [
 type ActiveObjectiveInfo = {
     days: WeekTuple;
     durationMinutes: number;
-    rests: number | null;
+    rests: number;
     restDurationMinutes: number;
 };
 
@@ -83,6 +83,7 @@ interface ActiveObjectiveSpecificData {
     /**
      * RUNNING - Speed (value equals the INDEX in the speed array, not the actual speed!)
      *
+     * @deprecated Keep it only until the `exp_tracker` experiments is finished and rolled out.
      * @type {number}
      */
     estimateSpeed: number;

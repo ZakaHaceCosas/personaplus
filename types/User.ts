@@ -1,6 +1,6 @@
 import { CoreLibraryType_Activeness } from "@/core/types/MiscTypes";
 
-export interface FullProfile {
+export interface FullProfileForCreation {
     username: string;
     age: number | "";
     height: number | "";
@@ -16,6 +16,20 @@ export interface FullProfile {
         | "exercising"
         | null;
     sleepHours: 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | null; // 11 = more than ten
+    theThinkHour: string;
+    isNewUser: boolean;
+}
+
+export interface FullProfile {
+    username: string;
+    age: number;
+    height: number;
+    weight: number;
+    gender: "male" | "female";
+    language: "es" | "en";
+    activeness: CoreLibraryType_Activeness;
+    focus: "noPriority" | "assistMePls" | "wellbeing" | "diet" | "exercising";
+    sleepHours: 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11; // 11 = more than ten
     theThinkHour: string;
     isNewUser: boolean;
 }
