@@ -5,7 +5,7 @@ import {
     SupportedActiveObjectives,
 } from "@/types/ActiveObjectives";
 import { logToConsole } from "@/toolkit/debug/Console";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "expo-sqlite/kv-store";
 import {
     adjustedToday,
     getCurrentDate,
@@ -13,6 +13,10 @@ import {
 } from "@/toolkit/debug/Today";
 import StoredItemNames from "@/constants/StoredItemNames";
 import { TFunction } from "i18next";
+import ROUTES from "@/constants/Routes";
+import { router } from "expo-router";
+import { GetExperiments } from "../Experiments";
+import { Platform, ToastAndroid } from "react-native";
 
 /**
  * Returns the objectives from AsyncStorage as an `ActiveObjective[]`, or `null` if there aren't any objectives.
@@ -164,10 +168,6 @@ async function CheckForAnActiveObjectiveDailyStatus(
                 );
             }
         } else {
-            /* const log = dailyLog[date]
-                ? `Warning: No data exists for objective ${identifier} on date ${date}. This is actually a normal behavior most of the time: if there wasn't any interaction with the objective, there's no data saved for it.`
-                : `Warning: No data exists for date ${date} at all. This is actually a normal behavior most of the time: if there wasn't any interaction with any objective, there's no data saved today.`;
-            logToConsole(log, "warn"); */
             return false; // no interaction with the objective means no data logged.
         }
     } catch (e) {
@@ -340,6 +340,12 @@ async function CreateActiveObjective(
                 StoredItemNames.objectives,
                 JSON.stringify(objs),
             );
+            if (Platform.OS === "android") {
+                ToastAndroid.show(
+                    `${target.exercise}? Let's go!`,
+                    ToastAndroid.LONG,
+                );
+            }
         } catch (e) {
             throw new Error("Failed to save objectives! " + e);
         }
@@ -448,6 +454,39 @@ function GenerateDescriptionOfObjective(
         return t("For " + obj.info.durationMinutes + minuteWord);
     return "(There was an error reading this objective's data)";
 }
+async function LaunchActiveObjective(identifier: number): Promise<void> {
+    try {
+        const [obj, experiments] = await Promise.all([
+            GetActiveObjective(identifier),
+            GetExperiments(),
+        ]);
+
+        if (!obj) {
+            throw new Error(`Active objective ${identifier} does not exist.`);
+        }
+
+        const track = experiments.exp_tracker;
+
+        if (obj.exercise === "Running" && track) {
+            router.replace({
+                pathname: ROUTES.EXPERIMENTS.TRACKER,
+                params: { id: identifier },
+            });
+            return;
+        }
+
+        router.replace({
+            pathname: ROUTES.ACTIVE_OBJECTIVES.SESSION,
+            params: { id: identifier },
+        });
+        return;
+    } catch (e) {
+        logToConsole(
+            "Error launching objective " + identifier + ", " + e,
+            "error",
+        );
+    }
+}
 
 export {
     CreateActiveObjective,
@@ -460,4 +499,5 @@ export {
     CalculateSessionFragmentsDuration,
     DeleteActiveObjective,
     GenerateDescriptionOfObjective,
+    LaunchActiveObjective,
 };
