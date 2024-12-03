@@ -5,19 +5,71 @@ import Colors from "@/constants/Colors";
 import getCommonScreenSize from "@/constants/Screen";
 import FontSizes from "@/constants/FontSizes";
 import { UniversalItemStyle } from "@/constants/ui/Pressables";
-import { logToConsole } from "@/toolkit/debug/Console";
 
+/**
+ * SwapOption
+ *
+ * @export
+ * @interface SwapOption
+ * @typedef {SwapOption}
+ */
 export interface SwapOption {
-    value: string | null; // null for invalid values
+    /**
+     * The value of the option.
+     *
+     * @type {(string | null)}
+     */
+    value: string | null;
+    /**
+     * The text it will display.
+     *
+     * @type {string}
+     */
     label: string;
+    /**
+     * Whether it's the default option. We recommend having one. Having more than one will break stuff.
+     *
+     * @type {boolean}
+     */
     default: boolean;
 }
 
+/**
+ * SwapProps
+ *
+ * @interface SwapProps
+ * @typedef {SwapProps}
+ */
 interface SwapProps {
+    /**
+     * An array of `SwapOption`s.
+     *
+     * @type {SwapOption[]}
+     */
     options: SwapOption[];
+    /**
+     * Currently selected value (`options.WHATEVER_IS_SELECTED.value` to be precise).
+     *
+     * @type {(string | null)}
+     */
     value: string | null;
+    /**
+     * On what order it should be displayed.
+     *
+     * @type {("horizontal" | "vertical")}
+     */
     order: "horizontal" | "vertical";
+    /**
+     * A function that will be called upon changing the value. Passes the value that has been selected so you can use it.
+     *
+     * @type {(value: string | null) => void}
+     */
     onValueChange: (value: string | null) => void;
+    /**
+     * Style.
+     *
+     * @type {?("ACE" | "GOD")}
+     */
     style?: "ACE" | "GOD";
 }
 
@@ -44,6 +96,18 @@ const styles = StyleSheet.create({
     },
 });
 
+/**
+ * A swap / select / multiple options / whatever you want to call it.
+ *
+ * @export
+ * @param {SwapProps} p
+ * @param {SwapOption[]} p.options
+ * @param {string} p.value
+ * @param {("horizontal" | "vertical")} p.order
+ * @param {(value: string) => void} p.onValueChange
+ * @param {("ACE" | "GOD")} [p.style="ACE"]
+ * @returns {ReactElement}
+ */
 export default function Swap({
     options,
     value,
@@ -54,13 +118,6 @@ export default function Swap({
     const defaultOption: SwapOption | undefined = options.find(
         (option): boolean => option.default,
     );
-
-    if (!defaultOption) {
-        logToConsole(
-            "A default option for Swap elements is highly recommended. Bugs can happen otherwise.",
-            "warn",
-        );
-    }
 
     const [selectedOption, setSelectedOption] = useState<SwapOption | null>(
         value
