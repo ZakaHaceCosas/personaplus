@@ -16,6 +16,7 @@ const ROUTES = {
         HOME: "/DevInterface",
         LOG_VIEW: "/LogView",
         ERROR_LOG_VIEW: "/ErrorLogger",
+        EXPERIMENTS: "/DevExperiments",
     },
     ACTIVE_OBJECTIVES: {
         CREATE: "/objectives/Create",
