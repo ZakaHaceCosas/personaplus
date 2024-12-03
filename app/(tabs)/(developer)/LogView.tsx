@@ -15,7 +15,7 @@ import getCommonScreenSize from "@/constants/Screen";
 import StoredItemNames from "@/constants/StoredItemNames";
 import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/Console";
 import { Logs } from "@/types/Logs";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "expo-sqlite/kv-store";
 import { router } from "expo-router";
 import React from "react";
 import { useEffect, useState } from "react";

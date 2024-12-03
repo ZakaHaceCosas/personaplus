@@ -5,6 +5,7 @@ import {
     BetterTextHeader,
     BetterTextSubHeader,
 } from "@/components/text/BetterTextPresets";
+import GapView from "@/components/ui/GapView";
 import Division from "@/components/ui/sections/Division";
 import Section from "@/components/ui/sections/Section";
 import ROUTES from "@/constants/Routes";
@@ -61,7 +62,7 @@ export default function Dashboard() {
             );
         } catch (e) {
             logToConsole(
-                "Error deleting a objective " + identifier + ": " + e,
+                "Error deleting objective " + identifier + ": " + e,
                 "error",
             );
         }
@@ -75,6 +76,7 @@ export default function Dashboard() {
             <BetterTextSubHeader>
                 Setup your path to success here
             </BetterTextSubHeader>
+            <GapView height={10} />
             <Section kind="ActiveObjectives">
                 {activeObjectives === null || activeObjectives.length === 0 ? (
                     <Division header="You don't have any objectives... Let's create one!" />
