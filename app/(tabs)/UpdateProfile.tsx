@@ -4,11 +4,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { router } from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "expo-sqlite/kv-store";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/Colors";
 import { logToConsole } from "@/toolkit/debug/Console";
-import { validateUserData } from "@/toolkit/User";
+import { OrchestrateUserData, ValidateUserData } from "@/toolkit/User";
 import Loading from "@/components/static/Loading";
 import BackButton from "@/components/navigation/GoBack";
 import GapView from "@/components/ui/GapView";
@@ -21,165 +21,70 @@ import BetterButton from "@/components/interaction/BetterButton";
 import Swap, { SwapOption } from "@/components/interaction/Swap";
 import BetterInputField from "@/components/interaction/BetterInputField";
 import PageEnd from "@/components/static/PageEnd";
+import { BasicUserData } from "@/types/User";
+import StoredItemNames from "@/constants/StoredItemNames";
+import SafelyGoBack from "@/toolkit/Routing";
+import ROUTES from "@/constants/Routes";
+import GetStuffForUserDataQuestion from "@/constants/UserData";
+import getCommonScreenSize from "@/constants/Screen";
 
-// TypeScript, supongo (should use toolkified ver instead?)
-interface UserData {
-    username: string;
-    gender: string;
-    age: string;
-    height: string;
-    weight: string;
-}
-
-// We define the styles
 const styles = StyleSheet.create({
-    flexButtons: {
+    buttonWrapper: {
         display: "flex",
         flexDirection: "row",
-        width: "100%",
+        width: getCommonScreenSize("width"),
+        alignItems: "center",
+        justifyContent: "center",
+        bottom: -160, // TODO - this is kinda unresponsive
+        position: "absolute",
     },
 });
 
-// We create the function
 export default function UpdateProfile() {
     const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean>(true);
-    const [previousUsername, setPreviousUsername] = useState<string>("Unknown"); // Store previous username
-    const [previousGender, setPreviousGender] = useState<string>("Unknown"); // Store previous gender
-    const [previousAge, setPreviousAge] = useState<string>("Unknown"); // Store previous age
-    const [previousHeight, setPreviousHeight] = useState<string>("Unknown"); // Store previous height
-    const [previousWeight, setPreviousWeight] = useState<string>("Unknown"); // Store previous weight
+    const [workingData, setWorkingData] = useState<BasicUserData>(); // Store previous data
 
-    // Fetch all user data from AsyncStorage
-    const getAllUserData = async (): Promise<UserData> => {
-        try {
-            const values = await AsyncStorage.multiGet([
-                "username",
-                "gender",
-                "age",
-                "height",
-                "weight",
-            ]);
-
-            // Construct UserData object with fetched values or defaults
-            const data: UserData = {
-                username: values[0][1] || "Unknown",
-                gender: values[1][1] || "Unknown",
-                age: values[2][1] || "Unknown",
-                height: values[3][1] || "Unknown",
-                weight: values[4][1] || "Unknown",
-            };
-            return data;
-        } catch (e) {
-            logToConsole(String(e), "error");
-            return {
-                // "Nice to meet you, Unknown"!
-                username: "Unknown",
-                gender: "Unknown",
-                age: "Unknown",
-                height: "Unknown",
-                weight: "Unknown",
-            };
-        }
-    };
-
+    // Fetch all user data
     useEffect(() => {
-        const fetchData = async () => {
-            const userData = await getAllUserData();
-            // Update state with fetched user data
-            setPreviousUsername(userData.username);
-            setPreviousGender(userData.gender);
-            setPreviousAge(userData.age);
-            setPreviousHeight(userData.height);
-            setPreviousWeight(userData.weight);
-            setLoading(false);
-        };
-
-        fetchData();
+        async function handle() {
+            try {
+                const data = await OrchestrateUserData("basic");
+                if (!data) {
+                    router.replace(ROUTES.MAIN.WELCOME_SCREEN);
+                    throw new Error("no work data");
+                }
+                setWorkingData(data);
+                setLoading(false);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        handle();
     }, []);
 
-    const [formData, setFormData] = useState({
-        username: previousUsername,
-        height: previousHeight,
-        weight: previousWeight,
-        age: previousAge,
-    });
-    useEffect(() => {
-        // Update form data when previous user data changes
-        setFormData({
-            username: previousUsername,
-            height: previousHeight,
-            weight: previousWeight,
-            age: previousAge,
-        });
-        setGenderValue(previousGender);
-    }, [
-        previousAge,
-        previousGender,
-        previousHeight,
-        previousUsername,
-        previousWeight,
-    ]);
-
-    const [genderValue, setGenderValue] = useState<string | null>(
-        previousGender,
-    );
-
-    const handleGenderChange = (value: string | null) => {
-        setGenderValue(value);
-    };
-
-    const genderOptions: SwapOption[] = [
-        {
-            value: "male",
-            label: t("page_welcome.fragment_one.questions.gender.male"),
-            default: true,
-        },
-        {
-            value: "female",
-            label: t("page_welcome.fragment_one.questions.gender.female"),
-            default: false,
-        },
-    ];
+    const genderOptions: SwapOption[] = GetStuffForUserDataQuestion(
+        "gender",
+    ) as SwapOption[];
     const inputRefs = useRef<TextInput[]>([]);
 
-    // Update form data with user input
-    const handleChange = (name: string, value: string) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
-
-    // Check if all required data is valid
-    const isFirstStepDone: boolean = validateUserData(
-        genderValue,
-        formData.age,
-        formData.weight,
-        formData.height,
-        formData.username,
-    );
-
-    const submit = async () => {
+    async function submit() {
         if (
-            genderValue &&
-            formData.username &&
-            formData.height &&
-            formData.weight &&
-            formData.height
+            ValidateUserData(
+                workingData!.gender,
+                workingData!.age,
+                workingData!.weight,
+                workingData!.height,
+                workingData!.username,
+            )
         ) {
             try {
                 // Save data to AsyncStorage
-                await AsyncStorage.setItem("username", formData.username);
-                await AsyncStorage.setItem("height", formData.height);
-                await AsyncStorage.setItem("weight", formData.weight);
-                await AsyncStorage.setItem("age", formData.age);
-                await AsyncStorage.setItem("gender", genderValue);
-                if (router.canGoBack()) {
-                    router.back();
-                } else {
-                    router.replace("/Profile");
-                } // go to the prev page
+                await AsyncStorage.setItem(
+                    StoredItemNames.userData,
+                    JSON.stringify(workingData),
+                );
+                SafelyGoBack(ROUTES.MAIN.PROFILE);
             } catch (e) {
                 logToConsole("Error creating profile: " + e, "error");
             }
@@ -189,7 +94,49 @@ export default function UpdateProfile() {
                 "error",
             ); // bro forgot to add data
         }
-    };
+    }
+
+    /**
+     * Spawns an input field with the given parameters.
+     *
+     * @param {string} label A short text to show before the input to give indications.
+     * @param {string} placeholder The placeholder of the input.
+     * @param {string | number} value The value of the input. Set it to a stateful value, e.g. `formData.username`.
+     * @param {string} name The name of the property / stateful value it's linked to, e.g. `username` for `formData.username`.
+     * @param {number} refIndex It's index. _yes, you have to count all the calls the `spawnInputField` can keep an incremental index_.
+     * @param {("default" | "numeric")} [keyboardType="default"] Whether to use the normal keyboard or a numeric pad.
+     * @param {number} length Max length of the input.
+     * @returns {ReactNode} Returns a Fragment with a `<BetterText>` (label), `<TextInput />`, and a `<GapView />` between them.
+     */
+    function spawnInputField(
+        label: string,
+        placeholder: string,
+        value: string | number,
+        name: "username" | "age" | "height" | "weight",
+        refIndex: number,
+        keyboardType: "default" | "numeric" = "default",
+        length: number,
+    ) {
+        return (
+            <>
+                <BetterInputField
+                    readOnly={false}
+                    label={label}
+                    placeholder={placeholder}
+                    value={value}
+                    name={name}
+                    refIndex={refIndex}
+                    length={length}
+                    refParams={{ inputRefs, totalRefs: 4 }}
+                    keyboardType={keyboardType}
+                    changeAction={(text) =>
+                        setWorkingData((prev) => ({ ...prev!, username: text }))
+                    }
+                    shouldRef={true}
+                />
+            </>
+        );
+    }
 
     if (loading) return <Loading />;
 
@@ -197,63 +144,51 @@ export default function UpdateProfile() {
         <>
             <BackButton t={t} />
             <BetterTextHeader>
-                {t("subPage_edit_profile.title")}
+                {t("pages.updateProfile.header")}
             </BetterTextHeader>
             <BetterTextSubHeader>
-                {t("subPage_edit_profile.subtitle")}
+                {t("pages.updateProfile.subheader")}
             </BetterTextSubHeader>
             <GapView height={15} />
-            <BetterInputField
-                label={t("page_welcome.fragment_one.questions.username")}
-                placeholder={t("page_welcome.fragment_one.questions.username")}
-                value={formData.username}
-                name="PROFILE_EDITOR__USERNAME_INPUT_FIELD"
-                changeAction={(text) => handleChange("username", text)}
-                refIndex={0}
-                inputRefs={inputRefs}
-                nextFieldIndex={1}
-                length={40}
-                readOnly={false}
-            />
-            <GapView height={15} />
-            <BetterInputField
-                label={t("page_welcome.fragment_one.questions.height")}
-                placeholder={t("page_welcome.fragment_one.questions.height")}
-                name="PROFILE_EDITOR__HEIGHT_INPUT_FIELD"
-                value={formData.height}
-                changeAction={(text) => handleChange("height", text)}
-                refIndex={1}
-                inputRefs={inputRefs}
-                nextFieldIndex={2}
-                length={3}
-                readOnly={false}
-            />
-            <GapView height={15} />
-            <BetterInputField
-                label={t("page_welcome.fragment_one.questions.weight")}
-                placeholder={t("page_welcome.fragment_one.questions.weight")}
-                name="PROFILE_EDITOR__WEIGHT_INPUT_FIELD"
-                value={formData.weight}
-                changeAction={(text) => handleChange("weight", text)}
-                refIndex={2}
-                inputRefs={inputRefs}
-                nextFieldIndex={3}
-                length={3}
-                readOnly={false}
-            />
-            <GapView height={15} />
-            <BetterInputField
-                label={t("page_welcome.fragment_one.questions.age")}
-                placeholder={t("page_welcome.fragment_one.questions.age")}
-                name="PROFILE_EDITOR__AGE_INPUT_FIELD"
-                value={formData.age}
-                changeAction={(text) => handleChange("age", text)}
-                refIndex={2}
-                inputRefs={inputRefs}
-                nextFieldIndex={3}
-                length={3}
-                readOnly={false}
-            />
+            {spawnInputField(
+                t("globals.userData.username.wordShorter"),
+                t("pages.welcome.questions.aboutYou.placeholders.username"),
+                workingData!.username,
+                "username",
+                0,
+                "default",
+                30,
+            )}
+            <GapView height={5} />
+            {spawnInputField(
+                t("globals.userData.age.word"),
+                t("pages.welcome.questions.aboutYou.placeholders.age"),
+                workingData!.age,
+                "age",
+                1,
+                "numeric",
+                2,
+            )}
+            <GapView height={5} />
+            {spawnInputField(
+                t("globals.userData.weight"),
+                t("pages.welcome.questions.aboutYou.placeholders.weight"),
+                workingData!.weight,
+                "weight",
+                2,
+                "numeric",
+                3,
+            )}
+            <GapView height={5} />
+            {spawnInputField(
+                t("globals.userData.height"),
+                t("pages.welcome.questions.aboutYou.placeholders.height"),
+                workingData!.height,
+                "height",
+                3,
+                "numeric",
+                3,
+            )}
             <GapView height={15} />
             <BetterText
                 textAlign="normal"
@@ -261,20 +196,28 @@ export default function UpdateProfile() {
                 fontSize={15}
                 textColor={Colors.LABELS.SDD}
             >
-                {t("page_profile.your_profile_division.gender")}
+                {
+                    new Date().getDate() === 28 && new Date().getMonth() === 5
+                        ? t("EasterEggs.whyChangeGender") // "genders don't change, but okay"
+                        : t("globals.userData.gender.word") // "Gender"
+                    // i keep to myself the right to be as unhinged as i want to
+                }
             </BetterText>
             <GapView height={5} />
             <Swap
                 key="genderSwap"
                 options={genderOptions}
-                value={genderValue}
+                value={workingData!.gender}
                 onValueChange={(value: string | null): void =>
-                    handleGenderChange(value)
+                    setWorkingData((prev) => ({
+                        ...prev!,
+                        gender: value as "male" | "female",
+                    }))
                 }
                 order="horizontal"
             />
             <GapView height={5} />
-            <View style={styles.flexButtons}>
+            <View style={styles.buttonWrapper}>
                 <BetterButton
                     style="DEFAULT"
                     action={router.back}
@@ -282,27 +225,14 @@ export default function UpdateProfile() {
                     buttonHint="TODO"
                 />
                 <GapView width={15} />
-                {isFirstStepDone ? (
-                    <BetterButton
-                        style="ACE"
-                        action={submit}
-                        buttonText={t("globals.save")}
-                        buttonHint="TODO"
-                    />
-                ) : (
-                    <BetterButton
-                        style="HMM"
-                        action={() => {}}
-                        buttonText={
-                            !(Number(formData.age) > 99)
-                                ? t("globals.fill_all_items")
-                                : t("page_welcome.you_are_not_that_old", {
-                                      age: formData.age,
-                                  })
-                        }
-                        buttonHint="TODO"
-                    />
-                )}
+                <BetterButton
+                    style="ACE"
+                    action={async () => {
+                        await submit();
+                    }}
+                    buttonText={t("globals.save")}
+                    buttonHint="TODO"
+                />
             </View>
             <PageEnd includeText={false} size="tiny" />
         </>
