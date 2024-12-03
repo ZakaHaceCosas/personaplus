@@ -7,14 +7,14 @@ import React, {
 } from "react";
 import { router } from "expo-router";
 import { StyleSheet, View, TextInput, Linking } from "react-native";
-import Swap from "@/components/interaction/Swap";
+import Swap, { SwapOption } from "@/components/interaction/Swap";
 import GapView from "@/components/ui/GapView";
 import BetterText from "@/components/text/BetterText";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import AsyncStorage from "expo-sqlite/kv-store";
 import { logToConsole } from "@/toolkit/debug/Console";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/Colors";
-import { FullProfile } from "@/types/User";
+import { FullProfile, FullProfileForCreation } from "@/types/User";
 import getCommonScreenSize from "@/constants/Screen";
 import {
     BetterTextHeader,
@@ -24,15 +24,17 @@ import {
 import { TimerPickerModal } from "react-native-timer-picker";
 import { LinearGradient } from "expo-linear-gradient";
 import { getDefaultLocale } from "@/translations/translate";
-import { validateUserData } from "@/toolkit/User";
+import { ValidateUserData } from "@/toolkit/User";
 import FontSizes from "@/constants/FontSizes";
-import Select from "@/components/interaction/Select";
+import Select, { SelectOption } from "@/components/interaction/Select";
 import BetterButton from "@/components/interaction/BetterButton";
 import BetterInputField from "@/components/interaction/BetterInputField";
 import StoredItemNames from "@/constants/StoredItemNames";
 import { formatTimeString } from "@/toolkit/Time";
 import ROUTES from "@/constants/Routes";
-import { CoreLibraryType_Activeness } from "@/core/types/MiscTypes";
+import GetStuffForUserDataQuestion from "@/constants/UserData";
+import URLs from "@/constants/Urls";
+import { DEFAULT_EXPERIMENTS } from "@/constants/Experiments";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -44,6 +46,14 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
         justifyContent: "flex-start",
         backgroundColor: Colors.MAIN.APP,
+    },
+    welcomeView: {
+        height: getCommonScreenSize("height"),
+        width: getCommonScreenSize("width"),
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+        justifyContent: "center",
     },
     buttonWrapper: {
         display: "flex",
@@ -65,7 +75,7 @@ export default function WelcomePage() {
     const inputRefs = useRef<TextInput[]>([]);
 
     // formData
-    const [formData, setFormData] = useState<FullProfile>({
+    const [formData, setFormData] = useState<FullProfileForCreation>({
         username: "",
         height: "",
         weight: "",
@@ -85,83 +95,14 @@ export default function WelcomePage() {
     const [isStepThreeValid, validateStepThree] = useState<boolean>(false);
     const [isStepFourValid, validateStepFour] = useState<boolean>(false);
 
-    // options
-    const genderOptions = [
-        {
-            value: "male",
-            label: t("globals.userData.gender.male"),
-            default: false,
-        },
-        {
-            value: "female",
-            label: t("globals.userData.gender.female"),
-            default: false,
-        },
-    ];
-    const focusOptions = [
-        {
-            value: null,
-            label: t("globals.interaction.chooseAnOption"),
-            default: true,
-        },
-        {
-            value: "exercising",
-            label: t("pages.welcome.questions.focus.options.exercising"),
-            default: false,
-        },
-        {
-            value: "diet",
-            label: t("pages.welcome.questions.focus.options.eating"),
-            default: false,
-        },
-        {
-            value: "wellbeing",
-            label: t("pages.welcome.questions.focus.options.wellbeing"),
-            default: false,
-        },
-        // both options below equal no priority
-        // then why create two options?
-        // if user says he doesn't know, no focus will be used and he'll see the assistant feature (when it gets developed lol)
-        // if user says he has everything as a priority, no focus will be used and he'll be free to do whatever by himself
-        {
-            value: "noPriority",
-            label: t("pages.welcome.questions.focus.options.noPriority"),
-            default: false,
-        },
-        {
-            value: "assistMePls",
-            label: t("pages.welcome.questions.focus.options.assistMePls"),
-            default: false,
-        },
-    ];
-    const sleepTimeOptions: [string, number][] = [
-        [t("pages.welcome.questions.sleepTime.options.threeOrLess"), 3],
-        [t("pages.welcome.questions.sleepTime.options.four"), 4],
-        [t("pages.welcome.questions.sleepTime.options.five"), 5],
-        [t("pages.welcome.questions.sleepTime.options.six"), 6],
-        [t("pages.welcome.questions.sleepTime.options.seven"), 7],
-        [t("pages.welcome.questions.sleepTime.options.eight"), 8],
-        [t("pages.welcome.questions.sleepTime.options.nine"), 9],
-        [t("pages.welcome.questions.sleepTime.options.ten"), 10],
-        [t("pages.welcome.questions.sleepTime.options.moreThanTen"), 11],
-    ];
-    const sleepTimeSelectOptions = sleepTimeOptions.map((option) => ({
-        label: option[0],
-        value: option[1],
-        enabled: true,
-    }));
-    const activenessOptions: [string, CoreLibraryType_Activeness][] = [
-        [t("pages.welcome.questions.activeness.options.poor"), "poor"],
-        [t("pages.welcome.questions.activeness.options.small"), "light"],
-        [t("pages.welcome.questions.activeness.options.normal"), "moderate"],
-        [t("pages.welcome.questions.activeness.options.intense"), "intense"],
-        [t("pages.welcome.questions.activeness.options.super"), "super"],
-    ];
-    const activenessSelectOptions = activenessOptions.map((option) => ({
-        label: option[0],
-        value: option[1],
-        enabled: true,
-    }));
+    const activenessSelectOptions = GetStuffForUserDataQuestion(
+        "activeness",
+    ) as SelectOption[];
+    const sleepTimeSelectOptions = GetStuffForUserDataQuestion(
+        "sleepTime",
+    ) as SelectOption[];
+    const focusOptions = GetStuffForUserDataQuestion("focus") as SwapOption[];
+    const genderOptions = GetStuffForUserDataQuestion("gender") as SwapOption[];
 
     /* for the time picker to be displayed or not */
     const [showPicker, setShowPicker] = useState<boolean>(false);
@@ -205,10 +146,11 @@ export default function WelcomePage() {
         value: string | number | null,
     ): void {
         try {
-            setFormData((prevData) => ({
+            setFormData((prevData: FullProfileForCreation) => ({
                 ...prevData,
                 [item]: value,
             }));
+            return;
         } catch (e) {
             logToConsole(
                 "Error handling data changes happened at Welcome screen: " + e,
@@ -234,17 +176,19 @@ export default function WelcomePage() {
             isStepFourValid
         ) {
             try {
+                const locale = await getDefaultLocale();
+                const validData = formData as FullProfile; // if we're on this code block we assume all data IS valid, so we simply convert types to tell TS we're sure about that
                 const userData: FullProfile = {
-                    username: formData.username,
-                    height: formData.height,
-                    weight: formData.weight,
-                    age: formData.age,
-                    gender: formData.gender,
-                    focus: formData.focus,
-                    sleepHours: formData.sleepHours,
-                    activeness: formData.activeness,
-                    language: await getDefaultLocale(),
-                    theThinkHour: formData.theThinkHour,
+                    username: validData.username,
+                    height: validData.height,
+                    weight: validData.weight,
+                    age: validData.age,
+                    gender: validData.gender,
+                    focus: validData.focus,
+                    sleepHours: validData.sleepHours,
+                    activeness: validData.activeness,
+                    language: locale,
+                    theThinkHour: validData.theThinkHour,
                     isNewUser: false,
                 };
 
@@ -257,12 +201,15 @@ export default function WelcomePage() {
                     "userData",
                     JSON.stringify(userData),
                 );
-
+                await AsyncStorage.setItem(
+                    StoredItemNames.experiments,
+                    JSON.stringify(DEFAULT_EXPERIMENTS),
+                );
                 await AsyncStorage.setItem(StoredItemNames.objectives, "[]");
                 router.replace(ROUTES.MAIN.HOME);
                 logToConsole(
                     "User " +
-                        formData.username +
+                        userData.username +
                         " registered with no errors. Give yourself a plus!",
                     "success",
                 );
@@ -297,7 +244,6 @@ export default function WelcomePage() {
      * @param {string | number} value The value of the input. Set it to a stateful value, e.g. `formData.username`.
      * @param {string} name The name of the property / stateful value it's linked to, e.g. `username` for `formData.username`.
      * @param {number} refIndex It's index. _yes, you have to count all the calls the `spawnInputField` can keep an incremental index_.
-     * @param {number} nextFieldIndex `refIndex` + 1, basically.
      * @param {("default" | "numeric")} [keyboardType="default"] Whether to use the normal keyboard or a numeric pad.
      * @param {number} length Max length of the input.
      * @returns {ReactNode} Returns a Fragment with a `<BetterText>` (label), `<TextInput />`, and a `<GapView />` between them.
@@ -306,9 +252,8 @@ export default function WelcomePage() {
         label: string,
         placeholder: string,
         value: string | number,
-        name: string,
+        name: "username" | "age" | "height" | "weight",
         refIndex: number,
-        nextFieldIndex: number,
         keyboardType: "default" | "numeric" = "default",
         length: number,
     ): ReactNode {
@@ -321,16 +266,11 @@ export default function WelcomePage() {
                     value={value}
                     name={name}
                     refIndex={refIndex}
-                    nextFieldIndex={nextFieldIndex}
                     length={length}
-                    inputRefs={inputRefs}
+                    refParams={{ inputRefs, totalRefs: 4 }}
                     keyboardType={keyboardType}
-                    changeAction={(text) =>
-                        handleChange(
-                            name as "username" | "age" | "height" | "weight",
-                            text,
-                        )
-                    }
+                    changeAction={(text) => handleChange(name, text)}
+                    shouldRef={true}
                 />
             </>
         );
@@ -380,7 +320,7 @@ export default function WelcomePage() {
     useEffect((): void => {
         try {
             validateStepOne(
-                validateUserData(
+                ValidateUserData(
                     formData.gender,
                     formData.age,
                     formData.weight,
@@ -550,14 +490,8 @@ export default function WelcomePage() {
     function goToPrivacyPolicy(): void {
         async function handle() {
             try {
-                if (
-                    await Linking.canOpenURL(
-                        "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md",
-                    )
-                ) {
-                    await Linking.openURL(
-                        "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md",
-                    );
+                if (await Linking.canOpenURL(URLs.privacy)) {
+                    await Linking.openURL(URLs.privacy);
                 } else {
                     logToConsole(
                         "Huh? Can't open the privacy policy URL. What's up?",
@@ -566,7 +500,7 @@ export default function WelcomePage() {
                 }
             } catch (e) {
                 logToConsole(
-                    "Bruh. An error ocurred trying to open an URL: " + e,
+                    "Bruh. An error occurred trying to open an URL: " + e,
                     "error",
                 );
             }
@@ -579,7 +513,7 @@ export default function WelcomePage() {
         <View style={styles.mainView}>
             {spawnProgressBar()}
             {currentTab === 0 && (
-                <>
+                <View style={styles.welcomeView}>
                     <BetterText fontSize={40} fontWeight="Bold">
                         {t("pages.welcome.beginning.welcomeTo")}{" "}
                         <BetterText
@@ -601,7 +535,7 @@ export default function WelcomePage() {
                         style="GOD"
                         action={goNext}
                     />
-                </>
+                </View>
             )}
             {currentTab === 1 && (
                 <>
@@ -628,7 +562,6 @@ export default function WelcomePage() {
                         formData.username,
                         "username",
                         0,
-                        1,
                         "default",
                         30,
                     )}
@@ -639,7 +572,6 @@ export default function WelcomePage() {
                         formData.age,
                         "age",
                         1,
-                        2,
                         "numeric",
                         2,
                     )}
@@ -652,7 +584,6 @@ export default function WelcomePage() {
                         formData.weight,
                         "weight",
                         2,
-                        3,
                         "numeric",
                         3,
                     )}
@@ -665,7 +596,6 @@ export default function WelcomePage() {
                         formData.height,
                         "height",
                         3,
-                        4,
                         "numeric",
                         3,
                     )}
