@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         width: "100%",
         maxWidth: "100%", // borderRadius fix.
+        backgroundColor: Colors.MAIN.DIVISION,
     },
     filledView: {
         width: "100%",
@@ -126,14 +127,7 @@ export default function Division({
     gap,
 }: DivisionProps): ReactElement {
     return (
-        <View
-            style={[
-                styles.division,
-                {
-                    backgroundColor: Colors.MAIN.DIVISION,
-                },
-            ]}
-        >
+        <View style={styles.division}>
             {iconName && (
                 <View style={styles.iconContainer}>
                     <Ionicons
