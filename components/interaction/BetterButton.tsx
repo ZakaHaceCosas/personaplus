@@ -1,5 +1,15 @@
-// src/Buttons.tsx
-// Buttons, botones, elementos presionables, ENTIDADES INTERACTIVAS UTILIZABLES POR MEDIO DE CLICS / TOCAMIENTOS DE LA PANTALLA xd
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/components/interaction/BetterButton.tsx
+ * Basically: Buttons, botones, elementos presionables, ENTIDADES INTERACTIVAS UTILIZABLES POR MEDIO DE CLICS / TOCAMIENTOS DE LA PANTALLA xd
+ *
+ * <=============================================================================>
+ */
 
 import React, { ReactElement, useState } from "react";
 import { DimensionValue, Pressable, StyleSheet } from "react-native";
@@ -9,6 +19,7 @@ import FontSizes from "@/constants/FontSizes";
 import { UniversalItemStyle } from "@/constants/ui/Pressables";
 import { Color, PrimaryColorsType } from "@/types/Color";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
+import { logToConsole } from "@/toolkit/debug/Console";
 
 // TypeScript, supongo
 interface BetterButtonIcon {
@@ -45,9 +56,9 @@ interface BetterButtonProps {
     /**
      * A function. The action the button will perform.
      *
-     * @type {() => void}
+     * @type {() => any | Promise<any>}
      */
-    action: () => void;
+    action: () => any | Promise<any>;
     /**
      * Whether it's a normal button or a box (50x50) button.
      *
@@ -76,7 +87,7 @@ const styles = StyleSheet.create({
  * @param {BetterButtonProps} p
  * @param {PrimaryColorsType} p.style The color style of the button.
  * @param {string | null} p.buttonText The text of the button.
- * @param {() => void} p.action A function. The action the button will perform.
+ * @param {() => void | Promise<void>} p.action A function. The action the button will perform.
  * @param {("normal" | "box")} [p.layout="normal"] Whether it's a normal button or a box (50x50) button.
  * @param {BetterButtonIcon} p.icon An icon, in case you wanted to use one.
  * @param {string} p.buttonHint A hint, explaining in detail what is the button supposed to do. Use it for accessibility purposes.
@@ -145,7 +156,24 @@ export default function BetterButton({
 
     return (
         <Pressable
-            onPress={action}
+            onPress={async () => {
+                try {
+                    // always await, so we correctly handle both sync and async stuff
+                    await Promise.resolve(action());
+                } catch (e) {
+                    await logToConsole(
+                        `Error handling a button press: ${e}.`,
+                        "error",
+                        {
+                            location:
+                                "Unknown. This happened on the 'onPress' prop of a <BetterButton /> you have somewhere. Use context to find out where it happened.",
+                            function:
+                                "Whatever you passed to some <BetterButton />",
+                            isHandler: true,
+                        },
+                    );
+                }
+            }}
             onPressIn={() => setOpacityValue(0.75)}
             onPressOut={() => setOpacityValue(1)}
             style={[
