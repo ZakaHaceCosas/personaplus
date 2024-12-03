@@ -22,6 +22,12 @@ import Colors from "@/constants/Colors";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
+// Set the animation options. This is optional.
+SplashScreen.setOptions({
+    duration: 1000,
+    fade: true,
+});
+
 export default function RootLayout() {
     const [loaded] = useFonts({
         "RobotoSerif-Light": require("../assets/fonts/RobotoSerif-Light.ttf"),
