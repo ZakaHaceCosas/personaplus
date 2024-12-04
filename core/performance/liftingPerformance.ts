@@ -7,11 +7,11 @@ CALCULATE LIFTING PERFORMANCE
 
 import { default as OneRepetitionMax } from "@/core/physicalHealth/OneRepMax";
 import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
-import { CoreLibraryResponse } from "../types/CoreLibraryResponse";
+import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 
-export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
+export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "01/07/2024",
-    "", // FIXME: NEED TO PROVIDE SOURCE
+    [""], // FIXME: NEED TO PROVIDE SOURCE
 );
 
 /**

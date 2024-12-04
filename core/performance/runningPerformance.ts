@@ -7,11 +7,17 @@ CALCULATE RUNNING PERFORMANCE
 */
 
 import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
-import { CoreLibraryResponse } from "../types/CoreLibraryResponse";
+import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 
-export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
+export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "26/06/2024",
-    "https://downhilltodowntown.com/how-to-calculate-your-caloric-burn-while-running/ and https://scielo.isciii.es/scielo.php?script=sci_arttext&pid=S0212-16112012000400040 and https://eresdeportista.com/salud/como-calcular-calorias-quemadas-ejercicio/ and https://www.topendsports.com/weight-loss/energy-met.htm andhttps://journals.lww.com/acsm-msse/fulltext/2000/09001/compendium_of_physical_activities__an_update_of.9.aspx and https://www.cmu.edu/common-cold-project/measures-by-study/health-practices/physical-activity/index.html",
+    [
+        "https://downhilltodowntown.com/how-to-calculate-your-caloric-burn-while-running/",
+        "https://scielo.isciii.es/scielo.php?script=sci_arttext&pid=S0212-16112012000400040",
+        "https://eresdeportista.com/salud/como-calcular-calorias-quemadas-ejercicio/",
+        "https://www.topendsports.com/weight-loss/energy-met.htm andhttps://journals.lww.com/acsm-msse/fulltext/2000/09001/compendium_of_physical_activities__an_update_of.9.aspx",
+        "https://www.cmu.edu/common-cold-project/measures-by-study/health-practices/physical-activity/index.html",
+    ],
 );
 
 /**

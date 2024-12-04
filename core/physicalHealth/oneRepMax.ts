@@ -3,11 +3,11 @@ CALCULATE ONE REPETITION MAX
 */
 
 import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
-import { CoreLibraryResponse } from "../types/CoreLibraryResponse";
+import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 
-export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
+export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "08/07/2024",
-    "https://en.wikipedia.org/wiki/One-repetition_maximum",
+    ["https://en.wikipedia.org/wiki/One-repetition_maximum"],
 );
 
 /**

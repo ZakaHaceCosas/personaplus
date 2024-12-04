@@ -5,9 +5,12 @@ import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 import calculateBodyMassIndex from "@/core/physicalHealth/BodyMassIndex";
 import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
 
-export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
+export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "26/06/2024",
-    "https://www.inchcalculator.com/body-fat-calculator/ and https://pubmed.ncbi.nlm.nih.gov/10966886/",
+    [
+        "https://www.inchcalculator.com/body-fat-calculator/",
+        "https://pubmed.ncbi.nlm.nih.gov/10966886/",
+    ],
 );
 
 /**

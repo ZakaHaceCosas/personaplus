@@ -1,9 +1,9 @@
 /**
- * A type with the `getSource` and `getLastUpdate` data.
+ * A type with the `getSources` and `getLastUpdate` data.
  */
 type CoreLibraryComponentData = {
     updated: `${string}/${string}/${string}`;
-    source: string;
+    sources: string[];
 };
 
 /**
@@ -11,15 +11,15 @@ type CoreLibraryComponentData = {
  *
  * @export
  * @param {string} updated - The date of the last update in DD/MM/YYYY format.
- * @param {string} source - The sources of information used.
- * @returns {{ getSource: () => string; getLastUpdate: () => `${string}/${string}/${string}`; }}
+ * @param {string} sources - The sources of information used.
+ * @returns {{ getSources: () => string; getLastUpdate: () => `${string}/${string}/${string}`; }}
  */
 export default function CreateComponentDataUtilities(
     updated: string,
-    source: string,
+    sources: string[],
 ): {
-    getSource: () => string;
     getLastUpdate: () => `${string}/${string}/${string}`;
+    getSources: () => string[];
 } {
     // data validation
     const datePattern = /^\d{2}\/\d{2}\/\d{4}$/;
@@ -30,7 +30,7 @@ export default function CreateComponentDataUtilities(
     // construction
     const componentData: CoreLibraryComponentData = {
         updated: updated as `${string}/${string}/${string}`,
-        source,
+        sources: sources,
     };
 
     // function creation
@@ -39,8 +39,8 @@ export default function CreateComponentDataUtilities(
      *
      * @returns {string} A single string with all the URLs, separated by "and" if there is more than one.
      */
-    function getSource(): string {
-        return componentData.source;
+    function getSources(): string[] {
+        return componentData.sources;
     }
 
     /**
@@ -53,7 +53,7 @@ export default function CreateComponentDataUtilities(
     }
 
     return {
-        getSource,
         getLastUpdate,
+        getSources,
     };
 }

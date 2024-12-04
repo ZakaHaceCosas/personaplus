@@ -9,9 +9,12 @@ import {
     FEMALE_PERCENTILES,
 } from "@/core/physicalHealth/utils/bmiPercentiles";
 
-export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
+export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "10/08/2024",
-    "https://www.cdc.gov/growthcharts/data/set1clinical/cj41c024.pdf and https://www.cdc.gov/growthcharts/data/set1clinical/cj41c023.pdf",
+    [
+        "https://www.cdc.gov/growthcharts/data/set1clinical/cj41c024.pdf",
+        "https://www.cdc.gov/growthcharts/data/set1clinical/cj41c023.pdf",
+    ],
 );
 
 export function getPercentile(

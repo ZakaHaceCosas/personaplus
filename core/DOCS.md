@@ -38,7 +38,7 @@ Each function is different, but they all follow a standard:
 
 ```tsx
 CoreLibrary.physicalHealth.BodyMassIndex.calculate({params});
-CoreLibrary.physicalHealth.BodyMassIndex.getSource();
+CoreLibrary.physicalHealth.BodyMassIndex.getSources();
 CoreLibrary.physicalHealth.BodyMassIndex.getLastUpdated();
 ```
 
@@ -77,7 +77,7 @@ In some cases, like the OneRM calculation, you can opt in to get an additional (
 
 ## What to expect from the other functions?
 
-There's `getSource()`, which returns a string with the URLs to all the sources of knowledge used to develop the function, write it's explanation, and so on. The string will look like this: `"https://website-one.gov and https://website-two.org`.
+There's `getSources()`, which returns a string array with all the URLs to all the sources of knowledge used to develop the function, write it's explanation, and so on. The array will look like this: `["https://website-one.gov", "https://website-two.org"]`.
 
 And then there's `getLastUpdated()`, which returns a string with the last time the function ITSELF was updated (using the DD/MM/YYYY format).
 
@@ -89,7 +89,7 @@ Great, you got it all!
 Now, let's move onto the reference manual: a list of all available functions, categorized, and with explanations.
 
 > [!TIP]
-> This reference is only for the `calculate()` function of each utility, as `getLastUpdated()` and `getSource()` are always the same.
+> This reference is only for the `calculate()` function of each utility, as `getLastUpdated()` and `getSources()` are always the same.
 
 <!--markdownlint-disable-next-line-->
 # CoreLibrary reference manual
