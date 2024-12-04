@@ -6,7 +6,7 @@ import React, {
     useState,
 } from "react";
 import { router } from "expo-router";
-import { StyleSheet, View, TextInput, Linking } from "react-native";
+import { StyleSheet, View, TextInput } from "react-native";
 import Swap, { SwapOption } from "@/components/interaction/Swap";
 import GapView from "@/components/ui/GapView";
 import BetterText from "@/components/text/BetterText";
@@ -35,6 +35,7 @@ import ROUTES from "@/constants/Routes";
 import GetStuffForUserDataQuestion from "@/constants/UserData";
 import URLs from "@/constants/Urls";
 import { DEFAULT_EXPERIMENTS } from "@/constants/Experiments";
+import { SafelyOpenUrl } from "@/toolkit/Routing";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -339,7 +340,6 @@ export default function WelcomePage() {
         } catch (e) {
             logToConsole("Error validating user data: " + e, "error");
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [formData]);
 
     /**
@@ -486,29 +486,6 @@ export default function WelcomePage() {
         );
     }
 
-    /** Opens up our privacy policy in the user's browser. */
-    function goToPrivacyPolicy(): void {
-        async function handle() {
-            try {
-                if (await Linking.canOpenURL(URLs.privacy)) {
-                    await Linking.openURL(URLs.privacy);
-                } else {
-                    logToConsole(
-                        "Huh? Can't open the privacy policy URL. What's up?",
-                        "error",
-                    );
-                }
-            } catch (e) {
-                logToConsole(
-                    "Bruh. An error occurred trying to open an URL: " + e,
-                    "error",
-                );
-            }
-        }
-
-        handle();
-    }
-
     return (
         <View style={styles.mainView}>
             {spawnProgressBar()}
@@ -548,7 +525,9 @@ export default function WelcomePage() {
                             isLink={true}
                             fontWeight="Medium"
                             fontSize={FontSizes.LARGE}
-                            onTap={goToPrivacyPolicy}
+                            onTap={async () => {
+                                await SafelyOpenUrl(URLs.privacy);
+                            }}
                         >
                             {t("globals.interaction.learnMore")}
                         </BetterText>
