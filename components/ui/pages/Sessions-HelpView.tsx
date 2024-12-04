@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { View, StyleSheet } from "react-native";
 import BetterText from "@/components/text/BetterText";
-import GapView from "../GapView";
+import GapView from "@/components/ui/GapView";
 import { TFunction } from "i18next";
 import BetterButton from "@/components/interaction/BetterButton";
 import { ActiveObjective } from "@/types/ActiveObjectives";

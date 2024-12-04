@@ -156,7 +156,7 @@ export default function Sessions() {
                     text: t("page_sessions.give_up_yes"),
                     style: "destructive",
                     onPress: () => {
-                        router.navigate(ROUTES.MAIN.HOME); // basically goes home without saving, easy.
+                        router.replace(ROUTES.MAIN.HOME); // basically goes home without saving, easy.
                     },
                 },
             ],

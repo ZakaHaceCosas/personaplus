@@ -20,6 +20,8 @@ export function SafelyGoBack(target?: string): void {
 
 /** Safely opens a URL. */
 export async function SafelyOpenUrl(url: URLValues): Promise<void> {
+    // note: in R5 i remember Álvaro using useCallback for this
+    // i'll see if i add that later on
     try {
         if (await Linking.canOpenURL(url)) {
             await Linking.openURL(url);

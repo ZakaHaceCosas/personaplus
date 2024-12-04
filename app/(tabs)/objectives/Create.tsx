@@ -380,7 +380,7 @@ export default function CreateActiveObjectivePage() {
                         "error",
                     );
                 }
-                router.navigate(ROUTES.MAIN.HOME);
+                router.replace(ROUTES.MAIN.HOME);
             }
         }
 

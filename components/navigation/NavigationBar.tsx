@@ -89,7 +89,7 @@ export default function NavigationBar({ currentLocation }: SectionProps) {
             ]}
         >
             <NavItem
-                href="/"
+                href={ROUTES.MAIN.HOME}
                 iconName="home"
                 label={t("globals.navbar.home")}
                 isSelected={currentLocation === "/"}
