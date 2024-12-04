@@ -1,3 +1,16 @@
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/toolkit/objectives/ActiveObjectives.ts
+ * Basically: One of the most important parts of the app, this toolkit contains all the base functions to interact with active objectives.
+ *
+ * <=============================================================================>
+ */
+
 import {
     ActiveObjective,
     ActiveObjectiveDailyLog,
@@ -15,7 +28,7 @@ import StoredItemNames from "@/constants/StoredItemNames";
 import { TFunction } from "i18next";
 import ROUTES from "@/constants/Routes";
 import { router } from "expo-router";
-import { GetExperiments } from "../Experiments";
+import { GetExperiments } from "@/toolkit/Experiments";
 import { Platform, ToastAndroid } from "react-native";
 
 /**
@@ -176,13 +189,8 @@ async function CheckForAnActiveObjectiveDailyStatus(
 }
 
 /**
- * **TODO: MAKE THIS R6 COMPLIANT.** Tells you if the user has any active objective due today or not. If he does, returns all of them, as an `number[]` being each number the ID of each active objective. **Async function.**
+ * Tells you if the user has any active objective due today or not. If he does, returns all of them, as an `number[]` being each number the ID of each active objective.
  *
- * *SHOULD WORK NOW*
- * TODO - TESTING
- *
- * @deprecated
- * @rawR5code
  * @async
  * @returns {Promise<number[] | 0 | false | null>} Read carefully: `null` if there are no objectives at all, `false` if there are, but none is due today, and `0` if there are for today user took care of all of them), and a `number[]` if there's any active objective due today, being each number an active objective identifier.
  */
@@ -193,17 +201,23 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
             return null; // no objectives at all
         }
 
-        // okay k this thing is kinda like: doing a foreach with all the objective entries and for each entry doing a map looking for its identifier and its status
-        // (only if its due today, otherwise we directly skip it)
-
-        // the return inside the loop *should* return an ActiveObjective[]
-        // (aka an array of ActiveObjectives)
-        const dueTodayObjectives = await Promise.all(
-            Object.values(objectives).map(async (obj: ActiveObjective) => {
+        // there are only two hard things in computer science, cache invalidation and naming things
+        type safeThing = {
+            identifier: number;
+            status: boolean;
+        };
+        type thing = safeThing | null;
+        type whatever = thing[];
+        // okay i think i finally know what's going on in here, for each
+        const dueTodayObjectives: whatever = await Promise.all(
+            Object.values(objectives).map(async function (
+                obj: ActiveObjective,
+            ): Promise<thing> {
                 if (obj.info.days[adjustedToday]) {
-                    const status = await CheckForAnActiveObjectiveDailyStatus(
-                        obj.identifier,
-                    );
+                    const status: boolean =
+                        await CheckForAnActiveObjectiveDailyStatus(
+                            obj.identifier,
+                        );
                     return { identifier: obj.identifier, status };
                 }
                 return null; // not due today
@@ -212,36 +226,14 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
 
         // filter out null entries and separate the dueToday objectives based on their status
         const activeObjectivesDueToday = dueTodayObjectives.filter(
-            (obj) => obj !== null,
-        ) as { identifier: number; status: boolean }[];
+            (obj: thing): boolean => obj !== null,
+        ) as safeThing[];
 
         if (activeObjectivesDueToday.length === 0) {
             return false; // there are objectives, but none are due today
         }
 
         // okay i don't get whats going on in here
-        // only thing i know is 0 equals "there are objetives, but no one's due *today*" while null means there are no existing objectives at all
-        // (maybe)
-        /* const objectivesToDo = dueTodayObjectives.filter(obj => obj && !obj.status);
-        if (objectivesToDo.length > 0) {
-            return 0;
-        }
-
-        const allDone = dueTodayObjectives
-            .every(
-                obj => obj === null || obj.status === true);
-        return allDone ? 0 : null; */
-        /* const allDone: boolean = activeObjectivesDueToday.every(
-            (obj: { identifier: number; status: boolean }): boolean =>
-                obj.status,
-        );
-        return allDone
-            ? 0
-            : activeObjectivesDueToday.map(
-                  (obj: { identifier: number; status: boolean }): number =>
-                      obj.identifier,
-              ); // Return 0 if all are done, otherwise return the active objectives due today (well, their identifiers) */
-
         // hope this works
         // check if all objectives due today are done
         const allDone: boolean = activeObjectivesDueToday.every(
@@ -253,7 +245,7 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
         // get the identifiers of objectives that are not done yet
         const pendingObjectives: number[] = activeObjectivesDueToday
             // no i did not write this
-            .filter((obj) => !obj.status)
+            .filter((obj) => obj.status === false)
             .map((obj) => obj.identifier);
 
         return pendingObjectives.length > 0 ? pendingObjectives : 0; // return pending objectives or 0 if none
@@ -428,6 +420,15 @@ async function DeleteActiveObjective(identifier: number): Promise<void> {
     }
 }
 
+/**
+ * Generates a (currently) text based description of an objective.
+ *
+ * Note this will probably undergo refactoring as the final idea is to use icon for sleeker UI, changing the return type from `string` to `ReactNode`.
+ *
+ * @param {ActiveObjective} obj The objective.
+ * @param {TFunction} t Pass here the translate function, please.
+ * @returns {string} A string.
+ */
 function GenerateDescriptionOfObjective(
     obj: ActiveObjective,
     t: TFunction,
@@ -454,6 +455,13 @@ function GenerateDescriptionOfObjective(
         return t("For " + obj.info.durationMinutes + minuteWord);
     return "(There was an error reading this objective's data)";
 }
+/**
+ * Launches an Active Objective live session.
+ *
+ * @async
+ * @param {number} identifier The identifier.
+ * @returns {Promise<void>}
+ */
 async function LaunchActiveObjective(identifier: number): Promise<void> {
     try {
         const [obj, experiments] = await Promise.all([
