@@ -57,7 +57,12 @@ function NavItem({
         : Colors.MAIN.FOOTER.FOOTER_UNS;
 
     return (
-        <Pressable onPress={() => router.push(href)} style={styles.navItem}>
+        <Pressable
+            onPress={() => {
+                router.push(href);
+            }}
+            style={styles.navItem}
+        >
             <Ionicons name={iconName} size={25} color={color} />
             <GapView height={5} />
             <BetterText

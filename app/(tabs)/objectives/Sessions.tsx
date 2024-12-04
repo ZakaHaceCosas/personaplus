@@ -37,7 +37,12 @@ import { BasicUserHealthData } from "@/types/User";
 import { OrchestrateUserData } from "@/toolkit/User";
 
 // TypeScript, supongo
-export interface SessionParams {
+// this type is a glue fix, otherwise a type error happens because SessionParams is not compatible with UnknownInputParams from ExpoRouter
+type ExpoRouterParams = Record<
+    string,
+    string | number | undefined | null | (string | number)[]
+>;
+export interface SessionParams extends ExpoRouterParams {
     burntCalories: number;
     elapsedTime: number;
     id: number;
@@ -243,11 +248,7 @@ export default function Sessions() {
                         objective &&
                         !isNaN(totalTime) &&
                         !isNaN(objective.specificData.estimateSpeed) &&
-                        userData &&
-                        userData.age !== "" &&
-                        userData.gender &&
-                        userData.weight !== "" &&
-                        userData.height !== ""
+                        userData
                     ) {
                         const exercise = objective.exercise.toLowerCase();
 
@@ -317,7 +318,6 @@ export default function Sessions() {
 
             router.replace({
                 pathname: ROUTES.ACTIVE_OBJECTIVES.RESULTS,
-                // @ts-expect-error TypeError
                 params: params,
             });
         } catch (e) {

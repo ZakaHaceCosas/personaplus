@@ -111,8 +111,7 @@ export default function CreateActiveObjectivePage() {
     const [randomMessage, setRandomMessage] = useState<string>("");
     useEffect((): void => {
         setRandomMessage(GenerateRandomMessage("createActiveObjective", t));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [t]);
 
     // some types to avoid duplication
     type InfoValue = "durationMinutes" | "rests" | "restDurationMinutes";
@@ -272,7 +271,6 @@ export default function CreateActiveObjectivePage() {
                         : `${baseTranslateKey}.amountOfHandsLiftingHint`
                     : `${baseTranslateKey}.${associatedValue}Hint`,
         };
-        console.log(translateKeys.header, translateKeys.subHeader);
 
         switch (associatedValue) {
             case "rests":
@@ -360,8 +358,8 @@ export default function CreateActiveObjectivePage() {
             } else if (objectiveToCreate.exercise === "Push Ups") {
                 isSpecificDataValid =
                     objectiveToCreate.specificData.amountOfPushUps > 0;
-            } else if (objectiveToCreate.exercise === "Running") {
-                isSpecificDataValid = true; // heh
+            } else {
+                isSpecificDataValid = true; // heh. no validation required.
             }
 
             return isInfoValid && isSpecificDataValid;
