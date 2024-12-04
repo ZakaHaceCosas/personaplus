@@ -23,6 +23,10 @@ const ROUTES = {
         SESSION: "/objectives/Sessions",
         RESULTS: "/objectives/Results",
     },
+    ABOUT: {
+        LICENSE: "/about/License",
+        ABOUT_PAGE: "/about/About",
+    },
     /**
      * Experimental features should live in separate pages, listed here.
      */
