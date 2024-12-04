@@ -3,7 +3,7 @@
 
 import React, { ReactElement } from "react";
 import { View } from "react-native";
-import GapView from "../GapView";
+import GapView from "@/components/ui/GapView";
 import { ActiveObjective } from "@/types/ActiveObjectives";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import BetterText from "@/components/text/BetterText";

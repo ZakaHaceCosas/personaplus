@@ -14,12 +14,7 @@
 import AsyncStorage from "expo-sqlite/kv-store";
 import { logToConsole } from "@/toolkit/debug/Console";
 import { Alert } from "react-native";
-import {
-    BasicUserData,
-    BasicUserHealthData,
-    FullProfile,
-    FullProfileForCreation,
-} from "@/types/User";
+import { BasicUserData, BasicUserHealthData, FullProfile } from "@/types/User";
 import { router } from "expo-router";
 import StoredItemNames from "@/constants/StoredItemNames";
 import ROUTES from "@/constants/Routes";
@@ -219,18 +214,18 @@ export function updateBrm5(careAboutTheUser: boolean): void {
 /**
  * Use this only as placeholder data for when an error happens while fetching user data.
  *
- * @type {FullProfileForCreation}
+ * @type {FullProfile}
  */
-export const ErrorUserData: FullProfileForCreation = {
+export const ErrorUserData: FullProfile = {
     username: "Error",
-    age: "",
-    height: "",
-    weight: "",
-    theThinkHour: "",
+    age: 0,
+    height: 0,
+    weight: 0,
+    theThinkHour: "0",
     gender: "female",
     language: "en",
     activeness: "poor",
     focus: "noPriority",
-    sleepHours: null,
+    sleepHours: 3,
     isNewUser: false,
 };

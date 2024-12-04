@@ -17,7 +17,7 @@ import Division from "@/components/ui/sections/Division";
 import BetterText from "@/components/text/BetterText";
 import BetterButton from "@/components/interaction/BetterButton";
 import ROUTES from "@/constants/Routes";
-import { SessionParams } from "./Sessions";
+import { SessionParams } from "@/app/(tabs)/objectives/Sessions";
 
 // We define the styles
 const styles = StyleSheet.create({

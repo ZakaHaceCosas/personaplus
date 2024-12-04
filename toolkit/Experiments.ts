@@ -1,7 +1,7 @@
 import StoredItemNames from "@/constants/StoredItemNames";
 import { Experiment, Experiments } from "@/types/User";
 import { AsyncStorage } from "expo-sqlite/kv-store";
-import { logToConsole } from "./debug/Console";
+import { logToConsole } from "@/toolkit/debug/Console";
 import { DEFAULT_EXPERIMENTS } from "@/constants/Experiments";
 
 async function GetExperiments(): Promise<Experiments> {

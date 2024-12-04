@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { View, StyleSheet } from "react-native";
-import { BetterTextSmallText } from "../text/BetterTextPresets";
+import { BetterTextSmallText } from "@/components/text/BetterTextPresets";
 import Colors from "@/constants/Colors";
 import GenerateRandomKey from "@/toolkit/KeyGenerator";
 
