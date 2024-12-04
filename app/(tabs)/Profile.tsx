@@ -28,7 +28,7 @@ export default function HomeScreen() {
     useEffect((): void => {
         async function handler(): Promise<void> {
             try {
-                const profile: FullProfile | null = await OrchestrateUserData();
+                const profile: FullProfile = await OrchestrateUserData();
                 if (!profile) {
                     setUserData(ErrorUserData);
                     return;
@@ -139,6 +139,41 @@ export default function HomeScreen() {
                         buttonHint="Launches Dev Interface"
                         style="HMM"
                         action={() => router.push(ROUTES.DEV_INTERFACE.HOME)}
+                    />
+                </Division>
+            </Section>
+            <GapView height={20} />
+            <Section kind="About">
+                <Division
+                    preHeader="About"
+                    header="About us"
+                    subHeader="Find out who's behind the app you're (hopefully!) enjoying right now."
+                    direction="vertical"
+                    gap={0}
+                >
+                    <BetterButton
+                        buttonText="See about us"
+                        buttonHint="Opens a page to see info about the app, its creator, etc..."
+                        style="DEFAULT"
+                        action={() => {
+                            router.push(ROUTES.ABOUT.ABOUT_PAGE);
+                        }}
+                    />
+                </Division>
+                <Division
+                    preHeader="About"
+                    header="License"
+                    subHeader="PersonaPlus is licensed under GPL-v3. Enter here to learn more. Note this page is only in English."
+                    direction="vertical"
+                    gap={0}
+                >
+                    <BetterButton
+                        buttonText="See license"
+                        buttonHint="Opens a page to see the app's license."
+                        style="DEFAULT"
+                        action={() => {
+                            router.push(ROUTES.ABOUT.LICENSE);
+                        }}
                     />
                 </Division>
             </Section>
