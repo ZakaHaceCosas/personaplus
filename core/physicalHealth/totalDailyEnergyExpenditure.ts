@@ -5,11 +5,15 @@ CALCULATE TOTAL DAILY ENERGY EXPENDITURE
 import CoreLibrary from "@/core/CoreLibrary";
 import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
-import { CoreLibraryType_Activeness } from "../types/MiscTypes";
+import { CoreLibraryType_Activeness } from "@/core/types/MiscTypes";
 
-export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
+export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "07/07/2024",
-    "https://en.wikipedia.org/wiki/Harris%E2%80%93Benedict_equation and https://ajcn.nutrition.org/article/S0002-9165(23)16698-6/abstract and https://web.archive.org/web/20081014132915/http://gottasport.com/weight-loss/71/harris-benedict-formula-for-women-and-men.html",
+    [
+        "https://en.wikipedia.org/wiki/Harris%E2%80%93Benedict_equation",
+        "https://ajcn.nutrition.org/article/S0002-9165(23)16698-6/abstract",
+        "https://web.archive.org/web/20081014132915/http://gottasport.com/weight-loss/71/harris-benedict-formula-for-women-and-men.html",
+    ],
 );
 
 /**

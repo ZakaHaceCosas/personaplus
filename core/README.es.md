@@ -5,7 +5,7 @@
 La PersonaPlus CoreLibrary (antes conocida como "_OpenHealth_") es, como el nombre implica, el núcleo ("core") de la app - una "librería" de código TS diseñado para realizar cálculos relacionados con la salud y proporcionar información detallada sobre varios aspectos de bienestar personal. Desde el cálculo de diferentes índices y estadísticas hasta la explicación detallada de términos médicos, CoreLibrary está pensado para ser una herramienta versátil, educativa, útil, y abierta.
 
 > [!NOTE]
-> Todas las funciones deben contener (y contendrán) una función `getSource` para obtener todas las URLs de todas las fuentes de información utilizadas para obtener los datos, fórmulas, y cálculos utilizados.
+> Todas las funciones deben contener (y contendrán) una función `getSources()` para obtener todas las URLs de todas las fuentes de información utilizadas para obtener los datos, fórmulas, y cálculos utilizados.
 
 ## Utilización
 

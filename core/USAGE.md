@@ -23,7 +23,7 @@ import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
 import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 
 // Then, construct the data function. More onto this later.
-export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
+export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "date",
     "sources"
 )
@@ -64,7 +64,7 @@ Then, construct the data. Let me explain:
 
 Then there's source, a single string with all the sources you've used. Think of it as a school work, where you got to link your sources so we can ensure your info is valid and calculations are correct.
 
-Just `export const { getSource, getLastUpdate }` the data utilities function and they will work out of the box.
+Just `export const { getSources, getLastUpdate }` the data utilities function and they will work out of the box.
 
 Then, you just need to create your main function and make it the **default** export. Be sure to give it the correct params and return one of the three valid CoreLibrary Responses. You can just copy & paste from other functions for that.
 

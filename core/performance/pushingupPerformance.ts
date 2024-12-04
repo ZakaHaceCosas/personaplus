@@ -3,11 +3,11 @@ CALCULATE PUSHING UP PERFORMANCE
 */
 
 import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
-import { CoreLibraryResponse } from "../types/CoreLibraryResponse";
+import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 
-export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
+export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "03/08/2024",
-    "https://fitnessvolt.com/calories-burned-push-up-calculator/",
+    ["https://fitnessvolt.com/calories-burned-push-up-calculator/"],
 );
 
 /**

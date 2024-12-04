@@ -21,14 +21,14 @@ import * as PushingUpPerformance from "@/core/performance/PushingUpPerformance";
 // Interface for all CoreLibraryModules
 interface CoreLibraryModule<T = unknown> {
     default: T; // unknown, as it can be anything
-    getSource: () => string;
+    getSources: () => string[];
     getLastUpdate: () => string;
 }
 
 // Alias for the return type of the CreateModule function
 type ModuleReturn<T> = {
     calculate: T;
-    getSource: () => string;
+    getSources: () => string[];
     getLastUpdate: () => string;
 };
 
@@ -37,7 +37,7 @@ const CreateModule: <T>(module: CoreLibraryModule<T>) => ModuleReturn<T> = <T>(
     module: CoreLibraryModule<T>,
 ): ModuleReturn<T> => ({
     calculate: module.default,
-    getSource: module.getSource,
+    getSources: module.getSources,
     getLastUpdate: module.getLastUpdate,
 });
 
