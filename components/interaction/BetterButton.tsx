@@ -23,8 +23,11 @@ import { logToConsole } from "@/toolkit/debug/Console";
 
 // TypeScript, supongo
 interface BetterButtonIcon {
-    name: string;
+    /** Name of the icon. */
+    name: "pause" | "play-arrow";
+    /** Size in px. */
     size: number;
+    /** Icon color. */
     color: Color;
 }
 
@@ -65,6 +68,7 @@ interface BetterButtonProps {
      * @type {?("normal" | "box")}
      */
     layout?: "normal" | "box";
+    /** Optionally, add an icon to the button. */
     icon?: BetterButtonIcon;
 }
 
@@ -174,8 +178,12 @@ export default function BetterButton({
                     );
                 }
             }}
-            onPressIn={() => setOpacityValue(0.75)}
-            onPressOut={() => setOpacityValue(1)}
+            onPressIn={() => {
+                setOpacityValue(0.7);
+            }}
+            onPressOut={() => {
+                setOpacityValue(1);
+            }}
             style={[
                 styles.button,
                 {
@@ -196,7 +204,6 @@ export default function BetterButton({
         >
             {icon && (
                 <Ionicons
-                    // @ts-expect-error It's because of a simple type error. Nothing's actually wrong.
                     name={icon.name}
                     size={icon.size}
                     color={icon.color}

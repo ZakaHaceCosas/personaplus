@@ -130,7 +130,7 @@ export default function UpdateProfile() {
                     refParams={{ inputRefs, totalRefs: 4 }}
                     keyboardType={keyboardType}
                     changeAction={(text) =>
-                        setWorkingData((prev) => ({ ...prev!, username: text }))
+                        setWorkingData((prev) => ({ ...prev!, [name]: text }))
                     }
                     shouldRef={true}
                 />
