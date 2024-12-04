@@ -18,6 +18,10 @@ const URLs = {
     website: "https://personaplus.vercel.app/",
     privacy:
         "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md",
-};
+    license: "https://www.gnu.org/licenses/gpl-3.0.html#license-text",
+} as const;
+
+/** TS type for functions that only take app URLs. */
+export type URLValues = (typeof URLs)[keyof typeof URLs];
 
 export default URLs;
