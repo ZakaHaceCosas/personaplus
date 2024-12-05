@@ -1,18 +1,13 @@
-// FIXME - THERE'S A LOT OF WRONG STUFF IN HERE
-// TODO - HANDLE ALL TODOs FROM THIS PAGE
-
-// FIXME: KNOWN ERRORS
-// FIXME 1: When it "enters" rest state colors change but the timer keeps going
-
 // Sessions.tsx
 // Page for live exercising sessions
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { View, StyleSheet, Alert, ToastAndroid, Platform } from "react-native";
 import {
     GetActiveObjective,
     CalculateSessionFragmentsDuration,
     SaveActiveObjectiveToDailyLog,
+    CalculateSessionPerformance,
 } from "@/toolkit/objectives/ActiveObjectives";
 import { router, useGlobalSearchParams } from "expo-router";
 import BetterText from "@/components/text/BetterText";
@@ -32,7 +27,6 @@ import IslandDivision from "@/components/ui/sections/IslandDivision";
 import GenerateRandomMessage from "@/toolkit/RandomMessage";
 import ROUTES from "@/constants/Routes";
 import { Color } from "@/types/Color";
-import CoreLibrary from "@/core/CoreLibrary";
 import { BasicUserHealthData } from "@/types/User";
 import { OrchestrateUserData } from "@/toolkit/User";
 
@@ -48,7 +42,6 @@ export interface SessionParams extends ExpoRouterParams {
     id: number;
 }
 
-// We define the styles
 const styles = StyleSheet.create({
     mainView: {
         width: getCommonScreenSize("width"),
@@ -61,36 +54,56 @@ const styles = StyleSheet.create({
     },
 });
 
-// We define the main function
 export default function Sessions() {
     // Stateful values and stuff
     const { t } = useTranslation();
+
+    // data
     const params = useGlobalSearchParams();
     const objectiveIdentifier = Number(params.id);
     const [loading, setLoading] = useState<boolean>(true);
     const [objective, setObjective] = useState<ActiveObjective | null>(null);
-
     const [userData, setUserData] = useState<BasicUserHealthData>();
 
-    useEffect(() => {
-        const h = async () => {
-            const d = await OrchestrateUserData();
-            if (!d) throw new Error("Error obtaining user data. Null.");
-            const { age, weight, height, gender } = d;
-            setUserData({ age, weight, height, gender });
-        };
+    // session itself
+    const [isTimerRunning, setTimerStatus] = useState(true);
+    const [isUserCheckingHelp, setIsUserCheckingHelp] = useState(false);
+    const [isUserResting, setIsUserResting] = useState(false);
+    const [totalTime, setTotalTime] = useState<number>(0);
+    // the verbal version of the objective name (i don't know how to call it)
+    // like if the exercise is "Push ups" this variable is "Pushing up" (or "Doing pushups"? i don't remember)
+    const currentObjectiveVerbalName = useMemo(
+        () =>
+            objective?.exercise
+                ? t(
+                      `globals.supported_active_objectives_verbal.${objective.exercise}`,
+                  ) // TODO - rename vars accordingly
+                : "Doing something",
+        [objective, t],
+    );
+    const [currentObjectiveDescription, setObjectiveDescription] =
+        useState<string>(t("page_sessions.resting"));
 
-        h();
+    useEffect(() => {
+        async function handler() {
+            setUserData(await OrchestrateUserData("health"));
+        }
+        handler();
     }, []);
 
     useEffect(() => {
-        const handler = async () => {
+        async function handler() {
             try {
                 if (objectiveIdentifier === null) {
                     throw new Error("objectiveIdentifier is null.");
                 }
-
-                const obj = await GetActiveObjective(objectiveIdentifier);
+                const obj: ActiveObjective | null =
+                    await GetActiveObjective(objectiveIdentifier);
+                if (!obj) {
+                    throw new Error(
+                        `${objectiveIdentifier} is not an objective.`,
+                    );
+                }
                 setObjective(obj);
                 setLoading(false);
             } catch (e) {
@@ -100,29 +113,12 @@ export default function Sessions() {
                 );
                 setLoading(false);
             }
-        };
-
+        }
         handler();
     }, [objectiveIdentifier]);
 
-    const [isTimerRunning, setTimerStatus] = useState(true);
-    const [isUserCheckingHelp, setIsUserCheckingHelp] = useState(false);
-    const [isUserResting, setIsUserResting] = useState(false);
-
-    const [totalTime, setTotalTime] = useState<number>(0);
-
-    // the verbal version of the objective name (i don't know how to call it)
-    // like if the exercise is "Push ups" this variable is "Pushing up" (or "Doing pushups"? i don't remember)
-    const currentObjectiveVerbalName: string = objective?.exercise
-        ? t(`globals.supported_active_objectives_verbal.${objective.exercise}`) // TODO - rename vars accordingly
-        : "Doing something";
-
-    const [currentObjectiveDescription, setObjectiveDescription] =
-        useState<string>(t("page_sessions.resting"));
-
     useEffect(() => {
         if (!objective) return;
-
         const { durationMinutes } = objective.info;
         const result = !isUserResting
             ? `${currentObjectiveVerbalName} ${durationMinutes}${durationMinutes > 1 ? ` ${t("globals.minute")}s` : ""}`
@@ -151,6 +147,7 @@ export default function Sessions() {
                 {
                     text: t("globals.nevermind"),
                     style: "cancel",
+                    onPress: () => {},
                 },
                 {
                     text: t("page_sessions.give_up_yes"),
@@ -166,70 +163,75 @@ export default function Sessions() {
 
     // pauses/plays the timer
     // you can pass a specific boolean value (true = play, false = pause), or don't pass anything for it to revert (true to false / false to true)
-    const toggleTimerStatus = (target?: boolean): void => {
-        setTimerStatus((prev) => target ?? !prev);
-    };
+    const toggleTimerStatus = useCallback((target: boolean) => {
+        setTimerStatus((prev) =>
+            typeof target === "boolean" ? target : !prev,
+        );
+    }, []);
 
     // total duration of the session, including rests
-    useEffect(() => {
-        const calculateTotalTime = (): number => {
-            if (!objective) return 0;
-            const { durationMinutes, rests, restDurationMinutes } =
-                objective.info;
-            return durationMinutes + (rests ?? 0) * restDurationMinutes;
-        };
-
-        setTotalTime(calculateTotalTime());
+    const calculateTotalTime = useCallback(() => {
+        if (!objective) return 0;
+        const { durationMinutes, rests, restDurationMinutes } = objective.info;
+        return durationMinutes + (rests ?? 0) * restDurationMinutes;
     }, [objective]);
 
+    useEffect(() => {
+        setTotalTime(calculateTotalTime());
+    }, [calculateTotalTime]);
+
     // handle the state changes for resting
-    const handleRestState = (isResting: boolean): void => {
-        toggleTimerStatus(!isResting); // if resting, pause; if not, play
-        setIsUserResting(isResting);
-    };
+    const handleRestState = useCallback(
+        (isResting: boolean) => {
+            toggleTimerStatus(!isResting); // if resting, pause; if not, play
+            setIsUserResting(isResting);
+        },
+        [toggleTimerStatus],
+    );
 
     // this handles pausing the timer for resting
-    const handleResting = (
-        totalDuration: number,
-        timeLeft: number,
-        fragmentDuration: number,
-        restDuration: number,
-        rests: number,
-    ): void => {
-        const elapsedTime = totalDuration - timeLeft; // Elapsed time. The circle timer is supposed to call this thing each second, so it should work
-        const currentFragment = Math.floor(elapsedTime / fragmentDuration);
+    const handleResting = useCallback(
+        (
+            totalDuration: number,
+            timeLeft: number,
+            fragmentDuration: number,
+            restDuration: number,
+            rests: number,
+        ) => {
+            const elapsedTime = totalDuration - timeLeft; // Elapsed time. The circle timer is supposed to call this thing each second, so it should work
+            const currentFragment = Math.floor(elapsedTime / fragmentDuration);
 
-        /*
-        i'll try to explain what's up
-        sessions get divided in equally lasting "fragments", one division per rest
-        1 session (60 seconds) + 1 rest = 1 division = 2 fragments (30 seconds)
-        alright?
-        */
+            /*
+            i'll try to explain what's up
+            sessions get divided in equally lasting "fragments", one division per rest
+            1 session (60 seconds) + 1 rest = 1 division = 2 fragments (30 seconds)
+            alright?
+            */
 
-        if (
-            elapsedTime !== 0 &&
-            elapsedTime % fragmentDuration === 0 &&
-            currentFragment <= rests
-        ) {
-            handleRestState(true); // Pauses
-            setTimeout(
-                () => {
-                    handleRestState(false); // Plays, after the time has passed
-                },
-                restDuration * 60 * 1000, // Convert seconds to milliseconds
-            );
-        }
-    };
+            if (
+                elapsedTime > 0 &&
+                elapsedTime % fragmentDuration === 0 &&
+                currentFragment <= rests
+            ) {
+                handleRestState(true); // Pauses
+                setTimeout(
+                    () => handleRestState(false), // Plays, after the time has passed
+                    restDuration * 60 * 1000, // Convert seconds to milliseconds
+                );
+            }
+        },
+        [handleRestState],
+    );
 
-    const toggleHelpMenu = (): void => {
-        setIsUserCheckingHelp(!isUserCheckingHelp);
-        toggleTimerStatus(isUserCheckingHelp); // Pause if checking help, play otherwise
-    };
+    function toggleHelpMenu(status: boolean): void {
+        setIsUserCheckingHelp(status);
+        toggleTimerStatus(!status); // Pause if checking help, play otherwise
+    }
 
     // this function is basically to finish the session
     // will mark the obj as done, save it, and head to the results page
-    const finishSession: () => Promise<void> = async (): Promise<void> => {
-        if (!objective || objective === null) return;
+    const FinishSession = useCallback(() => {
+        if (!objective || !userData) return; // i mean if we finished we can asume we already have both things, but typescript disagrees
 
         try {
             if (Platform.OS === "android") {
@@ -239,76 +241,15 @@ export default function Sessions() {
                 );
             }
 
-            function handleExerciseCalculation() {
-                try {
-                    // ok, I know nesting too much is a bad practice
-                    // but uhh it has to be a different function with different params for each scenario
-                    // so yeah i cant think of a better approach
-                    if (
-                        objective &&
-                        !isNaN(totalTime) &&
-                        !isNaN(objective.specificData.estimateSpeed) &&
-                        userData
-                    ) {
-                        const exercise = objective.exercise.toLowerCase();
+            const response = CalculateSessionPerformance(
+                objective,
+                userData,
+                totalTime,
+            );
+            if (!response) throw new Error("Response is null or undefined");
 
-                        switch (exercise) {
-                            case "running":
-                                return CoreLibrary.performance.RunningPerformance.calculate(
-                                    userData.weight,
-                                    objective.specificData.estimateSpeed,
-                                    totalTime,
-                                );
-                            case "lifting":
-                                return CoreLibrary.performance.LiftingPerformance.calculate(
-                                    userData.age,
-                                    userData.gender,
-                                    userData.weight,
-                                    objective.specificData.dumbbellWeight,
-                                    objective.specificData.amountOfHands,
-                                    totalTime,
-                                    objective.specificData.reps,
-                                );
-                            case "push ups":
-                                return CoreLibrary.performance.PushingUpPerformance.calculate(
-                                    userData.gender,
-                                    userData.weight,
-                                    totalTime,
-                                    objective.specificData.amountOfPushUps,
-                                    objective.specificData.amountOfHands,
-                                );
-                            default:
-                                throw new Error(
-                                    "Unknown or invalid exercise type",
-                                );
-                        }
-                    } else {
-                        throw new Error("Invalid input data");
-                    }
-                } catch (e) {
-                    logToConsole(
-                        "Error handling post-session calculations (@ handleExerciseCalculation): " +
-                            e,
-                        "error",
-                    );
-                    return undefined;
-                }
-            }
-
-            const response = handleExerciseCalculation();
-            if (response) {
-                SaveActiveObjectiveToDailyLog(
-                    objectiveIdentifier,
-                    true,
-                    response,
-                );
-                logToConsole(
-                    "Success! Session's results set & saved",
-                    "success",
-                );
-            } else {
-                throw new Error("Response is null or undefined");
-            }
+            SaveActiveObjectiveToDailyLog(objectiveIdentifier, true, response);
+            logToConsole("Success! Session's results set & saved", "success");
 
             const params: SessionParams = {
                 burntCalories: response.result,
@@ -322,18 +263,11 @@ export default function Sessions() {
             });
         } catch (e) {
             logToConsole(
-                "Error parsing active objectives for update: " + e,
+                `Error parsing active objectives for update: ${e}`,
                 "error",
             );
         }
-    };
-
-    // handles finishing. this is called whenever the timer runs out of time
-    // however repetitions exist, so a handler is required
-    // NOTE - repetitions have been deprecated as of now so uh i don't think we'll need this anymore?
-    const handleFinish = () => {
-        finishSession();
-    };
+    }, [objective, userData, totalTime, t, objectiveIdentifier]);
 
     if (loading || !objective) {
         return <Loading />;
@@ -393,7 +327,7 @@ export default function Sessions() {
                 colors={[timerColor, timerColor]}
                 colorsTime={[15, 5]}
                 isSmoothColorTransition={true}
-                onComplete={handleFinish}
+                onComplete={FinishSession}
                 onUpdate={(remainingTime: number): void =>
                     handleResting(
                         objective.info.durationMinutes * 60,
@@ -433,7 +367,11 @@ export default function Sessions() {
             <GapView height={20} />
             <IslandDivision alignment="center" direction="horizontal">
                 <BetterButton
-                    buttonHint="TODO"
+                    buttonHint={
+                        isTimerRunning
+                            ? "Pauses the timer."
+                            : "Lets the timer keep running."
+                    }
                     buttonText={null}
                     style={isTimerRunning ? "ACE" : "HMM"}
                     action={() => setTimerStatus((prev) => !prev)}
@@ -448,15 +386,15 @@ export default function Sessions() {
                 />
                 <GapView width={10} />
                 <BetterButton
-                    buttonHint="TODO"
+                    buttonHint="Opens up a menu with basic help onto what you should be doing right now."
                     style="HMM"
-                    buttonText={t("globals.help")}
-                    action={() => toggleHelpMenu()}
+                    buttonText={t("globals.interaction.help")}
+                    action={() => toggleHelpMenu(true)}
                     layout="normal"
                 />
                 <GapView width={10} />
                 <BetterButton
-                    buttonHint="TODO"
+                    buttonHint="Leaves the current sessions without saving your data."
                     style="WOR"
                     buttonText={t("page_sessions.give_up")}
                     action={() => GiveUp()}
@@ -465,9 +403,8 @@ export default function Sessions() {
             </IslandDivision>
             {isUserCheckingHelp && (
                 <SessionsPageHelpView
-                    t={t}
                     objective={objective}
-                    toggleHelpMenu={() => toggleHelpMenu()}
+                    toggleHelpMenu={() => toggleHelpMenu(false)}
                 />
             )}
         </View>

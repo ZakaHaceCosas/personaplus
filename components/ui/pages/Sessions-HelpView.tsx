@@ -2,10 +2,10 @@ import React, { ReactElement } from "react";
 import { View, StyleSheet } from "react-native";
 import BetterText from "@/components/text/BetterText";
 import GapView from "@/components/ui/GapView";
-import { TFunction } from "i18next";
 import BetterButton from "@/components/interaction/BetterButton";
 import { ActiveObjective } from "@/types/ActiveObjectives";
 import Colors from "@/constants/Colors";
+import { useTranslation } from "react-i18next";
 
 /**
  * HelpViewProps
@@ -26,12 +26,6 @@ interface HelpViewProps {
      * @type {() => void}
      */
     toggleHelpMenu: () => void;
-    /**
-     * Pass here the `t` function, please.
-     *
-     * @type {TFunction}
-     */
-    t: TFunction;
 }
 
 const styles = StyleSheet.create({
@@ -61,14 +55,14 @@ const styles = StyleSheet.create({
  * @param {HelpViewProps} p HelpViewProps
  * @param {ActiveObjective} p.objective The ActiveObjective you want help with.
  * @param {() => void} p.toggleHelpMenu The stateful function you'll use to close / toggle this menu.
- * @param {TFunction} p.t Pass here the `t` function, please.
  * @returns {ReactElement}
  */
 export default function SessionsPageHelpView({
     objective,
     toggleHelpMenu,
-    t,
 }: HelpViewProps): ReactElement {
+    const { t } = useTranslation();
+
     return (
         <View style={styles.helpContainer}>
             <BetterText fontSize={18} fontWeight="Regular">

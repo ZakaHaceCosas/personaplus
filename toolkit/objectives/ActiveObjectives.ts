@@ -30,6 +30,9 @@ import ROUTES from "@/constants/Routes";
 import { router } from "expo-router";
 import { GetExperiments } from "@/toolkit/Experiments";
 import { Platform, ToastAndroid } from "react-native";
+import CoreLibrary from "@/core/CoreLibrary";
+import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
+import { BasicUserHealthData } from "@/types/User";
 
 /**
  * Returns the objectives from AsyncStorage as an `ActiveObjective[]`, or `null` if there aren't any objectives.
@@ -496,6 +499,55 @@ async function LaunchActiveObjective(identifier: number): Promise<void> {
     }
 }
 
+function CalculateSessionPerformance(
+    objective: ActiveObjective,
+    userData: BasicUserHealthData,
+    elapsedTime: number,
+): CoreLibraryResponse {
+    try {
+        const exercise = objective.exercise;
+
+        switch (exercise) {
+            case "Running":
+                return CoreLibrary.performance.RunningPerformance.calculate(
+                    userData.weight,
+                    objective.specificData.estimateSpeed,
+                    elapsedTime,
+                );
+            case "Lifting":
+                return CoreLibrary.performance.LiftingPerformance.calculate(
+                    userData.age,
+                    userData.gender,
+                    userData.weight,
+                    objective.specificData.dumbbellWeight,
+                    objective.specificData.amountOfHands,
+                    elapsedTime,
+                    objective.specificData.reps,
+                );
+            case "Push Ups":
+                return CoreLibrary.performance.PushingUpPerformance.calculate(
+                    userData.gender,
+                    userData.weight,
+                    elapsedTime,
+                    objective.specificData.amountOfPushUps,
+                    objective.specificData.amountOfHands,
+                );
+            default:
+                throw new Error("Unknown or invalid exercise type");
+        }
+    } catch (e) {
+        const err = `Error handling post-session calculations: ${e}`;
+        logToConsole(err, "error", {
+            location:
+                "USE: @/app/(tabs)/objectives/Sessions.tsx; FUNC: @/toolkit/objectives/ActiveObjectives.ts",
+            function: "FinishSession()",
+            isHandler: true,
+            handlerName: "Toolkified CalculateSessionPerformance()",
+        });
+        throw new Error(err);
+    }
+}
+
 export {
     CreateActiveObjective,
     GetAllObjectives,
@@ -508,4 +560,5 @@ export {
     DeleteActiveObjective,
     GenerateDescriptionOfObjective,
     LaunchActiveObjective,
+    CalculateSessionPerformance,
 };
