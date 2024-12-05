@@ -15,8 +15,9 @@ import { GetExperiments, ToggleExperiment } from "@/toolkit/Experiments";
 import { SafelyGoBack } from "@/toolkit/Routing";
 import { logToConsole } from "@/toolkit/debug/Console";
 import { Experiment, Experiments } from "@/types/User";
-import { Alert, Platform, ToastAndroid } from "react-native";
+import { Alert } from "react-native";
 import TopBar from "@/components/navigation/TopBar";
+import { ShowToast } from "@/toolkit/Android";
 
 // i gave myself the freedom to write in an informal way on this page.
 export default function EpicExperiments() {
@@ -47,14 +48,8 @@ export default function EpicExperiments() {
                         text: "Go ahead",
                         onPress: () => {
                             ToggleExperiment(experiment, value);
+                            ShowToast("Enabled " + experiment + ". Have fun!");
                             SafelyGoBack();
-                            if (Platform.OS === "android") {
-                                ToastAndroid.show(
-                                    "Enabled " + experiment + ". Have fun!",
-                                    ToastAndroid.LONG,
-                                );
-                                SafelyGoBack();
-                            }
                         },
                     },
                     {
@@ -65,10 +60,8 @@ export default function EpicExperiments() {
             );
         } else {
             ToggleExperiment(experiment, value);
-            if (Platform.OS === "android") {
-                ToastAndroid.show("Disabled " + experiment, ToastAndroid.LONG);
-                SafelyGoBack();
-            }
+            ShowToast("Disabled " + experiment);
+            SafelyGoBack();
         }
     }
 
@@ -118,28 +111,24 @@ export default function EpicExperiments() {
                     />
                 </Division>
                 <Division
-                    header="exp_think"
-                    subHeader="Enable The Daily Check, formerly called 'The Think Hour'."
+                    header="exp_report"
+                    subHeader="Enables the Report tab."
                     direction="vertical"
                 >
                     <BetterTextNormalText>
-                        Value: {experiments?.exp_think ? "enabled" : "disabled"}
+                        Value:{" "}
+                        {experiments?.exp_report ? "enabled" : "disabled"}
                     </BetterTextNormalText>
-                    <BetterTextSmallerText>
-                        This experiment isn't implemented (yet). You can keep it
-                        enabled and it'll auto enable in the 1st update to the
-                        app that implements it.
-                    </BetterTextSmallerText>
                     <BetterButton
-                        style={experiments?.exp_think ? "HMM" : "DEFAULT"}
+                        style={experiments?.exp_report ? "HMM" : "DEFAULT"}
                         buttonText={
-                            experiments?.exp_think ? "Disable" : "Enable"
+                            experiments?.exp_report ? "Disable" : "Enable"
                         }
                         buttonHint="Toggles the state of this experiment, if it's enabled, disables it, and viceversa."
                         action={() => {
                             HandleExperiment(
-                                "exp_think",
-                                !experiments?.exp_think,
+                                "exp_report",
+                                !experiments?.exp_report,
                             );
                         }}
                     />

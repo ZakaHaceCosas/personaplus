@@ -4,6 +4,12 @@ import { AsyncStorage } from "expo-sqlite/kv-store";
 import { logToConsole } from "@/toolkit/debug/Console";
 import { DEFAULT_EXPERIMENTS } from "@/constants/Experiments";
 
+/**
+ * Returns all experiments and their status.
+ *
+ * @async
+ * @returns {Promise<Experiments>}
+ */
 async function GetExperiments(): Promise<Experiments> {
     try {
         const stuff = await AsyncStorage.getItem(StoredItemNames.experiments);
@@ -24,6 +30,14 @@ async function GetExperiments(): Promise<Experiments> {
     }
 }
 
+/**
+ * Enables or disables a given experiment.
+ *
+ * @async
+ * @param {Experiment} experiment Experiment to be toggled.
+ * @param {boolean} toggle Status you want to set it to.
+ * @returns {Promise<void>}
+ */
 async function ToggleExperiment(
     experiment: Experiment,
     toggle: boolean,

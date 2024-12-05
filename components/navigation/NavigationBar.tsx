@@ -1,7 +1,7 @@
 // src/BottomNav.tsx
 // Navegación "de abajo" (está arriba, pero bueno)
 
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import BetterText from "@/components/text/BetterText";
@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import Colors from "@/constants/Colors";
 import FontSizes from "@/constants/FontSizes";
 import ROUTES from "@/constants/Routes";
+import { GetExperiments } from "@/toolkit/Experiments";
 
 // TypeScript, supongo
 interface SectionProps {
@@ -80,6 +81,14 @@ function NavItem({
 // We create the function
 export default function NavigationBar({ currentLocation }: SectionProps) {
     const { t } = useTranslation();
+    const [reportEnabled, setReport] = useState<boolean>(false);
+
+    useEffect(() => {
+        async function handle() {
+            setReport((await GetExperiments()).exp_report);
+        }
+        handle();
+    }, []);
 
     return (
         <View
@@ -100,12 +109,14 @@ export default function NavigationBar({ currentLocation }: SectionProps) {
                 label={t("globals.navbar.dashboard")}
                 isSelected={currentLocation === ROUTES.MAIN.DASHBOARD}
             />
-            <NavItem
-                href={ROUTES.MAIN.REPORT}
-                iconName="auto-graph"
-                label={t("globals.navbar.report")}
-                isSelected={currentLocation === ROUTES.MAIN.REPORT}
-            />
+            {reportEnabled && (
+                <NavItem
+                    href={ROUTES.EXPERIMENTS.REPORT}
+                    iconName="auto-graph"
+                    label={t("globals.navbar.report")}
+                    isSelected={currentLocation === ROUTES.EXPERIMENTS.REPORT}
+                />
+            )}
             <NavItem
                 href={ROUTES.MAIN.PROFILE}
                 iconName="person"

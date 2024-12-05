@@ -52,7 +52,7 @@ export type BasicUserHealthData = Omit<
  */
 export interface Experiments {
     exp_tracker: boolean;
-    exp_think: boolean;
+    exp_report: boolean;
 }
 
-export type Experiment = "exp_tracker" | "exp_think";
+export type Experiment = "exp_tracker" | "exp_report";
