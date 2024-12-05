@@ -14,6 +14,22 @@ import Loading from "@/components/static/Loading";
 import GapView from "@/components/ui/GapView";
 import PageEnd from "@/components/static/PageEnd";
 import TopBar from "@/components/navigation/TopBar";
+import Ionicons from "@expo/vector-icons/MaterialIcons";
+import FontSizes from "@/constants/FontSizes";
+import { StyleSheet, View, Alert } from "react-native";
+import { version as currentVersion } from "../../package.json";
+import URLs from "@/constants/Urls";
+import semver from "semver";
+import { SafelyOpenUrl } from "@/toolkit/Routing";
+import { ShowToast } from "@/toolkit/Android";
+
+const styles = StyleSheet.create({
+    iconView: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+    },
+});
 
 export default function HomeScreen() {
     const [userData, setUserData] = useState<FullProfile>(ErrorUserData);
@@ -40,6 +56,88 @@ export default function HomeScreen() {
         handler();
     }, []);
 
+    interface Release {
+        tag_name: string;
+        prerelease: boolean;
+        assets: { browser_download_url: string; name: string }[];
+        html_url: string;
+    }
+
+    /**
+     * Checks for updates. Shows a modal if you're not up to date, prompting to update.
+     *
+     * TODO: this should be in the toolkit, but hook calls are making me go crazy
+     *
+     * @export
+     * @async
+     * @returns {Promise<void>}
+     */
+    async function CheckForUpdates(): Promise<void> {
+        try {
+            ShowToast("Checking for updates...");
+            const response = await fetch(URLs.releasesApi);
+            if (!response.ok) {
+                throw new Error(
+                    `Failed to fetch releases (status ${response.status})`,
+                );
+            }
+            const releases: Release[] = await response.json(); // gets releases
+
+            // sorts releases by date and gets the most recent
+            const latestRelease = releases
+                .filter((release) => semver.valid(release.tag_name)) // validate tags
+                .sort((a, b) => semver.rcompare(a.tag_name, b.tag_name))[0];
+
+            const latestVersion = latestRelease.tag_name; // gets the tagname
+            logToConsole(`Latest version: ${latestVersion}`, "log");
+
+            if (semver.gt(latestVersion, currentVersion)) {
+                // if it's not the same as your current version, you're not up to date!
+                Alert.alert(
+                    t(
+                        "pages.profile.divisions.update.updateFlow.updateAvailable",
+                    ),
+                    t(
+                        "pages.profile.divisions.update.updateFlow.updateAvailableText",
+                        { latestVersion: latestVersion },
+                    ),
+                    [
+                        {
+                            text: t(
+                                "pages.profile.divisions.update.updateFlow.buttons.update",
+                            ),
+                            style: "default",
+                            onPress: async () =>
+                                await SafelyOpenUrl(
+                                    latestRelease.assets[0]
+                                        .browser_download_url,
+                                ), // update will download the APK from the browser
+                        },
+                        {
+                            text: t(
+                                "pages.profile.divisions.update.updateFlow.buttons.changelog",
+                            ),
+                            onPress: async () =>
+                                await SafelyOpenUrl(URLs.latestChangelog), // changelog will just open the page so you see whats new
+                        },
+                        {
+                            text: t("globals.nevermind"),
+                            style: "destructive",
+                            onPress: () => {}, // closes
+                        },
+                    ],
+                );
+            } else {
+                ShowToast(
+                    t("pages.profile.divisions.update.updateFlow.upToDate"),
+                );
+            }
+        } catch (e) {
+            logToConsole("Error checking for update: " + e, "error");
+            ShowToast(t("pages.profile.divisions.update.updateFlow.cantCheck"));
+        }
+    }
+
     if (loading) return <Loading />;
 
     return (
@@ -57,21 +155,57 @@ export default function HomeScreen() {
                     direction="vertical"
                     gap={0}
                 >
-                    <BetterTextNormalText>
-                        {t("Age: {{age}} years old", { age: userData.age })}
-                    </BetterTextNormalText>
-                    <GapView height={5} />
-                    <BetterTextNormalText>
-                        {t("Weight: {{w}}kg", { w: userData.weight })}
-                    </BetterTextNormalText>
-                    <GapView height={5} />
-                    <BetterTextNormalText>
-                        {t("Height: {{h}}cm", { h: userData.height })}
-                    </BetterTextNormalText>
+                    <View style={styles.iconView}>
+                        <View style={styles.iconView}>
+                            <Ionicons
+                                name="face"
+                                size={FontSizes.REGULAR}
+                                color="white"
+                            />
+                            <GapView width={5} />
+                            <BetterTextNormalText>
+                                {t("pages.profile.data.age", {
+                                    age: userData.age,
+                                })}
+                            </BetterTextNormalText>
+                        </View>
+                        <GapView width={10} />
+                        <View style={styles.iconView}>
+                            <Ionicons
+                                name="scale"
+                                size={FontSizes.REGULAR}
+                                color="white"
+                            />
+                            <GapView width={5} />
+                            <BetterTextNormalText>
+                                {t("pages.profile.data.weight", {
+                                    weight: userData.weight,
+                                })}
+                            </BetterTextNormalText>
+                        </View>
+                        <GapView width={10} />
+                        <View style={styles.iconView}>
+                            <Ionicons
+                                name="height"
+                                size={FontSizes.REGULAR}
+                                color="white"
+                            />
+                            <GapView width={5} />
+                            <BetterTextNormalText>
+                                {t("pages.profile.data.height", {
+                                    height: userData.height,
+                                })}
+                            </BetterTextNormalText>
+                        </View>
+                    </View>
                     <GapView height={10} />
                     <BetterButton
-                        buttonText="Update profile"
-                        buttonHint="Takes you to a page from where you can update your profile"
+                        buttonText={t(
+                            "pages.profile.interactions.updateProfile.text",
+                        )}
+                        buttonHint={t(
+                            "pages.profile.interactions.updateProfile.hint",
+                        )}
                         style="DEFAULT"
                         action={() =>
                             router.push(ROUTES.MAIN.SETTINGS.UPDATE_PROFILE)
@@ -82,14 +216,18 @@ export default function HomeScreen() {
             <GapView height={20} />
             <Section kind="Settings">
                 <Division
-                    header="Open settings"
-                    subHeader="Manage notifications, app language, and other preferences. Access advanced features and experiments. Reset the app if needed."
+                    header={t("pages.profile.divisions.settings.header")}
+                    subHeader={t("pages.profile.divisions.settings.subheader")}
                     direction="vertical"
                     gap={0}
                 >
                     <BetterButton
-                        buttonText="Open settings page"
-                        buttonHint="Opens a dedicated page to see and change all of the app's settings."
+                        buttonText={t(
+                            "pages.profile.divisions.settings.action.text",
+                        )}
+                        buttonHint={t(
+                            "pages.profile.divisions.settings.action.hint",
+                        )}
                         style="ACE"
                         action={() => {
                             router.push(ROUTES.MAIN.SETTINGS.SETTINGS_PAGE);
@@ -100,18 +238,44 @@ export default function HomeScreen() {
             <GapView height={20} />
             <Section kind="About">
                 <Division
-                    preHeader="About"
-                    header="About us"
-                    subHeader="Find out who's behind the app you're (hopefully!) enjoying right now."
+                    preHeader={t("globals.about")}
+                    header={t("pages.profile.divisions.about.header")}
+                    subHeader={t("pages.profile.divisions.about.subheader")}
+                    /* subHeader="Find out who's behind the app you're (hopefully!) enjoying right now." */
                     direction="vertical"
                     gap={0}
                 >
                     <BetterButton
-                        buttonText="See about us"
-                        buttonHint="Opens a page to see info about the app, its creator, etc..."
+                        buttonText={t(
+                            "pages.profile.divisions.about.action.text",
+                        )}
+                        buttonHint={t(
+                            "pages.profile.divisions.about.action.hint",
+                        )}
                         style="DEFAULT"
                         action={() => {
                             router.push(ROUTES.ABOUT.ABOUT_PAGE);
+                        }}
+                    />
+                </Division>
+                <Division
+                    header={t("pages.profile.divisions.update.header")}
+                    subHeader={t("pages.profile.divisions.update.subheader", {
+                        version: currentVersion,
+                    })}
+                    direction="vertical"
+                    gap={0}
+                >
+                    <BetterButton
+                        buttonText={t(
+                            "pages.profile.divisions.update.action.text",
+                        )}
+                        buttonHint={t(
+                            "pages.profile.divisions.update.action.hint",
+                        )}
+                        style="DEFAULT"
+                        action={async () => {
+                            await CheckForUpdates();
                         }}
                     />
                 </Division>
