@@ -4,6 +4,8 @@
 
 b25 was cancelled (due to the huge amount of problems that were on top of each other complicating development), in favor of the R6 rewrite.
 
+---
+
 > Note: This update also brings changes to OpenHealth (core library). See core/CHANGELOG.md for more info.
 
 ### User updates - Latest
