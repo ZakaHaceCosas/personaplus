@@ -1,17 +1,11 @@
 import React from "react";
-import {
-    BetterTextHeader,
-    BetterTextNormalText,
-    BetterTextSubHeader,
-} from "@/components/text/BetterTextPresets";
+import { BetterTextNormalText } from "@/components/text/BetterTextPresets";
 import { useTranslation } from "react-i18next";
-import AsyncStorage from "expo-sqlite/kv-store";
 import type { FullProfile } from "@/types/User";
 import BetterButton from "@/components/interaction/BetterButton";
-import { ErrorUserData, OrchestrateUserData, updateBrm5 } from "@/toolkit/User";
+import { ErrorUserData, OrchestrateUserData } from "@/toolkit/User";
 import { router } from "expo-router";
 import { logToConsole } from "@/toolkit/debug/Console";
-import StoredItemNames from "@/constants/StoredItemNames";
 import ROUTES from "@/constants/Routes";
 import { useEffect, useState } from "react";
 import Section from "@/components/ui/sections/Section";
@@ -19,6 +13,7 @@ import Division from "@/components/ui/sections/Division";
 import Loading from "@/components/static/Loading";
 import GapView from "@/components/ui/GapView";
 import PageEnd from "@/components/static/PageEnd";
+import TopBar from "@/components/navigation/TopBar";
 
 export default function HomeScreen() {
     const [userData, setUserData] = useState<FullProfile>(ErrorUserData);
@@ -45,29 +40,17 @@ export default function HomeScreen() {
         handler();
     }, []);
 
-    async function changeLanguage(): Promise<void> {
-        try {
-            if (!userData) throw new Error("Why is userData (still) null?");
-            userData.language = userData.language === "es" ? "en" : "es";
-            await AsyncStorage.setItem(
-                StoredItemNames.userData,
-                JSON.stringify(userData),
-            );
-            router.replace(ROUTES.MAIN.PROFILE);
-        } catch (e) {
-            logToConsole("Error changing language:" + e, "error");
-        }
-    }
-
     if (loading) return <Loading />;
 
     return (
         <>
-            <BetterTextHeader>{t("pages.profile.header")}</BetterTextHeader>
-            <BetterTextSubHeader>
-                {t("pages.profile.subheader", { username: userData?.username })}
-            </BetterTextSubHeader>
-            <GapView height={10} />
+            <TopBar
+                includeBackButton={false}
+                header={t("pages.profile.header")}
+                subHeader={t("pages.profile.subheader", {
+                    username: userData?.username,
+                })}
+            />
             <Section kind="Profile">
                 <Division
                     header={userData.username}
@@ -99,47 +82,18 @@ export default function HomeScreen() {
             <GapView height={20} />
             <Section kind="Settings">
                 <Division
-                    preHeader="Preferences"
-                    header="Change language"
-                    subHeader={`You're currently using ${t(`globals.languages.${userData.language}`)}`}
+                    header="Open settings"
+                    subHeader="Manage notifications, app language, and other preferences. Access advanced features and experiments. Reset the app if needed."
                     direction="vertical"
                     gap={0}
                 >
                     <BetterButton
-                        buttonText="Change language"
-                        buttonHint="Changes your language."
-                        style="DEFAULT"
-                        action={changeLanguage}
-                    />
-                </Division>
-                <Division
-                    preHeader="Advanced"
-                    header="Experiments"
-                    subHeader="Features still in progress. Test them early, share feedback, and help us improve—but note they're unstable."
-                    direction="vertical"
-                    gap={0}
-                >
-                    <BetterButton
-                        buttonText="Open Experiments"
-                        buttonHint="Opens a page where experiments can be enabled or disabled."
-                        style="HMM"
-                        action={() =>
-                            router.push(ROUTES.DEV_INTERFACE.EXPERIMENTS)
-                        }
-                    />
-                </Division>
-                <Division
-                    preHeader="Advanced"
-                    header="Launch Dev Interface"
-                    subHeader="An interface for contributors to see what's up from the inside of the app."
-                    direction="vertical"
-                    gap={0}
-                >
-                    <BetterButton
-                        buttonText="Dev Interface"
-                        buttonHint="Launches Dev Interface"
-                        style="HMM"
-                        action={() => router.push(ROUTES.DEV_INTERFACE.HOME)}
+                        buttonText="Open settings page"
+                        buttonHint="Opens a dedicated page to see and change all of the app's settings."
+                        style="ACE"
+                        action={() => {
+                            router.push(ROUTES.MAIN.SETTINGS.SETTINGS_PAGE);
+                        }}
                     />
                 </Division>
             </Section>
@@ -159,39 +113,6 @@ export default function HomeScreen() {
                         action={() => {
                             router.push(ROUTES.ABOUT.ABOUT_PAGE);
                         }}
-                    />
-                </Division>
-                <Division
-                    preHeader="About"
-                    header="License"
-                    subHeader="PersonaPlus is licensed under GPL-v3. Enter here to learn more. Note this page is only in English."
-                    direction="vertical"
-                    gap={0}
-                >
-                    <BetterButton
-                        buttonText="See license"
-                        buttonHint="Opens a page to see the app's license."
-                        style="DEFAULT"
-                        action={() => {
-                            router.push(ROUTES.ABOUT.LICENSE);
-                        }}
-                    />
-                </Division>
-            </Section>
-            <GapView height={20} />
-            <Section kind="Danger">
-                <Division
-                    preHeader="Dangerous"
-                    header="Reset app"
-                    subHeader="It will permanently remove all of your user data, with no way to go back. Use it at your own will."
-                    direction="vertical"
-                    gap={0}
-                >
-                    <BetterButton
-                        buttonText="Reset PersonaPlus"
-                        buttonHint="makes your account go boom"
-                        style="WOR"
-                        action={() => updateBrm5(true)}
                     />
                 </Division>
             </Section>
