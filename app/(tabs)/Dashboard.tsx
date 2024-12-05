@@ -2,11 +2,6 @@ import React from "react";
 import BetterButton from "@/components/interaction/BetterButton";
 import Loading from "@/components/static/Loading";
 import PageEnd from "@/components/static/PageEnd";
-import {
-    BetterTextHeader,
-    BetterTextSubHeader,
-} from "@/components/text/BetterTextPresets";
-import GapView from "@/components/ui/GapView";
 import Division from "@/components/ui/sections/Division";
 import Section from "@/components/ui/sections/Section";
 import ROUTES from "@/constants/Routes";
@@ -21,6 +16,7 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View, StyleSheet } from "react-native";
+import TopBar from "@/components/navigation/TopBar";
 
 const styles = StyleSheet.create({
     buttonWrapper: {
@@ -73,11 +69,11 @@ export default function Dashboard() {
 
     return (
         <>
-            <BetterTextHeader>Dashboard</BetterTextHeader>
-            <BetterTextSubHeader>
-                Setup your path to success here
-            </BetterTextSubHeader>
-            <GapView height={10} />
+            <TopBar
+                includeBackButton={false}
+                header="Dashboard"
+                subHeader="Setup here your path to success!"
+            />
             <Section kind="ActiveObjectives">
                 {activeObjectives === null || activeObjectives.length === 0 ? (
                     <Division header="You don't have any objectives... Let's create one!" />

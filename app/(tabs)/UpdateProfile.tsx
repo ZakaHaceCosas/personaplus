@@ -10,12 +10,7 @@ import Colors from "@/constants/Colors";
 import { logToConsole } from "@/toolkit/debug/Console";
 import { OrchestrateUserData, ValidateUserData } from "@/toolkit/User";
 import Loading from "@/components/static/Loading";
-import BackButton from "@/components/navigation/GoBack";
 import GapView from "@/components/ui/GapView";
-import {
-    BetterTextHeader,
-    BetterTextSubHeader,
-} from "@/components/text/BetterTextPresets";
 import BetterText from "@/components/text/BetterText";
 import BetterButton from "@/components/interaction/BetterButton";
 import Swap, { SwapOption } from "@/components/interaction/Swap";
@@ -27,6 +22,7 @@ import { SafelyGoBack } from "@/toolkit/Routing";
 import ROUTES from "@/constants/Routes";
 import GetStuffForUserDataQuestion from "@/constants/UserData";
 import getCommonScreenSize from "@/constants/Screen";
+import TopBar from "@/components/navigation/TopBar";
 
 const styles = StyleSheet.create({
     buttonWrapper: {
@@ -142,14 +138,11 @@ export default function UpdateProfile() {
 
     return (
         <>
-            <BackButton t={t} />
-            <BetterTextHeader>
-                {t("pages.updateProfile.header")}
-            </BetterTextHeader>
-            <BetterTextSubHeader>
-                {t("pages.updateProfile.subheader")}
-            </BetterTextSubHeader>
-            <GapView height={15} />
+            <TopBar
+                includeBackButton={true}
+                header={t("pages.updateProfile.header")}
+                subHeader={t("pages.updateProfile.subheader")}
+            />
             {spawnInputField(
                 t("globals.userData.username.wordShorter"),
                 t("pages.welcome.questions.aboutYou.placeholders.username"),

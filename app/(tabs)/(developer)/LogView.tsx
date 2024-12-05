@@ -1,9 +1,7 @@
 import BetterButton from "@/components/interaction/BetterButton";
-import BackButton from "@/components/navigation/GoBack";
 import Loading from "@/components/static/Loading";
 import PageEnd from "@/components/static/PageEnd";
 import {
-    BetterTextHeader,
     BetterTextSmallText,
     BetterTextSmallerText,
 } from "@/components/text/BetterTextPresets";
@@ -18,8 +16,8 @@ import AsyncStorage from "expo-sqlite/kv-store";
 import { router } from "expo-router";
 import React from "react";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { StyleSheet, Text, View } from "react-native";
+import TopBar from "@/components/navigation/TopBar";
 
 const styles = StyleSheet.create({
     consoleView: {
@@ -87,18 +85,17 @@ export default function HomeScreen() {
         }
     }
 
-    // no i am not translating dev interface. it is just for BackButton to work.
-    const { t } = useTranslation();
-
     if (loading) {
         return <Loading />;
     }
 
     return (
         <>
-            <BackButton t={t} />
-            <BetterTextHeader>Full Console View</BetterTextHeader>
-            <GapView height={5} />
+            <TopBar
+                includeBackButton={true}
+                header="Full Console View"
+                subHeader={null}
+            />
             <BetterTextSmallerText>
                 Note: Logs may grow large over time. It's a good idea to clear
                 them regularly to save storage and keep the Dev Interface

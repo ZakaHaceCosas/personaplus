@@ -30,6 +30,7 @@ export default function License() {
     // yes, i did spend more than an hour formatting the General Public License into a lot of <BetterText> blocks. :]
     return (
         <>
+            {/* Doesn't use <TopBar /> because it's a different layout */}
             <BackButton t={t} />
             <GapView height={10} />
             <BetterTextHeader>License</BetterTextHeader>
@@ -38,7 +39,7 @@ export default function License() {
             </BetterText>
             <GapView height={10} />
             <BetterText fontSize={15} fontWeight="Regular">
-                Copyright (C) 2024 ZakaHaceCosas{"\n"}his legal text is only
+                Copyright (C) 2024 ZakaHaceCosas{"\n"}This legal text is only
                 available in English.
             </BetterText>
             <GapView height={20} />

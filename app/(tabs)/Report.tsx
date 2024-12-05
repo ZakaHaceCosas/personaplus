@@ -1,11 +1,7 @@
 import React from "react";
 import Loading from "@/components/static/Loading";
 import PageEnd from "@/components/static/PageEnd";
-import {
-    BetterTextHeader,
-    BetterTextSmallText,
-    BetterTextSubHeader,
-} from "@/components/text/BetterTextPresets";
+import { BetterTextSmallText } from "@/components/text/BetterTextPresets";
 import BetterAlert from "@/components/ui/BetterAlert";
 import GapView from "@/components/ui/GapView";
 import Division from "@/components/ui/sections/Division";
@@ -14,6 +10,7 @@ import CoreLibrary from "@/core/CoreLibrary";
 import { OrchestrateUserData } from "@/toolkit/User";
 import { logToConsole } from "@/toolkit/debug/Console";
 import { useEffect, useState } from "react";
+import TopBar from "@/components/navigation/TopBar";
 // import { useTranslation } from "react-i18next";
 
 export default function Report() {
@@ -76,9 +73,11 @@ export default function Report() {
 
     return (
         <>
-            <BetterTextHeader>Your report</BetterTextHeader>
-            <BetterTextSubHeader>This is how you're doing</BetterTextSubHeader>
-            <GapView height={10} />
+            <TopBar
+                includeBackButton={false}
+                header="Your report"
+                subHeader="This is how you're doing"
+            />
             <BetterAlert
                 style="HMM"
                 preTitle="Disclaimer"

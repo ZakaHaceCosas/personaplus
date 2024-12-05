@@ -4,16 +4,13 @@
 import React, { useEffect, useState } from "react";
 import { View, Pressable, StyleSheet, TextInput } from "react-native";
 import {
-    BetterTextHeader,
     BetterTextNormalText,
     BetterTextSmallHeader,
     BetterTextSmallText,
     BetterTextSmallerText,
-    BetterTextSubHeader,
 } from "@/components/text/BetterTextPresets";
 import GapView from "@/components/ui/GapView";
 import { useTranslation } from "react-i18next";
-import BackButton from "@/components/navigation/GoBack";
 import {
     ActiveObjectiveWithoutId,
     SupportedActiveObjectivesList,
@@ -35,6 +32,7 @@ import { router } from "expo-router";
 import ROUTES from "@/constants/Routes";
 import { Experiments } from "@/types/User";
 import { GetExperiments } from "@/toolkit/Experiments";
+import TopBar from "@/components/navigation/TopBar";
 
 const styles = StyleSheet.create({
     dayContainer: {
@@ -148,7 +146,7 @@ export default function CreateActiveObjectivePage() {
             } = prev.specificData;
 
             function op(num: number): number {
-                return Math.max(num + delta, 0);
+                return Math.max(parseFloat(String(num)) + delta, 0);
             }
 
             switch (value) {
@@ -343,6 +341,7 @@ export default function CreateActiveObjectivePage() {
     useEffect(() => {
         function validate() {
             const isInfoValid =
+                objectiveToCreate.exercise !== "" &&
                 !objectiveToCreate.info.days.every((day) => day === false) && // not all 7 days are false
                 objectiveToCreate.info.durationMinutes > 0; // no 0 minutes of exercise
 
@@ -389,13 +388,11 @@ export default function CreateActiveObjectivePage() {
 
     return (
         <>
-            <BackButton t={t} />
-            <GapView height={10} />
-            <BetterTextHeader>
-                {t("pages.createActiveObjective.header")}
-            </BetterTextHeader>
-            <BetterTextSubHeader>{randomMessage}</BetterTextSubHeader>
-            <GapView height={20} />
+            <TopBar
+                includeBackButton={true}
+                header={t("pages.createActiveObjective.header")}
+                subHeader={randomMessage}
+            />
             <BetterTextSmallHeader>
                 {t("pages.createActiveObjective.questions.whatToDo.question")}
             </BetterTextSmallHeader>
@@ -512,7 +509,8 @@ export default function CreateActiveObjectivePage() {
             <GapView height={20} />
             {spawnToggle("durationMinutes")}
             {spawnToggle("rests")}
-            {objectiveToCreate.info.restDurationMinutes! > 0 &&
+            {objectiveToCreate.info.restDurationMinutes &&
+                objectiveToCreate.info.restDurationMinutes > 0 &&
                 spawnToggle("restDurationMinutes")}
             {
                 // forgive me for promising that R6 would address all code duplication and yet making this

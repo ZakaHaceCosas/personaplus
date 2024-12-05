@@ -1,10 +1,8 @@
 import React from "react";
 import BetterButton from "@/components/interaction/BetterButton";
-import BackButton from "@/components/navigation/GoBack";
 import Loading from "@/components/static/Loading";
 import PageEnd from "@/components/static/PageEnd";
 import {
-    BetterTextHeader,
     BetterTextSmallText,
     BetterTextSubHeader,
 } from "@/components/text/BetterTextPresets";
@@ -27,8 +25,8 @@ import AsyncStorage from "expo-sqlite/kv-store";
 import * as Device from "expo-device";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { Platform, ToastAndroid } from "react-native";
+import TopBar from "@/components/navigation/TopBar";
 
 export default function HomeScreen() {
     const [loading, setLoading] = useState<boolean>(true);
@@ -89,9 +87,6 @@ export default function HomeScreen() {
         handler();
     }, [objectives]);
 
-    // no i am not translating dev interface. it is just for BackButton to work.
-    const { t } = useTranslation();
-
     async function clearLogs() {
         try {
             await AsyncStorage.setItem(StoredItemNames.consoleLogs, "");
@@ -109,12 +104,11 @@ export default function HomeScreen() {
 
     return (
         <>
-            <BackButton t={t} />
-            <BetterTextHeader>Dev Interface</BetterTextHeader>
-            <BetterTextSubHeader>
-                NOTE: This is ENGLISH only.
-            </BetterTextSubHeader>
-            <GapView height={15} />
+            <TopBar
+                includeBackButton={true}
+                header="Dev Interface"
+                subHeader="Advanced toggles and stuff. English only."
+            />
             <BetterAlert
                 style="DEFAULT"
                 preTitle="Generic info from your device"

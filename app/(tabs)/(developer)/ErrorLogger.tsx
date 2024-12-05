@@ -1,20 +1,18 @@
 import React from "react";
 import Loading from "@/components/static/Loading";
 import {
-    BetterTextHeader,
     BetterTextSmallText,
     BetterTextSmallerText,
 } from "@/components/text/BetterTextPresets";
 import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/Console";
 import { Logs } from "@/types/Logs";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { View, Text, StyleSheet } from "react-native";
 import Colors from "@/constants/Colors";
 import getCommonScreenSize from "@/constants/Screen";
-import BackButton from "@/components/navigation/GoBack";
 import GapView from "@/components/ui/GapView";
 import PageEnd from "@/components/static/PageEnd";
+import TopBar from "@/components/navigation/TopBar";
 
 const styles = StyleSheet.create({
     consoleView: {
@@ -73,18 +71,17 @@ export default function ErrorLogger() {
         handler();
     }, []);
 
-    // no i am not translating dev interface. it is just for BackButton to work.
-    const { t } = useTranslation();
-
     if (loading) {
         return <Loading />;
     }
 
     return (
         <>
-            <BackButton t={t} />
-            <BetterTextHeader>Error Console View</BetterTextHeader>
-            <GapView height={5} />
+            <TopBar
+                includeBackButton={true}
+                header="Error Console View"
+                subHeader={null}
+            />
             <BetterTextSmallerText>
                 Note: Logs are SOMETIMES formatted as MM/DD/YYYY due to React's
                 constraints. Apologies for the inconvenience.
