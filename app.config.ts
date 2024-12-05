@@ -17,7 +17,7 @@ const config: ExpoConfig.ExpoConfig = {
     platforms: ["android"],
     backgroundColor: "#0E1013",
     splash: {
-        image: "./assets/resources/splash.png",
+        image: "./assets/resources/adaptive-icon.png",
         resizeMode: "contain",
         backgroundColor: "#0E1013",
     },
@@ -153,9 +153,15 @@ const config: ExpoConfig.ExpoConfig = {
         [
             "expo-splash-screen",
             {
-                image: "./assets/resources/splash.png",
-                resizeMode: "contain",
                 backgroundColor: "#0E1013",
+                image: "./assets/resources/adaptive-icon.png",
+                dark: {
+                    // the same
+                    backgroundColor: "#0E1013",
+                    image: "./assets/resources/adaptive-icon.png",
+                },
+                imageWidth: 150,
+                resizeMode: "contain",
             },
         ],
     ],

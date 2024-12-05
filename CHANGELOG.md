@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.26-preapp.6] - Unreleased
 
-There've been A LOT of changes. I'll take my time to view the `diff` and update this when the rewrite is done. For now, this is outdated.
+Keep in mind there have been many visual and functional changes due to the R6 rewrite. Some changes might not be logged.
 
 ### Added
 
@@ -21,12 +21,14 @@ There've been A LOT of changes. I'll take my time to view the `diff` and update 
 - More random, friendly messages :]
 - New info for Dev Interface to display, like device details, a table with all active objectives and their ID, and even two new separate pages to view logs in a better way.
 - Now you can tap the numbers at the active objective creation page to set a custom value.
+- A settings page. Now most settings, and all new settings, have been moved from the profile tab to there.
 
 ### Changed
 
 - Gave the app a visual refresh. While it's not a redesign, many things have changed, they look better, feel and interact better, etc...
 - Changed many in-app texts.
 - Now, in the active objective creation page, days of the week are shown in a row instead of a column, saving up on space.
+- Now the credits page also showcases highlighted contributors.
 
 ### Removed
 
@@ -50,6 +52,7 @@ There've been A LOT of changes. I'll take my time to view the `diff` and update 
 ### Known issues <!-- not part of the Keep A Changelog standard -->
 
 - First time launching the app doesn't properly handle missing user data, crashes.
+- Splash screen looks extremely small.
 
 ### R5 ISSUES
 

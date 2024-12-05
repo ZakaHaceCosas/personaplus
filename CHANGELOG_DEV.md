@@ -7,11 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 
-<!-- this is a draft, obviously -->
-
 ## [0.0.26-preapp.6] - Unreleased
 
-There've been A LOT of changes. I'll take my time to view the `diff` and update this when the rewrite is done. For now, this is outdated.
+There've been A LOT of changes. The rewrite is overwhelmingly big and detailed logs are hard to provide. Next versions will much better log changes.
 
 ### Added
 

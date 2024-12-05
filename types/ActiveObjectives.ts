@@ -109,7 +109,7 @@ export interface ActiveObjective {
      */
     exercise: SupportedActiveObjectives;
     /**
-     * A unique, numeric, 5-character long, identifier.
+     * A unique, numeric, 10-character long, identifier.
      *
      * @type {number}
      */
