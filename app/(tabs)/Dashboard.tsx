@@ -1,3 +1,4 @@
+import React from "react";
 import BetterButton from "@/components/interaction/BetterButton";
 import Loading from "@/components/static/Loading";
 import PageEnd from "@/components/static/PageEnd";

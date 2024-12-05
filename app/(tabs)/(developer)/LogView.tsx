@@ -10,7 +10,6 @@ import {
 import GapView from "@/components/ui/GapView";
 import Colors from "@/constants/Colors";
 import ROUTES from "@/constants/Routes";
-
 import getCommonScreenSize from "@/constants/Screen";
 import StoredItemNames from "@/constants/StoredItemNames";
 import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/Console";

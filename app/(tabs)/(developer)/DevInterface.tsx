@@ -1,3 +1,4 @@
+import React from "react";
 import BetterButton from "@/components/interaction/BetterButton";
 import BackButton from "@/components/navigation/GoBack";
 import Loading from "@/components/static/Loading";

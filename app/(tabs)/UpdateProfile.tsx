@@ -23,7 +23,7 @@ import BetterInputField from "@/components/interaction/BetterInputField";
 import PageEnd from "@/components/static/PageEnd";
 import { BasicUserData } from "@/types/User";
 import StoredItemNames from "@/constants/StoredItemNames";
-import SafelyGoBack from "@/toolkit/Routing";
+import { SafelyGoBack } from "@/toolkit/Routing";
 import ROUTES from "@/constants/Routes";
 import GetStuffForUserDataQuestion from "@/constants/UserData";
 import getCommonScreenSize from "@/constants/Screen";
@@ -221,8 +221,8 @@ export default function UpdateProfile() {
                 <BetterButton
                     style="DEFAULT"
                     action={router.back}
-                    buttonText={t("globals.go_back")}
-                    buttonHint="TODO"
+                    buttonText={t("globals.interaction.nevermind")}
+                    buttonHint="Go back without saving your changes."
                 />
                 <GapView width={15} />
                 <BetterButton
@@ -230,8 +230,8 @@ export default function UpdateProfile() {
                     action={async () => {
                         await submit();
                     }}
-                    buttonText={t("globals.save")}
-                    buttonHint="TODO"
+                    buttonText={t("globals.interaction.save")}
+                    buttonHint="Save and apply these changes to your profile."
                 />
             </View>
             <PageEnd includeText={false} size="tiny" />
