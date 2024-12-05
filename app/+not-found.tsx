@@ -6,31 +6,31 @@ import { LayoutContainer } from "@/app/(tabs)/_layout";
 import GapView from "@/components/ui/GapView";
 import ROUTES from "@/constants/Routes";
 import TopBar from "@/components/navigation/TopBar";
+import { useTranslation } from "react-i18next";
 
 export default function NotFoundScreen() {
-    const currentRoute: string = Router.usePathname();
+    const requestedPath: string = Router.usePathname();
+    const { t } = useTranslation();
 
     return (
         <>
             <LayoutContainer>
                 <TopBar
                     includeBackButton={true}
-                    header="Got a map?"
-                    subHeader="You've got a 404 error - this means, PersonaPlus cannot find the route you're looking for. Sorry!"
+                    header={t("pages.404.header")}
+                    subHeader={t("pages.404.subheader")}
                 />
                 <BetterButton
                     style="DEFAULT"
-                    buttonText="Go home"
-                    buttonHint="Directly redirects the user to the home page"
+                    buttonText={t("pages.404.goHome.text")}
+                    buttonHint={t("pages.404.goHome.hint")}
                     action={() => Router.router.replace(ROUTES.MAIN.HOME)}
                 />
                 <GapView height={20} />
                 <BetterTextSmallText>
-                    The requested path was:{"\n"}
-                    {currentRoute}
-                    {"\n\n"}If you think this route is correct and you should
-                    not be lost, we kindly ask you to submit a GitHub issue so
-                    we can fix this. Thank you!
+                    {t("pages.404.requestedPath", {
+                        requestedPath: requestedPath,
+                    })}
                 </BetterTextSmallText>
             </LayoutContainer>
         </>

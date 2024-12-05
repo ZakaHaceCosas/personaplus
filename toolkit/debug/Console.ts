@@ -1,7 +1,7 @@
 import AsyncStorage from "expo-sqlite/kv-store";
 import { Log, LogTraceback } from "@/types/Logs";
-import { Platform, ToastAndroid } from "react-native";
 import StoredItemNames from "@/constants/StoredItemNames";
+import { ShowToast } from "../Android";
 
 // Función para obtener logs desde AsyncStorage
 /**
@@ -145,12 +145,11 @@ export function logToConsole(
             });
 
         if (
-            Platform.OS === "android" &&
-            (type === "error" ||
-                (typeof displayToEndUser !== "undefined" &&
-                    displayToEndUser === true))
+            type === "error" ||
+            (typeof displayToEndUser !== "undefined" &&
+                displayToEndUser === true)
         ) {
-            ToastAndroid.show(message, ToastAndroid.LONG); // Shows a toast if it's an error or if displayToEndUser is explicitly true.
+            ShowToast(message); // Shows a toast if it's an error or if displayToEndUser is explicitly true.
         }
     } catch (e) {
         console.error("Error with logging:", e);

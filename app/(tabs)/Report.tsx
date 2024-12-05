@@ -11,10 +11,10 @@ import { OrchestrateUserData } from "@/toolkit/User";
 import { logToConsole } from "@/toolkit/debug/Console";
 import { useEffect, useState } from "react";
 import TopBar from "@/components/navigation/TopBar";
-// import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 export default function Report() {
-    // const { t } = useTranslation();
+    const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean>(true);
     const [report, setReport] = useState<any>();
 
@@ -75,15 +75,15 @@ export default function Report() {
         <>
             <TopBar
                 includeBackButton={false}
-                header="Your report"
-                subHeader="This is how you're doing"
+                header={t("pages.report.header")}
+                subHeader={t("pages.report.subheader")}
             />
             <BetterAlert
                 style="HMM"
-                preTitle="Disclaimer"
-                title="This page is an experiment"
                 layout="alert"
-                bodyText="This page is expected to change a lot. Until this warning is removed, please consider the values shown above imprecise and don't trust them."
+                preTitle="Disclaimer"
+                title={t("pages.report.disclaimer.header")}
+                bodyText={t("pages.report.disclaimer.subheader")}
             />
             <GapView height={20} />
             <Section kind="HowYouAreDoing">

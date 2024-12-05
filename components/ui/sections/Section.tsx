@@ -108,45 +108,45 @@ export default function Section({
 
     switch (kind) {
         case "ActiveObjectives":
-            label = t("sections.headers.activeObjectives");
+            label = t("globals.objectives.active");
             headerIcon = "timer";
             break;
         case "PassiveObjectives":
-            label = t("sections.headers.passiveObjectives");
+            label = t("globals.objectives.passive");
             headerIcon = "calendar-today";
             break;
         case "HowYouAreDoing":
-            label = t("sections.headers.howYouAreDoing");
+            label = t("globals.howYouAreDoing");
             headerIcon = "space-dashboard";
             break;
         case "Unknown":
-            label = t("sections.headers.unknown");
+            label = t("globals.somethingIsWrong");
             headerIcon = "question-mark";
             break;
         case "Settings":
-            label = t("sections.headers.settings");
+            label = t("globals.settings");
             headerIcon = "settings";
             break;
         case "Developer":
-            label = t("sections.headers.developer");
+            label = t("globals.developers");
             headerIcon = "code";
             break;
         case "Profile":
-            label = t("sections.headers.profile");
+            label = t("pages.profile.header");
             headerIcon = "person";
             break;
         case "About":
-            label = t("sections.headers.about");
+            label = t("globals.about");
             headerIcon = "info";
             break;
         case "Danger":
-            label = t("sections.headers.danger");
+            label = t("globals.danger");
             headerIcon = "warning";
             backgroundColor = Colors.PRIMARIES.WOR.WOR;
             foregroundColor = Colors.MAIN.APP;
             break;
         case "Experiments":
-            label = t("sections.headers.experiments");
+            label = t("globals.experiments");
             headerIcon = "science";
             backgroundColor = Colors.PRIMARIES.HMM.HMM;
             foregroundColor = Colors.MAIN.APP;

@@ -25,8 +25,8 @@ import AsyncStorage from "expo-sqlite/kv-store";
 import * as Device from "expo-device";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { Platform, ToastAndroid } from "react-native";
 import TopBar from "@/components/navigation/TopBar";
+import { ShowToast } from "@/toolkit/Android";
 
 export default function HomeScreen() {
     const [loading, setLoading] = useState<boolean>(true);
@@ -90,9 +90,7 @@ export default function HomeScreen() {
     async function clearLogs() {
         try {
             await AsyncStorage.setItem(StoredItemNames.consoleLogs, "");
-            if (Platform.OS === "android") {
-                ToastAndroid.show("Clear!", ToastAndroid.LONG);
-            }
+            ShowToast("Clear!");
         } catch (e) {
             logToConsole("Failed to clear logs: " + e, "error");
         }

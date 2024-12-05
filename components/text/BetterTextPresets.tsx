@@ -141,7 +141,7 @@ export function BetterTextSmallText({
         <BetterText
             textAlign="normal"
             fontWeight="Regular"
-            fontSize={FontSizes.REGULAR}
+            fontSize={FontSizes.ALMOST_REGULAR}
             textColor={Colors.LABELS.SDD}
         >
             {children}

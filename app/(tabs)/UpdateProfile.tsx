@@ -215,7 +215,7 @@ export default function UpdateProfile() {
                     style="DEFAULT"
                     action={router.back}
                     buttonText={t("globals.interaction.nevermind")}
-                    buttonHint="Go back without saving your changes."
+                    buttonHint={t("pages.updateProfile.nevermindHint")}
                 />
                 <GapView width={15} />
                 <BetterButton
@@ -224,7 +224,7 @@ export default function UpdateProfile() {
                         await submit();
                     }}
                     buttonText={t("globals.interaction.save")}
-                    buttonHint="Save and apply these changes to your profile."
+                    buttonHint={t("pages.updateProfile.saveHint")}
                 />
             </View>
             <PageEnd includeText={false} size="tiny" />

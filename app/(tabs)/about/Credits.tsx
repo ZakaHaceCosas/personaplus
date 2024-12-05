@@ -14,6 +14,7 @@ import {
     BetterTextSmallText,
 } from "@/components/text/BetterTextPresets";
 import PageEnd from "@/components/static/PageEnd";
+import { useTranslation } from "react-i18next";
 
 /**
  * OpenSourceLibrary
@@ -150,15 +151,17 @@ const contributors: Contributor[] = [
 ];
 
 export default function OpenSourceCredits() {
+    const { t } = useTranslation();
+
     return (
         <>
             <TopBar
                 includeBackButton={true}
-                header="Credits"
-                subHeader="Awesome people and code that helped PersonaPlus!"
+                header={t("pages.credits.header")}
+                subHeader={t("pages.credits.subheader")}
             />
             <BetterTextExtraHeader>
-                Cool contributors that helped a lot with the app
+                {t("pages.credits.contributors")}
             </BetterTextExtraHeader>
             <GapView height={20} />
             {contributors.map((contributor, index) => (
@@ -213,13 +216,11 @@ export default function OpenSourceCredits() {
                 </View>
             ))}
             <BetterTextSmallText>
-                Note: Not all contributors are listed. For the full list, you
-                can check out the GitHub contributors tab. And hey - not being
-                listed here doesn't mean anyone's contributions aren't great!
+                {t("pages.credits.contributorsNote")}
             </BetterTextSmallText>
             <GapView height={20} />
             <BetterTextExtraHeader>
-                Cool libraries that power the app
+                {t("pages.credits.libraries")}
             </BetterTextExtraHeader>
             <GapView height={20} />
             {libraries.map((library, index) => (
@@ -267,7 +268,7 @@ export default function OpenSourceCredits() {
                 </View>
             ))}
             <BetterTextSmallText>
-                *We use our own fork, not the library itself.
+                {t("pages.credits.librariesNoteOne")}
             </BetterTextSmallText>
             <PageEnd includeText={false} size="tiny" />
         </>

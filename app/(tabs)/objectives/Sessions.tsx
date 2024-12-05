@@ -2,7 +2,7 @@
 // Page for live exercising sessions
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { View, StyleSheet, Alert, ToastAndroid, Platform } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import {
     GetActiveObjective,
     CalculateSessionFragmentsDuration,
@@ -29,6 +29,7 @@ import ROUTES from "@/constants/Routes";
 import { Color } from "@/types/Color";
 import { BasicUserHealthData } from "@/types/User";
 import { OrchestrateUserData } from "@/toolkit/User";
+import { ShowToast } from "@/toolkit/Android";
 
 // TypeScript, supongo
 // this type is a glue fix, otherwise a type error happens because SessionParams is not compatible with UnknownInputParams from ExpoRouter
@@ -144,16 +145,16 @@ export default function Sessions() {
     // give up function
     function GiveUp(): void {
         Alert.alert(
-            t("globals.are_you_sure"),
-            t("page_sessions.give_up_description"),
+            t("globals.interaction.areYouSure"),
+            t("pages.sessions.giveUpDescription"),
             [
                 {
-                    text: t("globals.nevermind"),
+                    text: t("globals.interaction.nevermind"),
                     style: "cancel",
                     onPress: () => {},
                 },
                 {
-                    text: t("page_sessions.give_up_yes"),
+                    text: t("globals.interaction.giveUp"),
                     style: "destructive",
                     onPress: () => {
                         router.replace(ROUTES.MAIN.HOME); // basically goes home without saving, easy.
@@ -237,12 +238,7 @@ export default function Sessions() {
         if (!objective || !userData) return; // i mean if we finished we can asume we already have both things, but typescript disagrees
 
         try {
-            if (Platform.OS === "android") {
-                ToastAndroid.show(
-                    GenerateRandomMessage("sessionCompleted", t),
-                    ToastAndroid.LONG,
-                );
-            }
+            ShowToast(GenerateRandomMessage("sessionCompleted", t));
 
             const response = CalculateSessionPerformance(
                 objective,
@@ -303,7 +299,7 @@ export default function Sessions() {
                     fontWeight="Bold"
                     textColor={Colors.LABELS.SHL}
                 >
-                    {t("page_sessions.in_a_session")}
+                    {t("pages.sessions.live")}
                 </BetterText>
             </IslandDivision>
             <GapView height={20} />
@@ -313,7 +309,7 @@ export default function Sessions() {
                     fontSize={12}
                     textAlign="center"
                 >
-                    CURRENT OBJECTIVE:
+                    {t("pages.sessions.currentObjective")}
                 </BetterText>
                 <GapView height={10} />
                 <BetterText fontWeight="Bold" fontSize={25} textAlign="center">
@@ -372,8 +368,8 @@ export default function Sessions() {
                 <BetterButton
                     buttonHint={
                         isTimerRunning
-                            ? "Pauses the timer."
-                            : "Lets the timer keep running."
+                            ? t("pages.sessions.toggleTimer.hintPause")
+                            : t("pages.sessions.toggleTimer.hintPlay")
                     }
                     buttonText={null}
                     style={isTimerRunning ? "ACE" : "HMM"}
@@ -389,7 +385,7 @@ export default function Sessions() {
                 />
                 <GapView width={10} />
                 <BetterButton
-                    buttonHint="Opens up a menu with basic help onto what you should be doing right now."
+                    buttonHint={t("pages.sessions.helpHint")}
                     style="HMM"
                     buttonText={t("globals.interaction.help")}
                     action={() => toggleHelpMenu(true)}
@@ -397,7 +393,7 @@ export default function Sessions() {
                 />
                 <GapView width={10} />
                 <BetterButton
-                    buttonHint="Leaves the current sessions without saving your data."
+                    buttonHint={t("pages.sessions.giveUpHint")}
                     style="WOR"
                     buttonText={t("globals.interaction.giveUp")}
                     action={() => GiveUp()}

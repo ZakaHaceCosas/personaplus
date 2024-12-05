@@ -36,6 +36,7 @@ import GetStuffForUserDataQuestion from "@/constants/UserData";
 import URLs from "@/constants/Urls";
 import { DEFAULT_EXPERIMENTS } from "@/constants/Experiments";
 import { SafelyOpenUrl } from "@/toolkit/Routing";
+import BetterAlert from "@/components/ui/BetterAlert";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -691,11 +692,24 @@ export default function WelcomePage() {
                     {formData.theThinkHour && (
                         <>
                             <BetterTextSmallText>
-                                Has elegido las {formData.theThinkHour}.
+                                {t(
+                                    "pages.welcome.questions.theThinkHour.youChose",
+                                    { hour: formData.theThinkHour },
+                                )}
                             </BetterTextSmallText>
                             <GapView height={10} />
                         </>
                     )}
+                    <BetterAlert
+                        style="DEFAULT"
+                        layout="alert"
+                        title={t(
+                            "pages.welcome.questions.theThinkHour.TEMP_disclaimer",
+                        )}
+                        bodyText={t(
+                            "pages.welcome.questions.theThinkHour.TEMP_disclaimer2",
+                        )}
+                    />
                     {spawnNavigationButtons(4, true)}
                 </>
             )}

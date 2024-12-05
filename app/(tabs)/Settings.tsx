@@ -1,4 +1,3 @@
-// todo: doing this, some day
 import BetterButton from "@/components/interaction/BetterButton";
 import Loading from "@/components/static/Loading";
 import Division from "@/components/ui/sections/Division";
@@ -61,20 +60,27 @@ export default function Settings() {
         <>
             <TopBar
                 includeBackButton={true}
-                header="Settings"
-                subHeader="Your app, your rule. Tweak it here."
+                header={t("globals.settings")}
+                subHeader={t("pages.settings.subheader")}
             />
             <Section kind="Settings">
                 <Division
-                    preHeader="Preferences"
-                    header="Change language"
-                    subHeader={`You're currently using ${t(`globals.languages.${userData.language}`)}`}
+                    preHeader={t("pages.settings.preferences.word")}
+                    header={t("pages.settings.preferences.language.header")}
+                    subHeader={t(
+                        "pages.settings.preferences.language.subheader",
+                        { lang: t(`globals.languages.${userData.language}`) },
+                    )}
                     direction="vertical"
                     gap={0}
                 >
                     <BetterButton
-                        buttonText="Change language"
-                        buttonHint="Changes your language."
+                        buttonText={t(
+                            "pages.settings.preferences.language.action.text",
+                        )}
+                        buttonHint={t(
+                            "pages.settings.preferences.language.action.hint",
+                        )}
                         style="DEFAULT"
                         action={changeLanguage}
                     />
@@ -83,15 +89,22 @@ export default function Settings() {
             <GapView height={20} />
             <Section kind="Developer">
                 <Division
-                    preHeader="Advanced"
-                    header="Experiments"
-                    subHeader="Features still in progress. Test them early, share feedback, and help us improve—but note they're unstable."
+                    preHeader={t("pages.settings.advanced.word")}
+                    header={t("pages.settings.advanced.experiments.header")}
+                    /* subHeader="Features still in progress. Test them early, share feedback, and help us improve—but note they're unstable." */
+                    subHeader={t(
+                        "pages.settings.advanced.experiments.subheader",
+                    )}
                     direction="vertical"
                     gap={0}
                 >
                     <BetterButton
-                        buttonText="Open Experiments"
-                        buttonHint="Opens a page where experiments can be enabled or disabled."
+                        buttonText={t(
+                            "pages.settings.advanced.experiments.action.text",
+                        )}
+                        buttonHint={t(
+                            "pages.settings.advanced.experiments.action.hint",
+                        )}
                         style="HMM"
                         action={() =>
                             router.push(ROUTES.DEV_INTERFACE.EXPERIMENTS)
@@ -99,15 +112,21 @@ export default function Settings() {
                     />
                 </Division>
                 <Division
-                    preHeader="Advanced"
-                    header="Launch Dev Interface"
-                    subHeader="An interface for contributors to see what's up from the inside of the app."
+                    preHeader={t("pages.settings.advanced.word")}
+                    header={t("pages.settings.advanced.devInterface.header")}
+                    subHeader={t(
+                        "pages.settings.advanced.devInterface.subheader",
+                    )}
                     direction="vertical"
                     gap={0}
                 >
                     <BetterButton
-                        buttonText="Dev Interface"
-                        buttonHint="Launches Dev Interface"
+                        buttonText={t(
+                            "pages.settings.advanced.devInterface.action.text",
+                        )}
+                        buttonHint={t(
+                            "pages.settings.advanced.devInterface.action.hint",
+                        )}
                         style="HMM"
                         action={() => router.push(ROUTES.DEV_INTERFACE.HOME)}
                     />
@@ -116,21 +135,25 @@ export default function Settings() {
             <GapView height={20} />
             <Section kind="Danger">
                 <Division
-                    preHeader="Dangerous"
-                    header="Reset app"
-                    subHeader="It will permanently remove all of your user data, with no way to go back. Use it at your own will."
+                    preHeader={t("pages.settings.dangerous.word")}
+                    header={t("pages.settings.dangerous.resetApp.header")}
+                    subHeader={t("pages.settings.dangerous.resetApp.subheader")}
                     direction="vertical"
                     gap={0}
                 >
                     <BetterButton
-                        buttonText="Reset PersonaPlus"
-                        buttonHint="makes your account go boom"
+                        buttonText={t(
+                            "pages.settings.dangerous.resetApp.action.text",
+                        )}
+                        buttonHint={t(
+                            "pages.settings.dangerous.resetApp.action.hint",
+                        )}
                         style="WOR"
                         action={() => updateBrm5(true)}
                     />
                 </Division>
             </Section>
-            <PageEnd includeText={true} />
+            <PageEnd includeText={true} size="tiny" />
         </>
     );
 }

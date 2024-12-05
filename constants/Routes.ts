@@ -7,7 +7,6 @@ const ROUTES = {
         PROFILE: "/Profile",
         DASHBOARD: "/Dashboard",
         WELCOME_SCREEN: "/Welcome",
-        REPORT: "/Report",
         SETTINGS: {
             UPDATE_PROFILE: "/UpdateProfile",
             SETTINGS_PAGE: "/Settings",
@@ -34,6 +33,7 @@ const ROUTES = {
      */
     EXPERIMENTS: {
         TRACKER: "/objectives/exp_tracker",
+        REPORT: "/Report",
     },
 };
 

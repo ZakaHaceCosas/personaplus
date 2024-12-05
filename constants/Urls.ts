@@ -21,6 +21,10 @@ const URLs = {
     license: "https://www.gnu.org/licenses/gpl-3.0.html#license-text",
     discord: "https://discord.gg/wwzddK4Zpc",
     repo: "https://github.com/ZakaHaceCosas/personaplus",
+    releasesApi:
+        "https://api.github.com/repos/ZakaHaceCosas/personaplus/releases",
+    latestChangelog:
+        "https://github.com/ZakaHaceCosas/personaplus/releases/latest",
 } as const;
 
 /** TS type for functions that only take app URLs. */

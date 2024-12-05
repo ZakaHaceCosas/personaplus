@@ -78,7 +78,7 @@ export default function CreateActiveObjectivePage() {
     // objective and stuff
     const exerciseOptions: SelectOption[] = SupportedActiveObjectivesList.map(
         (option: string): SelectOption => ({
-            label: t(`globals.supportedActiveObjectives.${option}`),
+            label: t(`globals.supportedActiveObjectives.${option}.name`),
             value: option,
             enabled: true,
         }),
@@ -447,13 +447,13 @@ export default function CreateActiveObjectivePage() {
             <View style={styles.dayContainer}>
                 {objectiveToCreate.info.days.map((day, index) => {
                     const daysOfWeek: string[] = [
-                        t("globals.daysOfTheWeek.monday.key"),
-                        t("globals.daysOfTheWeek.tuesday.key"),
-                        t("globals.daysOfTheWeek.wednesday.key"),
-                        t("globals.daysOfTheWeek.thursday.key"),
-                        t("globals.daysOfTheWeek.friday.key"),
-                        t("globals.daysOfTheWeek.saturday.key"),
-                        t("globals.daysOfTheWeek.sunday.key"),
+                        t("globals.daysOfTheWeek.Monday.key"),
+                        t("globals.daysOfTheWeek.Tuesday.key"),
+                        t("globals.daysOfTheWeek.Wednesday.key"),
+                        t("globals.daysOfTheWeek.Thursday.key"),
+                        t("globals.daysOfTheWeek.Friday.key"),
+                        t("globals.daysOfTheWeek.Saturday.key"),
+                        t("globals.daysOfTheWeek.Sunday.key"),
                     ];
                     const thisDay = daysOfWeek[index];
 
