@@ -1,3 +1,4 @@
+import React from "react";
 import BetterButton from "@/components/interaction/BetterButton";
 import Loading from "@/components/static/Loading";
 import PageEnd from "@/components/static/PageEnd";
@@ -45,11 +46,7 @@ export default function HomeScreen() {
     async function fetchData(): Promise<void> {
         try {
             // user data
-            const userData: FullProfile | null = await OrchestrateUserData();
-            if (!userData) {
-                router.replace(ROUTES.MAIN.WELCOME_SCREEN);
-                return;
-            }
+            const userData: FullProfile = await OrchestrateUserData();
             setUserData(userData);
 
             // objectives for UI
@@ -96,6 +93,10 @@ export default function HomeScreen() {
                 setAllObjectivesForTable(objectivesForTable);
             }
         } catch (e) {
+            if (String(e).includes("null")) {
+                router.replace(ROUTES.MAIN.WELCOME_SCREEN);
+                return;
+            }
             logToConsole("Error fetching data: " + e, "error");
         } finally {
             setLoading(false);
