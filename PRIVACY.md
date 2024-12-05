@@ -15,8 +15,7 @@
     - Among others. We keep adding additional calculations to the CL as needed.
   - You are always shown the results of all calculations and they're never shown to anyone. Please note their accuracy is not a guarantee[^2].
 - **Usage data:** PersonaPlus does not compile technical usage data, diagnostics, telemetry, whatsoever. We do collect basic data onto your usage of the app, but it's only stored locally and you can see it and/or wipe it at any time. <!-- TODO: add data removal without needing to remove account as an actual feature -->
-
-<!-- todo finish translating -->
+<!-- todo finish -->
 ## Métodos de Recopilación
 
 - **Obtención directa:** Podemos obtener los datos directamente desde usted: al abrir la app por primera vez, se le hace un cuestionario preguntándole ciertos datos. Varias preguntas son opcionales, por lo que no hay problema si no quiere responder alguna.
