@@ -1,7 +1,4 @@
-# PersonaPlus Developer CHANGELOG
-<!--
-P.S.: Changelog is managed by the owner only, thanks. One task less for you!
--->
+# PersonaPlus Developer Changelog
 
 All changes related to the app's development (codebase and others) will be documented in this file.
 
@@ -41,6 +38,7 @@ There've been A LOT of changes. I'll take my time to view the `diff` and update 
 - Fully reorganized the project onto a better, easier to understand file structure.
 - Most components went under revision and refactoring. Some were entirely rebuilt, others were just changed, more or less. But most components have undergone changes.
 - Improved JSDoc for many functions.
+- Renamed many functions and components.
 
 ### Removed
 

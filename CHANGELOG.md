@@ -1,7 +1,4 @@
-# PersonaPlus CHANGELOG
-<!--
-P.S.: Changelog is managed by the owner only, thanks. One task less for you!
--->
+# PersonaPlus Changelog
 
 All notable changes will be documented in this file.
 
@@ -23,12 +20,12 @@ There've been A LOT of changes. I'll take my time to view the `diff` and update 
 - Added a Not found page for non-existing routes.
 - More random, friendly messages :]
 - New info for Dev Interface to display, like device details, a table with all active objectives and their ID, and even two new separate pages to view logs in a better way.
+- Now you can tap the numbers at the active objective creation page to set a custom value.
 
 ### Changed
 
 - Gave the app a visual refresh. While it's not a redesign, many things have changed, they look better, feel and interact better, etc...
 - Changed many in-app texts.
-- Now you can tap the numbers at the active objective creation page to set a custom value.
 - Now, in the active objective creation page, days of the week are shown in a row instead of a column, saving up on space.
 
 ### Removed
@@ -42,16 +39,17 @@ There've been A LOT of changes. I'll take my time to view the `diff` and update 
 - **Fixed** some content lacking translations.
 - **Fixed** the app erroneously considering the onboarding form as completed even if it wasn't. Previously, if the app was left without submission and relaunched, it would load without the data, treating the user as "Unknown".
 - **Fixed** Dev Interface showing "[object Object]" instead of the relevant data.
-- ~~Fixed the app registering multiple times for reminder notifications, causing unwanted reminders.~~
+<!-- - ~~Fixed the app registering multiple times for reminder notifications, causing unwanted reminders.~~ ("Fixed" by removal of the feature. Will be re-added.) -->
 - **Fixed** buttons having inconsistent heights.
 - **Fixed** swap components having their order disrupted.
 - **Fixed** buttons intended to navigate back failing when there's no history.
 - (WIP, SEE R5 ISSUES) **Fixed** the app being unable to scroll on some devices.
 - (WIP, SEE R5 ISSUES) **Fixed** the app crashing at the end of a session.
+- **Fixed** the home page showing "all objectives done" even tho there are some objectives not done.
 
 ### Known issues <!-- not part of the Keep A Changelog standard -->
 
-- Active objective creation page's input fields have turned not precise, and tend to fail, especially with the new tap to edit feature.
+- First time launching the app doesn't properly handle missing user data, crashes.
 
 ### R5 ISSUES
 
@@ -59,11 +57,10 @@ There've been A LOT of changes. I'll take my time to view the `diff` and update 
 
 These errors come from the R5 version. They _should_ be already fixed, but haven't been tested (otherwise it will be specified).
 
-- EAS build refusing to work.
 - The app not allowing the user to scroll on some (modern) Android devices.
   - (my old Xiaomi never had that error, but friends of mine testing the app did have it)
-- (FIXED) Home page showing "all objectives done" even tho there are some objectives not done.
-- Random crashes of the app
+
+---
 
 > For versions prior to 0.0.26, see [the deprecated changelog](CHANGELOG.deprecated.md).
 > P.S. Versions prior to 0.0.26 are not SemVer compliant and follow a different format.
