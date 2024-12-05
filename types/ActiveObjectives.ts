@@ -11,8 +11,8 @@ export type SupportedActiveObjectives =
     | "Push Ups"
     | "Lifting"
     | "Running"
-    | "Walking"
-    | "Biking";
+    | "Walking";
+// | "Biking"; (coming soon)
 
 /**
  * A list with all supported active objectives as a `string[]`.
@@ -24,7 +24,7 @@ export const SupportedActiveObjectivesList: string[] = [
     "Lifting",
     "Running",
     "Walking",
-    "Biking",
+    // "Biking",
 ];
 
 /**
