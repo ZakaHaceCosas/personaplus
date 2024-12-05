@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import BetterButton from "@/components/interaction/BetterButton";
 import BackButton from "@/components/navigation/GoBack";
 import Loading from "@/components/static/Loading";
@@ -12,10 +13,9 @@ import GapView from "@/components/ui/GapView";
 import Division from "@/components/ui/sections/Division";
 import Section from "@/components/ui/sections/Section";
 import { GetExperiments, ToggleExperiment } from "@/toolkit/Experiments";
-import SafelyGoBack from "@/toolkit/Routing";
+import { SafelyGoBack } from "@/toolkit/Routing";
 import { logToConsole } from "@/toolkit/debug/Console";
 import { Experiment, Experiments } from "@/types/User";
-import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Alert, Platform, ToastAndroid } from "react-native";
 

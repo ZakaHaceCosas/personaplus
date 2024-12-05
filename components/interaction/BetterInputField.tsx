@@ -115,7 +115,7 @@ export default function BetterInputField({
 
     const nextFieldIndex = refIndex + 1;
     const returnKeyType = shouldRef
-        ? nextFieldIndex === refParams.totalRefs - 1
+        ? nextFieldIndex === refParams.totalRefs
             ? "done"
             : "next"
         : "done";
