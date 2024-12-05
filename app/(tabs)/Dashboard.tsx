@@ -8,9 +8,9 @@ import ROUTES from "@/constants/Routes";
 import { logToConsole } from "@/toolkit/debug/Console";
 import {
     DeleteActiveObjective,
-    GenerateDescriptionOfObjective,
     GetAllObjectives,
 } from "@/toolkit/objectives/ActiveObjectives";
+import { ObjectiveDescriptiveIcons } from "@/toolkit/objectives/ActiveObjectivesUi";
 import { ActiveObjective } from "@/types/ActiveObjectives";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -71,28 +71,36 @@ export default function Dashboard() {
         <>
             <TopBar
                 includeBackButton={false}
-                header="Dashboard"
-                subHeader="Setup here your path to success!"
+                header={t("pages.dashboard.header")}
+                subHeader={t("pages.dashboard.subheader")}
             />
             <Section kind="ActiveObjectives">
                 {activeObjectives === null || activeObjectives.length === 0 ? (
-                    <Division header="You don't have any objectives... Let's create one!" />
+                    <Division
+                        header={t("activeObjectives.noObjectives.noObjectives")}
+                    />
                 ) : (
                     activeObjectives.map((obj: ActiveObjective) => {
                         return (
                             <Division
                                 key={obj.identifier}
-                                preHeader="ACTIVE OBJECTIVE"
-                                header={obj.exercise}
-                                subHeader={GenerateDescriptionOfObjective(
-                                    obj,
-                                    t,
+                                header={t(
+                                    `globals.supportedActiveObjectives.${obj.exercise}.name`,
                                 )}
+                                preHeader={t(
+                                    "activeObjectives.allCapsSingular",
+                                )}
+                                direction="vertical"
                             >
+                                <ObjectiveDescriptiveIcons obj={obj} />
                                 <BetterButton
                                     style="WOR"
-                                    buttonText="Delete"
-                                    buttonHint="Permanently removes an active objective (the one this button is tied to)"
+                                    buttonText={t(
+                                        "pages.dashboard.deleteObjective.text",
+                                    )}
+                                    buttonHint={t(
+                                        "pages.dashboard.deleteObjective.hint",
+                                    )}
                                     action={() =>
                                         handleDeleteObjective(obj.identifier)
                                     }
@@ -103,12 +111,12 @@ export default function Dashboard() {
                 )}
                 <View style={styles.buttonWrapper}>
                     <BetterButton
-                        buttonText="Create active objective"
-                        buttonHint="Redirects the user to a page where he can create an active objective"
                         style="GOD"
-                        action={() =>
+                        action={(): void =>
                             router.push(ROUTES.ACTIVE_OBJECTIVES.CREATE)
                         }
+                        buttonText={t("activeObjectives.createObjective.text")}
+                        buttonHint={t("activeObjectives.createObjective.hint")}
                     />
                 </View>
             </Section>
