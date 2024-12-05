@@ -18,26 +18,32 @@ import { TFunction } from "i18next";
  * @property {ActiveObjective} objective The objective of the current session.
  * @property {TFunction} t The translate function.
  */
-type InfoIconsProps = {
+interface InfoIconsProps {
+    /**
+     * The objective of the current session.
+     *
+     * @type {ActiveObjective}
+     */
     objective: ActiveObjective;
     t: TFunction;
-};
+}
 
-// I don't usually use React.FC, I prefer export default function
-// This was the only fix I found for an IntrinsicAttributes error, tho
 /**
- * Returns a JSX component with a list of icons containing info about a certain objective.
+ * Returns an array of icons containing info about a certain objective.
  *
- * @param {InfoIconsProps} props The properties for the InfoIcons component.
- * @param {Objective} props.objective The objective of the current session.
- * @param {1 | 2} props.row Whether to show the 1st row (generic data) or the 2nd row (exercise-specific) data.
- * @param {TFunction} props.t The translate function.
+ * @param {InfoIconsProps} p The properties for the InfoIcons component.
+ * @param {Objective} p.objective The objective of the current session.
+ * @param {1 | 2} p.row Whether to show the 1st row (generic data) or the 2nd row (exercise-specific) data.
+ * @param {TFunction} p.t The translate function.
  * @returns {ReactElement} The JSX component displaying the icons.
  */
-const SessionsPageInfoIcons: React.FC<InfoIconsProps> = ({
+export default function SessionsPageInfoIcons({
     objective,
     t,
-}: InfoIconsProps): ReactElement => {
+}: InfoIconsProps): ReactElement {
+    /**
+     * @deprecated Only use until the tracker experiment fully rolls out.
+     */
     const speedOptions: [string, string][] = [
         [t("Brisk Walk"), t("1.6 - 3.2 km/h")],
         [t("Light Jog"), t("3.2 - 4.0 km/h")],
@@ -67,10 +73,11 @@ const SessionsPageInfoIcons: React.FC<InfoIconsProps> = ({
                 <GapView width={5} />
                 <BetterText fontWeight="Regular" fontSize={15}>
                     {objective.info.rests === 0
-                        ? t("globals.none")
-                        : objective.info.rests === 1
-                          ? `${objective.info.rests} rest of ${objective.info.restDurationMinutes} mins`
-                          : `${objective.info.rests} rests (${objective.info.restDurationMinutes} mins)`}
+                        ? t("globals.interaction.none")
+                        : t("pages.sessions.rests", {
+                              rests: objective.info.rests,
+                              duration: objective.info.restDurationMinutes,
+                          })}
                 </BetterText>
             </View>
             {objective.exercise.toLowerCase() === "running" && (
@@ -122,9 +129,10 @@ const SessionsPageInfoIcons: React.FC<InfoIconsProps> = ({
                         fontSize={15}
                     >
                         {objective?.specificData?.amountOfHands !== undefined
-                            ? String(objective.specificData.amountOfHands)
-                            : "N/A"}{" "}
-                        hand
+                            ? t("pages.sessions.hands", {
+                                  hands: objective.specificData.amountOfHands,
+                              })
+                            : "N/A"}
                     </BetterText>
                 </View>
             )}
@@ -149,9 +157,11 @@ const SessionsPageInfoIcons: React.FC<InfoIconsProps> = ({
                         fontSize={15}
                     >
                         {objective?.specificData?.amountOfPushUps !== undefined
-                            ? String(objective.specificData.amountOfPushUps)
-                            : "N/A"}{" "}
-                        push-ups
+                            ? t("pages.sessions.pushUps", {
+                                  pushUps:
+                                      objective.specificData.amountOfPushUps,
+                              })
+                            : "N/A"}
                     </BetterText>
                     <GapView width={10} />
                     <Ionicons
@@ -166,14 +176,13 @@ const SessionsPageInfoIcons: React.FC<InfoIconsProps> = ({
                         fontSize={15}
                     >
                         {objective?.specificData?.amountOfHands !== undefined
-                            ? String(objective.specificData.amountOfHands)
-                            : "N/A"}{" "}
-                        hand
+                            ? t("pages.sessions.hands", {
+                                  hands: objective.specificData.amountOfHands,
+                              })
+                            : "N/A"}
                     </BetterText>
                 </View>
             )}
         </>
     );
-};
-
-export default SessionsPageInfoIcons;
+}
