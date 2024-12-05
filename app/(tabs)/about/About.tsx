@@ -15,6 +15,7 @@ import Division from "@/components/ui/sections/Division";
 import BetterButton from "@/components/interaction/BetterButton";
 import { SafelyOpenUrl } from "@/toolkit/Routing";
 import URLs from "@/constants/Urls";
+import ROUTES from "@/constants/Routes";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -41,6 +42,7 @@ export default function About() {
 
     return (
         <>
+            {/* Doesn't use <TopBar /> because it's a different layout */}
             <BackButton t={t} />
             <GapView height={10} />
             <View style={styles.headerContainer}>
@@ -64,7 +66,6 @@ export default function About() {
                     </BetterText>
                 </View>
             </View>
-            <GapView height={5} />
             <BetterText
                 textAlign="center"
                 fontWeight="Bold"
@@ -91,14 +92,14 @@ export default function About() {
                     buttonHint="TODO"
                     buttonText={t("License")}
                     style="GOD"
-                    action={() => router.push("/License")}
+                    action={() => router.push(ROUTES.ABOUT.LICENSE)}
                 />
                 <GapView width={10} />
                 <BetterButton
                     buttonHint="TODO"
                     buttonText={"Credits"}
                     style="GOD"
-                    action={() => router.push("/OpenSourceCredits")}
+                    action={() => router.push(ROUTES.ABOUT.CREDITS)}
                 />
             </View>
             <GapView height={10} />
@@ -128,8 +129,10 @@ export default function About() {
                 fontWeight="Italic"
                 fontSize={FontSizes.SMALL}
             >
-                here goes the "early version" disclaimer. TODO#2,, make the
-                button layout up there better.
+                PS. You're running an early version of the app. Thank you for
+                testing it and being among the first ones to do so! Remember to
+                report on GitHub ("Open Source") any issue you find with the app
+                so we can fix it. Thanks!
             </BetterText>
         </>
     );

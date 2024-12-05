@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import BetterButton from "@/components/interaction/BetterButton";
-import BackButton from "@/components/navigation/GoBack";
 import Loading from "@/components/static/Loading";
 import PageEnd from "@/components/static/PageEnd";
 import {
@@ -16,12 +15,11 @@ import { GetExperiments, ToggleExperiment } from "@/toolkit/Experiments";
 import { SafelyGoBack } from "@/toolkit/Routing";
 import { logToConsole } from "@/toolkit/debug/Console";
 import { Experiment, Experiments } from "@/types/User";
-import { useTranslation } from "react-i18next";
 import { Alert, Platform, ToastAndroid } from "react-native";
+import TopBar from "@/components/navigation/TopBar";
 
 // i gave myself the freedom to write in an informal way on this page.
 export default function EpicExperiments() {
-    const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean>(true);
     const [experiments, setExperiments] = useState<Experiments | null>(null);
 
@@ -78,13 +76,11 @@ export default function EpicExperiments() {
 
     return (
         <>
-            <BackButton t={t} />
-            <GapView height={10} />
-            <BetterTextHeader>READ THIS OR YOU WILL EXPLODE!!</BetterTextHeader>
-            <BetterTextSmallerText>
-                i mean you wont actually explode but pls read it
-            </BetterTextSmallerText>
-            <GapView height={10} />
+            <TopBar
+                includeBackButton={true}
+                header="READ THIS OR YOU WILL EXPLODE!!"
+                subHeader="i mean you won't actually explode but pls read"
+            />
             <BetterAlert
                 style="WOR"
                 title="READ THIS OR YOU WILL EXPLODE!!"

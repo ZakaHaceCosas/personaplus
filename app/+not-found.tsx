@@ -1,14 +1,11 @@
 import React from "react";
 import BetterButton from "@/components/interaction/BetterButton";
-import {
-    BetterTextHeader,
-    BetterTextSmallText,
-    BetterTextSubHeader,
-} from "@/components/text/BetterTextPresets";
+import { BetterTextSmallText } from "@/components/text/BetterTextPresets";
 import * as Router from "expo-router";
 import { LayoutContainer } from "@/app/(tabs)/_layout";
 import GapView from "@/components/ui/GapView";
 import ROUTES from "@/constants/Routes";
+import TopBar from "@/components/navigation/TopBar";
 
 export default function NotFoundScreen() {
     const currentRoute: string = Router.usePathname();
@@ -16,12 +13,11 @@ export default function NotFoundScreen() {
     return (
         <>
             <LayoutContainer>
-                <BetterTextHeader>Got a map?</BetterTextHeader>
-                <BetterTextSubHeader>
-                    You've got a 404 error - this means, PersonaPlus cannot find
-                    the route you're looking for. Sorry!
-                </BetterTextSubHeader>
-                <GapView height={20} />
+                <TopBar
+                    includeBackButton={true}
+                    header="Got a map?"
+                    subHeader="You've got a 404 error - this means, PersonaPlus cannot find the route you're looking for. Sorry!"
+                />
                 <BetterButton
                     style="DEFAULT"
                     buttonText="Go home"
