@@ -1,7 +1,7 @@
 {
   "name": "personaplus",
   "main": "expo-router/entry",
-  "version": "0.0.26-preapp.6",
+  "version": "0.0.6-preapp.26",
   "scripts": {
     "start": "expo start --go",
     "start:clear": "expo start --go --clear",
@@ -79,13 +79,15 @@
     "react-native-svg": "15.8.0",
     "react-native-timer-picker": "^2.0.0",
     "react-native-web": "~0.19.13",
-    "rn-countdown-timer": "^4.0.3"
+    "rn-countdown-timer": "^4.0.3",
+    "semver": "^7.6.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/jest": "^29.5.12",
     "@types/react": "~18.3.12",
     "@types/react-test-renderer": "^18.0.7",
+    "@types/semver": "^7.5.8",
     "ajv": "^8.17.1",
     "eslint": "^8.57.0",
     "eslint-config-expo": "~8.0.1",

@@ -92,7 +92,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 26
-        versionName "0.0.26-preapp.6"
+        versionName "0.0.6-preapp.26"
     }
     signingConfigs {
         debug {

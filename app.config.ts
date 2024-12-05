@@ -1,5 +1,6 @@
 import * as ExpoConfig from "@expo/config";
 import dotenv from "dotenv";
+import { version as actualVersion } from "./package.json";
 
 dotenv.config();
 
@@ -9,7 +10,7 @@ const config: ExpoConfig.ExpoConfig = {
     scheme: "personaplus",
     description: "Give yourself a plus!",
     owner: "zakahacecosas",
-    version: "0.0.26-preapp.6", // SemVer-compliant 0.0.1-R6-bX equivalent. on ALPHA milestone bump the minor version.
+    version: actualVersion, // SemVer-compliant 0.0.1-R6-bX equivalent
     orientation: "portrait",
     githubUrl: "https://github.com/ZakaHaceCosas/personaplus",
     icon: "./assets/resources/icon.png",
