@@ -96,3 +96,6 @@ FIXED_ERROR_LOG.md
 CODE_OF_CONDUCT.md
 CHANGELOG.md
 CHANGELOG_DEV.md
+
+# android. ignoring this affects EAS build.
+android/
