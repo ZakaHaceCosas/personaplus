@@ -72,15 +72,19 @@ export default function Sessions() {
     const [totalTime, setTotalTime] = useState<number>(0);
     // the verbal version of the objective name (i don't know how to call it)
     // like if the exercise is "Push ups" this variable is "Pushing up" (or "Doing pushups"? i don't remember)
-    const currentObjectiveVerbalName = useMemo(
-        () =>
-            objective?.exercise
-                ? t(
-                      `globals.supported_active_objectives_verbal.${objective.exercise}`,
-                  ) // TODO - rename vars accordingly
-                : "Doing something",
-        [objective, t],
-    );
+    const currentObjectiveVerbalName = useMemo(() => {
+        if (!objective) return;
+
+        const { durationMinutes } = objective.info;
+
+        return objective?.exercise
+            ? `${t(
+                  `globals.supportedActiveObjectives.${objective.exercise}.doing`,
+                  { duration: durationMinutes },
+              )}${durationMinutes > 1 ? "s" : ""}`
+            : "Doing something";
+    }, [objective, t]);
+
     const [currentObjectiveDescription, setObjectiveDescription] =
         useState<string>(t("page_sessions.resting"));
 
@@ -119,12 +123,11 @@ export default function Sessions() {
 
     useEffect(() => {
         if (!objective) return;
-        const { durationMinutes } = objective.info;
         const result = !isUserResting
-            ? `${currentObjectiveVerbalName} ${durationMinutes}${durationMinutes > 1 ? ` ${t("globals.minute")}s` : ""}`
+            ? currentObjectiveVerbalName
             : t("page_sessions.resting");
 
-        setObjectiveDescription(result);
+        setObjectiveDescription(result!);
     }, [
         currentObjectiveVerbalName,
         isUserResting,
@@ -310,7 +313,7 @@ export default function Sessions() {
                     fontSize={12}
                     textAlign="center"
                 >
-                    {t("page_sessions.current")}
+                    CURRENT OBJECTIVE:
                 </BetterText>
                 <GapView height={10} />
                 <BetterText fontWeight="Bold" fontSize={25} textAlign="center">
@@ -396,7 +399,7 @@ export default function Sessions() {
                 <BetterButton
                     buttonHint="Leaves the current sessions without saving your data."
                     style="WOR"
-                    buttonText={t("page_sessions.give_up")}
+                    buttonText={t("globals.interaction.giveUp")}
                     action={() => GiveUp()}
                     layout="normal"
                 />

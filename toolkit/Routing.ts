@@ -18,8 +18,8 @@ export function SafelyGoBack(target?: string): void {
     }
 }
 
-/** Safely opens a URL. */
-export async function SafelyOpenUrl(url: URLValues): Promise<void> {
+/** Safely opens a URL. Can be a `URLValues` (app related URL) or any other string. */
+export async function SafelyOpenUrl(url: URLValues | string): Promise<void> {
     // note: in R5 i remember Álvaro using useCallback for this
     // i'll see if i add that later on
     try {
