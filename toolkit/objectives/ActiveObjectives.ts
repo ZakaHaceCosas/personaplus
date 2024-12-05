@@ -15,7 +15,6 @@ import {
     ActiveObjective,
     ActiveObjectiveDailyLog,
     ActiveObjectiveWithoutId,
-    SupportedActiveObjectives,
 } from "@/types/ActiveObjectives";
 import { logToConsole } from "@/toolkit/debug/Console";
 import AsyncStorage from "expo-sqlite/kv-store";
@@ -25,14 +24,13 @@ import {
     TodaysDay,
 } from "@/toolkit/debug/Today";
 import StoredItemNames from "@/constants/StoredItemNames";
-import { TFunction } from "i18next";
 import ROUTES from "@/constants/Routes";
 import { router } from "expo-router";
 import { GetExperiments } from "@/toolkit/Experiments";
-import { Platform, ToastAndroid } from "react-native";
 import CoreLibrary from "@/core/CoreLibrary";
 import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 import { BasicUserHealthData } from "@/types/User";
+import { ShowToast } from "../Android";
 
 /**
  * Returns the objectives from AsyncStorage as an `ActiveObjective[]`, or `null` if there aren't any objectives.
@@ -335,12 +333,7 @@ async function CreateActiveObjective(
                 StoredItemNames.objectives,
                 JSON.stringify(objs),
             );
-            if (Platform.OS === "android") {
-                ToastAndroid.show(
-                    `${target.exercise}? Let's go!`,
-                    ToastAndroid.LONG,
-                );
-            }
+            ShowToast(`${target.exercise}? Let's go!`);
         } catch (e) {
             throw new Error("Failed to save objectives! " + e);
         }
@@ -423,41 +416,6 @@ async function DeleteActiveObjective(identifier: number): Promise<void> {
     }
 }
 
-/**
- * Generates a (currently) text based description of an objective.
- *
- * Note this will probably undergo refactoring as the final idea is to use icon for sleeker UI, changing the return type from `string` to `ReactNode`.
- *
- * @param {ActiveObjective} obj The objective.
- * @param {TFunction} t Pass here the translate function, please.
- * @returns {string} A string.
- */
-function GenerateDescriptionOfObjective(
-    obj: ActiveObjective,
-    t: TFunction,
-): string {
-    const exercise: SupportedActiveObjectives = obj.exercise;
-    const minuteWord =
-        obj.info.durationMinutes === 1 ? " minute." : " minutes.";
-    if (exercise === "Lifting")
-        return t(
-            obj.specificData.reps +
-                " lifts of " +
-                obj.specificData.dumbbellWeight *
-                    obj.specificData.amountOfHands +
-                " kg each.",
-        );
-    else if (exercise === "Push Ups")
-        return t(
-            obj.specificData.amountOfPushUps +
-                " push ups with " +
-                obj.specificData.amountOfHands +
-                " hands.",
-        );
-    else if (exercise === "Running")
-        return t("For " + obj.info.durationMinutes + minuteWord);
-    return "(There was an error reading this objective's data)";
-}
 /**
  * Launches an Active Objective live session.
  *
@@ -558,7 +516,6 @@ export {
     CheckForAnActiveObjectiveDailyStatus,
     CalculateSessionFragmentsDuration,
     DeleteActiveObjective,
-    GenerateDescriptionOfObjective,
     LaunchActiveObjective,
     CalculateSessionPerformance,
 };

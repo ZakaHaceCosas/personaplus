@@ -13,12 +13,12 @@ import { OrchestrateUserData } from "@/toolkit/User";
 import { logToConsole } from "@/toolkit/debug/Console";
 import {
     CheckForAnActiveObjectiveDailyStatus,
-    GenerateDescriptionOfObjective,
     GetActiveObjective,
     GetAllObjectives,
     GetAllPendingObjectives,
     LaunchActiveObjective,
 } from "@/toolkit/objectives/ActiveObjectives";
+import { ObjectiveDescriptiveIcons } from "@/toolkit/objectives/ActiveObjectivesUi";
 import { ActiveObjective } from "@/types/ActiveObjectives";
 import { FullProfile } from "@/types/User";
 import { router } from "expo-router";
@@ -40,70 +40,77 @@ export default function HomeScreen() {
         null,
     );
 
-    async function fetchData(): Promise<void> {
-        try {
-            // user data
-            const userData: FullProfile = await OrchestrateUserData();
-            setUserData(userData);
-
-            // objectives for UI
-            const pending: number[] | 0 | false | null =
-                await GetAllPendingObjectives();
-            setIdentifiers(pending);
-
-            if (Array.isArray(pending)) {
-                const objectives: (ActiveObjective | null)[] =
-                    await Promise.all(
-                        pending.map(
-                            (
-                                identifier: number,
-                            ): Promise<ActiveObjective | null> =>
-                                GetActiveObjective(identifier),
-                        ),
-                    );
-
-                const filteredObjectives: ActiveObjective[] = objectives.filter(
-                    (obj: ActiveObjective | null): obj is ActiveObjective =>
-                        obj !== null,
-                );
-                setRenderedObjectives(filteredObjectives);
-            }
-
-            // objectives for table
-            const allObjectives: ActiveObjective[] | null =
-                await GetAllObjectives();
-            if (allObjectives) {
-                const objectivesForTable: BetterTableItem[] = await Promise.all(
-                    allObjectives.map(
-                        async (
-                            obj: ActiveObjective,
-                        ): Promise<BetterTableItem> => ({
-                            name: obj.exercise,
-                            value: (await CheckForAnActiveObjectiveDailyStatus(
-                                obj.identifier,
-                            ))
-                                ? "Done!"
-                                : "Pending...",
-                        }),
-                    ),
-                );
-                setAllObjectivesForTable(objectivesForTable);
-            }
-        } catch (e) {
-            if (String(e).includes("null")) {
-                router.replace(ROUTES.MAIN.WELCOME_SCREEN);
-                return;
-            }
-            logToConsole("Error fetching data: " + e, "error");
-        } finally {
-            setLoading(false);
-        }
-    }
-
     useEffect((): void => {
-        setLoading(true);
-        Promise.all([fetchData()]);
-    }, []);
+        async function fetchData(): Promise<void> {
+            try {
+                // user data
+                const userData: FullProfile = await OrchestrateUserData();
+                setUserData(userData);
+
+                // objectives for UI
+                const pending: number[] | 0 | false | null =
+                    await GetAllPendingObjectives();
+                setIdentifiers(pending);
+
+                if (Array.isArray(pending)) {
+                    const objectives: (ActiveObjective | null)[] =
+                        await Promise.all(
+                            pending.map(
+                                (
+                                    identifier: number,
+                                ): Promise<ActiveObjective | null> =>
+                                    GetActiveObjective(identifier),
+                            ),
+                        );
+
+                    const filteredObjectives: ActiveObjective[] =
+                        objectives.filter(
+                            (
+                                obj: ActiveObjective | null,
+                            ): obj is ActiveObjective => obj !== null,
+                        );
+                    setRenderedObjectives(filteredObjectives);
+                }
+
+                // objectives for table
+                const allObjectives: ActiveObjective[] | null =
+                    await GetAllObjectives();
+                if (allObjectives) {
+                    const objectivesForTable: BetterTableItem[] =
+                        await Promise.all(
+                            allObjectives.map(
+                                async (
+                                    obj: ActiveObjective,
+                                ): Promise<BetterTableItem> => ({
+                                    name: t(
+                                        `globals.supportedActiveObjectives.${obj.exercise}.name`,
+                                    ),
+                                    value: (await CheckForAnActiveObjectiveDailyStatus(
+                                        obj.identifier,
+                                    ))
+                                        ? t(
+                                              "activeObjectives.today.content.headers.statusOptions.yes",
+                                          )
+                                        : t(
+                                              "activeObjectives.today.content.headers.statusOptions.no",
+                                          ),
+                                }),
+                            ),
+                        );
+                    setAllObjectivesForTable(objectivesForTable);
+                }
+            } catch (e) {
+                if (String(e).includes("null")) {
+                    router.replace(ROUTES.MAIN.WELCOME_SCREEN);
+                    return;
+                }
+                logToConsole("Error fetching data: " + e, "error");
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchData();
+    }, [t]);
 
     if (loading) return <Loading />;
 
@@ -119,36 +126,56 @@ export default function HomeScreen() {
             <Section width="total" kind="ActiveObjectives">
                 <>
                     {identifiers === 0 ? (
-                        <Division header="Guess you've done everything!" />
+                        <Division
+                            header={t("activeObjectives.noObjectives.allDone")}
+                        />
                     ) : identifiers === null ? (
-                        <Division header="You don't have any objectives... Let's create one!">
+                        <Division
+                            header={t(
+                                "activeObjectives.noObjectives.noObjectives",
+                            )}
+                        >
                             <BetterButton
                                 style="GOD"
                                 action={(): void =>
                                     router.push(ROUTES.ACTIVE_OBJECTIVES.CREATE)
                                 }
-                                buttonText="Create active objective"
-                                buttonHint="Redirects the user to a page where he can create an active objective"
+                                buttonText={t(
+                                    "activeObjectives.createObjective.text",
+                                )}
+                                buttonHint={t(
+                                    "activeObjectives.createObjective.hint",
+                                )}
                             />
                         </Division>
                     ) : identifiers === false ? (
-                        <Division header="No objectives for today. Have a good rest!" />
+                        <Division
+                            header={t(
+                                "activeObjectives.noObjectives.todayFree",
+                            )}
+                        />
                     ) : (
                         renderedObjectives &&
                         renderedObjectives.map((obj: ActiveObjective) => {
                             return (
                                 <Division
                                     key={obj.identifier}
-                                    header={obj.exercise}
-                                    preHeader="ACTIVE OBJECTIVE"
-                                    subHeader={GenerateDescriptionOfObjective(
-                                        obj,
-                                        t,
+                                    header={t(
+                                        `globals.supportedActiveObjectives.${obj.exercise}.name`,
                                     )}
+                                    preHeader={t(
+                                        "activeObjectives.allCapsSingular",
+                                    )}
+                                    direction="vertical"
                                 >
+                                    <ObjectiveDescriptiveIcons obj={obj} />
                                     <BetterButton
-                                        buttonText="Let's go!"
-                                        buttonHint="Starts a session for the given objective"
+                                        buttonText={t(
+                                            "globals.interaction.goAheadGood",
+                                        )}
+                                        buttonHint={t(
+                                            "activeObjectives.start.hint",
+                                        )}
                                         style="ACE"
                                         action={async (): Promise<void> =>
                                             await LaunchActiveObjective(
@@ -163,18 +190,26 @@ export default function HomeScreen() {
                 </>
             </Section>
             <GapView height={20} />
-
             <Section kind="HowYouAreDoing">
                 {(identifiers &&
                     Array.isArray(identifiers) &&
                     identifiers.length >= 1) ||
                 identifiers === 0 ? (
                     <Division
-                        header="Today"
-                        subHeader="This table is temporary, as the app is a WIP. It will be overhauled and moved to the Dashboard."
+                        header={t("activeObjectives.today.content.header")}
+                        subHeader={t(
+                            "activeObjectives.today.content.subheader",
+                        )}
                     >
                         <BetterTable
-                            headers={["Objective", "Status"]}
+                            headers={[
+                                t(
+                                    "activeObjectives.today.content.headers.objective",
+                                ),
+                                t(
+                                    "activeObjectives.today.content.headers.status",
+                                ),
+                            ]}
                             items={allObjectivesForTable}
                         />
                         <GapView height={5} />
@@ -182,13 +217,11 @@ export default function HomeScreen() {
                 ) : (
                     <Division header="Today">
                         <BetterTextNormalText>
-                            Here you'll always see today's progress (as long as
-                            you have objectives due today).
+                            {t("activeObjectives.today.noContent")}
                         </BetterTextNormalText>
                     </Division>
                 )}
             </Section>
-
             <PageEnd includeText={true} />
         </>
     );
