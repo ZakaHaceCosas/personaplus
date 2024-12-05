@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 
-## [0.0.26-preapp.6] - Unreleased
+## [0.0.6-preapp.26] - Unreleased
 
 There've been A LOT of changes. The rewrite is overwhelmingly big and detailed logs are hard to provide. Next versions will much better log changes.
 
@@ -20,14 +20,20 @@ There've been A LOT of changes. The rewrite is overwhelmingly big and detailed l
   - `Screen.ts` = width and height of the screen (with some required calculations done by default).
   - `StoredItemNames.ts` = names of AsyncStorage entries.
 - Tracebacks: Now logs can be optionally passed a "traceback" object, including some meaningful data about where the log is actually happening, to help with debugging - specially with repeated messages across different places like "Error fetching objectives".
+- Experiments: So users can try out features early.
 - New components:
   - BetterButton (an iteration of buttons).
   - Select (a preconfigured `<Picker />`). Based on `react-native-picker`.
   - BetterInputField (a preconfigured `TextInput`).
   - BetterAlert (an iteration of notifications).
+  - IslandDivision (for floating divisions).
+  - TopBar (to avoid duplicating the top bar which is always the same in all pages).
 - New toolkit elements:
   - Routing toolkit (to safely work around with app routing).
   - Time (to better handle daily hours).
+  - Key Generator (to generate `key` attributes with very low chances of being duplicate).
+  - Experiments toolkit (for the newly added experiments).
+  - Android (to remove the `if (Platform.OS === "android")` boilerplate).
 - Separate log views and error views to Dev Interface, alongside displaying device data, raw JSON data from the app, and more.
 - Usage of Prettier within the codebase.
 
@@ -37,6 +43,7 @@ There've been A LOT of changes. The rewrite is overwhelmingly big and detailed l
 - Most components went under revision and refactoring. Some were entirely rebuilt, others were just changed, more or less. But most components have undergone changes.
 - Improved JSDoc for many functions.
 - Renamed many functions and components.
+- Changed the versioning and changelog system to comply with the SemVer and Keep A Changelog specs.
 
 ### Removed
 

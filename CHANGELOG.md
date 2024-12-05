@@ -8,20 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > [!NOTE]
 > For changes related to development, see [CHANGELOG_DEV.md](CHANGELOG_DEV.md).
 
-## [0.0.26-preapp.6] - Unreleased
+## [0.0.6-preapp.26] - Unreleased
 
 Keep in mind there have been many visual and functional changes due to the R6 rewrite. Some changes might not be logged.
 
 ### Added
 
-- Now the Welcome Screen asks you to specify your "daily check", a specific hour on which you'll be prompted daily to fill in a questionary about your day. `NOTE: THE ACTUAL DAILY CHECK FEATURE IS NOT AVAILABLE YET`.
-- Added a Report page for you to view insights on your results
-  - For now it's limited to showing results of basic CoreLibrary, BMI and BMR. Soon to be expanded with more data + insights on active objective progress.
+- Now the Welcome Screen is more complete, errors have been fixed, it looks more beautiful, and now it asks you to specify your "daily check", a specific hour on which you'll be prompted daily to fill in a questionary about your day.
+  - **NOTE: THE ACTUAL DAILY CHECK FEATURE IS NOT AVAILABLE YET.**
 - Added a Not found page for non-existing routes.
 - More random, friendly messages :]
-- New info for Dev Interface to display, like device details, a table with all active objectives and their ID, and even two new separate pages to view logs in a better way.
 - Now you can tap the numbers at the active objective creation page to set a custom value.
 - A settings page. Now most settings, and all new settings, have been moved from the profile tab to there.
+- Added a new "Experiments" feature, allowing you to enable experiments, like:
+  - A Report page for you to view insights on your results
+    - For now it's limited to showing results of basic CoreLibrary, BMI and BMR. Soon to be expanded with more data + insights on active objective progress.
+  - An actual movement tracker for running sessions (will be added to walking as well, when it's stabilized).
+- New info for Dev Interface to display, like device details, a table with all active objectives and their ID, and even two new separate pages to view logs in a better way.
 
 ### Changed
 
@@ -29,11 +32,15 @@ Keep in mind there have been many visual and functional changes due to the R6 re
 - Changed many in-app texts.
 - Now, in the active objective creation page, days of the week are shown in a row instead of a column, saving up on space.
 - Now the credits page also showcases highlighted contributors.
+- Now active objectives & your profile page use icons instead of text based descriptions to represent properties.
 
-### Removed
+### Removed temporarily
+
+- Reminder notifications. They will be added back when the app gets to a more stable point, as notifications have been a little bit of a headache to be honest.
+
+### Removed permanently
 
 - "Mark as done" - now the app won't offer the ability to just mark a session as done. You _will_ have to actually get of your chair for the app to note your progress.
-- Reminder notifications. They will be added back when the app gets to a more stable point, as notifications have been a little bit of a headache to be honest.
 - Repetitions. As the app currently supports nothing but sessions of a single, long-paced exercise, it doesn't really make sense to have "repetitions".
 
 ### Fixed
@@ -46,13 +53,14 @@ Keep in mind there have been many visual and functional changes due to the R6 re
 - **Fixed** swap components having their order disrupted.
 - **Fixed** buttons intended to navigate back failing when there's no history.
 - (WIP, SEE R5 ISSUES) **Fixed** the app being unable to scroll on some devices.
-- (WIP, SEE R5 ISSUES) **Fixed** the app crashing at the end of a session.
+- **Fixed** the app crashing at the end of a session.
 - **Fixed** the home page showing "all objectives done" even tho there are some objectives not done.
 
 ### Known issues <!-- not part of the Keep A Changelog standard -->
 
-- First time launching the app doesn't properly handle missing user data, crashes.
-- Splash screen looks extremely small.
+- First time launching the app doesn't properly handle missing user data, crashes. (SHOULD BE FIXED, NEED TO TEST)
+- Splash screen looks extremely small. (SHOULD BE FIXED, NEED TO TEST)
+- Create page shows "Text strings must be rendered inside a `<Text />` tag" error. I haven't found any text outside BetterText tags, so investigation is required. Doesn't crash the app, though.
 
 ### R5 ISSUES
 
@@ -65,5 +73,5 @@ These errors come from the R5 version. They _should_ be already fixed, but haven
 
 ---
 
-> For versions prior to 0.0.26, see [the deprecated changelog](CHANGELOG.deprecated.md).
-> P.S. Versions prior to 0.0.26 are not SemVer compliant and follow a different format.
+> For versions prior to 0.0.6, see [the deprecated changelog](CHANGELOG.deprecated.md).
+> P.S. Versions prior to 0.0.6 are not SemVer compliant and follow a different format.
