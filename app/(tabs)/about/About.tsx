@@ -78,26 +78,26 @@ export default function About() {
             <GapView height={20} />
             <Section kind="About">
                 <Division
-                    header={"About app"}
-                    subHeader="TODO: all of this content. This is about the app."
+                    header={t("pages.about.aboutApp.header")}
+                    subHeader={t("pages.about.aboutApp.subheader")}
                 />
                 <Division
-                    header={"about maker"}
-                    subHeader="this is about me :] and all contributors"
+                    header={t("pages.about.aboutTheMaker.header")}
+                    subHeader={t("pages.about.aboutTheMaker.subheader")}
                 />
             </Section>
             <GapView height={20} />
             <View style={styles.buttonContainer}>
                 <BetterButton
-                    buttonHint="TODO"
-                    buttonText={t("License")}
+                    buttonHint={t("pages.about.grid.license.hint")}
+                    buttonText={t("pages.about.grid.license.text")}
                     style="GOD"
                     action={() => router.push(ROUTES.ABOUT.LICENSE)}
                 />
                 <GapView width={10} />
                 <BetterButton
-                    buttonHint="TODO"
-                    buttonText={"Credits"}
+                    buttonHint={t("pages.about.grid.credits.hint")}
+                    buttonText={t("pages.about.grid.credits.text")}
                     style="GOD"
                     action={() => router.push(ROUTES.ABOUT.CREDITS)}
                 />
@@ -105,8 +105,8 @@ export default function About() {
             <GapView height={10} />
             <View style={styles.buttonContainer}>
                 <BetterButton
-                    buttonHint="TODO"
-                    buttonText={"Your privacy"}
+                    buttonHint={t("pages.about.grid.privacy.hint")}
+                    buttonText={t("pages.about.grid.privacy.text")}
                     style="ACE"
                     action={async () => {
                         await SafelyOpenUrl(URLs.privacy);
@@ -114,8 +114,8 @@ export default function About() {
                 />
                 <GapView width={10} />
                 <BetterButton
-                    buttonHint="TODO"
-                    buttonText={"Open Source"}
+                    buttonHint={t("pages.about.grid.openSource.hint")}
+                    buttonText={t("pages.about.grid.openSource.text")}
                     style="ACE"
                     action={async () => {
                         await SafelyOpenUrl(URLs.repo);
@@ -129,10 +129,7 @@ export default function About() {
                 fontWeight="Italic"
                 fontSize={FontSizes.SMALL}
             >
-                PS. You're running an early version of the app. Thank you for
-                testing it and being among the first ones to do so! Remember to
-                report on GitHub ("Open Source") any issue you find with the app
-                so we can fix it. Thanks!
+                {t("pages.about.ps")}
             </BetterText>
         </>
     );
