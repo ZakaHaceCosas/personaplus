@@ -10,6 +10,7 @@ const ROUTES = {
         REPORT: "/Report",
         SETTINGS: {
             UPDATE_PROFILE: "/UpdateProfile",
+            SETTINGS_PAGE: "/Settings",
         },
     },
     DEV_INTERFACE: {
@@ -26,6 +27,7 @@ const ROUTES = {
     ABOUT: {
         LICENSE: "/about/License",
         ABOUT_PAGE: "/about/About",
+        CREDITS: "/about/Credits",
     },
     /**
      * Experimental features should live in separate pages, listed here.

@@ -1,19 +1,22 @@
-# Política de Privacidad de PersonaPlus
+# PersonaPlus Privacy Policy
 
 > [!WARNING]
-> **Al ser una aplicación que NO ESTÁ ACABADA, esto es susceptible a cambios. Esto es solo un boceto.**
+> **As a NON FINISHED app, this is subject to changes. It's just a draft.**
 
-## Introducción
+## Data Collection
 
-Esta Política de Privacidad describe las prácticas en relación con la recolección, uso y protección de tus datos cuando utilizas nuestra aplicación.
+- What we **do not** collet: PersonaPlus does not collect any personal information from the user that allows to identify him or than can be directly associated to him. No real name, e-mail address, or any other kind of personal data from the user is collected.
+- What we **do** collect: PersonaPlus stores basic data, such as age, gender, and username. Your username does not need to be an authentic name and is not checked to be real. Age and gender _should_ be correct (and we encourage you to provide accurate values), but we do not intrude on your privacy to validate their veracity. We also collect health data, in two ways:
+  - **User provided health information:** PersonaPlus does ask for health way, in a fully anonymous way. This includes but is not limited to: age, gender, weight, height, estimate hours of sleep[^1], estimate activeness level of the user, among others.
+  - **App generated health data:** Via an internal library (CoreLibrary, or "CL"), PersonaPlus can use user provided data to generate additional data based on standardized medical calculations, calculations designed by us, or by measuring your way of using the app in certain ways. For example, we may measure the amount of time you spent one week on an Active Objective like "Running", together with the data you provided to us (like your gender or your weight) to estimate[^2] the amount of calories you've burnt that week[^2]. Some examples of calculations the app makes are:
+    - Your ideal body weight (IBW).
+    - The percentage of fat in your body (BFP).
+    - The estimate of calories you burn in a daily basis (BMR).
+    - Among others. We keep adding additional calculations to the CL as needed.
+  - You are always shown the results of all calculations and they're never shown to anyone. Please note their accuracy is not a guarantee[^2].
+- **Usage data:** PersonaPlus does not compile technical usage data, diagnostics, telemetry, whatsoever. We do collect basic data onto your usage of the app, but it's only stored locally and you can see it and/or wipe it at any time. <!-- TODO: add data removal without needing to remove account as an actual feature -->
 
-## Recopilación de Información
-
-- **Información Personal:** PersonaPlus no recopila ninguna información personal sobre el usuario que permita su identificación. La aplicación recopila datos requeridos, como la edad del sujeto, pero nunca pide ningún nombre real, correo-e, u otros datos cualesquiera que permitan identificar al usuario.
-- **Información Física:** PersonaPlus sí recopila información de salud, de manera totalmente anónima. Esto incluye pero no se limita al peso, edad, altura, género, cantidad estimada de horas de sueño[^1], entre otros.
-  - Además, PersonaPlus puede utilizar esta información para obtener otros datos vía cálculos médicos o mediante el uso que hace de la app. Por ejemplo, puede que utilice la cantidad de ejercicios que realiza en un periodo de tiempo para estimar su nivel de actividad física, y usar esa estimación para obtener cálculos médicos aproximados[^2], como el Peso Corporal Ideal (IBW), Porcentaje de Grasa del Cuerpo (BFP), entre otros índices.
-- **Datos de Uso:** PersonaPlus no recopila ningún dato de uso técnico o de diagnóstico, no hace uso alguno de tecnologías como la telemetría, ni similares.
-
+<!-- todo finish translating -->
 ## Métodos de Recopilación
 
 - **Obtención directa:** Podemos obtener los datos directamente desde usted: al abrir la app por primera vez, se le hace un cuestionario preguntándole ciertos datos. Varias preguntas son opcionales, por lo que no hay problema si no quiere responder alguna.
