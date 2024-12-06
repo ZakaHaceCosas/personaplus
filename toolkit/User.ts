@@ -18,6 +18,7 @@ import { BasicUserData, BasicUserHealthData, FullProfile } from "@/types/User";
 import { router } from "expo-router";
 import StoredItemNames from "@/constants/StoredItemNames";
 import ROUTES from "@/constants/Routes";
+import { TFunction } from "i18next";
 
 /**
  * Validates the basic user data, to ensure the gender, age, height, weight, and username values are valid. This doesn't just check for types, but actually does some extra validation, like username length or "normal limits" (e.g. returning invalid if the user wants to set his weight to 999kg).
@@ -109,7 +110,8 @@ export async function OrchestrateUserData(
             data === "" ||
             Object.keys(JSON.parse(data)).length === 0
         ) {
-            throw new Error("UserData appears to be null.");
+            logToConsole("UserData appears to be null.", "error");
+            return ErrorUserData;
         }
 
         const fullData: FullProfile = JSON.parse(data);
@@ -137,28 +139,41 @@ export async function OrchestrateUserData(
         return fullData;
     } catch (e) {
         logToConsole(
-            "Error orchestrating user data! " + e,
+            `Error orchestrating user data! ${e}`,
             "error",
             undefined,
             false,
         );
-        throw e;
+        return ErrorUserData;
     }
 }
 
 /**
  * **Removes all of the users data.** Doesn't remove some key pieces of data that are important (those can be deleted using separate functions), e.g. developer logs.
  *
+ * @async
  * @export
  * @param {boolean} careAboutTheUser Whether you care about the user or not in the specific context you're calling this. Basically: if `true`, a confirmation modal is shown, otherwise (`false`) data's just deleted without asking.
+ * @param {TFunction} t Pass here the translate function, please.
  */
-export function updateBrm5(careAboutTheUser: boolean): void {
+export async function updateBrm5(
+    careAboutTheUser: boolean,
+    t: TFunction,
+): Promise<void> {
+    /**
+     * Handles the removal.
+     *
+     * @async
+     * @returns {Promise<number>} 0 if success, 1 if failure.
+     */
     async function releaseOperationResurgence(): Promise<number> {
         try {
             await AsyncStorage.multiRemove([
                 StoredItemNames.userData,
                 StoredItemNames.objectives,
                 StoredItemNames.dailyLog,
+                StoredItemNames.colorTheme,
+                StoredItemNames.experiments,
             ]);
             router.replace(ROUTES.MAIN.WELCOME_SCREEN);
             return 0;
@@ -186,19 +201,22 @@ export function updateBrm5(careAboutTheUser: boolean): void {
 
     if (careAboutTheUser) {
         Alert.alert(
-            "Are you sure about that?",
-            "There's no way to undo this. Please be certain.",
+            t("pages.settings.dangerous.resetApp.flow.areYouSure"),
+            t("pages.settings.dangerous.resetApp.flow.areYouSureText"),
             [
                 {
                     isPreferred: false,
-                    text: "Go ahead",
+                    text: t("globals.interaction.goAheadBad"),
                     style: "destructive",
-                    onPress: () => releaseOperationResurgence(),
+                    onPress: async () => {
+                        await releaseOperationResurgence();
+                    },
                 },
                 {
                     isPreferred: true,
-                    text: "Nevermind",
+                    text: t("globals.interaction.nevermind"),
                     style: "cancel",
+                    onPress: () => {},
                 },
             ],
         );
@@ -207,12 +225,12 @@ export function updateBrm5(careAboutTheUser: boolean): void {
             "WATCHOUT! BAD PRACTICE SUMMONED!! (someone called `updateBrm5` with param `careAboutTheUser` set to `false`)",
             "warn",
         );
-        releaseOperationResurgence();
+        await releaseOperationResurgence();
     }
 }
 
 /**
- * Use this only as placeholder data for when an error happens while fetching user data.
+ * Use this only as placeholder data in case an error happens fetching user data.
  *
  * @type {FullProfile}
  */
@@ -227,5 +245,6 @@ export const ErrorUserData: FullProfile = {
     activeness: "poor",
     focus: "noPriority",
     sleepHours: 3,
-    isNewUser: false,
+    isNewUser: true,
+    wantsNotifications: true,
 };
