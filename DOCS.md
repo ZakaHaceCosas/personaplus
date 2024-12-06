@@ -4,6 +4,16 @@ _Dale un PLUS a tu Persona_ <!-- fun fact, this is the OG slogan -->
 
 ![Banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER_DEV.png)
 
+<!-- these badges are useless but pretty :3 -->
+<!--markdownlint-disable-next-line-->
+<div align="center">
+
+[![React Native](https://img.shields.io/badge/React-Native-57c4dc?style=for-the-badge&logo=react&logoColor=black&labelColor=white)](https://reactnative.dev)
+[![Expo](https://img.shields.io/badge/Expo-000?style=for-the-badge&logo=expo&logoColor=black&labelColor=white)](https://expo.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-2d79c7?style=for-the-badge&logo=typescript&logoColor=2d79c7&labelColor=white)](https://www.npmjs.com/package/typescript)
+
+</div>
+
 ## 1. Understanding PersonaPlus as a codebase
 
 PersonaPlus is a simple app written in React Native, which - while I admit is not the best way to do it - is relatively easy and gets the job done. This brief section will give you a quick look at the project's structure, organization, etc...
@@ -25,13 +35,11 @@ It is a simple yet functional structure. Remember we use `@` to mark the root of
 - `@/toolkit/` is where we store our toolkits. Toolkits are single TS files that contain all functions related to a specific feature into a single file (a "toolkit"). Features that grow in complexity, e.g. user handling, debugging, etc... are highly recommended to be "toolkified". While not necessary, it is allowed to toolkify simple functions as well.
 - And lastly, `@/types/` contains type definitions, `@/translations/` contains translation files, and `@/hooks/` contains React hooks.
 
-### Understanding comments and "custom" JSDoc properties
+### Understanding comments
 
-JSDoc does not support "custom properties" whatsoever, yet that doesn't stop us from writing them down. We use them to avoid text repetition.
+<!-- NOTE: uncomment when we actually start using them again. the only one (for raw R5 code) is gone). JSDoc does not support "custom properties" whatsoever, yet that doesn't stop us from writing them down. We use them to avoid text repetition. -->
 
-`@rawR5code` - The code you're referring to is raw / unmodified code from R5 (the previous version of the app's codebase, which was severely different in many core aspects). Functions with that tag have _not_ been tested and _might_ produce errors. Write tests (at `@/__tests__`) to that code, or manually ensure it works in order to consider the tag as removable.
-
-Besides that, we also use keywords in comments, so it's easier to find problems when anyone wants to contribute to the project. You know we always tend to add stuff like "TODO" to our comments, right? Well, we don't only use TODO but also a few extra words:
+We use certain keywords in comments, so it's easier to find problems when anyone wants to contribute to the project. You know we always tend to add stuff like "TODO" to our comments, right? Well, we don't only use TODO but also a few extra words:
 
 ```ts
 // TODO - tasks, things to be done, unfinished code, requires review, etc...

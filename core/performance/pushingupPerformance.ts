@@ -71,10 +71,7 @@ export default function calculateLiftingPerformance(
 
     const response: CoreLibraryResponse = {
         result: caloriesBurnt,
-        context:
-            "The performance of a pushing up session is measured in burnt calories, being an estimated " +
-            caloriesBurnt +
-            "cal for this session.",
+        context: `We estimated ${caloriesBurnt} cal burnt for this session.`,
         explanation:
             "The 'performance' of a pushing up session can be measured in burnt calories, which are obtained with a series of generic calculations using weight of the subject and other parameters like the push ups or the duration of the session.",
     };

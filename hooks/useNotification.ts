@@ -96,7 +96,6 @@ async function registerForPushNotificationsAsync(
  * Registers for push notifications and returns the token as a string.
  *
  * @returns {string} The Expo push token
- * @rawR5code All notification related functions, albeit slightly changed, are still considered rawR5.
  */
 export async function handleNotificationsAsync(
     channel: string,
