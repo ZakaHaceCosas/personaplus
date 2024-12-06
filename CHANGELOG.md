@@ -20,6 +20,7 @@ Keep in mind there have been many visual and functional changes due to the R6 re
 - More random, friendly messages :]
 - Now you can tap the numbers at the active objective creation page to set a custom value.
 - A settings page. Now most settings, and all new settings, have been moved from the profile tab to there.
+- Added the option to opt-out from reminder notifications.
 - Added a new "Experiments" feature, allowing you to enable experiments, like:
   - A Report page for you to view insights on your results
     - For now it's limited to showing results of basic CoreLibrary, BMI and BMR. Soon to be expanded with more data + insights on active objective progress.
@@ -34,15 +35,6 @@ Keep in mind there have been many visual and functional changes due to the R6 re
 - Now the credits page also showcases highlighted contributors.
 - Now active objectives & your profile page use icons instead of text based descriptions to represent properties.
 
-### Removed temporarily
-
-- Reminder notifications. They will be added back when the app gets to a more stable point, as notifications have been a little bit of a headache to be honest.
-
-### Removed permanently
-
-- "Mark as done" - now the app won't offer the ability to just mark a session as done. You _will_ have to actually get of your chair for the app to note your progress.
-- Repetitions. As the app currently supports nothing but sessions of a single, long-paced exercise, it doesn't really make sense to have "repetitions".
-
 ### Fixed
 
 - **Fixed** some content lacking translations.
@@ -55,11 +47,17 @@ Keep in mind there have been many visual and functional changes due to the R6 re
 - (WIP, SEE R5 ISSUES) **Fixed** the app being unable to scroll on some devices.
 - **Fixed** the app crashing at the end of a session.
 - **Fixed** the home page showing "all objectives done" even tho there are some objectives not done.
+- **Fixed** issues with notification scheduling.
+
+### Removed
+
+- "Mark as done" - now the app won't offer the ability to just mark a session as done. You _will_ have to actually get of your chair for the app to note your progress.
+- Repetitions. As the app currently supports nothing but sessions of a single, long-paced exercise, it doesn't really make sense to have "repetitions".
 
 ### Known issues <!-- not part of the Keep A Changelog standard -->
 
-- First time launching the app doesn't properly handle missing user data, crashes. (SHOULD BE FIXED, NEED TO TEST)
-- Splash screen looks extremely small. (SHOULD BE FIXED, NEED TO TEST)
+- First time launching the app doesn't properly handle missing user data, crashes. (SHOULD BE FIXED, NEED TO TEST x2)
+- ~~Splash screen looks extremely small.~~ (FIXED)
 - Create page shows "Text strings must be rendered inside a `<Text />` tag" error. I haven't found any text outside BetterText tags, so investigation is required. Doesn't crash the app, though.
 
 ### R5 ISSUES

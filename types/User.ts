@@ -32,11 +32,17 @@ export interface FullProfile {
     sleepHours: 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11; // 11 = more than ten
     theThinkHour: string;
     isNewUser: boolean;
+    wantsNotifications: boolean;
 }
 
 export type BasicUserData = Omit<
     FullProfile,
-    "focus" | "sleepHours" | "activeness" | "language" | "isNewUser"
+    | "focus"
+    | "sleepHours"
+    | "activeness"
+    | "language"
+    | "isNewUser"
+    | "wantsNotifications"
 >;
 export type BasicUserHealthData = Omit<
     BasicUserData,
