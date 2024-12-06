@@ -1,7 +1,3 @@
-// TODO
-// CALCULATIONS *NOT* ALRIGHT
-// los cálculos *NO* están bien
-
 /*
 CALCULATE RUNNING PERFORMANCE
 */
@@ -10,13 +6,10 @@ import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
 import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
-    "26/06/2024",
+    "06/12/2024",
     [
         "https://downhilltodowntown.com/how-to-calculate-your-caloric-burn-while-running/",
-        "https://scielo.isciii.es/scielo.php?script=sci_arttext&pid=S0212-16112012000400040",
-        "https://eresdeportista.com/salud/como-calcular-calorias-quemadas-ejercicio/",
-        "https://www.topendsports.com/weight-loss/energy-met.htm andhttps://journals.lww.com/acsm-msse/fulltext/2000/09001/compendium_of_physical_activities__an_update_of.9.aspx",
-        "https://www.cmu.edu/common-cold-project/measures-by-study/health-practices/physical-activity/index.html",
+        // "https://www.topendsports.com/weight-loss/energy-met.htm andhttps://journals.lww.com/acsm-msse/fulltext/2000/09001/compendium_of_physical_activities__an_update_of.9.aspx",
     ],
 );
 
@@ -64,26 +57,20 @@ export default function calculateRunningPerformance(
         METs = null;
     }
 
-    // Constant factor for calories burnt calculation
-    const caloriesBurntPerKgPerHour = 0.075 * 4.3;
-
     // Calculate calories burnt
     let caloriesBurnt: number;
 
     if (METs) {
-        caloriesBurnt = METs * caloriesBurntPerKgPerHour * weight * time;
+        caloriesBurnt = METs * weight * (time * 60);
     } else {
         caloriesBurnt = 0; // if the MET is not calculable, it returns 0.
     }
 
     const response: CoreLibraryResponse = {
         result: caloriesBurnt,
-        context:
-            "The performance of a weight lifting session is measured in burnt calories, being an estimated " +
-            caloriesBurnt +
-            "cal for this session.",
+        context: `Estimated ${caloriesBurnt} cal burnt for this session.`,
         explanation:
-            "The 'performance' of a running session can be measured in burnt calories, which are obtained with a series of generic calculations using age, weight, height, gender of the subject, and other parameters like the estimate speed, time duration of the session, and the MET.",
+            "The 'performance' of a running session can be measured in burnt calories, which are obtained calculating the MET value (based on avg. speed) and multiplying by the person's weight and by the duration in hours of the session.",
     };
 
     return response;

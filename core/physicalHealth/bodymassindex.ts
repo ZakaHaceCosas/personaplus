@@ -12,8 +12,9 @@ import {
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "10/08/2024",
     [
-        "https://www.cdc.gov/growthcharts/data/set1clinical/cj41c024.pdf",
-        "https://www.cdc.gov/growthcharts/data/set1clinical/cj41c023.pdf",
+        "https://www.cdc.gov/growthcharts/extended-bmi-data-files.htm",
+        "https://www.cdc.gov/growthcharts/data/extended-bmi/BMI-Age-percentiles-GIRLS.pdf",
+        "https://www.cdc.gov/growthcharts/data/extended-bmi/BMI-Age-percentiles-BOYS.pdf",
     ],
 );
 
