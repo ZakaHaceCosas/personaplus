@@ -15,6 +15,7 @@ import {
     ActiveObjective,
     ActiveObjectiveDailyLog,
     ActiveObjectiveWithoutId,
+    SupportedActiveObjectives,
 } from "@/types/ActiveObjectives";
 import { logToConsole } from "@/toolkit/debug/Console";
 import AsyncStorage from "expo-sqlite/kv-store";
@@ -44,23 +45,13 @@ async function GetAllObjectives(): Promise<ActiveObjective[] | null> {
         const storedObjectives: string | null = await AsyncStorage.getItem(
             StoredItemNames.objectives,
         );
-        let objectives: ActiveObjective[] = [];
-        try {
-            objectives = storedObjectives ? JSON.parse(storedObjectives) : [];
-        } catch (e) {
-            logToConsole(
-                "Failed to parse stored objectives: " + e,
-                "error",
-                {
-                    location: "@/toolkit/objectives/ActiveObjectives.ts",
-                    isHandler: false,
-                    function:
-                        "GetAllObjectives() @ try-catch #1 @ sub try-catch #1",
-                },
-                false,
-            );
+
+        if (!storedObjectives) {
+            logToConsole("Warning! There are no objectives", "warn", undefined);
             return null;
         }
+
+        const objectives: ActiveObjective[] = JSON.parse(storedObjectives);
 
         if (!Array.isArray(objectives)) {
             logToConsole(
@@ -71,14 +62,23 @@ async function GetAllObjectives(): Promise<ActiveObjective[] | null> {
             return null;
         }
 
+        if (objectives.length === 0) {
+            return null;
+        }
+
         return objectives;
     } catch (e) {
-        throw new Error("Got an error getting all objectives! " + e);
+        logToConsole(`Failed to get objectives: ${e}`, "error", {
+            location: "@/toolkit/objectives/ActiveObjectives.ts",
+            isHandler: false,
+            function: "GetAllObjectives()",
+        });
+        return null;
     }
 }
 
 /**
- * Returns the ActiveObjectiveDailyLog. **Async function.**
+ * Returns the ActiveObjectiveDailyLog.
  *
  * @returns {ActiveObjectiveDailyLog} The entire daily log.
  */
@@ -87,16 +87,18 @@ async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog | n
         const response: string | null = await AsyncStorage.getItem(
             StoredItemNames.dailyLog,
         );
-        if (response === null) return null;
+        if (!response) {
+            return null;
+        }
         const dailyLog: ActiveObjectiveDailyLog = JSON.parse(response);
         return dailyLog;
     } catch (e) {
-        throw new Error("Error accessing active objective daily log! " + e);
+        throw new Error(`Error accessing active objective daily log! ${e}`);
     }
 }
 
 /**
- * Saves the results of an objective to a daily registry. **Async function.**
+ * Saves the results of an objective to a daily registry.
  *
  * @async
  * @param {number} id ID of the objective
@@ -133,23 +135,16 @@ async function SaveActiveObjectiveToDailyLog(
         );
         logToConsole(`Objective ${id} data saved for ${today}`, "success");
     } catch (e) {
-        if (id) {
-            logToConsole(
-                `Error saving user's performance for objective ${id}, caught: ${e}`,
-                "error",
-            );
-        } else {
-            logToConsole(
-                `Error saving user's performance for objective (no ID), caught: ${e}`,
-                "error",
-            );
-        }
-        throw e;
+        const message = id
+            ? `Error saving user's performance for objective ${id}: ${e}`
+            : `Error saving user's performance (no objective ID): ${e}`;
+        logToConsole(message, "error");
+        throw new Error(message);
     }
 }
 
 /**
- * Checks if an objective was already done today or needs to be done. **Async function.**
+ * Checks if an objective was already done today or needs to be done.
  *
  * @async
  * @param {number} identifier The objective's identifier
@@ -252,7 +247,7 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
 
         return pendingObjectives.length > 0 ? pendingObjectives : 0; // return pending objectives or 0 if none
     } catch (e) {
-        throw new Error("Failed to get all pending objectives: " + e);
+        throw new Error(`Failed to get all pending objectives: ${e}`);
     }
 }
 
@@ -269,40 +264,40 @@ async function GetActiveObjective(
     try {
         const objectives: ActiveObjective[] | null = await GetAllObjectives();
 
-        if (objectives === null) {
-            throw new Error("No objectives exist!");
+        if (!objectives) {
+            logToConsole("No objectives exist!", "error");
+            return null;
         }
 
-        const objective = objectives.find(
-            (obj) => obj.identifier === identifier,
+        const objective: ActiveObjective | undefined = objectives.find(
+            (obj: ActiveObjective): boolean => obj.identifier === identifier,
         );
 
         if (objective === undefined) {
             return null;
         }
+
         return objective;
     } catch (e) {
-        throw new Error(
-            "Got an error fetching objective " + identifier + "! " + e,
-        );
+        throw new Error(`Got an error getting objective ${identifier}: ${e}`);
     }
 }
 
 /**
- * Creates an objective and saves it. You need to provide all the data for it except the ID, as an `ActiveObjectiveWithoutId` object.
+ * Creates an objective and saves it. You need to provide all the data for it (except the ID) as an `ActiveObjectiveWithoutId` object.
  *
  * @async
  * @param {ActiveObjectiveWithoutId} target An active objective with everything EXCEPT it's ID. Identifier is generated by the own function.
  * @param {TFunction} t Pass here the translate function, please.
- * @returns {Promise<0>} 0 if success, 1 if failure.
+ * @returns {Promise<0 | 1>} 0 if success, 1 if failure.
  */
 async function CreateActiveObjective(
     target: ActiveObjectiveWithoutId,
     t: TFunction,
-): Promise<0> {
+): Promise<0 | 1> {
     try {
         let objs: ActiveObjective[] | null = await GetAllObjectives();
-        if (!objs || objs.length === 0 || objs === null) {
+        if (!objs || objs.length === 0) {
             objs = [];
         }
 
@@ -343,60 +338,48 @@ async function CreateActiveObjective(
                     ),
                 }),
             );
+            logToConsole(
+                `Created ${newObjective.identifier} objective with ID ${newObjective.exercise} successfully! Full JSON of the created objective:\n${JSON.stringify(newObjective)}"`,
+                "success",
+                undefined,
+                false,
+            );
+            return 0;
         } catch (e) {
-            throw new Error("Failed to save objectives! " + e);
+            throw new Error(`Failed to save objectives! ${e}`);
         }
-
-        logToConsole(
-            "Created objective " +
-                newObjective.identifier +
-                " (exercise: " +
-                newObjective.exercise +
-                ") successfully!",
-            "success",
-            undefined,
-            false,
-        );
-        logToConsole(
-            "NOTE: Full JSON of the created objective:" +
-                JSON.stringify(newObjective),
-            "log",
-            undefined,
-            false,
-        );
-        return 0;
     } catch (e) {
-        throw new Error("Something went wrong creating objective: " + e);
+        logToConsole(
+            `Something went wrong creating an objective. JSON:\n${JSON.stringify(target)}\n\nError: ${e}`,
+            "error",
+        );
+        ShowToast("Error :c");
+        return 1;
     }
 }
 
 /**
  * Calculates the duration of each fragment of a session. Let me explain: Sessions support rests, which - as the name implies - are pauses of a fixed duration between a session, for the user to rest.
+ *
  * While the duration of a rest is specified by the user, it's position is not, instead PersonaPlus will (thanks to this function) distribute evenly each rest between all the duration of the session. This implies splitting the session's duration into **fragments**, separated by rests.
  *
- * @rawR5code
  * @param {number | null} duration The duration (in seconds) of the whole session.
  * @param {number | null} rests The amount of rests of the session.
  * @returns {number} A number, the amount of seconds each fragment shall last. If any of the params is null / invalid, throws an error.
  */
 function CalculateSessionFragmentsDuration(
-    duration: number | null,
-    rests: number | null,
+    duration: number,
+    rests: number,
 ): number {
-    if (rests === null || duration === null) {
+    if (!rests || !duration) {
         logToConsole(
-            "React error: Got a null value. Objective is not getting fetched correctly? Check your code",
+            "Some parameters are missing, can't calculate fragment duration. Objective is not getting fetched correctly? Check your code",
             "error",
         );
-        throw new Error(
-            "React error: Got a null value. Objective is not getting fetched correctly? Check your code",
-        );
+        return 0;
     }
     if (rests < 0) {
-        logToConsole(
-            "React error: Negative rests? Seriously? Check your code",
-            "error",
-        );
+        logToConsole("Negative rests? Seriously? Check your code", "error");
         throw new Error("Negative rests? Seriously? Check your code"); // heh~
     }
     return duration / (rests + 1);
@@ -421,7 +404,7 @@ async function DeleteActiveObjective(identifier: number): Promise<void> {
             JSON.stringify(updatedObjectives),
         );
     } catch (e) {
-        logToConsole("Error in deleteObjective: " + e, "error");
+        logToConsole(`Error in deleteObjective: ${e}`, "error");
     }
 }
 
@@ -440,10 +423,14 @@ async function LaunchActiveObjective(identifier: number): Promise<void> {
         ]);
 
         if (!obj) {
-            throw new Error(`Active objective ${identifier} does not exist.`);
+            logToConsole(
+                `Can't launch active objective ${identifier}: it does not exist.`,
+                "error",
+            );
+            return;
         }
 
-        const track = experiments.exp_tracker;
+        const track: boolean = experiments.exp_tracker;
 
         if (obj.exercise === "Running" && track) {
             router.replace({
@@ -459,22 +446,28 @@ async function LaunchActiveObjective(identifier: number): Promise<void> {
         });
         return;
     } catch (e) {
-        logToConsole(
-            "Error launching objective " + identifier + ", " + e,
-            "error",
-        );
+        logToConsole(`Error launching objective ${identifier}: ${e}`, "error");
     }
 }
 
+/**
+ * Calculates the performance of a live sessions using CoreLibrary.
+ *
+ * @param {ActiveObjective} objective The active objective.
+ * @param {BasicUserHealthData} userData The user's health data.
+ * @param {number} elapsedTime The elapsed time of the session, in minutes.
+ * @returns {CoreLibraryResponse}
+ */
 function CalculateSessionPerformance(
     objective: ActiveObjective,
     userData: BasicUserHealthData,
     elapsedTime: number,
 ): CoreLibraryResponse {
     try {
-        const exercise = objective.exercise;
+        const exercise: SupportedActiveObjectives = objective.exercise;
 
         switch (exercise) {
+            case "Walking":
             case "Running":
                 return CoreLibrary.performance.RunningPerformance.calculate(
                     userData.weight,
@@ -500,7 +493,9 @@ function CalculateSessionPerformance(
                     objective.specificData.amountOfHands,
                 );
             default:
-                throw new Error("Unknown or invalid exercise type");
+                throw new Error(
+                    `Unknown or invalid exercise type: ${exercise}`,
+                );
         }
     } catch (e) {
         const err = `Error handling post-session calculations: ${e}`;
