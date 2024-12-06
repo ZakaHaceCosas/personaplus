@@ -91,7 +91,7 @@ export default function HomeScreen() {
             ) : (
                 <Console logs={logs} errorOnly={false} />
             )}
-            <PageEnd includeText={true} />
+            <PageEnd includeText={true} size="tiny" />
         </>
     );
 }
