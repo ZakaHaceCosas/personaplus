@@ -2,7 +2,7 @@
 
 _Dale un PLUS a tu Persona_ <!-- fun fact, this is the OG slogan -->
 
-![Banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER_DEV.png)
+![Banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER_DEV.webp)
 
 <!-- these badges are useless but pretty :3 -->
 <!--markdownlint-disable-next-line-->
