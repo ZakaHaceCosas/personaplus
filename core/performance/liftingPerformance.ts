@@ -1,6 +1,3 @@
-// TODO: NOT DONE YET!!!!
-// Zaka don't be lazy and work
-
 /*
 CALCULATE LIFTING PERFORMANCE
 */
@@ -10,8 +7,10 @@ import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
 import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
-    "01/07/2024",
-    [""], // FIXME: NEED TO PROVIDE SOURCE
+    "06/12/2024",
+    [
+        "https://www.calculatorultra.com/es/tool/mets-metabolic-equivalent-calculator.html#gsc.tab=0",
+    ],
 );
 
 /**
@@ -23,7 +22,7 @@ export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
  * @param scales The amount of scales / dumbbells the subject has been working out with.
  * @param time The duration in MINUTES of the exercise performed by the subject.
  * @param repetitions The amount of lifts the subject has done.
- * @returns A standard `CoreLibraryResponse` with the desired results.
+ * @returns {CoreLibraryResponse} A standard `CoreLibraryResponse` with the desired results.
  */
 
 export default function calculateLiftingPerformance(
@@ -35,34 +34,38 @@ export default function calculateLiftingPerformance(
     scales: number,
     repetitions: number,
 ): CoreLibraryResponse {
-    // Get the Metabolic Equivalent of Task for this
+    /**
+     * Get the Metabolic Equivalent of Task for this
+     *
+     * TODO - i'll be honest i don't fully trust this formula, but at least we managed to source *part* of the lifting performance, something is something
+     */
     const calculateMET = (
-        w: number,
+        weightLifted: number,
         oneRepMax: number,
-        a: number,
-        g: "male" | "female",
-        r: number,
-        t: number,
+        age: number,
+        gender: "male" | "female",
+        reps: number,
+        time: number,
     ): number => {
-        const GENDER_COEFFICIENT = g === "male" ? 1 : 0.85;
-        const AGE_ADJUSTMENT = 1 / (1 + 0.01 * (a - 22));
+        const GENDER_COEFFICIENT = gender === "male" ? 1 : 0.85;
+        const AGE_ADJUSTMENT = 1 / (1 + 0.01 * (age - 22));
         const BASE_MET = 5.0;
 
-        return (
-            (BASE_MET *
-                (w / oneRepMax) *
-                r *
-                AGE_ADJUSTMENT *
-                GENDER_COEFFICIENT *
-                t) /
-            60
-        );
+        const firstStep = weightLifted / oneRepMax;
+        const secondStep =
+            firstStep *
+            reps *
+            AGE_ADJUSTMENT *
+            GENDER_COEFFICIENT *
+            time *
+            BASE_MET;
+        const thirdStep = secondStep / 60;
+
+        return thirdStep;
     };
 
     const weightLifted = dumbbellWeight * scales;
-    const OneRepMaxObject = OneRepetitionMax(weightLifted, repetitions, true);
-
-    const oneRepMax = OneRepMaxObject.result;
+    const oneRepMax = OneRepetitionMax(weightLifted, repetitions, true).result;
 
     const metabolicEquivOfTask = calculateMET(
         weightLifted,
@@ -73,18 +76,22 @@ export default function calculateLiftingPerformance(
         time,
     );
 
-    const caloriesBurntPerKgPerHour = 0.075 * 4.3;
+    /**
+     * Returns calories burnt PER MINUTE
+     */
+    function calculateCaloriesBurnt() {
+        const firstStep = weight / 200;
+        const secondStep = firstStep * metabolicEquivOfTask;
+        const thirdStep = secondStep * 3.5;
+        return thirdStep;
+    }
 
-    const caloriesBurnt =
-        metabolicEquivOfTask * caloriesBurntPerKgPerHour * weight * time;
+    const caloriesBurnt = calculateCaloriesBurnt() * time;
 
     const response: CoreLibraryResponse = {
         result: caloriesBurnt,
 
-        context:
-            "The performance of a weight lifting session is measured in burnt calories, being an estimated " +
-            caloriesBurnt +
-            "cal for this session.",
+        context: `We estimated ${calculateCaloriesBurnt()} cal burnt per minute, being ${caloriesBurnt} cal in total.`,
         explanation:
             "The 'performance' of a weight lifting session can be measured in burnt calories, which are obtained with a series of generic calculations using age, weight, height, gender of the subject, and other parameters weight lifted, time duration of the session, and the One Repetition Max.",
     };

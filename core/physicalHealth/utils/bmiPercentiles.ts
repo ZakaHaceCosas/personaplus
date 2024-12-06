@@ -1,5 +1,5 @@
 /**
- * Represents percentiles data for Body Mass Index (BMI) for individuals between 2 and 20 years of age.
+ * Represents percentiles data for Body Mass Index (BMI) for individuals between 2 and 20 years of age. While for people over 20 years of age BMI calculations can be generic, for people under 20 we need to use the percentiles - which translates into turning a 300 rows Excel table into two objects
  *
  * @interface BMIPercentiles
  * @typedef {BMIPercentiles}
@@ -42,14 +42,11 @@ interface BMIPercentiles {
     };
 }
 
-// you can skip / collapse this part
-// while for people over 20 years of age BMI calculations can be generic, for people under 20 we need to use the percentiles - which translates into turning a 300 rows excel table into two objects
-
-// TODO: revise all data to adjust its precision
-
-// (send help)
-// UNREVISED - MAY NOT BE PRECISE
-// TODO: COMPARE WITH CDC DATABASE AND ENSURE IT'S PRECISE
+/**
+ * These are **NOT VALID**. Update required.
+ *
+ * @type {BMIPercentiles}
+ */
 export const MALE_PERCENTILES: BMIPercentiles = {
     2: {
         5: 14.73,
@@ -244,18 +241,23 @@ export const MALE_PERCENTILES: BMIPercentiles = {
     },
 };
 
-// REVISED - PRECISE
+/**
+ * THESE ARE **ALREADY VALID**, however they use CDC's data from the year 2000. In the process of updating to data from 2022.
+ *
+ * * @type {BMIPercentiles}
+ */
 export const FEMALE_PERCENTILES: BMIPercentiles = {
     2: {
-        5: 14.39,
-        10: 14.8,
-        25: 15.52,
-        50: 16.42,
-        75: 17.42,
-        85: 18.01,
-        90: 18.44,
-        95: 19.1,
+        5: 14.7373,
+        10: 15.0903,
+        25: 15.7416,
+        50: 16.575,
+        75: 17.5572,
+        85: 18.1622,
+        90: 18.6095,
+        95: 19.338,
     },
+    // checkpoint. stuff below is using 2000 data.
     3: {
         5: 14.0,
         10: 14.32,
