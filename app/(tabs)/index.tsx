@@ -25,6 +25,20 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import TopBar from "@/components/navigation/TopBar";
+import { setNotificationHandler } from "expo-notifications";
+import {
+    areNotificationsScheduledForToday,
+    cancelScheduledNotifications,
+    scheduleRandomNotifications,
+} from "@/hooks/useNotification";
+
+setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+    }),
+});
 
 export default function HomeScreen() {
     const { t } = useTranslation();
@@ -45,6 +59,15 @@ export default function HomeScreen() {
             try {
                 // user data
                 const userData: FullProfile = await OrchestrateUserData();
+                // since OrchestrateUserData() never throws an error, we gotta identify values that are only possible if an ErrorUserData was returned, AKA a setup is needed
+                if (
+                    userData.isNewUser === true &&
+                    userData.age === 0 &&
+                    userData.theThinkHour === "0"
+                ) {
+                    router.replace(ROUTES.MAIN.WELCOME_SCREEN);
+                    return;
+                }
                 setUserData(userData);
 
                 // objectives for UI
@@ -100,10 +123,6 @@ export default function HomeScreen() {
                     setAllObjectivesForTable(objectivesForTable);
                 }
             } catch (e) {
-                if (String(e).includes("null")) {
-                    router.replace(ROUTES.MAIN.WELCOME_SCREEN);
-                    return;
-                }
                 logToConsole("Error fetching data: " + e, "error");
             } finally {
                 setLoading(false);
@@ -111,6 +130,30 @@ export default function HomeScreen() {
         }
         fetchData();
     }, [t]);
+
+    // notifications
+    /**
+     * @rawR5code all notification's source code is R5. i made a few changes but i'm not sure it'll work out of the box.
+     */
+    useEffect(() => {
+        async function handle() {
+            if (userData?.wantsNotifications === false) {
+                cancelScheduledNotifications();
+            } else {
+                const isRegistered = await areNotificationsScheduledForToday();
+                logToConsole("isRegistered status: " + isRegistered, "log");
+                if (isRegistered) return;
+                if (
+                    identifiers &&
+                    Array.isArray(identifiers) &&
+                    identifiers.length >= 1
+                ) {
+                    await scheduleRandomNotifications(3, t);
+                }
+            }
+        }
+        handle();
+    }, [userData?.wantsNotifications, identifiers, t]);
 
     if (loading) return <Loading />;
 
