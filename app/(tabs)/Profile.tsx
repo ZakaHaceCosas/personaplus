@@ -74,7 +74,7 @@ export default function HomeScreen() {
      */
     async function CheckForUpdates(): Promise<void> {
         try {
-            ShowToast("Checking for updates...");
+            ShowToast(t("pages.profile.divisions.update.updateFlow.checking"));
             const response = await fetch(URLs.releasesApi);
             if (!response.ok) {
                 throw new Error(

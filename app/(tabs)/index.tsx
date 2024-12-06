@@ -2,7 +2,6 @@ import React from "react";
 import BetterButton from "@/components/interaction/BetterButton";
 import Loading from "@/components/static/Loading";
 import PageEnd from "@/components/static/PageEnd";
-import { BetterTextNormalText } from "@/components/text/BetterTextPresets";
 import BetterTable, { BetterTableItem } from "@/components/ui/BetterTable";
 import GapView from "@/components/ui/GapView";
 import Division from "@/components/ui/sections/Division";
@@ -137,11 +136,12 @@ export default function HomeScreen() {
      */
     useEffect(() => {
         async function handle() {
+            const isRegistered = await areNotificationsScheduledForToday();
+            logToConsole("isRegistered status: " + isRegistered, "log");
             if (userData?.wantsNotifications === false) {
-                cancelScheduledNotifications();
+                if (!isRegistered) return;
+                cancelScheduledNotifications(t);
             } else {
-                const isRegistered = await areNotificationsScheduledForToday();
-                logToConsole("isRegistered status: " + isRegistered, "log");
                 if (isRegistered) return;
                 if (
                     identifiers &&
@@ -258,11 +258,10 @@ export default function HomeScreen() {
                         <GapView height={5} />
                     </Division>
                 ) : (
-                    <Division header="Today">
-                        <BetterTextNormalText>
-                            {t("activeObjectives.today.noContent")}
-                        </BetterTextNormalText>
-                    </Division>
+                    <Division
+                        header={t("activeObjectives.today.content.header")}
+                        subHeader={t("activeObjectives.today.noContent")}
+                    />
                 )}
             </Section>
             <PageEnd includeText={true} />
