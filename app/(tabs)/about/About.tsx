@@ -2,7 +2,7 @@
 // Info about the app
 import React from "react";
 import { version } from "../../../package.json";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/Colors";
@@ -16,6 +16,9 @@ import BetterButton from "@/components/interaction/BetterButton";
 import { SafelyOpenUrl } from "@/toolkit/Routing";
 import URLs from "@/constants/Urls";
 import ROUTES from "@/constants/Routes";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { BetterTextNormalText } from "@/components/text/BetterTextPresets";
+import PageEnd from "@/components/static/PageEnd";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -33,6 +36,14 @@ const styles = StyleSheet.create({
     buttonContainer: {
         display: "flex",
         flexDirection: "row",
+        alignItems: "center",
+    },
+    socialWrapper: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-around",
+        width: "100%",
     },
 });
 
@@ -66,15 +77,6 @@ export default function About() {
                     </BetterText>
                 </View>
             </View>
-            <BetterText
-                textAlign="center"
-                fontWeight="Bold"
-                fontFamily="JetBrainsMono"
-                fontSize={FontSizes.LARGER}
-                textColor={Colors.PRIMARIES.GOD.GOD}
-            >
-                Give yourself a plus!
-            </BetterText>
             <GapView height={20} />
             <Section kind="About">
                 <Division
@@ -122,8 +124,7 @@ export default function About() {
                     }}
                 />
             </View>
-            <GapView height={5} />
-            <GapView height={5} />
+            <GapView height={20} />
             <BetterText
                 textAlign="center"
                 fontWeight="Italic"
@@ -131,6 +132,38 @@ export default function About() {
             >
                 {t("pages.about.ps")}
             </BetterText>
+            <GapView height={20} />
+            <View style={styles.socialWrapper}>
+                {/* TODO: uncomment when i actually post something here <Pressable
+                    style={styles.buttonContainer}
+                    onPress={async () => {
+                        await SafelyOpenUrl(URLs.instagram);
+                    }}
+                >
+                    <MaterialCommunityIcons
+                        name="instagram"
+                        color={Colors.BASIC.WHITE}
+                        size={FontSizes.LARGE}
+                    />
+                    <GapView width={5} />
+                    <BetterTextNormalText>giveitaplus</BetterTextNormalText>
+                </Pressable> */}
+                <Pressable
+                    style={styles.buttonContainer}
+                    onPress={async () => {
+                        await SafelyOpenUrl(URLs.instagram);
+                    }}
+                >
+                    <MaterialCommunityIcons
+                        name="discord"
+                        color={Colors.BASIC.WHITE}
+                        size={FontSizes.LARGE}
+                    />
+                    <GapView width={5} />
+                    <BetterTextNormalText>discord</BetterTextNormalText>
+                </Pressable>
+            </View>
+            <PageEnd includeText={false} size="tiny" />
         </>
     );
 }

@@ -1,3 +1,16 @@
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/app/(tabs)/(developer)/DevExperiments.tsx
+ * Basically: A page from where the user can enable experimental features.
+ *
+ * <=============================================================================>
+ */
+
 import React, { useEffect, useState } from "react";
 import BetterButton from "@/components/interaction/BetterButton";
 import Loading from "@/components/static/Loading";
@@ -18,11 +31,50 @@ import { Experiment, Experiments } from "@/types/User";
 import { Alert } from "react-native";
 import TopBar from "@/components/navigation/TopBar";
 import { ShowToast } from "@/toolkit/Android";
+import { useTranslation } from "react-i18next";
+// import { router } from "expo-router";
 
 // i gave myself the freedom to write in an informal way on this page.
 export default function EpicExperiments() {
+    const { t } = useTranslation();
+
+    function ExperimentDivision({
+        id,
+        isEnabled,
+    }: {
+        id: Experiment;
+        isEnabled: boolean;
+    }) {
+        return (
+            <Division
+                key={id}
+                header={id}
+                subHeader={t(`pages.experiments.${id}`)}
+                direction="vertical"
+            >
+                <BetterTextNormalText>
+                    {isEnabled
+                        ? t("pages.experiments.status.enabled")
+                        : t("pages.experiments.status.disabled")}
+                </BetterTextNormalText>
+                <BetterButton
+                    style={isEnabled ? "HMM" : "DEFAULT"}
+                    buttonText={
+                        isEnabled
+                            ? t("pages.experiments.toggle.disable")
+                            : t("pages.experiments.toggle.enable")
+                    }
+                    buttonHint={t("pages.experiments.toggle.hint")}
+                    action={() => {
+                        HandleExperiment(id, !isEnabled);
+                    }}
+                />
+            </Division>
+        );
+    }
+
     const [loading, setLoading] = useState<boolean>(true);
-    const [experiments, setExperiments] = useState<Experiments | null>(null);
+    const [experiments, setExperiments] = useState<Experiments>();
 
     useEffect(() => {
         async function handler() {
@@ -41,26 +93,36 @@ export default function EpicExperiments() {
     function HandleExperiment(experiment: Experiment, value: boolean) {
         if (value === true) {
             Alert.alert(
-                "Are you sure?",
-                "Again, experiments are usually cool, but are also unstable. Proceed at your own risk!",
+                t("globals.interaction.areYouSure"),
+                t("pages.experiments.toggle.warning"),
                 [
                     {
-                        text: "Go ahead",
+                        text: t("globals.interaction.goAheadBad"),
                         onPress: () => {
                             ToggleExperiment(experiment, value);
-                            ShowToast("Enabled " + experiment + ". Have fun!");
+                            ShowToast(
+                                t("pages.experiments.toggle.enabledFeedback", {
+                                    exp: experiment,
+                                }),
+                            );
+                            // router.reload();
                             SafelyGoBack();
                         },
                     },
                     {
-                        text: "Nevermind",
+                        text: t("globals.interaction.nevermind"),
                         onPress: () => {},
                     },
                 ],
             );
         } else {
             ToggleExperiment(experiment, value);
-            ShowToast("Disabled " + experiment);
+            ShowToast(
+                t("pages.experiments.toggle.disabledFeedback", {
+                    exp: experiment,
+                }),
+            );
+            // router.reload();
             SafelyGoBack();
         }
     }
@@ -71,68 +133,33 @@ export default function EpicExperiments() {
         <>
             <TopBar
                 includeBackButton={true}
-                header="READ THIS OR YOU WILL EXPLODE!!"
-                subHeader="i mean you won't actually explode but pls read"
+                header={t("pages.experiments.header")}
+                subHeader={t("pages.experiments.subheader")}
             />
             <BetterAlert
                 style="WOR"
-                title="READ THIS OR YOU WILL EXPLODE!!"
-                bodyText="TL;DR: experiments are cool features I'm working on that aren't done yet. You get to try them early!! But they might have bugs, so I can't promise they won't cause issues.\n\nIf you find any problems (or have feedback), let me know—your help the app better!"
+                title={t("pages.experiments.header")}
+                bodyText={t(
+                    "pages.experiments.disclaimer",
+                )} /* "TL;DR: experiments are cool features I'm working on that aren't done yet. You get to try them early!! But they might have bugs, so I can't promise they won't cause issues.\n\nIf you find any problems (or have feedback), let me know—your help the app better!" */
                 layout="alert"
             />
             <GapView height={10} />
-            <BetterTextHeader>Experiments</BetterTextHeader>
+            <BetterTextHeader>
+                {t("pages.experiments.realHeader")}
+            </BetterTextHeader>
             <BetterTextSmallerText>
-                PersonaPlus experimental features
+                {t("pages.experiments.realSubheader")}
             </BetterTextSmallerText>
             <GapView height={10} />
             <Section kind="Experiments">
-                <Division
-                    header="exp_tracker"
-                    subHeader="In it's early days PersonaPlus asked you to 'estimate your running speed' and used that fixed number to calculate burnt calories (stupid idea). This experiment enables an experimental tracker that makes the app actually track your movement and get your speed (similar to what apps like Adidas Running do)."
-                    direction="vertical"
-                >
-                    <BetterTextNormalText>
-                        Value:{" "}
-                        {experiments?.exp_tracker ? "enabled" : "disabled"}
-                    </BetterTextNormalText>
-                    <BetterButton
-                        style={experiments?.exp_tracker ? "HMM" : "DEFAULT"}
-                        buttonText={
-                            experiments?.exp_tracker ? "Disable" : "Enable"
-                        }
-                        buttonHint="Toggles the state of this experiment, if it's enabled, disables it, and viceversa."
-                        action={() => {
-                            HandleExperiment(
-                                "exp_tracker",
-                                !experiments?.exp_tracker,
-                            );
-                        }}
+                {Object.entries(experiments!).map(([id, isEnabled]) => (
+                    <ExperimentDivision
+                        key={id}
+                        id={id as Experiment}
+                        isEnabled={isEnabled}
                     />
-                </Division>
-                <Division
-                    header="exp_report"
-                    subHeader="Enables the Report tab."
-                    direction="vertical"
-                >
-                    <BetterTextNormalText>
-                        Value:{" "}
-                        {experiments?.exp_report ? "enabled" : "disabled"}
-                    </BetterTextNormalText>
-                    <BetterButton
-                        style={experiments?.exp_report ? "HMM" : "DEFAULT"}
-                        buttonText={
-                            experiments?.exp_report ? "Disable" : "Enable"
-                        }
-                        buttonHint="Toggles the state of this experiment, if it's enabled, disables it, and viceversa."
-                        action={() => {
-                            HandleExperiment(
-                                "exp_report",
-                                !experiments?.exp_report,
-                            );
-                        }}
-                    />
-                </Division>
+                ))}
             </Section>
             <PageEnd includeText={true} size={"tiny"} />
         </>

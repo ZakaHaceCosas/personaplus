@@ -13,7 +13,6 @@ import { logToConsole } from "@/toolkit/debug/Console";
 import {
     CheckForAnActiveObjectiveDailyStatus,
     GetActiveObjective,
-    GetAllObjectives,
     GetAllPendingObjectives,
     LaunchActiveObjective,
 } from "@/toolkit/objectives/ActiveObjectives";
@@ -95,9 +94,17 @@ export default function HomeScreen() {
                 }
 
                 // objectives for table
-                const allObjectives: ActiveObjective[] | null =
-                    await GetAllObjectives();
-                if (allObjectives) {
+                const allObjectives: ActiveObjective[] = [];
+                if (!Array.isArray(identifiers)) {
+                    setAllObjectivesForTable([]);
+                    return;
+                }
+                for (const id of identifiers) {
+                    const obj = await GetActiveObjective(id);
+                    if (!obj) continue;
+                    allObjectives.push(obj);
+                }
+                if (allObjectives.length > 0) {
                     const objectivesForTable: BetterTableItem[] =
                         await Promise.all(
                             allObjectives.map(
@@ -128,19 +135,20 @@ export default function HomeScreen() {
             }
         }
         fetchData();
-    }, [t]);
+    }, [identifiers, t]);
 
     // notifications
     /**
      * @rawR5code all notification's source code is R5. i made a few changes but i'm not sure it'll work out of the box.
      */
     useEffect(() => {
-        async function handle() {
-            const isRegistered = await areNotificationsScheduledForToday();
+        async function handle(): Promise<void> {
+            const isRegistered: boolean =
+                await areNotificationsScheduledForToday();
             logToConsole("isRegistered status: " + isRegistered, "log");
             if (userData?.wantsNotifications === false) {
                 if (!isRegistered) return;
-                cancelScheduledNotifications(t);
+                cancelScheduledNotifications(t, false);
             } else {
                 if (isRegistered) return;
                 if (
@@ -149,6 +157,8 @@ export default function HomeScreen() {
                     identifiers.length >= 1
                 ) {
                     await scheduleRandomNotifications(3, t);
+                } else {
+                    await cancelScheduledNotifications(t, false);
                 }
             }
         }

@@ -126,6 +126,7 @@ export async function handleNotificationsAsync(
  *
  * @async
  * @param t Pass here the translate function
+ * @param {boolean} shouldTell if true, the user is told about the change.
  * @returns {boolean} True if everything went alright, false if otherwise. Should log the try-catch error to termLog.
  */
 export async function scheduleRandomNotifications(
@@ -154,7 +155,7 @@ export async function scheduleRandomNotifications(
 
             const identifier: string = await scheduleNotificationAsync({
                 content: {
-                    title: t("notifications.daily_active_objectives_pending"),
+                    title: t("notifications.reminder"),
                     body: randomMessage,
                 },
                 trigger: {
@@ -186,14 +187,20 @@ export async function scheduleRandomNotifications(
  *
  * @async
  * @param {TFunction} t Pass the translate function here, please.
+ * @param {?boolean} shouldTell If true, the user is told about the change.
  * @returns {boolean} True if everything went alright, false if otherwise. Should log the try-catch error to termLog.
  */
 export async function cancelScheduledNotifications(
     t: TFunction,
+    shouldTell: boolean,
 ): Promise<boolean> {
     try {
         const identifiers = await getAllScheduledNotificationsAsync();
-        ShowToast(t("pages.settings.preferences.notifications.flow.disabling"));
+        if (shouldTell) {
+            ShowToast(
+                t("pages.settings.preferences.notifications.flow.disabling"),
+            );
+        }
         for (const identifier of identifiers) {
             logToConsole(
                 "Cancelling notification " + identifier.identifier,
@@ -202,7 +209,11 @@ export async function cancelScheduledNotifications(
             await cancelScheduledNotificationAsync(identifier.identifier);
         }
         logToConsole("Scheduled Notifications DISABLED", "log");
-        ShowToast(t("pages.settings.preferences.notifications.flow.disabled"));
+        if (shouldTell) {
+            ShowToast(
+                t("pages.settings.preferences.notifications.flow.disabled"),
+            );
+        }
         return true;
     } catch (e) {
         logToConsole("ERROR REGISTERING NOTIFICATIONS: " + e, "error");
