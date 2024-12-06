@@ -7,7 +7,6 @@ import GapView from "@/components/ui/GapView";
 import Division from "@/components/ui/sections/Division";
 import Section from "@/components/ui/sections/Section";
 import ROUTES from "@/constants/Routes";
-
 import { OrchestrateUserData } from "@/toolkit/User";
 import { logToConsole } from "@/toolkit/debug/Console";
 import {
@@ -52,22 +51,27 @@ export default function HomeScreen() {
         null,
     );
 
-    useEffect((): void => {
+    useEffect(() => {
         async function fetchData(): Promise<void> {
             try {
                 // user data
                 const userData: FullProfile = await OrchestrateUserData();
                 // since OrchestrateUserData() never throws an error, we gotta identify values that are only possible if an ErrorUserData was returned, AKA a setup is needed
-                if (
-                    userData.isNewUser === true &&
-                    userData.age === 0 &&
-                    userData.theThinkHour === "0"
-                ) {
+                if (userData.username === "Error" && userData.age === 0) {
                     router.replace(ROUTES.MAIN.WELCOME_SCREEN);
                     return;
                 }
                 setUserData(userData);
+            } catch {
+                router.replace(ROUTES.MAIN.WELCOME_SCREEN);
+            }
+        }
+        fetchData();
+    }, []);
 
+    useEffect((): void => {
+        async function fetchData(): Promise<void> {
+            try {
                 // objectives for UI
                 const pending: number[] | 0 | false | null =
                     await GetAllPendingObjectives();

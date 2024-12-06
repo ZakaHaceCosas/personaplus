@@ -140,7 +140,6 @@ export default function Settings() {
                 <Division
                     preHeader={t("pages.settings.advanced.word")}
                     header={t("pages.settings.advanced.experiments.header")}
-                    /* subHeader="Features still in progress. Test them early, share feedback, and help us improve—but note they're unstable." */
                     subHeader={t(
                         "pages.settings.advanced.experiments.subheader",
                     )}

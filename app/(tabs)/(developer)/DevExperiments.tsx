@@ -139,9 +139,7 @@ export default function EpicExperiments() {
             <BetterAlert
                 style="WOR"
                 title={t("pages.experiments.header")}
-                bodyText={t(
-                    "pages.experiments.disclaimer",
-                )} /* "TL;DR: experiments are cool features I'm working on that aren't done yet. You get to try them early!! But they might have bugs, so I can't promise they won't cause issues.\n\nIf you find any problems (or have feedback), let me know—your help the app better!" */
+                bodyText={t("pages.experiments.disclaimer")}
                 layout="alert"
             />
             <GapView height={10} />

@@ -511,8 +511,7 @@ export default function CreateActiveObjectivePage() {
             <GapView height={20} />
             {spawnToggle("durationMinutes")}
             {spawnToggle("rests")}
-            {objectiveToCreate.info.restDurationMinutes &&
-                objectiveToCreate.info.restDurationMinutes > 0 &&
+            {objectiveToCreate.info.rests > 0 &&
                 spawnToggle("restDurationMinutes")}
             {
                 // forgive me for promising that R6 would address all code duplication and yet making this
