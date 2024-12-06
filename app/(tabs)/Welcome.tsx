@@ -192,6 +192,7 @@ export default function WelcomePage() {
                     language: locale,
                     theThinkHour: validData.theThinkHour,
                     isNewUser: false,
+                    wantsNotifications: true,
                 };
 
                 logToConsole(

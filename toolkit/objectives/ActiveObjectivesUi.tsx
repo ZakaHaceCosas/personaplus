@@ -6,6 +6,7 @@ import { BetterTextSmallText } from "@/components/text/BetterTextPresets";
 import { StyleSheet, View } from "react-native";
 import GapView from "@/components/ui/GapView";
 import { useTranslation } from "react-i18next";
+import Colors from "@/constants/Colors";
 
 const styles = StyleSheet.create({
     view: {
@@ -55,7 +56,7 @@ function ObjectiveDescriptiveIcons({
                     <Ionicons
                         name="scale"
                         size={FontSizes.REGULAR}
-                        color="#FFF"
+                        color={Colors.LABELS.SDD}
                     />
                     <GapView width={5} />
                     <BetterTextSmallText>
@@ -65,7 +66,7 @@ function ObjectiveDescriptiveIcons({
                     <Ionicons
                         name="loop"
                         size={FontSizes.REGULAR}
-                        color="#FFF"
+                        color={Colors.LABELS.SDD}
                     />
                     <GapView width={5} />
                     <BetterTextSmallText>
@@ -75,7 +76,7 @@ function ObjectiveDescriptiveIcons({
                     <Ionicons
                         name="front-hand"
                         size={FontSizes.REGULAR}
-                        color="#FFF"
+                        color={Colors.LABELS.SDD}
                     />
                     <GapView width={5} />
                     <BetterTextSmallText>
@@ -90,7 +91,7 @@ function ObjectiveDescriptiveIcons({
                     <Ionicons
                         name="speed"
                         size={FontSizes.REGULAR}
-                        color="#FFF"
+                        color={Colors.LABELS.SDD}
                     />
                     <GapView width={5} />
                     <BetterTextSmallText>
@@ -106,7 +107,7 @@ function ObjectiveDescriptiveIcons({
                     <Ionicons
                         name="repeat"
                         size={FontSizes.REGULAR}
-                        color="#FFF"
+                        color={Colors.LABELS.SDD}
                     />
                     <GapView width={5} />
                     <BetterTextSmallText>
@@ -116,7 +117,7 @@ function ObjectiveDescriptiveIcons({
                     <Ionicons
                         name="front-hand"
                         size={FontSizes.REGULAR}
-                        color="#FFF"
+                        color={Colors.LABELS.SDD}
                     />
                     <GapView width={5} />
                     <BetterTextSmallText>
@@ -131,7 +132,7 @@ function ObjectiveDescriptiveIcons({
                     <Ionicons
                         name="av-timer"
                         size={FontSizes.REGULAR}
-                        color="#FFF"
+                        color={Colors.LABELS.SDD}
                     />
                     <GapView width={5} />
                     <BetterTextSmallText>

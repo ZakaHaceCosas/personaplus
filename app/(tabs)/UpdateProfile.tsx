@@ -53,7 +53,7 @@ export default function UpdateProfile() {
                 setWorkingData(data);
                 setLoading(false);
             } catch (e) {
-                console.error(e);
+                logToConsole("Error handling user data: " + e, "error");
             }
         }
         handle();
