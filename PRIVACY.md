@@ -15,23 +15,21 @@
     - Among others. We keep adding additional calculations to the CL as needed.
   - You are always shown the results of all calculations and they're never shown to anyone. Please note their accuracy is not a guarantee[^2].
 - **Usage data:** PersonaPlus does not compile technical usage data, diagnostics, telemetry, whatsoever. We do collect basic data onto your usage of the app, but it's only stored locally and you can see it and/or wipe it at any time. <!-- TODO: add data removal without needing to remove account as an actual feature -->
-<!-- todo finish -->
-## Métodos de Recopilación
 
-- **Obtención directa:** Podemos obtener los datos directamente desde usted: al abrir la app por primera vez, se le hace un cuestionario preguntándole ciertos datos. Varias preguntas son opcionales, por lo que no hay problema si no quiere responder alguna.
-- **Deducción / Obtención indirecta:** Como mencionado anteriormente, podemos usar los datos proporcionados por usted para realizar cálculos médicos[^2] y generar datos más precisos.
+## Data collection methods
 
-### Procesamiento de la Información
+- **User:** We can obtain data directly from you by asking you to provide it in various ways; for example the onboarding form you're required to submit before being able to use the app.
+- **Deduction / Internal collection:** As previously mentioned, we may use provided data to perform medical calculations[^2] and generate additional data from you.
 
-- **Almacenamiento:** La información del usuario se almacena única y exclusivamente en el dispositivo en el que se utilice la aplicación, vía el almacenamiento local del teléfono (`AsyncStorage`). Nunca se almacena en ningún servidor externo[^3] o cualquier otro almacenamiento que no sea el tuyo.
+### How we process and use your data
 
-## Uso de Información
+- **Local-only processing:** Your info is stored uniquely and exclusively on your own device. An SQLite database (provided by React Native package `expo-sqlite/kv-store`) is used for storing all of your data. You can read most of this content from Profile -> Settings -> Dev Interface.
+  - We never store your data in any 1st or 3rd party cloud service[^3]. We never store your data anywhere that isn't your device.
+- **Usage:** We only use your data for the purposes stated before: functionality and personality purposes. We do not use your data in any way that's not specified in here. If an update to the app changes the way we process your data, an in-app alert will notify you about this change.
+  - **Third parties:** PersonaPlus never shares, sells, or exchanges ANY piece of your data with any third party, ever. No third party services are used for data processing.
 
-- **Funcionalidad:** Los datos mencionados anteriormente, como su peso, edad, o los índices médicos[^2] que se pueden obtener mediante esos y otros datos, se utilizan para que PersonaPlus cumpla con lo prometido: proporcionar estadísticas, consejos, y actividades personalizadas para el usuario. Para ello, es necesario entenderle, y la información recopilada lo hace posible.
-- **Terceros:** PersonaPlus no comparte, vende ni intercambia datos con terceros. No se usan proveedores externos para el almacenamiento de datos ni para el análisis de datos personales.
+[^1]: Estimate sleep hours are asked to the user, the app does not have any sleep tracking feature as of now.
 
-[^1]: La estimación de horas de sueño es proporcionada por el propio usuario mediante cuestionario. La app NO realiza rastreo del sueño de ningún tipo.
+[^2]: "Medical calculations" provided by this app include (but aren't limited to) BMI, BMR, or IBW, among others, that provide estimates about user related health aspects. This app SHALL NEVER BE CONSIDERED UNDER ANY CIRCUMSTANCE as a substitute to the medical info provided by your medic, or by any other source of prover reliability. In case of a discrepancy between our advice and that of a trusted source, such as your doctor, always prioritize their guidance over ours.
 
-[^2]: Los "cálculos médicos" en esta app incluyen (pero no se limitan a) índices como el BMI, BMR, e IBW, entre otros, que proporcionan estimaciones sobre aspectos de salud del usuario, para ayudar a dar recomendaciones más precisas. Esta app NO DEBE SER CONSIDERADA BAJO NINGÚN CONCEPTO como una fuente de información médica real ni reemplaza la información proporcionada por su médico.
-
-[^3]: **PersonaPlus jamás compartirá sus datos con terceros por cuenta propia.** Sin embargo, los datos del usuario se almacenan como objetos AsyncStorage individuales NO ENCRIPTADOS. Una copia de seguridad, por ejemplo, podría "quebrantar" el principio de no hacer copias en la nube, ya que Google (o el proveedor de copias de seguridad de su teléfono Android) sería el responsable de realizar dicha copia. PersonaPlus deshabilita desde su código las copias de seguridad automáticas de Android, pero esto no es una garantía absoluta. Nunca almacenaremos ninguna información sensible de esta manera.
+[^3]: **PersonaPlus will never INTENTIONALLY share your data with third parties.** However, things like backups made by your Android phone on Google Drive, unauthorized access to your device's system files, 3rd party backup services, and so on, are outside of the scope of what we can control. We do our best to keep your data private, but be aware of what apps are accessing what on your device, and what are you backing up and where.

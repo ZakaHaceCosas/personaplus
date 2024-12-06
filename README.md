@@ -80,6 +80,7 @@ Make sure that any third-party software used that is under different licenses (s
 <div align="center">
 
 [![YouTube button](https://img.shields.io/badge/YouTube-PersonaPlus-%23fb100a?style=for-the-badge&labelColor=%23000&logo=youtube)](https://www.youtube.com/playlist?list=PLdif1flfmG__g_a1QSmBNnSh_6pAeRizW)
-[![Discord button](https://img.shields.io/badge/Discord-Servidor_de_Discord-%235a68ed?style=for-the-badge&labelColor=%23000&logo=discord&logoColor=white)](https://discord.gg/wwzddK4Zpc)
+[![Discord button](https://img.shields.io/badge/Discord-Discord_server-%235a68ed?style=for-the-badge&labelColor=%23000&logo=discord&logoColor=white)](https://discord.gg/wwzddK4Zpc)
+[![Instagram button](https://img.shields.io/badge/Instagram-Instagram-%23f71464?style=for-the-badge&labelColor=%23000&logo=instagram&logoColor=white)](https://www.instagram.com/giveitaplus/)
 
 </div>
