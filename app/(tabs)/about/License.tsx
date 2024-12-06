@@ -23,6 +23,7 @@ import BetterText from "@/components/text/BetterText";
 import BackButton from "@/components/navigation/GoBack";
 import { SafelyOpenUrl } from "@/toolkit/Routing";
 import URLs from "@/constants/Urls";
+import PageEnd from "../../../components/static/PageEnd";
 
 export default function License() {
     const { t } = useTranslation();
@@ -804,6 +805,7 @@ export default function License() {
                 {"\n\n"}
                 END OF TERMS AND CONDITIONS
             </BetterTextLicenseText>
+            <PageEnd size="tiny" includeText={false} />
         </>
     );
 }

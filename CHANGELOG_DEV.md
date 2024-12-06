@@ -9,7 +9,8 @@ For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 
 ## [0.0.6-preapp.26] - Unreleased
 
-There've been A LOT of changes. The rewrite is overwhelmingly big and detailed logs are hard to provide. Next versions will much better log changes.
+> [!IMPORTANT]
+> There've been A LOT of changes. The rewrite is overwhelmingly big and detailed logs are hard to provide, so this list does not include all changes. Next versions will much better log changes.
 
 ### Added
 
@@ -55,3 +56,7 @@ There've been A LOT of changes. The rewrite is overwhelmingly big and detailed l
 
 - Welcome screen
   - Saving values the wrong way, using the display sentence (e.g. "Not too active...") instead of a `"poor" | "small" | ...` value.
+
+### Known issues
+
+- (Dev only) Create page shows "Text strings must be rendered inside a `<Text />` tag" error. I haven't found any text outside BetterText tags, so investigation is required. Doesn't crash the app, though.

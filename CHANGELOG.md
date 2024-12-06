@@ -56,18 +56,7 @@ Keep in mind there have been many visual and functional changes due to the R6 re
 
 ### Known issues <!-- not part of the Keep A Changelog standard -->
 
-- First time launching the app doesn't properly handle missing user data, crashes. (SHOULD BE FIXED, NEED TO TEST x2)
-- ~~Splash screen looks extremely small.~~ (FIXED)
-- Create page shows "Text strings must be rendered inside a `<Text />` tag" error. I haven't found any text outside BetterText tags, so investigation is required. Doesn't crash the app, though.
-
-### R5 ISSUES
-
-> This is not part of the Keep A Changelog standard and will only be present during development of the R6 rewrite. It's essentially the same as [the tracking issue](https://github.com/ZakaHaceCosas/personaplus/issues/3) but in english.
-
-These errors come from the R5 version. They _should_ be already fixed, but haven't been tested (otherwise it will be specified).
-
-- The app not allowing the user to scroll on some (modern) Android devices.
-  - (my old Xiaomi never had that error, but friends of mine testing the app did have it)
+- First time launching the app doesn't properly handle missing user data, crashes. **Relaunch the app to fix.**
 
 ---
 

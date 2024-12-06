@@ -16,7 +16,7 @@ import BetterButton from "@/components/interaction/BetterButton";
 import Swap, { SwapOption } from "@/components/interaction/Swap";
 import BetterInputField from "@/components/interaction/BetterInputField";
 import PageEnd from "@/components/static/PageEnd";
-import { BasicUserData } from "@/types/User";
+import { BasicUserData, FullProfile } from "@/types/User";
 import StoredItemNames from "@/constants/StoredItemNames";
 import { SafelyGoBack } from "@/toolkit/Routing";
 import ROUTES from "@/constants/Routes";
@@ -66,19 +66,29 @@ export default function UpdateProfile() {
 
     async function submit() {
         if (
+            workingData &&
             ValidateUserData(
-                workingData!.gender,
-                workingData!.age,
-                workingData!.weight,
-                workingData!.height,
-                workingData!.username,
+                workingData.gender,
+                workingData.age,
+                workingData.weight,
+                workingData.height,
+                workingData.username,
             )
         ) {
             try {
+                const data: FullProfile = await OrchestrateUserData();
+                const newData: FullProfile = {
+                    ...data,
+                    username: workingData.username,
+                    gender: workingData.gender,
+                    age: workingData.age,
+                    weight: workingData.weight,
+                    height: workingData.height,
+                };
                 // Save data to AsyncStorage
                 await AsyncStorage.setItem(
                     StoredItemNames.userData,
-                    JSON.stringify(workingData),
+                    JSON.stringify(newData),
                 );
                 SafelyGoBack(ROUTES.MAIN.PROFILE);
             } catch (e) {
