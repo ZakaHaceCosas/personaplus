@@ -52,7 +52,7 @@ export default function HomeScreen() {
     );
 
     useEffect(() => {
-        async function fetchData(): Promise<void> {
+        async function fetchUserData(): Promise<void> {
             try {
                 // user data
                 const userData: FullProfile = await OrchestrateUserData();
@@ -66,108 +66,103 @@ export default function HomeScreen() {
                 router.replace(ROUTES.MAIN.WELCOME_SCREEN);
             }
         }
-        fetchData();
+        fetchUserData();
     }, []);
 
     useEffect((): void => {
         async function fetchData(): Promise<void> {
             try {
+                // TODO - if i move this to its own useEffect (identifiers), it fixes notifications useEffect re-running a lot of times but messes up the "Loading..." state.
                 // objectives for UI
                 const pending: number[] | 0 | false | null =
                     await GetAllPendingObjectives();
                 setIdentifiers(pending);
 
-                if (Array.isArray(pending)) {
-                    const objectives: (ActiveObjective | null)[] =
-                        await Promise.all(
-                            pending.map(
-                                (
-                                    identifier: number,
-                                ): Promise<ActiveObjective | null> =>
-                                    GetActiveObjective(identifier),
-                            ),
-                        );
-
-                    const filteredObjectives: ActiveObjective[] =
-                        objectives.filter(
-                            (
-                                obj: ActiveObjective | null,
-                            ): obj is ActiveObjective => obj !== null,
-                        );
-                    setRenderedObjectives(filteredObjectives);
-                }
-
-                // objectives for table
-                const allObjectives: ActiveObjective[] = [];
-                if (!Array.isArray(identifiers)) {
+                if (!Array.isArray(pending)) {
                     setAllObjectivesForTable([]);
+                    setLoading(false);
                     return;
                 }
-                for (const id of identifiers) {
+                const objectives: (ActiveObjective | null)[] =
+                    await Promise.all(
+                        pending.map(
+                            (
+                                identifier: number,
+                            ): Promise<ActiveObjective | null> =>
+                                GetActiveObjective(identifier),
+                        ),
+                    );
+
+                const filteredObjectives: ActiveObjective[] = objectives.filter(
+                    (obj: ActiveObjective | null): obj is ActiveObjective =>
+                        obj !== null,
+                );
+                setRenderedObjectives(filteredObjectives);
+
+                const allObjectives: ActiveObjective[] = [];
+                for (const id of pending) {
                     const obj = await GetActiveObjective(id);
                     if (!obj) continue;
                     allObjectives.push(obj);
                 }
-                if (allObjectives.length > 0) {
-                    const objectivesForTable: BetterTableItem[] =
-                        await Promise.all(
-                            allObjectives.map(
-                                async (
-                                    obj: ActiveObjective,
-                                ): Promise<BetterTableItem> => ({
-                                    name: t(
-                                        `globals.supportedActiveObjectives.${obj.exercise}.name`,
-                                    ),
-                                    value: (await CheckForAnActiveObjectiveDailyStatus(
-                                        obj.identifier,
-                                    ))
-                                        ? t(
-                                              "activeObjectives.today.content.headers.statusOptions.yes",
-                                          )
-                                        : t(
-                                              "activeObjectives.today.content.headers.statusOptions.no",
-                                          ),
-                                }),
-                            ),
-                        );
-                    setAllObjectivesForTable(objectivesForTable);
+                if (allObjectives.length === 0) {
+                    setAllObjectivesForTable([]);
+                    setLoading(false);
+                    return;
                 }
+                const objectivesForTable: BetterTableItem[] = await Promise.all(
+                    allObjectives.map(
+                        async (
+                            obj: ActiveObjective,
+                        ): Promise<BetterTableItem> => ({
+                            name: t(
+                                `globals.supportedActiveObjectives.${obj.exercise}.name`,
+                            ),
+                            value: (await CheckForAnActiveObjectiveDailyStatus(
+                                obj.identifier,
+                            ))
+                                ? t(
+                                      "activeObjectives.today.content.headers.statusOptions.yes",
+                                  )
+                                : t(
+                                      "activeObjectives.today.content.headers.statusOptions.no",
+                                  ),
+                        }),
+                    ),
+                );
+                setAllObjectivesForTable(objectivesForTable);
+                setLoading(false);
             } catch (e) {
                 logToConsole("Error fetching data: " + e, "error");
-            } finally {
-                setLoading(false);
             }
         }
         fetchData();
     }, [identifiers, t]);
 
     // notifications
-    /**
-     * @rawR5code all notification's source code is R5. i made a few changes but i'm not sure it'll work out of the box.
-     */
     useEffect(() => {
         async function handle(): Promise<void> {
             const isRegistered: boolean =
                 await areNotificationsScheduledForToday();
             logToConsole("isRegistered status: " + isRegistered, "log");
-            if (userData?.wantsNotifications === false) {
-                if (!isRegistered) return;
-                cancelScheduledNotifications(t, false);
-            } else {
-                if (isRegistered) return;
-                if (
-                    identifiers &&
-                    Array.isArray(identifiers) &&
-                    identifiers.length >= 1
-                ) {
-                    await scheduleRandomNotifications(3, t);
-                } else {
-                    await cancelScheduledNotifications(t, false);
-                }
+            if (userData?.wantsNotifications === false && isRegistered) {
+                await cancelScheduledNotifications(t, false);
+                return;
+            }
+            if (
+                userData?.wantsNotifications !== false &&
+                !isRegistered &&
+                Array.isArray(identifiers) &&
+                identifiers.length > 0
+            ) {
+                await scheduleRandomNotifications(3, t);
             }
         }
-        handle();
-    }, [userData?.wantsNotifications, identifiers, t]);
+        if (userData && identifiers !== null) {
+            handle();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userData, identifiers]);
 
     if (loading) return <Loading />;
 

@@ -13,9 +13,10 @@ import TopBar from "@/components/navigation/TopBar";
 
 // settings for this thingy
 const SETTINGS = {
-    DIST_INTERVAL_METERS: 0.05,
-    TIME_INTERVAL_MS: 975,
-    MIN_BUMP_DISTANCE: 0.05,
+    DIST_INTERVAL_METERS: 1,
+    TIME_INTERVAL_MS: 1900,
+    MIN_BUMP_DISTANCE: 0.15,
+    MAX_BUMP_DISTANCE: 30,
 };
 
 const styles = StyleSheet.create({
@@ -81,7 +82,7 @@ export default function PersonaPlusRunningTracker() {
         // watch location
         const subscription = await Location.watchPositionAsync(
             {
-                accuracy: Location.Accuracy.High,
+                accuracy: Location.Accuracy.BestForNavigation,
                 distanceInterval: SETTINGS.DIST_INTERVAL_METERS,
                 timeInterval: SETTINGS.TIME_INTERVAL_MS,
                 mayShowUserSettingsDialog: true,
@@ -97,7 +98,11 @@ export default function PersonaPlusRunningTracker() {
                         latitude,
                         longitude,
                     );
-                    if (dist > SETTINGS.MIN_BUMP_DISTANCE) {
+                    // min & max are to ignore stupid values that can mess up the stats
+                    if (
+                        dist > SETTINGS.MIN_BUMP_DISTANCE &&
+                        dist < SETTINGS.MAX_BUMP_DISTANCE
+                    ) {
                         setDistance((prevDistance) => prevDistance + dist);
                     }
                 }
@@ -160,7 +165,7 @@ export default function PersonaPlusRunningTracker() {
                             ? "Stops tracking movement"
                             : "Start tracking movement"
                     }
-                    style="DEFAULT"
+                    style={isTracking ? "ACE" : "GOD"}
                 />
                 <BetterButton
                     buttonText="Reset distance"
@@ -176,6 +181,8 @@ export default function PersonaPlusRunningTracker() {
                 {"\n"}TIME INTERVAL (MILLISECONDS): {SETTINGS.TIME_INTERVAL_MS}
                 {"\n"}
                 MIN DISTANCE FOR BUMP (METERS): {SETTINGS.MIN_BUMP_DISTANCE}
+                {"\n"}
+                MAX DISTANCE FOR BUMP (METERS): {SETTINGS.MAX_BUMP_DISTANCE}
             </BetterTextSmallText>
         </>
     );
