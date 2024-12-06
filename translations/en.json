@@ -1,3 +1,553 @@
 {
-    "todo": "To do"
+    "globals": {
+        "userData": {
+            "username": {
+                "word": "Username",
+                "wordShorter": "Name"
+            },
+            "gender": {
+                "word": "Gender",
+                "male": "Male",
+                "female": "Female"
+            },
+            "age": {
+                "word": "Age",
+                "suffix": " years old"
+            },
+            "height": "Height",
+            "weight": "Weight"
+        },
+        "languages": {
+            "es": "Spanish",
+            "en": "English"
+        },
+        "interaction": {
+            "areYouSure": "Are you sure?",
+            "goAheadBad": "Okay.",
+            "goAhead": "Go ahead",
+            "goAheadGood": "Lets go!",
+            "nevermind": "Nevermind",
+            "continue": "Continue",
+            "somethingIsWrong": "Something is wrong",
+            "goBack": "Go back :c",
+            "goBackNoSad": "Go back",
+            "yes": "Yes",
+            "no": "No",
+            "chooseAnOption": "Choose an option",
+            "learnMore": "Learn more.",
+            "save": "Save",
+            "help": "Help",
+            "giveUp": "I give up :c",
+            "none": "None",
+            "wellDoneBud": "Well done, bud!"
+        },
+        "daysOfTheWeek": {
+            "Monday": {
+                "key": "M",
+                "value": "Monday"
+            },
+            "Tuesday": {
+                "key": "T",
+                "value": "Tuesday"
+            },
+            "Wednesday": {
+                "key": "X",
+                "value": "Wednesday"
+            },
+            "Thursday": {
+                "key": "T",
+                "value": "Thursday"
+            },
+            "Friday": {
+                "key": "F",
+                "value": "Friday"
+            },
+            "Saturday": {
+                "key": "S",
+                "value": "Saturday"
+            },
+            "Sunday": {
+                "key": "S",
+                "value": "Sunday"
+            }
+        },
+        "loading": "Loading...",
+        "pageEnd": "Nothing more to see here",
+        "navbar": {
+            "home": "Home",
+            "dashboard": "Dash",
+            "report": "Report",
+            "profile": "Profile"
+        },
+        "settings": "Settings",
+        "developers": "Developers",
+        "danger": "Danger",
+        "about": "About",
+        "experiments": "Experiments",
+        "howYouAreDoing": "This is how you're doing",
+        "objectives": {
+            "active": "Active Objectives",
+            "passive": "Passive Objectives"
+        },
+        "supportedActiveObjectives": {
+            "Push Ups": {
+                "name": "Push ups",
+                "doing": "Doing push ups for {{duration}} minute"
+            },
+            "Lifting": {
+                "name": "Lifting",
+                "doing": "Lifting for {{duration}} minute"
+            },
+            "Walking": {
+                "name": "Walking",
+                "doing": "Walking for {{duration}} minute"
+            },
+            "Biking": {
+                "name": "Biking",
+                "doing": "Biking for {{duration}} minute"
+            },
+            "Running": {
+                "name": "Running",
+                "doing": "Running for {{duration}} minute"
+            }
+        }
+    },
+    "EasterEggs": {
+        "whyChangeGender": "genders don't change, but okay"
+    },
+    "coolRandomMessages": {
+        "createActiveObjective": [
+            "Think of an exercise you like, and go for it!",
+            "Let's make a plan to have fun.",
+            "This is gonna be fun!",
+            "What's in your mind?",
+            "Your objectives, your results.",
+            "Psst... Don't create goals just for the sake of it: do them!",
+            "You finally use that phone for something useful.",
+            "If anything, there's nothing better than a little exercise.",
+            "you right now: 📈📈📈",
+            "Using your phone to train instead of watching Instagram? What an idol.",
+            "Your routine, your rules. You decide on your objectives.",
+            "Trust me: you will not forget this objective...",
+            "*insert motivational sentence here*",
+            "Some upload \"Stories\", you level up.",
+            "Remember to add rests: even champions like you need them.",
+            "I spent months making this app so you become your best self: don't let me down!",
+            "Don't just hit \"Create\" - then I want to see you in action!",
+            "Dare to create an objective that takes you out of your comfort zone?",
+            "Ready to prove what you're capable of?",
+            "Set an objective that makes you feel proud tomorrow.",
+            "Your progress starts here, let's get to work!",
+            "Less excuses, more action. Let's go!",
+            "Don't underestimate the power of a small but constant effort 🔥.",
+            "Dare to overcome your limits, one by one.",
+            "Remember: champions are made, not born.",
+            "Give your day a purpose: create an objective."
+        ],
+        "sessionCompleted": [
+            "You finished! How great you are.",
+            "How cool was that?",
+            "More days like this one, pls.",
+            "Now I see you more handsome.",
+            "On to the next one!"
+        ],
+        "activeObjectiveReminders": [
+            "You know you got stuff to do!",
+            "Time to give yourself a plus!",
+            "You said you wanted to give yourself a plus - get up!",
+            "The difference between PersonaPlus and a regular to-do list? I'm much more funnier to check!",
+            "Like your mother: until you don't do what you said, I won't leave you alone.",
+            "You give yourself a plus first, then you silence your phone.",
+            "The only notification that doesn't waste your time.",
+            "No, not another TikTok notification. Move, damn it!",
+            "No, not another Instagram notification. I'll make you a better person, reels won't!",
+            "They're called 'objectives' for a reason: they need to be met!",
+            "No, I won't stop sending notifications until you stop ignoring your path to success.",
+            "Trust me, you'll feel better later.",
+            "just one more session pls, love you <3",
+            "You downloaded this app for a reason. Don't give up.",
+            "It's that time again!",
+            "Whenever you want, huh?"
+        ]
+    },
+    "notifications": {
+        "reminder": "Ey, you got objectives to do!"
+    },
+    "pages": {
+        "404": {
+            "header": "Got a map?",
+            "subheader": "You got a 404 error - this means, PersonaPlus couldn't find the path you we're looking for. Sorry!",
+            "goHome": {
+                "text": "Go home",
+                "hint": "Redirects the user directly to the homepage."
+            },
+            "requestedPath": "Requested path was:\n{{path}}\n\nIf you think this path is correct and you shouldn't be lost, we kindly ask you to report this issue so we can fix it. Thank you!"
+        },
+        "home": {
+            "header": "Hi, {{username}}!",
+            "subheader": "What objectives will you accomplish today?"
+        },
+        "dashboard": {
+            "header": "Dashboard",
+            "subheader": "Lets setup your path to success",
+            "deleteObjective": {
+                "text": "Delete",
+                "hint": "Permanently deletes this objective."
+            }
+        },
+        "profile": {
+            "header": "Profile",
+            "subheader": "Nice to meet you, {{username}}!",
+            "data": {
+                "age": "{{age}} years old",
+                "weight": "{{weight}} kg",
+                "height": "{{height}} cm"
+            },
+            "interactions": {
+                "updateProfile": {
+                    "text": "Update your profile",
+                    "hint": "Takes to a page from where you can edit your profile."
+                }
+            },
+            "divisions": {
+                "settings": {
+                    "header": "Open settings",
+                    "subheader": "Manage notifications, app language, and other preferences. Access advanced features and experiments. Reset the app if needed.",
+                    "action": {
+                        "text": "Open up settings",
+                        "hint": "Opens a page from where you can see and edit all app settings."
+                    }
+                },
+                "about": {
+                    "header": "About PersonaPlus",
+                    "subheader": "Discover who's behind the app you're (hopefully!) enjoying.",
+                    "action": {
+                        "text": "See about us",
+                        "hint": "Opens a page to see license, credits, and more info about the app."
+                    }
+                },
+                "update": {
+                    "header": "Look for updates",
+                    "subheader": "You're on version {{version}}.",
+                    "action": {
+                        "text": "Search for new updates",
+                        "hint": "Checks if there's a new version of the app, and if there is, shows a modal with options on what to do about it."
+                    },
+                    "updateFlow": {
+                        "checking": "Searching for updates...",
+                        "updateAvailable": "Update available",
+                        "updateAvailableText": "A new version ({{latestVersion}}) is available. Please, update PersonaPlus to the latest version.",
+                        "upToDate": "You're up to date!",
+                        "cantCheck": "Couldn't check for updates. Please, try later (or manually check the repo).",
+                        "buttons": {
+                            "update": "Get update",
+                            "changelog": "See what's new"
+                        }
+                    }
+                }
+            }
+        },
+        "createActiveObjective": {
+            "header": "Lets do it!",
+            "questions": {
+                "whatToDo": {
+                    "question": "What will you do?",
+                    "options": {
+                        "title": "Choose an exercise, your favorite :]"
+                    }
+                },
+                "whenToDo": {
+                    "question": "What days will you exercise?",
+                    "proTip": "Tap a day to enable or disable it. Colored days are enabled, gray ones are disabled."
+                },
+                "actualQuestions": {
+                    "durationMinutes": "Duration (minutes)",
+                    "durationMinutesHint": "For how long will you hold?",
+                    "rests": "Rests",
+                    "restsHint": "You also gotta rest, boss!",
+                    "restDurationMinutes": "Rest duration (minutes)",
+                    "restDurationMinutesHint": "Don't type \"200\", I see you coming.",
+                    "amountOfPushUps": "How many push ups?",
+                    "amountOfPushUpsHint": "Tip: Balance the duration and number of push-ups. More push-ups in less time will be more challenging but will have a greater (and better) effect on your body. Fewer push-ups in more time will give you a more relaxed, beginner-friendly session.",
+                    "amountOfHandsPushUpHint": "Basically, will you be doing push-ups with two hands (normal) or just one (advanced)? The default is two.",
+                    "reps": "How many lifts will you do?",
+                    "repsHint": "Tip: Balance the duration and number of lifts. More lifts in less time will be more complicated but will have a greater (and better) effect on your body. Fewer lifts in more time will give you a more relaxed and beginner-friendly session.",
+                    "dumbbellWeight": "How much weight?",
+                    "dumbbellWeightHint": "In kilograms. The total weight of the dumbbell (both discs and the barbell). If you have two dumbbells, indicate the weight of just one of them.",
+                    "amountOfHandsLiftingHint": "Basically: one dumbbell, or two dumbbells, one in each hand? By default it's two.",
+                    "estimateSpeed": "What pace will you run at?",
+                    "estimateSpeedHint": "Of course you don't have to be exact, just try to estimate it.",
+                    "amountOfHands": "One hand or two?"
+                }
+            },
+            "warnings": {
+                "tooLongSession": {
+                    "text": "We're talking about {{equal}} minutes of exercise. Isn't that too much?",
+                    "subtext": "You can still create the objective if you want, don't worry. We're just warning you, for your own good!"
+                }
+            },
+            "required": "Required: Duration, Exercise, and at least one day of the week. Some specific exercises will have extra requirements: for example, \"Lifting\" requires you to specify how much weight you will be lifting.",
+            "doneFeedback": "{{obj}}, lets go!"
+        },
+        "welcome": {
+            "beginning": {
+                "welcomeTo": "Welcome to",
+                "subheader": "We're proud to see you want to give yourself a plus!"
+            },
+            "questions": {
+                "aboutYou": {
+                    "ask": "Tells us about you",
+                    "description": "The essential. Yes, we keep it extremely private.",
+                    "placeholders": {
+                        "username": "A name or nickname, whatever you like",
+                        "age": "Age (in years)",
+                        "weight": "Your weight (kg without decimals)",
+                        "height": "How tall are you (cm without decimals)"
+                    }
+                },
+                "focus": {
+                    "ask": "Your priority?",
+                    "description": "Yes, giving yourself a plus, but, what should we prioritize?",
+                    "options": {
+                        "exercising": "Exercise, I need to get moving ASAP!",
+                        "eating": "Diet, I must control better what I eat.",
+                        "wellbeing": "Mind & digital wellbeing.",
+                        "noPriority": "Everything's a top priority!",
+                        "assistMePls": "Don't know / Can't decide"
+                    }
+                },
+                "aboutYouAgain": {
+                    "ask": "Tell us more",
+                    "description": "Knowing about you helps us taking you to the top. No worries, your data is super private."
+                },
+                "sleepTime": {
+                    "ask": "How much do you sleep? It doesn't have to be exact",
+                    "options": {
+                        "threeOrLess": "3 hours or less",
+                        "four": "4 hours",
+                        "five": "5 hours",
+                        "six": "6 hours",
+                        "seven": "7 hours",
+                        "eight": "8 hours",
+                        "nine": "9 hours",
+                        "ten": "10 hours",
+                        "moreThanTen": "More than 10 hours"
+                    }
+                },
+                "activeness": {
+                    "ask": "How often do you exercise?",
+                    "options": {
+                        "poor": "Hardly ever",
+                        "small": "Slightly active (1-2 days a week)",
+                        "normal": "Somewhat active (3-5 days a week)",
+                        "intense": "Very active (5 days or more)",
+                        "super": "Super active (daily)"
+                    }
+                },
+                "theThinkHour": {
+                    "ask": "Choose the time for the 'Daily Check'",
+                    "description": "We'll send you a short questionnaire about your day at that time. We'll use your information to improve PersonaPlus.",
+                    "summon": "Tap here to choose the hour.",
+                    "youChose": "You chose {{hour}}h.",
+                    "TEMP_disclaimer": "Note",
+                    "TEMP_disclaimer2": "The Daily Check is not functional YET - we are working on it. We already told you that PersonaPlus is still in development. The time you choose here will be saved and will start to be used as soon as we release the Daily Check."
+                }
+            }
+        },
+        "updateProfile": {
+            "header": "Update your profile",
+            "subheader": "Things change and so do you.",
+            "saveHint": "Save and apply these changes to your profile.",
+            "nevermindHint": "Leave the page without making any changes to your profile."
+        },
+        "settings": {
+            "header": "Settings",
+            "subheader": "Your app, your rule. Tweak it here.",
+            "preferences": {
+                "word": "Preferences",
+                "language": {
+                    "header": "Change language",
+                    "subheader": "You are currently using {{lang}}. We only support Spanish and English, so the button will automatically change from one to the other.",
+                    "action": {
+                        "text": "Change language",
+                        "hint": "Change the app's language."
+                    }
+                },
+                "notifications": {
+                    "header": "Notifications",
+                    "subheader": "PersonaPlus sends several reminders at random times (but not weird times like 3am) by default. You can disable (or re-enable) them here.",
+                    "action": {
+                        "__epic_comment_lol": "the true / false thingy before is used to append ${userData.wantsNotifications}. 'true' should show disable, and 'false' should show enable",
+                        "trueText": "Disable",
+                        "trueHint": "Disables notifications.",
+                        "falseText": "Enable",
+                        "falseHint": "Enables notifications."
+                    },
+                    "flow": {
+                        "disabling": "Notifications are being unscheduled. Hang there...",
+                        "disabled": "Done, no more notifications. But remember your objectives!",
+                        "enabled": "Done. Notifications will be rescheduled automatically."
+                    }
+                }
+            },
+            "advanced": {
+                "word": "Advanced",
+                "experiments": {
+                    "header": "Experiments",
+                    "subheader": "Features still in progress. Test them early, share feedback, and help us improve—but note they're unstable.",
+                    "action": {
+                        "text": "Launch Experiments",
+                        "hint": "Opens a page from which you can activate and/or deactivate experiments."
+                    }
+                },
+                "devInterface": {
+                    "header": "Dev Interface",
+                    "subheader": "An interface for contributors, to see what happens from inside the app.",
+                    "action": {
+                        "text": "Launch Dev Interface",
+                        "hint": "Opens the Dev Interface."
+                    }
+                }
+            },
+            "dangerous": {
+                "word": "Dangerous",
+                "resetApp": {
+                    "header": "Reset app",
+                    "subheader": "It'll permanently delete all of your user data, without a way to undo. Use it at your own will.",
+                    "action": {
+                        "text": "Reset PersonaPlus",
+                        "hint": "Makes your account go boom"
+                    },
+                    "flow": {
+                        "areYouSure": "Are you sure about that?",
+                        "areYouSureText": "There's no way to undo this. Please be certain."
+                    }
+                }
+            }
+        },
+        "report": {
+            "header": "Your report",
+            "subheader": "This is how you're doing",
+            "disclaimer": {
+                "header": "This page is an experiment",
+                "subheader": "This page is expected to change quite a bit. Until we remove this notice, don't rely on these calculations: they are inaccurate."
+            }
+        },
+        "sessions": {
+            "live": "In a session!",
+            "currentObjective": "CURRENT OBJECTIVE",
+            "toggleTimer": {
+                "pauseHint": "Pause the timer.",
+                "playHint": "Resume the timer."
+            },
+            "helpHint": "Opens a menu with basic help on what you should be doing right now.",
+            "giveUpHint": "Leaves the current session without saving your progress.",
+            "giveUpDescription": "If you give up, all your progress will be lost! Can't you last a little longer?",
+            "rests": "{{rests}} rest(s) of {{duration}} minute(s)",
+            "hands": "{{hands}} hands(s)",
+            "pushUps": "{{pushUps}} push ups"
+        },
+        "results": {
+            "header": "Session completed",
+            "actualResults": {
+                "burntCalories": "Burnt calories"
+            }
+        },
+        "about": {
+            "aboutApp": {
+                "header": "About the app",
+                "subheader": "PersonaPlus es una app para ayudarte a cuidar de tu salud. Gratis, privada, y haciendo lo posible por mejorar como cada día la forma en que te ayuda. ¡Espero que mejores cada día tú también!"
+            },
+            "aboutTheMaker": {
+                "header": "About the maker",
+                "subheader": "I'm Zaka and I Make Stuff. It's a pleasure to dedicate as much time as possible to this app - which at the moment seems like a draft - so that it eventually becomes your best ally to improve as a person.\n\nGive yourself a plus!"
+            },
+            "grid": {
+                "credits": {
+                    "text": "Credits",
+                    "hint": "Show credits, a tribute to everyone who has helped make this app so great."
+                },
+                "license": {
+                    "text": "License",
+                    "hint": "Opens a page to see the license of the app."
+                },
+                "privacy": {
+                    "text": "Your privacy",
+                    "hint": "Opens a web page to view our privacy policy."
+                },
+                "openSource": {
+                    "text": "Open Source",
+                    "hint": "Opens our GiHub repo, where all the source code of our app is public for view and contribution."
+                }
+            },
+            "ps": "PS. You're in an early version of the app. Thanks for being among the first ones to try it out! If you find any issue, tell us about it and we'll fix it! Thank you"
+        },
+        "credits": {
+            "header": "Credits",
+            "subheader": "Awesome people and code that've helped PersonaPlus out!",
+            "contributors": "Contributors that helped a lot with the app:",
+            "contributorsNote": "You can see the full list on GitHub, only the most important ones are shown here.",
+            "libraries": "Epic libraries that power the app:",
+            "__epic_comment_lol": "here says one because its a note relative to a specific project. the previous note just says 'note' because it affects the whole section.",
+            "librariesNoteOne": "*We use our own fork, not the library itself."
+        },
+        "experiments": {
+            "header": "READ THIS OR YOU WILL EXPLODE!!",
+            "subheader": "i mean you wont actually explode but pls read",
+            "disclaimer": "TL;DR: experiments are cool features I'm working on BUT aren't done yet. You get to try them early!! But they might have bugs, so I can't promise they won't cause issues.\n\nIf you find any problems (or have feedback), let me know*—your help the app better!\n\n*On the 'About' page you got the official Instagram, you can message us there.",
+            "realHeader": "Experiments",
+            "realSubheader": "PersonaPlus experimental features",
+            "status": {
+                "enabled": "This experiment is enabled.",
+                "disabled": "This experiment is disabled."
+            },
+            "toggle": {
+                "enable": "Enable experiment",
+                "disable": "Disable experiment",
+                "hint": "Toggles the state of this experiment. If it is disabled, it enables it, and viceversa.",
+                "warning": "Again, experiments are cool, but are also unstable. Proceed at your own risk!",
+                "enabledFeedback": "{{exp}} enabled. Have fun!",
+                "disabledFeedback": "{{exp}} disabled. Back to normality."
+            },
+            "exp_tracker": "PersonaPlus asks you 'how fast you will run' to calculate the calories burned after a running session. Stupid, I know, that's what this experiment is for: a motion tracker (similar to apps like 'Adidas Running').",
+            "exp_report": "Enables a page called 'Report' that shows (based on calculations that the app makes with your data) whether you are healthy / underweight / overweight, and how many calories you burn as a minimum per day to survive."
+        }
+    },
+    "experimentNotes": {
+        "exp_tracker": "PS. You have the exp_tracker experiment enabled, so this value is useless and won't be used to estimate your speed."
+    },
+    "activeObjectives": {
+        "allCapsSingular": "ACTIVE OBJECTIVE",
+        "noObjectives": {
+            "allDone": "Looks like you've done everything!",
+            "noObjectives": "You don't have any objective. Create one now!",
+            "todayFree": "No objectives for today. Enjoy your break!"
+        },
+        "createObjective": {
+            "text": "Crearte active objective",
+            "hint": "Opens a page from which you can create an active objective."
+        },
+        "start": {
+            "hint": "Starts a live session for this objective."
+        },
+        "feedback": {
+            "created": "Objective successfully created!",
+            "deleted": "Objetive {{id}} successfully removed!"
+        },
+        "today": {
+            "noContent": "Here you'll always see todays progress (as long as you have objectives for today).",
+            "content": {
+                "header": "Today",
+                "subheader": "(Yeah, this table is pretty basic. The app is still in development, in a future version the 'Today' section will be overhauled.)",
+                "headers": {
+                    "objective": "Objective",
+                    "status": "Done it?",
+                    "statusOptions": {
+                        "yes": "Yep!",
+                        "no": "Pending..."
+                    }
+                }
+            }
+        }
+    }
 }
