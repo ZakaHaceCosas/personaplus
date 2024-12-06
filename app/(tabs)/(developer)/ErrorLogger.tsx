@@ -7,43 +7,10 @@ import {
 import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/Console";
 import { Logs } from "@/types/Logs";
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import Colors from "@/constants/Colors";
-import getCommonScreenSize from "@/constants/Screen";
 import GapView from "@/components/ui/GapView";
 import PageEnd from "@/components/static/PageEnd";
 import TopBar from "@/components/navigation/TopBar";
-
-const styles = StyleSheet.create({
-    consoleView: {
-        backgroundColor: Colors.BASIC.BLACK,
-        padding: 10,
-        width: getCommonScreenSize("width"),
-    },
-    logText: {
-        marginBottom: 5,
-        fontFamily: "monospace",
-        fontSize: 11,
-        borderLeftWidth: 2,
-        paddingLeft: 10,
-    },
-    log: {
-        color: Colors.LABELS.TABLE_HEADER,
-        borderLeftColor: Colors.LABELS.TABLE_HEADER,
-    },
-    success: {
-        color: Colors.PRIMARIES.GOD.GOD,
-        borderLeftColor: Colors.PRIMARIES.GOD.GOD,
-    },
-    warn: {
-        color: Colors.PRIMARIES.HMM.HMM,
-        borderLeftColor: Colors.PRIMARIES.HMM.HMM,
-    },
-    error: {
-        color: Colors.PRIMARIES.WOR.WOR,
-        borderLeftColor: Colors.PRIMARIES.WOR.WOR,
-    },
-});
+import Console from "@/components/ui/Console";
 
 export default function ErrorLogger() {
     const [loading, setLoading] = useState<boolean>(true);
@@ -92,62 +59,11 @@ export default function ErrorLogger() {
                 type, timestamp, and traceback, while the second entry, contains
                 the log's text. Both entries are color-coded.
             </BetterTextSmallerText>
-            <View style={styles.consoleView}>
-                {error ? (
-                    <BetterTextSmallText>{error}</BetterTextSmallText>
-                ) : logs && logs.length > 0 && Array.isArray(logs) ? (
-                    // Filtra los logs para mostrar solo los de tipo "warn" o "error"
-                    logs.filter(
-                        (log) => log.type === "warn" || log.type === "error",
-                    ).length > 0 ? (
-                        logs
-                            .filter(
-                                (log) =>
-                                    log.type === "warn" || log.type === "error",
-                            )
-                            .map((log, index) => {
-                                const logStyle = styles[log.type] || {};
-                                const options: Intl.DateTimeFormatOptions = {
-                                    day: "2-digit",
-                                    month: "2-digit",
-                                    year: "numeric",
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                    second: "2-digit",
-                                    hour12: false, // 24h format
-                                };
-
-                                // formats date in a more sense-making way than what R5 used to do
-                                const formattedDate = new Date(log.timestamp)
-                                    .toLocaleString("es-ES", options)
-                                    .replace(",", "");
-
-                                return (
-                                    <Text
-                                        key={index}
-                                        style={[styles.logText, logStyle]}
-                                    >
-                                        [{formattedDate}] (
-                                        {log.type.toUpperCase()}){" "}
-                                        {String(log.message)}
-                                    </Text>
-                                );
-                            })
-                    ) : (
-                        <BetterTextSmallText>
-                            Great! There are no errors and no warnings! If you
-                            want to see full logs, including regular and success
-                            ones, tap "See all logs".
-                        </BetterTextSmallText>
-                    )
-                ) : (
-                    <BetterTextSmallText>
-                        No logs. If you recently cleared them it's alright, if
-                        not, this shouldn't be empty, so you might be facing a
-                        bug.
-                    </BetterTextSmallText>
-                )}
-            </View>
+            {error ? (
+                <BetterTextSmallText>{error}</BetterTextSmallText>
+            ) : (
+                <Console errorOnly={true} logs={logs} />
+            )}
             <PageEnd includeText={true} size="tiny" />
         </>
     );
