@@ -32,7 +32,7 @@ const ROUTES = {
      * Experimental features should live in separate pages, listed here.
      */
     EXPERIMENTS: {
-        TRACKER: "/objectives/exp_tracker",
+        TRACKER: "/objectives/Tracker",
         REPORT: "/Report",
     },
 };
