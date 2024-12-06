@@ -6,9 +6,7 @@ import {
     BetterTextSmallerText,
 } from "@/components/text/BetterTextPresets";
 import GapView from "@/components/ui/GapView";
-import Colors from "@/constants/Colors";
 import ROUTES from "@/constants/Routes";
-import getCommonScreenSize from "@/constants/Screen";
 import StoredItemNames from "@/constants/StoredItemNames";
 import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/Console";
 import { Logs } from "@/types/Logs";
@@ -16,39 +14,8 @@ import AsyncStorage from "expo-sqlite/kv-store";
 import { router } from "expo-router";
 import React from "react";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
 import TopBar from "@/components/navigation/TopBar";
-
-const styles = StyleSheet.create({
-    consoleView: {
-        backgroundColor: Colors.BASIC.BLACK,
-        padding: 10,
-        width: getCommonScreenSize("width"),
-    },
-    logText: {
-        marginBottom: 5,
-        fontFamily: "monospace",
-        fontSize: 11,
-        borderLeftWidth: 2,
-        paddingLeft: 10,
-    },
-    log: {
-        color: Colors.LABELS.TABLE_HEADER,
-        borderLeftColor: Colors.LABELS.TABLE_HEADER,
-    },
-    success: {
-        color: Colors.PRIMARIES.GOD.GOD,
-        borderLeftColor: Colors.PRIMARIES.GOD.GOD,
-    },
-    warn: {
-        color: Colors.PRIMARIES.HMM.HMM,
-        borderLeftColor: Colors.PRIMARIES.HMM.HMM,
-    },
-    error: {
-        color: Colors.PRIMARIES.WOR.WOR,
-        borderLeftColor: Colors.PRIMARIES.WOR.WOR,
-    },
-});
+import Console from "@/components/ui/Console";
 
 export default function HomeScreen() {
     const [loading, setLoading] = useState<boolean>(true);
@@ -119,61 +86,11 @@ export default function HomeScreen() {
                 style="HMM"
                 action={clearLogs}
             />
-            <View style={styles.consoleView}>
-                {error ? (
-                    <BetterTextSmallText>{error}</BetterTextSmallText>
-                ) : logs && logs.length > 0 && Array.isArray(logs) ? (
-                    logs.map((log, index) => {
-                        const logStyle = styles[log.type] || {};
-                        const options: Intl.DateTimeFormatOptions = {
-                            day: "2-digit",
-                            month: "2-digit",
-                            year: "numeric",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            second: "2-digit",
-                            hour12: false, // 24h format
-                        };
-
-                        // formats date in a more sense-making way than what R5 used to do
-                        const formattedDate = new Date(log.timestamp)
-                            .toLocaleString("es-ES", options)
-                            .replace(",", "");
-
-                        return (
-                            <React.Fragment key={index}>
-                                <Text style={[styles.logText, logStyle]}>
-                                    ({log.type.toUpperCase()}) [{formattedDate}]{" "}
-                                    {log.traceback
-                                        ? `{\n  TRACEBACK:\n  location: ${
-                                              log.traceback.location
-                                          },\n  function: ${
-                                              log.traceback.function
-                                          },\n  isHandler: ${
-                                              log.traceback.isHandler
-                                          },\n${
-                                              log.traceback.isHandler &&
-                                              log.traceback.handlerName
-                                                  ? `  handlerName: ${log.traceback.handlerName}`
-                                                  : ""
-                                          }}`
-                                        : "{ NO TRACEBACK }"}
-                                </Text>
-                                <Text style={[styles.logText, logStyle]}>
-                                    {String(log.message)}
-                                </Text>
-                                <GapView height={10} />
-                            </React.Fragment>
-                        );
-                    })
-                ) : (
-                    <BetterTextSmallText>
-                        No logs. If you recently cleared them it's alright, if
-                        not, this shouldn't be empty, so you might be facing a
-                        bug.
-                    </BetterTextSmallText>
-                )}
-            </View>
+            {error ? (
+                <BetterTextSmallText>{error}</BetterTextSmallText>
+            ) : (
+                <Console logs={logs} errorOnly={false} />
+            )}
             <PageEnd includeText={true} />
         </>
     );
