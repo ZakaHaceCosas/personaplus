@@ -117,7 +117,10 @@ export default function BetterTable({
             </View>
             {items.map((item) => (
                 <View
-                    key={GenerateRandomKey(`BETTER_TABLE_ITEM__${item.name}`)}
+                    key={
+                        GenerateRandomKey(`BETTER_TABLE_ITEM__${item.name}`) +
+                        Math.random() * 25 // TODO - fix this bit-
+                    }
                     style={styles.row}
                 >
                     <View style={styles.item}>

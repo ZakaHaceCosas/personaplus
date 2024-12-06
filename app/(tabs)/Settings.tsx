@@ -65,7 +65,7 @@ export default function Settings() {
             if (!userData) throw new Error("Why is userData (still) null?");
             userData.wantsNotifications = !userData.wantsNotifications;
             if (userData.wantsNotifications === false) {
-                await cancelScheduledNotifications(t);
+                await cancelScheduledNotifications(t, true);
             } else {
                 ShowToast(
                     t("pages.settings.preferences.notifications.flow.enabled"),

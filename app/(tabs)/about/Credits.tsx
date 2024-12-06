@@ -15,6 +15,7 @@ import {
 } from "@/components/text/BetterTextPresets";
 import PageEnd from "@/components/static/PageEnd";
 import { useTranslation } from "react-i18next";
+import FontSizes from "@/constants/FontSizes";
 
 /**
  * OpenSourceLibrary
@@ -144,10 +145,12 @@ interface Contributor {
 const contributors: Contributor[] = [
     {
         username: "Alvaro842DEV",
-        contribution:
-            "Committing ideas like constant sizing and scaling values, memos & callbacks, and other coding features now used by the app.",
+        contribution: "Contributed code & gave ideas that are base to the app.",
+        // ^used to be "Committing ideas like constant sizing and scaling values, memos & callbacks, and other coding features now used by the app." but that's too fu- long, so from now on i'll just use "code" / "design" / "security fix" / whatever
         url: "https://github.com/Alvaro842DEV",
     },
+    // missing
+    // - del
 ];
 
 export default function OpenSourceCredits() {
@@ -163,6 +166,9 @@ export default function OpenSourceCredits() {
             <BetterTextExtraHeader>
                 {t("pages.credits.contributors")}
             </BetterTextExtraHeader>
+            <BetterTextSmallText>
+                {t("pages.credits.contributorsNote")}
+            </BetterTextSmallText>
             <GapView height={20} />
             {contributors.map((contributor, index) => (
                 <View key={index}>
@@ -183,7 +189,7 @@ export default function OpenSourceCredits() {
                         <BetterText
                             textColor={Colors.LABELS.SHL}
                             fontWeight="Italic"
-                            fontSize={16}
+                            fontSize={FontSizes.LARGE}
                         >
                             @{contributor.username}
                         </BetterText>
@@ -215,10 +221,6 @@ export default function OpenSourceCredits() {
                     <GapView height={20} />
                 </View>
             ))}
-            <BetterTextSmallText>
-                {t("pages.credits.contributorsNote")}
-            </BetterTextSmallText>
-            <GapView height={20} />
             <BetterTextExtraHeader>
                 {t("pages.credits.libraries")}
             </BetterTextExtraHeader>

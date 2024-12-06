@@ -370,8 +370,10 @@ export default function CreateActiveObjectivePage() {
     function handleCreation(): void {
         async function createObjective(): Promise<void> {
             if (canCreateObjective) {
-                const response: 0 =
-                    await CreateActiveObjective(objectiveToCreate);
+                const response: 0 = await CreateActiveObjective(
+                    objectiveToCreate,
+                    t,
+                );
 
                 if (response !== 0) {
                     logToConsole(
@@ -584,8 +586,7 @@ export default function CreateActiveObjectivePage() {
                     {experiments?.exp_tracker && (
                         <>
                             <BetterTextSmallerText>
-                                PS. You have the tracker experiment enabled, so
-                                this value is useless and won't be used.
+                                {t("experimentNotes.exp_tracker")}
                             </BetterTextSmallerText>
                             <GapView height={10} />
                         </>
