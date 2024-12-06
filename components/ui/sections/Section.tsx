@@ -186,7 +186,7 @@ export default function Section({
                     fontSize={FontSizes.SMALL}
                     textColor={foregroundColor}
                 >
-                    {String(label)}
+                    {label.toUpperCase()}
                 </BetterText>
             </View>
             {children}
