@@ -3,40 +3,36 @@ import { Log, LogTraceback } from "@/types/Logs";
 import StoredItemNames from "@/constants/StoredItemNames";
 import { ShowToast } from "../Android";
 
-// Función para obtener logs desde AsyncStorage
 /**
  * Returns logs saved on the AsyncStorage.
  *
- * @async
- * @returns {Promise<Log[]>} A Log array (`Log[]`)
+ * @returns {Log[]} A Log array (`Log[]`)
  */
-export async function getLogsFromStorage(): Promise<Log[]> {
+export function getLogsFromStorage(): Log[] {
     try {
-        const logsString: string | null = await AsyncStorage.getItem(
+        const logsString: string | null = AsyncStorage.getItemSync(
             StoredItemNames.consoleLogs,
         );
-        if (logsString) {
-            try {
-                const parsedLogs = JSON.parse(logsString);
-                if (Array.isArray(parsedLogs)) {
-                    return parsedLogs;
-                } else {
-                    return [];
-                }
-            } catch (e) {
-                logToConsole(
-                    "Error parsing logs from AsyncStorage: " + e,
-                    "error",
-                    {
-                        location: "toolkit/debug/console",
-                        function: "getLogsFromStorage()",
-                        isHandler: false,
-                    },
-                );
+        if (!logsString) return [];
+        try {
+            const parsedLogs = JSON.parse(logsString);
+            if (Array.isArray(parsedLogs)) {
+                return parsedLogs;
+            } else {
                 return [];
             }
+        } catch (e) {
+            logToConsole(
+                "Error parsing logs from AsyncStorage: " + e,
+                "error",
+                {
+                    location: "toolkit/debug/console",
+                    function: "getLogsFromStorage()",
+                    isHandler: false,
+                },
+            );
+            return [];
         }
-        return [];
     } catch (e) {
         console.error("Error accessing logs from AsyncStorage: " + e, "error", {
             location: "toolkit/debug/console",
@@ -50,13 +46,12 @@ export async function getLogsFromStorage(): Promise<Log[]> {
 /**
  * Saves a given array of Logs (`Log[]`) to the AsyncStorage.
  *
- * @async
  * @param {Log[]} logs An array of logs
  * @returns {0 | 1} 0 if success, 1 if failure.
  */
-async function saveLogsToStorage(logs: Log[]): Promise<0 | 1> {
+function saveLogsToStorage(logs: Log[]): 0 | 1 {
     try {
-        await AsyncStorage.setItem(
+        AsyncStorage.setItemSync(
             StoredItemNames.consoleLogs,
             JSON.stringify(logs),
         );
@@ -74,15 +69,14 @@ async function saveLogsToStorage(logs: Log[]): Promise<0 | 1> {
 /**
  * Securely updates logs in the AsyncStorage. ("securely" means if you used the `saveLogsToStorage()` function directly it would overwrite the file, while this one will keep the past logs).
  *
- * @async
  * @param {Log} log The log to be added.
  * @returns {0 | 1} 0 if success, 1 if failure.
  */
-async function addLogToGlobal(log: Log): Promise<0 | 1> {
+function addLogToGlobal(log: Log): 0 | 1 {
     try {
-        const currentLogs: Log[] = await getLogsFromStorage();
+        const currentLogs: Log[] = getLogsFromStorage();
         const updatedLogs: Log[] = [...currentLogs, log];
-        await saveLogsToStorage(updatedLogs);
+        saveLogsToStorage(updatedLogs);
         return 0;
     } catch (e) {
         console.error(
@@ -134,22 +128,10 @@ export function logToConsole(
             traceback,
         }; // Generates the log
 
-        addLogToGlobal(newLog) // Pushes it so it gets stored
-            .then((result: 0 | 1): void => {
-                if (result === 1) {
-                    console.error("Failed to save log to storage"); // here, as an exception, we use regular console.error
-                }
-            })
-            .catch((e: any): void => {
-                console.error("Error saving log:", e);
-            });
+        addLogToGlobal(newLog); // Pushes it so it gets stored
 
-        if (
-            type === "error" ||
-            (typeof displayToEndUser !== "undefined" &&
-                displayToEndUser === true)
-        ) {
-            ShowToast(message); // Shows a toast if it's an error or if displayToEndUser is explicitly true.
+        if (displayToEndUser !== undefined && displayToEndUser === true) {
+            ShowToast(message); // Shows a toast if the dev wants to.
         }
     } catch (e) {
         console.error("Error with logging:", e);
