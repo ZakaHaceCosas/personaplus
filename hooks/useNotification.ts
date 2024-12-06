@@ -185,12 +185,15 @@ export async function scheduleRandomNotifications(
  * This function cancels all registered reminder notifications.
  *
  * @async
+ * @param {TFunction} t Pass the translate function here, please.
  * @returns {boolean} True if everything went alright, false if otherwise. Should log the try-catch error to termLog.
  */
-export async function cancelScheduledNotifications(): Promise<boolean> {
+export async function cancelScheduledNotifications(
+    t: TFunction,
+): Promise<boolean> {
     try {
         const identifiers = await getAllScheduledNotificationsAsync();
-        ShowToast("Notifications are being unscheduled. Wait there...");
+        ShowToast(t("pages.settings.preferences.notifications.flow.disabling"));
         for (const identifier of identifiers) {
             logToConsole(
                 "Cancelling notification " + identifier.identifier,
@@ -199,7 +202,7 @@ export async function cancelScheduledNotifications(): Promise<boolean> {
             await cancelScheduledNotificationAsync(identifier.identifier);
         }
         logToConsole("Scheduled Notifications DISABLED", "log");
-        ShowToast("Done!");
+        ShowToast(t("pages.settings.preferences.notifications.flow.disabled"));
         return true;
     } catch (e) {
         logToConsole("ERROR REGISTERING NOTIFICATIONS: " + e, "error");

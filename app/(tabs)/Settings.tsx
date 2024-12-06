@@ -15,6 +15,7 @@ import Section from "@/components/ui/sections/Section";
 import PageEnd from "@/components/static/PageEnd";
 import TopBar from "@/components/navigation/TopBar";
 import { cancelScheduledNotifications } from "@/hooks/useNotification";
+import { ShowToast } from "@/toolkit/Android";
 
 export default function Settings() {
     const [userData, setUserData] = useState<FullProfile>(ErrorUserData);
@@ -49,7 +50,11 @@ export default function Settings() {
                 StoredItemNames.userData,
                 JSON.stringify(userData),
             );
-            router.replace(ROUTES.MAIN.SETTINGS.SETTINGS_PAGE);
+            ShowToast(
+                userData.language === "es"
+                    ? "¡Hecho! Reinicia la app para aplicar tus cambios."
+                    : "Done! Restart the app to apply your changes.",
+            );
         } catch (e) {
             logToConsole("Error changing language:" + e, "error");
         }
@@ -60,7 +65,11 @@ export default function Settings() {
             if (!userData) throw new Error("Why is userData (still) null?");
             userData.wantsNotifications = !userData.wantsNotifications;
             if (userData.wantsNotifications === false) {
-                await cancelScheduledNotifications();
+                await cancelScheduledNotifications(t);
+            } else {
+                ShowToast(
+                    t("pages.settings.preferences.notifications.flow.enabled"),
+                );
             }
             await AsyncStorage.setItem(
                 StoredItemNames.userData,
@@ -68,7 +77,7 @@ export default function Settings() {
             );
             router.replace(ROUTES.MAIN.SETTINGS.SETTINGS_PAGE);
         } catch (e) {
-            logToConsole("Error changing language:" + e, "error");
+            logToConsole("Error toggling notifications:" + e, "error");
         }
     }
 
