@@ -243,10 +243,9 @@ export default function HomeScreen() {
             </Section>
             <GapView height={20} />
             <Section kind="HowYouAreDoing">
-                {(identifiers &&
-                    Array.isArray(identifiers) &&
-                    identifiers.length >= 1) ||
-                identifiers === 0 ? (
+                {identifiers &&
+                Array.isArray(identifiers) &&
+                identifiers.length > 0 ? (
                     <Division
                         header={t("activeObjectives.today.content.header")}
                         subHeader={t(
