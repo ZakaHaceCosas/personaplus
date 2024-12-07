@@ -1,7 +1,7 @@
 <!--markdownlint-disable-next-line-->
 <h1 align="center">PersonaPlus</h1>
 
-![PersonaPlus banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER.webp)
+![PersonaPlus banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/design/PP_BANNER.webp)
 
 <!--markdownlint-disable-next-line-->
 <div align="center">
