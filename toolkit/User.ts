@@ -90,12 +90,12 @@ export async function OrchestrateUserData(
     filter?: undefined,
 ): Promise<FullProfile>;
 /**
- * Fetches and orchestrates all of the user's data onto a `FullProfile` object. Throws an error if no data exists, which is really strange to be honest.
+ * Fetches and orchestrates all of the user's data onto a `FullProfile` object. Returns `ErrorUserData` if an error happens.
  *
  * @export
  * @async
  * @param {"basic" | "health"} filter If passed, it will instead return the specified (basic data or health data).
- * @returns {Promise<FullProfile | BasicUserData | BasicUserHealthData>} A `FullProfile` if a profile exists and the function succeeds in orchestrating it, throws an error otherwise.
+ * @returns {Promise<FullProfile | BasicUserData | BasicUserHealthData>} A `FullProfile` if a profile exists and the function succeeds in orchestrating it, `ErrorUserData` otherwise.
  */
 export async function OrchestrateUserData(
     filter?: Filter,
@@ -107,11 +107,11 @@ export async function OrchestrateUserData(
 
         if (
             !data ||
+            data === null ||
             data === "" ||
             Object.keys(JSON.parse(data)).length === 0
         ) {
-            logToConsole("UserData appears to be null.", "error");
-            return ErrorUserData;
+            throw new Error("NO_DATA");
         }
 
         const fullData: FullProfile = JSON.parse(data);
@@ -138,6 +138,10 @@ export async function OrchestrateUserData(
 
         return fullData;
     } catch (e) {
+        if ((e as string).includes("NO_DATA")) {
+            router.replace(ROUTES.MAIN.WELCOME_SCREEN);
+            return ErrorUserData;
+        }
         logToConsole(
             `Error orchestrating user data! ${e}`,
             "error",

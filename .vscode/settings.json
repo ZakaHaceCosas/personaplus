@@ -13,7 +13,6 @@
         "pwshCode": false,
         "pwshGit": true
     },
-    "editor.fontSize": 14.5,
     "editor.fontVariations": true,
     "editor.wordWrap": "on",
     "editor.smoothScrolling": true,
@@ -27,8 +26,6 @@
     "telemetry.telemetryLevel": 0,
     "telemetry.enableTelemetry": false,
     "files.autoSave": "off",
-    "editor.fontFamily": "'JetBrains Mono', 'Roboto Mono', Consolas, 'Courier New', monospace",
-    "editor.fontWeight": "normal",
     "editor.fontLigatures": true,
     "editor.formatOnSave": true,
     "editor.detectIndentation": false,
