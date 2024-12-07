@@ -535,7 +535,7 @@
             "deleted": "Objetive {{id}} successfully removed!"
         },
         "today": {
-            "noContent": "Here you'll always see todays progress (as long as you have objectives for today).",
+            "noContent": "Here you'll always see todays progress (as long as you have objectives for today that aren't done).",
             "content": {
                 "header": "Today",
                 "subheader": "(Yeah, this table is pretty basic. The app is still in development, in a future version the 'Today' section will be overhauled.)",

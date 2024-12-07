@@ -168,7 +168,12 @@ export default function CreateActiveObjectivePage() {
                     dumbbellWeight = op(dumbbellWeight);
                     break;
                 case "estimateSpeed":
-                    estimateSpeed = op(estimateSpeed);
+                    const result = op(estimateSpeed);
+                    if (result >= speedOptions.length) {
+                        estimateSpeed = estimateSpeed; // don't do the operation
+                        break;
+                    }
+                    estimateSpeed = result;
                     break;
                 case "reps":
                     reps = op(reps);
@@ -370,7 +375,7 @@ export default function CreateActiveObjectivePage() {
     function handleCreation(): void {
         async function createObjective(): Promise<void> {
             if (canCreateObjective) {
-                const response: 0 = await CreateActiveObjective(
+                const response: 0 | 1 = await CreateActiveObjective(
                     objectiveToCreate,
                     t,
                 );
@@ -513,14 +518,6 @@ export default function CreateActiveObjectivePage() {
             {spawnToggle("rests")}
             {objectiveToCreate.info.rests > 0 &&
                 spawnToggle("restDurationMinutes")}
-            {
-                // forgive me for promising that R6 would address all code duplication and yet making this
-                // i got no fucking spare time to deal with this
-                // this is still my first react / typescript actual project, hope you don't expect more than this :[
-                // (im writing this like weeks before making this public, who am i asking forgiveness too)
-                // (javascript made me go weird :skull:)
-                // (02/12/2024: everything should be fixed by now but realizing i wrote this back then feels so funny im gonna leave this comment for now LOL)
-            }
             {objectiveToCreate.exercise === "Push Ups" &&
                 spawnToggle("amountOfPushUps")}
             {objectiveToCreate.exercise === "Lifting" && spawnToggle("reps")}

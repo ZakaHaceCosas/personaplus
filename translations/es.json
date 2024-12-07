@@ -535,7 +535,7 @@
             "deleted": "¡Objetivo {{id}} eliminado exitosamente!"
         },
         "today": {
-            "noContent": "Aquí siempre verás el progreso de hoy (siempre y cuando tengas objetivos para hoy).",
+            "noContent": "Aquí siempre verás el progreso de hoy (siempre y cuando tengas objetivos para hoy y que estén sin hacer).",
             "content": {
                 "header": "Hoy",
                 "subheader": "(Sí, esta tabla es bastante básica. La app aún está en desarrollo, en una futura versión se renovará la sección 'Hoy'.)",
