@@ -371,6 +371,7 @@ function CalculateSessionFragmentsDuration(
     duration: number,
     rests: number,
 ): number {
+    if (rests === 0) return 0;
     if (!rests || !duration) {
         logToConsole(
             "Some parameters are missing, can't calculate fragment duration. Objective is not getting fetched correctly? Check your code",

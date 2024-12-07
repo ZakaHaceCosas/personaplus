@@ -202,6 +202,7 @@ export default function Sessions() {
             restDuration: number,
             rests: number,
         ) => {
+            if (rests === 0) return;
             const elapsedTime = totalDuration - timeLeft; // Elapsed time. The circle timer is supposed to call this thing each second, so it should work
             const currentFragment = Math.floor(elapsedTime / fragmentDuration);
 
@@ -299,7 +300,7 @@ export default function Sessions() {
                     fontWeight="Bold"
                     textColor={Colors.LABELS.SHL}
                 >
-                    {t("pages.sessions.live")}
+                    {t("pages.sessions.live").toUpperCase()}
                 </BetterText>
             </IslandDivision>
             <GapView height={20} />
