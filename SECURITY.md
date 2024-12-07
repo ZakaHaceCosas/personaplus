@@ -1,35 +1,32 @@
-# Política de Seguridad de PersonaPlus
+# Security at PersonaPlus
 
-## Reportar Vulnerabilidades
+Found a security vulnerability reading code or testing the app? This is what to do.
 
-Si encuentras en el código o probando la aplicación alguna vulnerabilidad de seguridad en PersonaPlus, por favor sigue estos pasos para reportarla de manera responsable:
+## Reporting a vulnerability
 
-1. **No publiques** la vulnerabilidad en lugares públicos como la pestaña Issues, el serivodr de Discord, o parecidos.
-2. **Contacta al equipo** de PersonaPlus enviando un correo a [zakahacecosas@protonmail.com], o mediante mensaje directo a los miembros del [servidor de Discord](https://discord.com/invite/euVHrr46c6) que tengan el rol de `@Desarrollador PersonaPlus`. Incluye los siguientes detalles en tu mensaje:
-    - Descripción de la vulnerabilidad.
-    - Pasos para reproducirla.
-    - Impacto potencial.
-    - Cualquier posible solución o parche que puedas sugerir.
-3. Si crees que puedes solucionarla tu mismo, **envía tu solución en tu mensaje y NO crees una solicitud de cambios (_pull request_) en el repositorio.**
+1. **Do NOT publish** anything about the vulnerability in public places like the Issues tab, Discord server, or anything similar.
+2. **Contact the PersonaPlus team** by emailing [zakahacecosas@protonmail.com] or sending a DM to [Discord](https://discord.gg/wwzddK4Zpc) members with the `@team - security` role. In your message, please include:
+    - Description of the vulnerability.
+    - Steps to reproduce.
+    - Potential impact (AKA what is the real risk of the vulnerability).
+    - Optionally, if you know how we could fix it, tell us.
+We also recommend that you [submit a report to our repository here](https://github.com/ZakaHaceCosas/personaplus/security/advisories/new) (replacing the default description with the content described before).
+3. If you think you can fix it yourself, **explain us your solution in your message and DO NOT create a pull request whatsoever with your fix.**
 
-Nos comprometemos a responder a los informes de vulnerabilidades lo antes posible. Agradecemos mucho tu ayuda, con cada reporte haremos todo lo posible para entender el problema y desarrollar una solución.
+We really acknowledge your help and we will try our best to develop a solution ASAP.
 
-## Proceso de Gestión de Vulnerabilidades
+We will reply to you with a max delay of 24 hours, and notify you (and everyone else) as soon as we're able to release a patch.
 
-En un plazo máximo de 24 horas te responderemos para confirmar que hemos recibido el reporte. Empezaremos a trabajar de inmediato en una solución. Como antes mencionado, puedes aportar tus soluciones si es posible, cosa que agradecemos.
+## Again: Do not divulgate vulnerabilities
 
-Lanzaremos un parche lo antes posible y te lo haremos saber (a tí y a todos).
+Drawing attention will only increase chances of someone exploiting the app. We kindly ask you to not tell anyone but us about security issues you find.
 
-## Políticas de Divulgación
+## Best security practices
 
-Para proteger a nuestros usuarios, pedimos que no divulgues detalles de la vulnerabilidad hasta que hayamos tenido la oportunidad de solucionarla. Esto incluye la publicación de información en Discord, en las issues del repo, redes sociales o cualquier otro medio público.
+Please follow these practices when submitting code to the project to ensure everything remains safe and sound.
 
-## Mejores Prácticas de Seguridad
+- **Review your code:** Okay, it might seem obvious, but everyone has probably submitted an auth token to production at least once - with this we mean, read your local diff before submitting your code.
+- **Keep dependencies up to date:** Run `npm run dep:check` always before pushing your code.
+- **Ensure everything is proven to work:** Make sure all tests are passing. If you even write your own tests for your new code (or for old code that wasn't test covered), even better.
 
-Para contribuir a la seguridad general de PersonaPlus, te pedimos que sigas estas mejores prácticas:
-
-- **Revisa el código:** Antes de enviar una solicitud de cambios o una commit, revisa tu código para detectar posibles vulnerabilidades.
-- **Actualiza dependencias:** Mantén las dependencias de tu entorno de desarrollo actualizadas para evitar vulnerabilidades conocidas.
-- **Asegura tu código:** Asegurate de que todos los `__tests__` están pasando. Si además puedes añadir tests adicionales, mejor aún.
-
-¡Gracias por ayudar a mantener PersonaPlus seguro para todos nuestros usuarios!
+Thanks for helping us keeping PersonaPlus safe for everyone!

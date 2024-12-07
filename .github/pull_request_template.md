@@ -1,13 +1,26 @@
-# \<Título aquí\>
+# PR Title (Briefly describe the purpose of this PR)
 
-\<describe brevemente lo que se ha cambiado>
+## What
 
-- [ ] Confirmo que he probado el código y funciona
+(Describe the changes made)
 
-## Issues relacionadas
+## Why
 
-- \<lista aquí cualquier issue relacionada>
+(Explain briefly the motivation behind the changes)
 
-## Capturas de pantalla (si aplica)
+## Fixes
 
-\<Opcional, si crees que hace falta añadir pantallazos, o crees que ayudarán a enteder lo que cambiaste.>
+(List any related issue or bug this PR resolves)
+
+## Screenshots
+
+(Optional, but recommended when applicable)
+
+## Checkboxes
+
+Please ensure the following criteria are met before submitting your PR:
+
+- [ ] I confirm my code has been tested and I confirmed it works.
+- [ ] I confirm my code does not represent any security vulnerability.
+- [ ] I confirm my code follows the project's documentation and coding standards.
+- [ ] (If applicable) I confirm I have written tests for all edge cases.

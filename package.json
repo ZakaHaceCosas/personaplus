@@ -1,105 +1,115 @@
 {
-    "name": "personaplus",
-    "version": "0.0.1-R5-b25",
-    "main": "expo-router/entry",
-    "scripts": {
-        "start": "expo start",
-        "start:nc": "expo start --clear",
-        "android": "expo run:android",
-        "ios": "expo run:ios",
-        "web": "expo start --web",
-        "ts:check": "tsc",
-        "dep:check": "expo install --check",
-        "dep:fix": "expo install --fix",
-        "build": "eas build -p android --profile production",
-        "build:depcheck": "expo install --fix && eas build -p android --profile production",
-        "build:prebuild": "expo install --fix && expo prebuild --clean && eas build -p android --profile production",
-        "build:dev": "eas build -p android --profile development",
-        "test": "jest"
-    },
-    "author": {
-        "name": "ZakaHaceCosas",
-        "email": "zakahacecosas@protonmail.com",
-        "url": "https://zakahacecosas.github.io/"
-    },
-    "contributors": [
-        {
-            "name": "Alvaro842DEV",
-            "url": "https://github.com/Alvaro842DEV/"
-        }
-    ],
-    "bugs": {
-        "url": "https://github.com/ZakaHaceCosas/personaplus/issues",
-        "email": "zakahacecosas@protonmail.com"
-    },
-    "homepage": "https://github.com/ZakaHaceCosas/personaplus#readme",
-    "license": "GPL-3.0-only",
-    "description": "Give yourself a PLUS",
-    "repository": "https://github.com/ZakaHaceCosas/personaplus",
-    "dependencies": {
-        "@babel/runtime": "^7.25.0",
-        "@expo/metro-runtime": "~3.2.3",
-        "@expo/vector-icons": "^14.0.2",
-        "@react-native-async-storage/async-storage": "1.23.1",
-        "@react-native-picker/picker": "2.7.5",
-        "@react-native/assets-registry": "^0.75.2",
-        "@react-navigation/native": "^6.1.18",
-        "babel-plugin-module-resolver": "^5.0.2",
-        "expo": "~51.0.31",
-        "expo-background-fetch": "~12.0.1",
-        "expo-build-properties": "~0.12.5",
-        "expo-constants": "~16.0.2",
-        "expo-dev-client": "~4.0.25",
-        "expo-device": "~6.0.2",
-        "expo-file-system": "~17.0.1",
-        "expo-font": "~12.0.9",
-        "expo-linking": "~6.3.1",
-        "expo-localization": "~15.0.3",
-        "expo-media-library": "~16.0.4",
-        "expo-navigation-bar": "~3.0.7",
-        "expo-notifications": "~0.28.16",
-        "expo-router": "~3.5.23",
-        "expo-splash-screen": "~0.27.5",
-        "expo-status-bar": "~1.12.1",
-        "expo-system-ui": "~3.0.7",
-        "expo-task-manager": "~11.8.2",
-        "i18next": "^23.14.0",
-        "react": "18.2.0",
-        "react-dom": "18.2.0",
-        "react-i18next": "^15.0.1",
-        "react-native": "0.74.5",
-        "react-native-countdown-circle-timer": "^3.2.1",
-        "react-native-safe-area-context": "4.10.5",
-        "react-native-screens": "3.31.1",
-        "react-native-svg": "15.2.0",
-        "react-native-svg-transformer": "^1.5.0",
-        "react-native-web": "~0.19.12"
-    },
-    "devDependencies": {
-        "@babel/core": "^7.25.2",
-        "@babel/preset-env": "^7.25.3",
-        "@babel/preset-flow": "^7.24.7",
-        "@babel/preset-react": "^7.24.7",
-        "@babel/preset-typescript": "^7.24.7",
-        "@expo/config": "~9.0.3",
-        "@jest/globals": "^29.7.0",
-        "@types/jest": "^29.5.12",
-        "@types/node": "22.4.2",
-        "@types/react": "~18.2.79",
-        "babel-jest": "^29.7.0",
-        "dotenv": "^16.4.5",
-        "expect": "^29.7.0",
-        "jest": "^29.7.0",
-        "jest-expo": "~51.0.4",
-        "ts-jest": "^29.2.4",
-        "typescript": "~5.3.3"
-    },
-    "private": false,
-    "expo": {
-        "doctor": {
-            "reactNativeDirectoryCheck": {
-                "enabled": true
-            }
-        }
+  "name": "personaplus",
+  "main": "expo-router/entry",
+  "version": "0.0.6-preapp.26",
+  "scripts": {
+    "start": "expo start --go",
+    "start:clear": "expo start --go --clear",
+    "start:super-clear": "expo prebuild --clean && expo start --go --clear",
+    "start:dev": "expo start --clear",
+    "test": "jest --verbose",
+    "lint": "expo lint",
+    "dep:check": "expo install --check",
+    "build": "eas build -p android --profile production",
+    "build:pre:only": "expo prebuild --clean",
+    "build:pre": "expo prebuild --clean && eas build -p android --profile production",
+    "build:dev": "eas build -p android --profile development",
+    "build:dev:pre": "expo prebuild --clean && eas build -p android --profile development",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "setupFiles": [
+      "./jest.setup.js"
+    ]
+  },
+  "author": {
+    "name": "ZakaHaceCosas",
+    "email": "zakahacecosas@protonmail.com",
+    "url": "https://zakahacecosas.github.io/"
+  },
+  "contributors": [
+    {
+      "name": "Alvaro842DEV",
+      "url": "https://github.com/Alvaro842DEV/"
     }
+  ],
+  "bugs": {
+    "url": "https://github.com/ZakaHaceCosas/personaplus/issues",
+    "email": "zakahacecosas@protonmail.com"
+  },
+  "homepage": "https://github.com/ZakaHaceCosas/personaplus#readme",
+  "license": "GPL-3.0-only",
+  "description": "Give yourself a plus!",
+  "repository": "https://github.com/ZakaHaceCosas/personaplus",
+  "dependencies": {
+    "@expo/vector-icons": "^14.0.3",
+    "@react-native-picker/picker": "2.9.0",
+    "@react-navigation/native": "^7.0.0",
+    "expo": "~52.0.17",
+    "expo-av": "~15.0.1",
+    "expo-build-properties": "~0.13.1",
+    "expo-constants": "~17.0.3",
+    "expo-dev-client": "~5.0.5",
+    "expo-device": "~7.0.1",
+    "expo-doctor": "^1.11.2",
+    "expo-font": "~13.0.1",
+    "expo-haptics": "~14.0.0",
+    "expo-linear-gradient": "~14.0.1",
+    "expo-linking": "~7.0.3",
+    "expo-localization": "~16.0.0",
+    "expo-location": "~18.0.3",
+    "expo-notifications": "~0.29.10",
+    "expo-router": "~4.0.11",
+    "expo-splash-screen": "~0.29.16",
+    "expo-sqlite": "~15.0.3",
+    "expo-status-bar": "~2.0.0",
+    "expo-system-ui": "~4.0.5",
+    "expo-web-browser": "~14.0.1",
+    "i18next": "^23.14.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-i18next": "^15.0.1",
+    "react-native": "0.76.3",
+    "react-native-gesture-handler": "~2.20.2",
+    "react-native-reanimated": "~3.16.1",
+    "react-native-safe-area-context": "4.12.0",
+    "react-native-screens": "~4.1.0",
+    "react-native-svg": "15.8.0",
+    "react-native-timer-picker": "^2.0.1",
+    "react-native-web": "~0.19.13",
+    "rn-countdown-timer": "^4.0.3",
+    "semver": "^7.6.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/jest": "^29.5.12",
+    "@types/react": "~18.3.12",
+    "@types/react-test-renderer": "^18.0.7",
+    "@types/semver": "^7.5.8",
+    "ajv": "^8.17.1",
+    "eslint": "^8.57.0",
+    "eslint-config-expo": "~8.0.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "jest": "^29.2.1",
+    "jest-expo": "~52.0.2",
+    "prettier": "^3.3.3",
+    "react-test-renderer": "18.2.0",
+    "typescript": "~5.3.3"
+  },
+  "private": true,
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "enabled": true,
+        "exclude": [
+          "rn-countdown-timer",
+          "expo-doctor",
+          "i18next"
+        ]
+      }
+    }
+  }
 }

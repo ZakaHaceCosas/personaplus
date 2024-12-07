@@ -1,205 +1,356 @@
-# Documentación para devs - PersonaPlus
+# Developer Documentation
 
-![Banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER_DEV.png)
+_Dale un PLUS a tu Persona_ <!-- fun fact, this is the OG slogan -->
+
+![Banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER_DEV.webp)
+
+<!-- these badges are useless but pretty :3 -->
 <!--markdownlint-disable-next-line-->
 <div align="center">
 
-[![reactnative](https://img.shields.io/badge/React-Native-57c4dc?style=for-the-badge&logo=react&logoColor=black&labelColor=white)](https://reactnative.dev)
-[![expo](https://img.shields.io/badge/Expo-000?style=for-the-badge&logo=expo&logoColor=black&labelColor=white)](https://expo.dev)
-[![ts](https://img.shields.io/badge/TypeScript-2d79c7?style=for-the-badge&logo=typescript&logoColor=2d79c7&labelColor=white)](https://www.npmjs.com/package/typescript)
+[![React Native](https://img.shields.io/badge/React-Native-57c4dc?style=for-the-badge&logo=react&logoColor=black&labelColor=white)](https://reactnative.dev)
+[![Expo](https://img.shields.io/badge/Expo-000?style=for-the-badge&logo=expo&logoColor=black&labelColor=white)](https://expo.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-2d79c7?style=for-the-badge&logo=typescript&logoColor=2d79c7&labelColor=white)](https://www.npmjs.com/package/typescript)
 
 </div>
 
-Dale un PLUS a tu Persona <!-- dato curioso, este eslogan lo dejo a proposito, es el eslogan OG -->
+## 1. Understanding PersonaPlus as a codebase
 
-## 1. Programando PersonaPlus
+PersonaPlus is a simple app written in React Native, which - while I admit is not the best way to do it - is relatively easy and gets the job done. This brief section will give you a quick look at the project's structure, organization, etc...
 
-### > TRABAJANDO CON EL PROYECTO
+### Understanding the file structure
 
-Necesitarás TypeScript, Expo, y Expo CLI. Si trabajas desde VSCode, recomendamos la [extensión oficial de Expo Tools](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools).
+It is a simple yet functional structure. Remember we use `@` to mark the root of the project. It is also used for TypeScript code as an alias.
 
-La mayor parte del tiempo solo usarás `expo start`, a veces con el arg. `--clear` (para limpiar la caché), y `expo install --check` y `--fix` para arreglar dependencias rotas.
+- `@/app/` is where each page lives. It starts with the main layout and a not-found page, while the _actual pages_ live in `app/(tabs)/`.
+- `@/core/` is where the PersonaPlus Core lives. It's a "library" (to call it somehow) that provides all the medical calculations, functions, and other tools needed to turn our buttons and timers into meaningful data, stats, and more, for the user.
+- `@/components/` is where, as the name implies, most components (mainly UI components) live. It contains:
+  - `/interaction` for interactive elements like buttons, input fields, pickers, etc...
+  - `/navigation` for navigation-related elements, like the navbar.
+  - `/static` for static elements that never change nor interact, like the _footer_ or the "Loading..." screen.
+  - `/text` contains text-related components.
+  - `/ui` contains core components of the user interface, like **sections & divisions**, along side other elements like alerts, gap views, etc...
+    - Sub-directories of the `/ui/sections/` path contain page-specific section / division generators; in other words, presets.
+- `@/constants/` contains, as the name implies, constant values to be used across the app, like stored item names, colors, screen sizes, predefined styles...
+- `@/toolkit/` is where we store our toolkits. Toolkits are single TS files that contain all functions related to a specific feature into a single file (a "toolkit"). Features that grow in complexity, e.g. user handling, debugging, etc... are highly recommended to be "toolkified". While not necessary, it is allowed to toolkify simple functions as well.
+- And lastly, `@/types/` contains type definitions, `@/translations/` contains translation files, and `@/hooks/` contains React hooks.
 
-> [!TIP]
-> Recomiendo instalar Expo Go en tu teléfono para probar la app en Android. Probando en PC verás muchos errores visuales y botones que no funcionan - el código solo está optimizado para móvil.
+### Understanding comments
 
-[![Expo Go](https://img.shields.io/badge/Expo_Go-SDK_51-000.svg?style=for-the-badge&logo=EXPO&labelColor=f3f3f3&logoColor=000)](https://expo.dev/client)
+<!-- NOTE: uncomment when we actually start using them again. the only one (for raw R5 code) is gone). JSDoc does not support "custom properties" whatsoever, yet that doesn't stop us from writing them down. We use them to avoid text repetition. -->
 
-### > CONFIGURACIÓN RECOMENDADA DEL EDITOR
-
-Recomendamos utilizar [Microsoft Visual Studio Code](https://code.visualstudio.com/) o [VSCodium](https://vscodium.com/), junto a las siguientes extensiones:
-
-- [Expo Tools](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools)
-
-Para el formato:
-
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) (si planeas editar algún archivo MarkDown del proyecto)
-
-Otros:
-
-- [JS and TS Nightly](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-next)
-- [npm IntelliSense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense)
-
-### > ESTRUCTURA DE ARCHIVOS
-
-PersonaPlus está organizada de forma concreta. Si creas un archivo nuevo, que no desorganice el proyecto.
-
-- **`/app`**: Páginas de la app a las que se puede navegar (`/Dashboard`, p ej.).
-- **`/src`**: Componentes, hooks, tipos, _toolkits_, etc...
-- **`/core`**: Libreria core de la app. [Ver más](core/README.md).
-
-### > REDACTAR CÓDIGO APROPIADO
-
-Por el bien de todos, ¡el código se tiene que entender! Sigue estas prácticas:
-
-#### 1. SIEMPRE EL MISMO ORDEN
-
-IMPORT - INTERFACE - STYLE - FUNCTION
-
-Siempre el mismo orden, primero importamos, luego definimos la interfaz, después los estilos si proceden, y por último la función (si hay varias, el `export default` siempre será el último). No olvides el comentario de título.
-
-```tsx
-// ruta/al/Modulo.tsx
-// Breve descripción de que hace (en inglés)
-
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import BetterText from '@/src/BetterText';
-import termLog from '@/src/toolkit/debug/console';
-
-interface ModuloProps {
-  variable: string;
-}
-
-const styles = StyleSheet.create({
-  mainview: {
-    padding: 10,
-    backgroundColor: "#FFF"
-  }
-});
-
-const otraFunction = () => {
-  termLog("Hago algo :D")
-}
-
-export default function Modulo() {
-  return (
-    <View style={styles.mainview}>
-      <BetterText textAlign="normal" fontWeight="bold" fontSize={20} textColor="#000">
-        Un módulo bien hecho
-      </BetterText>
-    </View>
-  );
-}
-```
-
-#### 2. IMPORTA CORRECTAMENTE
-
-Para los componentes propios, utiliza `@` en vez de `./`. E.J.:
-
-```tsx
-import BetterText from '@/src/BetterText'; // bien
-import BetterText from './src/BetterText'; // no bien
-```
-
-#### 3. NOMBRA CLARAMENTE VARIABLES Y FUNCIONES
-
-Utiliza el inglés, crea nombres descriptivos y comprensibles, que se entienda fácilmente qué es cada cosa. Aunque ninguna capitalización especifica es obligada (y yo mismo las mezclo a veces 😅), recomiendo utilizar capitalización en camello (CamelCasing).
-
-```tsx
-// Muy mal.
-const w = Dimensions.get("screen").width / 2
-const t = "Bold"
-const a = "center"
-
-// Mal.
-const widt = Dimensions.get("screen").width / 2
-const text = "Bold"
-const algn = "center"
-
-// Bien. Recomendable.
-const width = Dimensions.get("screen").width / 2
-const text = "Bold"
-const align = "center"
-
-// También bien, funciona. Aún así, evita pasarte de largo.
-const alignment = "center"
-
-// No hagas ninguno de estos.
-const access_objectives(objective-identifier);
-
-// Haz esto.
-const AccessObjectives(ObjectiveIdentifier);
-// Empezar con MAYÚSCULA es opcional.
-```
-
-#### 4. USA LOS COMPONENTES PROPIOS
-
-No utilices `Text` o `Pressable` de React Native: utiliza `BetterText` o `Button`. Tenemos una serie de componentes propios para facilitar el trabajo, haciendo que de forma más rápida tengas algo funcional y acorde al estilo de la app.
-
-Incluso tenemos colores globales. Ni se te ocurra usar `"#FFF"` o `"#32FF80"`, importa `colors` desde `@/src/toolkit/design/colors` e importa los colores desde ahí. Cada color tiene un JSDoc indicando donde deberías usarlo, así mantenemos una interfaz consistente. Pronto haremos lo mismo con espaciados y tamaños de tipografía.
-
-#### 5. HAZ UN BUEN USO DE LOS TIPOS
-
-Estás trabajando con TypeScript, así que obviamente te verás usando tipos.
-
-```tsx
-import React from 'react';
-import BetterText from "@/src/BetterText";
-
-const mivariable: string = "String :D";
-
-interface miComponenteProps {
- param: string; // Comentario explicando el param
- param2: number; // Comentario explicando el param2
-}
-
-export default function miComponente({ param, param2 }: miComponenteProps) {
- return (
-  <BeText>{param} + {" "} + {param2}</BeText>
- )
-}
-```
-
-#### 6. MANTEN EL FORMATO
-
-Recuerda mantener un código uniforme, organizado, usando siempre puntos y coma, tabulación apropiada, entre otros. **Si usas Visual Studio Code, gracias a la configuración de`.vscode/settings.json`, cuando guardes un archivo se auto-formateará, así que esto es fácil :]**.
-
-#### 7. HAZ USO DE JSDoc
-
-Si eres tan humilde que vas a aportar una función entera a PersonaPlus, lo primero: ¡gracias!, y lo segundo: utiliza JSDoc. Personalmente recomiendo la extensión [JSDoc generator](https://marketplace.visualstudio.com/items?itemName=crystal-spider.jsdoc-generator) para VSCode, hace muy bien el trabajo (`Ctrl` + `Shift` + `P` y luego `Generate JSDoc for the current file`).
-
-#### 8. COMENTA BIEN
-
-Añade comentarios descriptivos a las funciones y variables para ayudar a que se entiendan. **Se comenta en inglés**, para el entendimiento de todos, aunque hay una excepción para esa regla: las funciones que usen JSDoc, pueden tener un comentario (no JSDoc) en Castellano al lado.
-
-```tsx
-/**
- * This function does something
- */
-export default function doSomething() { // Esta funcion hace algo
-    explode()
-}
-```
-
-##### 8.1 USA PALABRAS CLAVE
-
-Ciertos tipos de comentario pueden (y deberían) llevar palabras clave para ayudar a encontrarlos y entender de que van. Serían "TODO", "FIXME", "NOTE", "WATCHOUT", y "FAILING", para los siguientes casos:
+We use certain keywords in comments, so it's easier to find problems when anyone wants to contribute to the project. You know we always tend to add stuff like "TODO" to our comments, right? Well, we don't only use TODO but also a few extra words:
 
 ```ts
-// TODO: para tareas pendientes, cosas que estén inacabadas, o que necesiten cambios
-// FIXME: cosas que sabes que no funcionan o que están mal, pero no sabes arreglar y prefieres dejar para algún otro contribuidor
-// NOTE: info importante sobre el codigo en cuestión
-// WATCHOUT: similar a FIXME, pero para casos mas complejos / en los que no siempre falle / en los que haga falta estar atento
-// FAILING: añade esto a __tests__ que no estén pasando y no sepas porque (similar a FIXME)
+// TODO - tasks, things to be done, unfinished code, requires review, etc...
+// FIXME - code that is known to be broken and you rely on someone else to fix
+// WATCHOUT - code that is not necessarily broken, but requires review
+// NOTE - obviously, notes.
+// FAILING - code that is not broken but is not passing tests for whatever reason
 ```
 
-## Versionado y registro de cambios
+Thanks to _Better Comments_, one of our recommended extensions for this workspace, these keywords will make comments colored for a better experience.
 
-Cuando hagas cambios, aunque no es obligatorio, agradecemos que los añadas al `CHANGELOG.md`. Basta con que digas brevemente que cambiaste, no hace falta más. No subas el número de version, de eso nos encargamos nosotros ;D
+### Understanding data saving
 
-## Licencia
+We use AsyncStorage to store all of the user data - that's clear. But even I, the creator, have had some issues understanding how data is saved, leading to problems.
 
-Este proyecto está licenciado bajo los términos de la Licencia GPL-3.0, véase `LICENSE.md`.
+PersonaPlus has 4 main AsyncStorage items as of now (expected to grow over time):
+
+- `userData`: an **OBJECT** with all of the user data.
+
+```json
+{
+    "username": "Zaka",
+    "age": 34,
+    ...
+}
+```
+
+- `activeObjectives`: an **ARRAY** of **OBJECTS**, being each object an Active Objective.
+
+```json
+[
+    {
+        "exercise":"Running",
+        "info": {...},
+        "specificData":{...},
+        "identifier":8131221499
+    },
+    ...
+]
+```
+
+- `activeObjectiveDailyLog`: an **OBJECT** full of **OBJECTS**, each one also having **OBJECTS**. It's an object packaging DAYS, each day packaging ENTRIES. Better understood with the example:
+
+```json
+{ // an object
+    "15/09/2024": { // full of objects (days)
+        "8131221499": { // each one having more objects (entries)
+            // being here the actual data of each entry
+            "wasDone":true,
+            "performance":0 // (or the performance data, if any)
+        },
+        ...
+    },
+    ...
+}
+```
+
+- `globalLogs`: an **ARRAY** full of **OBJECTS**, being each one a log.
+
+```json
+[
+    {
+        "message":"WATCHOUT! BAD PRACTICE SUMMONED!! (someone called `updateBrm5` with param `careAboutTheUser` set to `false`)",
+        "type":"warn",
+        "timestamp":1726396238551,
+        "traceback": {...} // (the traceback is an optional OBJECT, you can set them as `undefined` if you want. not recommended, though.)
+    },
+    ...
+]
+```
+
+## 2. Understanding PersonaPlus as a project
+
+You also should have an overall idea of how the app is really meant to work, so you have a better guide of how to help the project achieve it's goal of being the best healthcare app.
+
+### The foundation - What does this exactly do?
+
+Just as with code, sometimes it's a bit hard to get the purpose of a project. PersonaPlus currently has a [public version](https://github.com/ZakaHaceCosas/personaplus/releases/tag/0.0.1-R5-b24) with a few features here and there, but not a clear "purpose".
+
+What I really want this app to be is an all in one replacement to three items: exercising, diet, and wellbeing apps. A single app that supports all needed features for taking care of yourself.
+
+### Objectives, Active and Passive
+
+The app is intended to have two kinds of "objectives", Active Objectives and Passive Objectives.
+
+_Active Objectives_ can be considered routines, while _Passive Objectives_ can be considered goals. An Active Objective is - in short - a physical activity routine. Think of it as the 1st item I told you about. Simple routines for doing exercise. They could be taken as a chore (AKA with a simple & straightforward "Done" button) or as something more serious with Sessions (as the name implies, live sessions where the phone turns into both a timer and an assistant for the user to accomplish that routine in the moment).
+
+Passive Objectives, on the other side, are more like goals. Ever seen any of those tracking apps where each day you don't smoke you note that so a "score" is bumped and you feel better? Basically that.
+
+> That's it as of now. Other mentioned ideas aren't listed because there is no progress (YET) on their implementations. You can track progress from our tracking issues / project.
+
+## 3. Writing (cool) code
+
+### Getting ready
+
+You'll need `npm` (I personally prefer `pnpm` but it just doesn't work good enough with Expo...). Create a fork of this project, clone it locally, and run `npm install` from the root. After that, `npm run start` every time you want to test your changes.
+
+> [!WARNING]
+> **Please do not manually run `npm update` whatsoever. ONLY update dependencies using `npm run dep:check`.** Expo handles dependencies **by itself**, and it knows (probably better than both you and me) what versions of each package the project requires. Manual updates have proven to break stuff. We don't need the latest versions, we need versions that work!
+
+As an extra, while not needed, it is highly recommended to use [Microsoft Visual Studio Code](https://code.visualstudio.com/) or [VS Codium](https://vscodium.com/) with the **[Expo Tools](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools)** extension. Additionally, `.vscode/extensions.json` includes other extensions we recommend you to have. They're optional, but will do a good job helping you work better with the project.
+
+### The beginning of a file
+
+Before your actual code, care to place this comment at the beginning.
+
+```ts
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: {LOCATION}
+ * Basically: {DESCRIPTION}
+ *
+ * <=============================================================================>
+ */
+```
+
+Being {LOCATION} the `@/absolute/path.ts` (with file extension) to that file, and {DESCRIPTION} a brief description of what the code of that file should do.
+
+> [!TIP]
+> If you're using VSCode, just type `beginFile` - it's a VSCode workspace code snippet you can quickly complete with the `TAB` key.
+
+### Use the alias
+
+Always import with `@/` and not with `./` or `../`, even if the file you need is in the same DIR as the one you're using.
+
+### Prefer the homemade
+
+Do not use `<Button />` or `<Pressable />` from React Native, use `<BetterButton />`. Don't use `<Picker />` from `@react-native-picker/picker`, use `<Select />`, and so on. Prefer homemade components, **and if you find yourself repeatedly using another component, consider making it into a homemade one.**
+
+> For example, our `<Select />` is just a `<Picker />` with all configuration applied, to avoid code duplication.
+
+### The order matters
+
+Always follow the same order in TSX files:
+
+**IMPORTS - TYPES - STYLES - FUNCTIONS - COMPONENT.**
+
+Obviously imports go first, then (if any), add your interfaces, types, and more (make sure you _should_ make your typings inline and not in the `@/types` DIR), then (if any) the component's `StyleSheet`, then (if any), all your separate / extra _components_, and then the main component.
+
+Functions like handlers, data fetching, or so, should go inside the main component function, while functions that return a JSX element should go outside (unless they depend on stuff you can only access from the inside, which shouldn't happen).
+
+### Naming stuff
+
+We encourage the usage of **camelCase** for most things, **PascalCase** for main / component functions, and **UNDERSCORED_UPPERCASE** for constants ("constants" refers to things that you export from `@/constants/`, not every `const` declaration).
+> To clarify, a constant parent is cased with PascalCase. Kinda like this:
+> `Constant.VALUE`, `Constant.VALUE.NESTED_VALUE`.
+
+**✅ Do:**
+
+```ts
+import { SomeConstant } from "@/constants/something.ts";
+
+export default function MainComponent() {
+    const myVariable = "something";
+
+    const otherThing = myVariable + " " + SomeConstant.OTHER_THING;
+
+    return otherThing
+}
+```
+
+**❌ Do not:**
+
+```ts
+import { someConstant } from "@/constants/something.ts";
+
+export default function mainComponent() {
+    const my_variable = "something";
+
+    const other_thing = my_variable + " " + someConstant.otherThing;
+
+    return other_thing
+}
+```
+
+Favor full words in variable names, except when the word becomes excessively long. If a shorter, equally clear word exists, use that. When necessary, use more than one word, but aim for brevity without losing clarity.
+
+**✅ Do:**
+
+```ts
+const hello = "Hello there."
+async function myAsyncFunction()
+let thisIsATest = true
+```
+
+**❌ Do not:**
+
+```ts
+const h = "Hello there."
+async function myAsynchronousFunction()
+let test = true
+```
+
+Make function names descriptive.
+
+**✅ Do:**
+
+```ts
+function SaveActiveObjectiveToDailyLog()
+```
+
+**❌ Do not:**
+
+```ts
+function ToDailyLog()
+```
+
+### Keeping code readable
+
+Comment your functions so we know what they do. Use JSDoc.
+
+**✅ Do:**
+
+```ts
+/**
+ * Greets someone
+ * @param {string} who Who to greet
+ */
+function Greet(who: string): void {
+    console.log(`Hi, ${who}!`)
+}
+```
+
+**❌ Do not:**
+
+```ts
+// greets someone
+function Greet(who: string /* who to greet*/): void {}
+
+// neither do uncommented stuff
+
+function Greet(who: string): void {}
+```
+
+Annulate cases instead of nesting `if else` statements.
+
+**✅ Do:**
+
+```ts
+if (!isAdmin) return;
+if (password != user.password) throw "Wrong pass!";
+doAdminStuff();
+```
+
+**❌ Do not:**
+
+```ts
+if (isAdmin) {
+    if (password === user.password) {
+        doAdminStuff();
+    } else {
+        throw "Wrong pass!";
+    }
+} else {
+    return;
+}
+```
+
+Where possible (and if it makes sense), use ternary operators instead of `if else` statements.
+
+**✅ Do:**
+
+```ts
+const isCool = usesPersonaPlus ? "yes" : "no :("
+```
+
+**❌ Do not:**
+
+```ts
+let isCool: string;
+
+if (usesPersonaPlus) {
+    isCool = "yes";
+} else {
+    isCool = "no :(";
+}
+```
+
+## 4. Contributing your cool code in a cool way
+
+Okay, so you did write some cool code, right? That's awesome! Now, here are a few guidelines for committing and submitting your cool code in a cool way.
+
+### Organize your commits by topic
+
+**Don't make a single commit for all of your changes**, unless they're small enough. Divide your contribution into many commits, one for each change. It's better understood when I tell you the next step:
+
+**Name your commits accordingly.** Okay, everyone has failed with that twice, even I. But try to name your commits in a simple & descriptive way. For that, we enforce the usage of labels or "categories" that describe your commit -- that's also helpful for knowing how to group your changes. You can combine labels.
+
+> [!TIP]
+> This repo uses the following labels:
+>
+> - `(page:PageName)` for in-app pages
+> - `(fix)` for bug fixes
+> - `(new)` for new features
+> - `(better)` for enhancements to existing features
+> - `(md)` for changes to MarkDown files
+> - `(txt)` for changes to in-app texts
+>   - `(txt/loc:LANG)` for translations, where LANG is the language code (like "es" or "en")
+> - `(test)` for changes or additions to testing
+> - `(chore)` for chores (small tasks or maintenance work)
+> - `(ui)` for visual changes
+>
+> Here are some sample valid (and good) commits:
+> `(page:WelcomeScreen)(design): Update spacing to match design principales`
+> `(chore): Rename variables in User toolkit for consistency`
+> `(txt): Update regular font size`
+> `(txt/loc:EN): Fix a typo ("are n't" -> "aren't")`
+
+And that's it for now. Keep in mind these docs _aren't fully done yet_. They will get updated in the future.

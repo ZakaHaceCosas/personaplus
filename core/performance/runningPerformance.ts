@@ -1,118 +1,77 @@
-// TODO
-// CALCULATIONS *NOT* ALRIGHT
-// los cálculos *NO* están bien
-
 /*
-CALCULATE RUNNING / WALKING PERFORMANCE
+CALCULATE RUNNING PERFORMANCE
 */
 
+import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
+import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 
-import CreateComponentDataUtilities from "@/core/tools/OpenHealthDataBuilder";
-
-export const { getSource, getLastUpdate } = CreateComponentDataUtilities(
-    "26/06/2024",
-    "https://downhilltodowntown.com/how-to-calculate-your-caloric-burn-while-running/ and https://scielo.isciii.es/scielo.php?script=sci_arttext&pid=S0212-16112012000400040 and https://eresdeportista.com/salud/como-calcular-calorias-quemadas-ejercicio/ and https://www.topendsports.com/weight-loss/energy-met.htm andhttps://journals.lww.com/acsm-msse/fulltext/2000/09001/compendium_of_physical_activities__an_update_of.9.aspx and https://www.cmu.edu/common-cold-project/measures-by-study/health-practices/physical-activity/index.html"
+export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
+    "06/12/2024",
+    [
+        "https://downhilltodowntown.com/how-to-calculate-your-caloric-burn-while-running/",
+        // "https://www.topendsports.com/weight-loss/energy-met.htm andhttps://journals.lww.com/acsm-msse/fulltext/2000/09001/compendium_of_physical_activities__an_update_of.9.aspx",
+    ],
 );
 
-interface RUNNING_WALKING_Response {
-    result: number;
-    subject?: {
-        age: number;
-        gender: "male" | "female";
-        weight: number;
-        height: number;
-        speed: number;
-        time: number;
-    };
-    context?: string;
-    explanation?: string;
-}
-
 /**
- * Calculate the calories burnt during running or walking based on given parameters.
- * @param age The age of the subject.
- * @param gender The gender of the subject (either "male" or "female").
+ * Calculate the calories burnt during a running session based on given parameters.
  * @param weight The weight of the subject in kilograms (KG).
- * @param height The height of the subject in centimeters (CM).
  * @param speed The speed in KM/h the subject was running to.
  * @param time The duration in MINUTES of the exercise performed by the subject.
- * @param provideContext Whether to provide a brief contextualization about the result.
- * @param provideExplanation Whether to provide a detailed explanation about what the calculation means.
- * @returns The calories burnt if neither provideContext nor provideExplanation are true, otherwise returns a RUNNING_WALKING_Response object.
-*/
+ * @returns A standard `CoreLibraryResponse` with the desired results.
+ */
 
-export default function calculateRunningOrWalkingPerformance(
-    age: number,
-    gender: "male" | "female",
+export default function calculateRunningPerformance(
     weight: number,
-    height: number,
     speed: number,
     time: number,
-    provideContext?: boolean,
-    provideExplanation?: boolean
-): RUNNING_WALKING_Response {
-    let mets: number | null; // MET - Metabolic Equivalent of Task
+): CoreLibraryResponse {
+    let METs: number | null; // MET - Metabolic Equivalent of Task
 
     // Assign METs based on speed in km/h
     if (speed > 1.6092 && speed < 3.2181) {
-        mets = 2;
+        METs = 2;
     } else if (speed >= 3.2181 && speed <= 4.023) {
-        mets = 2.5;
+        METs = 2.5;
     } else if (speed > 4.023 && speed <= 4.8276) {
-        mets = 3.5;
+        METs = 3.5;
     } else if (speed > 4.8276 && speed <= 5.51) {
-        mets = 4;
+        METs = 4;
     } else if (speed > 5.51 && speed <= 6.44) {
-        mets = 5;
+        METs = 5;
     } else if (speed > 6.44 && speed <= 8.05) {
-        mets = 6;
+        METs = 6;
     } else if (speed > 8.05 && speed <= 9.65) {
-        mets = 8;
+        METs = 8;
     } else if (speed > 9.65 && speed <= 11.27) {
-        mets = 10;
+        METs = 10;
     } else if (speed > 11.27 && speed <= 12.87) {
-        mets = 11;
+        METs = 11;
     } else if (speed > 12.87 && speed <= 14.48) {
-        mets = 11.5;
+        METs = 11.5;
     } else if (speed > 14.48 && speed <= 16.09) {
-        mets = 12.5;
+        METs = 12.5;
     } else if (speed > 16.09) {
-        mets = 16;
+        METs = 16;
     } else {
-        mets = null;
+        METs = null;
     }
-
-    // Constant factor for calories burnt calculation
-    const caloriesBurntPerKgPerHour = 0.075 * 4.3;
 
     // Calculate calories burnt
-    let caloriesBurnt: number
+    let caloriesBurnt: number;
 
-    if (mets) {
-        caloriesBurnt = mets * caloriesBurntPerKgPerHour * weight * time;
+    if (METs) {
+        caloriesBurnt = METs * weight * (time * 60);
     } else {
-        caloriesBurnt = 0 // if mets is not calculable, it returns 0.
+        caloriesBurnt = 0; // if the MET is not calculable, it returns 0.
     }
 
-    const response: RUNNING_WALKING_Response = {
+    const response: CoreLibraryResponse = {
         result: caloriesBurnt,
+        context: `Estimated ${caloriesBurnt} cal burnt for this session.`,
+        explanation:
+            "The 'performance' of a running session can be measured in burnt calories, which are obtained calculating the MET value (based on avg. speed) and multiplying by the person's weight and by the duration in hours of the session.",
     };
-
-    if (provideContext) {
-        response.subject = {
-            age,
-            gender,
-            weight,
-            height,
-            speed,
-            time,
-        };
-        response.context = "The performance of a weight lifting session is measured in burnt calories, being an estimated " + caloriesBurnt + "cal for this session.";
-    }
-
-    if (provideExplanation) {
-        response.explanation = "The 'performance' of a running (or walking) session can be measured in burnt calories, which are obtained with a series of generic calculations using age, weight, height, gender of the subject, and other parameters like the estimate speed, time duration of the session, and the MET.";
-    }
 
     return response;
 }
