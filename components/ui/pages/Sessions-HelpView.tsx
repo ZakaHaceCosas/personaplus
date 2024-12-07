@@ -6,6 +6,10 @@ import BetterButton from "@/components/interaction/BetterButton";
 import { ActiveObjective } from "@/types/ActiveObjectives";
 import Colors from "@/constants/Colors";
 import { useTranslation } from "react-i18next";
+import {
+    BetterTextSmallHeader,
+    BetterTextSmallText,
+} from "@/components/text/BetterTextPresets";
 
 /**
  * HelpViewProps
@@ -32,19 +36,15 @@ const styles = StyleSheet.create({
     helpContainer: {
         backgroundColor: Colors.MAIN.SECTION,
         position: "absolute",
-        top: "30%",
-        left: 10,
-        right: 10,
-        bottom: 40,
+        top: "40%",
+        left: 0,
+        right: 0,
+        bottom: 0,
         overflow: "visible",
         padding: 20,
         borderRadius: 20,
-        elevation: 16,
-        shadowColor: Colors.PRIMARIES.ACE.ACE,
-        shadowOpacity: 1,
         borderColor: Colors.MAIN.DIVISION_BORDER,
         borderWidth: 4,
-        zIndex: 999,
     },
 });
 
@@ -65,22 +65,24 @@ export default function SessionsPageHelpView({
 
     return (
         <View style={styles.helpContainer}>
-            <BetterText fontSize={18} fontWeight="Regular">
-                {t("globals.help_with_item", {
-                    item: t(
-                        `globals.supported_active_objectives.${objective.exercise}`,
-                    ).toLowerCase(),
-                })}
-            </BetterText>
-            <BetterText fontSize={14} fontWeight="Light">
-                {objective?.exercise
-                    ? t(`page_sessions.help_section.${objective.exercise}`)
-                    : t("globals.error_loading_content")}
-            </BetterText>
+            <BetterTextSmallHeader>
+                {t("globals.interaction.help")}
+            </BetterTextSmallHeader>
+            <BetterTextSmallText>
+                {t(
+                    `globals.supportedActiveObjectives.${objective.exercise}.name`,
+                )}
+            </BetterTextSmallText>
+            <GapView height={10} />
+            <BetterTextSmallText>
+                {t(
+                    `globals.supportedActiveObjectives.${objective.exercise}.help`,
+                )}
+            </BetterTextSmallText>
             <GapView height={10} />
             <BetterButton
                 style="ACE"
-                buttonText={t("globals.got_it")}
+                buttonText={t("globals.interaction.gotIt")}
                 buttonHint="Closes the help menu"
                 action={toggleHelpMenu}
             />
@@ -91,7 +93,7 @@ export default function SessionsPageHelpView({
                 textColor={Colors.LABELS.SDD}
                 textAlign="center"
             >
-                {t("page_sessions.timer_paused_help")}
+                {t("pages.sessions.helpTimerPaused")}
             </BetterText>
         </View>
     );
