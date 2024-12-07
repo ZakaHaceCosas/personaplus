@@ -44,6 +44,16 @@ export default function Console({
     logs: Logs;
     errorOnly: boolean;
 }) {
+    const timeFormatOptions: Intl.DateTimeFormatOptions = {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false, // 24h format
+    };
+
     const errorLogs = logs.filter(
         (log) => log.type === "warn" || log.type === "error",
     );
@@ -65,7 +75,6 @@ export default function Console({
             if (logs.length === 0)
                 return (
                     <View style={styles.consoleView}>
-                        {" "}
                         <BetterTextSmallText>
                             No logs. If you recently cleared them it's alright,
                             if not, this shouldn't be empty, so you might be
@@ -80,19 +89,10 @@ export default function Console({
         <View style={styles.consoleView}>
             {workingLogs.map((log, index) => {
                 const logStyle = styles[log.type] || {};
-                const options: Intl.DateTimeFormatOptions = {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    second: "2-digit",
-                    hour12: false, // 24h format
-                };
 
                 // formats date in a more sense-making way than what R5 used to do
                 const formattedDate = new Date(log.timestamp)
-                    .toLocaleString("es-ES", options)
+                    .toLocaleString("es-ES", timeFormatOptions)
                     .replace(",", "");
 
                 let finalMessage: string;
