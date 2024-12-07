@@ -1,65 +1,73 @@
-import * as ExpoConfig from '@expo/config';
-import dotenv from 'dotenv';
+import * as ExpoConfig from "@expo/config";
+import dotenv from "dotenv";
+import { version as actualVersion } from "./package.json";
 
 dotenv.config();
 
 const config: ExpoConfig.ExpoConfig = {
-    name: process.env.APPNAME || "PersonaPlus",
+    name: process.env.PERSONAPLUS_ENV_APP_NAME || "PersonaPlus",
     slug: "PersonaPlus",
     scheme: "personaplus",
-    description: "Give yourself a PLUS",
+    description: "Give yourself a plus!",
     owner: "zakahacecosas",
-    version: "0.0.1-R5-b25",
+    version: actualVersion, // SemVer-compliant 0.0.1-R6-bX equivalent
     orientation: "portrait",
     githubUrl: "https://github.com/ZakaHaceCosas/personaplus",
-    icon: "./assets/icon.png",
+    icon: "./assets/resources/icon.png",
     userInterfaceStyle: "dark",
+    platforms: ["android"],
+    backgroundColor: "#0E1013",
     splash: {
-        image: "./assets/splash.png",
+        image: "./assets/resources/adaptive-icon.png",
         resizeMode: "contain",
-        backgroundColor: "#14171C"
+        backgroundColor: "#0E1013",
     },
     notification: {
         color: "#32FF80",
         androidMode: "default",
-        icon: "./assets/notification-icon.png",
-        androidCollapsedTitle: "#{unread_notifications} PersonaPlus notifications"
+        icon: "./assets/resources/notification-icon.png",
+        androidCollapsedTitle:
+            "#{unread_notifications} PersonaPlus notifications",
     },
-    assetBundlePatterns: [
-        "**/*"
-    ],
+    assetBundlePatterns: ["**/*"],
     android: {
-        icon: process.env.APPICON || undefined, // || undefined, so either the blue dev icon or directly the regular adaptive icon
+        ...(process.env.PERSONAPLUS_ENV_APP_ICON && {
+            icon: process.env.PERSONAPLUS_ENV_APP_ICON,
+        }), // only specify "icon" when it exists
         adaptiveIcon: {
-            foregroundImage: "./assets/adaptive-icon-foreground.png",
-            backgroundImage: process.env.APPADAPTIVEICONBACKGROUND || "./assets/adaptive-icon-background.png",
-            backgroundColor: "#0E1013"
+            foregroundImage: "./assets/resources/adaptive-icon-foreground.png",
+            backgroundImage:
+                process.env.PERSONAPLUS_ENV_APP_ADAPTIVE_ICON_BACKGROUND ||
+                "./assets/resources/adaptive-icon-background.png",
+            backgroundColor: "#0E1013",
         },
         allowBackup: false,
-        package: process.env.PACKAGE || "com.zakahacecosas.personaplus",
+        package:
+            process.env.PERSONAPLUS_ENV_PACKAGE ||
+            "com.zakahacecosas.personaplus",
         permissions: [
             "android.permission.SCHEDULE_EXACT_ALARM",
             "android.permission.POST_NOTIFICATIONS",
             "android.permission.RECEIVE_BOOT_COMPLETED",
-            "android.permission.WAKE_LOCK"
+            "android.permission.WAKE_LOCK",
+            "android.permission.ACCESS_FINE_LOCATION",
         ],
-        versionCode: 25,
-        backgroundColor: "#0E1013"
+        versionCode: 26,
+        backgroundColor: "#0E1013",
     },
     ios: {
-        // apple is not supported and wont ever be, this is for some dude whos testing from an iphone
-        backgroundColor: "#0E1013"
+        // apple is not supported and wont ever be, this is for some dude who's testing from an iphone
+        backgroundColor: "#0E1013",
     },
     web: {
-        favicon: "./assets/favicon.png",
-        bundler: "metro"
+        favicon: "./assets/resources/favicon.png",
+        bundler: "metro",
     },
-    privacy: "public",
     androidStatusBar: {
         barStyle: "light-content",
         hidden: false,
         translucent: false,
-        backgroundColor: "#0E1013"
+        backgroundColor: "#0E1013",
     },
     androidNavigationBar: {
         barStyle: "light-content",
@@ -72,74 +80,106 @@ const config: ExpoConfig.ExpoConfig = {
             "expo-font",
             {
                 fonts: [
-                    "./fonts/BeVietnamPro-Black.ttf",
-                    "./fonts/BeVietnamPro-BlackItalic.ttf",
-                    "./fonts/BeVietnamPro-ExtraBold.ttf",
-                    "./fonts/BeVietnamPro-ExtraBoldItalic.ttf",
-                    "./fonts/BeVietnamPro-Bold.ttf",
-                    "./fonts/BeVietnamPro-BoldItalic.ttf",
-                    "./fonts/BeVietnamPro-SemiBold.ttf",
-                    "./fonts/BeVietnamPro-SemiBoldItalic.ttf",
-                    "./fonts/BeVietnamPro-Medium.ttf",
-                    "./fonts/BeVietnamPro-MediumItalic.ttf",
-                    "./fonts/BeVietnamPro-Regular.ttf",
-                    "./fonts/BeVietnamPro-Italic.ttf",
-                    "./fonts/BeVietnamPro-Light.ttf",
-                    "./fonts/BeVietnamPro-LightItalic.ttf",
-                    "./fonts/BeVietnamPro-ExtraLight.ttf",
-                    "./fonts/BeVietnamPro-ExtraLightItalic.ttf",
-                    "./fonts/BeVietnamPro-Thin.ttf",
-                    "./fonts/BeVietnamPro-ThinItalic.ttf",
-                    "./fonts/NotoSerif-Black.ttf",
-                    "./fonts/NotoSerif-BlackItalic.ttf",
-                    "./fonts/NotoSerif-Bold.ttf",
-                    "./fonts/NotoSerif-BoldItalic.ttf",
-                    "./fonts/NotoSerif-ExtraBold.ttf",
-                    "./fonts/NotoSerif-ExtraBoldItalic.ttf",
-                    "./fonts/NotoSerif-ExtraLight.ttf",
-                    "./fonts/NotoSerif-ExtraLightItalic.ttf",
-                    "./fonts/NotoSerif-Italic.ttf",
-                    "./fonts/NotoSerif-Light.ttf",
-                    "./fonts/NotoSerif-LightItalic.ttf",
-                    "./fonts/NotoSerif-Medium.ttf",
-                    "./fonts/NotoSerif-MediumItalic.ttf",
-                    "./fonts/NotoSerif-Regular.ttf",
-                    "./fonts/NotoSerif-SemiBold.ttf",
-                    "./fonts/NotoSerif-SemiBoldItalic.ttf",
-                    "./fonts/NotoSerif-Thin.ttf",
-                    "./fonts/NotoSerif-ThinItalic.ttf",
-                ]
-            }
+                    "./assets/fonts/RobotoSerif-Light.ttf",
+                    "./assets/fonts/BeVietnamPro-ThinItalic.ttf",
+                    "./assets/fonts/RobotoSerif-Regular.ttf",
+                    "./assets/fonts/JetBrainsMono-Light.ttf",
+                    "./assets/fonts/BeVietnamPro-ExtraBoldItalic.ttf",
+                    "./assets/fonts/RobotoSerif-Italic.ttf",
+                    "./assets/fonts/RobotoSerif-BlackItalic.ttf",
+                    "./assets/fonts/JetBrainsMono-ExtraLight.ttf",
+                    "./assets/fonts/RobotoSerif-Medium.ttf",
+                    "./assets/fonts/RobotoSerif-ExtraBoldItalic.ttf",
+                    "./assets/fonts/BeVietnamPro-LightItalic.ttf",
+                    "./assets/fonts/BeVietnamPro-MediumItalic.ttf",
+                    "./assets/fonts/BeVietnamPro-Medium.ttf",
+                    "./assets/fonts/BeVietnamPro-ExtraBold.ttf",
+                    "./assets/fonts/BeVietnamPro-Black.ttf",
+                    "./assets/fonts/BeVietnamPro-BoldItalic.ttf",
+                    "./assets/fonts/BeVietnamPro-Light.ttf",
+                    "./assets/fonts/JetBrainsMono-ExtraBold.ttf",
+                    "./assets/fonts/BeVietnamPro-Italic.ttf",
+                    "./assets/fonts/JetBrainsMono-MediumItalic.ttf",
+                    "./assets/fonts/JetBrainsMono-ExtraBoldItalic.ttf",
+                    "./assets/fonts/JetBrainsMono-ExtraLightItalic.ttf",
+                    "./assets/fonts/BeVietnamPro-Bold.ttf",
+                    "./assets/fonts/JetBrainsMono-ThinItalic.ttf",
+                    "./assets/fonts/JetBrainsMono-Medium.ttf",
+                    "./assets/fonts/RobotoSerif-Bold.ttf",
+                    "./assets/fonts/JetBrainsMono-SemiBoldItalic.ttf",
+                    "./assets/fonts/JetBrainsMono-LightItalic.ttf",
+                    "./assets/fonts/JetBrainsMono-BoldItalic.ttf",
+                    "./assets/fonts/JetBrainsMono-Thin.ttf",
+                    "./assets/fonts/BeVietnamPro-Regular.ttf",
+                    "./assets/fonts/RobotoSerif-ThinItalic.ttf",
+                    "./assets/fonts/RobotoSerif-Thin.ttf",
+                    "./assets/fonts/RobotoSerif-SemiBold.ttf",
+                    "./assets/fonts/JetBrainsMono-Italic.ttf",
+                    "./assets/fonts/RobotoSerif-LightItalic.ttf",
+                    "./assets/fonts/RobotoSerif-SemiBoldItalic.ttf",
+                    "./assets/fonts/RobotoSerif-BoldItalic.ttf",
+                    "./assets/fonts/BeVietnamPro-Thin.ttf",
+                    "./assets/fonts/BeVietnamPro-SemiBold.ttf",
+                    "./assets/fonts/JetBrainsMono-Regular.ttf",
+                    "./assets/fonts/RobotoSerif-Black.ttf",
+                    "./assets/fonts/RobotoSerif-ExtraLight.ttf",
+                    "./assets/fonts/BeVietnamPro-SemiBoldItalic.ttf",
+                    "./assets/fonts/BeVietnamPro-BlackItalic.ttf",
+                    "./assets/fonts/BeVietnamPro-ExtraLightItalic.ttf",
+                    "./assets/fonts/JetBrainsMono-SemiBold.ttf",
+                    "./assets/fonts/BeVietnamPro-ExtraLight.ttf",
+                    "./assets/fonts/RobotoSerif-ExtraBold.ttf",
+                    "./assets/fonts/JetBrainsMono-Bold.ttf",
+                    "./assets/fonts/RobotoSerif-ExtraLightItalic.ttf",
+                ],
+            },
         ],
         "expo-router",
         [
             "expo-notifications",
             {
-                "icon": "./assets/notification-icon.png",
-                "color": "#32FF80",
-                "defaultChannel": "default"
-            }
+                icon: "./assets/resources/notification-icon.png",
+                color: "#32FF80",
+                defaultChannel: "default",
+            },
         ],
         [
-            "expo-build-properties",
+            "expo-location",
             {
-                "android": {
-                    "newArchEnabled": false
-                }
-            }
-        ]
+                isAndroidBackgroundLocationEnabled: true,
+                isAndroidForegroundServiceEnabled: true,
+            },
+        ],
+        "expo-sqlite",
+        [
+            "expo-splash-screen",
+            {
+                backgroundColor: "#0E1013",
+                image: "./assets/resources/adaptive-icon.png",
+                dark: {
+                    // the same
+                    backgroundColor: "#0E1013",
+                    image: "./assets/resources/adaptive-icon.png",
+                },
+                imageWidth: 150,
+                resizeMode: "contain",
+            },
+        ],
     ],
     extra: {
         router: {
-            origin: false
+            origin: false,
         },
         eas: {
-            projectId: process.env.PID
-        }
+            projectId: process.env.PID,
+        },
     },
+    newArchEnabled: true,
 };
 
-export default ({ config: appConfig }: ExpoConfig.ConfigContext): ExpoConfig.ExpoConfig => ({
+export default ({
+    config: appConfig,
+}: ExpoConfig.ConfigContext): ExpoConfig.ExpoConfig => ({
     ...appConfig,
-    ...config
+    ...config,
 });

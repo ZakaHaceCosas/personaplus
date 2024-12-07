@@ -1,3 +1,16 @@
 {
-    "recommendations": ["crystal-spider.jsdoc-generator"]
+    "recommendations": [
+        "expo.vscode-expo-tools", // most important one
+        "crystal-spider.jsdoc-generator", // ezy JSDoc
+        "aaron-bond.better-comments", // support for coloring TODOs, WATCHOUTs, etc...
+        "usernamehw.errorlens", // personal recommendation: shows errors in-line
+        "EditorConfig.EditorConfig", // useful for code styles
+        "expo.vscode-expo-tools", // expo support.
+        "DavidAnson.vscode-markdownlint", // only for MD editing
+        "pmneo.tsimporter", // for ts imports
+        "dbaeumer.vscode-eslint", // eslint
+        "esbenp.prettier-vscode" // prettier
+        // "christian-kohler.npm-intellisense" // for deps. not needed as only I take care of them (at least that's the idea).
+        // "NgekNgok.vscode-custom-snippets" // for the beginFile snipped (and maybe more in the future)
+    ]
 }

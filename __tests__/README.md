@@ -1,3 +1,5 @@
-I'm using this to try out Jest (a thing i've never used before but looks amazing, ngl. with this i found many errors with userData validation :smile:)
+# Tests
 
-For now there's no need to add tests. I'll ocasionally work on this.
+For CoreLibrary (CL) tests, go to `@/core/__tests__`.
+
+> Note: I am lazy to maintain this, don't expect them to pass for now.

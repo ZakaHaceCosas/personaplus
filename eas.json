@@ -1,26 +1,27 @@
 {
     "cli": {
-        "version": ">= 9.0.7",
         "requireCommit": false,
-        "promptToConfigurePushNotifications": true
+        "promptToConfigurePushNotifications": true,
+        "appVersionSource": "local"
     },
     "build": {
+        "preview-assembleDebug": {
+            "android": {
+                "gradleCommand": ":app:assembleDebug"
+            }
+        },
         "development": {
             "developmentClient": true,
             "distribution": "internal",
             "android": {
-                "buildType": "apk"
+                "buildType": "apk",
+                "withoutCredentials": true
             },
             "env": {
-                "PACKAGE": "com.zakahacecosas.personaplus.development",
-                "APPICON": "./assets/icon-5050.png",
-                "APPNAME": "PP Developer",
-                "APPADAPTIVEICONBACKGROUND": "./assets/aib-5050.png"
-            }
-        },
-        "preview-assembleDebug": {
-            "android": {
-                "gradleCommand": ":app:assembleDebug"
+                "PERSONAPLUS_ENV_PACKAGE": "com.zakahacecosas.personaplus.development",
+                "PERSONAPLUS_ENV_APP_ICON": "./assets/resources/icon-5050.png",
+                "PERSONAPLUS_ENV_APP_NAME": "PP Dev Build",
+                "PERSONAPLUS_ENV_APP_ADAPTIVE_ICON_BACKGROUND": "./assets/resources/aib-5050.png"
             }
         },
         "production": {
@@ -29,11 +30,8 @@
             },
             "distribution": "store",
             "env": {
-                "PACKAGE": "com.zakahacecosas.personaplus"
+                "PERSONAPLUS_ENV_PACKAGE": "com.zakahacecosas.personaplus"
             }
         }
-    },
-    "submit": {
-        "production": {}
     }
 }

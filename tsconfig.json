@@ -1,11 +1,11 @@
 {
     "extends": "expo/tsconfig.base",
     "compilerOptions": {
-        "jsx": "react",
         "strict": true,
-        "baseUrl": ".",
         "paths": {
-            "@/*": ["*"]
+            "@/*": [
+                "./*"
+            ]
         },
         "noImplicitAny": true,
         "noImplicitOverride": true,
@@ -18,7 +18,27 @@
         "allowSyntheticDefaultImports": true,
         "strictFunctionTypes": true,
         "alwaysStrict": true,
-        "allowImportingTsExtensions": true
+        "strictPropertyInitialization": true,
+        "noStrictGenericChecks": false,
+        "noImplicitThis": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "exactOptionalPropertyTypes": true,
+        "strictBindCallApply": true,
+        "useUnknownInCatchVariables": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "suppressExcessPropertyErrors": false,
+        "suppressImplicitAnyIndexErrors": false,
+        "diagnostics": true,
+        "downlevelIteration": false
     },
-    "include": ["**/*.ts", "**/*.tsx", "jest.config.js"]
+    "include": [
+        "**/*.ts",
+        "**/*.tsx"
+    ],
+    "exclude": [
+        "**/*.wip.ts",
+        "**/*.deprecated.ts"
+    ]
 }

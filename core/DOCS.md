@@ -1,21 +1,26 @@
-# OpenHealth documentation
+# CoreLibrary documentation
+
+> [!CAUTION]
+> This is absolutely outdated, CoreLibrary has undergone some big refactoring and I am a bit lazy to take care of this right now. I'll do it shortly after merging the R6 rewrite.
+
+----
 
 > [!TIP]
 > También disponible en [Español (Spanish)](DOCS.es.md)
 
 ## First thing first: categories
 
-The entry point of the library is `OpenHealth` (`@/core/openhealth.ts`).
+The entry point of the library is `CoreLibrary` (`@/core/CoreLibrary.ts`).
 
 ```tsx
-import OpenHealth from "@/core/openhealth"
+import CoreLibrary from "@/core/CoreLibrary"
 ```
 
 From there, you have different categories to access functions, like the following:
 
 ```tsx
-OpenHealth.physicalHealth // phisical health related features
-OpenHealth.performance // performance measuring related features
+CoreLibrary.physicalHealth // physical health related features
+CoreLibrary.performance // performance measuring related features
 ...
 ```
 
@@ -23,7 +28,7 @@ Currently, these are all the categories available:
 
 | CATEGORY | EXPLANATION |
 | -------- | ----------- |
-| `physicalHealth` | Phisical health related functions and calculations. |
+| `physicalHealth` | Physical health related functions and calculations. |
 | `performance` | Sport & activity performance related functions and calculations. |
 | `mentalHealth` | **(Not yet implemented)** Mental health related functions and calculations. |
 
@@ -32,12 +37,12 @@ Currently, these are all the categories available:
 Each function is different, but they all follow a standard:
 
 ```tsx
-OpenHealth.physicalHealth.BodyMassIndex.calculate({params});
-OpenHealth.physicalHealth.BodyMassIndex.getSource();
-OpenHealth.physicalHealth.BodyMassIndex.getLastUpdated();
+CoreLibrary.physicalHealth.BodyMassIndex.calculate({params});
+CoreLibrary.physicalHealth.BodyMassIndex.getSources();
+CoreLibrary.physicalHealth.BodyMassIndex.getLastUpdated();
 ```
 
-**`Calculate`** is the most important thing, where you pass all the arguments required by the calculation function to work, plus **two extra booleans:** `provideContext` and `provideExplanation`. It can ask for data like the weight, height, age, or gender of the subject, among others.
+**`Calculate`** is the most important thing, where you pass all the arguments required by the calculation function to work. It can ask for data like the weight, height, age, or gender of the subject, among others.
 
 > [!NOTE]
 >
@@ -45,51 +50,34 @@ OpenHealth.physicalHealth.BodyMassIndex.getLastUpdated();
 >
 > We adhere to the international system and do not support the imperial system, nor do we have intentions to implement it. Thank you for your understanding!
 
-`provideContext` gives a small context (sometimes just a word) about how the result should be interpreted. E.g., in the BMI (Body Mass Index) function, `context` would a string saying if the result value does represent "healthy weight", "underweight", "obesity", and so on.
+## What should I expect as a return?
 
-`provideExplanation` gives a small explanation of what the calculation means. For example, in the BMI function it returns the following:
+Calculation functions always follow the same structure for returns. Basically, an average CL response looks like this:
+
+```tsx
+interface CoreLibraryResponse {
+    result: number;
+    alternate?: number; // (this is usually not provided)
+    context: string;
+    explanation: string;
+}
+```
+
+`result` is the result of the calculation itself you've just done.
+
+`context` gives a small context (sometimes just a word) about how the result should be interpreted. E.g., in the BMI (Body Mass Index) function, `context` would a string saying if the result value does represent "healthy weight", "underweight", "obesity", and so on.
+
+`explanation` gives a small explanation of what the calculation means. For example, in the BMI function it returns the following:
 
 ```tsx
 "(According to CDC) Body mass index (BMI) is a person's weight in kilograms divided by the square of height in meters. BMI is an inexpensive and easy screening method for weight category—underweight, healthy weight, overweight, and obesity. BMI does not measure body fat directly, but BMI is moderately correlated with more direct measures of body fat. Furthermore, BMI appears to be as strongly correlated with various metabolic and disease outcomes as are these more direct measures of body fatness."
 ```
 
-## What should I expect as a return?
-
-Calculation functions always follow the same structure for returns, or almost:
-
-There are three possible kinds of response, being all of them defined interfaces: `OpenHealthResponse`, `OpenHealthResponsePredictable`, and `OpenHealthResponseVersatile`.
-
-Basically, the basic response looks like this:
-
-```tsx
-interface OpenHealthResponse {
-    result: number;
-    subject?: {
-        age: number;
-        gender: "male" | "female";
-        weight: number;
-        height: number;
-        [key: string]: string | number | boolean | null | undefined;
-    };
-    context?: string;
-    explanation?: string;
-}
-```
-
-`result` is the result of the calculation. `subject` is basically the data you provided to the function, with the option of additional params. And context & explanation are those two texts that can be optionally returned.
-
-> [!WARNING]
-> If both `provideContext` and `provideExplanation` are set to `false`, you will be returned an object that contains JUST the "`result`". This is because the `subject` is considered part of the context, therefore `provideContext` must be set to true if you wanted to retrieve it for any reason. Anyways all the content from the `subject` are arguments you pass to the function, so in theory you'll always have access to those even if you don't explicitly ask for the `subject` AND the `context`.
->
-> In those cases, the number will be returned as part of the object, not as a standalone number.
-
-Then there's the `OpenHealthResponsePredictable`, which - as the name implies - is a *predictable* version of the OH response. In other words, there are no optional params and subject? is not optional (subject).
-
-And lastly, there's `OpenHealthResponseVersatile`, which is the opposite: more params are optional, meaning you can, for example, not get a `subject.weight` value returned, in the case it's not required by the function in the 1st place.
+In some cases, like the OneRM calculation, you can opt in to get an additional (`alternate`) result. OneRM offers the boolean param `providePercentage`, and when set to true, the return will also include the `alternate` prop, being its value the OneRM percentage in this case.
 
 ## What to expect from the other functions?
 
-There's `getSource()`, which returns a string with the URLs to all the sources of knoweledge used to develop the function, write it's explanation, and so on. The string will look like this: `"https://website-one.gov and https://website-two.org`.
+There's `getSources()`, which returns a string array with all the URLs to all the sources of knowledge used to develop the function, write it's explanation, and so on. The array will look like this: `["https://website-one.gov", "https://website-two.org"]`.
 
 And then there's `getLastUpdated()`, which returns a string with the last time the function ITSELF was updated (using the DD/MM/YYYY format).
 
@@ -98,17 +86,15 @@ And then there's `getLastUpdated()`, which returns a string with the last time t
 
 Great, you got it all!
 
-Now, let's move onto the reference manual: a list of all available functions, categorised, and with explanations.
+Now, let's move onto the reference manual: a list of all available functions, categorized, and with explanations.
 
 > [!TIP]
-> This reference is only for the `calculate()` function of each utility, as `getLastUpdated()` and `getSource()` are always the same.
-> [!TIP]
-> `provideContext` and `provideExplanation` are boolean values that are universal and always available, so they are not included on each table to save on page's size.
+> This reference is only for the `calculate()` function of each utility, as `getLastUpdated()` and `getSources()` are always the same.
 
 <!--markdownlint-disable-next-line-->
-# OpenHealth reference manual
+# CoreLibrary reference manual
 
-`OpenHealth.physicalHealth`
+`CoreLibrary.physicalHealth`
 
 ## basalMetabolicRate.`calculate()`
 
@@ -116,11 +102,11 @@ Now, let's move onto the reference manual: a list of all available functions, ca
 
 > The BMR is the rate of energy expenditure per unit time by endothermic animals at rest.
 
-In an easier vocabulary: BMR is used to calculate the ammount of energy the human body spends on a day to stay alive.
+In an easier vocabulary: BMR is used to calculate the amount of energy the human body spends on a day to stay alive.
 
 **What purpose does the function serve?**
 
-You use it by passing the data needed to calculate the BMR plus the activness of the subject, to calculate (based on the Harris-Benedict equation) the estimated amount of kilocaries the subject should get in a daily basis.
+You use it by passing the data needed to calculate the BMR plus the activeness of the subject, to calculate (based on the Harris-Benedict equation) the estimated amount of kilocalories the subject should get in a daily basis.
 
 For extra info about how this should be used within PersonaPlus' scope, see [USAGE.md](USAGE.md#basalMetabolicRate).
 
@@ -130,7 +116,7 @@ For extra info about how this should be used within PersonaPlus' scope, see [USA
 | `gender` | "male" or "female" | The **gender** of the subject |
 | `weight` | Number | The weight of the subject in **kilograms** |
 | `height` | Height | The height of the subject in **centimeters** |
-| `activness` | "poor" or "light" or "moderate" or "intense" or "extreme" | Aproximetly, how active the subject is in terms of exercising, being "poor" very little or no exercise, light 1 to 3 days of exercise a week (being one time each day), moderate 3 to 5 days a week, intense 6 or seven days a week, and extreme being very intense exercies and/or more than once a day. |
+| `activeness` | "poor" or "light" or "moderate" or "intense" or "extreme" | Approximately, how active the subject is in terms of exercising, being "poor" very little or no exercise, light 1 to 3 days of exercise a week (being one time each day), moderate 3 to 5 days a week, intense 6 or seven days a week, and extreme being very intense exercises and/or more than once a day. |
 
 ## getMetabolicEquivalentOfTask.`calculate()`
 
@@ -152,13 +138,13 @@ For extra info about how this should be used within PersonaPlus' scope, see [USA
 | --------- | ---- | ----------- |
 | `age` | Number | The **age** of the subject in years |
 | `gender` | "male" or "female" | The **gender** of the subject |
-| `intensity` | "superlow" or "very_low" or "low" or "low_to_mid" or "mid" or "mid_to_high" or "not_too_high" or "high" or "higher" or "very_high" or "very_high_to_intense" or "not_too_intense" or "a_bit_intense" or "intense" or "pretty_intense" or "very_intense" or "really_intense" | The intensity of the activity. |
+| `intensity` | "super_low" or "very_low" or "low" or "low_to_mid" or "mid" or "mid_to_high" or "not_too_high" or "high" or "higher" or "very_high" or "very_high_to_intense" or "not_too_intense" or "a_bit_intense" or "intense" or "pretty_intense" or "very_intense" or "really_intense" | The intensity of the activity. |
 
 Each `intensity` value is associated to a fixed, approximated MET value, as seen in the table that follows.
 
 | Value | Equivalent | MET value |
 | ----- | ---------- | --------- |
-| `superlow` | writing, desk work, using computer | 1.5 |
+| `super_low` | writing, desk work, using computer | 1.5 |
 | `very_low` | walking slowly | 2.0 |
 | `low` | walking, 4.8 km/h | 3.0 |
 | `low_to_mid` | sweeping or mopping floors, vacuuming carpets | 3 to 3.5 (3.5 in code) |
@@ -197,7 +183,7 @@ For extra info about how this should be used within PersonaPlus' scope, see [USA
 | `weight` | Number | The weight of the subject in **kilograms** |
 | `height` | Height | The height of the subject in **centimeters** |
 
-## bodyfatpercentage.`calculate()`
+## BodyFatPercentage.`calculate()`
 
 **What's this?**
 
@@ -209,7 +195,7 @@ In an easier vocabulary: BFP gives you the percentage of your body's weight that
 
 You use it by passing the data needed to calculate the BFP, to calculate the estimated percentage of your weight that's fat, and whether that BFP represents a healthy weight or an unhealthy one, either by underweight or overweight / obesity.
 
-For extra info about how this should be used within PersonaPlus' scope, see [USAGE.md](USAGE.md#bodyfatpercentage).
+For extra info about how this should be used within PersonaPlus' scope, see [USAGE.md](USAGE.md#BodyFatPercentage).
 
 | Parameter | Type | Explanation |
 | --------- | ---- | ----------- |

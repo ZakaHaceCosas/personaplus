@@ -1,0 +1,560 @@
+{
+    "globals": {
+        "userData": {
+            "username": {
+                "word": "Nombre de usuario",
+                "wordShorter": "Nombre"
+            },
+            "gender": {
+                "word": "Género",
+                "male": "Hombre",
+                "female": "Mujer"
+            },
+            "age": {
+                "word": "Edad",
+                "suffix": " años"
+            },
+            "height": "Altura",
+            "weight": "Peso"
+        },
+        "languages": {
+            "es": "español",
+            "en": "inglés"
+        },
+        "interaction": {
+            "areYouSure": "¿Estás seguro?",
+            "goAheadBad": "Está bien",
+            "goAhead": "Adelante",
+            "goAheadGood": "¡Vamos allá!",
+            "nevermind": "Olvídalo",
+            "continue": "Continuar",
+            "somethingIsWrong": "Algo no está bien",
+            "goBack": "Ir atrás :c",
+            "goBackNoSad": "Ir atrás",
+            "yes": "Sí",
+            "no": "No",
+            "chooseAnOption": "Elige una opción",
+            "learnMore": "Saber más.",
+            "save": "Guardar",
+            "help": "Ayuda",
+            "giveUp": "Me rindo :c",
+            "none": "Ninguno",
+            "wellDoneBud": "¡Bien hecho, colega!",
+            "gotIt": "¡Lo pillo!"
+        },
+        "daysOfTheWeek": {
+            "Monday": {
+                "key": "L",
+                "value": "Lunes"
+            },
+            "Tuesday": {
+                "key": "M",
+                "value": "Martes"
+            },
+            "Wednesday": {
+                "key": "X",
+                "value": "Miércoles"
+            },
+            "Thursday": {
+                "key": "J",
+                "value": "Jueves"
+            },
+            "Friday": {
+                "key": "V",
+                "value": "Viernes"
+            },
+            "Saturday": {
+                "key": "S",
+                "value": "Sábado"
+            },
+            "Sunday": {
+                "key": "D",
+                "value": "Domingo"
+            }
+        },
+        "loading": "Cargando...",
+        "pageEnd": "Nada más que ver aquí",
+        "navbar": {
+            "home": "Inicio",
+            "dashboard": "Panel",
+            "report": "Reporte",
+            "profile": "Perfil"
+        },
+        "settings": "Ajustes",
+        "developers": "Desarrolladores",
+        "danger": "Peligro",
+        "about": "Sobre",
+        "experiments": "Experimentos",
+        "howYouAreDoing": "Así te está yendo",
+        "objectives": {
+            "active": "Objetivos Activos",
+            "passive": "Objetivos Pasivos"
+        },
+        "supportedActiveObjectives": {
+            "Push Ups": {
+                "name": "Flexiones",
+                "doing": "Hacer flexiones por {{duration}} minuto",
+                "help": "Para hacer flexiones normales, comienza en posición de plancha con las manos ligeramente más anchas que los hombros. Baja tu cuerpo doblando los codos hasta que tu pecho casi toque el suelo, luego empuja hacia arriba hasta la posición inicial. Mantén tu core activo para mayor estabilidad. Empieza con un número cómodo de repeticiones y aumenta gradualmente a medida que ganas fuerza.\n\nPara hacer flexiones con una sola mano, comienza en posición de plancha con una mano centrada debajo del hombro y la otra detrás de la espalda. Baja tu cuerpo doblando el codo hasta que tu pecho casi toque el suelo, luego empuja hacia arriba. Mantén tu core firme y el equilibrio durante todo el movimiento. Empieza con unas pocas repeticiones en cada lado y progresa conforme mejora tu fuerza."
+            },
+            "Lifting": {
+                "name": "Pesas",
+                "doing": "Levantar pesas por {{duration}} minuto",
+                "help": "Distribuye equitativamente el peso entre ambas manos. Por ejemplo, si tu objetivo es levantar 6 kg, pon 3 kg en cada peso (ya que levantarás dos pesos, uno para cada mano).\n\nSin soltarlo, extiende tu brazo verticalmente y comienza a moverlo hacia arriba y hacia abajo, haciendo que tu codo vaya desde un ángulo de 90º a 45º y luego de nuevo a 90º (esto cuenta como una repetición).\n\nContinúa hasta completar todas las repeticiones especificadas (o hasta que se acabe el tiempo)."
+            },
+            "Walking": {
+                "name": "Caminata",
+                "doing": "Caminar por {{duration}} minuto",
+                "help": "Usa zapatos cómodos y ropa adecuada para el clima. Comienza caminando a un ritmo natural, permitiendo que tus brazos se balanceen naturalmente a los lados. Concéntrate en mantener una buena postura, con la espalda recta y la cabeza erguida. Puedes variar tu velocidad, incorporando intervalos de caminata rápida para aumentar tu frecuencia cardíaca. Caminar se puede hacer casi en cualquier lugar, así que elige una ruta que disfrutes. Apunta a caminar al menos 30 minutos por sesión, y aumenta gradualmente la duración e intensidad a medida que aumenta tu resistencia."
+            },
+            "Biking": {
+                "name": "Ciclismo",
+                "doing": "Pedalear por {{duration}} minuto",
+                "help": "POR HACER"
+            },
+            "Running": {
+                "name": "Running",
+                "doing": "Correr por {{duration}} minuto",
+                "help": "Para empezar a correr, asegúrate de llevar calzado y ropa cómodos para correr. Empieza con un calentamiento caminando rápidamente durante 5-10 minutos para preparar tus músculos. Comienza a correr a un ritmo cómodo y mantén un patrón constante de respiración. Concéntrate en mantener una buena postura y mantenerse relajado. Si eres principiante, alterna entre correr y caminar en intervalos. Aumenta gradualmente el tiempo que corres a medida que mejora tu resistencia. Enfría caminando unos minutos y luego estirando."
+            }
+        }
+    },
+    "EasterEggs": {
+        "whyChangeGender": "los géneros no cambian, pero ok"
+    },
+    "coolRandomMessages": {
+        "createActiveObjective": [
+            "Piensa algún ejercicio que te guste, ¡y a darle caña!",
+            "Hagamos un plan para pasarlo bien.",
+            "¡Esto va a ser divertido!",
+            "¿Qué se te ocurre?",
+            "Tus objetivos, tus resultados.",
+            "Psst... No crees objetivos porque sí: ¡luego hazlos!",
+            "Por fin usas el móvil para algo útil.",
+            "Si es que, no hay nada mejor que un poco de ejercicio.",
+            "tu ahora mismo: 📈📈📈",
+            "¿Usando el móvil para entrenar en vez de ver Instagram? Que ídolo.",
+            "Tu rutina, tus normas. Tú decides sobre tus objetivos.",
+            "Hazme caso: no se te olvidará este objetivo...",
+            "*insertar frase motivadora aquí*",
+            "Algunos suben \"Stories\", tu subes de nivel.",
+            "Recuerda añadir descansos: hasta los campeones como tú los necesitan.",
+            "Pasé meses haciendo esta app para que seas mejor persona: ¡no me falles!",
+            "No le des a \"Crear\" sin más, ¡luego quiero verte en acción!",
+            "¿Te atreves a crear un objetivo que te saque de tu zona de confort?",
+            "¿Listo para demostrar de lo que eres capaz?",
+            "Crea un objetivo que te haga sentir orgulloso mañana.",
+            "Tu progreso comienza aquí, ¡manos a la obra!",
+            "Menos excusas, más acción. ¡Vamos!",
+            "No subestimes el poder de un esfuerzo pequeño pero constante 🔥.",
+            "Atrévete a superar tus límites, uno a uno.",
+            "Recuerda: los campeones se hacen, no nacen.",
+            "Dale un propósito a tu día: crea un objetivo."
+        ],
+        "sessionCompleted": [
+            "¡Acabaste! Que grande eres.",
+            "¿A que mola?",
+            "Más días como este, porfa.",
+            "Ahora te veo más guapo.",
+            "¡A por la siguiente!"
+        ],
+        "activeObjectiveReminders": [
+            "¡Sabes que tienes cosas que hacer!",
+            "¡Momento de darse un plus!",
+            "Dijiste que querías darte un plus - ¡levántate!",
+            "¿La diferencia entre PersonaPlus y una lista de tareas normal? ¡es mucho más divertido revisarme a mi!",
+            "Como tu madre: hasta que no hagas lo que dijiste, no te dejo en paz.",
+            "Te das un plus primero, silencias el teléfono después.",
+            "La única notificación que no te hace perder el tiempo.",
+            "No, no es otra notificación de TikTok. ¡Muévete, hostia!",
+            "No, no es otra notificación de Instagram. Yo te haré mejor persona, ¡los reels no!",
+            "Se llaman 'objetivos' por una razón: ¡hay que cumplirlos!",
+            "No, no pararé de mandar notificaciones hasta que pares de ignorar tu camino hacia el éxito.",
+            "Confía en mí, te sentirás mejor después.",
+            "solo una sesión mas porfa, te quiero <3",
+            "Descargaste esta app por una razón. No te rindas.",
+            "¡Es ese momento otra vez!",
+            "Cuando quieras, ¿eh?"
+        ]
+    },
+    "notifications": {
+        "reminder": "Ey, ¡tienes objetivos por hacer!"
+    },
+    "pages": {
+        "404": {
+            "header": "¿Tienes un mapa?",
+            "subheader": "Recibiste un error 404 - o sea, PersonaPlus no pudo encontrar la ruta que buscas. ¡Perdón!",
+            "goHome": {
+                "text": "Volver a casa",
+                "hint": "Redirige al usuario directamente a la página de inicio."
+            },
+            "requestedPath": "La ruta solicitada fué:\n{{path}}\n\nSi crees que esta ruta es correcta y no deberías estar perdido, te pedimos educadamente que reportes el fallo para que podamos arreglarlo. ¡Gracias!"
+        },
+        "home": {
+            "header": "¡Hola, {{username}}!",
+            "subheader": "¿Qué objetivos cumplirás hoy?"
+        },
+        "dashboard": {
+            "header": "Panel de control",
+            "subheader": "Preparemos tu camino al el éxito",
+            "deleteObjective": {
+                "text": "Borrar",
+                "hint": "Borra permanentemente este objetivo."
+            }
+        },
+        "profile": {
+            "header": "Perfil",
+            "subheader": "¡Un placer conocerte, {{username}}!",
+            "data": {
+                "age": "{{age}} años",
+                "weight": "{{weight}} kg",
+                "height": "{{height}} cm"
+            },
+            "interactions": {
+                "updateProfile": {
+                    "text": "Actualiza tu perfil",
+                    "hint": "Lleva a una página desde la que puedes editar tu perfil."
+                }
+            },
+            "divisions": {
+                "settings": {
+                    "header": "Abrir ajustes",
+                    "subheader": "Administra notificaciones, idioma de la app, y otras preferencias. Accede a funciones avanzadas y experimentos. Restablece la app si lo necesitas.",
+                    "action": {
+                        "text": "Abrir ajustes",
+                        "hint": "Abre una página desde la que puedes ver y cambiar todos los ajustes de la app."
+                    }
+                },
+                "about": {
+                    "header": "Sobre PersonaPlus",
+                    "subheader": "Descubre quién está detrás de la aplicación que (¡con suerte!) disfrutas.",
+                    "action": {
+                        "text": "Ver sobre nosotros",
+                        "hint": "Abre una página para ver licencia, créditos, y más info sobre la app."
+                    }
+                },
+                "update": {
+                    "header": "Buscar actualizaciones",
+                    "subheader": "Estás usando la versión {{version}}.",
+                    "action": {
+                        "text": "Buscar actualizaciones nuevas",
+                        "hint": "Comprueba si hay una versión de la app, y si la hay, muestra un modal con opciones sobre que hacer al respecto."
+                    },
+                    "updateFlow": {
+                        "checking": "Buscando actualizaciones...",
+                        "updateAvailable": "Actualización disponible",
+                        "updateAvailableText": "Una nueva versión ({{latestVersion}}) está disponible. Por favor, actualiza PersonaPlus a la última versión.",
+                        "upToDate": "¡Estás al día!",
+                        "cantCheck": "No se pudo comprobar si hay actualizaciones. Por favor, intenta más tarde (o comprueba manualmente el repo).",
+                        "buttons": {
+                            "update": "Actualizar",
+                            "changelog": "Ver novedades"
+                        }
+                    }
+                }
+            }
+        },
+        "createActiveObjective": {
+            "header": "¡Hagámoslo!",
+            "questions": {
+                "whatToDo": {
+                    "question": "¿Qué quieres hacer?",
+                    "options": {
+                        "title": "Escoge un ejercicio, el que más te guste :]"
+                    }
+                },
+                "whenToDo": {
+                    "question": "¿Qué días harás ejercicio?",
+                    "proTip": "Toca un día para activarlo o desactivarlo. Los días a color están activados, y los grises, desactivados."
+                },
+                "actualQuestions": {
+                    "durationMinutes": "Duración (minutos)",
+                    "durationMinutesHint": "¿Cuánto aguantas?",
+                    "rests": "Descansos",
+                    "restsHint": "¡Tu también mereces descansar, jefe!",
+                    "restDurationMinutes": "Duración de descanso (minutos)",
+                    "restDurationMinutesHint": "No pongas \"200\", que te veo venir.",
+                    "amountOfPushUps": "¿Cuántas flexiones?",
+                    "amountOfPushUpsHint": "Consejo: Equilibra la duración y el número de flexiones. Más flexiones en menos tiempo serán más complicadas pero tendrán un mayor (y mejor) efecto sobre tu cuerpo. Menos flexiones en más tiempo te darán una sesión más relajada y amigable para principiantes.",
+                    "amountOfHandsPushUpHint": "Básicamente: ¿harás flexiones con dos manos (normal) o con sólo una (avanzado)? Por defecto son dos.",
+                    "reps": "¿Cuántos levantamientos harás?",
+                    "repsHint": "Consejo: Equilibra la duración y el número de levantamientos. Más levantamientos en menos tiempo serán más complicados pero tendrán un mayor (y mejor) efecto sobre tu cuerpo. Menos levantamientos en más tiempo te darán una sesión más relajada y amigable para principiantes",
+                    "dumbbellWeight": "¿Cuánto peso?",
+                    "dumbbellWeightHint": "En kilogramos. El total de la pesa (los dos discos y la barra). Si tienes dos pesas, indica el peso de una sola.",
+                    "amountOfHandsLiftingHint": "Básicamente: ¿una pesa, o dos pesas, una a cada mano? Por defecto son dos.",
+                    "estimateSpeed": "¿A que ritmo correrás?",
+                    "estimateSpeedHint": "Por supuesto no tienes que ser exacto, sólo trata de estimarlo.",
+                    "amountOfHands": "¿Una mano o dos?"
+                }
+            },
+            "warnings": {
+                "tooLongSession": {
+                    "text": "Estamos hablando de {{equal}} minutos de ejercicio. ¿No es demasiado?",
+                    "subtext": "Puedes crear el objetivo así si quieres, no te preocupes. Solo te advertimos, ¡por tu propio bien!"
+                }
+            },
+            "required": "Necesario: Duración, Ejercicio, y al menos un día de la semana. Algunos ejercicios específicos tendrán requisitos extra: por ejemplo \"Levantamiento de peso\" requiere que especifiques cuanto peso vas a levantar.",
+            "doneFeedback": "{{obj}}, ¡allá vamos!"
+        },
+        "welcome": {
+            "beginning": {
+                "welcomeTo": "Bienvenido a",
+                "subheader": "¡Nos enorgullece ver que quieras darte un plus!"
+            },
+            "questions": {
+                "aboutYou": {
+                    "ask": "Cuéntanos sobre tí",
+                    "description": "Lo esencial. Sí, lo mantenemos privadísimo.",
+                    "placeholders": {
+                        "username": "Un nombre o apodo, el que quieras",
+                        "age": "Edad (en años)",
+                        "weight": "Tu peso (kg sin decimales)",
+                        "height": "Cuánto mides (cm sin decimales)"
+                    }
+                },
+                "focus": {
+                    "ask": "¿Tu prioridad?",
+                    "description": "Sí, darte un plus, pero, ¿qué debemos priorizar?",
+                    "options": {
+                        "exercising": "Ejercicio, ¡necesito moverme ya!",
+                        "eating": "Dieta, debo controlar mejor lo que como.",
+                        "wellbeing": "Salud mental y bienestar digital.",
+                        "noPriority": "¡Todo es prioridad para mí!",
+                        "assistMePls": "No sé / No me decido"
+                    }
+                },
+                "aboutYouAgain": {
+                    "ask": "Cuéntanos más",
+                    "description": "Saber de tí nos ayuda a llevarte a la cima. Tranqui, tus datos son privadísimos."
+                },
+                "sleepTime": {
+                    "ask": "¿Cuánto duermes? No debe ser exacto",
+                    "options": {
+                        "threeOrLess": "3 horas o menos",
+                        "four": "4 horas",
+                        "five": "5 horas",
+                        "six": "6 horas",
+                        "seven": "7 horas",
+                        "eight": "8 horas",
+                        "nine": "9 horas",
+                        "ten": "10 horas",
+                        "moreThanTen": "Más de 10 horas"
+                    }
+                },
+                "activeness": {
+                    "ask": "¿Con qué frecuencia haces ejercicio?",
+                    "options": {
+                        "poor": "Muy inactivo (casi sin ejercicio)",
+                        "small": "Poco activo (1-2 días a la semana)",
+                        "normal": "Algo activo (3-5 días a la semana)",
+                        "intense": "Muy activo (5 días o más)",
+                        "super": "Super activo (diariamente)"
+                    }
+                },
+                "theThinkHour": {
+                    "ask": "Elige la hora para el 'Check Diario'",
+                    "description": "Te enviaremos un breve cuestionario sobre tu día a esa hora. Usaremos tu información para mejorar PersonaPlus.",
+                    "summon": "Haz clic aquí para elegir la hora.",
+                    "youChose": "Has elegido las {{hour}} horas.",
+                    "TEMP_disclaimer": "Nota",
+                    "TEMP_disclaimer2": "El Check Diario AÚN no es funcional - estamos trabajando en él. Ya te dijimos que PersonaPlus aún está en desarrollo. La hora que elijas aquí se guardará y se empezará a usar tan pronto como saquemos el Check Diario."
+                }
+            }
+        },
+        "updateProfile": {
+            "header": "Actualiza tu perfil",
+            "subheader": "Las cosas cambian y tú también.",
+            "saveHint": "Guarda y aplica estos cambios a tu perfil.",
+            "nevermindHint": "Abandona la página sin hacer ningún cambio a tu perfil."
+        },
+        "settings": {
+            "header": "Ajustes",
+            "subheader": "Tu app, tus reglas. Cámbialas aquí.",
+            "preferences": {
+                "word": "Preferencias",
+                "language": {
+                    "header": "Cambiar idioma",
+                    "subheader": "Ahora estás usando {{lang}}. Solo soportamos español e inglés, por lo que el botón automáticamente te cambiará del uno al otro.",
+                    "action": {
+                        "text": "Cambiar de idioma",
+                        "hint": "Cambia el idioma de la aplicación."
+                    }
+                },
+                "notifications": {
+                    "header": "Notificaciones",
+                    "subheader": "PersonaPlus manda varios recordatorios a horas aleatorias (pero no a horas raras como las 3am) por defecto. Puedes desactivarlas (o reactivarlas) aquí.",
+                    "action": {
+                        "__epic_comment_lol": "the true / false thingy before is used to append ${userData.wantsNotifications}. 'true' should show disable, and 'false' should show enable",
+                        "trueText": "Desactivar",
+                        "trueHint": "Desactiva las notificaciones.",
+                        "falseText": "Activar",
+                        "falseHint": "Activa las notificaciones."
+                    },
+                    "flow": {
+                        "disabling": "Las notificaciones se están desprogramando. Espera ahí...",
+                        "disabled": "Hecho, no más notificaciones. ¡Pero acuérdate de tus objetivos!",
+                        "enabled": "Hecho. Las notificaciones se reprogramarán automáticamente."
+                    }
+                }
+            },
+            "advanced": {
+                "word": "Avanzado",
+                "experiments": {
+                    "header": "Experimentos",
+                    "subheader": "Funciones aún en desarrollo. Úsalas temprano desde aquí, danos tu opinión y ayúdanos a mejorar—pero ten en cuenta que son inestables.",
+                    "action": {
+                        "text": "Lanzar Experimentos",
+                        "hint": "Abre una página desde la que puedes activar y/o desactivar experimentos."
+                    }
+                },
+                "devInterface": {
+                    "header": "Dev Interface",
+                    "subheader": "Una interfaz para contribuidores, para vean qué sucede desde el interior de la aplicación. ESTÁ EN INGLÉS.",
+                    "action": {
+                        "text": "Lanzar Dev Interface",
+                        "hint": "Abre la Dev Interface."
+                    }
+                }
+            },
+            "dangerous": {
+                "word": "Peligroso",
+                "resetApp": {
+                    "header": "Restablecer app",
+                    "subheader": "Borrará permanentemente todos tus datos de usuario, sin forma de deshacer. Úsalo bajo tu propia conciencia.",
+                    "action": {
+                        "text": "Restablecer PersonaPlus",
+                        "hint": "hace que tu cuenta haga boom"
+                    },
+                    "flow": {
+                        "areYouSure": "¿Estás seguro de esto?",
+                        "areYouSureText": "No hay forma de deshacer esto. Asegúrate."
+                    }
+                }
+            }
+        },
+        "report": {
+            "header": "Tu reporte",
+            "subheader": "Así te está yendo",
+            "disclaimer": {
+                "header": "Esta página es un experimento",
+                "subheader": "Se espera que esta página cambie un montón. Mientras no quitemos este aviso, no te fíes de estos cálculos: son imprecisos."
+            }
+        },
+        "sessions": {
+            "live": "¡En una sesión!",
+            "currentObjective": "OBJETIVO ACTUAL",
+            "toggleTimer": {
+                "pauseHint": "Pausa el temporizador.",
+                "playHint": "Reanuda el temporizador."
+            },
+            "helpHint": "Abre un menú con ayuda básica sobre lo que deberías estar haciendo ahora mismo.",
+            "helpTimerPaused": "Psst... No te preocupes, hemos pausado el temporizador para que puedas leer a tu ritmo.",
+            "giveUpHint": "Abandona la sesión actual sin guardar tu progreso.",
+            "giveUpDescription": "Si te rindes, ¡todo tu progreso se perderá! ¿No puedes aguantar un rato más?",
+            "rests": "{{rests}} descanso(s) de {{duration}} minuto(s)",
+            "hands": "{{hands}} mano(s)",
+            "pushUps": "{{pushUps}} flexiones"
+        },
+        "results": {
+            "header": "Sesión completada",
+            "actualResults": {
+                "burntCalories": "Calorías quemadas"
+            }
+        },
+        "about": {
+            "aboutApp": {
+                "header": "Sobre la app",
+                "subheader": "PersonaPlus es una app para ayudarte a cuidar de tu salud. Gratis, privada, y haciendo lo posible por mejorar como cada día la forma en que te ayuda. ¡Espero que mejores cada día tú también!"
+            },
+            "aboutTheMaker": {
+                "header": "Sobre el creador",
+                "subheader": "Soy Zaka y Hago Cosas. Un placer dedicar todo el tiempo posible a esta app - que de momento parece un boceto - para que sea eventualmente tu mejor aliada a la hora de mejorar como persona.\n\n¡Date un plus!"
+            },
+            "grid": {
+                "credits": {
+                    "text": "Créditos",
+                    "hint": "Muestra los créditos, un tributo a todos los que han ayudado a que esta app sea tan genial."
+                },
+                "license": {
+                    "text": "Licencia",
+                    "hint": "Abre una página para ver la licencia de la app."
+                },
+                "privacy": {
+                    "text": "Tu privacidad",
+                    "hint": "Abre una página web para ver nuestra política de privacidad."
+                },
+                "openSource": {
+                    "text": "Código Abierto",
+                    "hint": "Abre nuestro repositorio de GitHub, donde todo el código fuente de la app es público para ver y contribuir."
+                }
+            },
+            "ps": "PD. Estás en una versión temprana de la app. ¡Gracias por ser de los primeros en probarla! Si encuentras fallos, ¡avísanos y los arreglaremos! Gracias."
+        },
+        "credits": {
+            "header": "Créditos",
+            "subheader": "¡Gente y código increíbles que han ayudado a PersonaPlus!",
+            "contributors": "Contribuidores que han ayudado mucho con la app:",
+            "contributorsNote": "Puedes ver la lista completa en GitHub, aquí sólo se muestran los más importantes.",
+            "libraries": "Librerías épicas que potencian la app:",
+            "__epic_comment_lol": "here says one because its a note relative to a specific project. the previous note just says 'note' because it affects the whole section.",
+            "librariesNoteOne": "*Usamos nuestra propia bifurcación, no la librería en sí."
+        },
+        "experiments": {
+            "header": "LEE ESTO O VAS A EXPLOTAR!!",
+            "subheader": "quiero decir no vas a explotar en realidad pero porfa lee",
+            "disclaimer": "Básicamente: Los experimentos son funciones chulas en las que estoy trabajando PERO que no he terminado. ¡Puedes probarlas anticipadamente! Pero puede que tengan errores, así que no prometo que no causen problemas.\n\nSi encuentras cualquier fallo o tienes cualquier sugerencia, házmela saber*—¡todo ayuda a que la app sea mejor!\n\n*Desde la página 'Sobre' tienes el Instagram oficial, puedes mandar un mensaje ahí.",
+            "realHeader": "Experimentos",
+            "realSubheader": "Funciones experimentales de PersonaPlus",
+            "status": {
+                "enabled": "Este experimento está habilitado.",
+                "disabled": "Este experimento está deshabilitado."
+            },
+            "toggle": {
+                "enable": "Activar experimento",
+                "disable": "Desactivar experimento",
+                "hint": "Alterna el estado de este experimento. Si está desactivado, lo activa, y viceversa.",
+                "warning": "De nuevo, los experimentos están chulos, pero también son inestables. ¡Procede bajo tu propio riesgo!",
+                "enabledFeedback": "{{exp}} habilitado. ¡Diviértete!",
+                "disabledFeedback": "{{exp}} deshabilitado. Vuelta a la normalidad."
+            },
+            "exp_tracker": "PersonaPlus te pregunta 'a que velocidad vas a correr' para calcular las calorías quemadas tras una sesión de correr. Estúpido, lo sé, para eso es este experimento: un tracker de movimiento (parecido a apps como 'Adidas Running').",
+            "exp_report": "Activa una página llamada 'Reporte' que muestra (en base a unos cálculos que la app hace con tus datos) si estás bien / bajo peso / sobre peso, y cuantas calorías quemas como mínimo al día para sobrevivir."
+        }
+    },
+    "experimentNotes": {
+        "exp_tracker": "PD. Tienes el experimento exp_tracker activado, por lo que este valor es inútil y no se usará para estimar tu velocidad."
+    },
+    "activeObjectives": {
+        "allCapsSingular": "OBJETIVO ACTIVO",
+        "noObjectives": {
+            "allDone": "¡Parece que lo hiciste todo!",
+            "noObjectives": "No tienes ningún objetivo. ¡Crea uno ahora!",
+            "todayFree": "No tienes objetivos para hoy. ¡Disfruta tu descanso!"
+        },
+        "createObjective": {
+            "text": "Crear objetivo activo",
+            "hint": "Abre una página desde la que puedes crear un objetivo activo."
+        },
+        "start": {
+            "hint": "Empieza una sesión en vivo para este objetivo."
+        },
+        "feedback": {
+            "created": "¡Objetivo creado con éxito!",
+            "deleted": "¡Objetivo {{id}} eliminado exitosamente!"
+        },
+        "today": {
+            "noContent": "Aquí siempre verás el progreso de hoy (siempre y cuando tengas objetivos para hoy y que estén sin hacer).",
+            "content": {
+                "header": "Hoy",
+                "subheader": "(Sí, esta tabla es bastante básica. La app aún está en desarrollo, en una futura versión se renovará la sección 'Hoy'.)",
+                "headers": {
+                    "objective": "Objetivo",
+                    "status": "¿Lo has hecho?",
+                    "statusOptions": {
+                        "yes": "¡Sip!",
+                        "no": "Pendiente..."
+                    }
+                }
+            }
+        }
+    }
+}

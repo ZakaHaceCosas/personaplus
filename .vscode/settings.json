@@ -6,14 +6,13 @@
         "**/.hg": true,
         "**/CVS": true,
         "**/.DS_Store": true,
-        "**/android": true
+        "**/android": false
     },
     "terminal.integrated.suggest.enabled": true,
     "terminal.integrated.suggest.builtinCompletions": {
         "pwshCode": false,
         "pwshGit": true
     },
-    "editor.fontSize": 15,
     "editor.fontVariations": true,
     "editor.wordWrap": "on",
     "editor.smoothScrolling": true,
@@ -22,38 +21,34 @@
     "terminal.integrated.smoothScrolling": true,
     "editor.cursorBlinking": "expand",
     "redhat.telemetry.enabled": false,
+    "telemetry.enableCrashReporter": false,
+    "gitlens.telemetry.enabled": false,
+    "telemetry.telemetryLevel": 0,
+    "telemetry.enableTelemetry": false,
     "files.autoSave": "off",
-    "editor.fontFamily": "'JetBrains Mono', 'Roboto Mono', Consolas, 'Courier New', monospace",
-    "editor.fontWeight": 400,
     "editor.fontLigatures": true,
-    "window.zoomLevel": -0.5,
     "editor.formatOnSave": true,
     "editor.detectIndentation": false,
     "editor.tabSize": 4,
     "files.trimTrailingWhitespace": true,
     "files.insertFinalNewline": true,
     "editor.insertSpaces": true,
+    "editor.renderWhitespace": "trailing",
     "editor.minimap.enabled": true,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "explorer.confirmDelete": true,
-    "[javascript]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": true
-    },
-    "[typescript]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": true
-    },
-    "[typescriptreact]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": true
-    },
-    "[json]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": true
-    },
+    "prettier.endOfLine": "crlf",
+    "prettier.trailingComma": "all",
+    "prettier.semi": true,
     "prettier.tabWidth": 4,
-    "prettier.bracketSpacing": true,
+    "prettier.singleQuote": false,
+    "prettier.arrowParens": "always",
+    "prettier.jsxSingleQuote": false,
+    "prettier.useTabs": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
     "[markdown]": {
         "editor.unicodeHighlight.ambiguousCharacters": true,
         "editor.unicodeHighlight.invisibleCharacters": false,
@@ -63,8 +58,7 @@
             "comments": "on",
             "strings": "on",
             "other": "on"
-        },
-        "editor.formatOnSave": true
+        }
     },
     "[yaml]": {
         "editor.insertSpaces": true,
@@ -73,21 +67,143 @@
         "diffEditor.ignoreTrimWhitespace": false,
         "editor.formatOnSave": false
     },
+    "editor.formatOnSaveMode": "file",
     "workbench.editor.customLabels.patterns": {
-        "**/toolkit/**": "Toolkit, ${filename}.${extname}",
-        "**/toolkit/design/**": "Design toolkit, ${filename}.${extname}",
-        "**/toolkit/debug/**": "Debug toolkit, ${filename}.${extname}",
-        "**/translations/**": "Localization, ${filename}.${extname}",
-        "**/src/hooks/**": "Hooks, ${filename}.${extname}",
         "**/core/**": "Core library, ${filename}.${extname} @ ${dirname}",
+        "**/app/**": "App layout, ${filename}.${extname}",
+        "**/app/(tabs)/**": "App pages, ${filename}.${extname}",
         "**/assets/**": "Assets, ${filename}.${extname}",
-        "**/fonts/**": "Fonts, ${filename}.${extname}",
-        "**/app/**": "App pages, ${filename}.${extname}",
-        "**/src/types/**": "Types, ${filename}.${extname}",
-        "**/src/**": "Source components, ${filename}.${extname}"
+        "**/assets/design/**": "Design assets, ${filename}.${extname}",
+        "**/assets/fonts/**": "Fonts, ${filename}.${extname}",
+        "**/assets/resources/**": "Resources, ${filename}.${extname}",
+        "**/components/**": "Main components, ${filename}.${extname}",
+        "**/constants/**": "Constants, ${filename}.${extname}",
+        "**/hooks/**": "Hooks, ${filename}.${extname}",
+        "**/translations/**": "Localization, ${filename}.${extname}",
+        "**/toolkit/**": "Toolkit, ${filename}.${extname}",
+        "**/toolkit/debug/**": "Debug toolkit, ${filename}.${extname}",
+        "**/types/**": "TS types, ${filename}.${extname}"
     },
     "typescript.tsdk": "node_modules\\typescript\\lib",
     "files.associations": {
-        ".easignore": "ignore"
-    }
+        ".easignore": "ignore",
+        "*.json": "json"
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "always"
+    },
+    "editor.inlayHints.enabled": "on",
+    "typescript.inlayHints.variableTypes.enabled": true,
+    "typescript.inlayHints.enumMemberValues.enabled": true,
+    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "typescript.inlayHints.parameterNames.enabled": "all",
+    "typescript.inlayHints.parameterTypes.enabled": true,
+    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+    "typescript.reportStyleChecksAsWarnings": true,
+    "editor.lightbulb.enabled": "on",
+    "better-comments.tags": [
+        {
+            "tag": "FAILING",
+            "color": "#FF2D00",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": true,
+            "italic": false
+        },
+        {
+            "tag": "WATCHOUT",
+            "color": "#EF7E22",
+            "strikethrough": false,
+            "underline": true,
+            "backgroundColor": "transparent",
+            "bold": true,
+            "italic": false
+        },
+        {
+            "tag": "NOTE",
+            "color": "#676767",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": false,
+            "italic": true
+        },
+        {
+            "tag": "TODO",
+            "color": "#45AAFF",
+            "strikethrough": false,
+            "underline": true,
+            "backgroundColor": "transparent",
+            "bold": true,
+            "italic": false
+        },
+        {
+            "tag": "FIXME",
+            "color": "#FF6347",
+            "strikethrough": false,
+            "underline": false,
+            "backgroundColor": "transparent",
+            "bold": true,
+            "italic": true
+        }
+    ],
+    "editor.tabCompletion": "on",
+    "editor.snippetSuggestions": "top",
+    "cSpell.language": "en-US,es-ES",
+    "cSpell.words": [
+        "american't",
+        "androiddebugkey",
+        "bruh",
+        "codegen",
+        "desprogramando",
+        "Dimitrov",
+        "Epley's",
+        "facebook",
+        "fastfood",
+        "geolocation",
+        "giveitaplus",
+        "Hagámoslo",
+        "haptics",
+        "hermes",
+        "hermesc",
+        "Ionicons",
+        "jetbrains",
+        "kotlin",
+        "nevermind",
+        "Nevermind",
+        "ONERM",
+        "Parens",
+        "personaplus",
+        "picasa",
+        "Pngs",
+        "porfa",
+        "preapp",
+        "preconfigured",
+        "presionables",
+        "pressable",
+        "pressables",
+        "println",
+        "privadísimo",
+        "privadísimos",
+        "proguard",
+        "reprogramando",
+        "reprogramarán",
+        "Roboto",
+        "SCCS",
+        "Schedulable",
+        "SCSS",
+        "sqlite",
+        "TDEE",
+        "toolkified",
+        "toolkify",
+        "toolkits",
+        "traceback",
+        "Tranqui",
+        "Vasil",
+        "webp",
+        "webpsupport",
+        "Zaka",
+        "zakahacecosas"
+    ]
 }

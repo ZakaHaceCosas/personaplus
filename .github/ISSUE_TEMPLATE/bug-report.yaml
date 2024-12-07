@@ -1,0 +1,51 @@
+name: Report a bug / error
+description: "Found an error? Tell us so we can fix it!"
+title: "[BUG]: "
+labels: ["bug"]
+assignees:
+  - ZakaHaceCosas
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Explain in detail what went wrong.
+      placeholder: "\"I clicked this button and that happened!\""
+    validations:
+      required: true
+  - type: textarea
+    id: how-it-happened
+    attributes:
+      label: How did it happen?
+      description: Explain the steps to replicate the error.
+      placeholder: "\"Go to this page, search for this button, and click it.\""
+    validations:
+      required: true
+  - type: textarea
+    id: what-did-not-happen
+    attributes:
+      label: Expected result
+      description: Explain what were you actually expecting to happen.
+      placeholder: "If everything went okay, what should \"this button\" have done?"
+    validations:
+      required: true
+  - type: dropdown
+    id: device
+    attributes:
+      label: On what device(s) did you find the error?
+      multiple: true
+      options:
+        - Android (production APK / installed app)
+        - Android (Expo Go)
+        - Android (Expo Development Build)
+        - iOS (Expo Go)
+        - iOS (Expo Development Build)
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console logs
+      description: If you can, paste here any console log.
+      placeholder: "You can find them at Profile -> Dev Interface -> See all logs."
+      render: shell

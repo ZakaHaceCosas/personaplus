@@ -62,3 +62,15 @@ local.properties
 # local-only testing
 **/*.testing.*
 *.testing.*
+
+# deprecated stuff
+**/*.deprecated.*
+*.deprecated.*
+# ignore changelog
+!CHANGELOG.deprecated.md
+
+# archived files
+archive/
+
+# this
+FIXED_ERROR_LOG.md
