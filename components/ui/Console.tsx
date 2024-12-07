@@ -95,6 +95,20 @@ export default function Console({
                     .toLocaleString("es-ES", options)
                     .replace(",", "");
 
+                let finalMessage: string;
+
+                if (!log.message) {
+                    finalMessage = "";
+                } else if (typeof log.message === "string") {
+                    finalMessage = log.message;
+                } else if (Array.isArray(log.message)) {
+                    finalMessage = (log.message as typeof Array).toString();
+                } else if (typeof log.message === "object") {
+                    finalMessage = JSON.stringify(log.message);
+                } else {
+                    finalMessage = String(log.message);
+                }
+
                 const finalContent = {
                     type: log.type ? log.type.toUpperCase() : "",
                     date: formattedDate,
@@ -110,7 +124,7 @@ export default function Console({
                                   : ""
                           }\n}`
                         : "{ NO TRACEBACK }",
-                    message: log.message,
+                    message: finalMessage,
                 };
 
                 return (

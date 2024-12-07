@@ -144,7 +144,9 @@ export default function HomeScreen() {
         async function handle(): Promise<void> {
             const isRegistered: boolean =
                 await areNotificationsScheduledForToday();
-            logToConsole("isRegistered status: " + isRegistered, "log");
+            // regular log instead of logToConsole because this is kinda broken and spam-logs this a thousand times
+            // TODO - fix
+            console.log("isRegistered status: " + isRegistered, "log");
             if (userData?.wantsNotifications === false && isRegistered) {
                 await cancelScheduledNotifications(t, false);
                 return;
