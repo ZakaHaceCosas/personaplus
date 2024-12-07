@@ -1,5 +1,4 @@
-<!--markdownlint-disable-next-line-->
-<h1 align="center">PersonaPlus</h1>
+# The app is being rewritten
 
 ![PersonaPlus banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/PP_BANNER.webp)
 
