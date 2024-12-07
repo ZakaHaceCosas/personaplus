@@ -56,7 +56,3 @@ For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 
 - Welcome screen
   - Saving values the wrong way, using the display sentence (e.g. "Not too active...") instead of a `"poor" | "small" | ...` value.
-
-### Known issues
-
-- (Dev only) Create page shows "Text strings must be rendered inside a `<Text />` tag" error. I haven't found any text outside BetterText tags, so investigation is required. Doesn't crash the app, though.
