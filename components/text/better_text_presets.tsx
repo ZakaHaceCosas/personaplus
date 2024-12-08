@@ -1,7 +1,7 @@
 import { ReactNode, ReactElement } from "react";
 import BetterText from "@/components/text/better_text";
 import FontSizes from "@/constants/font_sizes";
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 
 /**
  * A pre-made **header**, based on `<BetterText>` and with default styles for design consistency.

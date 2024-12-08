@@ -13,7 +13,7 @@
 
 import React, { ReactNode, ReactElement } from "react";
 import { TextStyle, Text } from "react-native";
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 import { FontFamily, FontWeight } from "@/types/font_weights";
 
 // TypeScript, supongo

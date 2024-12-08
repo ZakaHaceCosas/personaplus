@@ -1,14 +1,14 @@
 import React from "react";
 import BetterButton from "@/components/interaction/better_button";
-import Loading from "@/components/static/loading_re";
+import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
 import BetterTable, { BetterTableItem } from "@/components/ui/better_table";
 import GapView from "@/components/ui/gap_view";
-import Division from "@/components/ui/sections/division_re";
-import Section from "@/components/ui/sections/section_re";
-import ROUTES from "@/constants/routes_re";
-import { OrchestrateUserData } from "@/toolkit/user_re";
-import { logToConsole } from "@/toolkit/debug/console_re";
+import Division from "@/components/ui/sections/division";
+import Section from "@/components/ui/sections/section";
+import ROUTES from "@/constants/routes";
+import { OrchestrateUserData } from "@/toolkit/user";
+import { logToConsole } from "@/toolkit/debug/console";
 import {
     CheckForAnActiveObjectiveDailyStatus,
     GetActiveObjective,
@@ -17,7 +17,7 @@ import {
 } from "@/toolkit/objectives/active_objectives";
 import { ObjectiveDescriptiveIcons } from "@/toolkit/objectives/active_objectives_ui";
 import { ActiveObjective } from "@/types/active_objectives";
-import { FullProfile } from "@/types/user_re";
+import { FullProfile } from "@/types/user";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";

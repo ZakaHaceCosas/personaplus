@@ -1,4 +1,4 @@
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 import GenerateRandomKey from "@/toolkit/key_generator";
 import { Picker } from "@react-native-picker/picker";
 import { TFunction } from "i18next";

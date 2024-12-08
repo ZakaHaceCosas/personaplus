@@ -3,7 +3,7 @@ import BetterText from "@/components/text/better_text";
 import { useTranslation } from "react-i18next";
 import FontSizes from "@/constants/font_sizes";
 import { TFunction } from "i18next";
-import { SafelyGoBack } from "@/toolkit/routing_re";
+import { SafelyGoBack } from "@/toolkit/routing";
 
 type TranslateFunction = ReturnType<typeof useTranslation>["t"];
 

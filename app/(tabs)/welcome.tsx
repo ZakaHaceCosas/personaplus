@@ -7,15 +7,15 @@ import React, {
 } from "react";
 import { router } from "expo-router";
 import { StyleSheet, View, TextInput } from "react-native";
-import Swap, { SwapOption } from "@/components/interaction/swap_re";
+import Swap, { SwapOption } from "@/components/interaction/swap";
 import GapView from "@/components/ui/gap_view";
 import BetterText from "@/components/text/better_text";
 import AsyncStorage from "expo-sqlite/kv-store";
-import { logToConsole } from "@/toolkit/debug/console_re";
+import { logToConsole } from "@/toolkit/debug/console";
 import { useTranslation } from "react-i18next";
-import Colors from "@/constants/colors_re";
-import { FullProfile, FullProfileForCreation } from "@/types/user_re";
-import getCommonScreenSize from "@/constants/screen_re";
+import Colors from "@/constants/colors";
+import { FullProfile, FullProfileForCreation } from "@/types/user";
+import getCommonScreenSize from "@/constants/screen";
 import {
     BetterTextHeader,
     BetterTextSmallText,
@@ -24,18 +24,18 @@ import {
 import { TimerPickerModal } from "react-native-timer-picker";
 import { LinearGradient } from "expo-linear-gradient";
 import { getDefaultLocale } from "@/translations/translate";
-import { ValidateUserData } from "@/toolkit/user_re";
+import { ValidateUserData } from "@/toolkit/user";
 import FontSizes from "@/constants/font_sizes";
-import Select, { SelectOption } from "@/components/interaction/select_re";
+import Select, { SelectOption } from "@/components/interaction/select";
 import BetterButton from "@/components/interaction/better_button";
 import BetterInputField from "@/components/interaction/better_input_field";
 import StoredItemNames from "@/constants/stored_item_names";
-import { formatTimeString } from "@/toolkit/time_re";
-import ROUTES from "@/constants/routes_re";
+import { formatTimeString } from "@/toolkit/time";
+import ROUTES from "@/constants/routes";
 import GetStuffForUserDataQuestion from "@/constants/user_data";
-import URLs from "@/constants/urls_re";
-import { DEFAULT_EXPERIMENTS } from "@/constants/experiments_re";
-import { SafelyOpenUrl } from "@/toolkit/routing_re";
+import URLs from "@/constants/urls";
+import { DEFAULT_EXPERIMENTS } from "@/constants/experiments";
+import { SafelyOpenUrl } from "@/toolkit/routing";
 import BetterAlert from "@/components/ui/better_alert";
 
 // We define the styles

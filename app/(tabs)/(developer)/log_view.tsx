@@ -1,21 +1,21 @@
 import BetterButton from "@/components/interaction/better_button";
-import Loading from "@/components/static/loading_re";
+import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
 import {
     BetterTextSmallText,
     BetterTextSmallerText,
 } from "@/components/text/better_text_presets";
 import GapView from "@/components/ui/gap_view";
-import ROUTES from "@/constants/routes_re";
+import ROUTES from "@/constants/routes";
 import StoredItemNames from "@/constants/stored_item_names";
-import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/console_re";
-import { Logs } from "@/types/logs_re";
+import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/console";
+import { Logs } from "@/types/logs";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { router } from "expo-router";
 import React from "react";
 import { useEffect, useState } from "react";
 import TopBar from "@/components/navigation/top_bar";
-import Console from "@/components/ui/console_re";
+import Console from "@/components/ui/console";
 
 export default function HomeScreen() {
     const [loading, setLoading] = useState<boolean>(true);

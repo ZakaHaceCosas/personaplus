@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import { ColorsObject } from "@/types/color_re";
+import { ColorsObject } from "@/types/color";
 
 /**
  * All the colors used by PersonaPlus, in a HEX (`#123456`) format. They are grouped by categories and theme aware.

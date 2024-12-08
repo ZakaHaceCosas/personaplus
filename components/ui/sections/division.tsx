@@ -6,7 +6,7 @@ import {
     BetterTextSmallText,
 } from "@/components/text/better_text_presets";
 import GapView from "@/components/ui/gap_view";
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 

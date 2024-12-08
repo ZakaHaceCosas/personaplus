@@ -5,9 +5,9 @@ import React from "react";
 import { View } from "react-native";
 import TopBar from "@/components/navigation/top_bar";
 import BetterText from "@/components/text/better_text";
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 import GapView from "@/components/ui/gap_view";
-import { SafelyOpenUrl } from "@/toolkit/routing_re";
+import { SafelyOpenUrl } from "@/toolkit/routing";
 import {
     BetterTextExtraHeader,
     BetterTextSmallHeader,

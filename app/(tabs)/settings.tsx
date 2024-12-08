@@ -1,25 +1,21 @@
 import BetterButton from "@/components/interaction/better_button";
-import Loading from "@/components/static/loading_re";
-import Division from "@/components/ui/sections/division_re";
-import { logToConsole } from "@/toolkit/debug/console_re";
+import Loading from "@/components/static/loading";
+import Division from "@/components/ui/sections/division";
+import { logToConsole } from "@/toolkit/debug/console";
 import React, { useEffect, useState } from "react";
 import StoredItemNames from "@/constants/stored_item_names";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { useTranslation } from "react-i18next";
-import {
-    ErrorUserData,
-    OrchestrateUserData,
-    updateBrm5,
-} from "@/toolkit/user_re";
-import { FullProfile } from "@/types/user_re";
-import ROUTES from "@/constants/routes_re";
+import { ErrorUserData, OrchestrateUserData, updateBrm5 } from "@/toolkit/user";
+import { FullProfile } from "@/types/user";
+import ROUTES from "@/constants/routes";
 import { router } from "expo-router";
 import GapView from "@/components/ui/gap_view";
-import Section from "@/components/ui/sections/section_re";
+import Section from "@/components/ui/sections/section";
 import PageEnd from "@/components/static/page_end";
 import TopBar from "@/components/navigation/top_bar";
 import { cancelScheduledNotifications } from "@/hooks/use_notification";
-import { ShowToast } from "@/toolkit/android_re";
+import { ShowToast } from "@/toolkit/android";
 
 export default function Settings() {
     const [userData, setUserData] = useState<FullProfile>(ErrorUserData);

@@ -21,8 +21,8 @@ import {
 import GapView from "@/components/ui/gap_view";
 import BetterText from "@/components/text/better_text";
 import BackButton from "@/components/navigation/back_button";
-import { SafelyOpenUrl } from "@/toolkit/routing_re";
-import URLs from "@/constants/urls_re";
+import { SafelyOpenUrl } from "@/toolkit/routing";
+import URLs from "@/constants/urls";
 import PageEnd from "../../../components/static/page_end";
 
 export default function License() {

@@ -1,11 +1,11 @@
 import React from "react";
 import BetterButton from "@/components/interaction/better_button";
-import Loading from "@/components/static/loading_re";
+import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
-import Division from "@/components/ui/sections/division_re";
-import Section from "@/components/ui/sections/section_re";
-import ROUTES from "@/constants/routes_re";
-import { logToConsole } from "@/toolkit/debug/console_re";
+import Division from "@/components/ui/sections/division";
+import Section from "@/components/ui/sections/section";
+import ROUTES from "@/constants/routes";
+import { logToConsole } from "@/toolkit/debug/console";
 import {
     DeleteActiveObjective,
     GetAllObjectives,

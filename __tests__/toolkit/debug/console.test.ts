@@ -1,6 +1,6 @@
 import AsyncStorage from "expo-sqlite/kv-store";
-import { logToConsole, getLogsFromStorage } from "@/toolkit/debug/console_re";
-import { Logs } from "@/types/logs_re";
+import { logToConsole, getLogsFromStorage } from "@/toolkit/debug/console";
+import { Logs } from "@/types/logs";
 import { ToastAndroid } from "react-native";
 
 jest.mock("expo-sqlite/kv-store", () => ({

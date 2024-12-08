@@ -1,16 +1,16 @@
 import React from "react";
 import { BetterTextNormalText } from "@/components/text/better_text_presets";
 import { useTranslation } from "react-i18next";
-import type { FullProfile } from "@/types/user_re";
+import type { FullProfile } from "@/types/user";
 import BetterButton from "@/components/interaction/better_button";
-import { ErrorUserData, OrchestrateUserData } from "@/toolkit/user_re";
+import { ErrorUserData, OrchestrateUserData } from "@/toolkit/user";
 import { router } from "expo-router";
-import { logToConsole } from "@/toolkit/debug/console_re";
-import ROUTES from "@/constants/routes_re";
+import { logToConsole } from "@/toolkit/debug/console";
+import ROUTES from "@/constants/routes";
 import { useEffect, useState } from "react";
-import Section from "@/components/ui/sections/section_re";
-import Division from "@/components/ui/sections/division_re";
-import Loading from "@/components/static/loading_re";
+import Section from "@/components/ui/sections/section";
+import Division from "@/components/ui/sections/division";
+import Loading from "@/components/static/loading";
 import GapView from "@/components/ui/gap_view";
 import PageEnd from "@/components/static/page_end";
 import TopBar from "@/components/navigation/top_bar";
@@ -18,10 +18,10 @@ import Ionicons from "@expo/vector-icons/MaterialIcons";
 import FontSizes from "@/constants/font_sizes";
 import { StyleSheet, View, Alert } from "react-native";
 import { version as currentVersion } from "../../package.json";
-import URLs from "@/constants/urls_re";
+import URLs from "@/constants/urls";
 import semver from "semver";
-import { SafelyOpenUrl } from "@/toolkit/routing_re";
-import { ShowToast } from "@/toolkit/android_re";
+import { SafelyOpenUrl } from "@/toolkit/routing";
+import { ShowToast } from "@/toolkit/android";
 
 const styles = StyleSheet.create({
     iconView: {

@@ -12,16 +12,12 @@
  */
 
 import AsyncStorage from "expo-sqlite/kv-store";
-import { logToConsole } from "@/toolkit/debug/console_re";
+import { logToConsole } from "@/toolkit/debug/console";
 import { Alert } from "react-native";
-import {
-    BasicUserData,
-    BasicUserHealthData,
-    FullProfile,
-} from "@/types/user_re";
+import { BasicUserData, BasicUserHealthData, FullProfile } from "@/types/user";
 import { router } from "expo-router";
 import StoredItemNames from "@/constants/stored_item_names";
-import ROUTES from "@/constants/routes_re";
+import ROUTES from "@/constants/routes";
 import { TFunction } from "i18next";
 
 /**

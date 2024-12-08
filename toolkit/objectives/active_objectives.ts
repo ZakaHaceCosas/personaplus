@@ -17,20 +17,20 @@ import {
     ActiveObjectiveWithoutId,
     SupportedActiveObjectives,
 } from "@/types/active_objectives";
-import { logToConsole } from "@/toolkit/debug/console_re";
+import { logToConsole } from "@/toolkit/debug/console";
 import AsyncStorage from "expo-sqlite/kv-store";
 import {
     adjustedToday,
     getCurrentDate,
     TodaysDay,
-} from "@/toolkit/debug/today_re";
+} from "@/toolkit/debug/today";
 import StoredItemNames from "@/constants/stored_item_names";
-import ROUTES from "@/constants/routes_re";
+import ROUTES from "@/constants/routes";
 import { router } from "expo-router";
-import { GetExperiments } from "@/toolkit/experiments_re";
+import { GetExperiments } from "@/toolkit/experiments";
 import CoreLibrary from "@/core/core";
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
-import { BasicUserHealthData } from "@/types/user_re";
+import { BasicUserHealthData } from "@/types/user";
 import { ShowToast } from "../android";
 import { TFunction } from "i18next";
 

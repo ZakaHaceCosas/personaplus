@@ -14,12 +14,12 @@
 import React, { ReactElement, useState } from "react";
 import { DimensionValue, Pressable, StyleSheet } from "react-native";
 import BetterText from "@/components/text/better_text";
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
-import { UniversalItemStyle } from "@/constants/ui/pressables_re";
-import { Color, PrimaryColorsType } from "@/types/color_re";
+import { UniversalItemStyle } from "@/constants/ui/pressables";
+import { Color, PrimaryColorsType } from "@/types/color";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import { logToConsole } from "@/toolkit/debug/console_re";
+import { logToConsole } from "@/toolkit/debug/console";
 
 // TypeScript, supongo
 interface BetterButtonIcon {

@@ -4,7 +4,7 @@ import { BetterTextSmallText } from "@/components/text/better_text_presets";
 import * as Router from "expo-router";
 import { LayoutContainer } from "@/app/(tabs)/_layout";
 import GapView from "@/components/ui/gap_view";
-import ROUTES from "@/constants/routes_re";
+import ROUTES from "@/constants/routes";
 import TopBar from "@/components/navigation/top_bar";
 import { useTranslation } from "react-i18next";
 

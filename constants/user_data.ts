@@ -1,5 +1,5 @@
-import { SelectOption } from "@/components/interaction/select_re";
-import { SwapOption } from "@/components/interaction/swap_re";
+import { SelectOption } from "@/components/interaction/select";
+import { SwapOption } from "@/components/interaction/swap";
 import { CoreLibraryType_Activeness } from "@/core/types/misc_types";
 import { useTranslation } from "react-i18next";
 
