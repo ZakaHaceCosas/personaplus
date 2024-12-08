@@ -15,7 +15,7 @@ import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { Fragment, useEffect } from "react";
-import "@/translations/translate_re";
+import "@/translations/translate";
 import { StatusBar } from "react-native";
 import Colors from "@/constants/colors_re";
 

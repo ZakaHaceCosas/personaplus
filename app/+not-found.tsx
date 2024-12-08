@@ -2,7 +2,7 @@ import React from "react";
 import BetterButton from "@/components/interaction/better_button";
 import { BetterTextSmallText } from "@/components/text/better_text_presets";
 import * as Router from "expo-router";
-import { LayoutContainer } from "@/app/(tabs)/_layout-re";
+import { LayoutContainer } from "@/app/(tabs)/_layout";
 import GapView from "@/components/ui/gap_view";
 import ROUTES from "@/constants/routes_re";
 import TopBar from "@/components/navigation/top_bar";
