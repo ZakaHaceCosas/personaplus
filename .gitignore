@@ -68,9 +68,3 @@ local.properties
 *.deprecated.*
 # ignore changelog
 !CHANGELOG.deprecated.md
-
-# archived files
-archive/
-
-# this
-FIXED_ERROR_LOG.md

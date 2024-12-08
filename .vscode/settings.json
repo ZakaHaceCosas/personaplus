@@ -1,7 +1,7 @@
 {
     "files.exclude": {
-        "**/node_modules": true,
-        "**/.git": true,
+        "**/node_modules": false,
+        "**/.git": false,
         "**/.svn": true,
         "**/.hg": true,
         "**/CVS": true,
@@ -163,6 +163,7 @@
         "fastfood",
         "geolocation",
         "giveitaplus",
+        "gradlew",
         "Hagámoslo",
         "haptics",
         "hermes",
@@ -170,6 +171,7 @@
         "Ionicons",
         "jetbrains",
         "kotlin",
+        "mobileprovision",
         "nevermind",
         "Nevermind",
         "ONERM",
