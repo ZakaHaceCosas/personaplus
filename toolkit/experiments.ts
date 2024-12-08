@@ -1,8 +1,8 @@
 import StoredItemNames from "@/constants/stored_item_names";
-import { Experiment, Experiments } from "@/types/user_re";
+import { Experiment, Experiments } from "@/types/user";
 import { AsyncStorage } from "expo-sqlite/kv-store";
-import { logToConsole } from "@/toolkit/debug/console_re";
-import { DEFAULT_EXPERIMENTS } from "@/constants/experiments_re";
+import { logToConsole } from "@/toolkit/debug/console";
+import { DEFAULT_EXPERIMENTS } from "@/constants/experiments";
 
 /**
  * Returns all experiments and their status.

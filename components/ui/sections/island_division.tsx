@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { View, StyleSheet } from "react-native";
-import Colors from "@/constants/colors_re";
-import getCommonScreenSize from "@/constants/screen_re";
+import Colors from "@/constants/colors";
+import getCommonScreenSize from "@/constants/screen";
 
 interface IslandDivisionProps {
     alignment: "center" | "start";

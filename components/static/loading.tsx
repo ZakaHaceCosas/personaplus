@@ -4,7 +4,7 @@
 import React, { ReactElement } from "react";
 import BetterText from "@/components/text/better_text";
 import { useTranslation } from "react-i18next";
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
 
 /**

@@ -4,7 +4,7 @@ import BetterText from "@/components/text/better_text";
 import GapView from "@/components/ui/gap_view";
 import BetterButton from "@/components/interaction/better_button";
 import { ActiveObjective } from "@/types/active_objectives";
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 import { useTranslation } from "react-i18next";
 import {
     BetterTextSmallHeader,

@@ -12,8 +12,8 @@
  */
 
 import NavigationBar from "@/components/navigation/navigation_bar";
-import Colors from "@/constants/colors_re";
-import ROUTES from "@/constants/routes_re";
+import Colors from "@/constants/colors";
+import ROUTES from "@/constants/routes";
 
 import * as Router from "expo-router";
 import React, { ReactNode, useEffect, useState } from "react";

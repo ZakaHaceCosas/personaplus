@@ -8,10 +8,10 @@ import BetterText from "@/components/text/better_text";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/ui/gap_view";
 import { useTranslation } from "react-i18next";
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
-import ROUTES from "@/constants/routes_re";
-import { GetExperiments } from "@/toolkit/experiments_re";
+import ROUTES from "@/constants/routes";
+import { GetExperiments } from "@/toolkit/experiments";
 
 // TypeScript, supongo
 interface SectionProps {

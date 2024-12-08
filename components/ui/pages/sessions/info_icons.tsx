@@ -7,7 +7,7 @@ import GapView from "@/components/ui/gap_view";
 import { ActiveObjective } from "@/types/active_objectives";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import BetterText from "@/components/text/better_text";
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 import { TFunction } from "i18next";
 
 // TypeScript, supongo...

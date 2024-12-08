@@ -1,4 +1,4 @@
-import SafelyGoBack from "@/toolkit/routing_re";
+import { SafelyGoBack } from "@/toolkit/routing";
 
 describe("SafelyGoBack", () => {
     test("safely goes back without issues", () => {

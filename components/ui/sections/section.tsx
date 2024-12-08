@@ -6,9 +6,9 @@ import BetterText from "@/components/text/better_text";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import GapView from "@/components/ui/gap_view";
 import { useTranslation } from "react-i18next";
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
-import getCommonScreenSize from "@/constants/screen_re";
+import getCommonScreenSize from "@/constants/screen";
 
 // TypeScript, supongo
 /**

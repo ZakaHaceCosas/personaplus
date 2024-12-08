@@ -1,10 +1,10 @@
 import React, { useState, useEffect, ReactElement } from "react";
 import { StyleSheet, View, Pressable } from "react-native";
 import BetterText from "@/components/text/better_text";
-import Colors from "@/constants/colors_re";
-import getCommonScreenSize from "@/constants/screen_re";
+import Colors from "@/constants/colors";
+import getCommonScreenSize from "@/constants/screen";
 import FontSizes from "@/constants/font_sizes";
-import { UniversalItemStyle } from "@/constants/ui/pressables_re";
+import { UniversalItemStyle } from "@/constants/ui/pressables";
 
 /**
  * SwapOption

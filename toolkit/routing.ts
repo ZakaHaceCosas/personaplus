@@ -1,7 +1,7 @@
 import { router } from "expo-router";
-import { logToConsole } from "@/toolkit/debug/console_re";
-import ROUTES from "@/constants/routes_re";
-import { URLValues } from "@/constants/urls_re";
+import { logToConsole } from "@/toolkit/debug/console";
+import ROUTES from "@/constants/routes";
+import { URLValues } from "@/constants/urls";
 import { Linking } from "react-native";
 
 /** Goes back safely. This means, if an error happens and the app can't go back, instead of getting stuck, it will go home. */

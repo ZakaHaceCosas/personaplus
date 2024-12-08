@@ -1,6 +1,6 @@
-import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user_re";
+import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
 import AsyncStorage from "expo-sqlite/kv-store";
-import { FullProfile } from "@/types/user_re";
+import { FullProfile } from "@/types/user";
 
 jest.mock("expo-sqlite/kv-store", () => ({
     getItemSync: jest.fn(),

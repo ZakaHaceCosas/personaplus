@@ -19,19 +19,19 @@ import {
 } from "@/types/active_objectives";
 import GenerateRandomMessage from "@/toolkit/random_message";
 import BetterText from "@/components/text/better_text";
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
-import { UniversalItemStyle } from "@/constants/ui/pressables_re";
-import Select, { SelectOption } from "@/components/interaction/select_re";
-import { logToConsole } from "@/toolkit/debug/console_re";
+import { UniversalItemStyle } from "@/constants/ui/pressables";
+import Select, { SelectOption } from "@/components/interaction/select";
+import { logToConsole } from "@/toolkit/debug/console";
 import BetterButton from "@/components/interaction/better_button";
-import getCommonScreenSize from "@/constants/screen_re";
+import getCommonScreenSize from "@/constants/screen";
 import PageEnd from "@/components/static/page_end";
 import { CreateActiveObjective } from "@/toolkit/objectives/active_objectives";
 import { router } from "expo-router";
-import ROUTES from "@/constants/routes_re";
-import { Experiments } from "@/types/user_re";
-import { GetExperiments } from "@/toolkit/experiments_re";
+import ROUTES from "@/constants/routes";
+import { Experiments } from "@/types/user";
+import { GetExperiments } from "@/toolkit/experiments";
 import TopBar from "@/components/navigation/top_bar";
 
 const styles = StyleSheet.create({

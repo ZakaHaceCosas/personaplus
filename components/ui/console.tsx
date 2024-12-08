@@ -1,10 +1,10 @@
 import React from "react";
-import getCommonScreenSize from "@/constants/screen_re";
+import getCommonScreenSize from "@/constants/screen";
 import { View, Text, StyleSheet } from "react-native";
 import { BetterTextSmallText } from "../text/better_text_presets";
 import GapView from "./gap_view";
-import { Logs } from "@/types/logs_re";
-import Colors from "@/constants/colors_re";
+import { Logs } from "@/types/logs";
+import Colors from "@/constants/colors";
 
 const styles = StyleSheet.create({
     consoleView: {

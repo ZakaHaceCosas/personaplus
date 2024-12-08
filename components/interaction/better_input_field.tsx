@@ -13,9 +13,9 @@
 
 import React, { ReactNode } from "react";
 import { TextInput, StyleSheet } from "react-native";
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 import { BetterTextSmallText } from "@/components/text/better_text_presets";
-import { UniversalItemStyle } from "@/constants/ui/pressables_re";
+import { UniversalItemStyle } from "@/constants/ui/pressables";
 import GenerateRandomKey from "@/toolkit/key_generator";
 import GapView from "@/components/ui/gap_view";
 

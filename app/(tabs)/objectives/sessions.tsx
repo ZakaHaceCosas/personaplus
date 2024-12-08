@@ -12,24 +12,24 @@ import {
 import { router, useGlobalSearchParams } from "expo-router";
 import BetterText from "@/components/text/better_text";
 import GapView from "@/components/ui/gap_view";
-import { logToConsole } from "@/toolkit/debug/console_re";
+import { logToConsole } from "@/toolkit/debug/console";
 import { CountdownCircleTimer } from "rn-countdown-timer";
 import { useTranslation } from "react-i18next";
 import BetterButton from "@/components/interaction/better_button";
 import SessionsPageInfoIcons from "@/components/ui/pages/sessions/info_icons";
-import Colors from "@/constants/colors_re";
-import Loading from "@/components/static/loading_re";
+import Colors from "@/constants/colors";
+import Loading from "@/components/static/loading";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import SessionsPageHelpView from "@/components/ui/pages/sessions/help_view";
 import { ActiveObjective } from "@/types/active_objectives";
-import getCommonScreenSize from "@/constants/screen_re";
+import getCommonScreenSize from "@/constants/screen";
 import IslandDivision from "@/components/ui/sections/island_division";
 import GenerateRandomMessage from "@/toolkit/random_message";
-import ROUTES from "@/constants/routes_re";
-import { Color } from "@/types/color_re";
-import { BasicUserHealthData } from "@/types/user_re";
-import { OrchestrateUserData } from "@/toolkit/user_re";
-import { ShowToast } from "@/toolkit/android_re";
+import ROUTES from "@/constants/routes";
+import { Color } from "@/types/color";
+import { BasicUserHealthData } from "@/types/user";
+import { OrchestrateUserData } from "@/toolkit/user";
+import { ShowToast } from "@/toolkit/android";
 
 // TypeScript, supongo
 // this type is a glue fix, otherwise a type error happens because SessionParams is not compatible with UnknownInputParams from ExpoRouter

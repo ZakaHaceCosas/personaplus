@@ -1,16 +1,16 @@
 import React from "react";
-import Loading from "@/components/static/loading_re";
+import Loading from "@/components/static/loading";
 import {
     BetterTextSmallText,
     BetterTextSmallerText,
 } from "@/components/text/better_text_presets";
-import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/console_re";
-import { Logs } from "@/types/logs_re";
+import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/console";
+import { Logs } from "@/types/logs";
 import { useEffect, useState } from "react";
 import GapView from "@/components/ui/gap_view";
 import PageEnd from "@/components/static/page_end";
 import TopBar from "@/components/navigation/top_bar";
-import Console from "@/components/ui/console_re";
+import Console from "@/components/ui/console";
 
 export default function ErrorLogger() {
     const [loading, setLoading] = useState<boolean>(true);

@@ -1,5 +1,5 @@
 import AsyncStorage from "expo-sqlite/kv-store";
-import { Log, LogTraceback } from "@/types/logs_re";
+import { Log, LogTraceback } from "@/types/logs";
 import StoredItemNames from "@/constants/stored_item_names";
 import { ShowToast } from "../android";
 

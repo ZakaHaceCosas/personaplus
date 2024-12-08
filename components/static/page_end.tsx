@@ -3,8 +3,8 @@ import { StyleSheet, View } from "react-native";
 import { useTranslation } from "react-i18next";
 import BetterText from "@/components/text/better_text";
 import FontSizes from "@/constants/font_sizes";
-import Colors from "@/constants/colors_re";
-import getCommonScreenSize from "@/constants/screen_re";
+import Colors from "@/constants/colors";
+import getCommonScreenSize from "@/constants/screen";
 
 interface PageEndProps {
     includeText: boolean;

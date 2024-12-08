@@ -17,7 +17,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { Fragment, useEffect } from "react";
 import "@/translations/translate";
 import { StatusBar } from "react-native";
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

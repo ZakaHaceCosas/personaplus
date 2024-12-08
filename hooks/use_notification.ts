@@ -15,11 +15,11 @@ import {
     SchedulableTriggerInputTypes,
     getAllScheduledNotificationsAsync,
 } from "expo-notifications";
-import { logToConsole } from "@/toolkit/debug/console_re";
+import { logToConsole } from "@/toolkit/debug/console";
 import Constants from "expo-constants";
 import { TFunction } from "i18next";
 import GenerateRandomMessage from "@/toolkit/random_message";
-import { ShowToast } from "@/toolkit/android_re";
+import { ShowToast } from "@/toolkit/android";
 
 /**
  * Function to register for using the push notifications.

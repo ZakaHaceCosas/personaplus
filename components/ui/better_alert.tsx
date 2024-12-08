@@ -15,10 +15,10 @@ import React, { ReactElement } from "react";
 import { StyleSheet, View } from "react-native";
 import BetterText from "@/components/text/better_text";
 import GapView from "@/components/ui/gap_view";
-import Colors from "@/constants/colors_re";
-import getCommonScreenSize from "@/constants/screen_re";
-import { UniversalItemStyle } from "@/constants/ui/pressables_re";
-import { PrimaryColorsType } from "@/types/color_re";
+import Colors from "@/constants/colors";
+import getCommonScreenSize from "@/constants/screen";
+import { UniversalItemStyle } from "@/constants/ui/pressables";
+import { PrimaryColorsType } from "@/types/color";
 
 // TypeScript, supongo
 /**

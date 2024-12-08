@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useColorScheme } from "react-native";
 import AsyncStorage from "expo-sqlite/kv-store";
-import { logToConsole } from "@/toolkit/debug/console_re";
+import { logToConsole } from "@/toolkit/debug/console";
 import StoredItemNames from "@/constants/stored_item_names";
 
 export function useTheme(): "light" | "dark" {

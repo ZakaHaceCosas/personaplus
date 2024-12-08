@@ -1,4 +1,4 @@
-import { TodaysDay } from "@/toolkit/debug/today_re";
+import { TodaysDay } from "@/toolkit/debug/today";
 
 /**
  * A type with all supported active objectives. **Tied to const `SupportedActiveObjectivesList`, note that in case of modifications.**

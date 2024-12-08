@@ -13,7 +13,7 @@
 
 import React, { useEffect, useState } from "react";
 import BetterButton from "@/components/interaction/better_button";
-import Loading from "@/components/static/loading_re";
+import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
 import {
     BetterTextHeader,
@@ -22,15 +22,15 @@ import {
 } from "@/components/text/better_text_presets";
 import BetterAlert from "@/components/ui/better_alert";
 import GapView from "@/components/ui/gap_view";
-import Division from "@/components/ui/sections/division_re";
-import Section from "@/components/ui/sections/section_re";
-import { GetExperiments, ToggleExperiment } from "@/toolkit/experiments_re";
-import { SafelyGoBack } from "@/toolkit/routing_re";
-import { logToConsole } from "@/toolkit/debug/console_re";
-import { Experiment, Experiments } from "@/types/user_re";
+import Division from "@/components/ui/sections/division";
+import Section from "@/components/ui/sections/section";
+import { GetExperiments, ToggleExperiment } from "@/toolkit/experiments";
+import { SafelyGoBack } from "@/toolkit/routing";
+import { logToConsole } from "@/toolkit/debug/console";
+import { Experiment, Experiments } from "@/types/user";
 import { Alert } from "react-native";
 import TopBar from "@/components/navigation/top_bar";
-import { ShowToast } from "@/toolkit/android_re";
+import { ShowToast } from "@/toolkit/android";
 import { useTranslation } from "react-i18next";
 // import { router } from "expo-router";
 

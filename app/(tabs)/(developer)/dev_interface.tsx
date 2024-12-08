@@ -1,6 +1,6 @@
 import React from "react";
 import BetterButton from "@/components/interaction/better_button";
-import Loading from "@/components/static/loading_re";
+import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
 import {
     BetterTextSmallText,
@@ -9,9 +9,9 @@ import {
 import BetterAlert from "@/components/ui/better_alert";
 import BetterTable, { BetterTableItem } from "@/components/ui/better_table";
 import GapView from "@/components/ui/gap_view";
-import ROUTES from "@/constants/routes_re";
+import ROUTES from "@/constants/routes";
 import StoredItemNames from "@/constants/stored_item_names";
-import { logToConsole } from "@/toolkit/debug/console_re";
+import { logToConsole } from "@/toolkit/debug/console";
 import {
     GetActiveObjectiveDailyLog,
     GetAllObjectives,
@@ -20,13 +20,13 @@ import {
     ActiveObjective,
     ActiveObjectiveDailyLog,
 } from "@/types/active_objectives";
-import { FullProfile } from "@/types/user_re";
+import { FullProfile } from "@/types/user";
 import AsyncStorage from "expo-sqlite/kv-store";
 import * as Device from "expo-device";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import TopBar from "@/components/navigation/top_bar";
-import { ShowToast } from "@/toolkit/android_re";
+import { ShowToast } from "@/toolkit/android";
 
 export default function HomeScreen() {
     const [loading, setLoading] = useState<boolean>(true);

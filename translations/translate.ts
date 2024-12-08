@@ -4,8 +4,8 @@ import AsyncStorage from "expo-sqlite/kv-store";
 // somehow unused: import { getLocales } from 'expo-localization';
 import enTranslations from "@/translations/en.json";
 import esTranslations from "@/translations/es.json";
-import { FullProfile } from "@/types/user_re";
-import { logToConsole } from "@/toolkit/debug/console_re";
+import { FullProfile } from "@/types/user";
+import { logToConsole } from "@/toolkit/debug/console";
 import StoredItemNames from "@/constants/stored_item_names";
 
 // Defines available translates

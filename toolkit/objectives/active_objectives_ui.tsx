@@ -6,7 +6,7 @@ import { BetterTextSmallText } from "@/components/text/better_text_presets";
 import { StyleSheet, View } from "react-native";
 import GapView from "@/components/ui/gap_view";
 import { useTranslation } from "react-i18next";
-import Colors from "@/constants/colors_re";
+import Colors from "@/constants/colors";
 
 const styles = StyleSheet.create({
     view: {
