@@ -1,2 +1,8 @@
-divineProtection:
-- updater
+divineProtection: "updater"
+lintCmd: "lint"
+prettyCmd: "prettify"
+destroy:
+    intensities: [ "*" ]
+    targets:
+      - ".expo/"
+commitActions: false
