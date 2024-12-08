@@ -252,6 +252,36 @@ function SaveActiveObjectiveToDailyLog()
 function ToDailyLog()
 ```
 
+While PascalCase or camelCase look pretty, avoid them for naming files. Use snake_case or kebab-case (we prefer snake) for file names, as some filesystems aren't case sensitive but others are and it ends up breaking this.
+
+**✅ Do:**
+
+```ts
+import { a } from "@/module_a.ts";
+import { b } from "@/module-b.ts";
+```
+
+**❌ Do not:**
+
+```ts
+import { a } from "@/ModuleA.ts";
+import { b } from "@/moduleB.ts";
+```
+
+Make function names descriptive.
+
+**✅ Do:**
+
+```ts
+function SaveActiveObjectiveToDailyLog()
+```
+
+**❌ Do not:**
+
+```ts
+function ToDailyLog()
+```
+
 ### Keeping code readable
 
 Comment your functions so we know what they do. Use JSDoc.
