@@ -103,12 +103,12 @@ async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog | n
  * @async
  * @param {number} id ID of the objective
  * @param {boolean} wasDone Whether the objective was done or not.
- * @param {?object} [performance] Results for the session from CoreLibrary. Optional (the user could have not done the objective, so no data would exist).
+ * @param {?CoreLibraryResponse} [performance] Results for the session from CoreLibrary. Optional (the user could have not done the objective, so no data would exist).
  */
 async function SaveActiveObjectiveToDailyLog(
     id: number,
     wasDone: boolean,
-    performance?: object,
+    performance?: CoreLibraryResponse,
 ) {
     try {
         // Fetch old data
