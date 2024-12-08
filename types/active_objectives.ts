@@ -1,3 +1,4 @@
+import { CoreLibraryResponse } from "@/core/types/core_library_response";
 import { TodaysDay } from "@/toolkit/debug/today";
 
 /**
@@ -150,11 +151,11 @@ interface ActiveObjectiveDailyLogEntry {
      */
     wasDone: boolean;
     /**
-     * The performance data for this session (as it's an ActiveObjective). Due to the fact CoreLibrary's responses are a bit unpredictable, it's a generic `object` where anything's valid. `0` represents a null / empty value (usually when `wasDone` is false).
+     * The performance data for this session (as it's an ActiveObjective). A CoreLibrary standard response. `0` represents a null / empty value (usually when `wasDone` is false).
      *
-     * @type {(object | 0)}
+     * @type {(CoreLibraryResponse | 0)}
      */
-    performance: object | 0;
+    performance: CoreLibraryResponse | 0;
 }
 
 /**
