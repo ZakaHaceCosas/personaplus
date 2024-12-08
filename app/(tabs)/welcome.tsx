@@ -23,7 +23,7 @@ import {
 } from "@/components/text/better_text_presets";
 import { TimerPickerModal } from "react-native-timer-picker";
 import { LinearGradient } from "expo-linear-gradient";
-import { getDefaultLocale } from "@/translations/translate_re";
+import { getDefaultLocale } from "@/translations/translate";
 import { ValidateUserData } from "@/toolkit/user_re";
 import FontSizes from "@/constants/font_sizes";
 import Select, { SelectOption } from "@/components/interaction/select_re";

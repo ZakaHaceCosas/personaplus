@@ -31,7 +31,7 @@ import { GetExperiments } from "@/toolkit/experiments_re";
 import CoreLibrary from "@/core/core";
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
 import { BasicUserHealthData } from "@/types/user_re";
-import { ShowToast } from "../android_re";
+import { ShowToast } from "../android";
 import { TFunction } from "i18next";
 
 /**
