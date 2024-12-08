@@ -2,7 +2,7 @@
 CALCULATE LIFTING PERFORMANCE
 */
 
-import { default as OneRepetitionMax } from "@/core/physicalHealth/OneRepMax";
+import { default as OneRepetitionMax } from "@/core/physical_health/one_rep_max";
 import CreateComponentDataUtilities from "@/core/tools/core_library_data_builder";
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
 

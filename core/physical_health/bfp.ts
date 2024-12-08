@@ -2,7 +2,7 @@
 CALCULATE BODY FAT PERCENTAGE
 */
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
-import calculateBodyMassIndex from "@/core/physicalHealth/BodyMassIndex";
+import calculateBodyMassIndex from "@/core/physical_health/bmi";
 import CreateComponentDataUtilities from "@/core/tools/core_library_data_builder";
 
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
