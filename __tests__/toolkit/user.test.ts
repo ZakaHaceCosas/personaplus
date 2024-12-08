@@ -19,6 +19,7 @@ const samplesValidProfile: FullProfile = {
     focus: "exercising",
     isNewUser: false,
     sleepHours: 9,
+    wantsNotifications: false,
 };
 
 const mockGetItemSync = AsyncStorage.getItemSync as jest.MockedFunction<

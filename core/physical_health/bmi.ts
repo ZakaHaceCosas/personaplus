@@ -7,7 +7,7 @@ import CreateComponentDataUtilities from "@/core/tools/core_library_data_builder
 import {
     MALE_PERCENTILES,
     FEMALE_PERCENTILES,
-} from "@/core/physicalHealth/utils/bmiPercentiles";
+} from "@/core/physical_health/utils/bmi_percentiles";
 
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "10/08/2024",

@@ -4,36 +4,36 @@
 const ROUTES = {
     MAIN: {
         HOME: "/",
-        PROFILE: "/Profile",
-        DASHBOARD: "/Dashboard",
-        WELCOME_SCREEN: "/Welcome",
+        PROFILE: "/profile",
+        DASHBOARD: "/dashboard",
+        WELCOME_SCREEN: "/welcome",
         SETTINGS: {
-            UPDATE_PROFILE: "/UpdateProfile",
-            SETTINGS_PAGE: "/Settings",
+            UPDATE_PROFILE: "/update_profile",
+            SETTINGS_PAGE: "/settings",
         },
     },
     DEV_INTERFACE: {
-        HOME: "/DevInterface",
-        LOG_VIEW: "/LogView",
-        ERROR_LOG_VIEW: "/ErrorLogger",
-        EXPERIMENTS: "/DevExperiments",
+        HOME: "/dev_interface",
+        LOG_VIEW: "/log_view",
+        ERROR_LOG_VIEW: "/error_logger",
+        EXPERIMENTS: "/dev_experiments",
     },
     ACTIVE_OBJECTIVES: {
-        CREATE: "/objectives/Create",
-        SESSION: "/objectives/Sessions",
-        RESULTS: "/objectives/Results",
+        CREATE: "/objectives/create",
+        SESSION: "/objectives/sessions",
+        RESULTS: "/objectives/results",
     },
     ABOUT: {
-        LICENSE: "/about/License",
-        ABOUT_PAGE: "/about/About",
-        CREDITS: "/about/Credits",
+        LICENSE: "/about/license",
+        ABOUT_PAGE: "/about/about",
+        CREDITS: "/about/credits",
     },
     /**
      * Experimental features should live in separate pages, listed here.
      */
     EXPERIMENTS: {
-        TRACKER: "/objectives/Tracker",
-        REPORT: "/Report",
+        TRACKER: "/objectives/tracker",
+        REPORT: "/report",
     },
 };
 

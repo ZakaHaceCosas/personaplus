@@ -1,7 +1,7 @@
 import CoreLibrary from "@/core/core";
 import { expect } from "@jest/globals";
 import type { MatcherFunction } from "expect";
-import { getPercentile } from "@/core/physicalHealth/BodyMassIndex";
+import { getPercentile } from "@/core/physical_health/bmi";
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
 
 // there is a possible error margin for CoreLibrary's calculations, so this custom function allows for minimal errors within an acceptable range to pass the tests

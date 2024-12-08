@@ -5,12 +5,12 @@
 
 // PHYSICAL HEALTH
 
-import * as BodyMassIndex from "@/core/physicalHealth/BodyMassIndex";
-import * as BodyFatPercentage from "@/core/physicalHealth/BodyFatPercentage";
-import * as IdealBodyWeight from "@/core/physicalHealth/IdealBodyWeight";
-import * as BasalMetabolicRate from "@/core/physicalHealth/BasalMetabolicRate";
-import * as MetabolicEquivalentOfTask from "@/core/physicalHealth/MetabolicEquivalentOfTask";
-import * as OneRepMax from "@/core/physicalHealth/OneRepMax";
+import * as BodyMassIndex from "@/core/physical_health/bmi";
+import * as BodyFatPercentage from "@/core/physical_health/bfp";
+import * as IdealBodyWeight from "@/core/physical_health/ibw";
+import * as BasalMetabolicRate from "@/core/physical_health/bmr";
+import * as MetabolicEquivalentOfTask from "@/core/physical_health/met";
+import * as OneRepMax from "@/core/physical_health/one_rep_max";
 
 // PERFORMANCE
 
