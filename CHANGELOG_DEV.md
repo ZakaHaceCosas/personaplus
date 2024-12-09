@@ -1,3 +1,4 @@
+<!-- markdownlint-disable-file MD024 -->
 # PersonaPlus Developer Changelog
 
 All changes related to the app's development (codebase and others) will be documented in this file.
@@ -6,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
+
+## Unreleased
+
+### Fixed
+
+- Fixed an issue that made ESLint and Prettier VSCode extensions conflict, leading to code formatting issues.
 
 ## [0.0.6-preapp.26] - 07-12-2024
 
