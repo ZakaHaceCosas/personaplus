@@ -200,7 +200,7 @@ import { SomeConstant } from "@/constants/something.ts";
 export default function MainComponent() {
     const myVariable = "something";
 
-    const otherThing = myVariable + " " + SomeConstant.OTHER_THING;
+    const otherThing = `${myVariable} ${SomeConstant.OTHER_THING}`;
 
     return otherThing
 }
@@ -214,7 +214,7 @@ import { someConstant } from "@/constants/something.ts";
 export default function mainComponent() {
     const my_variable = "something";
 
-    const other_thing = my_variable + " " + someConstant.otherThing;
+    const other_thing = `${my_variable} ${someConstant.otherThing}`;
 
     return other_thing
 }

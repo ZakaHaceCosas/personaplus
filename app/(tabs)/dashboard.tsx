@@ -39,7 +39,7 @@ export default function Dashboard() {
                     await GetAllObjectives();
                 setActiveObjectives(objectives);
             } catch (e) {
-                logToConsole("Error fetching Active Objectives: " + e, "error");
+                logToConsole(`Error fetching Active Objectives: ${e}`, "error");
             } finally {
                 setLoading(false);
             }
@@ -59,7 +59,7 @@ export default function Dashboard() {
             );
         } catch (e) {
             logToConsole(
-                "Error deleting objective " + identifier + ": " + e,
+                `Error deleting objective ${identifier}: ${e}`,
                 "error",
             );
         }

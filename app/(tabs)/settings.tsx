@@ -33,7 +33,7 @@ export default function Settings() {
                 }
                 setUserData(profile);
             } catch (e) {
-                logToConsole("Error orchestrating user data: " + e, "error");
+                logToConsole(`Error orchestrating user data: ${e}`, "error");
             } finally {
                 setLoading(false);
             }
@@ -56,7 +56,7 @@ export default function Settings() {
                     : "Done! Restart the app to apply your changes.",
             );
         } catch (e) {
-            logToConsole("Error changing language:" + e, "error");
+            logToConsole(`Error changing language: ${e}`, "error");
         }
     }
 
@@ -77,7 +77,7 @@ export default function Settings() {
             );
             router.replace(ROUTES.MAIN.SETTINGS.SETTINGS_PAGE);
         } catch (e) {
-            logToConsole("Error toggling notifications:" + e, "error");
+            logToConsole(`Error toggling notifications: ${e}`, "error");
         }
     }
 

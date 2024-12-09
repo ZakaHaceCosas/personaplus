@@ -20,7 +20,7 @@ export function useTheme(): "light" | "dark" {
                         : (systemTheme ?? "dark"),
                 );
             } catch (e) {
-                logToConsole("Error fetching theme:" + e, "error");
+                logToConsole(`Error fetching theme: ${e}`, "error");
                 setTheme(systemTheme ?? "dark");
             }
         }

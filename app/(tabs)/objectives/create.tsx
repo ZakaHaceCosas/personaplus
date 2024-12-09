@@ -434,10 +434,8 @@ export default function CreateActiveObjectivePage() {
                         );
                     } else {
                         logToConsole(
-                            "Invalid exercise value: " + value,
+                            `Invalid exercise value: ${value}`,
                             "error",
-                            undefined,
-                            false,
                         );
                     }
                 }}

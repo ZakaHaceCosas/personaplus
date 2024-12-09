@@ -82,7 +82,7 @@ export default function EpicExperiments() {
                 const theExperiments = await GetExperiments();
                 setExperiments(theExperiments);
             } catch (e) {
-                logToConsole("Error getting experiments: " + e, "error");
+                logToConsole(`Error getting experiments: ${e}`, "error");
             } finally {
                 setLoading(false);
             }

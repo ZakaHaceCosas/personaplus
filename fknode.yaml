@@ -5,4 +5,5 @@ destroy:
     intensities: [ "*" ]
     targets:
       - ".expo/"
-commitActions: false
+commitActions: true
+commitMessage: "(chore) code quality task (automated by F*ckingNode)"
