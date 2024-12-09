@@ -9,12 +9,14 @@ export function SafelyGoBack(target?: string): void {
     try {
         if (router.canGoBack()) {
             router.back();
+            return;
         } else {
             router.replace(target ?? ROUTES.MAIN.HOME);
+            return;
         }
     } catch (e) {
-        logToConsole("Error when (safely) going back!" + e, "error");
-        throw e;
+        logToConsole(`Error (safely) going back! ${e}`, "error");
+        return;
     }
 }
 
