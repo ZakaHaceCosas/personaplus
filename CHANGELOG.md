@@ -1,3 +1,4 @@
+<!-- <!-- markdownlint-disable-file MD024 -->
 # PersonaPlus Changelog
 
 All notable changes will be documented in this file.
@@ -7,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > [!NOTE]
 > For changes related to development, see [CHANGELOG_DEV.md](CHANGELOG_DEV.md).
+
+## Unreleased
+
+### Fixed
+
+- Fixed a performance issue in the homepage caused by notification validation looping itself. The "Loading..." screen became slightly longer, in exchange.
 
 ## [0.0.6-preapp.26] - 07-12-2024
 
