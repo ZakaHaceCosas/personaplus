@@ -41,11 +41,18 @@ export default function HomeScreen() {
     const { t } = useTranslation();
     const [userData, setUserData] = useState<FullProfile>();
     const [loading, setLoading] = useState<boolean>(true);
-    const [allObjectivesForTable, setAllObjectivesForTable] = useState<BetterTableItem[]>([]);
-    const [renderedObjectives, setRenderedObjectives] = useState<ActiveObjective[] | null>(null);
-    const [identifiers, setIdentifiers] = useState<number[] | false | 0 | null>(null);
+    const [allObjectivesForTable, setAllObjectivesForTable] = useState<
+        BetterTableItem[]
+    >([]);
+    const [renderedObjectives, setRenderedObjectives] = useState<
+        ActiveObjective[] | null
+    >(null);
+    const [identifiers, setIdentifiers] = useState<number[] | false | 0 | null>(
+        null,
+    );
     const [identifiersLoaded, setIdentifiersLoaded] = useState<boolean>(false);
-    const [notificationsHandled, setNotificationsHandled] = useState<boolean>(false);
+    const [notificationsHandled, setNotificationsHandled] =
+        useState<boolean>(false);
 
     useEffect(() => {
         async function fetchUserData(): Promise<void> {
@@ -68,7 +75,8 @@ export default function HomeScreen() {
     useEffect(() => {
         async function fetchIdentifiers(): Promise<void> {
             try {
-                const pending: number[] | 0 | false | null = await GetAllPendingObjectives();
+                const pending: number[] | 0 | false | null =
+                    await GetAllPendingObjectives();
                 setIdentifiers(pending);
             } catch (e) {
                 logToConsole(`Error fetching identifiers: ${e}`, "error");
@@ -88,15 +96,19 @@ export default function HomeScreen() {
                     setAllObjectivesForTable([]);
                     return;
                 }
-                const objectives: (ActiveObjective | null)[] = await Promise.all(
-                    identifiers.map(
-                        (identifier: number): Promise<ActiveObjective | null> =>
-                            GetActiveObjective(identifier),
-                    ),
-                );
+                const objectives: (ActiveObjective | null)[] =
+                    await Promise.all(
+                        identifiers.map(
+                            (
+                                identifier: number,
+                            ): Promise<ActiveObjective | null> =>
+                                GetActiveObjective(identifier),
+                        ),
+                    );
 
                 const filteredObjectives: ActiveObjective[] = objectives.filter(
-                    (obj: ActiveObjective | null): obj is ActiveObjective => obj !== null,
+                    (obj: ActiveObjective | null): obj is ActiveObjective =>
+                        obj !== null,
                 );
                 setRenderedObjectives(filteredObjectives);
 
@@ -112,11 +124,21 @@ export default function HomeScreen() {
                 }
                 const objectivesForTable: BetterTableItem[] = await Promise.all(
                     allObjectives.map(
-                        async (obj: ActiveObjective): Promise<BetterTableItem> => ({
-                            name: t(`globals.supportedActiveObjectives.${obj.exercise}.name`),
-                            value: (await CheckForAnActiveObjectiveDailyStatus(obj.identifier))
-                                ? t("activeObjectives.today.content.headers.statusOptions.yes")
-                                : t("activeObjectives.today.content.headers.statusOptions.no"),
+                        async (
+                            obj: ActiveObjective,
+                        ): Promise<BetterTableItem> => ({
+                            name: t(
+                                `globals.supportedActiveObjectives.${obj.exercise}.name`,
+                            ),
+                            value: (await CheckForAnActiveObjectiveDailyStatus(
+                                obj.identifier,
+                            ))
+                                ? t(
+                                      "activeObjectives.today.content.headers.statusOptions.yes",
+                                  )
+                                : t(
+                                      "activeObjectives.today.content.headers.statusOptions.no",
+                                  ),
                         }),
                     ),
                 );
@@ -135,7 +157,8 @@ export default function HomeScreen() {
         async function handle(): Promise<void> {
             try {
                 if (notificationsHandled === true) return;
-                const isRegistered: boolean = await areNotificationsScheduledForToday();
+                const isRegistered: boolean =
+                    await areNotificationsScheduledForToday();
                 console.log("isRegistered status:", isRegistered);
                 if (userData?.wantsNotifications === false && isRegistered) {
                     await cancelScheduledNotifications(t, false);
@@ -166,7 +189,8 @@ export default function HomeScreen() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userData, identifiers, identifiersLoaded, notificationsHandled]);
 
-    if (loading || !identifiersLoaded || !userData || !notificationsHandled) return <Loading />;
+    if (loading || !identifiersLoaded || !userData || !notificationsHandled)
+        return <Loading />;
 
     return (
         <>
@@ -180,18 +204,34 @@ export default function HomeScreen() {
             <Section width="total" kind="ActiveObjectives">
                 <>
                     {identifiers === 0 ? (
-                        <Division header={t("activeObjectives.noObjectives.allDone")} />
+                        <Division
+                            header={t("activeObjectives.noObjectives.allDone")}
+                        />
                     ) : identifiers === null ? (
-                        <Division header={t("activeObjectives.noObjectives.noObjectives")}>
+                        <Division
+                            header={t(
+                                "activeObjectives.noObjectives.noObjectives",
+                            )}
+                        >
                             <BetterButton
                                 style="GOD"
-                                action={(): void => router.push(ROUTES.ACTIVE_OBJECTIVES.CREATE)}
-                                buttonText={t("activeObjectives.createObjective.text")}
-                                buttonHint={t("activeObjectives.createObjective.hint")}
+                                action={(): void =>
+                                    router.push(ROUTES.ACTIVE_OBJECTIVES.CREATE)
+                                }
+                                buttonText={t(
+                                    "activeObjectives.createObjective.text",
+                                )}
+                                buttonHint={t(
+                                    "activeObjectives.createObjective.hint",
+                                )}
                             />
                         </Division>
                     ) : identifiers === false ? (
-                        <Division header={t("activeObjectives.noObjectives.todayFree")} />
+                        <Division
+                            header={t(
+                                "activeObjectives.noObjectives.todayFree",
+                            )}
+                        />
                     ) : (
                         renderedObjectives &&
                         renderedObjectives.map((obj: ActiveObjective) => {
@@ -201,16 +241,24 @@ export default function HomeScreen() {
                                     header={t(
                                         `globals.supportedActiveObjectives.${obj.exercise}.name`,
                                     )}
-                                    preHeader={t("activeObjectives.allCapsSingular")}
+                                    preHeader={t(
+                                        "activeObjectives.allCapsSingular",
+                                    )}
                                     direction="vertical"
                                 >
                                     <ObjectiveDescriptiveIcons obj={obj} />
                                     <BetterButton
-                                        buttonText={t("globals.interaction.goAheadGood")}
-                                        buttonHint={t("activeObjectives.start.hint")}
+                                        buttonText={t(
+                                            "globals.interaction.goAheadGood",
+                                        )}
+                                        buttonHint={t(
+                                            "activeObjectives.start.hint",
+                                        )}
                                         style="ACE"
                                         action={async (): Promise<void> =>
-                                            await LaunchActiveObjective(obj.identifier)
+                                            await LaunchActiveObjective(
+                                                obj.identifier,
+                                            )
                                         }
                                     />
                                 </Division>
@@ -221,15 +269,23 @@ export default function HomeScreen() {
             </Section>
             <GapView height={20} />
             <Section kind="HowYouAreDoing">
-                {identifiers && Array.isArray(identifiers) && identifiers.length > 0 ? (
+                {identifiers &&
+                Array.isArray(identifiers) &&
+                identifiers.length > 0 ? (
                     <Division
                         header={t("activeObjectives.today.content.header")}
-                        subHeader={t("activeObjectives.today.content.subheader")}
+                        subHeader={t(
+                            "activeObjectives.today.content.subheader",
+                        )}
                     >
                         <BetterTable
                             headers={[
-                                t("activeObjectives.today.content.headers.objective"),
-                                t("activeObjectives.today.content.headers.status"),
+                                t(
+                                    "activeObjectives.today.content.headers.objective",
+                                ),
+                                t(
+                                    "activeObjectives.today.content.headers.status",
+                                ),
                             ]}
                             items={allObjectivesForTable}
                         />

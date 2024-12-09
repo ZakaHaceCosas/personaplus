@@ -27,6 +27,7 @@ import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import TopBar from "@/components/navigation/top_bar";
 import { ShowToast } from "@/toolkit/android";
+import { OrchestrateUserData } from "@/toolkit/user";
 
 export default function HomeScreen() {
     const [loading, setLoading] = useState<boolean>(true);
@@ -39,15 +40,11 @@ export default function HomeScreen() {
         async function handler() {
             try {
                 // user data
-                const bareUserData: string | null = await AsyncStorage.getItem(
-                    StoredItemNames.userData,
-                );
-                if (!bareUserData) {
-                    throw new Error("userData is null!");
-                }
-                const readyData: FullProfile = JSON.parse(bareUserData);
-                const mappedArray = Object.entries(readyData).map(
-                    ([key, value]) =>
+                const userData: FullProfile = await OrchestrateUserData();
+                const mappedArray: BetterTableItem[] = Object.entries(
+                    userData,
+                ).map(
+                    ([key, value]): BetterTableItem =>
                         ({
                             name: key,
                             value: String(value),
