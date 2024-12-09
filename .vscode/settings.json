@@ -37,14 +37,7 @@
     "editor.minimap.enabled": true,
     "typescript.updateImportsOnFileMove.enabled": "always",
     "explorer.confirmDelete": true,
-    "prettier.endOfLine": "crlf",
-    "prettier.trailingComma": "all",
-    "prettier.semi": true,
-    "prettier.tabWidth": 4,
-    "prettier.singleQuote": false,
-    "prettier.arrowParens": "always",
-    "prettier.jsxSingleQuote": false,
-    "prettier.useTabs": false,
+    "prettier.configPath": "./.prettierrc",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
