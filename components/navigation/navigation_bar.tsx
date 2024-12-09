@@ -14,11 +14,53 @@ import ROUTES from "@/constants/routes";
 import { GetExperiments } from "@/toolkit/experiments";
 
 // TypeScript, supongo
+/**
+ * SectionProps
+ *
+ * @interface SectionProps
+ * @typedef {SectionProps}
+ */
 interface SectionProps {
-    currentLocation: string; // on what page ( /Dashboard, /Profile...) the user is
+    /**
+     * On what page ( /dashboard, /profile...) the user is right now.
+     *
+     * @type {string}
+     */
+    currentLocation: string;
+}
+/**
+ * NavItemProps
+ *
+ * @interface NavItemProps
+ * @typedef {NavItemProps}
+ */
+interface NavItemProps {
+    /**
+     * The link this item points to.
+     *
+     * @type {string}
+     */
+    href: string;
+    /**
+     * Name of the icon.
+     *
+     * @type {("home" | "dashboard" | "person" | "auto-graph")}
+     */
+    iconName: "home" | "dashboard" | "person" | "auto-graph";
+    /**
+     * Label to be shown.
+     *
+     * @type {string}
+     */
+    label: string;
+    /**
+     * Is this the current tab?
+     *
+     * @type {boolean}
+     */
+    isSelected: boolean;
 }
 
-// We define the styles
 const styles = StyleSheet.create({
     navBar: {
         display: "flex",
@@ -32,6 +74,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         padding: 0,
         position: "absolute",
+        backgroundColor: Colors.MAIN.FOOTER.BACKGROUND,
     },
     navItem: {
         display: "flex",
@@ -42,28 +85,32 @@ const styles = StyleSheet.create({
     },
 });
 
+/**
+ * A Nav Item.
+ *
+ * @param {NavItemProps} p
+ * @param {string} p.href
+ * @param {("home" | "dashboard" | "person" | "auto-graph")} p.iconName
+ * @param {string} p.label
+ * @param {boolean} p.isSelected
+ * @returns {ReactElement}
+ */
 function NavItem({
     href,
     iconName,
     label,
     isSelected,
-}: {
-    href: string;
-    iconName: "home" | "dashboard" | "person" | "auto-graph";
-    label: string;
-    isSelected: boolean;
-}): ReactElement {
+}: NavItemProps): ReactElement {
     const color = isSelected
         ? Colors.MAIN.FOOTER.FOOTER_SEL
         : Colors.MAIN.FOOTER.FOOTER_UNS;
 
+    const handlePress = () => {
+        if (!isSelected) router.push(href);
+    };
+
     return (
-        <Pressable
-            onPress={() => {
-                router.push(href);
-            }}
-            style={styles.navItem}
-        >
+        <Pressable onPress={handlePress} style={styles.navItem}>
             <Ionicons name={iconName} size={25} color={color} />
             <GapView height={5} />
             <BetterText
@@ -78,8 +125,17 @@ function NavItem({
     );
 }
 
-// We create the function
-export default function NavigationBar({ currentLocation }: SectionProps) {
+/**
+ * The bottom navbar.
+ *
+ * @export
+ * @param {SectionProps} p
+ * @param {string} p.currentLocation
+ * @returns {ReactElement}
+ */
+export default function NavigationBar({
+    currentLocation,
+}: SectionProps): ReactElement {
     const { t } = useTranslation();
     const [reportEnabled, setReport] = useState<boolean>(false);
 
@@ -91,12 +147,7 @@ export default function NavigationBar({ currentLocation }: SectionProps) {
     }, []);
 
     return (
-        <View
-            style={[
-                styles.navBar,
-                { backgroundColor: Colors.MAIN.FOOTER.BACKGROUND },
-            ]}
-        >
+        <View style={styles.navBar}>
             <NavItem
                 href={ROUTES.MAIN.HOME}
                 iconName="home"
