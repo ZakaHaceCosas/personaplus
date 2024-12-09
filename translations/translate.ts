@@ -1,12 +1,26 @@
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/translations/translate.ts
+ * Basically: Main translation handler.
+ *
+ * <=============================================================================>
+ */
+
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import AsyncStorage from "expo-sqlite/kv-store";
-// somehow unused: import { getLocales } from 'expo-localization';
+import { getLocales, Locale } from "expo-localization";
 import enTranslations from "@/translations/en.json";
 import esTranslations from "@/translations/es.json";
 import { FullProfile } from "@/types/user";
 import { logToConsole } from "@/toolkit/debug/console";
 import StoredItemNames from "@/constants/stored_item_names";
+import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
 
 // Defines available translates
 const resources = {
@@ -23,48 +37,28 @@ const resources = {
  */
 export async function getDefaultLocale(): Promise<"es" | "en"> {
     try {
-        // const locales = getLocales();     (unused, for whatever reason)
-        const savedData: string | null = await AsyncStorage.getItem(
-            StoredItemNames.userData,
-        );
-        let savedDataValue: FullProfile | null = null;
+        const locales: Locale[] = getLocales();
+        const savedData: FullProfile = await OrchestrateUserData();
 
-        try {
-            if (savedData) {
-                savedDataValue = JSON.parse(savedData) as FullProfile;
-            } else {
-                logToConsole(
-                    "Warning! No language data. Might fallback to english.",
-                    "warn",
-                );
-            }
-        } catch (e) {
-            logToConsole(
-                "Error parsing JSON from AsyncStorage: " + e,
-                "warn",
-                {
-                    location: "@/translations/translate.ts",
-                    isHandler: false,
-                    function:
-                        "getDefaultLocale() @ try-catch #1 @ sub try-catch #1",
-                },
-                false,
-            );
+        if (
+            ValidateUserData(
+                savedData.gender,
+                savedData.age,
+                savedData.weight,
+                savedData.height,
+                savedData.username,
+            ) === false
+        ) {
+            const locale: string | null = locales[0].languageCode;
+            return locale === "en" || locale === "es" ? locale : "en";
         }
 
-        const savedLanguageValue: "es" | "en" =
-            savedDataValue?.language ?? "en";
-        const defaultLanguage: "es" | "en" =
-            savedLanguageValue === "es" || savedLanguageValue === "en"
-                ? savedLanguageValue
-                : "en";
+        const savedLanguage: "es" | "en" = savedData.language;
 
-        return defaultLanguage;
+        return savedLanguage;
     } catch (e) {
         logToConsole(
-            "Error handling getDefaultLocale(): " +
-                e +
-                ". This is a warning and not an error because it doesn't have severe side effects. Fallback to English.",
+            `Error handling getDefaultLocale(): ${e}. This is a warning and not an error because it doesn't have severe side effects. Fallback to English.`,
             "warn",
             {
                 location: "@/translations/translate.ts",
@@ -116,22 +110,20 @@ initializeI18n();
  */
 async function changeLanguage(language: "es" | "en"): Promise<0 | 1> {
     try {
-        const savedData: string | null = await AsyncStorage.getItem(
-            StoredItemNames.userData,
-        );
-        if (savedData === null) {
-            throw new Error("Why is userData null?");
-        }
-        const userData: FullProfile = JSON.parse(savedData);
+        const userData: FullProfile = await OrchestrateUserData();
+        const newUserData: FullProfile = {
+            ...userData,
+            language,
+        };
         await AsyncStorage.setItem(
             StoredItemNames.userData,
-            JSON.stringify({ ...userData, language }),
+            JSON.stringify(newUserData),
         );
         i18n.changeLanguage(language);
         return 0;
     } catch (e) {
         logToConsole(
-            "Error changing language: " + e,
+            `Error changing language: ${e}`,
             "error",
             {
                 function: "changeLanguage",
