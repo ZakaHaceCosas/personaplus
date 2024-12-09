@@ -91,7 +91,7 @@ async function initializeI18n(): Promise<void> {
             compatibilityJSON: "v3",
         });
     } catch (e) {
-        logToConsole("Error with i18n init: " + e, "error", {
+        logToConsole(`Error with i18n init: ${e}`, "error", {
             location: "@/translations/translate.ts",
             isHandler: false,
             function: "initializeI18n()",

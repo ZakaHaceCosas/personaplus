@@ -18,16 +18,16 @@ export default function ErrorLogger() {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        async function handler() {
+        function handler() {
             try {
                 // logs
-                const bareLogs = await getLogsFromStorage();
+                const bareLogs: Logs = getLogsFromStorage();
                 if (!bareLogs) {
                     throw new Error("HOW CAN LOGS BE NULL?");
                 }
                 setLogs(bareLogs);
             } catch (e) {
-                const err = "Error fetching data at DevInterface: " + e;
+                const err = `Error fetching data at DevInterface: ${e}`;
                 logToConsole(err, "error");
                 setError(err);
             } finally {
@@ -38,9 +38,7 @@ export default function ErrorLogger() {
         handler();
     }, []);
 
-    if (loading) {
-        return <Loading />;
-    }
+    if (loading) return <Loading />;
 
     return (
         <>

@@ -165,7 +165,7 @@ export default function BetterButton({
                     // always await, so we correctly handle both sync and async stuff
                     await Promise.resolve(action());
                 } catch (e) {
-                    await logToConsole(
+                    logToConsole(
                         `Error handling a button press: ${e}.`,
                         "error",
                         {

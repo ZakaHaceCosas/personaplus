@@ -113,7 +113,7 @@ export default function Sessions() {
                 setLoading(false);
             } catch (e) {
                 logToConsole(
-                    "Error fetching objective for session! " + e,
+                    `Error fetching objective for session! ${e}`,
                     "error",
                 );
                 setLoading(false);

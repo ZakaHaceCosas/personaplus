@@ -69,14 +69,14 @@ export default function HomeScreen() {
 
                 if (objectives) {
                     setObjectives(
-                        objectives.map((obj) => ({
+                        objectives.map((obj: ActiveObjective) => ({
                             name: obj.exercise,
                             value: String(obj.identifier),
                         })),
                     );
                 }
             } catch (e) {
-                const err = "Error fetching data at DevInterface: " + e;
+                const err = `Error fetching data at DevInterface: ${e}`;
                 logToConsole(err, "error");
                 setError(err);
             } finally {
@@ -92,7 +92,7 @@ export default function HomeScreen() {
             await AsyncStorage.setItem(StoredItemNames.consoleLogs, "");
             ShowToast("Clear!");
         } catch (e) {
-            logToConsole("Failed to clear logs: " + e, "error");
+            logToConsole(`Failed to clear logs: ${e}`, "error");
         }
     }
 
@@ -160,7 +160,7 @@ export default function HomeScreen() {
             <GapView height={10} />
             <BetterAlert
                 style="DEFAULT"
-                preTitle={"AsyncStorage item: " + StoredItemNames.dailyLog}
+                preTitle={`AsyncStorage item: ${StoredItemNames.dailyLog}`}
                 title={error ? "An error happened:" : "Daily log (raw JSON)"}
                 bodyText={error ? error : dailyLog ? dailyLog : "null"}
                 layout="alert"

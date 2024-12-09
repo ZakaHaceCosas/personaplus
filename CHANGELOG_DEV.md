@@ -10,6 +10,10 @@ For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 
 ## Unreleased
 
+### Changed
+
+- Replaced `"a " + b` with \``a ${b}`\` concatenations.
+
 ### Fixed
 
 - Fixed an issue that made ESLint and Prettier VSCode extensions conflict, leading to code formatting issues.

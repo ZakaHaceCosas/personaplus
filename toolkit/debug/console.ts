@@ -22,11 +22,11 @@ export function getLogsFromStorage(): Log[] {
                 return [];
             }
         } catch (e) {
-            logToConsole(
-                "Error parsing logs from AsyncStorage: " + e,
-                "error",
+            console.error(
+                `Error parsing logs from AsyncStorage: ${e}`,
+                "\nTRACEBACK\n", // these hope that the terminal auto-formats the JSON from the traceback as it would do in the browser
                 {
-                    location: "toolkit/debug/console",
+                    location: "@/toolkit/debug/console.ts",
                     function: "getLogsFromStorage()",
                     isHandler: false,
                 },
@@ -34,11 +34,15 @@ export function getLogsFromStorage(): Log[] {
             return [];
         }
     } catch (e) {
-        console.error("Error accessing logs from AsyncStorage: " + e, "error", {
-            location: "toolkit/debug/console",
-            function: "getLogsFromStorage()",
-            isHandler: false,
-        });
+        console.error(
+            `Error accessing logs from AsyncStorage: ${e}`,
+            "\nTRACEBACK\n",
+            {
+                location: "@/toolkit/debug/console.ts",
+                function: "getLogsFromStorage()",
+                isHandler: false,
+            },
+        );
         return [];
     }
 }
@@ -58,9 +62,13 @@ function saveLogsToStorage(logs: Log[]): 0 | 1 {
         return 0;
     } catch (e) {
         console.error(
-            "Error saving logs to AsyncStorage: " + e,
-            "error",
-            undefined,
+            `Error accessing logs from AsyncStorage: ${e}`,
+            "\nTRACEBACK\n",
+            {
+                location: "@/toolkit/debug/console.ts",
+                function: "saveLogsToStorage()",
+                isHandler: false,
+            },
         );
         return 1;
     }
@@ -80,7 +88,7 @@ function addLogToGlobal(log: Log): 0 | 1 {
         return 0;
     } catch (e) {
         console.error(
-            "Error adding log to AsyncStorage: " + e,
+            `Error adding log to AsyncStorage: ${e}`,
             "error",
             undefined,
         );

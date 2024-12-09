@@ -40,7 +40,7 @@ const BackButtonComponent: React.FC<BackButtonProps> = ({
         fontWeight="Light"
         onTap={() => SafelyGoBack()}
     >
-        {"< " + t("globals.interaction.goBackNoSad")}
+        {`< ${t("globals.interaction.goBackNoSad")}`}
     </BetterText>
 );
 

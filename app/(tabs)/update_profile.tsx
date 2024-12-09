@@ -53,7 +53,7 @@ export default function UpdateProfile() {
                 setWorkingData(data);
                 setLoading(false);
             } catch (e) {
-                logToConsole("Error handling user data: " + e, "error");
+                logToConsole(`Error handling user data: ${e}`, "error");
             }
         }
         handle();
@@ -92,7 +92,7 @@ export default function UpdateProfile() {
                 );
                 SafelyGoBack(ROUTES.MAIN.PROFILE);
             } catch (e) {
-                logToConsole("Error creating profile: " + e, "error");
+                logToConsole(`Error creating profile: ${e}`, "error");
             }
         } else {
             logToConsole(

@@ -47,7 +47,7 @@ export default function HomeScreen() {
                 }
                 setUserData(profile);
             } catch (e) {
-                logToConsole("Error orchestrating user data: " + e, "error");
+                logToConsole(`Error orchestrating user data: ${e}`, "error");
             } finally {
                 setLoading(false);
             }
@@ -99,7 +99,9 @@ export default function HomeScreen() {
                     ),
                     t(
                         "pages.profile.divisions.update.updateFlow.updateAvailableText",
-                        { latestVersion: latestVersion },
+                        {
+                            latestVersion: latestVersion,
+                        },
                     ),
                     [
                         {
@@ -133,7 +135,7 @@ export default function HomeScreen() {
                 );
             }
         } catch (e) {
-            logToConsole("Error checking for update: " + e, "error");
+            logToConsole(`Error checking for updates:${e}`, "error");
             ShowToast(t("pages.profile.divisions.update.updateFlow.cantCheck"));
         }
     }

@@ -168,7 +168,7 @@ export async function scheduleRandomNotifications(
 
             for (const notification of scheduledNotifications) {
                 logToConsole(
-                    "Notification scheduled: " + notification.identifier,
+                    `Notification scheduled: ${notification.identifier}`,
                     "log",
                 );
             }
@@ -176,7 +176,7 @@ export async function scheduleRandomNotifications(
         }
         return true;
     } catch (e) {
-        logToConsole("ERROR REGISTERING NOTIFICATIONS: " + e, "error");
+        logToConsole(`ERROR REGISTERING NOTIFICATIONS: ${e}`, "error");
         return false;
     }
 }
@@ -202,7 +202,7 @@ export async function cancelScheduledNotifications(
         }
         for (const identifier of identifiers) {
             logToConsole(
-                "Cancelling notification " + identifier.identifier,
+                `Cancelling notification ${identifier.identifier}`,
                 "log",
             );
             await cancelScheduledNotificationAsync(identifier.identifier);
@@ -215,7 +215,7 @@ export async function cancelScheduledNotifications(
         }
         return true;
     } catch (e) {
-        logToConsole("ERROR REGISTERING NOTIFICATIONS: " + e, "error");
+        logToConsole(`ERROR REGISTERING NOTIFICATIONS: ${e}`, "error");
         return false;
     }
 }

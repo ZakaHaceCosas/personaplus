@@ -181,7 +181,9 @@ async function CheckForAnActiveObjectiveDailyStatus(
             return false; // no interaction with the objective means no data logged.
         }
     } catch (e) {
-        throw new Error("Error checking if an objective is due today: " + e);
+        throw new Error(
+            `Error checking if the ${identifier} active objective is due today: ${e}`,
+        );
     }
 }
 

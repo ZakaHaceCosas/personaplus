@@ -155,7 +155,7 @@ export default function WelcomePage() {
             return;
         } catch (e) {
             logToConsole(
-                "Error handling data changes happened at Welcome screen: " + e,
+                `Error handling data changes happened at Welcome screen: ${e}`,
                 "error",
             );
         }
@@ -195,14 +195,13 @@ export default function WelcomePage() {
                     wantsNotifications: true,
                 };
 
-                logToConsole(
-                    "Trying to register: " + JSON.stringify(userData),
-                    "log",
-                );
+                const stringData = JSON.stringify(userData);
+
+                logToConsole(`Trying to register: ${stringData}`, "log");
 
                 await AsyncStorage.setItem(
-                    "userData",
-                    JSON.stringify(userData),
+                    StoredItemNames.userData,
+                    stringData,
                 );
                 await AsyncStorage.setItem(
                     StoredItemNames.experiments,
@@ -211,30 +210,24 @@ export default function WelcomePage() {
                 await AsyncStorage.setItem(StoredItemNames.objectives, "[]");
                 router.replace(ROUTES.MAIN.HOME);
                 logToConsole(
-                    "User " +
-                        userData.username +
-                        " registered with no errors. Give yourself a plus!",
+                    `${userData.username} was successfully registered with no errors. Give yourself a plus!`,
                     "success",
                 );
                 return 0;
             } catch (e) {
                 logToConsole(
-                    "Error creating profile: " +
-                        e +
-                        ". Data: " +
-                        JSON.stringify(formData),
+                    `Error creating profile! Data: ${JSON.stringify(formData)}\nError: ${e}.`,
                     "error",
                 );
                 return 1;
             }
         } else {
             logToConsole(
-                "Error saving user data, some data is missing or not valid!",
+                `Error saving user data, some data is missing or not valid! JSON is:\n${JSON.stringify(formData)}`,
                 "warn",
                 undefined,
                 true,
             );
-            logToConsole("User data: " + JSON.stringify(formData), "log");
             return 1;
         }
     }
@@ -340,7 +333,7 @@ export default function WelcomePage() {
             );
             validateStepFour(formData.theThinkHour !== "");
         } catch (e) {
-            logToConsole("Error validating user data: " + e, "error");
+            logToConsole(`Error validating user data: ${e}`, "error");
         }
     }, [formData]);
 
