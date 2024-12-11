@@ -9,6 +9,8 @@
         "**/android": false
     },
     "terminal.integrated.suggest.enabled": true,
+    "terminal.integrated.smoothScrolling": true,
+    "terminal.integrated.fontLigatures": true,
     "terminal.integrated.suggest.builtinCompletions": {
         "pwshCode": false,
         "pwshGit": true
@@ -18,7 +20,6 @@
     "editor.smoothScrolling": true,
     "editor.cursorSmoothCaretAnimation": "on",
     "workbench.list.smoothScrolling": true,
-    "terminal.integrated.smoothScrolling": true,
     "editor.cursorBlinking": "expand",
     "redhat.telemetry.enabled": false,
     "telemetry.enableCrashReporter": false,

@@ -96,6 +96,7 @@ export default function HomeScreen() {
                     setAllObjectivesForTable([]);
                     return;
                 }
+
                 const objectives: (ActiveObjective | null)[] =
                     await Promise.all(
                         identifiers.map(
@@ -112,18 +113,13 @@ export default function HomeScreen() {
                 );
                 setRenderedObjectives(filteredObjectives);
 
-                const allObjectives: ActiveObjective[] = [];
-                for (const id of identifiers) {
-                    const obj = await GetActiveObjective(id);
-                    if (!obj) continue;
-                    allObjectives.push(obj);
-                }
-                if (allObjectives.length === 0) {
+                if (filteredObjectives.length === 0) {
                     setAllObjectivesForTable([]);
                     return;
                 }
+
                 const objectivesForTable: BetterTableItem[] = await Promise.all(
-                    allObjectives.map(
+                    filteredObjectives.map(
                         async (
                             obj: ActiveObjective,
                         ): Promise<BetterTableItem> => ({
@@ -159,18 +155,24 @@ export default function HomeScreen() {
                 if (notificationsHandled === true) return;
                 const isRegistered: boolean =
                     await areNotificationsScheduledForToday();
-                console.log("isRegistered status:", isRegistered);
+                logToConsole(
+                    `isRegistered status (for notifications): ${isRegistered}`,
+                    "log",
+                );
                 if (userData?.wantsNotifications === false && isRegistered) {
                     await cancelScheduledNotifications(t, false);
                     return;
                 }
                 if (
-                    userData?.wantsNotifications !== false &&
+                    userData &&
+                    userData.wantsNotifications !== false &&
                     !isRegistered &&
                     Array.isArray(identifiers) &&
                     identifiers.length > 0
                 ) {
                     await scheduleRandomNotifications(3, t);
+                } else {
+                    return;
                 }
             } catch (e) {
                 logToConsole(`Error handling notifications: ${e}`, "error");
@@ -178,26 +180,28 @@ export default function HomeScreen() {
                 setNotificationsHandled(true);
             }
         }
-        if (
-            userData &&
-            identifiersLoaded &&
-            !notificationsHandled &&
-            (identifiers !== null || identifiers === false || identifiers === 0)
-        ) {
+
+        if (userData && identifiersLoaded && !notificationsHandled) {
             handle();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userData, identifiers, identifiersLoaded, notificationsHandled]);
+    }, [userData, identifiers, identifiersLoaded, notificationsHandled, t]);
 
-    if (loading || !identifiersLoaded || !userData || !notificationsHandled)
+    if (
+        loading ||
+        !userData ||
+        !identifiersLoaded ||
+        !renderedObjectives ||
+        !allObjectivesForTable
+    ) {
         return <Loading />;
+    }
 
     return (
         <>
             <TopBar
                 includeBackButton={false}
                 header={t("pages.home.header", {
-                    username: userData?.username,
+                    username: userData.username,
                 })}
                 subHeader={t("pages.home.subheader")}
             />
@@ -233,7 +237,6 @@ export default function HomeScreen() {
                             )}
                         />
                     ) : (
-                        renderedObjectives &&
                         renderedObjectives.map((obj: ActiveObjective) => {
                             return (
                                 <Division
