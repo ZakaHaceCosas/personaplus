@@ -6,7 +6,8 @@
         "**/.hg": true,
         "**/CVS": true,
         "**/.DS_Store": true,
-        "**/android": false
+        "**/android": false,
+        "**/CHANGELOG.deprecated.md": true
     },
     "terminal.integrated.suggest.enabled": true,
     "terminal.integrated.smoothScrolling": true,
@@ -188,6 +189,7 @@
         "Roboto",
         "SCCS",
         "Schedulable",
+        "Scriptify",
         "SCSS",
         "sqlite",
         "TDEE",

@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- Added a view displaying your daily log from the report page. (Currently only available as an experiment).
+
 ### Fixed
 
 - Fixed a performance issue in the homepage caused by notification validation looping itself. The "Loading..." screen became slightly longer, in exchange.

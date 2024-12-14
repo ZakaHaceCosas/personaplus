@@ -10,8 +10,13 @@ For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 
 ## Unreleased
 
+### Added
+
+- Today toolkit / Stringify, get today as object, and JS `Date()`-interop functions.
+
 ### Changed
 
+- Moved the `today` toolkit from `toolkit/debug` to simply `toolkit/`, and moved types to separate `types/today.ts` file.
 - Replaced `"a " + b` with \``a ${b}`\` concatenations.
 
 ### Fixed
