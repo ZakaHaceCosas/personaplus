@@ -1,5 +1,5 @@
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
-import { TodaysDay } from "@/toolkit/debug/today";
+import type { TodaysDate } from "@/types/today";
 
 /**
  * A type with all supported active objectives. **Tied to const `SupportedActiveObjectivesList`, note that in case of modifications.**
@@ -151,6 +151,12 @@ interface ActiveObjectiveDailyLogEntry {
      */
     wasDone: boolean;
     /**
+     * The metadata of the objective.
+     *
+     * @type {ActiveObjective}
+     */
+    objective: ActiveObjective;
+    /**
      * The performance data for this session (as it's an ActiveObjective). A CoreLibrary standard response. `0` represents a null / empty value (usually when `wasDone` is false).
      *
      * @type {(CoreLibraryResponse | 0)}
@@ -165,7 +171,7 @@ interface ActiveObjectiveDailyLogEntry {
  * @typedef {ActiveObjectiveDailyLog}
  */
 export type ActiveObjectiveDailyLog = {
-    [date: TodaysDay]: {
+    [date: TodaysDate]: {
         [identifier: number]: ActiveObjectiveDailyLogEntry;
     };
 };

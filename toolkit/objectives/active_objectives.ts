@@ -20,10 +20,13 @@ import {
 import { logToConsole } from "@/toolkit/debug/console";
 import AsyncStorage from "expo-sqlite/kv-store";
 import {
-    adjustedToday,
-    getCurrentDate,
-    TodaysDay,
-} from "@/toolkit/debug/today";
+    ADJUSTED_TODAY,
+    AlterDate,
+    GetCurrentDateCorrectly,
+    JavaScriptifyTodaysDate,
+    StringifyDate,
+} from "@/toolkit/today";
+import type { TodaysDate } from "@/types/today";
 import StoredItemNames from "@/constants/stored_item_names";
 import ROUTES from "@/constants/routes";
 import { router } from "expo-router";
@@ -46,7 +49,7 @@ async function GetAllObjectives(): Promise<ActiveObjective[] | null> {
             StoredItemNames.objectives,
         );
 
-        if (!storedObjectives) {
+        if (!storedObjectives || storedObjectives === "") {
             logToConsole("Warning! There are no objectives", "warn", undefined);
             return null;
         }
@@ -87,7 +90,12 @@ async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog | n
         const response: string | null = await AsyncStorage.getItem(
             StoredItemNames.dailyLog,
         );
-        if (!response) {
+        if (!response || response === "") {
+            const newDailyLog: ActiveObjectiveDailyLog = {};
+            await AsyncStorage.setItem(
+                StoredItemNames.dailyLog,
+                JSON.stringify(newDailyLog),
+            );
             return null;
         }
         const dailyLog: ActiveObjectiveDailyLog = JSON.parse(response);
@@ -108,6 +116,7 @@ async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog | n
 async function SaveActiveObjectiveToDailyLog(
     id: number,
     wasDone: boolean,
+    objective: ActiveObjective,
     performance?: CoreLibraryResponse,
 ) {
     try {
@@ -115,16 +124,23 @@ async function SaveActiveObjectiveToDailyLog(
         const prevDailySavedData: ActiveObjectiveDailyLog | null =
             await GetActiveObjectiveDailyLog();
         const dailyData: ActiveObjectiveDailyLog = prevDailySavedData ?? {};
-        const today = getCurrentDate();
+        const today: TodaysDate = GetCurrentDateCorrectly().string;
 
         // If there's no old data for today, creates an {} for today
         if (!dailyData[today]) {
             dailyData[today] = {};
         }
 
+        if (!objective) {
+            throw new Error(
+                `${id} is not a valid identifier - no objective has it.`,
+            );
+        }
+
         // Saves the objective data
         dailyData[today][id] = {
             wasDone: wasDone,
+            objective: objective,
             performance: performance ?? 0,
         };
 
@@ -133,7 +149,10 @@ async function SaveActiveObjectiveToDailyLog(
             StoredItemNames.dailyLog,
             JSON.stringify(dailyData),
         );
-        logToConsole(`Objective ${id} data saved for ${today}`, "success");
+        logToConsole(
+            `Success! Session ${id} data saved for ${today}.`,
+            "success",
+        );
     } catch (e) {
         const message = id
             ? `Error saving user's performance for objective ${id}: ${e}`
@@ -161,7 +180,7 @@ async function CheckForAnActiveObjectiveDailyStatus(
             return false; // log does not exist, so the objective isn't done today.
         }
 
-        const date: TodaysDay = getCurrentDate();
+        const date: TodaysDate = GetCurrentDateCorrectly().string;
 
         // Validate if dailyLog and the specific identifier exist
         if (dailyLog[date] && dailyLog[date][identifier]) {
@@ -212,7 +231,7 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
             Object.values(objectives).map(async function (
                 obj: ActiveObjective,
             ): Promise<thing> {
-                if (obj.info.days[adjustedToday]) {
+                if (obj.info.days[ADJUSTED_TODAY]) {
                     const status: boolean =
                         await CheckForAnActiveObjectiveDailyStatus(
                             obj.identifier,
@@ -513,6 +532,78 @@ function CalculateSessionPerformance(
     }
 }
 
+/**
+ * Handles saving the daily log, sorting stuff by date.
+ *
+ * @async
+ * @param {ActiveObjectiveDailyLog} log
+ * @returns {Promise<void>}
+ */
+async function HandleSavingActiveObjectiveDailyLog(
+    log: ActiveObjectiveDailyLog,
+): Promise<void> {
+    function sortObjectByDate(
+        obj: ActiveObjectiveDailyLog,
+    ): ActiveObjectiveDailyLog {
+        return Object.fromEntries(
+            Object.entries(obj).sort(([dateA], [dateB]) => {
+                return (
+                    JavaScriptifyTodaysDate(dateA as TodaysDate).getTime() -
+                    JavaScriptifyTodaysDate(dateB as TodaysDate).getTime()
+                );
+            }),
+        );
+    }
+
+    const sortedLog = sortObjectByDate(log);
+    await AsyncStorage.setItem(
+        StoredItemNames.dailyLog,
+        JSON.stringify(sortedLog),
+    );
+}
+
+/**
+ * Gets all objectives, finds the ones that you had to do yesterday, and if they weren't done, it adds them as not done to the daily log.
+ *
+ * @async
+ * @returns {Promise<void>}
+ */
+async function FailObjectivesNotDoneYesterday(): Promise<void> {
+    try {
+        const allObjectives: ActiveObjective[] | null =
+            await GetAllObjectives();
+        const dailyLog: ActiveObjectiveDailyLog | null =
+            await GetActiveObjectiveDailyLog();
+
+        const targetDate: TodaysDate = StringifyDate(
+            AlterDate(GetCurrentDateCorrectly().object, -1),
+        );
+
+        if (!allObjectives) return;
+        if (!dailyLog) return;
+
+        if (!dailyLog[targetDate]) {
+            dailyLog[targetDate] = {};
+        }
+
+        for (const objective of allObjectives) {
+            if (!objective.info.days[ADJUSTED_TODAY - 1]) continue;
+
+            if (dailyLog[targetDate][objective.identifier]) continue; // if data is already saved, don't do anything
+
+            dailyLog[targetDate][objective.identifier] = {
+                wasDone: false,
+                objective: objective,
+                performance: 0,
+            };
+        }
+
+        HandleSavingActiveObjectiveDailyLog(dailyLog);
+    } catch (e) {
+        logToConsole(`Error failing objectives: ${e}`, "error");
+    }
+}
+
 export {
     CreateActiveObjective,
     GetAllObjectives,
@@ -525,4 +616,5 @@ export {
     DeleteActiveObjective,
     LaunchActiveObjective,
     CalculateSessionPerformance,
+    FailObjectivesNotDoneYesterday,
 };

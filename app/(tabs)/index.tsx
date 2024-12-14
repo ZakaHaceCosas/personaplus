@@ -11,6 +11,7 @@ import { OrchestrateUserData } from "@/toolkit/user";
 import { logToConsole } from "@/toolkit/debug/console";
 import {
     CheckForAnActiveObjectiveDailyStatus,
+    FailObjectivesNotDoneYesterday,
     GetActiveObjective,
     GetAllPendingObjectives,
     LaunchActiveObjective,
@@ -75,6 +76,7 @@ export default function HomeScreen() {
     useEffect(() => {
         async function fetchIdentifiers(): Promise<void> {
             try {
+                await FailObjectivesNotDoneYesterday();
                 const pending: number[] | 0 | false | null =
                     await GetAllPendingObjectives();
                 setIdentifiers(pending);

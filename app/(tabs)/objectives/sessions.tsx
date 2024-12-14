@@ -248,8 +248,12 @@ export default function Sessions() {
             );
             if (!response) throw new Error("Response is null or undefined");
 
-            SaveActiveObjectiveToDailyLog(objectiveIdentifier, true, response);
-            logToConsole("Success! Session's results set & saved", "success");
+            SaveActiveObjectiveToDailyLog(
+                objectiveIdentifier,
+                true,
+                objective,
+                response,
+            );
 
             const params: SessionParams = {
                 burntCalories: response.result,
