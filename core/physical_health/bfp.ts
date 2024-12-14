@@ -88,10 +88,7 @@ export default function calculateBodyFatPercentage(
 
     const response: CoreLibraryResponse = {
         result: bfp,
-        context:
-            "Based on the Body Fat Percentage calculations, in this case we're talking of an " +
-            context +
-            " BFP.",
+        context: `Based on BFP, context is ${context}`,
         explanation:
             "Body Fat Percentage, usually calculated as a percentage of body weight. There are several methods for measuring it, and based on the percentage, it's possible to estimate whether the subject has normal weight, overweight, or underweight.",
     };

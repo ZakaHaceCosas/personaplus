@@ -84,14 +84,9 @@ export default function calculateMetabolicEquivalentOfTask(
 
     const response: CoreLibraryResponse = {
         result: METs,
-        context:
-            "The MET is a value that helps measure the intensity of a task. For this context, MET value is " +
-            METs +
-            " and the intensity would be " +
-            intensity +
-            ".",
+        context: `The MET is, for this context, ${METs}, and the intensity would be ${intensity}`,
         explanation:
-            "The performance can be measured in burnt calories, which are obtained by calculating the time spent on the exercise, the subject's weight, and the Metabolic Equivalent of Task (MET).",
+            "The performance can be measured in burnt calories, which are obtained by calculating the time spent on the exercise, the subject's weight, and the Metabolic Equivalent of Task (MET), a value that helps measure the intensity of a task.",
     };
 
     return response;
