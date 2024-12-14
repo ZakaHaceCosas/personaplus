@@ -41,7 +41,7 @@ const Colors: ColorsObject = {
             /** Background for the bottom navigation */
             BACKGROUND: "#16191E",
             /** Non-selected footer items */
-            FOOTER_UNS: "#8A8C8E",
+            FOOTER_UNS: "#7A7C7E",
             /** Selected footer items */
             FOOTER_SEL: "#FFFFFF",
         },

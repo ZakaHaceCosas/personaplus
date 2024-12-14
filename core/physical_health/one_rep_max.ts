@@ -37,10 +37,7 @@ export default function calculateOneRepetitionMax(
 
     const response: CoreLibraryResponse = {
         result: result,
-        context:
-            "The OneRepMax is the max amount of weight that a person can lift, being of " +
-            result +
-            " for this context.",
+        context: `The one rep max would be of ${result} for this context.`,
         explanation:
             "The One Repetition Maximum is the maximum amount of weight a person can lift. It can also be considered the max amount of force a person can apply in one maximal contraction. While the most precise method of measuring would be just trial and error testing with the person, it can be estimated mathematically using one of the many possible formulas, e.g., Epley's formula.",
     };

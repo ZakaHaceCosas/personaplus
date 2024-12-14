@@ -49,10 +49,7 @@ export default function calculateIdealBodyWeight(
     const fifthStep = fourthStep / 2.20462;
     const ibw: number = fifthStep;
 
-    const context: string | undefined =
-        "The ideal body weight for the given profile, based on the BMI, would be of " +
-        ibw +
-        "kg.";
+    const context: string = `The IBW for the given profile would be of ${ibw} kg.`;
 
     const response: CoreLibraryResponse = {
         result: ibw,

@@ -44,56 +44,21 @@ export default function calculateTotalDailyEnergyExpenditure(
 
     const bmr = bmrSource.result;
 
-    let context: string | undefined;
-
     let calc: number;
 
     if (activeness === "poor") {
         calc = bmr * 1.2;
-        context =
-            "The recommended daily caloric ingest would be of " +
-            calc +
-            ", taking into account the specified level of activeness is " +
-            activeness +
-            " and the BMR is " +
-            bmr;
     } else if (activeness === "light") {
         calc = bmr * 1.375;
-        context =
-            "The recommended daily caloric ingest would be of " +
-            calc +
-            ", taking into account the specified level of activeness is " +
-            activeness +
-            " and the BMR is " +
-            bmr;
     } else if (activeness === "moderate") {
         calc = bmr * 1.55;
-        context =
-            "The recommended daily caloric ingest would be of " +
-            calc +
-            ", taking into account the specified level of activeness is " +
-            activeness +
-            " and the BMR is " +
-            bmr;
     } else if (activeness === "intense") {
         calc = bmr * 1.725;
-        context =
-            "The recommended daily caloric ingest would be of " +
-            calc +
-            ", taking into account the specified level of activeness is " +
-            activeness +
-            " and the BMR is " +
-            bmr;
     } else {
         calc = bmr * 1.9;
-        context =
-            "The recommended daily caloric ingest would be of " +
-            calc +
-            ", taking into account the specified level of activeness is " +
-            activeness +
-            " and the BMR is " +
-            bmr;
     }
+
+    const context = `The recommended daily caloric ingest would be of ${calc}, taking into account the specified level of activeness is ${activeness} and the BMR is ${bmr}.`;
 
     const response: CoreLibraryResponse = {
         result: calc,
