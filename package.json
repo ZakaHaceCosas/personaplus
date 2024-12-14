@@ -11,6 +11,7 @@
     "lint": "eslint --fix .",
     "prettify": "prettier --w .",
     "dep:check": "expo install --check",
+    "dep:fix": "expo install --fix",
     "build": "eas build -p android --profile production",
     "build:pre:only": "expo prebuild --clean",
     "build:pre": "expo prebuild --clean && eas build -p android --profile production",
