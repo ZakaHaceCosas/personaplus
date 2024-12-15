@@ -107,10 +107,35 @@ function AlterDate(date: TodaysDateObject, shift: number): TodaysDateObject {
     };
 }
 
+/**
+ * Turns `x` minutes into an "x min.", "x s.", or "x h." string.
+ *
+ * @param {number} minutes Minute value.
+ * @returns {string} Stringified value.
+ */
+function StringifyMinutes(minutes: number): string {
+    let duration: number;
+    let word: string;
+
+    if (minutes < 1.0) {
+        duration = minutes * 60;
+        word = "s.";
+    } else if (minutes >= 60.0) {
+        duration = minutes / 60;
+        word = "h.";
+    } else {
+        duration = minutes;
+        word = minutes === 1 ? "min." : "mins.";
+    }
+
+    return `${duration} ${word}`;
+}
+
 export {
     ADJUSTED_TODAY,
     AlterDate,
     JavaScriptifyTodaysDate,
     GetCurrentDateCorrectly,
     StringifyDate,
+    StringifyMinutes,
 };
