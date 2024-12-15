@@ -14,7 +14,12 @@
 import AsyncStorage from "expo-sqlite/kv-store";
 import { logToConsole } from "@/toolkit/debug/console";
 import { Alert } from "react-native";
-import { BasicUserData, BasicUserHealthData, FullProfile } from "@/types/user";
+import {
+    BasicUserData,
+    BasicUserHealthData,
+    FullProfile,
+    FullProfileForCreation,
+} from "@/types/user";
 import { router } from "expo-router";
 import StoredItemNames from "@/constants/stored_item_names";
 import ROUTES from "@/constants/routes";
@@ -24,20 +29,18 @@ import { TFunction } from "i18next";
  * Validates the basic user data, to ensure the gender, age, height, weight, and username values are valid. This doesn't just check for types, but actually does some extra validation, like username length or "normal limits" (e.g. returning invalid if the user wants to set his weight to 999kg).
  *
  * @export
- * @param {(string | "male" | "female" | null)} gender Gender value
- * @param {(string | number | null)} age Age value
- * @param {(string | number | null)} weight Weight value (kilograms)
- * @param {(string | number | null)} height Height value (centimeters)
- * @param {(string | null)} username Username
- * @returns {boolean} `true` if everything's valid, `false` otherwise.
+ * @param {object} user Anything
+ * @param {("BasicHealth" | "Basic" | "Full")} level What level of validation you require.
+ * TODO - make `Full` complete!
+ * @returns {boolean}
  */
 export function ValidateUserData(
-    gender: string | "male" | "female" | null,
-    age: string | number | null,
-    weight: string | number | null,
-    height: string | number | null,
-    username: string | null,
+    user: object,
+    level: "BasicHealth" | "Basic" | "Full",
 ): boolean {
+    const { gender, age, username, height, weight } =
+        user as FullProfileForCreation;
+
     const isGenderValid = gender === "male" || gender === "female";
     const isAgeValid =
         age !== null &&
@@ -65,15 +68,20 @@ export function ValidateUserData(
         username !== undefined &&
         username.trim() !== "" &&
         username.trim().length >= 3 &&
-        username.trim().length <= 40;
+        username.trim().length <= 40 &&
+        username !== "Error";
 
-    return (
-        isGenderValid &&
-        isAgeValid &&
-        isWeightValid &&
-        isHeightValid &&
-        isUsernameValid
-    );
+    const isBasicHealthDataValid: boolean =
+        isGenderValid && isAgeValid && isWeightValid && isHeightValid;
+    const isBasicDataValid = isBasicHealthDataValid && isUsernameValid;
+
+    switch (level) {
+        case "BasicHealth":
+            return isBasicHealthDataValid;
+        case "Basic":
+        case "Full":
+            return isBasicDataValid;
+    }
 }
 
 // i think this is called overloading or something
