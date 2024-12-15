@@ -12,7 +12,9 @@ For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 
 ### Added
 
-- Today toolkit / Stringify, get today as object, and JS `Date()`-interop functions.
+- Today toolkit /
+  - Stringify TodaysDate, get today as object, and JS `Date()`-interop functions.
+  - Handle `m min`, `n sec`, etc... strings function.
 
 ### Changed
 

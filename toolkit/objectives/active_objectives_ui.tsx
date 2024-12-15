@@ -7,6 +7,7 @@ import { StyleSheet, View } from "react-native";
 import GapView from "@/components/ui/gap_view";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";
+import { StringifyMinutes } from "../today";
 
 const styles = StyleSheet.create({
     view: {
@@ -46,7 +47,7 @@ function ObjectiveDescriptiveIcons({
         [t("Sprinting"), t("11.3 - 12.9 km/h")],
         [t("Fast Sprinting"), t("12.9 - 14.5 km/h")],
         [t("Full Speed Sprinting"), t("14.5 - 16.1 km/h")],
-        [t("Maximum Speed"), t("more than 16.1 km/h")],
+        [t("Maximum Speed"), t("+16.1 km/h")],
     ];
 
     switch (obj.exercise) {
@@ -95,8 +96,7 @@ function ObjectiveDescriptiveIcons({
                     />
                     <GapView width={5} />
                     <BetterTextSmallText>
-                        {speedOptions[obj.specificData.estimateSpeed][1]} /{" "}
-                        {speedOptions[obj.specificData.estimateSpeed][0]}
+                        {speedOptions[obj.specificData.estimateSpeed][1]}
                     </BetterTextSmallText>
                 </>
             );
@@ -127,32 +127,33 @@ function ObjectiveDescriptiveIcons({
             );
             break;
         case "Walking":
-            icons = (
-                <>
-                    <Ionicons
-                        name="av-timer"
-                        size={FontSizes.REGULAR}
-                        color={Colors.LABELS.SDD}
-                    />
-                    <GapView width={5} />
-                    <BetterTextSmallText>
-                        {obj.info.durationMinutes} min.
-                    </BetterTextSmallText>
-                </>
-            );
+            icons = <></>; // lol
             break;
         default:
             icons = (
                 <>
                     <BetterTextSmallText>
-                        There was an error fetching properties of this
-                        objective.
+                        Error reading properties of this objective.
                     </BetterTextSmallText>
                 </>
             );
     }
 
-    return <View style={styles.view}>{icons}</View>;
+    return (
+        <View style={styles.view}>
+            <Ionicons
+                name="timer"
+                size={FontSizes.REGULAR}
+                color={Colors.LABELS.SDD}
+            />
+            <GapView width={5} />
+            <BetterTextSmallText>
+                {StringifyMinutes(obj.info.durationMinutes)}
+            </BetterTextSmallText>
+            <GapView width={10} />
+            {icons}
+        </View>
+    );
 }
 
 export { ObjectiveDescriptiveIcons };
