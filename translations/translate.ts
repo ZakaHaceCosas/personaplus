@@ -40,15 +40,7 @@ export async function getDefaultLocale(): Promise<"es" | "en"> {
         const locales: Locale[] = getLocales();
         const savedData: FullProfile = await OrchestrateUserData();
 
-        if (
-            ValidateUserData(
-                savedData.gender,
-                savedData.age,
-                savedData.weight,
-                savedData.height,
-                savedData.username,
-            ) === false
-        ) {
+        if (ValidateUserData(savedData, "Full") === false) {
             const locale: string | null = locales[0].languageCode;
             return locale === "en" || locale === "es" ? locale : "en";
         }
