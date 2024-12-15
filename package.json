@@ -1,7 +1,7 @@
 {
   "name": "personaplus",
   "main": "expo-router/entry",
-  "version": "0.0.6-preapp.26",
+  "version": "0.0.6-preapp.27",
   "scripts": {
     "start": "expo start --go",
     "start:clear": "expo start --go --clear",
