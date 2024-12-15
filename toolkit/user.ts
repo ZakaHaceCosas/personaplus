@@ -146,7 +146,7 @@ export async function OrchestrateUserData(
 
         return fullData;
     } catch (e) {
-        if ((e as string).includes("NO_DATA")) {
+        if (String(e).includes("NO_DATA")) {
             router.replace(ROUTES.MAIN.WELCOME_SCREEN);
             return ErrorUserData;
         }
