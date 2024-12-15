@@ -18,6 +18,7 @@ import { FullProfile, FullProfileForCreation } from "@/types/user";
 import getCommonScreenSize from "@/constants/screen";
 import {
     BetterTextHeader,
+    BetterTextSmallerText,
     BetterTextSmallText,
     BetterTextSubHeader,
 } from "@/components/text/better_text_presets";
@@ -89,6 +90,7 @@ export default function WelcomePage() {
         gender: null,
         theThinkHour: "",
         isNewUser: true,
+        wantsNotifications: true,
     });
 
     // stateful logic to validate formData
@@ -192,7 +194,7 @@ export default function WelcomePage() {
                     language: locale,
                     theThinkHour: validData.theThinkHour,
                     isNewUser: false,
-                    wantsNotifications: true,
+                    wantsNotifications: validData.wantsNotifications,
                 };
 
                 const stringData = JSON.stringify(userData);
@@ -315,15 +317,7 @@ export default function WelcomePage() {
 
     useEffect((): void => {
         try {
-            validateStepOne(
-                ValidateUserData(
-                    formData.gender,
-                    formData.age,
-                    formData.weight,
-                    formData.height,
-                    formData.username,
-                ),
-            );
+            validateStepOne(ValidateUserData(formData, "Full"));
             validateStepTwo(formData.focus !== null);
             validateStepThree(
                 formData.sleepHours !== null &&
@@ -591,6 +585,15 @@ export default function WelcomePage() {
                         style="GOD"
                     />
                     <GapView height={10} />
+                    {
+                        /* LMAO */
+                        formData.username === "Error" && (
+                            <BetterTextSmallerText>
+                                "Error" is not allowed as a username (we reserve
+                                it as a keyword for in-app error-handling).
+                            </BetterTextSmallerText>
+                        )
+                    }
                     {spawnNavigationButtons(1, false)}
                 </>
             )}
