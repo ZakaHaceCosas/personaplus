@@ -49,7 +49,7 @@ export const VALID_USER_CAPS = {
         MIN: 3,
         MAX: 40,
         /** the two last entries are a joke, somewhat. */
-        INVALID: ["error", "error.", "pedro sánchez", "psoe"],
+        INVALID: ["error", "error.", "pedro sánchez", "pedro sanchez", "psoe"],
     },
 };
 
@@ -183,10 +183,6 @@ export async function OrchestrateUserData(
 
         return fullData;
     } catch (e) {
-        if (String(e).includes("NO_DATA")) {
-            router.replace(ROUTES.MAIN.WELCOME_SCREEN);
-            return ErrorUserData;
-        }
         logToConsole(
             `Error orchestrating user data! ${e}`,
             "error",
