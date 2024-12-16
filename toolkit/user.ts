@@ -26,50 +26,87 @@ import ROUTES from "@/constants/routes";
 import { TFunction } from "i18next";
 
 /**
+ * Limits to what we consider "real" user data.
+ */
+export const VALID_USER_CAPS = {
+    /** years of age. */
+    AGE: {
+        MIN: 5,
+        MAX: 99,
+    },
+    /** kilograms. */
+    WEIGHT: {
+        MIN: 15,
+        MAX: 300,
+    },
+    /** centimeters. */
+    HEIGHT: {
+        MIN: 45,
+        MAX: 260,
+    },
+    /** char length. also includes invalid usernames. */
+    USERNAME: {
+        MIN: 3,
+        MAX: 40,
+        /** the two last entries are a joke, somewhat. */
+        INVALID: ["error", "error.", "Pedro Sánchez", "PSOE"],
+    },
+};
+
+/**
  * Validates the basic user data, to ensure the gender, age, height, weight, and username values are valid. This doesn't just check for types, but actually does some extra validation, like username length or "normal limits" (e.g. returning invalid if the user wants to set his weight to 999kg).
  *
  * @export
- * @param {object} user Anything
+ * @param {any} user Anything
  * @param {("BasicHealth" | "Basic" | "Full")} level What level of validation you require.
  * TODO - make `Full` complete!
- * @returns {boolean}
+ * @returns Whether the given user is valid.
  */
 export function ValidateUserData(
-    user: object,
+    user: any,
+    level: "BasicHealth",
+): user is BasicUserHealthData;
+export function ValidateUserData(user: any, level: "Full"): user is FullProfile;
+export function ValidateUserData(
+    user: any,
+    level: "Basic",
+): user is BasicUserData;
+export function ValidateUserData(
+    user: any,
     level: "BasicHealth" | "Basic" | "Full",
-): boolean {
+): user is BasicUserHealthData | BasicUserData | FullProfile {
     const { gender, age, username, height, weight } =
         user as FullProfileForCreation;
 
-    const isGenderValid = gender === "male" || gender === "female";
-    const isAgeValid =
+    const isGenderValid: boolean = gender === "male" || gender === "female";
+    const isAgeValid: boolean =
         age !== null &&
         age !== undefined &&
         age !== "" &&
         !isNaN(Number(age)) &&
-        Number(age) >= 5 &&
-        Number(age) <= 99;
-    const isWeightValid =
+        Number(age) >= VALID_USER_CAPS.HEIGHT.MIN &&
+        Number(age) <= VALID_USER_CAPS.HEIGHT.MAX;
+    const isWeightValid: boolean =
         weight !== null &&
         weight !== undefined &&
         weight !== "" &&
         !isNaN(Number(weight)) &&
-        Number(weight) >= 15 &&
-        Number(weight) <= 300;
-    const isHeightValid =
+        Number(weight) >= VALID_USER_CAPS.HEIGHT.MIN &&
+        Number(weight) <= VALID_USER_CAPS.HEIGHT.MAX;
+    const isHeightValid: boolean =
         height !== null &&
         height !== undefined &&
         height !== "" &&
         !isNaN(Number(height)) &&
-        Number(height) >= 45 &&
-        Number(height) <= 260;
-    const isUsernameValid =
+        Number(height) >= VALID_USER_CAPS.HEIGHT.MIN &&
+        Number(height) <= VALID_USER_CAPS.HEIGHT.MAX;
+    const isUsernameValid: boolean =
         username !== null &&
         username !== undefined &&
         username.trim() !== "" &&
-        username.trim().length >= 3 &&
-        username.trim().length <= 40 &&
-        username !== "Error";
+        username.trim().length >= VALID_USER_CAPS.USERNAME.MIN &&
+        username.trim().length <= VALID_USER_CAPS.USERNAME.MAX &&
+        !VALID_USER_CAPS.USERNAME.INVALID.includes(username);
 
     const isBasicHealthDataValid: boolean =
         isGenderValid && isAgeValid && isWeightValid && isHeightValid;
@@ -88,6 +125,14 @@ export function ValidateUserData(
 // it fixes a type error
 type Filter = "basic" | "health";
 
+/**
+ * Fetches and orchestrates all of the user's data onto a `FullProfile` object. Returns `ErrorUserData` if an error happens.
+ *
+ * @export
+ * @async
+ * @param {"basic" | "health"} filter If passed, it will instead return the specified (basic data or health data).
+ * @returns {Promise<FullProfile | BasicUserData | BasicUserHealthData>} The specified user data object (`FullProfile` by default) if a profile exists and the function succeeds in orchestrating it, `ErrorUserData` otherwise.
+ */
 export async function OrchestrateUserData(
     filter: "basic",
 ): Promise<BasicUserData>;
@@ -97,14 +142,6 @@ export async function OrchestrateUserData(
 export async function OrchestrateUserData(
     filter?: undefined,
 ): Promise<FullProfile>;
-/**
- * Fetches and orchestrates all of the user's data onto a `FullProfile` object. Returns `ErrorUserData` if an error happens.
- *
- * @export
- * @async
- * @param {"basic" | "health"} filter If passed, it will instead return the specified (basic data or health data).
- * @returns {Promise<FullProfile | BasicUserData | BasicUserHealthData>} A `FullProfile` if a profile exists and the function succeeds in orchestrating it, `ErrorUserData` otherwise.
- */
 export async function OrchestrateUserData(
     filter?: Filter,
 ): Promise<FullProfile | BasicUserData | BasicUserHealthData> {
