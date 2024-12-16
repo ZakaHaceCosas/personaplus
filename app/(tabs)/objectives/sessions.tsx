@@ -1,5 +1,15 @@
-// Sessions.tsx
-// Page for live exercising sessions
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/app/(tabs)/objectives/sessions.tsx
+ * Basically: Live sporting sessions.
+ *
+ * <=============================================================================>
+ */
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { View, StyleSheet, Alert } from "react-native";
@@ -21,7 +31,7 @@ import Colors from "@/constants/colors";
 import Loading from "@/components/static/loading";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import SessionsPageHelpView from "@/components/ui/pages/sessions/help_view";
-import { ActiveObjective } from "@/types/active_objectives";
+import { ActiveObjective, SessionParams } from "@/types/active_objectives";
 import getCommonScreenSize from "@/constants/screen";
 import IslandDivision from "@/components/ui/sections/island_division";
 import GenerateRandomMessage from "@/toolkit/random_message";
@@ -30,18 +40,6 @@ import { Color } from "@/types/color";
 import { BasicUserHealthData } from "@/types/user";
 import { OrchestrateUserData } from "@/toolkit/user";
 import { ShowToast } from "@/toolkit/android";
-
-// TypeScript, supongo
-// this type is a glue fix, otherwise a type error happens because SessionParams is not compatible with UnknownInputParams from ExpoRouter
-type ExpoRouterParams = Record<
-    string,
-    string | number | undefined | null | (string | number)[]
->;
-export interface SessionParams extends ExpoRouterParams {
-    burntCalories: number;
-    elapsedTime: number;
-    id: number;
-}
 
 const styles = StyleSheet.create({
     mainView: {

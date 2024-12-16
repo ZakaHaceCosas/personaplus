@@ -16,11 +16,13 @@ For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
   - Stringify TodaysDate, get today as object, and JS `Date()`-interop functions.
   - Handle `m min`, `n sec`, etc... strings function.
 - Added an `ActiveObjective` type guard.
+- Added a specific types file for types used as glue fixes.
 
 ### Changed
 
 - Moved the `today` toolkit from `toolkit/debug` to simply `toolkit/`, and moved types to separate `types/today.ts` file.
 - Replaced `"a " + b` with \``a ${b}`\` concatenations.
+- Moved `SessionParams` type to `active_objectives.ts` types file.
 
 ### Fixed
 

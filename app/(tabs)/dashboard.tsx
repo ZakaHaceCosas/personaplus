@@ -8,19 +8,29 @@ import ROUTES from "@/constants/routes";
 import { logToConsole } from "@/toolkit/debug/console";
 import {
     DeleteActiveObjective,
+    GetActiveObjective,
     GetAllObjectives,
 } from "@/toolkit/objectives/active_objectives";
 import { ObjectiveDescriptiveIcons } from "@/toolkit/objectives/active_objectives_ui";
-import { ActiveObjective } from "@/types/active_objectives";
+import {
+    ActiveObjective,
+    EditObjectiveParams,
+} from "@/types/active_objectives";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { View, StyleSheet } from "react-native";
 import TopBar from "@/components/navigation/top_bar";
+import GapView from "@/components/ui/gap_view";
+import { ShowToast } from "@/toolkit/android";
 
 const styles = StyleSheet.create({
     buttonWrapper: {
         padding: 20,
+    },
+    divButtons: {
+        display: "flex",
+        flexDirection: "row",
     },
 });
 
@@ -48,15 +58,38 @@ export default function Dashboard() {
         handler();
     }, []);
 
-    const handleDeleteObjective = (identifier: number) => {
+    const handleObjective = async (
+        identifier: number,
+        action: "delete" | "edit",
+    ) => {
         try {
-            DeleteActiveObjective(identifier);
-            // update & redraw without re-fetching everything upon update.
-            setActiveObjectives(
-                activeObjectives?.filter(
-                    (obj) => obj.identifier !== identifier,
-                ) || null,
-            );
+            if (action === "delete") {
+                await DeleteActiveObjective(identifier);
+                // update & redraw without re-fetching everything upon update.
+                setActiveObjectives(
+                    activeObjectives?.filter(
+                        (obj) => obj.identifier !== identifier,
+                    ) || null,
+                );
+                return;
+            } else {
+                const obj: ActiveObjective | null =
+                    await GetActiveObjective(identifier);
+                if (!obj) {
+                    ShowToast(
+                        t("errors.objectiveNotExists", { id: identifier }),
+                    );
+                    return;
+                }
+                const params: EditObjectiveParams = {
+                    edit: "true",
+                    objective: JSON.stringify(obj),
+                };
+                router.push({
+                    pathname: ROUTES.ACTIVE_OBJECTIVES.CREATE,
+                    params,
+                });
+            }
         } catch (e) {
             logToConsole(
                 `Error deleting objective ${identifier}: ${e}`,
@@ -93,18 +126,39 @@ export default function Dashboard() {
                                 direction="vertical"
                             >
                                 <ObjectiveDescriptiveIcons obj={obj} />
-                                <BetterButton
-                                    style="WOR"
-                                    buttonText={t(
-                                        "pages.dashboard.deleteObjective.text",
-                                    )}
-                                    buttonHint={t(
-                                        "pages.dashboard.deleteObjective.hint",
-                                    )}
-                                    action={() =>
-                                        handleDeleteObjective(obj.identifier)
-                                    }
-                                />
+                                <View style={styles.divButtons}>
+                                    <BetterButton
+                                        style="WOR"
+                                        buttonText={t(
+                                            "pages.dashboard.deleteObjective.text",
+                                        )}
+                                        buttonHint={t(
+                                            "pages.dashboard.deleteObjective.hint",
+                                        )}
+                                        action={() =>
+                                            handleObjective(
+                                                obj.identifier,
+                                                "delete",
+                                            )
+                                        }
+                                    />
+                                    <GapView width={10} />
+                                    <BetterButton
+                                        style="ACE"
+                                        buttonText={t(
+                                            "pages.dashboard.editObjective.text",
+                                        )}
+                                        buttonHint={t(
+                                            "pages.dashboard.editObjective.hint",
+                                        )}
+                                        action={() =>
+                                            handleObjective(
+                                                obj.identifier,
+                                                "edit",
+                                            )
+                                        }
+                                    />
+                                </View>
                             </Division>
                         );
                     })

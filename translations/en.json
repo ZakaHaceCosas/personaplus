@@ -191,7 +191,7 @@
         },
         "home": {
             "header": "Hi, {{username}}!",
-            "subheader": "What objectives will you accomplish today?"
+            "subheader": "What will you accomplish today?"
         },
         "dashboard": {
             "header": "Dashboard",

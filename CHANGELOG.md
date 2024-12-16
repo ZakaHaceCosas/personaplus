@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added the ability to edit an active objective.
 - Added a view displaying your daily log from the report page. (Currently only available as an experiment).
 
 ### Changed
