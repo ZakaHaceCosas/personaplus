@@ -1,5 +1,19 @@
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/types/active_objectives.ts
+ * Basically: Type definitions for active objectives, live sessions, daily log, and all related stuff.
+ *
+ * <=============================================================================>
+ */
+
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
 import type { TodaysDate } from "@/types/today";
+import { ExpoRouterParams } from "./glue_fix";
 
 /**
  * A type with all supported active objectives. **Tied to const `SupportedActiveObjectivesList`, note that in case of modifications.**
@@ -232,3 +246,63 @@ export type ActiveObjectiveDailyLog = {
         [identifier: number]: ActiveObjectiveDailyLogEntry;
     };
 };
+
+/**
+ * URL params for the live sessions page. Concretely, for passing data from `sessions.tsx` to `results.tsx`.
+ *
+ * @export
+ * @interface SessionParams
+ * @typedef {SessionParams}
+ * @extends {ExpoRouterParams}
+ */
+export interface SessionParams extends ExpoRouterParams {
+    /**
+     * Burnt calories.
+     *
+     * @type {number}
+     */
+    burntCalories: number;
+    /**
+     * Elapsed time, in seconds (IIRC).
+     *
+     * @type {number}
+     */
+    elapsedTime: number;
+    /**
+     * Active Objective ID.
+     *
+     * @type {number}
+     */
+    id: number;
+}
+
+/**
+ * URL params for passing data to edit an objective. Keep in mind it uses `string` instead of the right types, use `RealEditObjectiveParams` for when you got the data.
+ *
+ * @export
+ * @interface EditObjectiveParams
+ * @typedef {EditObjectiveParams}
+ * @extends {ExpoRouterParams}
+ */
+export interface EditObjectiveParams extends ExpoRouterParams {
+    /**
+     * @type {boolean}
+     */
+    edit: string;
+    /**
+     * @type {ActiveObjective}
+     */
+    objective: string;
+}
+
+/**
+ * Glue fix for `EditObjectiveParams` with proper typing.
+ *
+ * @export
+ * @interface RealEditObjectiveParams
+ * @typedef {RealEditObjectiveParams}
+ */
+export interface RealEditObjectiveParams {
+    edit: boolean;
+    objective: ActiveObjective;
+}

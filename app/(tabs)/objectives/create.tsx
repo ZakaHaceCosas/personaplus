@@ -27,6 +27,8 @@ import {
     SupportedActiveObjectives,
     WeekTuple,
     ValidateActiveObjective,
+    RealEditObjectiveParams,
+    EditObjectiveParams,
 } from "@/types/active_objectives";
 import GenerateRandomMessage from "@/toolkit/random_message";
 import BetterText from "@/components/text/better_text";
@@ -38,12 +40,16 @@ import { logToConsole } from "@/toolkit/debug/console";
 import BetterButton from "@/components/interaction/better_button";
 import getCommonScreenSize from "@/constants/screen";
 import PageEnd from "@/components/static/page_end";
-import { CreateActiveObjective } from "@/toolkit/objectives/active_objectives";
-import { router } from "expo-router";
+import {
+    CreateActiveObjective,
+    EditActiveObjective,
+} from "@/toolkit/objectives/active_objectives";
+import { router, useGlobalSearchParams } from "expo-router";
 import ROUTES from "@/constants/routes";
 import { Experiments } from "@/types/user";
 import { GetExperiments } from "@/toolkit/experiments";
 import TopBar from "@/components/navigation/top_bar";
+import { ShowToast } from "@/toolkit/android";
 
 const styles = StyleSheet.create({
     dayContainer: {
@@ -85,6 +91,7 @@ const styles = StyleSheet.create({
 // We create the function
 export default function CreateActiveObjectivePage() {
     const { t } = useTranslation(); // translate function
+    const params = useGlobalSearchParams();
 
     // objective and stuff
     const exerciseOptions: SelectOption[] = SupportedActiveObjectivesList.map(
@@ -111,6 +118,41 @@ export default function CreateActiveObjectivePage() {
                 estimateSpeed: 0,
             },
         });
+
+    interface EditData {
+        enable: boolean;
+        id: number | undefined;
+    }
+
+    // edit state handling
+    const [edit, setEdit] = useState<EditData>({
+        enable: false,
+        id: undefined,
+    });
+
+    useEffect(() => {
+        const typedParams: EditObjectiveParams = params as EditObjectiveParams;
+        const realParams: RealEditObjectiveParams = {
+            edit: typedParams.edit === "true" ? true : false,
+            objective:
+                typedParams.edit === "true"
+                    ? JSON.parse(typedParams.objective)
+                    : "",
+        };
+        const typedRealParams: RealEditObjectiveParams =
+            realParams as RealEditObjectiveParams;
+        if (typedRealParams.edit === true) {
+            if (ValidateActiveObjective(realParams.objective)) {
+                updateObjectiveToCreate(realParams.objective);
+                setEdit({
+                    enable: true,
+                    id: realParams.objective.identifier,
+                });
+            } else {
+                ShowToast(t("errors.TODO"));
+            }
+        }
+    }, [params, t]);
 
     // validation
     const [canCreateObjective, setCanCreateObjective] =
@@ -355,24 +397,41 @@ export default function CreateActiveObjectivePage() {
     }
 
     useEffect(() => {
-        setCanCreateObjective(ValidateActiveObjective(objectiveToCreate));
+        setCanCreateObjective(ValidateActiveObjective(objectiveToCreate, true));
     }, [objectiveToCreate]);
 
     async function handleCreation(): Promise<void> {
-        if (canCreateObjective) {
-            const response: 0 | 1 = await CreateActiveObjective(
-                objectiveToCreate,
-                t,
-            );
+        try {
+            if (canCreateObjective) {
+                let response: 0 | 1;
 
-            if (response !== 0) {
-                logToConsole(
-                    "Error? Got something else than 0 as the CreateActiveObjective() response",
-                    "error",
-                );
+                if (edit.enable && edit.id !== undefined) {
+                    response = await EditActiveObjective(
+                        objectiveToCreate,
+                        edit.id,
+                        t,
+                    );
+                } else {
+                    response = await CreateActiveObjective(
+                        objectiveToCreate,
+                        t,
+                    );
+                }
+                if (response !== 0) {
+                    logToConsole(
+                        `Got 1 as the ${edit.enable ? "EditActiveObjective()" : "CreateActiveObjective()"} response`,
+                        "error",
+                    );
+                }
+                router.replace(ROUTES.MAIN.HOME);
             }
-            router.replace(ROUTES.MAIN.HOME);
+        } catch (e) {
+            logToConsole(
+                `Error with ${edit.enable ? "EditActiveObjective()" : "CreateActiveObjective()"}:\n${e}`,
+                "error",
+            );
         }
+        return;
     }
 
     return (
@@ -584,10 +643,8 @@ export default function CreateActiveObjectivePage() {
                 action={async () => {
                     if (canCreateObjective) {
                         await handleCreation();
-                        return;
-                    } else {
-                        return;
                     }
+                    return;
                 }}
             />
             <PageEnd includeText={false} size="tiny" />

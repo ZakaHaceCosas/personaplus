@@ -11,7 +11,7 @@ import Division from "@/components/ui/sections/division";
 import BetterText from "@/components/text/better_text";
 import BetterButton from "@/components/interaction/better_button";
 import ROUTES from "@/constants/routes";
-import { SessionParams } from "@/app/(tabs)/objectives/sessions";
+import { SessionParams } from "@/types/active_objectives";
 import TopBar from "@/components/navigation/top_bar";
 
 export default function Results() {

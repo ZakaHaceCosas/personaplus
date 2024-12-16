@@ -380,6 +380,82 @@ async function CreateActiveObjective(
 }
 
 /**
+ * Edits an Active Objective, overwriting it's data.
+ *
+ * @async
+ * @param {ActiveObjectiveWithoutId} obj Data WITHOUT ID of the new objective (what content you'll use for overwriting).
+ * @param {number} id ID of the objective to overwrite.
+ * @param {TFunction} t Pass here the translate function, please.
+ * @returns {Promise<0 | 1>} 0 if success, 1 if failure.
+ */
+async function EditActiveObjective(
+    obj: ActiveObjectiveWithoutId,
+    id: number,
+    t: TFunction,
+): Promise<0 | 1> {
+    try {
+        const oldObj: ActiveObjective | null = await GetActiveObjective(id);
+
+        if (!oldObj) throw new Error(`No active objective with ID ${id}`);
+
+        const newObjective: ActiveObjective = {
+            ...oldObj, // 1st go the oldies
+            ...obj, // 2nd go the overrides
+            identifier: id, // 3rd goes the ID override
+        };
+
+        let objs: ActiveObjective[] | null = await GetAllObjectives();
+        if (!objs || objs.length === 0) {
+            objs = [];
+        }
+
+        const index = objs.findIndex(
+            (o: ActiveObjective): boolean => o.identifier === id,
+        );
+
+        if (index !== -1) {
+            // overwrite
+            objs[index] = newObjective;
+        } else {
+            // this shouldn't happen
+            throw new Error(
+                `Objective with ID ${id} not found in the objectives list!`,
+            );
+        }
+
+        try {
+            await AsyncStorage.setItem(
+                StoredItemNames.objectives,
+                JSON.stringify(objs),
+            );
+            ShowToast(
+                t("pages.createActiveObjective.doneFeedback", {
+                    obj: t(
+                        `globals.supportedActiveObjectives.${newObjective.exercise}.name`,
+                    ),
+                }),
+            );
+            logToConsole(
+                `Created ${newObjective.identifier} objective with ID ${newObjective.exercise} successfully! Full JSON of the created objective:\n${JSON.stringify(newObjective)}"`,
+                "success",
+                undefined,
+                false,
+            );
+            return 0;
+        } catch (e) {
+            throw new Error(`Failed to save objectives! ${e}`);
+        }
+    } catch (e) {
+        logToConsole(
+            `Something went wrong editing ${id}.\n\nError: ${e}`,
+            "error",
+        );
+        ShowToast("Error :c");
+        return 1;
+    }
+}
+
+/**
  * Calculates the duration of each fragment of a session. Let me explain: Sessions support rests, which - as the name implies - are pauses of a fixed duration between a session, for the user to rest.
  *
  * While the duration of a rest is specified by the user, it's position is not, instead PersonaPlus will (thanks to this function) distribute evenly each rest between all the duration of the session. This implies splitting the session's duration into **fragments**, separated by rests.
@@ -617,4 +693,5 @@ export {
     LaunchActiveObjective,
     CalculateSessionPerformance,
     FailObjectivesNotDoneYesterday,
+    EditActiveObjective,
 };

@@ -191,7 +191,7 @@
         },
         "home": {
             "header": "¡Hola, {{username}}!",
-            "subheader": "¿Qué objetivos cumplirás hoy?"
+            "subheader": "¿Qué lograrás hoy?"
         },
         "dashboard": {
             "header": "Panel de control",
