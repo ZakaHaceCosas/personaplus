@@ -1,5 +1,15 @@
-// app/CreateObjective.tsx
-// Objective creation
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/app/(tabs)/objectives/create.tsx
+ * Basically: A page to create active objectives.
+ *
+ * <=============================================================================>
+ */
 
 import React, { useEffect, useState } from "react";
 import { View, Pressable, StyleSheet, TextInput } from "react-native";
@@ -16,6 +26,7 @@ import {
     SupportedActiveObjectivesList,
     SupportedActiveObjectives,
     WeekTuple,
+    ValidateActiveObjective,
 } from "@/types/active_objectives";
 import GenerateRandomMessage from "@/toolkit/random_message";
 import BetterText from "@/components/text/better_text";
@@ -344,53 +355,24 @@ export default function CreateActiveObjectivePage() {
     }
 
     useEffect(() => {
-        function validate() {
-            const isInfoValid =
-                objectiveToCreate.exercise !== "" &&
-                !objectiveToCreate.info.days.every((day) => day === false) && // not all 7 days are false
-                objectiveToCreate.info.durationMinutes > 0; // no 0 minutes of exercise
-
-            let isSpecificDataValid = false;
-
-            if (objectiveToCreate.exercise === "Lifting") {
-                isSpecificDataValid =
-                    (objectiveToCreate.specificData?.dumbbellWeight || 0) > 0 &&
-                    [1, 2].includes(
-                        objectiveToCreate.specificData?.amountOfHands || 0,
-                    ) &&
-                    (objectiveToCreate.specificData?.reps || 0) > 0;
-            } else if (objectiveToCreate.exercise === "Push Ups") {
-                isSpecificDataValid =
-                    objectiveToCreate.specificData.amountOfPushUps > 0;
-            } else {
-                isSpecificDataValid = true; // heh. no validation required.
-            }
-
-            return isInfoValid && isSpecificDataValid;
-        }
-
-        setCanCreateObjective(validate());
+        setCanCreateObjective(ValidateActiveObjective(objectiveToCreate));
     }, [objectiveToCreate]);
 
-    function handleCreation(): void {
-        async function createObjective(): Promise<void> {
-            if (canCreateObjective) {
-                const response: 0 | 1 = await CreateActiveObjective(
-                    objectiveToCreate,
-                    t,
+    async function handleCreation(): Promise<void> {
+        if (canCreateObjective) {
+            const response: 0 | 1 = await CreateActiveObjective(
+                objectiveToCreate,
+                t,
+            );
+
+            if (response !== 0) {
+                logToConsole(
+                    "Error? Got something else than 0 as the CreateActiveObjective() response",
+                    "error",
                 );
-
-                if (response !== 0) {
-                    logToConsole(
-                        "Error? Got something else than 0 as the CreateActiveObjective() response",
-                        "error",
-                    );
-                }
-                router.replace(ROUTES.MAIN.HOME);
             }
+            router.replace(ROUTES.MAIN.HOME);
         }
-
-        createObjective();
     }
 
     return (
@@ -598,8 +580,15 @@ export default function CreateActiveObjectivePage() {
                         ? t("globals.interaction.goAheadGood")
                         : t("globals.interaction.somethingIsWrong")
                 }
-                buttonHint="Creates the desired active objective. In case of missing or invalid fields, it won't do anything."
-                action={canCreateObjective ? () => handleCreation() : () => {}}
+                buttonHint="Creates the desired active objective. In case of missing or invalid fields, it won't do anything. TODO-translate"
+                action={async () => {
+                    if (canCreateObjective) {
+                        await handleCreation();
+                        return;
+                    } else {
+                        return;
+                    }
+                }}
             />
             <PageEnd includeText={false} size="tiny" />
         </>
