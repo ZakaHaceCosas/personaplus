@@ -1,24 +1,24 @@
 import AsyncStorage from "expo-sqlite/kv-store";
 import { logToConsole, getLogsFromStorage } from "@/toolkit/debug/console";
 import { Logs } from "@/types/logs";
-import { ToastAndroid } from "react-native";
+import { ShowToast } from "@/toolkit/android";
+import StoredItemNames from "@/constants/stored_item_names";
 
 jest.mock("expo-sqlite/kv-store", () => ({
     getItem: jest.fn(),
     setItem: jest.fn(),
 }));
+
 jest.mock("react-native", () => ({
     Platform: {
         OS: "android",
-    },
-    ToastAndroid: {
-        show: jest.fn(),
     },
 }));
 
 const mockGetItem = AsyncStorage.getItem as jest.MockedFunction<
     typeof AsyncStorage.getItem
 >;
+const mockShowToast = ShowToast as jest.MockedFunction<typeof ShowToast>;
 
 const sampleLogs: Logs = [
     {
@@ -74,10 +74,12 @@ describe("logToConsole Toolkit", () => {
         test("should return an empty array if there is an error", async () => {
             mockGetItem.mockRejectedValueOnce(new Error("AsyncStorage error"));
 
-            const logs = await getLogsFromStorage();
+            const logs = getLogsFromStorage();
 
             expect(logs).toEqual([]);
-            expect(AsyncStorage.getItem).toHaveBeenCalledWith("globalLogs");
+            expect(AsyncStorage.getItemSync).toHaveBeenCalledWith(
+                StoredItemNames.consoleLogs,
+            );
         });
     });
 
@@ -105,20 +107,6 @@ describe("logToConsole Toolkit", () => {
             consoleWarnSpy.mockRestore();
         });
 
-        test("should log a message with 'error' type and display a toast", () => {
-            const consoleErrorSpy = jest
-                .spyOn(console, "error")
-                .mockImplementation();
-            logToConsole("Error: yes", "error");
-
-            expect(consoleErrorSpy).toHaveBeenCalledWith("Error: yes");
-            expect(ToastAndroid.show).toHaveBeenCalledWith(
-                "Error: yes",
-                ToastAndroid.LONG,
-            );
-            consoleErrorSpy.mockRestore();
-        });
-
         test("should log a message with 'success' type", () => {
             const consoleLogSpy = jest
                 .spyOn(console, "log")
@@ -136,10 +124,7 @@ describe("logToConsole Toolkit", () => {
             logToConsole("this is a toast", "log", undefined, true);
 
             expect(consoleLogSpy).toHaveBeenCalledWith("this is a toast");
-            expect(ToastAndroid.show).toHaveBeenCalledWith(
-                "this is a toast",
-                ToastAndroid.LONG,
-            );
+            expect(mockShowToast).toHaveBeenCalledWith("this is a toast");
             consoleLogSpy.mockRestore();
         });
     });

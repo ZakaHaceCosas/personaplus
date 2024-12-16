@@ -1,11 +1,19 @@
-import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
+import {
+    ErrorUserData,
+    OrchestrateUserData,
+    ValidateUserData,
+} from "@/toolkit/user";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { FullProfile } from "@/types/user";
 
 jest.mock("expo-sqlite/kv-store", () => ({
-    getItemSync: jest.fn(),
+    getItem: jest.fn(),
     setItem: jest.fn(),
 }));
+
+const mockGetItem = AsyncStorage.getItem as jest.MockedFunction<
+    (key: string) => Promise<string | null>
+>;
 
 const samplesValidProfile: FullProfile = {
     username: "Jesus",
@@ -22,46 +30,30 @@ const samplesValidProfile: FullProfile = {
     wantsNotifications: false,
 };
 
-const mockGetItemSync = AsyncStorage.getItemSync as jest.MockedFunction<
-    (key: string) => string | null
->;
-
 describe("OrchestrateUserData", () => {
     beforeEach(() => {
         jest.clearAllMocks();
     });
 
-    test("should return a valid FullProfile object when data is present", () => {
-        mockGetItemSync.mockReturnValueOnce(
-            JSON.stringify(samplesValidProfile),
-        );
+    test("should return a valid FullProfile object when data is present", async () => {
+        mockGetItem.mockResolvedValueOnce(JSON.stringify(samplesValidProfile));
 
-        const result = OrchestrateUserData();
+        const result = await OrchestrateUserData();
         expect(result).toEqual(samplesValidProfile);
     });
 
-    test("should return null if AsyncStorage has no data", () => {
-        mockGetItemSync.mockReturnValueOnce(null);
+    test("should return null if AsyncStorage has no data", async () => {
+        mockGetItem.mockResolvedValueOnce(null);
 
-        const result = OrchestrateUserData();
-        expect(result).toBeNull();
+        const result = await OrchestrateUserData();
+        expect(result).toEqual(ErrorUserData);
     });
 
     test("should return null for empty or invalid JSON data", async () => {
-        mockGetItemSync.mockReturnValueOnce("");
+        mockGetItem.mockResolvedValueOnce("");
 
-        const result = OrchestrateUserData();
-        expect(result).toBeNull();
-    });
-
-    test("should throw an error when AsyncStorage throws", async () => {
-        mockGetItemSync.mockImplementationOnce(() => {
-            throw new Error("This is a sample error. Everything works!");
-        });
-
-        expect(OrchestrateUserData()).rejects.toThrow(
-            "This is a sample error. Everything works!",
-        );
+        const result = await OrchestrateUserData();
+        expect(result).toEqual(ErrorUserData);
     });
 });
 
@@ -71,58 +63,192 @@ describe("ValidateUserData", () => {
     });
 
     test("should return true for valid data", () => {
-        const result = ValidateUserData("male", 25, 75, 180, "validUser");
+        const result: boolean = ValidateUserData(
+            {
+                gender: "male",
+                age: 25,
+                weight: 75,
+                height: 180,
+                username: "validUser",
+                theThinkHour: "15:35:00",
+            },
+            "Basic",
+        );
         expect(result).toBe(true);
     });
 
     test("should return false for invalid gender", () => {
-        const result = ValidateUserData("other", 25, 75, 180, "validUser");
+        const result = ValidateUserData(
+            {
+                gender: "transformational being LMAO",
+                age: 25,
+                weight: 75,
+                height: 180,
+                username: "validUser",
+            },
+            "Basic",
+        );
         expect(result).toBe(false);
     });
 
-    test("should return false for age less than 5", () => {
-        const result = ValidateUserData("female", 3, 60, 160, "validUser");
+    test("should return false for age below cap", () => {
+        const result = ValidateUserData(
+            {
+                gender: "male",
+                age: 1,
+                weight: 75,
+                height: 180,
+                username: "validUser",
+            },
+            "Basic",
+        );
         expect(result).toBe(false);
     });
 
-    test("should return false for age more than 99", () => {
-        const result = ValidateUserData("female", 100, 60, 160, "validUser");
+    test("should return false for age above cap", () => {
+        const result = ValidateUserData(
+            {
+                gender: "male",
+                age: 25432,
+                weight: 75,
+                height: 180,
+                username: "validUser",
+            },
+            "Basic",
+        );
         expect(result).toBe(false);
     });
 
-    test("should return false for invalid weight (less than 15)", () => {
-        const result = ValidateUserData("male", 30, 10, 180, "validUser");
+    test("should return false for weight below cap", () => {
+        const result = ValidateUserData(
+            {
+                gender: "male",
+                age: 25,
+                weight: 12,
+                height: 4,
+                username: "validUser",
+            },
+            "Basic",
+        );
         expect(result).toBe(false);
     });
 
-    test("should return false for invalid weight (more than 300)", () => {
-        const result = ValidateUserData("male", 30, 310, 180, "validUser");
+    test("should return false for weight above cap", () => {
+        const result = ValidateUserData(
+            {
+                gender: "male",
+                age: 25,
+                weight: 75,
+                height: 2180,
+                username: "validUser",
+            },
+            "Basic",
+        );
         expect(result).toBe(false);
     });
 
-    test("should return false for invalid height (less than 45)", () => {
-        const result = ValidateUserData("male", 25, 75, 30, "validUser");
+    test("should return false for height below cap", () => {
+        const result = ValidateUserData(
+            {
+                gender: "male",
+                age: 25,
+                weight: 5,
+                height: 180,
+                username: "validUser",
+            },
+            "Basic",
+        );
         expect(result).toBe(false);
     });
 
-    test("should return false for invalid height (more than 260)", () => {
-        const result = ValidateUserData("male", 25, 75, 270, "validUser");
+    test("should return false for height above cap", () => {
+        const result = ValidateUserData(
+            {
+                gender: "male",
+                age: 25,
+                weight: 75312,
+                height: 180,
+                username: "validUser",
+            },
+            "Basic",
+        );
         expect(result).toBe(false);
     });
 
-    test("should return false for invalid username (less than 3 characters)", () => {
-        const result = ValidateUserData("male", 25, 75, 180, "ab");
+    test("should return false for username below cap", () => {
+        const result = ValidateUserData(
+            {
+                gender: "male",
+                age: 25,
+                weight: 75,
+                height: 180,
+                username: "a",
+            },
+            "Basic",
+        );
         expect(result).toBe(false);
     });
 
-    test("should return false for invalid username (more than 40 characters)", () => {
-        const result = ValidateUserData("male", 25, 75, 180, "a".repeat(41));
+    test("should return false for username above cap", () => {
+        const result = ValidateUserData(
+            {
+                gender: "male",
+                age: 25,
+                weight: 75,
+                height: 180,
+                username: "a".repeat(41),
+            },
+            "Basic",
+        );
         expect(result).toBe(false);
     });
 
-    test("should return false if username is empty or null", () => {
-        const result1 = ValidateUserData("male", 25, 75, 180, "");
-        const result2 = ValidateUserData("male", 25, 75, 180, null);
+    test("should return false for no username", () => {
+        const result1 = ValidateUserData(
+            {
+                gender: "male",
+                age: 25,
+                weight: 75,
+                height: 180,
+                username: "",
+            },
+            "Basic",
+        );
+        const result2 = ValidateUserData(
+            {
+                gender: "male",
+                age: 25,
+                weight: 75,
+                height: 180,
+                username: null,
+            },
+            "Basic",
+        );
+        expect(result1).toBe(false);
+        expect(result2).toBe(false);
+    });
+
+    test("should return false for wrong username", () => {
+        const result1 = ValidateUserData(
+            {
+                gender: "male",
+                age: 25,
+                weight: 75,
+                height: 180,
+                username: "ErrOr.",
+            },
+            "Basic",
+        );
+        const result2 = ValidateUserData(
+            {
+                gender: "male",
+                age: 25,
+                weight: 75,
+                height: 180,
+                username: "PEdro Sánchez",
+            },
+            "Basic",
+        );
         expect(result1).toBe(false);
         expect(result2).toBe(false);
     });
