@@ -49,7 +49,7 @@ export const VALID_USER_CAPS = {
         MIN: 3,
         MAX: 40,
         /** the two last entries are a joke, somewhat. */
-        INVALID: ["error", "error.", "Pedro Sánchez", "PSOE"],
+        INVALID: ["error", "error.", "pedro sánchez", "psoe"],
     },
 };
 
@@ -84,15 +84,15 @@ export function ValidateUserData(
         age !== undefined &&
         age !== "" &&
         !isNaN(Number(age)) &&
-        Number(age) >= VALID_USER_CAPS.HEIGHT.MIN &&
-        Number(age) <= VALID_USER_CAPS.HEIGHT.MAX;
+        Number(age) >= VALID_USER_CAPS.AGE.MIN &&
+        Number(age) <= VALID_USER_CAPS.AGE.MAX;
     const isWeightValid: boolean =
         weight !== null &&
         weight !== undefined &&
         weight !== "" &&
         !isNaN(Number(weight)) &&
-        Number(weight) >= VALID_USER_CAPS.HEIGHT.MIN &&
-        Number(weight) <= VALID_USER_CAPS.HEIGHT.MAX;
+        Number(weight) >= VALID_USER_CAPS.WEIGHT.MIN &&
+        Number(weight) <= VALID_USER_CAPS.WEIGHT.MAX;
     const isHeightValid: boolean =
         height !== null &&
         height !== undefined &&
@@ -106,7 +106,7 @@ export function ValidateUserData(
         username.trim() !== "" &&
         username.trim().length >= VALID_USER_CAPS.USERNAME.MIN &&
         username.trim().length <= VALID_USER_CAPS.USERNAME.MAX &&
-        !VALID_USER_CAPS.USERNAME.INVALID.includes(username);
+        !VALID_USER_CAPS.USERNAME.INVALID.includes(username.toLowerCase());
 
     const isBasicHealthDataValid: boolean =
         isGenderValid && isAgeValid && isWeightValid && isHeightValid;
