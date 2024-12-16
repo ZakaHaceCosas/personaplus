@@ -130,6 +130,63 @@ export interface ActiveObjective {
 }
 
 /**
+ * Validates an ActiveObjective
+ *
+ * @export
+ * @param {ActiveObjective} obj The objective (type `any`, just in case).
+ * @param {?boolean} [omitIdentifier] If true, won't check for a valid ID.
+ * @returns {boolean} TRUE if valid, FALSE otherwise.
+ */
+export function ValidateActiveObjective(
+    obj: any,
+    omitIdentifier?: boolean,
+): obj is ActiveObjective {
+    try {
+        if (!obj || typeof obj !== "object") return false;
+        if (!omitIdentifier && !obj.identifier) return false; // if no ID and no skip, invalid. can be skipped because you might be creating the objective yet
+        if (!obj.info) return false; // no info, invalid
+        const info = obj.info as ActiveObjectiveInfo; // (for vsc intellisense)
+        if (!Array.isArray(info.days) || !info.days.includes(true))
+            return false; // if all days are disabled, invalid
+        if (
+            typeof info.durationMinutes !== "number" ||
+            info.durationMinutes <= 0
+        )
+            return false; // if eq or lower than 0, invalid
+        if (typeof info.rests !== "number" || info.rests < 0) return false; // if not present, invalid. can be 0
+        if (
+            info.rests > 0 &&
+            (typeof info.restDurationMinutes !== "number" ||
+                info.restDurationMinutes <= 0)
+        )
+            return false; // if not present, or eq / lower than 0 WHILE HAVING rests, invalid
+        if (!obj.specificData) return false;
+        const specificData = obj.specificData as ActiveObjectiveSpecificData;
+        const exercise = obj.exercise as SupportedActiveObjectives;
+
+        let isSpecificDataValid = false;
+
+        if (exercise === "Lifting") {
+            isSpecificDataValid =
+                (specificData?.dumbbellWeight || 0) > 0 &&
+                [1, 2].includes(specificData?.amountOfHands || 0) &&
+                (specificData?.reps || 0) > 0;
+        } else if (exercise === "Push Ups") {
+            isSpecificDataValid = specificData?.amountOfPushUps > 0;
+        } else if (exercise === "Running" || exercise === "Walking") {
+            isSpecificDataValid = true; // mo additional validation required
+            // in reality i should validate the estimateSpeed thingy but i don't care about it, as soon as i get the tracker to work it's getting removed anyway
+        } else if (exercise === "") {
+            isSpecificDataValid = false; // :D
+        }
+
+        return isSpecificDataValid;
+    } catch {
+        return false; // :(
+    }
+}
+
+/**
  * An objective type but without the ID, so you can create it without type errors (as you're not supposed to provide the ID yourself, it's app-generated).
  *
  * @export
