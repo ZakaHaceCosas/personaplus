@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fixed a performance issue in the homepage caused by notification validation looping itself. The "Loading..." screen became slightly longer, in exchange.
+- Fixed a performance issue in the homepage caused by notification validation looping itself.
 - Fixed the app not correctly fetching the user's language in some cases.
 - Fixed the app going into loading state again if you accidentally touched in the navbar the button to the tab you're currently on.
 

@@ -7,7 +7,7 @@ import GapView from "@/components/ui/gap_view";
 import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
 import ROUTES from "@/constants/routes";
-import { OrchestrateUserData } from "@/toolkit/user";
+import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
 import { logToConsole } from "@/toolkit/debug/console";
 import {
     CheckForAnActiveObjectiveDailyStatus,
@@ -56,116 +56,96 @@ export default function HomeScreen() {
         useState<boolean>(false);
 
     useEffect(() => {
-        async function fetchUserData(): Promise<void> {
+        async function fetchData(): Promise<void> {
             try {
-                // user data
+                // fetch user
                 const userData: FullProfile = await OrchestrateUserData();
-                // since OrchestrateUserData() never throws an error, we gotta identify values that are only possible if an ErrorUserData was returned, AKA a setup is needed
-                if (userData.username === "Error" && userData.age === 0) {
+                if (!ValidateUserData(userData, "Full")) {
                     router.replace(ROUTES.MAIN.WELCOME_SCREEN);
                     return;
                 }
                 setUserData(userData);
-            } catch {
-                router.replace(ROUTES.MAIN.WELCOME_SCREEN);
-            }
-        }
-        fetchUserData();
-    }, []);
 
-    useEffect(() => {
-        async function fetchIdentifiers(): Promise<void> {
-            try {
+                // fetch IDs
                 await FailObjectivesNotDoneYesterday();
                 const pending: number[] | 0 | false | null =
                     await GetAllPendingObjectives();
                 setIdentifiers(pending);
-            } catch (e) {
-                logToConsole(`Error fetching identifiers: ${e}`, "error");
-            } finally {
-                setIdentifiersLoaded(true);
-            }
-        }
-        fetchIdentifiers();
-    }, []);
 
-    useEffect((): void => {
-        async function fetchData(): Promise<void> {
-            try {
-                if (!identifiersLoaded) return;
-
-                if (!Array.isArray(identifiers)) {
-                    setAllObjectivesForTable([]);
-                    return;
-                }
-
-                const objectives: (ActiveObjective | null)[] =
-                    await Promise.all(
-                        identifiers.map(
-                            (
-                                identifier: number,
-                            ): Promise<ActiveObjective | null> =>
-                                GetActiveObjective(identifier),
-                        ),
-                    );
-
-                const filteredObjectives: ActiveObjective[] = objectives.filter(
-                    (obj: ActiveObjective | null): obj is ActiveObjective =>
-                        obj !== null,
-                );
-                setRenderedObjectives(filteredObjectives);
-
-                if (filteredObjectives.length === 0) {
-                    setAllObjectivesForTable([]);
-                    return;
-                }
-
-                const objectivesForTable: BetterTableItem[] = await Promise.all(
-                    filteredObjectives.map(
-                        async (
-                            obj: ActiveObjective,
-                        ): Promise<BetterTableItem> => ({
-                            name: t(
-                                `globals.supportedActiveObjectives.${obj.exercise}.name`,
+                // handle objectives
+                // PS. if you wonder why i didn't instead do
+                // if (!array.isArray(pending)) { setStuff([]) }
+                // to save an indent level, it's because type error happens
+                // if i do that :/
+                if (Array.isArray(pending)) {
+                    const objectives: (ActiveObjective | null)[] =
+                        await Promise.all(
+                            pending.map(
+                                (id: number): Promise<ActiveObjective | null> =>
+                                    GetActiveObjective(id),
                             ),
-                            value: (await CheckForAnActiveObjectiveDailyStatus(
-                                obj.identifier,
-                            ))
-                                ? t(
-                                      "activeObjectives.today.content.headers.statusOptions.yes",
-                                  )
-                                : t(
-                                      "activeObjectives.today.content.headers.statusOptions.no",
-                                  ),
-                        }),
-                    ),
-                );
-                setAllObjectivesForTable(objectivesForTable);
+                        );
+                    const filteredObjectives: ActiveObjective[] =
+                        objectives.filter(
+                            (
+                                obj: ActiveObjective | null,
+                            ): obj is ActiveObjective => obj !== null,
+                        );
+                    setRenderedObjectives(filteredObjectives);
+
+                    if (filteredObjectives.length > 0) {
+                        const objectivesForTable: BetterTableItem[] =
+                            await Promise.all(
+                                filteredObjectives.map(
+                                    async (
+                                        obj: ActiveObjective,
+                                    ): Promise<BetterTableItem> => ({
+                                        name: t(
+                                            `globals.supportedActiveObjectives.${obj.exercise}.name`,
+                                        ),
+                                        value: (await CheckForAnActiveObjectiveDailyStatus(
+                                            obj.identifier,
+                                        ))
+                                            ? t(
+                                                  "activeObjectives.today.content.headers.statusOptions.yes",
+                                              )
+                                            : t(
+                                                  "activeObjectives.today.content.headers.statusOptions.no",
+                                              ),
+                                    }),
+                                ),
+                            );
+                        setAllObjectivesForTable(objectivesForTable);
+                    } else {
+                        setAllObjectivesForTable([]);
+                    }
+                } else {
+                    setRenderedObjectives([]);
+                    setAllObjectivesForTable([]);
+                }
             } catch (e) {
                 logToConsole(`Error fetching data: ${e}`, "error");
+                router.replace(ROUTES.MAIN.WELCOME_SCREEN);
             } finally {
+                setIdentifiersLoaded(true);
                 setLoading(false);
             }
         }
-        fetchData();
-    }, [identifiersLoaded, identifiers, t]);
 
-    // notifications
+        fetchData();
+    }, [t]);
+
+    // handle notifications (most issues came from here bruh)
     useEffect(() => {
         async function handle(): Promise<void> {
+            if (notificationsHandled || !userData || !identifiersLoaded) return;
+
             try {
-                if (notificationsHandled === true) return;
                 const isRegistered: boolean =
                     await areNotificationsScheduledForToday();
-                logToConsole(
-                    `isRegistered status (for notifications): ${isRegistered}`,
-                    "log",
-                );
-                if (userData?.wantsNotifications === false && isRegistered) {
+                if (userData.wantsNotifications === false && isRegistered) {
                     await cancelScheduledNotifications(t, false);
-                    return;
-                }
-                if (
+                } else if (
                     userData &&
                     userData.wantsNotifications !== false &&
                     !isRegistered &&
@@ -173,8 +153,6 @@ export default function HomeScreen() {
                     identifiers.length > 0
                 ) {
                     await scheduleRandomNotifications(3, t);
-                } else {
-                    return;
                 }
             } catch (e) {
                 logToConsole(`Error handling notifications: ${e}`, "error");
@@ -183,18 +161,12 @@ export default function HomeScreen() {
             }
         }
 
-        if (userData && identifiersLoaded && !notificationsHandled) {
-            handle();
-        }
+        handle();
     }, [userData, identifiers, identifiersLoaded, notificationsHandled, t]);
 
-    if (
-        loading ||
-        !userData ||
-        !identifiersLoaded ||
-        !renderedObjectives ||
-        !allObjectivesForTable
-    ) {
+    // render stuff
+    if (loading) return <Loading />;
+    if (!userData || !renderedObjectives || !allObjectivesForTable) {
         return <Loading />;
     }
 
