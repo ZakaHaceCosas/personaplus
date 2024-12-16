@@ -22,7 +22,10 @@ import {
     BetterTextSmallText,
     BetterTextSubHeader,
 } from "@/components/text/better_text_presets";
-import { TimerPickerModal } from "react-native-timer-picker";
+import {
+    CustomTimerPickerModalStyles,
+    TimerPickerModal,
+} from "react-native-timer-picker";
 import { LinearGradient } from "expo-linear-gradient";
 import { getDefaultLocale } from "@/translations/translate";
 import { ValidateUserData } from "@/toolkit/user";
@@ -38,6 +41,7 @@ import URLs from "@/constants/urls";
 import { DEFAULT_EXPERIMENTS } from "@/constants/experiments";
 import { SafelyOpenUrl } from "@/toolkit/routing";
 import BetterAlert from "@/components/ui/better_alert";
+import { UniversalItemStyle } from "@/constants/ui/pressables";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -109,7 +113,7 @@ export default function WelcomePage() {
     const genderOptions = GetStuffForUserDataQuestion("gender") as SwapOption[];
 
     /* for the time picker to be displayed or not */
-    const [showPicker, setShowPicker] = useState<boolean>(false);
+    const [showTimePicker, toggleTimePicker] = useState<boolean>(false);
 
     // pagination
     /** Goes to the next "page" of the Welcome screen. If there are no more pages, calls `submitUser()`.
@@ -475,6 +479,55 @@ export default function WelcomePage() {
         );
     }
 
+    const pickerStyles: CustomTimerPickerModalStyles = {
+        backgroundColor: Colors.MAIN.SECTION,
+        modalTitle: {
+            textAlign: "center",
+            maxWidth: "75%",
+        },
+        text: {
+            color: "#FFF",
+            fontFamily: "BeVietnamPro-Regular",
+        },
+        pickerContainer: {
+            overflow: "visible",
+        },
+        confirmButton: {
+            backgroundColor: Colors.PRIMARIES.GOD.GOD,
+            borderColor: Colors.PRIMARIES.GOD.GOD_STROKE,
+            color: Colors.BASIC.BLACK,
+            borderWidth: UniversalItemStyle.borderWidth,
+            borderRadius: UniversalItemStyle.borderRadius,
+            padding: UniversalItemStyle.padding,
+        },
+        cancelButton: {
+            backgroundColor: Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
+            borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
+            color: Colors.BASIC.WHITE,
+            borderWidth: UniversalItemStyle.borderWidth,
+            borderRadius: UniversalItemStyle.borderRadius,
+            padding: UniversalItemStyle.padding,
+        },
+        buttonContainer: {
+            minWidth: "80%",
+            display: "flex",
+            flexDirection: "row",
+            gap: 10,
+            alignItems: "center",
+            justifyContent: "center",
+            padding: 20,
+        },
+        button: {
+            width: "100%",
+            textAlign: "center",
+        },
+        contentContainer: {
+            borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
+            borderWidth: UniversalItemStyle.borderWidth,
+            borderRadius: UniversalItemStyle.borderRadius * 2,
+        },
+    };
+
     return (
         <View style={styles.mainView}>
             {spawnProgressBar()}
@@ -658,17 +711,17 @@ export default function WelcomePage() {
                             "pages.welcome.questions.theThinkHour.summon",
                         )}
                         buttonHint="Summons a modal where the user can pick an hour of the day for The Think Hour."
-                        action={() => setShowPicker(!showPicker)}
+                        action={() => toggleTimePicker(!showTimePicker)}
                     />
                     <TimerPickerModal
-                        visible={showPicker}
-                        setIsVisible={setShowPicker}
+                        visible={showTimePicker}
+                        setIsVisible={toggleTimePicker}
                         onConfirm={(pickedDuration) => {
                             handleChange(
                                 "theThinkHour",
                                 formatTimeString(pickedDuration),
                             );
-                            setShowPicker(false);
+                            toggleTimePicker(false);
                         }}
                         hideSeconds={true}
                         padHoursWithZero={true}
@@ -677,22 +730,12 @@ export default function WelcomePage() {
                         modalTitle={t(
                             "pages.welcome.questions.theThinkHour.ask",
                         )}
-                        onCancel={() => setShowPicker(false)}
-                        closeOnOverlayPress
-                        Audio={false}
+                        onCancel={() => toggleTimePicker(false)}
+                        closeOnOverlayPress={true}
                         LinearGradient={LinearGradient}
-                        styles={{
-                            backgroundColor: Colors.MAIN.SECTION,
-                            text: {
-                                color: "#FFF",
-                                fontFamily: "BeVietnamPro-Regular",
-                            },
-                            pickerContainer: {
-                                overflow: "visible",
-                            },
-                        }}
+                        styles={pickerStyles}
                         modalProps={{
-                            overlayOpacity: 0.2,
+                            overlayOpacity: 0.25,
                         }}
                     />
                     <GapView height={10} />
