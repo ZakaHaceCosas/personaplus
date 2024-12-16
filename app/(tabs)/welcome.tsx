@@ -317,7 +317,7 @@ export default function WelcomePage() {
 
     useEffect((): void => {
         try {
-            validateStepOne(ValidateUserData(formData, "Full"));
+            validateStepOne(ValidateUserData(formData, "Basic"));
             validateStepTwo(formData.focus !== null);
             validateStepThree(
                 formData.sleepHours !== null &&
@@ -587,10 +587,20 @@ export default function WelcomePage() {
                     <GapView height={10} />
                     {
                         /* LMAO */
-                        formData.username === "Error" && (
+                        (formData.username.toLowerCase() === "error" ||
+                            formData.username.toLowerCase() === "error.") && (
                             <BetterTextSmallerText>
                                 "Error" is not allowed as a username (we reserve
                                 it as a keyword for in-app error-handling).
+                            </BetterTextSmallerText>
+                        )
+                    }
+                    {
+                        /* LMFAOOOOO */
+                        (formData.username.toLowerCase() === "pedro sánchez" ||
+                            formData.username.toLowerCase() === "psoe") && (
+                            <BetterTextSmallerText>
+                                que te jodan.
                             </BetterTextSmallerText>
                         )
                     }

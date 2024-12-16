@@ -65,7 +65,7 @@ export default function UpdateProfile() {
     const inputRefs = useRef<TextInput[]>([]);
 
     async function submit() {
-        if (workingData && ValidateUserData(workingData, "Full")) {
+        if (workingData && ValidateUserData(workingData, "Basic")) {
             try {
                 const data: FullProfile = await OrchestrateUserData();
                 const newData: FullProfile = {
