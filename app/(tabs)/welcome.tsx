@@ -321,7 +321,7 @@ export default function WelcomePage() {
 
     useEffect((): void => {
         try {
-            validateStepOne(ValidateUserData(formData, "Basic"));
+            validateStepOne(ValidateUserData(formData, "BasicHealth"));
             validateStepTwo(formData.focus !== null);
             validateStepThree(
                 formData.sleepHours !== null &&

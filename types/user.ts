@@ -38,16 +38,11 @@ export interface FullProfile {
 
 export type BasicUserData = Omit<
     FullProfile,
-    | "focus"
-    | "sleepHours"
-    | "activeness"
-    | "language"
-    | "isNewUser"
-    | "wantsNotifications"
+    "focus" | "language" | "isNewUser" | "wantsNotifications" | "theThinkHour"
 >;
 export type BasicUserHealthData = Omit<
     BasicUserData,
-    "username" | "theThinkHour"
+    "activeness" | "sleepHours" | "username"
 >;
 
 /**

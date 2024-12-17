@@ -144,13 +144,14 @@ export function ValidateUserData(
     const isBasicHealthDataValid: boolean =
         isGenderValid && isAgeValid && isWeightValid && isHeightValid;
     const isBasicDataValid: boolean =
-        isBasicHealthDataValid && isUsernameValid && isThinkHourValid;
+        isBasicHealthDataValid && areSleepHoursValid && isActivenessValid;
     const isFullProfileValid: boolean =
         isBasicDataValid &&
-        areSleepHoursValid &&
+        isBasicHealthDataValid &&
         isLanguageValid &&
-        isActivenessValid &&
-        areGenericBooleansValid;
+        areGenericBooleansValid &&
+        isUsernameValid &&
+        isThinkHourValid;
 
     switch (level) {
         case "BasicHealth":
@@ -210,6 +211,8 @@ export async function OrchestrateUserData(
                 height: fullData.height,
                 gender: fullData.gender,
                 theThinkHour: fullData.theThinkHour,
+                activeness: fullData.activeness,
+                sleepHours: fullData.sleepHours,
             };
         }
 
@@ -219,6 +222,8 @@ export async function OrchestrateUserData(
                 weight: fullData.weight,
                 height: fullData.height,
                 gender: fullData.gender,
+                activeness: fullData.activeness,
+                sleepHours: fullData.sleepHours,
             };
         }
 
