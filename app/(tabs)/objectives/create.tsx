@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
 
 // We create the function
 export default function CreateActiveObjectivePage() {
-    const { t } = useTranslation(); // translate function
+    const { t } = useTranslation();
     const params = useGlobalSearchParams();
 
     // objective and stuff
@@ -149,7 +149,7 @@ export default function CreateActiveObjectivePage() {
                     id: realParams.objective.identifier,
                 });
             } else {
-                ShowToast(t("errors.TODO"));
+                ShowToast(t("errors.activeObjectives.invalidData"));
             }
         }
     }, [params, t]);
@@ -639,7 +639,7 @@ export default function CreateActiveObjectivePage() {
                         ? t("globals.interaction.goAheadGood")
                         : t("globals.interaction.somethingIsWrong")
                 }
-                buttonHint="Creates the desired active objective. In case of missing or invalid fields, it won't do anything. TODO-translate"
+                buttonHint={t("pages.createActiveObjective.createButtonHint")}
                 action={async () => {
                     if (canCreateObjective) {
                         await handleCreation();

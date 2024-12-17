@@ -1,7 +1,7 @@
 {
     "files.exclude": {
-        "**/node_modules": false,
-        "**/.git": false,
+        "**/node_modules": true,
+        "**/.git": true,
         "**/.svn": true,
         "**/.hg": true,
         "**/CVS": true,
