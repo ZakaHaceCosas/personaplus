@@ -104,7 +104,7 @@ export default function BetterTable({
     return (
         <View style={styles.table}>
             <View style={styles.header}>
-                {headers.map((header) => (
+                {headers.map((header: string) => (
                     <View
                         key={GenerateRandomKey(
                             `BETTER_TABLE_HEADER__${header}`,
@@ -115,7 +115,7 @@ export default function BetterTable({
                     </View>
                 ))}
             </View>
-            {items.map((item) => (
+            {items.map((item: BetterTableItem) => (
                 <View
                     key={
                         GenerateRandomKey(`BETTER_TABLE_ITEM__${item.name}`) +
