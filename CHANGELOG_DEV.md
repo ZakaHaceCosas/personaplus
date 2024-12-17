@@ -15,7 +15,7 @@ For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 - Today toolkit /
   - Stringify TodaysDate, get today as object, and JS `Date()`-interop functions.
   - Handle `m min`, `n sec`, etc... strings function.
-- Added an `ActiveObjective` type guard.
+- Added `ActiveObjective` and `FullProfile | BasicUserData | BasicUserHealthData` type guards.
 - Added a specific types file for types used as glue fixes.
 
 ### Changed
