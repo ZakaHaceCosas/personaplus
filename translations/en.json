@@ -293,7 +293,8 @@
                 }
             },
             "required": "Required: Duration, Exercise, and at least one day of the week. Some specific exercises will have extra requirements: for example, \"Lifting\" requires you to specify how much weight you will be lifting.",
-            "doneFeedback": "{{obj}}, lets go!"
+            "doneFeedback": "{{obj}}, lets go!",
+            "createButtonHint": "Creates the objective. If there are empty or invalid fields, the button won't do anything."
         },
         "welcome": {
             "beginning": {
@@ -555,6 +556,11 @@
                     }
                 }
             }
+        }
+    },
+    "errors": {
+        "activeObjectives": {
+            "invalidData": "(ERROR) This objective's data is invalid."
         }
     }
 }

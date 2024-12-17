@@ -293,7 +293,8 @@
                 }
             },
             "required": "Necesario: Duración, Ejercicio, y al menos un día de la semana. Algunos ejercicios específicos tendrán requisitos extra: por ejemplo \"Levantamiento de peso\" requiere que especifiques cuanto peso vas a levantar.",
-            "doneFeedback": "{{obj}}, ¡allá vamos!"
+            "doneFeedback": "{{obj}}, ¡allá vamos!",
+            "createButtonHint": "Crea el objetivo. Si faltan campos por rellenar o son inválidos, el botón no hará nada."
         },
         "welcome": {
             "beginning": {
@@ -555,6 +556,11 @@
                     }
                 }
             }
+        }
+    },
+    "errors": {
+        "activeObjectives": {
+            "invalidData": "(ERROR) Los datos de este objetivo son inválidos."
         }
     }
 }
