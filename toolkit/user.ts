@@ -59,7 +59,7 @@ export const VALID_USER_CAPS = {
  * @export
  * @param {any} user Anything
  * @param {("BasicHealth" | "Basic" | "Full")} level What level of validation you require.
- * TODO - make `Full` complete!
+ *
  * @returns Whether the given user is valid.
  */
 export function ValidateUserData(
@@ -75,8 +75,19 @@ export function ValidateUserData(
     user: any,
     level: "BasicHealth" | "Basic" | "Full",
 ): user is BasicUserHealthData | BasicUserData | FullProfile {
-    const { gender, age, username, height, weight } =
-        user as FullProfileForCreation;
+    const {
+        gender,
+        age,
+        username,
+        height,
+        weight,
+        theThinkHour,
+        sleepHours,
+        language,
+        activeness,
+        isNewUser,
+        wantsNotifications,
+    } = user as FullProfileForCreation;
 
     const isGenderValid: boolean = gender === "male" || gender === "female";
     const isAgeValid: boolean =
@@ -107,17 +118,47 @@ export function ValidateUserData(
         username.trim().length >= VALID_USER_CAPS.USERNAME.MIN &&
         username.trim().length <= VALID_USER_CAPS.USERNAME.MAX &&
         !VALID_USER_CAPS.USERNAME.INVALID.includes(username.toLowerCase());
+    const isThinkHourValid: boolean =
+        theThinkHour !== null &&
+        theThinkHour !== undefined &&
+        theThinkHour.trim() !== "" &&
+        new RegExp("^(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d$").test(theThinkHour);
+    const areSleepHoursValid: boolean =
+        sleepHours !== null &&
+        sleepHours !== undefined &&
+        typeof sleepHours === "number" &&
+        sleepHours >= 3 &&
+        sleepHours <= 11;
+    const isLanguageValid: boolean =
+        language !== null &&
+        language !== undefined &&
+        ["en", "es"].includes(language);
+    const isActivenessValid: boolean =
+        activeness !== null &&
+        activeness !== undefined &&
+        ["poor", "light", "moderate", "intense", "super"].includes(activeness);
+    const areGenericBooleansValid: boolean =
+        typeof isNewUser === "boolean" &&
+        typeof wantsNotifications === "boolean";
 
     const isBasicHealthDataValid: boolean =
         isGenderValid && isAgeValid && isWeightValid && isHeightValid;
-    const isBasicDataValid = isBasicHealthDataValid && isUsernameValid;
+    const isBasicDataValid: boolean =
+        isBasicHealthDataValid && isUsernameValid && isThinkHourValid;
+    const isFullProfileValid: boolean =
+        isBasicDataValid &&
+        areSleepHoursValid &&
+        isLanguageValid &&
+        isActivenessValid &&
+        areGenericBooleansValid;
 
     switch (level) {
         case "BasicHealth":
             return isBasicHealthDataValid;
         case "Basic":
-        case "Full":
             return isBasicDataValid;
+        case "Full":
+            return isFullProfileValid;
     }
 }
 
