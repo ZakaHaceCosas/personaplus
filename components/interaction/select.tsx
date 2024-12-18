@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
  * An option for a Select.
  *
  * @interface SelectOption
- * @typedef {SelectOption}
  */
 export interface SelectOption {
     /**
@@ -51,7 +50,6 @@ export interface SelectOption {
  * SelectProps
  *
  * @interface SelectProps
- * @typedef {SelectProps}
  */
 interface SelectProps {
     /**

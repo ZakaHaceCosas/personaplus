@@ -15,7 +15,6 @@ import {
  * HelpViewProps
  *
  * @interface HelpViewProps
- * @typedef {HelpViewProps}
  */
 interface HelpViewProps {
     /**

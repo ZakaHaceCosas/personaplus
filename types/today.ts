@@ -3,7 +3,6 @@
  *
  * @export
  * @interface CorrectCurrentDate
- * @typedef {CorrectCurrentDate}
  */
 export interface CorrectCurrentDate {
     /**
@@ -24,7 +23,6 @@ export interface CorrectCurrentDate {
  * A type for today's date string, using DD/MM/YYYY format.
  *
  * @export
- * @typedef {TodaysDate}
  */
 export type TodaysDate = `${string}/${string}/${string}`;
 
@@ -32,7 +30,6 @@ export type TodaysDate = `${string}/${string}/${string}`;
  * An object with today's date.
  *
  * @export
- * @typedef {TodaysDateObject}
  */
 export type TodaysDateObject = {
     day: number;

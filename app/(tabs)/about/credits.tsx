@@ -21,7 +21,6 @@ import FontSizes from "@/constants/font_sizes";
  * OpenSourceLibrary
  *
  * @interface OpenSourceLibrary
- * @typedef {OpenSourceLibrary}
  */
 interface OpenSourceLibrary {
     /**
@@ -106,7 +105,6 @@ const libraries: OpenSourceLibrary[] = [
  * A cool contributor.
  *
  * @interface Contributor
- * @typedef {Contributor}
  */
 interface Contributor {
     /**

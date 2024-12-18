@@ -9,7 +9,6 @@ import { View } from "react-native";
  * GapViewProps interface
  *
  * @interface GapViewProps
- * @typedef {GapViewProps}
  */
 interface GapViewProps {
     /**
@@ -30,9 +29,9 @@ interface GapViewProps {
  * Homemade custom gap component. Think of it as an invisible box that creates empty space. It renders an empty `<View>` component with custom width and/or height, replicating gap to space items.
  *
  * @export
- * @param {GapViewProps} param0
- * @param {number} param0.height
- * @param {number} param0.width
+ * @param {GapViewProps} p
+ * @param {number} p.height
+ * @param {number} p.width
  * @returns {ReactElement}
  */
 export default function GapView({ height, width }: GapViewProps): ReactElement {

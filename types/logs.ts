@@ -16,7 +16,6 @@
  *
  * @export
  * @interface Log
- * @typedef {Log}
  */
 export interface Log {
     /**
@@ -50,7 +49,6 @@ export interface Log {
  *
  * @export
  * @interface LogTraceback
- * @typedef {LogTraceback}
  */
 export interface LogTraceback {
     /**
@@ -83,6 +81,5 @@ export interface LogTraceback {
  * An array of logs.
  *
  * @export
- * @typedef {Logs}
  */
 export type Logs = Log[];

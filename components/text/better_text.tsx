@@ -21,7 +21,6 @@ import { FontFamily, FontWeight } from "@/types/font_weights";
  * BetterTextProps
  *
  * @interface BetterTextProps
- * @typedef {BetterTextProps}
  * @template {FontFamily} [T="BeVietnamPro"]
  */
 interface BetterTextProps<T extends FontFamily = "BeVietnamPro"> {

@@ -15,7 +15,6 @@
  * Font Sizes object properties
  *
  * @interface FontSizesProps
- * @typedef {FontSizesProps}
  */
 interface FontSizesProps {
     /**

@@ -9,7 +9,6 @@ import GenerateRandomKey from "@/toolkit/key_generator";
  *
  * @export
  * @interface BetterTableItem
- * @typedef {BetterTableItem}
  */
 export interface BetterTableItem {
     /**
@@ -30,7 +29,6 @@ export interface BetterTableItem {
  * BetterTableProps
  *
  * @interface BetterTableProps
- * @typedef {BetterTableProps}
  */
 interface BetterTableProps {
     /**

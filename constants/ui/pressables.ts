@@ -2,7 +2,6 @@
  * A set of common, universal styles for different items, like buttons, swap elements, notification alerts, etc...
  *
  * @interface UniversalItemStyleProps
- * @typedef {UniversalItemStyleProps}
  */
 interface UniversalItemStyleProps {
     /**

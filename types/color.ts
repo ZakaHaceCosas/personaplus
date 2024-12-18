@@ -2,7 +2,6 @@
  * A type for colors. A string preceded with a `#` (HEX color).
  *
  * @export
- * @typedef {Color}
  */
 export type Color = `#${string}`;
 
@@ -10,7 +9,6 @@ export type Color = `#${string}`;
  * Colors for the bottom navigation.
  *
  * @interface FooterColors
- * @typedef {FooterColors}
  */
 interface FooterColors {
     /** Background for the bottom navigation */
@@ -25,7 +23,6 @@ interface FooterColors {
  * Bland, dimmed colors.
  *
  * @interface DefaultColors
- * @typedef {DefaultColors}
  */
 interface DefaultColors {
     /** Item background */
@@ -40,7 +37,6 @@ interface DefaultColors {
  * Core, brand colors.
  *
  * @interface MainColors
- * @typedef {MainColors}
  */
 interface MainColors {
     /** The very background of the app */
@@ -61,7 +57,6 @@ interface MainColors {
  * Colors for labels and texts that aren't white.
  *
  * @interface LabelColors
- * @typedef {LabelColors}
  */
 interface LabelColors {
     /** Used for the title of sections */
@@ -76,7 +71,6 @@ interface LabelColors {
  * GOD type core colors.
  *
  * @interface GodColors
- * @typedef {GodColors}
  */
 interface GodColors {
     /** Main color */
@@ -89,7 +83,6 @@ interface GodColors {
  * ACE type core colors.
  *
  * @interface AceColors
- * @typedef {AceColors}
  */
 interface AceColors {
     /** Main color */
@@ -104,7 +97,6 @@ interface AceColors {
  * WOR type core colors.
  *
  * @interface WorColors
- * @typedef {WorColors}
  */
 interface WorColors {
     /** Main color */
@@ -117,7 +109,6 @@ interface WorColors {
  * HMM type core colors.
  *
  * @interface HmmColors
- * @typedef {HmmColors}
  */
 interface HmmColors {
     /** Main color */
@@ -130,7 +121,6 @@ interface HmmColors {
  * Primary colors.
  *
  * @interface PrimaryColors
- * @typedef {PrimaryColors}
  */
 interface PrimaryColors {
     /** Accent color for branding, also used for positive elements and as an accent in some places */
@@ -147,7 +137,6 @@ interface PrimaryColors {
  * Basic black and white.
  *
  * @interface BasicColors
- * @typedef {BasicColors}
  */
 interface BasicColors {
     /** Pure black */
@@ -160,7 +149,6 @@ interface BasicColors {
  * All the colors used by PersonaPlus.
  *
  * @interface ColorsObject
- * @typedef {ColorsObject}
  * @returns The selected color as a HEX string
  */
 export interface ColorsObject {
@@ -178,7 +166,6 @@ export interface ColorsObject {
  * All primary colors (their code-name) as a type.
  *
  * @export
- * @typedef {PrimaryColorsType}
  */
 export type PrimaryColorsType = "DEFAULT" | "ACE" | "GOD" | "WOR" | "HMM";
 
@@ -186,6 +173,5 @@ export type PrimaryColorsType = "DEFAULT" | "ACE" | "GOD" | "WOR" | "HMM";
  * All primary colors (their code-name) as a type. Omits `"DEFAULT"`.
  *
  * @export
- * @typedef {PrimaryColorsTypeBasic}
  */
 export type PrimaryColorsTypeBasic = Omit<PrimaryColorsType, "DEFAULT">;
