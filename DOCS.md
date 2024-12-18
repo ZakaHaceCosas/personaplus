@@ -353,6 +353,8 @@ if (usesPersonaPlus) {
 }
 ```
 
+Type everything, use JSDoc as extensively as possible. If using a JSDoc generator extension (which we recommend), remove the `@typedef` prop if generated.
+
 ## 4. Contributing your cool code in a cool way
 
 Okay, so you did write some cool code, right? That's awesome! Now, here are a few guidelines for committing and submitting your cool code in a cool way.
