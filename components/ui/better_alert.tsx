@@ -25,7 +25,6 @@ import { PrimaryColorsType } from "@/types/color";
  * BetterAlertProps
  *
  * @interface BetterAlertProps
- * @typedef {BetterAlertProps}
  */
 interface BetterAlertProps {
     /**

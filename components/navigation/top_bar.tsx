@@ -11,7 +11,6 @@ import { useTranslation } from "react-i18next";
  * TopBarProps
  *
  * @interface TopBarProps
- * @typedef {TopBarProps}
  */
 interface TopBarProps {
     /**

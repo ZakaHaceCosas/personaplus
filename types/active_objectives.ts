@@ -19,7 +19,6 @@ import { ExpoRouterParams } from "./glue_fix";
  * A type with all supported active objectives. **Tied to const `SupportedActiveObjectivesList`, note that in case of modifications.**
  *
  * @export
- * @typedef {SupportedActiveObjectives}
  */
 export type SupportedActiveObjectives =
     | ""
@@ -46,7 +45,6 @@ export const SupportedActiveObjectivesList: string[] = [
  * A tuple of booleans for the days of the week. Use within active objectives.
  *
  * @export
- * @typedef {WeekTuple}
  */
 export type WeekTuple = [
     boolean,
@@ -60,8 +58,6 @@ export type WeekTuple = [
 
 /**
  * Info from an active objective, like what days should it be done, it's duration, etc...
- *
- * @typedef {ActiveObjectiveInfo}
  */
 type ActiveObjectiveInfo = {
     days: WeekTuple;
@@ -72,8 +68,6 @@ type ActiveObjectiveInfo = {
 
 /**
  * Specific objective data for exercises.
- *
- * @typedef {ActiveObjectiveSpecificData}
  */
 
 interface ActiveObjectiveSpecificData {
@@ -114,7 +108,6 @@ interface ActiveObjectiveSpecificData {
  * A PersonaPlus Active Objective™
  *
  * @export
- * @typedef {ActiveObjective}
  */
 export interface ActiveObjective {
     /**
@@ -204,7 +197,6 @@ export function ValidateActiveObjective(
  * An objective type but without the ID, so you can create it without type errors (as you're not supposed to provide the ID yourself, it's app-generated).
  *
  * @export
- * @typedef {ActiveObjectiveWithoutId}
  */
 export type ActiveObjectiveWithoutId = Omit<ActiveObjective, "identifier">;
 
@@ -212,7 +204,6 @@ export type ActiveObjectiveWithoutId = Omit<ActiveObjective, "identifier">;
  * An entry within the ActiveObjectiveDailyLog
  *
  * @interface ActiveObjectiveDailyLogEntry
- * @typedef {ActiveObjectiveDailyLogEntry}
  */
 interface ActiveObjectiveDailyLogEntry {
     /**
@@ -239,7 +230,6 @@ interface ActiveObjectiveDailyLogEntry {
  * A registry of all the objectives, whether they're done or not, when, and their performance stats if they exist.
  *
  * @export
- * @typedef {ActiveObjectiveDailyLog}
  */
 export type ActiveObjectiveDailyLog = {
     [date: TodaysDate]: {
@@ -252,8 +242,6 @@ export type ActiveObjectiveDailyLog = {
  *
  * @export
  * @interface SessionParams
- * @typedef {SessionParams}
- * @extends {ExpoRouterParams}
  */
 export interface SessionParams extends ExpoRouterParams {
     /**
@@ -281,7 +269,6 @@ export interface SessionParams extends ExpoRouterParams {
  *
  * @export
  * @interface EditObjectiveParams
- * @typedef {EditObjectiveParams}
  * @extends {ExpoRouterParams}
  */
 export interface EditObjectiveParams extends ExpoRouterParams {
@@ -300,7 +287,6 @@ export interface EditObjectiveParams extends ExpoRouterParams {
  *
  * @export
  * @interface RealEditObjectiveParams
- * @typedef {RealEditObjectiveParams}
  */
 export interface RealEditObjectiveParams {
     edit: boolean;

@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
  * BetterInputFieldProps
  *
  * @interface BetterInputFieldProps
- * @typedef {BetterInputFieldProps}
  */
 interface BetterInputFieldProps {
     /** A short text to show before the input to give indications. */

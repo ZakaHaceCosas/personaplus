@@ -14,7 +14,6 @@ import { TFunction } from "i18next";
 /**
  * InfoIconsProps
  *
- * @typedef {Object} InfoIconsProps
  * @property {ActiveObjective} objective The objective of the current session.
  * @property {TFunction} t The translate function.
  */

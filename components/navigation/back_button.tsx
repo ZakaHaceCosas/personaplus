@@ -11,7 +11,6 @@ type TranslateFunction = ReturnType<typeof useTranslation>["t"];
  * BackButtonProps interface
  *
  * @interface BackButtonProps
- * @typedef {BackButtonProps}
  */
 interface BackButtonProps {
     /**

@@ -11,7 +11,6 @@ import { UniversalItemStyle } from "@/constants/ui/pressables";
  *
  * @export
  * @interface SwapOption
- * @typedef {SwapOption}
  */
 export interface SwapOption {
     /**
@@ -38,7 +37,6 @@ export interface SwapOption {
  * SwapProps
  *
  * @interface SwapProps
- * @typedef {SwapProps}
  */
 interface SwapProps {
     /**

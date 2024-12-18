@@ -14,8 +14,6 @@ import Ionicons from "@expo/vector-icons/MaterialIcons";
 
 /**
  * All icons that can be used for Divisions.
- *
- * @typedef {icon}
  */
 type icon = "fastfood" | "sports-score" | "trending-down" | "trending-up";
 
@@ -23,7 +21,6 @@ type icon = "fastfood" | "sports-score" | "trending-down" | "trending-up";
  * DivisionProps
  *
  * @interface DivisionProps
- * @typedef {DivisionProps}
  */
 interface DivisionProps {
     /**

@@ -18,7 +18,6 @@ import { GetExperiments } from "@/toolkit/experiments";
  * SectionProps
  *
  * @interface SectionProps
- * @typedef {SectionProps}
  */
 interface SectionProps {
     /**
@@ -32,7 +31,6 @@ interface SectionProps {
  * NavItemProps
  *
  * @interface NavItemProps
- * @typedef {NavItemProps}
  */
 interface NavItemProps {
     /**

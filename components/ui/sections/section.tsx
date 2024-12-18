@@ -15,7 +15,6 @@ import getCommonScreenSize from "@/constants/screen";
  * SectionProps Interface
  *
  * @interface SectionProps
- * @typedef {SectionProps}
  */
 interface SectionProps {
     /**

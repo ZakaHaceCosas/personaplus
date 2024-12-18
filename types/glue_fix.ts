@@ -15,7 +15,6 @@
  * This type is a glue fix, otherwise a type error happens because SessionParams is not compatible with UnknownInputParams from ExpoRouter
  *
  * @export
- * @typedef {ExpoRouterParams}
  */
 export type ExpoRouterParams = Record<
     string,

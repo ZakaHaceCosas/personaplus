@@ -50,7 +50,6 @@ export type BasicUserHealthData = Omit<
  *
  * @export
  * @interface Experiments
- * @typedef {Experiments}
  */
 export interface Experiments {
     exp_tracker: boolean;

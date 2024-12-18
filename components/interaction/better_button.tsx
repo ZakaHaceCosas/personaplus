@@ -35,7 +35,6 @@ interface BetterButtonIcon {
  * BetterButtonProperties
  *
  * @interface BetterButtonProps
- * @typedef {BetterButtonProps}
  */
 interface BetterButtonProps {
     /**
