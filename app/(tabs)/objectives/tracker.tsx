@@ -13,10 +13,14 @@ import TopBar from "@/components/navigation/top_bar";
 
 // settings for this thingy
 const SETTINGS = {
-    DIST_INTERVAL_METERS: 1,
-    TIME_INTERVAL_MS: 1900,
-    MIN_BUMP_DISTANCE: 0.15,
-    MAX_BUMP_DISTANCE: 30,
+    /** Interval (in meters) for the location to update. */
+    DIST_INTERVAL_METERS: 0.5,
+    /** Minimum amount of time (in milliseconds) for the location to update. */
+    TIME_INTERVAL_MS: 1000,
+    /** Min distance in meters required for the distance to update. */
+    MIN_BUMP_DISTANCE: 0.1,
+    /** Max distance in meters required for the distance to update. */
+    MAX_BUMP_DISTANCE: 20,
 };
 
 const styles = StyleSheet.create({
@@ -43,26 +47,33 @@ function CalculateDistanceBetweenInterval(
     lat2: number,
     lon2: number,
 ): number {
-    const R = 6371e3; // earth radius in meters
+    const earthRadius = 6371e3; // earth radius in meters
     // NO FUCKING CLUE WHAT THIS IS BUT IT WORKS (I THINK)
     // NI PUTA IDEA DE QUE ES ESTO PERO FUNCIONA (CREO)
-    const φ1 = (lat1 * Math.PI) / 180;
-    const φ2 = (lat2 * Math.PI) / 180;
-    const Δφ = ((lat2 - lat1) * Math.PI) / 180;
-    const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+    const lat1Radians: number = (lat1 * Math.PI) / 180;
+    const lat2Radians: number = (lat2 * Math.PI) / 180;
+    const deltaLat: number = ((lat2 - lat1) * Math.PI) / 180;
+    const deltaLon: number = ((lon2 - lon1) * Math.PI) / 180;
 
-    const a =
-        Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-        Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
+    const a: number =
+        Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
+        Math.cos(lat1Radians) *
+            Math.cos(lat2Radians) *
+            Math.sin(deltaLon / 2) *
+            Math.sin(deltaLon / 2);
+    const c: number = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return earthRadius * c;
 }
 
 export default function PersonaPlusRunningTracker() {
-    const [location, setLocation] = useState({ latitude: 0, longitude: 0 });
+    const [location, setLocation] = useState({
+        latitude: 0,
+        longitude: 0,
+    });
     const [distance, setDistance] = useState(0);
     const [isTracking, setIsTracking] = useState(false);
-    const [locationSubscription, setLocationSubscription] = useState<any>(null);
+    const [locationSubscription, setLocationSubscription] =
+        useState<Location.LocationSubscription | null>(null);
 
     // startTracking and stopTracking were for whatever reason considered "dependencies" of the useEffect below (eslint)
     // so i wrapped them into a useCallback to memo them and avoid re-renders
@@ -82,7 +93,7 @@ export default function PersonaPlusRunningTracker() {
         // watch location
         const subscription = await Location.watchPositionAsync(
             {
-                accuracy: Location.Accuracy.BestForNavigation,
+                accuracy: Location.Accuracy.High,
                 distanceInterval: SETTINGS.DIST_INTERVAL_METERS,
                 timeInterval: SETTINGS.TIME_INTERVAL_MS,
                 mayShowUserSettingsDialog: true,
