@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         width: getCommonScreenSize("width"),
         alignItems: "center",
         justifyContent: "center",
-        bottom: 20,
+        bottom: 25,
         position: "absolute",
     },
 });
@@ -428,7 +428,7 @@ export default function WelcomePage() {
                     overflow: "hidden",
                     display: "flex",
                     flexDirection: "row",
-                    bottom: 0,
+                    bottom: 5,
                     zIndex: 99999,
                 }}
             >
