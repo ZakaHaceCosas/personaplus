@@ -28,12 +28,20 @@ export async function SafelyOpenUrl(url: URLValues | string): Promise<void> {
         if (await Linking.canOpenURL(url)) {
             await Linking.openURL(url);
         } else {
-            logToConsole(`Huh? Can't open the ${url} URL. What's up?`, "error");
+            logToConsole(
+                `Huh? Can't open the ${url} URL. What's up?`,
+                "error",
+                undefined,
+                true,
+            );
+            throw new Error(`Can't open the ${url} URL.`);
         }
     } catch (e) {
         logToConsole(
             `Bruh. An error occurred trying to open an URL: ${e}`,
             "error",
+            undefined,
+            true,
         );
         throw e;
     }

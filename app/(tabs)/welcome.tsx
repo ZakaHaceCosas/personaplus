@@ -199,7 +199,7 @@ export default function WelcomePage() {
             isStepFourValid
         ) {
             try {
-                const locale = await getDefaultLocale();
+                const locale: "es" | "en" = await getDefaultLocale();
                 const validData = formData as FullProfile; // if we're on this code block we assume all data IS valid, so we simply convert types to tell TS we're sure about that
                 const userData: FullProfile = {
                     username: validData.username,
@@ -216,7 +216,7 @@ export default function WelcomePage() {
                     wantsNotifications: validData.wantsNotifications,
                 };
 
-                const stringData = JSON.stringify(userData);
+                const stringData: string = JSON.stringify(userData);
 
                 logToConsole(`Trying to register: ${stringData}`, "log");
 
@@ -574,7 +574,7 @@ export default function WelcomePage() {
                             isLink={true}
                             fontWeight="Medium"
                             fontSize={FontSizes.LARGE}
-                            onTap={async () => {
+                            onTap={async (): Promise<void> => {
                                 await SafelyOpenUrl(URLs.privacy);
                             }}
                         >
