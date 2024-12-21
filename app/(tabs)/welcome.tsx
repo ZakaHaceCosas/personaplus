@@ -71,6 +71,21 @@ const styles = StyleSheet.create({
         bottom: 25,
         position: "absolute",
     },
+    progressBar: {
+        position: "absolute",
+        width: getCommonScreenSize("width"),
+        height: 4,
+        borderRadius: 100,
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "row",
+        bottom: 5,
+        zIndex: 99999,
+    },
+    progressBarItem: {
+        borderRadius: 20,
+        flex: 1,
+    },
 });
 
 // We create the function
@@ -419,61 +434,53 @@ export default function WelcomePage() {
      */
     function spawnProgressBar(): ReactElement {
         return (
-            <View
-                style={{
-                    position: "absolute",
-                    width: getCommonScreenSize("width"),
-                    height: 4,
-                    borderRadius: 100,
-                    overflow: "hidden",
-                    display: "flex",
-                    flexDirection: "row",
-                    bottom: 5,
-                    zIndex: 99999,
-                }}
-            >
+            <View style={styles.progressBar}>
                 <View
-                    style={{
-                        borderRadius: 20,
-                        flex: 1,
-                        backgroundColor:
-                            currentTab >= 1
-                                ? Colors.PRIMARIES.GOD.GOD
-                                : Colors.MAIN.DIVISION_BORDER,
-                    }}
+                    style={[
+                        styles.progressBarItem,
+                        {
+                            backgroundColor:
+                                currentTab >= 1
+                                    ? Colors.PRIMARIES.GOD.GOD
+                                    : Colors.MAIN.DIVISION_BORDER,
+                        },
+                    ]}
                 />
                 <GapView width={5} />
                 <View
-                    style={{
-                        borderRadius: 20,
-                        flex: 1,
-                        backgroundColor:
-                            currentTab >= 2
-                                ? Colors.PRIMARIES.GOD.GOD
-                                : Colors.MAIN.DIVISION_BORDER,
-                    }}
+                    style={[
+                        styles.progressBarItem,
+                        {
+                            backgroundColor:
+                                currentTab >= 2
+                                    ? Colors.PRIMARIES.GOD.GOD
+                                    : Colors.MAIN.DIVISION_BORDER,
+                        },
+                    ]}
                 />
                 <GapView width={5} />
                 <View
-                    style={{
-                        borderRadius: 20,
-                        flex: 1,
-                        backgroundColor:
-                            currentTab >= 3
-                                ? Colors.PRIMARIES.GOD.GOD
-                                : Colors.MAIN.DIVISION_BORDER,
-                    }}
+                    style={[
+                        styles.progressBarItem,
+                        {
+                            backgroundColor:
+                                currentTab >= 3
+                                    ? Colors.PRIMARIES.GOD.GOD
+                                    : Colors.MAIN.DIVISION_BORDER,
+                        },
+                    ]}
                 />
                 <GapView width={5} />
                 <View
-                    style={{
-                        borderRadius: 20,
-                        flex: 1,
-                        backgroundColor:
-                            currentTab >= 4
-                                ? Colors.PRIMARIES.GOD.GOD
-                                : Colors.MAIN.DIVISION_BORDER,
-                    }}
+                    style={[
+                        styles.progressBarItem,
+                        {
+                            backgroundColor:
+                                currentTab >= 4
+                                    ? Colors.PRIMARIES.GOD.GOD
+                                    : Colors.MAIN.DIVISION_BORDER,
+                        },
+                    ]}
                 />
             </View>
         );
