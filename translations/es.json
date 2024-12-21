@@ -199,6 +199,10 @@
             "deleteObjective": {
                 "text": "Borrar",
                 "hint": "Borra permanentemente este objetivo."
+            },
+            "editObjective": {
+                "text": "Editar",
+                "hint": "Edita este objetivo para cambiar sus propiedades"
             }
         },
         "profile": {
