@@ -199,6 +199,10 @@
             "deleteObjective": {
                 "text": "Delete",
                 "hint": "Permanently deletes this objective."
+            },
+            "editObjective": {
+                "text": "Edit",
+                "hint": "Edits this objective to change its properties"
             }
         },
         "profile": {
@@ -532,7 +536,7 @@
             "todayFree": "No objectives for today. Enjoy your break!"
         },
         "createObjective": {
-            "text": "Crearte active objective",
+            "text": "Create active objective",
             "hint": "Opens a page from which you can create an active objective."
         },
         "start": {
