@@ -5,7 +5,7 @@
  *
  * @property {Object<number, Object<number, number>>} data - An object where the keys are ages, and the values are objects mapping percentiles to BMI values.
  *
- * @example (this data is EXAMPLE, not real percentile data)
+ * @example // (this data is EXAMPLE, not real percentile data)
  * const percentiles: BMIPercentiles = {
  *     10: {
  *         5: 14.0,
@@ -46,7 +46,7 @@ interface BMIPercentiles {
  *
  * @type {BMIPercentiles}
  */
-export const MALE_PERCENTILES: BMIPercentiles = {
+export const FEMALE_PERCENTILES: BMIPercentiles = {
     2: {
         5: 14.73,
         10: 15.1,
@@ -241,11 +241,11 @@ export const MALE_PERCENTILES: BMIPercentiles = {
 };
 
 /**
- * THESE ARE **ALREADY VALID**, however they use CDC's data from the year 2000. In the process of updating to data from 2022.
+ * NOT VALID. In the process of updating to data from 2022.
  *
  * @type {BMIPercentiles}
  */
-export const FEMALE_PERCENTILES: BMIPercentiles = {
+export const MALE_PERCENTILES: BMIPercentiles = {
     2: {
         5: 14.7373,
         10: 15.0903,
@@ -256,27 +256,27 @@ export const FEMALE_PERCENTILES: BMIPercentiles = {
         90: 18.6095,
         95: 19.338,
     },
-    // checkpoint. stuff below is using 2000 data.
     3: {
-        5: 14.0,
-        10: 14.32,
-        25: 14.92,
-        50: 15.69,
-        75: 16.6,
-        85: 17.16,
-        90: 17.58,
-        95: 18.25,
+        5: 14.32,
+        10: 14.66,
+        25: 15.26,
+        50: 16.0,
+        75: 16.83,
+        85: 17.32,
+        90: 17.68,
+        95: 18.23,
     },
     4: {
-        5: 13.71,
-        10: 14.9,
-        25: 14.56,
-        50: 15.29,
-        75: 16.2,
-        85: 16.8,
-        90: 17.25,
-        95: 18.02,
+        5: 14.03,
+        10: 14.34,
+        25: 14.91,
+        50: 15.62,
+        75: 16.43,
+        85: 16.92,
+        90: 17.27,
+        95: 18.83,
     },
+    // TODO - checkpoint. stuff below is using 2000 data.
     5: {
         5: 13.52,
         10: 13.81,
