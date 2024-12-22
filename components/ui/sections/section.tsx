@@ -19,17 +19,6 @@ import getCommonScreenSize from "@/constants/screen";
 interface SectionProps {
     /**
      * The kind of section. Depending on this, the section will display a title and icon, or another one.
-     *
-     * @type {(| "ActiveObjectives"
-     *         | "PassiveObjectives"
-     *         | "HowYouAreDoing"
-     *         | "Unknown"
-     *         | "Settings"
-     *         | "Profile"
-     *         | "About"
-     *         | "Developer"
-     *         | "Danger"
-     *         | "Experiments")}
      */
     kind:
         | "ActiveObjectives"
@@ -41,7 +30,8 @@ interface SectionProps {
         | "About"
         | "Developer"
         | "Danger"
-        | "Experiments";
+        | "Experiments"
+        | "YourHealth";
     /**
      * Whether the width should be `"total"` (full screen) or `"parent"` (width of 100% to fill it's parent).
      *
@@ -100,7 +90,8 @@ export default function Section({
         | "code"
         | "question-mark"
         | "warning"
-        | "science"; // If you add a new icon, add it here
+        | "science"
+        | "favorite"; // If you add a new icon, add it here
     let sectionWidth: number | `${number}%`;
     let backgroundColor = Colors.MAIN.SECTION;
     let foregroundColor = Colors.LABELS.SHL;
@@ -149,6 +140,10 @@ export default function Section({
             headerIcon = "science";
             backgroundColor = Colors.PRIMARIES.HMM.HMM;
             foregroundColor = Colors.MAIN.APP;
+            break;
+        case "YourHealth":
+            label = t("globals.yourHealth");
+            headerIcon = "favorite";
             break;
         default:
             label = "UNKNOWN";
