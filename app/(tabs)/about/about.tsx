@@ -134,7 +134,8 @@ export default function About() {
             </BetterText>
             <GapView height={20} />
             <View style={styles.socialWrapper}>
-                {/* TODO: uncomment when i actually post something here <Pressable
+                {/* i don't post stuff here but well, keep it here anyway */}
+                <Pressable
                     style={styles.buttonContainer}
                     onPress={async () => {
                         await SafelyOpenUrl(URLs.instagram);
@@ -147,7 +148,7 @@ export default function About() {
                     />
                     <GapView width={5} />
                     <BetterTextNormalText>giveitaplus</BetterTextNormalText>
-                </Pressable> */}
+                </Pressable>
                 <Pressable
                     style={styles.buttonContainer}
                     onPress={async () => {
