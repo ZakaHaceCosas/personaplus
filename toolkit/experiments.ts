@@ -24,8 +24,42 @@ async function GetExperiments(): Promise<Experiments> {
             );
             return DEFAULT_EXPERIMENTS;
         }
-        return JSON.parse(stuff);
+        let experiments: Experiments;
+        try {
+            experiments = JSON.parse(stuff);
+            // validate
+            for (const key in DEFAULT_EXPERIMENTS) {
+                if (!(key in experiments)) {
+                    // if smth is missing, reset to default because we don't want to break anything (as we can just remove experiments from one update to another)
+                    logToConsole(
+                        `Missing experiment key "${key}". Resetting to default.`,
+                        "warn",
+                    );
+                    await AsyncStorage.setItem(
+                        StoredItemNames.experiments,
+                        JSON.stringify(DEFAULT_EXPERIMENTS),
+                    );
+                    return DEFAULT_EXPERIMENTS;
+                }
+            }
+        } catch (e) {
+            // if anything goes wrong, just return the default experiments
+            logToConsole(
+                `Error parsing stored experiments, resetting to default. ${e}`,
+                "warn",
+            );
+            await AsyncStorage.setItem(
+                StoredItemNames.experiments,
+                JSON.stringify(DEFAULT_EXPERIMENTS),
+            );
+            return DEFAULT_EXPERIMENTS;
+        }
+        return experiments;
     } catch (e) {
+        logToConsole(
+            `Unexpected error while fetching experiments: ${e}`,
+            "warn",
+        );
         throw e;
     }
 }
