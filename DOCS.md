@@ -192,20 +192,6 @@ We encourage the usage of **camelCase** for most things, **PascalCase** for main
 > To clarify, a constant parent is cased with PascalCase. Kinda like this:
 > `Constant.VALUE`, `Constant.VALUE.NESTED_VALUE`.
 
-**✅ Do:**
-
-```ts
-import { SomeConstant } from "@/constants/something.ts";
-
-export default function MainComponent() {
-    const myVariable = "something";
-
-    const otherThing = `${myVariable} ${SomeConstant.OTHER_THING}`;
-
-    return otherThing
-}
-```
-
 **❌ Do not:**
 
 ```ts
@@ -220,15 +206,21 @@ export default function mainComponent() {
 }
 ```
 
-Favor full words in variable names, except when the word becomes excessively long. If a shorter, equally clear word exists, use that. When necessary, use more than one word, but aim for brevity without losing clarity.
-
 **✅ Do:**
 
 ```ts
-const hello = "Hello there."
-async function myAsyncFunction()
-let thisIsATest = true
+import { SomeConstant } from "@/constants/something.ts";
+
+export default function MainComponent() {
+    const myVariable = "something";
+
+    const otherThing = `${myVariable} ${SomeConstant.OTHER_THING}`;
+
+    return otherThing
+}
 ```
+
+Favor full words in variable names, except when the word becomes excessively long. If a shorter, equally clear word exists, use that. When necessary, use more than one word, but aim for brevity without losing clarity.
 
 **❌ Do not:**
 
@@ -238,13 +230,15 @@ async function myAsynchronousFunction()
 let test = true
 ```
 
-Make function names descriptive.
-
 **✅ Do:**
 
 ```ts
-function SaveActiveObjectiveToDailyLog()
+const hello = "Hello there."
+async function myAsyncFunction()
+let thisIsATest = true
 ```
+
+Make function names descriptive.
 
 **❌ Do not:**
 
@@ -252,14 +246,13 @@ function SaveActiveObjectiveToDailyLog()
 function ToDailyLog()
 ```
 
-While PascalCase or camelCase look pretty, avoid them for naming files. Use snake_case or kebab-case (we prefer snake) for file names, as some filesystems aren't case sensitive but others are and it ends up breaking this.
-
 **✅ Do:**
 
 ```ts
-import { a } from "@/module_a.ts";
-import { b } from "@/module-b.ts";
+function SaveActiveObjectiveToDailyLog()
 ```
+
+While PascalCase or camelCase look pretty, avoid them for naming files. Use snake_case or kebab-case (we prefer snake) for file names, as some filesystems aren't case sensitive but others are and it ends up breaking this.
 
 **❌ Do not:**
 
@@ -268,23 +261,27 @@ import { a } from "@/ModuleA.ts";
 import { b } from "@/moduleB.ts";
 ```
 
-Make function names descriptive.
-
 **✅ Do:**
 
 ```ts
-function SaveActiveObjectiveToDailyLog()
-```
-
-**❌ Do not:**
-
-```ts
-function ToDailyLog()
+import { a } from "@/module_a.ts";
+import { b } from "@/module-b.ts";
 ```
 
 ### Keeping code readable
 
 Comment your functions so we know what they do. Use JSDoc.
+
+**❌ Do not:**
+
+```ts
+// greets someone
+function Greet(who: string /* who to greet*/): void {}
+
+// neither do uncommented stuff
+
+function Greet(who: string): void {}
+```
 
 **✅ Do:**
 
@@ -298,26 +295,7 @@ function Greet(who: string): void {
 }
 ```
 
-**❌ Do not:**
-
-```ts
-// greets someone
-function Greet(who: string /* who to greet*/): void {}
-
-// neither do uncommented stuff
-
-function Greet(who: string): void {}
-```
-
 Annulate cases instead of nesting `if else` statements.
-
-**✅ Do:**
-
-```ts
-if (!isAdmin) return;
-if (password != user.password) throw "Wrong pass!";
-doAdminStuff();
-```
 
 **❌ Do not:**
 
@@ -333,13 +311,15 @@ if (isAdmin) {
 }
 ```
 
-Where possible (and if it makes sense), use ternary operators instead of `if else` statements.
-
 **✅ Do:**
 
 ```ts
-const isCool = usesPersonaPlus ? "yes" : "no :("
+if (!isAdmin) return;
+if (password != user.password) throw "Wrong pass!";
+doAdminStuff();
 ```
+
+Where possible (and if it makes sense), use ternary operators instead of `if else` statements.
 
 **❌ Do not:**
 
@@ -351,6 +331,12 @@ if (usesPersonaPlus) {
 } else {
     isCool = "no :(";
 }
+```
+
+**✅ Do:**
+
+```ts
+const isCool = usesPersonaPlus ? "yes" : "no :("
 ```
 
 Type everything, use JSDoc as extensively as possible. If using a JSDoc generator extension (which we recommend), remove the `@typedef` prop if generated.
