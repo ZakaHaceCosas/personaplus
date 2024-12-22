@@ -20,6 +20,7 @@ import { UniversalItemStyle } from "@/constants/ui/pressables";
 import { Color, PrimaryColorsType } from "@/types/color";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import { logToConsole } from "@/toolkit/debug/console";
+import GapView from "../ui/gap_view";
 
 // TypeScript, supongo
 interface BetterButtonIcon {
@@ -73,10 +74,11 @@ interface BetterButtonProps {
 
 const styles = StyleSheet.create({
     button: {
-        padding: 0,
+        padding: 5,
         borderRadius: UniversalItemStyle.borderRadius,
         borderWidth: UniversalItemStyle.borderWidth,
         display: "flex",
+        flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
         alignSelf: "stretch",
@@ -202,11 +204,14 @@ export default function BetterButton({
             hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}
         >
             {icon && (
-                <Ionicons
-                    name={icon.name}
-                    size={icon.size}
-                    color={icon.color}
-                />
+                <>
+                    <Ionicons
+                        name={icon.name}
+                        size={icon.size}
+                        color={icon.color}
+                    />
+                    <GapView width={1} />
+                </>
             )}
             {buttonText && (
                 <BetterText
