@@ -99,6 +99,9 @@ async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog | n
             return null;
         }
         const dailyLog: ActiveObjectiveDailyLog = JSON.parse(response);
+        if (Object.keys(dailyLog).length === 0) {
+            return null;
+        }
         return dailyLog;
     } catch (e) {
         throw new Error(`Error accessing active objective daily log! ${e}`);
