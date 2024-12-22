@@ -28,7 +28,7 @@ import {
 } from "react-native-timer-picker";
 import { LinearGradient } from "expo-linear-gradient";
 import { getDefaultLocale } from "@/translations/translate";
-import { ValidateUserData } from "@/toolkit/user";
+import { VALID_USER_CAPS, ValidateUserData } from "@/toolkit/user";
 import FontSizes from "@/constants/font_sizes";
 import Select, { SelectOption } from "@/components/interaction/select";
 import BetterButton from "@/components/interaction/better_button";
@@ -51,8 +51,21 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
-        justifyContent: "flex-start",
+        justifyContent: "space-between",
         backgroundColor: Colors.MAIN.APP,
+    },
+    wrapperView: {
+        width: getCommonScreenSize("width"),
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "flex-start",
+    },
+    bottomWrapperView: {
+        width: getCommonScreenSize("width"),
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
     },
     welcomeView: {
         height: getCommonScreenSize("height"),
@@ -68,19 +81,14 @@ const styles = StyleSheet.create({
         width: getCommonScreenSize("width"),
         alignItems: "center",
         justifyContent: "center",
-        bottom: 25,
-        position: "absolute",
     },
     progressBar: {
-        position: "absolute",
         width: getCommonScreenSize("width"),
         height: 4,
         borderRadius: 100,
         overflow: "hidden",
         display: "flex",
         flexDirection: "row",
-        bottom: 5,
-        zIndex: 99999,
     },
     progressBarItem: {
         borderRadius: 20,
@@ -263,6 +271,8 @@ export default function WelcomePage() {
      * @param {number} refIndex It's index. _yes, you have to count all the calls the `spawnInputField` can keep an incremental index_.
      * @param {("default" | "numeric")} [keyboardType="default"] Whether to use the normal keyboard or a numeric pad.
      * @param {number} length Max length of the input.
+     * @param {boolean} isValid Whether the input is valid or not.
+     * @param {string} errorMessage Message to show if the input is not valid.
      * @returns {ReactNode} Returns a Fragment with a `<BetterText>` (label), `<TextInput />`, and a `<GapView />` between them.
      */
     function spawnInputField(
@@ -273,6 +283,8 @@ export default function WelcomePage() {
         refIndex: number,
         keyboardType: "default" | "numeric" = "default",
         length: number,
+        isValid: boolean,
+        errorMessage: string,
     ): ReactNode {
         return (
             <>
@@ -288,7 +300,16 @@ export default function WelcomePage() {
                     keyboardType={keyboardType}
                     changeAction={(text) => handleChange(name, text)}
                     shouldRef={true}
+                    isValid={isValid}
                 />
+                {isValid === false && (
+                    <>
+                        <GapView height={5} />
+                        <BetterTextSmallText>
+                            {errorMessage}
+                        </BetterTextSmallText>
+                    </>
+                )}
             </>
         );
     }
@@ -486,6 +507,21 @@ export default function WelcomePage() {
         );
     }
 
+    function BottomView() {
+        if (currentTab === 0) return <></>;
+
+        return (
+            <View style={styles.bottomWrapperView}>
+                {spawnNavigationButtons(
+                    currentTab as 1 | 2 | 3 | 4,
+                    currentTab === 4 ? true : false,
+                )}
+                <GapView height={10} />
+                {spawnProgressBar()}
+            </View>
+        );
+    }
+
     const pickerStyles: CustomTimerPickerModalStyles = {
         backgroundColor: Colors.MAIN.SECTION,
         modalTitle: {
@@ -537,239 +573,332 @@ export default function WelcomePage() {
 
     return (
         <View style={styles.mainView}>
-            {spawnProgressBar()}
-            {currentTab === 0 && (
-                <View style={styles.welcomeView}>
-                    <BetterText fontSize={40} fontWeight="Bold">
-                        {t("pages.welcome.beginning.welcomeTo")}{" "}
-                        <BetterText
-                            fontFamily="JetBrainsMono"
-                            fontSize={40}
-                            fontWeight="Bold"
-                            textColor={Colors.PRIMARIES.GOD.GOD}
-                        >
-                            PersonaPlus
+            <View style={styles.wrapperView}>
+                {currentTab === 0 && (
+                    <View style={styles.welcomeView}>
+                        <BetterText fontSize={40} fontWeight="Bold">
+                            {t("pages.welcome.beginning.welcomeTo")}{" "}
+                            <BetterText
+                                fontFamily="JetBrainsMono"
+                                fontSize={40}
+                                fontWeight="Bold"
+                                textColor={Colors.PRIMARIES.GOD.GOD}
+                            >
+                                PersonaPlus
+                            </BetterText>
                         </BetterText>
-                    </BetterText>
-                    <BetterTextSubHeader>
-                        {t("pages.welcome.beginning.subheader")}
-                    </BetterTextSubHeader>
-                    <GapView height={10} />
-                    <BetterButton
-                        buttonText={t("globals.interaction.goAheadGood")}
-                        buttonHint="Begins the on-boarding process"
-                        style="GOD"
-                        action={goNext}
-                    />
-                </View>
-            )}
-            {currentTab === 1 && (
-                <>
-                    <BetterTextHeader>
-                        {t("pages.welcome.questions.aboutYou.ask")}
-                    </BetterTextHeader>
-                    <BetterTextSubHeader>
-                        {t("pages.welcome.questions.aboutYou.description")}{" "}
+                        <BetterTextSubHeader>
+                            {t("pages.welcome.beginning.subheader")}
+                        </BetterTextSubHeader>
+                        <GapView height={10} />
+                        <BetterButton
+                            buttonText={t("globals.interaction.goAheadGood")}
+                            buttonHint="Begins the on-boarding process"
+                            style="GOD"
+                            action={goNext}
+                        />
+                    </View>
+                )}
+                {currentTab === 1 && (
+                    <>
+                        <BetterTextHeader>
+                            {t("pages.welcome.questions.aboutYou.ask")}
+                        </BetterTextHeader>
+                        <BetterTextSubHeader>
+                            {t("pages.welcome.questions.aboutYou.description")}{" "}
+                            <BetterText
+                                isLink={true}
+                                fontWeight="Medium"
+                                fontSize={FontSizes.LARGE}
+                                onTap={async (): Promise<void> => {
+                                    await SafelyOpenUrl(URLs.privacy);
+                                }}
+                            >
+                                {t("globals.interaction.learnMore")}
+                            </BetterText>
+                        </BetterTextSubHeader>
+                        <GapView height={5} />
+                        {spawnInputField(
+                            t("globals.userData.username.wordShorter"),
+                            t(
+                                "pages.welcome.questions.aboutYou.placeholders.username",
+                            ),
+                            formData.username,
+                            "username",
+                            0,
+                            "default",
+                            40,
+                            formData.username.length === 0 ||
+                                (formData.username.length >= 3 &&
+                                    formData.username.length < 40 &&
+                                    !(
+                                        formData.username.toLowerCase() ===
+                                            "error" ||
+                                        formData.username.toLowerCase() ===
+                                            "error." ||
+                                        formData.username
+                                            .toLowerCase()
+                                            .includes("pedro sánchez") ||
+                                        formData.username
+                                            .toLowerCase()
+                                            .includes("pedro sanchez") ||
+                                        formData.username
+                                            .toLowerCase()
+                                            .includes("psoe")
+                                    ))
+                                ? true
+                                : false,
+                            formData.username.length === 0
+                                ? "Username cannot be empty."
+                                : formData.username.length <
+                                        VALID_USER_CAPS.USERNAME.MIN ||
+                                    formData.username.length >=
+                                        VALID_USER_CAPS.USERNAME.MAX
+                                  ? `Your username must be between ${VALID_USER_CAPS.USERNAME.MIN} and ${VALID_USER_CAPS.USERNAME.MAX} characters long.`
+                                  : VALID_USER_CAPS.USERNAME.INVALID.includes(
+                                          formData.username.toLowerCase(),
+                                      )
+                                    ? "The username contains forbidden terms."
+                                    : "",
+                        )}
+                        {
+                            /* LMAO */
+                            (formData.username.toLowerCase() === "error" ||
+                                formData.username.toLowerCase() === "error." ||
+                                formData.username
+                                    .toLowerCase()
+                                    .includes("pedro sánchez") ||
+                                formData.username
+                                    .toLowerCase()
+                                    .includes("pedro sanchez") ||
+                                formData.username
+                                    .toLowerCase()
+                                    .includes("psoe")) && (
+                                <BetterTextSmallerText>
+                                    {formData.username.toLowerCase() ===
+                                        "error" ||
+                                    formData.username.toLowerCase() === "error."
+                                        ? `"Error" is not allowed as a username (we reserve it as a keyword for in-app error-handling).`
+                                        : "no me seas gracioso."}
+                                </BetterTextSmallerText>
+                            )
+                        }
+
+                        <GapView height={5} />
+                        {spawnInputField(
+                            t("globals.userData.age.word"),
+                            t(
+                                "pages.welcome.questions.aboutYou.placeholders.age",
+                            ),
+                            formData.age,
+                            "age",
+                            1,
+                            "numeric",
+                            3,
+                            formData.age === "" ||
+                                (formData.age >= VALID_USER_CAPS.AGE.MIN &&
+                                    formData.age <= VALID_USER_CAPS.AGE.MAX)
+                                ? true
+                                : false,
+                            formData.age === ""
+                                ? ""
+                                : !(formData.age >= VALID_USER_CAPS.AGE.MIN)
+                                  ? "You're NOT that young!"
+                                  : !(formData.age <= VALID_USER_CAPS.AGE.MAX)
+                                    ? "You're NOT that old!"
+                                    : "",
+                        )}
+                        <GapView height={5} />
+                        {spawnInputField(
+                            t("globals.userData.weight"),
+                            t(
+                                "pages.welcome.questions.aboutYou.placeholders.weight",
+                            ),
+                            formData.weight,
+                            "weight",
+                            2,
+                            "numeric",
+                            5,
+                            formData.weight === "" ||
+                                (formData.weight >=
+                                    VALID_USER_CAPS.WEIGHT.MIN &&
+                                    formData.weight <=
+                                        VALID_USER_CAPS.WEIGHT.MAX)
+                                ? true
+                                : false,
+                            formData.weight === ""
+                                ? ""
+                                : !(
+                                        formData.weight >=
+                                        VALID_USER_CAPS.WEIGHT.MIN
+                                    )
+                                  ? "You're NOT that light!"
+                                  : !(
+                                          formData.weight <=
+                                          VALID_USER_CAPS.WEIGHT.MAX
+                                      )
+                                    ? "You're NOT that heavy!"
+                                    : "",
+                        )}
+                        <GapView height={5} />
+                        {spawnInputField(
+                            t("globals.userData.height"),
+                            t(
+                                "pages.welcome.questions.aboutYou.placeholders.height",
+                            ),
+                            formData.height,
+                            "height",
+                            3,
+                            "numeric",
+                            5,
+                            formData.height === "" ||
+                                (formData.height >=
+                                    VALID_USER_CAPS.HEIGHT.MIN &&
+                                    formData.height <=
+                                        VALID_USER_CAPS.HEIGHT.MAX)
+                                ? true
+                                : false,
+                            formData.height === ""
+                                ? ""
+                                : !(
+                                        formData.height >=
+                                        VALID_USER_CAPS.HEIGHT.MIN
+                                    )
+                                  ? "You're NOT that light!"
+                                  : !(
+                                          formData.height <=
+                                          VALID_USER_CAPS.HEIGHT.MAX
+                                      )
+                                    ? "You're NOT that heavy!"
+                                    : "",
+                        )}
+                        <GapView height={5} />
                         <BetterText
-                            isLink={true}
-                            fontWeight="Medium"
-                            fontSize={FontSizes.LARGE}
-                            onTap={async (): Promise<void> => {
-                                await SafelyOpenUrl(URLs.privacy);
+                            textAlign="normal"
+                            fontWeight="Regular"
+                            fontSize={FontSizes.REGULAR}
+                            textColor={Colors.LABELS.SDD}
+                        >
+                            {t("globals.userData.gender.word")}
+                        </BetterText>
+                        <GapView height={5} />
+                        <Swap
+                            options={genderOptions}
+                            value={formData.gender}
+                            order="horizontal"
+                            onValueChange={(value) =>
+                                handleChange("gender", value)
+                            }
+                            style="GOD"
+                        />
+                    </>
+                )}
+                {currentTab === 2 && (
+                    <>
+                        <BetterTextHeader>
+                            {t("pages.welcome.questions.focus.ask")}
+                        </BetterTextHeader>
+                        <BetterTextSubHeader>
+                            {t("pages.welcome.questions.focus.description")}
+                        </BetterTextSubHeader>
+                        <GapView height={10} />
+                        <Swap
+                            options={focusOptions}
+                            value={formData.focus}
+                            order="vertical"
+                            onValueChange={(value) =>
+                                handleChange("focus", value)
+                            }
+                            style="GOD"
+                        />
+                    </>
+                )}
+                {currentTab === 3 && (
+                    <>
+                        <BetterTextHeader>
+                            {t("pages.welcome.questions.aboutYouAgain.ask")}
+                        </BetterTextHeader>
+                        <BetterTextSubHeader>
+                            {t(
+                                "pages.welcome.questions.aboutYouAgain.description",
+                            )}
+                        </BetterTextSubHeader>
+                        <GapView height={10} />
+                        {spawnInputSelect("sleepHours")}
+                        <GapView height={10} />
+                        {spawnInputSelect("activeness")}
+                    </>
+                )}
+                {currentTab === 4 && (
+                    <>
+                        <BetterTextHeader>
+                            {t("pages.welcome.questions.theThinkHour.ask")}
+                        </BetterTextHeader>
+                        <BetterTextSubHeader>
+                            {t(
+                                "pages.welcome.questions.theThinkHour.description",
+                            )}
+                        </BetterTextSubHeader>
+                        <GapView height={10} />
+                        <BetterButton
+                            style="GOD"
+                            buttonText={t(
+                                "pages.welcome.questions.theThinkHour.summon",
+                            )}
+                            buttonHint="Summons a modal where the user can pick an hour of the day for The Think Hour."
+                            action={() => toggleTimePicker(!showTimePicker)}
+                        />
+                        <TimerPickerModal
+                            visible={showTimePicker}
+                            setIsVisible={toggleTimePicker}
+                            onConfirm={(pickedDuration) => {
+                                handleChange(
+                                    "theThinkHour",
+                                    formatTimeString(pickedDuration),
+                                );
+                                toggleTimePicker(false);
                             }}
-                        >
-                            {t("globals.interaction.learnMore")}
-                        </BetterText>
-                    </BetterTextSubHeader>
-                    <GapView height={5} />
-                    {spawnInputField(
-                        t("globals.userData.username.wordShorter"),
-                        t(
-                            "pages.welcome.questions.aboutYou.placeholders.username",
-                        ),
-                        formData.username,
-                        "username",
-                        0,
-                        "default",
-                        30,
-                    )}
-                    <GapView height={5} />
-                    {spawnInputField(
-                        t("globals.userData.age.word"),
-                        t("pages.welcome.questions.aboutYou.placeholders.age"),
-                        formData.age,
-                        "age",
-                        1,
-                        "numeric",
-                        2,
-                    )}
-                    <GapView height={5} />
-                    {spawnInputField(
-                        t("globals.userData.weight"),
-                        t(
-                            "pages.welcome.questions.aboutYou.placeholders.weight",
-                        ),
-                        formData.weight,
-                        "weight",
-                        2,
-                        "numeric",
-                        3,
-                    )}
-                    <GapView height={5} />
-                    {spawnInputField(
-                        t("globals.userData.height"),
-                        t(
-                            "pages.welcome.questions.aboutYou.placeholders.height",
-                        ),
-                        formData.height,
-                        "height",
-                        3,
-                        "numeric",
-                        3,
-                    )}
-                    <GapView height={5} />
-                    <BetterText
-                        textAlign="normal"
-                        fontWeight="Regular"
-                        fontSize={FontSizes.REGULAR}
-                        textColor={Colors.LABELS.SDD}
-                    >
-                        {t("globals.userData.gender.word")}
-                    </BetterText>
-                    <GapView height={5} />
-                    <Swap
-                        options={genderOptions}
-                        value={formData.gender}
-                        order="horizontal"
-                        onValueChange={(value) => handleChange("gender", value)}
-                        style="GOD"
-                    />
-                    <GapView height={10} />
-                    {
-                        /* LMAO */
-                        (formData.username.toLowerCase() === "error" ||
-                            formData.username.toLowerCase() === "error.") && (
-                            <BetterTextSmallerText>
-                                "Error" is not allowed as a username (we reserve
-                                it as a keyword for in-app error-handling).
-                            </BetterTextSmallerText>
-                        )
-                    }
-                    {
-                        /* LMFAOOOOO */
-                        (formData.username.toLowerCase() === "pedro sánchez" ||
-                            formData.username.toLowerCase() === "psoe") && (
-                            <BetterTextSmallerText>
-                                que te jodan.
-                            </BetterTextSmallerText>
-                        )
-                    }
-                    {spawnNavigationButtons(1, false)}
-                </>
-            )}
-            {currentTab === 2 && (
-                <>
-                    <BetterTextHeader>
-                        {t("pages.welcome.questions.focus.ask")}
-                    </BetterTextHeader>
-                    <BetterTextSubHeader>
-                        {t("pages.welcome.questions.focus.description")}
-                    </BetterTextSubHeader>
-                    <GapView height={10} />
-                    <Swap
-                        options={focusOptions}
-                        value={formData.focus}
-                        order="vertical"
-                        onValueChange={(value) => handleChange("focus", value)}
-                        style="GOD"
-                    />
-                    <GapView height={10} />
-                    {spawnNavigationButtons(2, false)}
-                </>
-            )}
-            {currentTab === 3 && (
-                <>
-                    <BetterTextHeader>
-                        {t("pages.welcome.questions.aboutYouAgain.ask")}
-                    </BetterTextHeader>
-                    <BetterTextSubHeader>
-                        {t("pages.welcome.questions.aboutYouAgain.description")}
-                    </BetterTextSubHeader>
-                    <GapView height={10} />
-                    {spawnInputSelect("sleepHours")}
-                    <GapView height={10} />
-                    {spawnInputSelect("activeness")}
-                    <GapView height={10} />
-                    {spawnNavigationButtons(3, false)}
-                </>
-            )}
-            {currentTab === 4 && (
-                <>
-                    <BetterTextHeader>
-                        {t("pages.welcome.questions.theThinkHour.ask")}
-                    </BetterTextHeader>
-                    <BetterTextSubHeader>
-                        {t("pages.welcome.questions.theThinkHour.description")}
-                    </BetterTextSubHeader>
-                    <GapView height={10} />
-                    <BetterButton
-                        style="GOD"
-                        buttonText={t(
-                            "pages.welcome.questions.theThinkHour.summon",
+                            hideSeconds={true}
+                            padHoursWithZero={true}
+                            padMinutesWithZero={true}
+                            allowFontScaling={true}
+                            modalTitle={t(
+                                "pages.welcome.questions.theThinkHour.ask",
+                            )}
+                            onCancel={() => toggleTimePicker(false)}
+                            closeOnOverlayPress={true}
+                            LinearGradient={LinearGradient}
+                            styles={pickerStyles}
+                            modalProps={{
+                                overlayOpacity: 0.25,
+                            }}
+                        />
+                        <GapView height={10} />
+                        {formData.theThinkHour && (
+                            <>
+                                <BetterTextSmallText>
+                                    {t(
+                                        "pages.welcome.questions.theThinkHour.youChose",
+                                        { hour: formData.theThinkHour },
+                                    )}
+                                </BetterTextSmallText>
+                                <GapView height={10} />
+                            </>
                         )}
-                        buttonHint="Summons a modal where the user can pick an hour of the day for The Think Hour."
-                        action={() => toggleTimePicker(!showTimePicker)}
-                    />
-                    <TimerPickerModal
-                        visible={showTimePicker}
-                        setIsVisible={toggleTimePicker}
-                        onConfirm={(pickedDuration) => {
-                            handleChange(
-                                "theThinkHour",
-                                formatTimeString(pickedDuration),
-                            );
-                            toggleTimePicker(false);
-                        }}
-                        hideSeconds={true}
-                        padHoursWithZero={true}
-                        padMinutesWithZero={true}
-                        allowFontScaling={true}
-                        modalTitle={t(
-                            "pages.welcome.questions.theThinkHour.ask",
-                        )}
-                        onCancel={() => toggleTimePicker(false)}
-                        closeOnOverlayPress={true}
-                        LinearGradient={LinearGradient}
-                        styles={pickerStyles}
-                        modalProps={{
-                            overlayOpacity: 0.25,
-                        }}
-                    />
-                    <GapView height={10} />
-                    {formData.theThinkHour && (
-                        <>
-                            <BetterTextSmallText>
-                                {t(
-                                    "pages.welcome.questions.theThinkHour.youChose",
-                                    { hour: formData.theThinkHour },
-                                )}
-                            </BetterTextSmallText>
-                            <GapView height={10} />
-                        </>
-                    )}
-                    <BetterAlert
-                        style="DEFAULT"
-                        layout="alert"
-                        title={t(
-                            "pages.welcome.questions.theThinkHour.TEMP_disclaimer",
-                        )}
-                        bodyText={t(
-                            "pages.welcome.questions.theThinkHour.TEMP_disclaimer2",
-                        )}
-                    />
-                    {spawnNavigationButtons(4, true)}
-                </>
-            )}
+                        <BetterAlert
+                            style="DEFAULT"
+                            layout="alert"
+                            title={t(
+                                "pages.welcome.questions.theThinkHour.TEMP_disclaimer",
+                            )}
+                            bodyText={t(
+                                "pages.welcome.questions.theThinkHour.TEMP_disclaimer2",
+                            )}
+                        />
+                    </>
+                )}
+            </View>
+            <BottomView />
         </View>
     );
 }

@@ -21,11 +21,9 @@ import GapView from "@/components/ui/gap_view";
 
 const styles = StyleSheet.create({
     textInput: {
-        backgroundColor: Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
         borderRadius: UniversalItemStyle.borderRadius,
         padding: UniversalItemStyle.padding,
         borderWidth: UniversalItemStyle.borderWidth,
-        borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
         width: "100%",
         color: Colors.BASIC.WHITE,
         fontFamily: "BeVietnamPro-Regular",
@@ -64,6 +62,8 @@ interface BetterInputFieldProps {
         /** Total amount of inputs. If you have 4 input fields, pass 4 here. **Don't do like JS (starting at 0 instead of 1).** */
         totalRefs: number;
     };
+    /** Whether the value is valid or not. */
+    isValid: boolean;
 }
 
 /**
@@ -82,6 +82,7 @@ interface BetterInputFieldProps {
  * @param {boolean} [p.readOnly=false] If true the input field will be read only (non-editable).
  * @param {boolean} [p.shouldRef=false] If true, `refParams` will be used. It's used to auto-advance to the next input field in a screen upon submitting.
  * @param {{ inputRefs: { current: {}; }; totalRefs: number; }} p.refParams
+ * @param {boolean} p.isValid Whether the value is valid or not.
  * @returns {ReactNode} Returns a Fragment with a `<BetterText>` (label), `<TextInput />`, and a `<GapView />` between them.
  */
 export default function BetterInputField({
@@ -96,6 +97,7 @@ export default function BetterInputField({
     readOnly = false,
     shouldRef = false,
     refParams,
+    isValid = true,
 }: BetterInputFieldProps): ReactNode {
     /**
      * Focuses the next `<TextInput>` when the user presses the arrow / continue / next button on mobile keyboard.
@@ -127,8 +129,25 @@ export default function BetterInputField({
                 <TextInput
                     placeholder={placeholder}
                     value={typeof value === "string" ? value : String(value)}
-                    placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
-                    style={styles.textInput}
+                    placeholderTextColor={
+                        isValid
+                            ? Colors.MAIN.DEFAULT_ITEM.TEXT
+                            : Colors.PRIMARIES.WOR.WOR
+                    }
+                    style={[
+                        styles.textInput,
+                        isValid
+                            ? {
+                                  backgroundColor:
+                                      Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
+                                  borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
+                              }
+                            : {
+                                  backgroundColor:
+                                      Colors.PRIMARIES.WOR.WOR_STROKE,
+                                  borderColor: Colors.PRIMARIES.WOR.WOR,
+                              },
+                    ]}
                     autoCorrect={false}
                     multiline={false}
                     maxLength={length}
@@ -158,8 +177,24 @@ export default function BetterInputField({
             <TextInput
                 placeholder={placeholder}
                 value={typeof value === "string" ? value : String(value)}
-                placeholderTextColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
-                style={styles.textInput}
+                placeholderTextColor={
+                    isValid
+                        ? Colors.MAIN.DEFAULT_ITEM.TEXT
+                        : Colors.PRIMARIES.WOR.WOR
+                }
+                style={[
+                    styles.textInput,
+                    isValid
+                        ? {
+                              backgroundColor:
+                                  Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
+                              borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
+                          }
+                        : {
+                              backgroundColor: Colors.PRIMARIES.WOR.WOR_STROKE,
+                              borderColor: Colors.PRIMARIES.WOR.WOR,
+                          },
+                ]}
                 autoCorrect={false}
                 multiline={false}
                 maxLength={length}

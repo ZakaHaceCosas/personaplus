@@ -1,14 +1,18 @@
 // UpdateProfile.tsx
 // Update your profile.
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, ReactNode } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";
 import { logToConsole } from "@/toolkit/debug/console";
-import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
+import {
+    OrchestrateUserData,
+    VALID_USER_CAPS,
+    ValidateUserData,
+} from "@/toolkit/user";
 import Loading from "@/components/static/loading";
 import GapView from "@/components/ui/gap_view";
 import BetterText from "@/components/text/better_text";
@@ -23,6 +27,10 @@ import ROUTES from "@/constants/routes";
 import GetStuffForUserDataQuestion from "@/constants/user_data";
 import getCommonScreenSize from "@/constants/screen";
 import TopBar from "@/components/navigation/top_bar";
+import {
+    BetterTextSmallerText,
+    BetterTextSmallText,
+} from "@/components/text/better_text_presets";
 
 const styles = StyleSheet.create({
     buttonWrapper: {
@@ -98,11 +106,13 @@ export default function UpdateProfile() {
      *
      * @param {string} label A short text to show before the input to give indications.
      * @param {string} placeholder The placeholder of the input.
-     * @param {string | number} value The value of the input. Set it to a stateful value, e.g. `formData.username`.
-     * @param {string} name The name of the property / stateful value it's linked to, e.g. `username` for `formData.username`.
+     * @param {string | number} value The value of the input. Set it to a stateful value, e.g. `workingData!.username`.
+     * @param {string} name The name of the property / stateful value it's linked to, e.g. `username` for `workingData!.username`.
      * @param {number} refIndex It's index. _yes, you have to count all the calls the `spawnInputField` can keep an incremental index_.
      * @param {("default" | "numeric")} [keyboardType="default"] Whether to use the normal keyboard or a numeric pad.
      * @param {number} length Max length of the input.
+     * @param {boolean} isValid Whether the input is valid or not.
+     * @param {string} errorMessage Message to show if the input is not valid.
      * @returns {ReactNode} Returns a Fragment with a `<BetterText>` (label), `<TextInput />`, and a `<GapView />` between them.
      */
     function spawnInputField(
@@ -113,7 +123,9 @@ export default function UpdateProfile() {
         refIndex: number,
         keyboardType: "default" | "numeric" = "default",
         length: number,
-    ) {
+        isValid: boolean,
+        errorMessage: string,
+    ): ReactNode {
         return (
             <>
                 <BetterInputField
@@ -126,11 +138,23 @@ export default function UpdateProfile() {
                     length={length}
                     refParams={{ inputRefs, totalRefs: 4 }}
                     keyboardType={keyboardType}
-                    changeAction={(text) =>
-                        setWorkingData((prev) => ({ ...prev!, [name]: text }))
+                    changeAction={(text: string): void =>
+                        setWorkingData((prev: BasicUserData | undefined) => ({
+                            ...prev!,
+                            [name]: text,
+                        }))
                     }
                     shouldRef={true}
+                    isValid={isValid}
                 />
+                {isValid === false && (
+                    <>
+                        <GapView height={5} />
+                        <BetterTextSmallText>
+                            {errorMessage}
+                        </BetterTextSmallText>
+                    </>
+                )}
             </>
         );
     }
@@ -151,8 +175,56 @@ export default function UpdateProfile() {
                 "username",
                 0,
                 "default",
-                30,
+                40,
+                workingData!.username.length === 0 ||
+                    (workingData!.username.length >= 3 &&
+                        workingData!.username.length < 40 &&
+                        !(
+                            workingData!.username.toLowerCase() === "error" ||
+                            workingData!.username.toLowerCase() === "error." ||
+                            workingData!.username
+                                .toLowerCase()
+                                .includes("pedro sánchez") ||
+                            workingData!.username
+                                .toLowerCase()
+                                .includes("pedro sanchez") ||
+                            workingData!.username.toLowerCase().includes("psoe")
+                        ))
+                    ? true
+                    : false,
+                workingData!.username.length === 0
+                    ? "Username cannot be empty."
+                    : workingData!.username.length <
+                            VALID_USER_CAPS.USERNAME.MIN ||
+                        workingData!.username.length >=
+                            VALID_USER_CAPS.USERNAME.MAX
+                      ? `Your username must be between ${VALID_USER_CAPS.USERNAME.MIN} and ${VALID_USER_CAPS.USERNAME.MAX} characters long.`
+                      : VALID_USER_CAPS.USERNAME.INVALID.includes(
+                              workingData!.username.toLowerCase(),
+                          )
+                        ? "The username contains forbidden terms."
+                        : "",
             )}
+            {
+                /* LMAO */
+                (workingData!.username.toLowerCase() === "error" ||
+                    workingData!.username.toLowerCase() === "error." ||
+                    workingData!.username
+                        .toLowerCase()
+                        .includes("pedro sánchez") ||
+                    workingData!.username
+                        .toLowerCase()
+                        .includes("pedro sanchez") ||
+                    workingData!.username.toLowerCase().includes("psoe")) && (
+                    <BetterTextSmallerText>
+                        {workingData!.username.toLowerCase() === "error" ||
+                        workingData!.username.toLowerCase() === "error."
+                            ? `"Error" is not allowed as a username (we reserve it as a keyword for in-app error-handling).`
+                            : "no me seas gracioso."}
+                    </BetterTextSmallerText>
+                )
+            }
+
             <GapView height={5} />
             {spawnInputField(
                 t("globals.userData.age.word"),
@@ -161,7 +233,16 @@ export default function UpdateProfile() {
                 "age",
                 1,
                 "numeric",
-                2,
+                3,
+                workingData!.age >= VALID_USER_CAPS.AGE.MIN &&
+                    workingData!.age <= VALID_USER_CAPS.AGE.MAX
+                    ? true
+                    : false,
+                !(workingData!.age >= VALID_USER_CAPS.AGE.MIN)
+                    ? "You're NOT that young!"
+                    : !(workingData!.age <= VALID_USER_CAPS.AGE.MAX)
+                      ? "You're NOT that old!"
+                      : "",
             )}
             <GapView height={5} />
             {spawnInputField(
@@ -171,7 +252,16 @@ export default function UpdateProfile() {
                 "weight",
                 2,
                 "numeric",
-                3,
+                5,
+                workingData!.weight >= VALID_USER_CAPS.WEIGHT.MIN &&
+                    workingData!.weight <= VALID_USER_CAPS.WEIGHT.MAX
+                    ? true
+                    : false,
+                !(workingData!.weight >= VALID_USER_CAPS.WEIGHT.MIN)
+                    ? "You're NOT that light!"
+                    : !(workingData!.weight <= VALID_USER_CAPS.WEIGHT.MAX)
+                      ? "You're NOT that heavy!"
+                      : "",
             )}
             <GapView height={5} />
             {spawnInputField(
@@ -181,7 +271,16 @@ export default function UpdateProfile() {
                 "height",
                 3,
                 "numeric",
-                3,
+                5,
+                workingData!.height >= VALID_USER_CAPS.HEIGHT.MIN &&
+                    workingData!.height <= VALID_USER_CAPS.HEIGHT.MAX
+                    ? true
+                    : false,
+                !(workingData!.height >= VALID_USER_CAPS.HEIGHT.MIN)
+                    ? "You're NOT that light!"
+                    : !(workingData!.height <= VALID_USER_CAPS.HEIGHT.MAX)
+                      ? "You're NOT that heavy!"
+                      : "",
             )}
             <GapView height={15} />
             <BetterText

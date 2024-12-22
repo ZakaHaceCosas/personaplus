@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Now all objectives display their duration in their division.
+- Now the onboarding screen shows more clearly what's wrong when some data isn't alright.
 
 ### Fixed
 
@@ -26,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed the app not correctly fetching the user's language in some cases.
 - Fixed the app going into loading state again if you accidentally touched in the navbar the button to the tab you're currently on.
 - Fixed some missing translations
+- Fixed some responsiveness issues with the onboarding screen.
 
 ## [0.0.6-preapp.26] - 07-12-2024
 
