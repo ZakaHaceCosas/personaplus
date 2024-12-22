@@ -64,38 +64,30 @@ local.properties
 **/*.testing.*
 *.testing.*
 
-# .github
-.github/**
-
-# .vscode
-.vscode/**
-
 # deprecated stuff
 **/*.deprecated.*
 *.deprecated.*
 
-# archived files
-archive/
-
-# EASIGNORE
+# EAS IGNORE
 # NOTE: please keep this at the bottom of the file. the rest (top) is copy pasted from .gitignore
 # specific-files to be ignored by EAS Build
 
 # assets meant for public repo
-assets/design
+**/assets/design/**
 
 # markdown, only meant for public repo, not the app
-README.md
-PRIVACY.md
-SECURITY.md
-LICENSE.md
-# (license still ships to production, dont worry (see app/License.tsx))
-DOCS.md
-CONTRIBUTING.md
-FIXED_ERROR_LOG.md
-CODE_OF_CONDUCT.md
-CHANGELOG.md
-CHANGELOG_DEV.md
-
-# android. ignoring this affects EAS build.
-android/
+**/README.md
+**/README.es.md
+**/PRIVACY.md
+**/SECURITY.md
+**/LICENSE.md
+# (license still ships to production, don't worry (see app/License.tsx))
+**/DOCS.md
+**/DOCS.es.md
+**/CONTRIBUTING.md
+**/FIXED_ERROR_LOG.md
+**/CODE_OF_CONDUCT.md
+**/CHANGELOG.md
+**/CHANGELOG_DEV.md
+**/USAGE.md
+**/USAGE.es
