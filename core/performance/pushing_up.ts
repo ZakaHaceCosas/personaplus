@@ -19,7 +19,6 @@ export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
  * @param pushUps The amount of push ups that were done.
  * @returns A standard `CoreLibraryResponse` with the desired results.
  */
-
 export default function calculateLiftingPerformance(
     gender: "male" | "female",
     weight: number,
