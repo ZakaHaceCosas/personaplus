@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
 import {
@@ -19,6 +19,90 @@ import { ActiveObjectiveDailyLog } from "@/types/active_objectives";
 import { GetActiveObjectiveDailyLog } from "@/toolkit/objectives/active_objectives";
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
 import { FullProfile } from "@/types/user";
+import { StyleSheet, View } from "react-native";
+import Colors from "@/constants/colors";
+
+/**
+ * Returns a view that represents the BMI context in a traffic light-like style.
+ *
+ * @param {("underweight" | "healthy weight" | "overweight" | "obesity" | "severe obesity")} context The BMI context
+ * @returns {ReactElement}
+ */
+function BMIView({
+    context,
+}: {
+    context:
+        | "underweight"
+        | "healthy weight"
+        | "overweight"
+        | "obesity"
+        | "severe obesity";
+}): ReactElement {
+    const styles = StyleSheet.create({
+        wrapper: {
+            height: 10,
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            borderRadius: 10,
+            overflow: "hidden",
+            gap: 5,
+        },
+        cell: {
+            flex: 1,
+            borderRadius: 2,
+        },
+    });
+
+    const getColorForFragment = (index: number, totalFragments: number) => {
+        if (context === "severe obesity") {
+            return Colors.PRIMARIES.WOR.WOR; // all bad all red
+        }
+
+        if (context === "underweight") {
+            return index < totalFragments / 5
+                ? Colors.PRIMARIES.WOR.WOR
+                : Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
+        }
+
+        if (context === "healthy weight") {
+            return index < totalFragments / 3
+                ? Colors.PRIMARIES.GOD.GOD
+                : Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
+        }
+
+        if (context === "overweight") {
+            return index < totalFragments / 2
+                ? Colors.PRIMARIES.HMM.HMM
+                : Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
+        }
+
+        if (context === "obesity") {
+            return index < totalFragments / 1.5
+                ? Colors.PRIMARIES.HMM.HMM
+                : Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
+        }
+
+        // default background color for stuff we haven't reached
+        return Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
+    };
+
+    return (
+        <View style={styles.wrapper}>
+            {Array.from({ length: 5 }).map((_, index) => (
+                <View
+                    key={index}
+                    style={[
+                        styles.cell,
+                        {
+                            backgroundColor: getColorForFragment(index, 5),
+                        },
+                    ]}
+                />
+            ))}
+        </View>
+    );
+}
 
 export default function Report() {
     const { t } = useTranslation();
@@ -55,7 +139,7 @@ export default function Report() {
 
             setReport({
                 BMI: {
-                    value: BMI.toPrecision(3),
+                    value: BMI.toPrecision(4),
                     context: BMIContext,
                 },
                 BMR: {
@@ -100,14 +184,16 @@ export default function Report() {
                 bodyText={t("pages.report.disclaimer.subheader")}
             />
             <GapView height={20} />
-            <Section kind="HowYouAreDoing">
+            <Section kind="YourHealth">
                 {report ? (
                     <>
                         <Division
                             preHeader="BMI"
                             header={report.BMI.value}
                             subHeader={report.BMI.context}
-                        />
+                        >
+                            <BMIView context={report.BMI.context} />
+                        </Division>
                         <Division
                             preHeader="BMR"
                             header={report.BMR.value}
@@ -121,33 +207,44 @@ export default function Report() {
                 )}
             </Section>
             <GapView height={20} />
-            <Section kind="ActiveObjectives">
+            <Section kind="HowYouAreDoing">
                 {dailyLog ? (
-                    Object.entries(dailyLog).map(([date, entries]) => (
-                        <Division header={date} key={date} direction="vertical">
-                            {Object.entries(entries).map(([id, entry]) => (
-                                <React.Fragment key={id}>
-                                    <BetterTextNormalText>
-                                        {entry.objective
-                                            ? entry.objective.exercise
-                                            : id}
-                                    </BetterTextNormalText>
-                                    <BetterTextSmallText>
-                                        {entry.wasDone ? "Done" : "Missed!"}
-                                    </BetterTextSmallText>
-                                    <BetterTextSmallText>
-                                        Performance:{" "}
-                                        {entry.performance === 0
-                                            ? "No data"
-                                            : `${entry.performance.result.toFixed(2)} burnt calories`}
-                                    </BetterTextSmallText>
-                                </React.Fragment>
-                            ))}
-                        </Division>
-                    ))
+                    Object.entries(dailyLog)
+                        .sort(
+                            ([dateA], [dateB]) =>
+                                new Date(dateB).getMilliseconds() -
+                                new Date(dateA).getMilliseconds(),
+                        ) // sort by date
+                        .slice(0, 7) // get the latest 7
+                        .map(([date, entries]) => (
+                            <Division
+                                header={date}
+                                key={date}
+                                direction="vertical"
+                            >
+                                {Object.entries(entries).map(([id, entry]) => (
+                                    <React.Fragment key={id}>
+                                        <BetterTextNormalText>
+                                            {entry.objective
+                                                ? entry.objective.exercise
+                                                : id}
+                                        </BetterTextNormalText>
+                                        <BetterTextSmallText>
+                                            {entry.wasDone ? "Done" : "Missed!"}
+                                        </BetterTextSmallText>
+                                        <BetterTextSmallText>
+                                            Performance:{" "}
+                                            {entry.performance === 0
+                                                ? "No data"
+                                                : `${entry.performance.result.toFixed(2)} burnt calories`}
+                                        </BetterTextSmallText>
+                                    </React.Fragment>
+                                ))}
+                            </Division>
+                        ))
                 ) : (
                     <Division
-                        header="Here goes your daily log"
+                        header="Here'll go your daily log"
                         subHeader="We log your results each time you do a session. Here we store all the metadata of each session. As soon as you do something, you'll see results here."
                     />
                 )}
