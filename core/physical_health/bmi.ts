@@ -10,7 +10,7 @@ import {
 } from "@/core/physical_health/utils/bmi_percentiles";
 
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
-    "10/08/2024",
+    "22/12/2024",
     [
         "https://www.cdc.gov/growthcharts/extended-bmi-data-files.htm",
         "https://www.cdc.gov/growthcharts/data/extended-bmi/BMI-Age-percentiles-GIRLS.pdf",
@@ -68,7 +68,7 @@ export default function calculateBodyMassIndex(
     height: number,
 ): CoreLibraryResponse {
     // You MUST pass weight as KG (kilograms) and height as CM (centimeters)
-    const bmi = weight / (height / 100) ** 2;
+    const bmi: number = weight / (height / 100) ** 2;
 
     let context: string | undefined;
 
@@ -95,8 +95,10 @@ export default function calculateBodyMassIndex(
             context = "healthy weight";
         } else if (bmi >= 25.0 && bmi <= 29.9) {
             context = "overweight";
-        } else {
+        } else if (bmi >= 30.0 && bmi <= 39.9) {
             context = "obesity";
+        } else {
+            context = "severe obesity";
         }
     }
 
