@@ -17,6 +17,7 @@ For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
   - Handle `m min`, `n sec`, etc... strings function.
 - Added `ActiveObjective` and `FullProfile | BasicUserData | BasicUserHealthData` type guards.
 - Added a specific types file for types used as glue fixes.
+- Added validation to `BetterInputField`.
 
 ### Changed
 
