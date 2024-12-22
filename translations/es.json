@@ -312,8 +312,8 @@
                     "placeholders": {
                         "username": "Un nombre o apodo, el que quieras",
                         "age": "Edad (en años)",
-                        "weight": "Tu peso (kg sin decimales)",
-                        "height": "Cuánto mides (cm sin decimales)"
+                        "weight": "Tu peso (kilogramos)",
+                        "height": "Cuánto mides (centímetros)"
                     }
                 },
                 "focus": {

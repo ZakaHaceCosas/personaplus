@@ -28,7 +28,7 @@
             "goAheadGood": "Lets go!",
             "nevermind": "Nevermind",
             "continue": "Continue",
-            "somethingIsWrong": "Something is wrong",
+            "somethingIsWrong": "Something's wrong",
             "goBack": "Go back :c",
             "goBackNoSad": "Go back",
             "yes": "Yes",
@@ -312,8 +312,8 @@
                     "placeholders": {
                         "username": "A name or nickname, whatever you like",
                         "age": "Age (in years)",
-                        "weight": "Your weight (kg without decimals)",
-                        "height": "How tall are you (cm without decimals)"
+                        "weight": "Your weight (kilograms)",
+                        "height": "How tall are you (centimeters)"
                     }
                 },
                 "focus": {
