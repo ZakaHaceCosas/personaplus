@@ -532,9 +532,6 @@ export default function WelcomePage() {
             color: "#FFF",
             fontFamily: "BeVietnamPro-Regular",
         },
-        pickerContainer: {
-            overflow: "visible",
-        },
         confirmButton: {
             backgroundColor: Colors.PRIMARIES.GOD.GOD,
             borderColor: Colors.PRIMARIES.GOD.GOD_STROKE,
@@ -552,13 +549,12 @@ export default function WelcomePage() {
             padding: UniversalItemStyle.padding,
         },
         buttonContainer: {
-            minWidth: "80%",
             display: "flex",
             flexDirection: "row",
             gap: 10,
             alignItems: "center",
             justifyContent: "center",
-            padding: 20,
+            marginRight: 20,
         },
         button: {
             width: "100%",
@@ -568,6 +564,10 @@ export default function WelcomePage() {
             borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
             borderWidth: UniversalItemStyle.borderWidth,
             borderRadius: UniversalItemStyle.borderRadius * 2,
+        },
+        container: {
+            width: "90%",
+            height: "100%",
         },
     };
 
@@ -866,7 +866,7 @@ export default function WelcomePage() {
                                 "pages.welcome.questions.theThinkHour.ask",
                             )}
                             onCancel={() => toggleTimePicker(false)}
-                            closeOnOverlayPress={true}
+                            closeOnOverlayPress={false}
                             LinearGradient={LinearGradient}
                             styles={pickerStyles}
                             modalProps={{
