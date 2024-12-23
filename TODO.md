@@ -9,7 +9,7 @@ Here I'll keep track of what I want to do short-term so I don't forget about it.
 - [ ] Translating missing stuff:
   - [ ] new user data form validation
   - [ ] report page
-- [ ] optimize dev interface by reducing the amount of stuff to load (moving them to separate pages)
+- [x] optimize dev interface by reducing the amount of stuff to load (moving them to separate pages)
 - [ ] fix the damn BMI percentiles for CL
 
 ## Adding cool stuff
