@@ -16,6 +16,8 @@ const ROUTES = {
         HOME: "/dev_interface",
         LOG_VIEW: "/log_view",
         ERROR_LOG_VIEW: "/log_view_error",
+        USER_DATA_VIEW: "/viewer_user_data",
+        ACTIVE_OBJECTIVES_VIEW: "/viewer_active_objectives",
         EXPERIMENTS: "/dev_experiments",
     },
     ACTIVE_OBJECTIVES: {
