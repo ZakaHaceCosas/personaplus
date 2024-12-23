@@ -667,9 +667,12 @@ async function FailObjectivesNotDoneYesterday(): Promise<void> {
         }
 
         for (const objective of allObjectives) {
-            if (!objective.info.days[ADJUSTED_TODAY - 1]) continue;
+            if (!objective.info.days[ADJUSTED_TODAY - 1]) continue; // if you weren't supposed to do it anyway, don't do anything
 
             if (dailyLog[targetDate][objective.identifier]) continue; // if data is already saved, don't do anything
+
+            if (objective.createdAt === GetCurrentDateCorrectly().string)
+                continue; // if it was created today, don't do anything
 
             dailyLog[targetDate][objective.identifier] = {
                 wasDone: false,
