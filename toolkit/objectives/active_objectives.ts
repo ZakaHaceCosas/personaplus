@@ -148,10 +148,7 @@ async function SaveActiveObjectiveToDailyLog(
         };
 
         // Updates data and puts it back to AsyncStorage
-        await AsyncStorage.setItem(
-            StoredItemNames.dailyLog,
-            JSON.stringify(dailyData),
-        );
+        await HandleSavingActiveObjectiveDailyLog(dailyData);
         logToConsole(
             `Success! Session ${id} data saved for ${today}.`,
             "success",
@@ -621,24 +618,28 @@ function CalculateSessionPerformance(
 async function HandleSavingActiveObjectiveDailyLog(
     log: ActiveObjectiveDailyLog,
 ): Promise<void> {
-    function sortObjectByDate(
-        obj: ActiveObjectiveDailyLog,
-    ): ActiveObjectiveDailyLog {
-        return Object.fromEntries(
-            Object.entries(obj).sort(([dateA], [dateB]) => {
-                return (
-                    JavaScriptifyTodaysDate(dateA as TodaysDate).getTime() -
-                    JavaScriptifyTodaysDate(dateB as TodaysDate).getTime()
-                );
-            }),
-        );
-    }
+    try {
+        function sortObjectByDate(
+            obj: ActiveObjectiveDailyLog,
+        ): ActiveObjectiveDailyLog {
+            return Object.fromEntries(
+                Object.entries(obj).sort(([dateA], [dateB]) => {
+                    return (
+                        JavaScriptifyTodaysDate(dateA as TodaysDate).getTime() -
+                        JavaScriptifyTodaysDate(dateB as TodaysDate).getTime()
+                    );
+                }),
+            );
+        }
 
-    const sortedLog = sortObjectByDate(log);
-    await AsyncStorage.setItem(
-        StoredItemNames.dailyLog,
-        JSON.stringify(sortedLog),
-    );
+        const sortedLog: ActiveObjectiveDailyLog = sortObjectByDate(log);
+        await AsyncStorage.setItem(
+            StoredItemNames.dailyLog,
+            JSON.stringify(sortedLog),
+        );
+    } catch (e) {
+        logToConsole(`Error handling the daily log: ${e}`, "error");
+    }
 }
 
 /**
@@ -677,7 +678,7 @@ async function FailObjectivesNotDoneYesterday(): Promise<void> {
             };
         }
 
-        HandleSavingActiveObjectiveDailyLog(dailyLog);
+        await HandleSavingActiveObjectiveDailyLog(dailyLog);
     } catch (e) {
         logToConsole(`Error failing objectives: ${e}`, "error");
     }
