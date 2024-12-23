@@ -15,7 +15,7 @@ const ROUTES = {
     DEV_INTERFACE: {
         HOME: "/dev_interface",
         LOG_VIEW: "/log_view",
-        ERROR_LOG_VIEW: "/error_logger",
+        ERROR_LOG_VIEW: "/log_view_error",
         EXPERIMENTS: "/dev_experiments",
     },
     ACTIVE_OBJECTIVES: {
