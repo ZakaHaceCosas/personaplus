@@ -60,9 +60,29 @@ export type WeekTuple = [
  * Info from an active objective, like what days should it be done, it's duration, etc...
  */
 type ActiveObjectiveInfo = {
+    /**
+     * What days of the week is this objective scheduled for.
+     *
+     * @type {WeekTuple}
+     */
     days: WeekTuple;
+    /**
+     * Duration in minutes of the objective.
+     *
+     * @type {number}
+     */
     durationMinutes: number;
+    /**
+     * Rests.
+     *
+     * @type {number}
+     */
     rests: number;
+    /**
+     * If there are rests, how long should they last.
+     *
+     * @type {number}
+     */
     restDurationMinutes: number;
 };
 
@@ -122,6 +142,12 @@ export interface ActiveObjective {
      * @type {number}
      */
     identifier: number;
+    /**
+     * Date of the creation of this objective.
+     *
+     * @type {TodaysDate}
+     */
+    createdAt: TodaysDate;
     /**
      * Global info about the objective, such as it's duration.
      *
@@ -232,7 +258,13 @@ interface ActiveObjectiveDailyLogEntry {
  * @export
  */
 export type ActiveObjectiveDailyLog = {
+    /**
+     * Each entry uses the date as a key, and then each objective has it's own entry.
+     */
     [date: TodaysDate]: {
+        /**
+         * Each objective uses it's ID as the key, then an `ActiveObjectiveDailyLogEntry` as the value.
+         */
         [identifier: number]: ActiveObjectiveDailyLogEntry;
     };
 };
@@ -289,6 +321,16 @@ export interface EditObjectiveParams extends ExpoRouterParams {
  * @interface RealEditObjectiveParams
  */
 export interface RealEditObjectiveParams {
+    /**
+     * If true, the current action for the create page it's an edit. If false, it's a creation.
+     *
+     * @type {boolean}
+     */
     edit: boolean;
+    /**
+     * In case of editing, the objective to edit.
+     *
+     * @type {ActiveObjective}
+     */
     objective: ActiveObjective;
 }

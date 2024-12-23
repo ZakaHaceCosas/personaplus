@@ -50,6 +50,7 @@ import { Experiments } from "@/types/user";
 import { GetExperiments } from "@/toolkit/experiments";
 import TopBar from "@/components/navigation/top_bar";
 import { ShowToast } from "@/toolkit/android";
+import { GetCurrentDateCorrectly } from "@/toolkit/today";
 
 const styles = StyleSheet.create({
     dayContainer: {
@@ -104,6 +105,7 @@ export default function CreateActiveObjectivePage() {
     const [objectiveToCreate, updateObjectiveToCreate] =
         useState<ActiveObjectiveWithoutId>({
             exercise: "",
+            createdAt: GetCurrentDateCorrectly().string,
             info: {
                 days: [false, false, false, false, false, false, false],
                 durationMinutes: 0,
