@@ -5,7 +5,7 @@ Here I'll keep track of what I want to do short-term so I don't forget about it.
 ## Fixing stuff
 
 - [x] Add `createdAt` property to active objectives so `FailObjectivesNotDoneYesterday()` doesn't fail an objective you "didn't do yesterday" because it's new.
-- [ ] Ensure notifications are stopped immediately after finishing today's last objective (probably by moving that to the `results.tsx` page).
+- [x] Ensure notifications are stopped immediately after finishing today's last objective (probably by moving that to the `results.tsx` page).
 - [ ] Translating missing stuff:
   - [ ] new user data form validation
   - [ ] report page
