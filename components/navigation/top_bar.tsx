@@ -57,7 +57,7 @@ export default function TopBar({
             {subHeader !== null && (
                 <BetterTextSubHeader>{subHeader}</BetterTextSubHeader>
             )}
-            <GapView height={20} />
+            <GapView height={10} />
         </>
     );
 }
