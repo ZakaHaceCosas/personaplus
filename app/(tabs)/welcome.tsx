@@ -42,6 +42,7 @@ import { DEFAULT_EXPERIMENTS } from "@/constants/experiments";
 import { SafelyOpenUrl } from "@/toolkit/routing";
 import BetterAlert from "@/components/ui/better_alert";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
+import PageEnd from "@/components/static/page_end";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -84,14 +85,13 @@ const styles = StyleSheet.create({
     },
     progressBar: {
         width: getCommonScreenSize("width"),
-        height: 4,
+        height: 5,
         borderRadius: 100,
         overflow: "hidden",
         display: "flex",
         flexDirection: "row",
     },
     progressBarItem: {
-        borderRadius: 20,
         flex: 1,
     },
 });
@@ -518,6 +518,7 @@ export default function WelcomePage() {
                 )}
                 <GapView height={10} />
                 {spawnProgressBar()}
+                <PageEnd size="tiny" includeText={false} />
             </View>
         );
     }

@@ -39,8 +39,6 @@ const styles = StyleSheet.create({
         width: getCommonScreenSize("width"),
         alignItems: "center",
         justifyContent: "center",
-        bottom: -160, // TODO - this is kinda unresponsive
-        position: "absolute",
     },
 });
 
@@ -309,7 +307,7 @@ export default function UpdateProfile() {
                 }
                 order="horizontal"
             />
-            <GapView height={5} />
+            <GapView height={20} />
             <View style={styles.buttonWrapper}>
                 <BetterButton
                     style="DEFAULT"
@@ -317,7 +315,7 @@ export default function UpdateProfile() {
                     buttonText={t("globals.interaction.nevermind")}
                     buttonHint={t("pages.updateProfile.nevermindHint")}
                 />
-                <GapView width={15} />
+                <GapView width={10} />
                 <BetterButton
                     style="ACE"
                     action={async () => {

@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed the app going into loading state again if you accidentally touched in the navbar the button to the tab you're currently on.
 - Fixed some missing translations
 - Fixed some responsiveness issues with the onboarding screen.
+- Fixed the app not looking as it should on devices that still use 3-dot navigation.
 
 ## [0.0.6-preapp.26] - 07-12-2024
 
