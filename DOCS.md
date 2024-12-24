@@ -358,17 +358,16 @@ Okay, so you did write some cool code, right? That's awesome! Now, here are a fe
 > - `(fix)` for bug fixes
 > - `(new)` for new features
 > - `(better)` for enhancements to existing features
-> - `(md)` for changes to MarkDown files
-> - `(txt)` for changes to in-app texts
->   - `(txt/loc:LANG)` for translations, where LANG is the language code (like "es" or "en")
-> - `(test)` for changes or additions to testing
+> - `(CL)` for updates to CoreLibrary
+> - `(doc)` for changes to MarkDown files
+> - `(tests)` for changes or additions to testing
 > - `(chore)` for chores (small tasks or maintenance work)
 > - `(ui)` for visual changes
 >
 > Here are some sample valid (and good) commits:
-> `(page:WelcomeScreen)(design): Update spacing to match design principales`
+> `(page:WelcomeScreen)(ui): Remove unneeded spacing below headers`
 > `(chore): Rename variables in User toolkit for consistency`
-> `(txt): Update regular font size`
-> `(txt/loc:EN): Fix a typo ("are n't" -> "aren't")`
+> `(ui): Update regular font size`
+> `(fix): Fix a typo ("are n't" -> "aren't")`
 
 And that's it for now. Keep in mind these docs _aren't fully done yet_. They will get updated in the future.
