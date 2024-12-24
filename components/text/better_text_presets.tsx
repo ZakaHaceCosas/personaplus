@@ -167,7 +167,7 @@ export function BetterTextLicenseText({
             fontFamily="RobotoSerif"
             textAlign="normal"
             fontWeight="Regular"
-            fontSize={FontSizes.MEDIUM}
+            fontSize={FontSizes.SMALL}
         >
             {children}
         </BetterText>

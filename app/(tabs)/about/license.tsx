@@ -12,39 +12,32 @@
  */
 
 import React from "react";
-import { useTranslation } from "react-i18next";
 import {
-    BetterTextHeader,
     BetterTextLicenseHeader,
     BetterTextLicenseText,
 } from "@/components/text/better_text_presets";
 import GapView from "@/components/ui/gap_view";
 import BetterText from "@/components/text/better_text";
-import BackButton from "@/components/navigation/back_button";
 import { SafelyOpenUrl } from "@/toolkit/routing";
 import URLs from "@/constants/urls";
 import PageEnd from "../../../components/static/page_end";
+import TopBar from "@/components/navigation/top_bar";
 
 export default function License() {
-    const { t } = useTranslation();
-
     // yes, i did spend more than an hour formatting the General Public License into a lot of <BetterText> blocks. :]
     return (
         <>
-            {/* Doesn't use <TopBar /> because it's a different layout */}
-            <BackButton t={t} />
-            <GapView height={10} />
-            <BetterTextHeader>License</BetterTextHeader>
-            <BetterText fontSize={10} fontWeight="Italic">
-                SPDX: GPL-3.0-only
-            </BetterText>
-            <GapView height={10} />
-            <BetterText fontSize={15} fontWeight="Regular">
+            <TopBar
+                includeBackButton={true}
+                header="License"
+                subHeader="GPL-3.0-only"
+            />
+            <BetterText fontSize={12} fontWeight="Regular">
                 Copyright (C) 2024 ZakaHaceCosas{"\n"}This legal text is only
                 available in English.
             </BetterText>
-            <GapView height={20} />
-            <BetterText fontSize={20} fontWeight="Regular">
+            <GapView height={10} />
+            <BetterText fontSize={15} fontWeight="Regular">
                 This program is free software: you can redistribute it and/or
                 modify it under the terms of the GNU General Public License as
                 published by the Free Software Foundation, either version 3 of
@@ -56,7 +49,7 @@ export default function License() {
                 received a copy of the GNU General Public License along with
                 this program. If not, see{" "}
                 <BetterText
-                    fontSize={20}
+                    fontSize={15}
                     fontWeight="Regular"
                     isLink={true}
                     onTap={async () => await SafelyOpenUrl(URLs.license)}
@@ -65,7 +58,7 @@ export default function License() {
                 </BetterText>
                 .
             </BetterText>
-            <GapView height={20} />
+            <GapView height={15} />
             <BetterText
                 // yes, i spent my time manually formatting the entire GPL 3
                 fontWeight="Bold"
@@ -162,7 +155,6 @@ export default function License() {
             <BetterTextLicenseHeader>
                 TERMS AND CONDITIONS
             </BetterTextLicenseHeader>
-            <GapView height={20} />
             <BetterTextLicenseHeader>0. Definitions.</BetterTextLicenseHeader>
             <BetterTextLicenseText>
                 &quot;This License&quot; refers to version 3 of the GNU General
@@ -805,7 +797,7 @@ export default function License() {
                 {"\n\n"}
                 END OF TERMS AND CONDITIONS
             </BetterTextLicenseText>
-            <PageEnd size="tiny" includeText={false} />
+            <PageEnd size="normal" includeText={false} />
         </>
     );
 }
