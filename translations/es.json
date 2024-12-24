@@ -566,6 +566,29 @@
     "errors": {
         "activeObjectives": {
             "invalidData": "(ERROR) Los datos de este objetivo son inválidos."
+        },
+        "userData": {
+            "formValidation": {
+                "username": {
+                    "required": "El usuario no puede estar vacío.",
+                    "length": "Tu usuario debe medir entre {{minCap}} y {{maxCap}} caracteres.",
+                    "forbidden": "Este usuario incluye términos prohibidos.",
+                    "forbiddenError": "\"Error\" no se permite como usuario (lo reservamos como palabra clave para manejar errores dentro de la app).",
+                    "forbiddenPsoe": "no me seas gracioso."
+                },
+                "age": {
+                    "min": "¡NO eres TAN joven! La edad mínima es de {{minCap}} años.",
+                    "max": "¡NO eres TAN viejo! La edad máxima es de {{maxCap}} años."
+                },
+                "weight": {
+                    "min": "¡NO eres TAN ligero! El peso mínimo es {{minCap}}kg.",
+                    "max": "¡NO eres TAN pesado! El peso máximo es {{maxCap}}kg."
+                },
+                "height": {
+                    "min": "¡NO eres TAN bajo! La altura mínima es de {{minCap}}cm.",
+                    "max": "¡NO eres TAN alto! La altura máxima es de {{maxCap}}cm."
+                }
+            }
         }
     }
 }

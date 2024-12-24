@@ -340,3 +340,97 @@ export const ErrorUserData: FullProfile = {
     isNewUser: true,
     wantsNotifications: true,
 };
+
+const validatorPrefix = "errors.userData.formValidation";
+
+export const IndividualUserDataValidators = {
+    username: {
+        validator: (username: string): boolean => {
+            return username.length === 0 ||
+                (username.length >= 3 &&
+                    username.length < 40 &&
+                    !(
+                        username.toLowerCase() === "error" ||
+                        username.toLowerCase() === "error." ||
+                        username.toLowerCase().includes("pedro sánchez") ||
+                        username.toLowerCase().includes("pedro sanchez") ||
+                        username.toLowerCase().includes("psoe")
+                    ))
+                ? true
+                : false;
+        },
+        message: (username: string, t: TFunction): string => {
+            return username.length === 0
+                ? t(`${validatorPrefix}.username.required`)
+                : username.length < VALID_USER_CAPS.USERNAME.MIN ||
+                    username.length >= VALID_USER_CAPS.USERNAME.MAX
+                  ? t(`${validatorPrefix}.username.length`, {
+                        minCap: VALID_USER_CAPS.USERNAME.MIN,
+                        maxCap: VALID_USER_CAPS.USERNAME.MAX,
+                    })
+                  : VALID_USER_CAPS.USERNAME.INVALID.includes(
+                          username.toLowerCase(),
+                      )
+                    ? t(`${validatorPrefix}.username.forbidden`)
+                    : "";
+        },
+    },
+    age: {
+        validator: (age: number | ""): boolean => {
+            const { MIN, MAX } = VALID_USER_CAPS.AGE;
+
+            return age === "" || (age >= MIN && age <= MAX) ? true : false;
+        },
+        message: (age: number | "", t: TFunction): string => {
+            const { MIN, MAX } = VALID_USER_CAPS.AGE;
+
+            return age === ""
+                ? ""
+                : !(age >= MIN)
+                  ? t(`${validatorPrefix}.age.min`, { minCap: MIN })
+                  : !(age <= MAX)
+                    ? t(`${validatorPrefix}.age.max`, { maxCap: MAX })
+                    : "";
+        },
+    },
+    weight: {
+        validator: (weight: number | ""): boolean => {
+            const { MIN, MAX } = VALID_USER_CAPS.WEIGHT;
+
+            return weight === "" || (weight >= MIN && weight <= MAX)
+                ? true
+                : false;
+        },
+        message: (weight: number | "", t: TFunction): string => {
+            const { MIN, MAX } = VALID_USER_CAPS.WEIGHT;
+
+            return weight === ""
+                ? ""
+                : !(weight >= MIN)
+                  ? t(`${validatorPrefix}.weight.min`, { minCap: MIN })
+                  : !(weight <= MAX)
+                    ? t(`${validatorPrefix}.weight.max`, { maxCap: MAX })
+                    : "";
+        },
+    },
+    height: {
+        validator: (height: number | ""): boolean => {
+            const { MIN, MAX } = VALID_USER_CAPS.HEIGHT;
+
+            return height === "" || (height >= MIN && height <= MAX)
+                ? true
+                : false;
+        },
+        message: (height: number | "", t: TFunction): string => {
+            const { MIN, MAX } = VALID_USER_CAPS.HEIGHT;
+
+            return height === ""
+                ? ""
+                : !(height >= MIN)
+                  ? t(`${validatorPrefix}.height.min`, { minCap: MIN })
+                  : !(height <= MAX)
+                    ? t(`${validatorPrefix}.height.max`, { maxCap: MAX })
+                    : "";
+        },
+    },
+};
