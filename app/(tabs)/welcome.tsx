@@ -28,7 +28,7 @@ import {
 } from "react-native-timer-picker";
 import { LinearGradient } from "expo-linear-gradient";
 import { getDefaultLocale } from "@/translations/translate";
-import { VALID_USER_CAPS, ValidateUserData } from "@/toolkit/user";
+import { IndividualUserDataValidators, ValidateUserData } from "@/toolkit/user";
 import FontSizes from "@/constants/font_sizes";
 import Select, { SelectOption } from "@/components/interaction/select";
 import BetterButton from "@/components/interaction/better_button";
@@ -629,38 +629,14 @@ export default function WelcomePage() {
                             0,
                             "default",
                             40,
-                            formData.username.length === 0 ||
-                                (formData.username.length >= 3 &&
-                                    formData.username.length < 40 &&
-                                    !(
-                                        formData.username.toLowerCase() ===
-                                            "error" ||
-                                        formData.username.toLowerCase() ===
-                                            "error." ||
-                                        formData.username
-                                            .toLowerCase()
-                                            .includes("pedro sánchez") ||
-                                        formData.username
-                                            .toLowerCase()
-                                            .includes("pedro sanchez") ||
-                                        formData.username
-                                            .toLowerCase()
-                                            .includes("psoe")
-                                    ))
-                                ? true
-                                : false,
-                            formData.username.length === 0
-                                ? "Username cannot be empty."
-                                : formData.username.length <
-                                        VALID_USER_CAPS.USERNAME.MIN ||
-                                    formData.username.length >=
-                                        VALID_USER_CAPS.USERNAME.MAX
-                                  ? `Your username must be between ${VALID_USER_CAPS.USERNAME.MIN} and ${VALID_USER_CAPS.USERNAME.MAX} characters long.`
-                                  : VALID_USER_CAPS.USERNAME.INVALID.includes(
-                                          formData.username.toLowerCase(),
-                                      )
-                                    ? "The username contains forbidden terms."
-                                    : "",
+
+                            IndividualUserDataValidators.username.validator(
+                                formData.username,
+                            ),
+                            IndividualUserDataValidators.username.message(
+                                formData.username,
+                                t,
+                            ),
                         )}
                         {
                             /* LMAO */
@@ -679,8 +655,12 @@ export default function WelcomePage() {
                                     {formData.username.toLowerCase() ===
                                         "error" ||
                                     formData.username.toLowerCase() === "error."
-                                        ? `"Error" is not allowed as a username (we reserve it as a keyword for in-app error-handling).`
-                                        : "no me seas gracioso."}
+                                        ? t(
+                                              "userData.formValidation.username.forbiddenError",
+                                          )
+                                        : t(
+                                              "userData.formValidation.username.forbiddenPsoe",
+                                          )}
                                 </BetterTextSmallerText>
                             )
                         }
@@ -696,18 +676,13 @@ export default function WelcomePage() {
                             1,
                             "numeric",
                             3,
-                            formData.age === "" ||
-                                (formData.age >= VALID_USER_CAPS.AGE.MIN &&
-                                    formData.age <= VALID_USER_CAPS.AGE.MAX)
-                                ? true
-                                : false,
-                            formData.age === ""
-                                ? ""
-                                : !(formData.age >= VALID_USER_CAPS.AGE.MIN)
-                                  ? "You're NOT that young!"
-                                  : !(formData.age <= VALID_USER_CAPS.AGE.MAX)
-                                    ? "You're NOT that old!"
-                                    : "",
+                            IndividualUserDataValidators.age.validator(
+                                formData.age,
+                            ),
+                            IndividualUserDataValidators.age.message(
+                                formData.age,
+                                t,
+                            ),
                         )}
                         <GapView height={5} />
                         {spawnInputField(
@@ -720,26 +695,13 @@ export default function WelcomePage() {
                             2,
                             "numeric",
                             5,
-                            formData.weight === "" ||
-                                (formData.weight >=
-                                    VALID_USER_CAPS.WEIGHT.MIN &&
-                                    formData.weight <=
-                                        VALID_USER_CAPS.WEIGHT.MAX)
-                                ? true
-                                : false,
-                            formData.weight === ""
-                                ? ""
-                                : !(
-                                        formData.weight >=
-                                        VALID_USER_CAPS.WEIGHT.MIN
-                                    )
-                                  ? "You're NOT that light!"
-                                  : !(
-                                          formData.weight <=
-                                          VALID_USER_CAPS.WEIGHT.MAX
-                                      )
-                                    ? "You're NOT that heavy!"
-                                    : "",
+                            IndividualUserDataValidators.weight.validator(
+                                formData.weight,
+                            ),
+                            IndividualUserDataValidators.weight.message(
+                                formData.weight,
+                                t,
+                            ),
                         )}
                         <GapView height={5} />
                         {spawnInputField(
@@ -752,26 +714,13 @@ export default function WelcomePage() {
                             3,
                             "numeric",
                             5,
-                            formData.height === "" ||
-                                (formData.height >=
-                                    VALID_USER_CAPS.HEIGHT.MIN &&
-                                    formData.height <=
-                                        VALID_USER_CAPS.HEIGHT.MAX)
-                                ? true
-                                : false,
-                            formData.height === ""
-                                ? ""
-                                : !(
-                                        formData.height >=
-                                        VALID_USER_CAPS.HEIGHT.MIN
-                                    )
-                                  ? "You're NOT that light!"
-                                  : !(
-                                          formData.height <=
-                                          VALID_USER_CAPS.HEIGHT.MAX
-                                      )
-                                    ? "You're NOT that heavy!"
-                                    : "",
+                            IndividualUserDataValidators.height.validator(
+                                formData.height,
+                            ),
+                            IndividualUserDataValidators.height.message(
+                                formData.height,
+                                t,
+                            ),
                         )}
                         <GapView height={5} />
                         <BetterText

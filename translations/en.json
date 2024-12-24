@@ -566,6 +566,29 @@
     "errors": {
         "activeObjectives": {
             "invalidData": "(ERROR) This objective's data is invalid."
+        },
+        "userData": {
+            "formValidation": {
+                "username": {
+                    "required": "Username cannot be empty.",
+                    "length": "Your username must be between {{minCap}} and {{maxCap}} characters long.",
+                    "forbidden": "This username contains forbidden terms.",
+                    "forbiddenError": "\"Error\" is not allowed as a username (we reserve it as a keyword for in-app error-handling).",
+                    "forbiddenPsoe": "not funny."
+                },
+                "age": {
+                    "min": "You're NOT that young! Min age is {{minCap}}.",
+                    "max": "You're NOT that old! Max age is {{maxCap}}."
+                },
+                "weight": {
+                    "min": "You're NOT that light! Min weight is {{minCap}}kg.",
+                    "max": "You're NOT that heavy! Max weight is {{maxCap}}kg."
+                },
+                "height": {
+                    "min": "You're NOT that short! Min height is {{minCap}}cm.",
+                    "max": "You're NOT that heavy! Max height is {{maxCap}}cm."
+                }
+            }
         }
     }
 }

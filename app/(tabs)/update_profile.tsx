@@ -9,8 +9,8 @@ import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";
 import { logToConsole } from "@/toolkit/debug/console";
 import {
+    IndividualUserDataValidators,
     OrchestrateUserData,
-    VALID_USER_CAPS,
     ValidateUserData,
 } from "@/toolkit/user";
 import Loading from "@/components/static/loading";
@@ -174,34 +174,13 @@ export default function UpdateProfile() {
                 0,
                 "default",
                 40,
-                workingData!.username.length === 0 ||
-                    (workingData!.username.length >= 3 &&
-                        workingData!.username.length < 40 &&
-                        !(
-                            workingData!.username.toLowerCase() === "error" ||
-                            workingData!.username.toLowerCase() === "error." ||
-                            workingData!.username
-                                .toLowerCase()
-                                .includes("pedro sánchez") ||
-                            workingData!.username
-                                .toLowerCase()
-                                .includes("pedro sanchez") ||
-                            workingData!.username.toLowerCase().includes("psoe")
-                        ))
-                    ? true
-                    : false,
-                workingData!.username.length === 0
-                    ? "Username cannot be empty."
-                    : workingData!.username.length <
-                            VALID_USER_CAPS.USERNAME.MIN ||
-                        workingData!.username.length >=
-                            VALID_USER_CAPS.USERNAME.MAX
-                      ? `Your username must be between ${VALID_USER_CAPS.USERNAME.MIN} and ${VALID_USER_CAPS.USERNAME.MAX} characters long.`
-                      : VALID_USER_CAPS.USERNAME.INVALID.includes(
-                              workingData!.username.toLowerCase(),
-                          )
-                        ? "The username contains forbidden terms."
-                        : "",
+                IndividualUserDataValidators.username.validator(
+                    workingData!.username,
+                ),
+                IndividualUserDataValidators.username.message(
+                    workingData!.username,
+                    t,
+                ),
             )}
             {
                 /* LMAO */
@@ -217,8 +196,12 @@ export default function UpdateProfile() {
                     <BetterTextSmallerText>
                         {workingData!.username.toLowerCase() === "error" ||
                         workingData!.username.toLowerCase() === "error."
-                            ? `"Error" is not allowed as a username (we reserve it as a keyword for in-app error-handling).`
-                            : "no me seas gracioso."}
+                            ? t(
+                                  "userData.formValidation.username.forbiddenError",
+                              )
+                            : t(
+                                  "userData.formValidation.username.forbiddenPsoe",
+                              )}
                     </BetterTextSmallerText>
                 )
             }
@@ -232,15 +215,8 @@ export default function UpdateProfile() {
                 1,
                 "numeric",
                 3,
-                workingData!.age >= VALID_USER_CAPS.AGE.MIN &&
-                    workingData!.age <= VALID_USER_CAPS.AGE.MAX
-                    ? true
-                    : false,
-                !(workingData!.age >= VALID_USER_CAPS.AGE.MIN)
-                    ? "You're NOT that young!"
-                    : !(workingData!.age <= VALID_USER_CAPS.AGE.MAX)
-                      ? "You're NOT that old!"
-                      : "",
+                IndividualUserDataValidators.age.validator(workingData!.age),
+                IndividualUserDataValidators.age.message(workingData!.age, t),
             )}
             <GapView height={5} />
             {spawnInputField(
@@ -251,15 +227,13 @@ export default function UpdateProfile() {
                 2,
                 "numeric",
                 5,
-                workingData!.weight >= VALID_USER_CAPS.WEIGHT.MIN &&
-                    workingData!.weight <= VALID_USER_CAPS.WEIGHT.MAX
-                    ? true
-                    : false,
-                !(workingData!.weight >= VALID_USER_CAPS.WEIGHT.MIN)
-                    ? "You're NOT that light!"
-                    : !(workingData!.weight <= VALID_USER_CAPS.WEIGHT.MAX)
-                      ? "You're NOT that heavy!"
-                      : "",
+                IndividualUserDataValidators.weight.validator(
+                    workingData!.weight,
+                ),
+                IndividualUserDataValidators.weight.message(
+                    workingData!.weight,
+                    t,
+                ),
             )}
             <GapView height={5} />
             {spawnInputField(
@@ -270,15 +244,13 @@ export default function UpdateProfile() {
                 3,
                 "numeric",
                 5,
-                workingData!.height >= VALID_USER_CAPS.HEIGHT.MIN &&
-                    workingData!.height <= VALID_USER_CAPS.HEIGHT.MAX
-                    ? true
-                    : false,
-                !(workingData!.height >= VALID_USER_CAPS.HEIGHT.MIN)
-                    ? "You're NOT that light!"
-                    : !(workingData!.height <= VALID_USER_CAPS.HEIGHT.MAX)
-                      ? "You're NOT that heavy!"
-                      : "",
+                IndividualUserDataValidators.height.validator(
+                    workingData!.height,
+                ),
+                IndividualUserDataValidators.height.message(
+                    workingData!.height,
+                    t,
+                ),
             )}
             <GapView height={15} />
             <BetterText
