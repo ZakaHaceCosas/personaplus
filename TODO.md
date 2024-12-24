@@ -7,7 +7,7 @@ Here I'll keep track of what I want to do short-term so I don't forget about it.
 - [x] Add `createdAt` property to active objectives so `FailObjectivesNotDoneYesterday()` doesn't fail an objective you "didn't do yesterday" because it's new.
 - [x] Ensure notifications are stopped immediately after finishing today's last objective (probably by moving that to the `results.tsx` page).
 - [ ] Translating missing stuff:
-  - [ ] new user data form validation
+  - [x] new user data form validation
   - [ ] report page
 - [x] optimize dev interface by reducing the amount of stuff to load (moving them to separate pages)
 - [ ] fix the damn BMI percentiles for CL
