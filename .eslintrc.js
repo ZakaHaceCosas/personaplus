@@ -21,4 +21,5 @@ module.exports = {
             },
         ],
     },
+    ignorePatterns: ["fknode.yaml", "**/assets/*"],
 };

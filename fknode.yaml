@@ -1,7 +1,9 @@
-lintCmd: "lint";
-prettyCmd: "prettify";
-destroy: intensities: ["*"];
-targets: -".expo/";
-commitActions: true;
-commitMessage: "(chore) code quality task (automated by F*ckingNode)";
-updateCmdOverride: "dep:fix";
+lintCmd: "lint"
+prettyCmd: "prettify"
+destroy:
+    intensities: ["*"]
+    targets:
+      - ".expo/"
+commitActions: true
+commitMessage: "(chore) code quality task (automated by F*ckingNode)"
+updateCmdOverride: "dep:fix"
