@@ -1,5 +1,6 @@
 import TopBar from "@/components/navigation/top_bar";
 import Loading from "@/components/static/loading";
+import PageEnd from "@/components/static/page_end";
 import { BetterTextSmallText } from "@/components/text/better_text_presets";
 import BetterTable, { BetterTableItem } from "@/components/ui/better_table";
 import GapView from "@/components/ui/gap_view";
@@ -66,6 +67,7 @@ export default function ViewerUserData() {
                     )}
                 </>
             )}
+            <PageEnd includeText={true} size="tiny" />
         </>
     );
 }
