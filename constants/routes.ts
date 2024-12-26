@@ -1,7 +1,7 @@
 /**
  * The name of each route / path, so you don't mess up.
  */
-const ROUTES = {
+export const Routes = {
     MAIN: {
         HOME: "/",
         PROFILE: "/profile",
@@ -14,10 +14,10 @@ const ROUTES = {
     },
     DEV_INTERFACE: {
         HOME: "/developer/dev_interface",
-        LOG_VIEW: "/developer/log_view",
-        ERROR_LOG_VIEW: "/developer/log_view_error",
-        USER_DATA_VIEW: "/developer/viewer_user_data",
-        ACTIVE_OBJECTIVES_VIEW: "/developer/viewer_active_objectives",
+        VIEWER_LOGS: "/developer/log_view",
+        VIEWER_ERROR_LOGS: "/developer/log_view_error",
+        VIEWER_USER_DATA: "/developer/viewer_user_data",
+        VIEWER_ACTIVE_OBJECTIVES: "/developer/viewer_active_objectives",
         VIEWER_NOTIFICATIONS: "/developer/viewer_notifications",
         EXPERIMENTS: "/developer/dev_experiments",
     },
@@ -39,5 +39,3 @@ const ROUTES = {
         REPORT: "/report",
     },
 };
-
-export default ROUTES;

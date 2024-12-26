@@ -4,7 +4,7 @@ import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
 import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import { logToConsole } from "@/toolkit/debug/console";
 import {
     DeleteActiveObjective,
@@ -86,7 +86,7 @@ export default function Dashboard() {
                     objective: JSON.stringify(obj),
                 };
                 router.push({
-                    pathname: ROUTES.ACTIVE_OBJECTIVES.CREATE,
+                    pathname: Routes.ACTIVE_OBJECTIVES.CREATE,
                     params,
                 });
             }
@@ -167,7 +167,7 @@ export default function Dashboard() {
                     <BetterButton
                         style="GOD"
                         action={(): void =>
-                            router.push(ROUTES.ACTIVE_OBJECTIVES.CREATE)
+                            router.push(Routes.ACTIVE_OBJECTIVES.CREATE)
                         }
                         buttonText={t("activeObjectives.createObjective.text")}
                         buttonHint={t("activeObjectives.createObjective.hint")}

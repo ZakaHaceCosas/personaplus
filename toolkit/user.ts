@@ -22,7 +22,7 @@ import {
 } from "@/types/user";
 import { router } from "expo-router";
 import StoredItemNames from "@/constants/stored_item_names";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import { TFunction } from "i18next";
 
 /**
@@ -267,7 +267,7 @@ export async function updateBrm5(
                 StoredItemNames.colorTheme,
                 StoredItemNames.experiments,
             ]);
-            router.replace(ROUTES.MAIN.WELCOME_SCREEN);
+            router.replace(Routes.MAIN.WELCOME_SCREEN);
             return 0;
         } catch (e) {
             logToConsole(

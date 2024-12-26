@@ -7,7 +7,7 @@ import {
 } from "@/components/text/better_text_presets";
 import BetterAlert from "@/components/ui/better_alert";
 import GapView from "@/components/ui/gap_view";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import StoredItemNames from "@/constants/stored_item_names";
 import { logToConsole } from "@/toolkit/debug/console";
 import AsyncStorage from "expo-sqlite/kv-store";
@@ -95,7 +95,7 @@ export default function HomeScreen() {
                 buttonHint="Opens up a dedicated page for viewing all your active objectives."
                 style="ACE"
                 action={() =>
-                    router.push(ROUTES.DEV_INTERFACE.ACTIVE_OBJECTIVES_VIEW)
+                    router.push(Routes.DEV_INTERFACE.VIEWER_ACTIVE_OBJECTIVES)
                 }
             />
             <GapView height={20} />
@@ -105,7 +105,9 @@ export default function HomeScreen() {
                 buttonText="See all user data"
                 buttonHint="Opens up a dedicated page for viewing all of your data."
                 style="ACE"
-                action={() => router.push(ROUTES.DEV_INTERFACE.USER_DATA_VIEW)}
+                action={() =>
+                    router.push(Routes.DEV_INTERFACE.VIEWER_USER_DATA)
+                }
             />
             <GapView height={20} />
             <BetterTextSubHeader>Notifications</BetterTextSubHeader>
@@ -115,7 +117,7 @@ export default function HomeScreen() {
                 buttonHint="Opens up a dedicated page for viewing all of your scheduled notification reminders."
                 style="ACE"
                 action={() =>
-                    router.push(ROUTES.DEV_INTERFACE.VIEWER_NOTIFICATIONS)
+                    router.push(Routes.DEV_INTERFACE.VIEWER_NOTIFICATIONS)
                 }
             />
             <GapView height={20} />
@@ -125,14 +127,16 @@ export default function HomeScreen() {
                 buttonText="See all logs"
                 buttonHint="Opens up a dedicated page for viewing all console logs."
                 style="ACE"
-                action={() => router.push(ROUTES.DEV_INTERFACE.LOG_VIEW)}
+                action={() => router.push(Routes.DEV_INTERFACE.VIEWER_LOGS)}
             />
             <GapView height={10} />
             <BetterButton
                 buttonText="See error logs only"
                 buttonHint="Opens up a dedicated page for viewing warning and error console logs."
                 style="DEFAULT"
-                action={() => router.push(ROUTES.DEV_INTERFACE.ERROR_LOG_VIEW)}
+                action={() =>
+                    router.push(Routes.DEV_INTERFACE.VIEWER_ERROR_LOGS)
+                }
             />
             <GapView height={10} />
             <BetterTextSmallText>

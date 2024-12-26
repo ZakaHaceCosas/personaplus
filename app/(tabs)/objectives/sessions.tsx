@@ -35,7 +35,7 @@ import { ActiveObjective, SessionParams } from "@/types/active_objectives";
 import getCommonScreenSize from "@/constants/screen";
 import IslandDivision from "@/components/ui/sections/island_division";
 import GenerateRandomMessage from "@/toolkit/random_message";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import { Color } from "@/types/color";
 import { BasicUserHealthData } from "@/types/user";
 import { OrchestrateUserData } from "@/toolkit/user";
@@ -155,7 +155,7 @@ export default function Sessions() {
                     text: t("globals.interaction.giveUp"),
                     style: "destructive",
                     onPress: () => {
-                        router.replace(ROUTES.MAIN.HOME); // basically goes home without saving, easy.
+                        router.replace(Routes.MAIN.HOME); // basically goes home without saving, easy.
                     },
                 },
             ],
@@ -260,7 +260,7 @@ export default function Sessions() {
             };
 
             router.replace({
-                pathname: ROUTES.ACTIVE_OBJECTIVES.RESULTS,
+                pathname: Routes.ACTIVE_OBJECTIVES.RESULTS,
                 params: params,
             });
         } catch (e) {

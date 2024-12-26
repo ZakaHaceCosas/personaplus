@@ -8,7 +8,7 @@ import AsyncStorage from "expo-sqlite/kv-store";
 import { useTranslation } from "react-i18next";
 import { ErrorUserData, OrchestrateUserData, updateBrm5 } from "@/toolkit/user";
 import { FullProfile } from "@/types/user";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import { router } from "expo-router";
 import GapView from "@/components/ui/gap_view";
 import Section from "@/components/ui/sections/section";
@@ -75,7 +75,7 @@ export default function Settings() {
                 StoredItemNames.userData,
                 JSON.stringify(userData),
             );
-            router.replace(ROUTES.MAIN.SETTINGS.SETTINGS_PAGE);
+            router.replace(Routes.MAIN.SETTINGS.SETTINGS_PAGE);
         } catch (e) {
             logToConsole(`Error toggling notifications: ${e}`, "error");
         }
@@ -155,7 +155,7 @@ export default function Settings() {
                         )}
                         style="HMM"
                         action={() =>
-                            router.push(ROUTES.DEV_INTERFACE.EXPERIMENTS)
+                            router.push(Routes.DEV_INTERFACE.EXPERIMENTS)
                         }
                     />
                 </Division>
@@ -176,7 +176,7 @@ export default function Settings() {
                             "pages.settings.advanced.devInterface.action.hint",
                         )}
                         style="HMM"
-                        action={() => router.push(ROUTES.DEV_INTERFACE.HOME)}
+                        action={() => router.push(Routes.DEV_INTERFACE.HOME)}
                     />
                 </Division>
             </Section>

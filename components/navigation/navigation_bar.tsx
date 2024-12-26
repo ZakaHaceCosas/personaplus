@@ -10,7 +10,7 @@ import GapView from "@/components/ui/gap_view";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import { GetExperiments } from "@/toolkit/experiments";
 
 // TypeScript, supongo
@@ -147,30 +147,30 @@ export default function NavigationBar({
     return (
         <View style={styles.navBar}>
             <NavItem
-                href={ROUTES.MAIN.HOME}
+                href={Routes.MAIN.HOME}
                 iconName="home"
                 label={t("globals.navbar.home")}
                 isSelected={currentLocation === "/"}
             />
             <NavItem
-                href={ROUTES.MAIN.DASHBOARD}
+                href={Routes.MAIN.DASHBOARD}
                 iconName="dashboard"
                 label={t("globals.navbar.dashboard")}
-                isSelected={currentLocation === ROUTES.MAIN.DASHBOARD}
+                isSelected={currentLocation === Routes.MAIN.DASHBOARD}
             />
             {reportEnabled && (
                 <NavItem
-                    href={ROUTES.EXPERIMENTS.REPORT}
+                    href={Routes.EXPERIMENTS.REPORT}
                     iconName="auto-graph"
                     label={t("globals.navbar.report")}
-                    isSelected={currentLocation === ROUTES.EXPERIMENTS.REPORT}
+                    isSelected={currentLocation === Routes.EXPERIMENTS.REPORT}
                 />
             )}
             <NavItem
-                href={ROUTES.MAIN.PROFILE}
+                href={Routes.MAIN.PROFILE}
                 iconName="person"
                 label={t("globals.navbar.profile")}
-                isSelected={currentLocation === ROUTES.MAIN.PROFILE}
+                isSelected={currentLocation === Routes.MAIN.PROFILE}
             />
         </View>
     );

@@ -35,7 +35,7 @@ import BetterButton from "@/components/interaction/better_button";
 import BetterInputField from "@/components/interaction/better_input_field";
 import StoredItemNames from "@/constants/stored_item_names";
 import { formatTimeString } from "@/toolkit/time";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import GetStuffForUserDataQuestion from "@/constants/user_data";
 import URLs from "@/constants/urls";
 import { DEFAULT_EXPERIMENTS } from "@/constants/experiments";
@@ -237,7 +237,7 @@ export default function WelcomePage() {
                     JSON.stringify(DEFAULT_EXPERIMENTS),
                 );
                 await AsyncStorage.setItem(StoredItemNames.objectives, "[]");
-                router.replace(ROUTES.MAIN.HOME);
+                router.replace(Routes.MAIN.HOME);
                 logToConsole(
                     `${userData.username} was successfully registered with no errors. Give yourself a plus!`,
                     "success",
