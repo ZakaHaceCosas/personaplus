@@ -2,7 +2,6 @@
 // A hook to send reminder notifications for users to do what they have to do.
 
 import { Platform } from "react-native";
-import { isDevice } from "expo-device";
 import {
     setNotificationChannelAsync,
     getPermissionsAsync,
@@ -14,6 +13,7 @@ import {
     cancelScheduledNotificationAsync,
     SchedulableTriggerInputTypes,
     getAllScheduledNotificationsAsync,
+    NotificationRequest,
 } from "expo-notifications";
 import { logToConsole } from "@/toolkit/debug/console";
 import Constants from "expo-constants";
@@ -30,18 +30,18 @@ import { ShowToast } from "@/toolkit/android";
 async function registerForPushNotificationsAsync(
     channel: string,
 ): Promise<ExpoPushToken | undefined> {
-    let token;
+    try {
+        let token;
 
-    if (Platform.OS === "android") {
-        await setNotificationChannelAsync(channel, {
-            name: channel,
-            importance: AndroidImportance.HIGH,
-            vibrationPattern: [0, 250, 250, 250],
-            lightColor: "#FF231F7C",
-        });
-    }
+        if (Platform.OS === "android") {
+            await setNotificationChannelAsync(channel, {
+                name: channel,
+                importance: AndroidImportance.HIGH,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: "#FF231F7C",
+            });
+        }
 
-    if (isDevice) {
         const { status: existingStatus } = await getPermissionsAsync();
         let finalStatus = existingStatus;
         if (existingStatus !== "granted") {
@@ -55,11 +55,12 @@ async function registerForPushNotificationsAsync(
             );
             return;
         }
+
         // Learn more about projectId:
         // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
         // EAS projectId is used here.
         try {
-            const projectId =
+            const projectId: string =
                 Constants?.expoConfig?.extra?.eas?.projectId ??
                 Constants?.easConfig?.projectId;
             if (!projectId) {
@@ -86,9 +87,10 @@ async function registerForPushNotificationsAsync(
         } catch (e) {
             throw new Error(`Error getting Expo Push token: ${e}`);
         }
-    } else {
-        logToConsole("Must use physical device for Push Notifications", "warn");
-        return;
+    } catch (e) {
+        const err = `Error registering for push notifications: ${e}`;
+        logToConsole(err, "error");
+        throw new Error(err);
     }
 }
 
@@ -101,20 +103,21 @@ export async function handleNotificationsAsync(
     channel: string,
 ): Promise<string> {
     try {
-        const token = await registerForPushNotificationsAsync(channel);
+        const token: ExpoPushToken | undefined =
+            await registerForPushNotificationsAsync(channel);
 
         if (token && token.data) {
             return token.data;
         } else {
             throw new Error(
-                "Registering didn't throw an error, but ExpoPushToken.data (the token is null). I don't know what's up.",
+                "Registering didn't throw an error, but ExpoPushToken.data (the token) is null. I don't know what's up.",
             );
         }
     } catch (e) {
-        logToConsole(`Error with useNotification(${channel}): ${e}`, "error", {
-            function: "useNotification()",
-            location: "@/hooks/useNotification()",
-            isHandler: true,
+        logToConsole(`Error with notification handler: ${e}`, "error", {
+            function: `handleNotificationsAsync(${channel})`,
+            location: "@/hooks/use_notification()",
+            isHandler: false,
         });
         return "error";
     }
@@ -194,7 +197,8 @@ export async function cancelScheduledNotifications(
     shouldTell: boolean,
 ): Promise<boolean> {
     try {
-        const identifiers = await getAllScheduledNotificationsAsync();
+        const identifiers: NotificationRequest[] =
+            await getAllScheduledNotificationsAsync();
         if (shouldTell) {
             ShowToast(
                 t("pages.settings.preferences.notifications.flow.disabling"),
@@ -215,7 +219,7 @@ export async function cancelScheduledNotifications(
         }
         return true;
     } catch (e) {
-        logToConsole(`ERROR REGISTERING NOTIFICATIONS: ${e}`, "error");
+        logToConsole(`ERROR UNREGISTERING NOTIFICATIONS: ${e}`, "error");
         return false;
     }
 }
@@ -228,14 +232,21 @@ export async function cancelScheduledNotifications(
  * @returns {Promise<boolean>} `true` if there are notifications already scheduled for today, `false` if otherwise.
  */
 export async function areNotificationsScheduledForToday(): Promise<boolean> {
-    const notifications = await getAllScheduledNotificationsAsync(); // get notifications
+    try {
+        const notifications: NotificationRequest[] =
+            await getAllScheduledNotificationsAsync(); // get notifications
 
-    if (notifications.length > 15) {
-        logToConsole(
-            `There are ${notifications.length} registered notifications. Isn't that too much?`,
-            "warn",
-        );
+        if (notifications.length > 5) {
+            logToConsole(
+                `There are ${notifications.length} registered notifications. Isn't that too much?`,
+                "warn",
+            );
+        }
+
+        return notifications.length > 0;
+    } catch (e) {
+        const err = `Error checking for scheduled notifications: ${e}`;
+        logToConsole(err, "error");
+        throw new Error(err);
     }
-
-    return notifications.length > 0;
 }
