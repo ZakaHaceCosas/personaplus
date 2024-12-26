@@ -5,7 +5,7 @@
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
  *
- * You are in: @/app/(tabs)/(developer)/DevExperiments.tsx
+ * You are in: @/app/(tabs)/developer/DevExperiments.tsx
  * Basically: A page from where the user can enable experimental features.
  *
  * <=============================================================================>
