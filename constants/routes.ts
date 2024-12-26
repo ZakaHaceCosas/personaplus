@@ -18,6 +18,7 @@ const ROUTES = {
         ERROR_LOG_VIEW: "/log_view_error",
         USER_DATA_VIEW: "/viewer_user_data",
         ACTIVE_OBJECTIVES_VIEW: "/viewer_active_objectives",
+        VIEWER_NOTIFICATIONS: "/viewer_notifications",
         EXPERIMENTS: "/dev_experiments",
     },
     ACTIVE_OBJECTIVES: {

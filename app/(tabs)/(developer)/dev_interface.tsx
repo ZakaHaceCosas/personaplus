@@ -108,6 +108,17 @@ export default function HomeScreen() {
                 action={() => router.push(ROUTES.DEV_INTERFACE.USER_DATA_VIEW)}
             />
             <GapView height={20} />
+            <BetterTextSubHeader>Notifications</BetterTextSubHeader>
+            <GapView height={10} />
+            <BetterButton
+                buttonText="See all scheduled notifications"
+                buttonHint="Opens up a dedicated page for viewing all of your scheduled notification reminders."
+                style="ACE"
+                action={() =>
+                    router.push(ROUTES.DEV_INTERFACE.VIEWER_NOTIFICATIONS)
+                }
+            />
+            <GapView height={20} />
             <BetterTextSubHeader>Console logs</BetterTextSubHeader>
             <GapView height={10} />
             <BetterButton
