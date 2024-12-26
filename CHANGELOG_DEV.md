@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > [!NOTE]
 > For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).
 
+## Unreleased
+
+### Changed
+
+- `ROUTES` renamed to `Routes` and tweaked to match documentation.
+
 ## [0.0.6-preapp.27] - 25-12-2024
 
 Merry Christmas btw
