@@ -15,7 +15,7 @@ import Division from "@/components/ui/sections/division";
 import BetterButton from "@/components/interaction/better_button";
 import { SafelyOpenUrl } from "@/toolkit/routing";
 import URLs from "@/constants/urls";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { BetterTextNormalText } from "@/components/text/better_text_presets";
 import PageEnd from "@/components/static/page_end";
@@ -94,14 +94,14 @@ export default function About() {
                     buttonHint={t("pages.about.grid.license.hint")}
                     buttonText={t("pages.about.grid.license.text")}
                     style="GOD"
-                    action={() => router.push(ROUTES.ABOUT.LICENSE)}
+                    action={() => router.push(Routes.ABOUT.LICENSE)}
                 />
                 <GapView width={10} />
                 <BetterButton
                     buttonHint={t("pages.about.grid.credits.hint")}
                     buttonText={t("pages.about.grid.credits.text")}
                     style="GOD"
-                    action={() => router.push(ROUTES.ABOUT.CREDITS)}
+                    action={() => router.push(Routes.ABOUT.CREDITS)}
                 />
             </View>
             <GapView height={10} />

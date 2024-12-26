@@ -45,7 +45,7 @@ import {
     EditActiveObjective,
 } from "@/toolkit/objectives/active_objectives";
 import { router, useGlobalSearchParams } from "expo-router";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import { Experiments } from "@/types/user";
 import { GetExperiments } from "@/toolkit/experiments";
 import TopBar from "@/components/navigation/top_bar";
@@ -425,7 +425,7 @@ export default function CreateActiveObjectivePage() {
                         "error",
                     );
                 }
-                router.replace(ROUTES.MAIN.HOME);
+                router.replace(Routes.MAIN.HOME);
             }
         } catch (e) {
             logToConsole(

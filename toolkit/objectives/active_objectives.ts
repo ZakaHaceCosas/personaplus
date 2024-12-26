@@ -28,7 +28,7 @@ import {
 } from "@/toolkit/today";
 import type { TodaysDate } from "@/types/today";
 import StoredItemNames from "@/constants/stored_item_names";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import { router } from "expo-router";
 import { GetExperiments } from "@/toolkit/experiments";
 import CoreLibrary from "@/core/core";
@@ -532,14 +532,14 @@ async function LaunchActiveObjective(identifier: number): Promise<void> {
 
         if (obj.exercise === "Running" && track) {
             router.replace({
-                pathname: ROUTES.EXPERIMENTS.TRACKER,
+                pathname: Routes.EXPERIMENTS.TRACKER,
                 params: { id: identifier },
             });
             return;
         }
 
         router.replace({
-            pathname: ROUTES.ACTIVE_OBJECTIVES.SESSION,
+            pathname: Routes.ACTIVE_OBJECTIVES.SESSION,
             params: { id: identifier },
         });
         return;

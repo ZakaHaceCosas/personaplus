@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import { logToConsole } from "@/toolkit/debug/console";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import { URLValues } from "@/constants/urls";
 import { Linking } from "react-native";
 
@@ -11,7 +11,7 @@ export function SafelyGoBack(target?: string): void {
             router.back();
             return;
         } else {
-            router.replace(target ?? ROUTES.MAIN.HOME);
+            router.replace(target ?? Routes.MAIN.HOME);
             return;
         }
     } catch (e) {

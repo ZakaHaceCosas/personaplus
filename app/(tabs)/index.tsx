@@ -6,7 +6,7 @@ import BetterTable, { BetterTableItem } from "@/components/ui/better_table";
 import GapView from "@/components/ui/gap_view";
 import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
 import { logToConsole } from "@/toolkit/debug/console";
 import {
@@ -61,7 +61,7 @@ export default function HomeScreen() {
                 // fetch user
                 const userData: FullProfile = await OrchestrateUserData();
                 if (!ValidateUserData(userData, "Full")) {
-                    router.replace(ROUTES.MAIN.WELCOME_SCREEN);
+                    router.replace(Routes.MAIN.WELCOME_SCREEN);
                     return;
                 }
                 setUserData(userData);
@@ -125,7 +125,7 @@ export default function HomeScreen() {
                 }
             } catch (e) {
                 logToConsole(`Error fetching data: ${e}`, "error");
-                router.replace(ROUTES.MAIN.WELCOME_SCREEN);
+                router.replace(Routes.MAIN.WELCOME_SCREEN);
             } finally {
                 setIdentifiersLoaded(true);
                 setLoading(false);
@@ -194,7 +194,7 @@ export default function HomeScreen() {
                             <BetterButton
                                 style="GOD"
                                 action={(): void =>
-                                    router.push(ROUTES.ACTIVE_OBJECTIVES.CREATE)
+                                    router.push(Routes.ACTIVE_OBJECTIVES.CREATE)
                                 }
                                 buttonText={t(
                                     "activeObjectives.createObjective.text",

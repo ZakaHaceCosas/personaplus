@@ -13,7 +13,7 @@
 
 import NavigationBar from "@/components/navigation/navigation_bar";
 import Colors from "@/constants/colors";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 
 import * as Router from "expo-router";
 import React, { ReactNode, useEffect, useState } from "react";
@@ -61,15 +61,15 @@ export default function Layout() {
     }, [currentRoute]);
 
     const noNavigationRoutes: string[] = [
-        ROUTES.MAIN.WELCOME_SCREEN,
-        ROUTES.MAIN.SETTINGS.UPDATE_PROFILE,
-        ROUTES.MAIN.SETTINGS.SETTINGS_PAGE,
-        ROUTES.ACTIVE_OBJECTIVES.CREATE,
-        ROUTES.ACTIVE_OBJECTIVES.SESSION,
-        ROUTES.ACTIVE_OBJECTIVES.RESULTS,
-        ROUTES.EXPERIMENTS.TRACKER,
-        ...Object.values(ROUTES.DEV_INTERFACE),
-        ...Object.values(ROUTES.ABOUT),
+        Routes.MAIN.WELCOME_SCREEN,
+        Routes.MAIN.SETTINGS.UPDATE_PROFILE,
+        Routes.MAIN.SETTINGS.SETTINGS_PAGE,
+        Routes.ACTIVE_OBJECTIVES.CREATE,
+        Routes.ACTIVE_OBJECTIVES.SESSION,
+        Routes.ACTIVE_OBJECTIVES.RESULTS,
+        Routes.EXPERIMENTS.TRACKER,
+        ...Object.values(Routes.DEV_INTERFACE),
+        ...Object.values(Routes.ABOUT),
     ];
 
     return (

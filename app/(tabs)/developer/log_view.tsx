@@ -6,7 +6,7 @@ import {
     BetterTextSmallerText,
 } from "@/components/text/better_text_presets";
 import GapView from "@/components/ui/gap_view";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import StoredItemNames from "@/constants/stored_item_names";
 import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/console";
 import { Logs } from "@/types/logs";
@@ -46,7 +46,7 @@ export default function HomeScreen() {
     async function clearLogs() {
         try {
             await AsyncStorage.setItem(StoredItemNames.consoleLogs, "");
-            router.replace(ROUTES.DEV_INTERFACE.LOG_VIEW);
+            router.replace(Routes.DEV_INTERFACE.LOG_VIEW);
         } catch (e) {
             logToConsole(`Failed to clear logs: ${e}`, "error");
         }

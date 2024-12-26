@@ -23,7 +23,7 @@ import PageEnd from "@/components/static/page_end";
 import { BasicUserData, FullProfile } from "@/types/user";
 import StoredItemNames from "@/constants/stored_item_names";
 import { SafelyGoBack } from "@/toolkit/routing";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import GetStuffForUserDataQuestion from "@/constants/user_data";
 import getCommonScreenSize from "@/constants/screen";
 import TopBar from "@/components/navigation/top_bar";
@@ -53,7 +53,7 @@ export default function UpdateProfile() {
             try {
                 const data = await OrchestrateUserData("basic");
                 if (!data) {
-                    router.replace(ROUTES.MAIN.WELCOME_SCREEN);
+                    router.replace(Routes.MAIN.WELCOME_SCREEN);
                     throw new Error("no work data");
                 }
                 setWorkingData(data);
@@ -87,7 +87,7 @@ export default function UpdateProfile() {
                     StoredItemNames.userData,
                     JSON.stringify(newData),
                 );
-                SafelyGoBack(ROUTES.MAIN.PROFILE);
+                SafelyGoBack(Routes.MAIN.PROFILE);
             } catch (e) {
                 logToConsole(`Error creating profile: ${e}`, "error");
             }

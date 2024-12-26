@@ -4,7 +4,7 @@ import { BetterTextSmallText } from "@/components/text/better_text_presets";
 import * as Router from "expo-router";
 import { LayoutContainer } from "@/app/(tabs)/_layout";
 import GapView from "@/components/ui/gap_view";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import TopBar from "@/components/navigation/top_bar";
 import { useTranslation } from "react-i18next";
 
@@ -24,7 +24,7 @@ export default function NotFoundScreen() {
                     style="DEFAULT"
                     buttonText={t("pages.404.goHome.text")}
                     buttonHint={t("pages.404.goHome.hint")}
-                    action={() => Router.router.replace(ROUTES.MAIN.HOME)}
+                    action={() => Router.router.replace(Routes.MAIN.HOME)}
                 />
                 <GapView height={20} />
                 <BetterTextSmallText>

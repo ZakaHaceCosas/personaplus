@@ -10,7 +10,7 @@ import Section from "@/components/ui/sections/section";
 import Division from "@/components/ui/sections/division";
 import BetterText from "@/components/text/better_text";
 import BetterButton from "@/components/interaction/better_button";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import { SessionParams } from "@/types/active_objectives";
 import TopBar from "@/components/navigation/top_bar";
 import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
@@ -37,7 +37,7 @@ export default function Results() {
                 // fetch user
                 const userData: FullProfile = await OrchestrateUserData();
                 if (!ValidateUserData(userData, "Full")) {
-                    router.replace(ROUTES.MAIN.WELCOME_SCREEN);
+                    router.replace(Routes.MAIN.WELCOME_SCREEN);
                     return;
                 }
                 setUserData(userData);
@@ -99,7 +99,7 @@ export default function Results() {
             <GapView height={10} />
             <BetterButton
                 action={() => {
-                    router.replace(ROUTES.MAIN.HOME);
+                    router.replace(Routes.MAIN.HOME);
                 }}
                 style="ACE"
                 buttonText={t("globals.interaction.goAhead")}

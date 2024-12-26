@@ -6,7 +6,7 @@ import BetterButton from "@/components/interaction/better_button";
 import { ErrorUserData, OrchestrateUserData } from "@/toolkit/user";
 import { router } from "expo-router";
 import { logToConsole } from "@/toolkit/debug/console";
-import ROUTES from "@/constants/routes";
+import { Routes } from "@/constants/routes";
 import { useEffect, useState } from "react";
 import Section from "@/components/ui/sections/section";
 import Division from "@/components/ui/sections/division";
@@ -210,7 +210,7 @@ export default function HomeScreen() {
                         )}
                         style="DEFAULT"
                         action={() =>
-                            router.push(ROUTES.MAIN.SETTINGS.UPDATE_PROFILE)
+                            router.push(Routes.MAIN.SETTINGS.UPDATE_PROFILE)
                         }
                     />
                 </Division>
@@ -232,7 +232,7 @@ export default function HomeScreen() {
                         )}
                         style="ACE"
                         action={() => {
-                            router.push(ROUTES.MAIN.SETTINGS.SETTINGS_PAGE);
+                            router.push(Routes.MAIN.SETTINGS.SETTINGS_PAGE);
                         }}
                     />
                 </Division>
@@ -256,7 +256,7 @@ export default function HomeScreen() {
                         )}
                         style="DEFAULT"
                         action={() => {
-                            router.push(ROUTES.ABOUT.ABOUT_PAGE);
+                            router.push(Routes.ABOUT.ABOUT_PAGE);
                         }}
                     />
                 </Division>
