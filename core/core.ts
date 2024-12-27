@@ -4,7 +4,6 @@
 // IMPORT MODULES
 
 // PHYSICAL HEALTH
-
 import * as BodyMassIndex from "@/core/physical_health/bmi";
 import * as BodyFatPercentage from "@/core/physical_health/bfp";
 import * as IdealBodyWeight from "@/core/physical_health/ibw";
@@ -13,10 +12,10 @@ import * as MetabolicEquivalentOfTask from "@/core/physical_health/met";
 import * as OneRepMax from "@/core/physical_health/one_rep_max";
 
 // PERFORMANCE
-
 import * as RunningPerformance from "@/core/performance/running";
 import * as LiftingPerformance from "@/core/performance/lifting";
 import * as PushingUpPerformance from "@/core/performance/pushing_up";
+import * as TotalDailyEnergyExpenditure from "./physical_health/tdee";
 
 // Interface for all CoreLibraryModules
 interface CoreLibraryModule<T = unknown> {
@@ -48,6 +47,7 @@ const CoreLibrary = {
         BodyFatPercentage: CreateModule(BodyFatPercentage),
         IdealBodyWeight: CreateModule(IdealBodyWeight),
         BasalMetabolicRate: CreateModule(BasalMetabolicRate),
+        TotalDailyEnergyExpenditure: CreateModule(TotalDailyEnergyExpenditure),
         getMetabolicEquivalentOfTask: CreateModule(MetabolicEquivalentOfTask),
         OneRepetitionMax: CreateModule(OneRepMax),
     },

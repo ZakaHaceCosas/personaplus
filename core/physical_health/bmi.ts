@@ -10,7 +10,7 @@ import {
 } from "@/core/physical_health/utils/bmi_percentiles";
 
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
-    "22/12/2024",
+    "27/12/2024",
     [
         "https://www.cdc.gov/growthcharts/extended-bmi-data-files.htm",
         "https://www.cdc.gov/growthcharts/data/extended-bmi/BMI-Age-percentiles-GIRLS.pdf",
@@ -60,7 +60,6 @@ export function getPercentile(
  * @param height The height of the subject in centimeters (CM).
  * @returns A standard `CoreLibraryResponse` with the desired results.
  */
-
 export default function calculateBodyMassIndex(
     age: number,
     gender: "male" | "female",
@@ -72,33 +71,32 @@ export default function calculateBodyMassIndex(
 
     let context: string | undefined;
 
-    if (age < 0) {
+    if (age <= 0) {
         throw new Error("Invalid age provided.");
-    } else if (age < 20) {
-        const percentile = getPercentile(bmi, age, gender);
-
+    } else if (age <= 20) {
+        const percentile: number = getPercentile(bmi, age, gender);
         if (percentile <= 5) {
+            context = "severely underweight";
+        } else if (percentile >= 5 && percentile <= 10) {
             context = "underweight";
-        } else if (percentile >= 5 && percentile <= 75) {
+        } else if (percentile >= 10 && percentile < 80) {
             context = "healthy weight";
-        } else if (percentile >= 75 && percentile < 85) {
+        } else if (percentile >= 80 && percentile <= 90) {
             context = "overweight";
-        } else if (percentile >= 85 && percentile <= 95) {
-            context = "obesity";
         } else {
-            context = "severe obesity";
+            context = "obesity";
         }
     } else {
-        if (bmi < 18.5) {
+        if (bmi < 16.0) {
+            context = "severely underweight";
+        } else if (bmi >= 16.0 && bmi < 18.5) {
             context = "underweight";
-        } else if (bmi >= 18.5 && bmi <= 24.9) {
+        } else if (bmi >= 18.5 && bmi < 25.0) {
             context = "healthy weight";
-        } else if (bmi >= 25.0 && bmi <= 29.9) {
+        } else if (bmi >= 25.0 && bmi < 30.0) {
             context = "overweight";
-        } else if (bmi >= 30.0 && bmi <= 39.9) {
-            context = "obesity";
         } else {
-            context = "severe obesity";
+            context = "obesity";
         }
     }
 
