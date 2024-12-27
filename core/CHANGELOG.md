@@ -10,7 +10,7 @@
 - Now `source` was renamed to `sources` and is a `string[]`. `getSource` was renamed to `getSources` too.
 - Added the activeness factor to BMR calculation.
 - (hopefully) fixed accuracy of supported `performance/` calculations.
-- (WIP) update BMI percentiles from 2000 to 2022 data from the CDC.
+- update BMI percentiles from 2000 to 2022 data from the CDC.
 
 ## 0.1.0
 

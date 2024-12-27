@@ -10,7 +10,7 @@ Here I'll keep track of what I want to do short-term so I don't forget about it.
   - [x] new user data form validation
   - [ ] report page
 - [x] optimize dev interface by reducing the amount of stuff to load (moving them to separate pages)
-- [ ] fix the damn BMI percentiles for CL
+- [x] fix the damn BMI percentiles for CL
 
 ## Adding cool stuff
 
