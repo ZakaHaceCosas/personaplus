@@ -42,23 +42,29 @@ export default function calculateTotalDailyEnergyExpenditure(
             activeness,
         );
 
-    const bmr = bmrSource.result;
+    const bmr: number = bmrSource.result;
 
     let calc: number;
 
-    if (activeness === "poor") {
-        calc = bmr * 1.2;
-    } else if (activeness === "light") {
-        calc = bmr * 1.375;
-    } else if (activeness === "moderate") {
-        calc = bmr * 1.55;
-    } else if (activeness === "intense") {
-        calc = bmr * 1.725;
-    } else {
-        calc = bmr * 1.9;
+    switch (activeness) {
+        case "poor":
+            calc = bmr * 1.2;
+            break;
+        case "light":
+            calc = bmr * 1.375;
+            break;
+        case "moderate":
+            calc = bmr * 1.55;
+            break;
+        case "intense":
+            calc = bmr * 1.725;
+            break;
+        case "super":
+            calc = bmr * 1.9;
+            break;
     }
 
-    const context = `The recommended daily caloric ingest would be of ${calc}, taking into account the specified level of activeness is ${activeness} and the BMR is ${bmr}.`;
+    const context = `Recommended daily caloric ingest: ${calc.toPrecision(6)}cal, taking into account BMR is ${bmr.toPrecision(6)}.`;
 
     const response: CoreLibraryResponse = {
         result: calc,
