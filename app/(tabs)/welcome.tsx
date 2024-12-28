@@ -17,7 +17,6 @@ import Colors from "@/constants/colors";
 import { FullProfile, FullProfileForCreation } from "@/types/user";
 import getCommonScreenSize from "@/constants/screen";
 import {
-    BetterTextHeader,
     BetterTextSmallerText,
     BetterTextSmallText,
     BetterTextSubHeader,
@@ -620,23 +619,13 @@ export default function WelcomePage() {
                 )}
                 {currentTab === 1 && (
                     <>
-                        <BetterTextHeader>
-                            {t("pages.welcome.questions.aboutYou.ask")}
-                        </BetterTextHeader>
-                        <BetterTextSubHeader>
-                            {t("pages.welcome.questions.aboutYou.description")}{" "}
-                            <BetterText
-                                isLink={true}
-                                fontWeight="Medium"
-                                fontSize={FontSizes.LARGE}
-                                onTap={async (): Promise<void> => {
-                                    await SafelyOpenUrl(URLs.privacy);
-                                }}
-                            >
-                                {t("globals.interaction.learnMore")}
-                            </BetterText>
-                        </BetterTextSubHeader>
-                        <GapView height={5} />
+                        <TopBar
+                            header={t("pages.welcome.questions.aboutYou.ask")}
+                            subHeader={t(
+                                "pages.welcome.questions.aboutYou.description",
+                            )}
+                            includeBackButton={false}
+                        />
                         {spawnInputField(
                             t("globals.userData.username.wordShorter"),
                             t(
@@ -682,7 +671,6 @@ export default function WelcomePage() {
                                 </BetterTextSmallerText>
                             )
                         }
-
                         <GapView height={5} />
                         {spawnInputField(
                             t("globals.userData.age.word"),
@@ -759,17 +747,28 @@ export default function WelcomePage() {
                             }
                             style="GOD"
                         />
+                        <GapView height={10} />
+                        <BetterText
+                            isLink={true}
+                            fontWeight="Medium"
+                            fontSize={FontSizes.REGULAR}
+                            onTap={async (): Promise<void> => {
+                                await SafelyOpenUrl(URLs.privacy);
+                            }}
+                        >
+                            {t("globals.interaction.privacy")}
+                        </BetterText>
                     </>
                 )}
                 {currentTab === 2 && (
                     <>
-                        <BetterTextHeader>
-                            {t("pages.welcome.questions.focus.ask")}
-                        </BetterTextHeader>
-                        <BetterTextSubHeader>
-                            {t("pages.welcome.questions.focus.description")}
-                        </BetterTextSubHeader>
-                        <GapView height={10} />
+                        <TopBar
+                            header={t("pages.welcome.questions.focus.ask")}
+                            subHeader={t(
+                                "pages.welcome.questions.focus.description",
+                            )}
+                            includeBackButton={false}
+                        />
                         <Swap
                             options={focusOptions}
                             value={formData.focus}
@@ -840,15 +839,15 @@ export default function WelcomePage() {
                 )}
                 {currentTab === 5 && (
                     <>
-                        <BetterTextHeader>
-                            {t("pages.welcome.questions.theThinkHour.ask")}
-                        </BetterTextHeader>
-                        <BetterTextSubHeader>
-                            {t(
+                        <TopBar
+                            header={t(
+                                "pages.welcome.questions.theThinkHour.ask",
+                            )}
+                            subHeader={t(
                                 "pages.welcome.questions.theThinkHour.description",
                             )}
-                        </BetterTextSubHeader>
-                        <GapView height={10} />
+                            includeBackButton={false}
+                        />
                         <BetterButton
                             style="GOD"
                             buttonText={t(
