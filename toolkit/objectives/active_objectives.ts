@@ -542,6 +542,14 @@ async function LaunchActiveObjective(identifier: number): Promise<void> {
             pathname: Routes.ACTIVE_OBJECTIVES.SESSION,
             params: { id: identifier },
         });
+
+        // TODO - at some point, merge the tracker with the standard session experience
+        /*
+         router.replace({
+            pathname: Routes.ACTIVE_OBJECTIVES.SESSION,
+            params: { id: identifier, tracker: track ? "yeah" : "nah" },
+        });
+        */
         return;
     } catch (e) {
         logToConsole(`Error launching objective ${identifier}: ${e}`, "error");
