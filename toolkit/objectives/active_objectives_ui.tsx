@@ -1,6 +1,5 @@
 import { ActiveObjective } from "@/types/active_objectives";
 import React, { ReactElement, ReactNode } from "react";
-import Ionicons from "@expo/vector-icons/MaterialIcons";
 import FontSizes from "@/constants/font_sizes";
 import { BetterTextSmallText } from "@/components/text/better_text_presets";
 import { StyleSheet, View } from "react-native";
@@ -8,6 +7,7 @@ import GapView from "@/components/ui/gap_view";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";
 import { StringifyMinutes } from "../today";
+import IconView from "@/components/ui/icon_view";
 
 const styles = StyleSheet.create({
     view: {
@@ -54,75 +54,57 @@ function ObjectiveDescriptiveIcons({
         case "Lifting":
             icons = (
                 <>
-                    <Ionicons
+                    <IconView
                         name="scale"
                         size={FontSizes.REGULAR}
                         color={Colors.LABELS.SDD}
+                        text={`${obj.specificData.dumbbellWeight} kg`}
                     />
-                    <GapView width={5} />
-                    <BetterTextSmallText>
-                        {obj.specificData.dumbbellWeight} kg
-                    </BetterTextSmallText>
                     <GapView width={10} />
-                    <Ionicons
+                    <IconView
                         name="loop"
                         size={FontSizes.REGULAR}
                         color={Colors.LABELS.SDD}
+                        text={String(obj.specificData.reps)}
                     />
-                    <GapView width={5} />
-                    <BetterTextSmallText>
-                        {obj.specificData.reps}
-                    </BetterTextSmallText>
                     <GapView width={10} />
-                    <Ionicons
+                    <IconView
                         name="front-hand"
                         size={FontSizes.REGULAR}
                         color={Colors.LABELS.SDD}
+                        text={String(obj.specificData.amountOfHands)}
                     />
-                    <GapView width={5} />
-                    <BetterTextSmallText>
-                        {obj.specificData.amountOfHands}
-                    </BetterTextSmallText>
                 </>
             );
             break;
         case "Running":
             icons = (
                 <>
-                    <Ionicons
+                    <IconView
                         name="speed"
                         size={FontSizes.REGULAR}
                         color={Colors.LABELS.SDD}
+                        text={speedOptions[obj.specificData.estimateSpeed][1]}
                     />
-                    <GapView width={5} />
-                    <BetterTextSmallText>
-                        {speedOptions[obj.specificData.estimateSpeed][1]}
-                    </BetterTextSmallText>
                 </>
             );
             break;
         case "Push Ups":
             icons = (
                 <>
-                    <Ionicons
+                    <IconView
                         name="repeat"
                         size={FontSizes.REGULAR}
                         color={Colors.LABELS.SDD}
+                        text={String(obj.specificData.amountOfPushUps)}
                     />
-                    <GapView width={5} />
-                    <BetterTextSmallText>
-                        {obj.specificData.amountOfPushUps}
-                    </BetterTextSmallText>
                     <GapView width={10} />
-                    <Ionicons
+                    <IconView
                         name="front-hand"
                         size={FontSizes.REGULAR}
                         color={Colors.LABELS.SDD}
+                        text={String(obj.specificData.amountOfHands)}
                     />
-                    <GapView width={5} />
-                    <BetterTextSmallText>
-                        {obj.specificData.amountOfHands}
-                    </BetterTextSmallText>
                 </>
             );
             break;
@@ -141,15 +123,12 @@ function ObjectiveDescriptiveIcons({
 
     return (
         <View style={styles.view}>
-            <Ionicons
+            <IconView
                 name="timer"
                 size={FontSizes.REGULAR}
                 color={Colors.LABELS.SDD}
+                text={StringifyMinutes(obj.info.durationMinutes)}
             />
-            <GapView width={5} />
-            <BetterTextSmallText>
-                {StringifyMinutes(obj.info.durationMinutes)}
-            </BetterTextSmallText>
             <GapView width={10} />
             {icons}
         </View>

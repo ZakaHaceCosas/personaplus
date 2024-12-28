@@ -1,5 +1,4 @@
 import React from "react";
-import { BetterTextNormalText } from "@/components/text/better_text_presets";
 import { useTranslation } from "react-i18next";
 import type { FullProfile } from "@/types/user";
 import BetterButton from "@/components/interaction/better_button";
@@ -14,7 +13,6 @@ import Loading from "@/components/static/loading";
 import GapView from "@/components/ui/gap_view";
 import PageEnd from "@/components/static/page_end";
 import TopBar from "@/components/navigation/top_bar";
-import Ionicons from "@expo/vector-icons/MaterialIcons";
 import FontSizes from "@/constants/font_sizes";
 import { StyleSheet, View, Alert } from "react-native";
 import { version as currentVersion } from "../../package.json";
@@ -22,6 +20,8 @@ import URLs from "@/constants/urls";
 import semver from "semver";
 import { SafelyOpenUrl } from "@/toolkit/routing";
 import { ShowToast } from "@/toolkit/android";
+import IconView from "@/components/ui/icon_view";
+import Colors from "@/constants/colors";
 
 const styles = StyleSheet.create({
     iconView: {
@@ -158,47 +158,32 @@ export default function HomeScreen() {
                     gap={0}
                 >
                     <View style={styles.iconView}>
-                        <View style={styles.iconView}>
-                            <Ionicons
-                                name="face"
-                                size={FontSizes.REGULAR}
-                                color="white"
-                            />
-                            <GapView width={5} />
-                            <BetterTextNormalText>
-                                {t("pages.profile.data.age", {
-                                    age: userData.age,
-                                })}
-                            </BetterTextNormalText>
-                        </View>
+                        <IconView
+                            name="face"
+                            size={FontSizes.REGULAR}
+                            color={Colors.BASIC.WHITE}
+                            text={t("pages.profile.data.age", {
+                                age: userData.age,
+                            })}
+                        />
                         <GapView width={10} />
-                        <View style={styles.iconView}>
-                            <Ionicons
-                                name="scale"
-                                size={FontSizes.REGULAR}
-                                color="white"
-                            />
-                            <GapView width={5} />
-                            <BetterTextNormalText>
-                                {t("pages.profile.data.weight", {
-                                    weight: userData.weight,
-                                })}
-                            </BetterTextNormalText>
-                        </View>
+                        <IconView
+                            name="scale"
+                            size={FontSizes.REGULAR}
+                            color={Colors.BASIC.WHITE}
+                            text={t("pages.profile.data.weight", {
+                                weight: userData.weight,
+                            })}
+                        />
                         <GapView width={10} />
-                        <View style={styles.iconView}>
-                            <Ionicons
-                                name="height"
-                                size={FontSizes.REGULAR}
-                                color="white"
-                            />
-                            <GapView width={5} />
-                            <BetterTextNormalText>
-                                {t("pages.profile.data.height", {
-                                    height: userData.height,
-                                })}
-                            </BetterTextNormalText>
-                        </View>
+                        <IconView
+                            name="height"
+                            size={FontSizes.REGULAR}
+                            color={Colors.BASIC.WHITE}
+                            text={t("pages.profile.data.height", {
+                                height: userData.height,
+                            })}
+                        />
                     </View>
                     <GapView height={10} />
                     <BetterButton
