@@ -48,33 +48,6 @@ export function getLogsFromStorage(): Log[] {
 }
 
 /**
- * Saves a given array of Logs (`Log[]`) to the AsyncStorage.
- *
- * @param {Log[]} logs An array of logs
- * @returns {0 | 1} 0 if success, 1 if failure.
- */
-function saveLogsToStorage(logs: Log[]): 0 | 1 {
-    try {
-        AsyncStorage.setItemSync(
-            StoredItemNames.consoleLogs,
-            JSON.stringify(logs),
-        );
-        return 0;
-    } catch (e) {
-        console.error(
-            `Error accessing logs from AsyncStorage: ${e}`,
-            "\nTRACEBACK\n",
-            {
-                location: "@/toolkit/debug/console.ts",
-                function: "saveLogsToStorage()",
-                isHandler: false,
-            },
-        );
-        return 1;
-    }
-}
-
-/**
  * Securely updates logs in the AsyncStorage. ("securely" means if you used the `saveLogsToStorage()` function directly it would overwrite the file, while this one will keep the past logs).
  *
  * @param {Log} log The log to be added.
@@ -84,7 +57,10 @@ function addLogToGlobal(log: Log): 0 | 1 {
     try {
         const currentLogs: Log[] = getLogsFromStorage();
         const updatedLogs: Log[] = [...currentLogs, log];
-        saveLogsToStorage(updatedLogs);
+        AsyncStorage.setItemSync(
+            StoredItemNames.consoleLogs,
+            JSON.stringify(updatedLogs),
+        );
         return 0;
     } catch (e) {
         console.error(
