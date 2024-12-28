@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, ReactElement } from "react";
 import * as Location from "expo-location";
 import { StyleSheet, View } from "react-native";
 import {
@@ -10,6 +10,12 @@ import Ionicons from "@expo/vector-icons/MaterialIcons";
 import { logToConsole } from "@/toolkit/debug/console";
 import BetterButton from "@/components/interaction/better_button";
 import TopBar from "@/components/navigation/top_bar";
+import SessionTimer from "@/components/ui/pages/sessions/timer";
+import { ActiveObjective } from "@/types/active_objectives";
+import { useGlobalSearchParams } from "expo-router/build/hooks";
+import { UnknownOutputParams } from "expo-router";
+import { GetActiveObjective } from "@/toolkit/objectives/active_objectives";
+import Colors from "@/constants/colors";
 
 // settings for this thingy
 const SETTINGS = {
@@ -65,7 +71,25 @@ function CalculateDistanceBetweenInterval(
     return earthRadius * c;
 }
 
-export default function PersonaPlusRunningTracker() {
+export default function PersonaPlusRunningTracker(): ReactElement {
+    const params: UnknownOutputParams = useGlobalSearchParams();
+    const id: number | null =
+        params.id && typeof params.id === "string" ? Number(params.id) : null;
+    const [objective, setObjective] = useState<ActiveObjective>();
+    useEffect((): void => {
+        async function handler(): Promise<void> {
+            try {
+                if (!id) throw new Error("no id!");
+                const objective: ActiveObjective | null =
+                    await GetActiveObjective(id);
+                if (!objective) throw new Error("no objective!");
+                setObjective(objective);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+        handler();
+    }, [id]);
     const [location, setLocation] = useState({
         latitude: 0,
         longitude: 0,
@@ -78,54 +102,64 @@ export default function PersonaPlusRunningTracker() {
     // startTracking and stopTracking were for whatever reason considered "dependencies" of the useEffect below (eslint)
     // so i wrapped them into a useCallback to memo them and avoid re-renders
     // so i'm not worried about having a function as a dependency of something
-    const startTracking = useCallback(async () => {
-        // permissions
-        const { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== "granted") {
-            logToConsole("Location permission not granted", "error", {
-                location: "@/objectives/exp_tracker.tsx",
-                function: "startTracking",
-                isHandler: false,
-            });
-            return;
-        }
+    const startTracking: () => Promise<void> =
+        useCallback(async (): Promise<void> => {
+            // permissions
+            const { status } =
+                await Location.requestForegroundPermissionsAsync();
+            if (status !== "granted") {
+                logToConsole("Location permission not granted", "error", {
+                    location: "@/objectives/exp_tracker.tsx",
+                    function: "startTracking",
+                    isHandler: false,
+                });
+                return;
+            }
 
-        // watch location
-        const subscription = await Location.watchPositionAsync(
-            {
-                accuracy: Location.Accuracy.High,
-                distanceInterval: SETTINGS.DIST_INTERVAL_METERS,
-                timeInterval: SETTINGS.TIME_INTERVAL_MS,
-                mayShowUserSettingsDialog: true,
-            },
-            (position) => {
-                const { latitude, longitude } = position.coords;
+            // watch location
+            const subscription: Location.LocationSubscription =
+                await Location.watchPositionAsync(
+                    {
+                        accuracy: Location.Accuracy.High,
+                        distanceInterval: SETTINGS.DIST_INTERVAL_METERS,
+                        timeInterval: SETTINGS.TIME_INTERVAL_MS,
+                        mayShowUserSettingsDialog: true,
+                    },
+                    (position: Location.LocationObject): void => {
+                        const { latitude, longitude } = position.coords;
 
-                // calc distance
-                if (location.latitude !== 0 || location.longitude !== 0) {
-                    const dist = CalculateDistanceBetweenInterval(
-                        location.latitude,
-                        location.longitude,
-                        latitude,
-                        longitude,
-                    );
-                    // min & max are to ignore stupid values that can mess up the stats
-                    if (
-                        dist > SETTINGS.MIN_BUMP_DISTANCE &&
-                        dist < SETTINGS.MAX_BUMP_DISTANCE
-                    ) {
-                        setDistance((prevDistance) => prevDistance + dist);
-                    }
-                }
+                        // calc distance
+                        if (
+                            location.latitude !== 0 ||
+                            location.longitude !== 0
+                        ) {
+                            const dist: number =
+                                CalculateDistanceBetweenInterval(
+                                    location.latitude,
+                                    location.longitude,
+                                    latitude,
+                                    longitude,
+                                );
+                            // min & max are to ignore stupid values that can mess up the stats
+                            if (
+                                dist > SETTINGS.MIN_BUMP_DISTANCE &&
+                                dist < SETTINGS.MAX_BUMP_DISTANCE
+                            ) {
+                                setDistance(
+                                    (prevDistance: number): number =>
+                                        prevDistance + dist,
+                                );
+                            }
+                        }
 
-                // update distance
-                setLocation({ latitude, longitude });
-            },
-        );
+                        // update distance
+                        setLocation({ latitude, longitude });
+                    },
+                );
 
-        setLocationSubscription(subscription);
-    }, [location]);
-    const stopTracking = useCallback(() => {
+            setLocationSubscription(subscription);
+        }, [location]);
+    const stopTracking: () => void = useCallback((): void => {
         // Clear and delete subscription when component unmounts to save resources
         if (locationSubscription) {
             locationSubscription.remove();
@@ -133,7 +167,7 @@ export default function PersonaPlusRunningTracker() {
         }
     }, [locationSubscription]);
 
-    useEffect(() => {
+    useEffect((): (() => void) => {
         if (isTracking) {
             startTracking();
         } else {
@@ -145,6 +179,14 @@ export default function PersonaPlusRunningTracker() {
             stopTracking();
         };
     }, [isTracking, startTracking, stopTracking]);
+
+    if (!objective) {
+        return (
+            <>
+                <BetterTextNormalText>bruh</BetterTextNormalText>
+            </>
+        );
+    }
 
     return (
         <>
@@ -159,6 +201,7 @@ export default function PersonaPlusRunningTracker() {
                     Total distance: {distance.toFixed(2)} m
                 </BetterTextNormalText>
             </View>
+            <GapView height={5} />
             <View style={styles.buttonContainer}>
                 <Ionicons name="pin-drop" size={25} color="#FFF" />
                 <BetterTextNormalText>
@@ -170,7 +213,9 @@ export default function PersonaPlusRunningTracker() {
             <View style={styles.buttonContainer}>
                 <BetterButton
                     buttonText={isTracking ? "Stop tracking" : "Start tracking"}
-                    action={() => setIsTracking((prev) => !prev)}
+                    action={(): void =>
+                        setIsTracking((prev: boolean): boolean => !prev)
+                    }
                     buttonHint={
                         isTracking
                             ? "Stops tracking movement"
@@ -180,11 +225,19 @@ export default function PersonaPlusRunningTracker() {
                 />
                 <BetterButton
                     buttonText="Reset distance"
-                    action={() => setDistance(0)}
+                    action={(): void => setDistance(0)}
                     buttonHint="Restarts the total distance counter"
                     style="DEFAULT"
                 />
             </View>
+            <GapView height={10} />
+            <SessionTimer
+                objective={objective}
+                running={isTracking}
+                timerColor={Colors.PRIMARIES.ACE.ACE}
+                restingHandler={() => {}}
+                onComplete={() => {}}
+            />
             <GapView height={10} />
             <BetterTextSmallText>
                 PARAMS (this is just for app developers):{"\n\n"}
