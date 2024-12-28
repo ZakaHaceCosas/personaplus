@@ -358,7 +358,7 @@
                 },
                 "theThinkHour": {
                     "ask": "Choose the time for the 'Daily Check'",
-                    "description": "We'll send you a short questionnaire about your day at that time. We'll use your information to improve PersonaPlus.",
+                    "description": "We'll send you a questionnaire at that time and use it to improve your experience.",
                     "summon": "Tap here to choose the hour.",
                     "youChose": "You chose {{hour}}h.",
                     "TEMP_disclaimer": "Note",

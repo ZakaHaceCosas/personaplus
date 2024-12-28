@@ -358,9 +358,9 @@
                 },
                 "theThinkHour": {
                     "ask": "Elige la hora para el 'Check Diario'",
-                    "description": "Te enviaremos un breve cuestionario sobre tu día a esa hora. Usaremos tu información para mejorar PersonaPlus.",
+                    "description": "Te enviaremos un cuestionario a esa hora y lo usaremos para mejorar tu experience.",
                     "summon": "Haz clic aquí para elegir la hora.",
-                    "youChose": "Has elegido las {{hour}} horas.",
+                    "youChose": "Elegiste las {{hour}} horas.",
                     "TEMP_disclaimer": "Nota",
                     "TEMP_disclaimer2": "El Check Diario AÚN no es funcional - estamos trabajando en él. Ya te dijimos que PersonaPlus aún está en desarrollo. La hora que elijas aquí se guardará y se empezará a usar tan pronto como saquemos el Check Diario."
                 }
