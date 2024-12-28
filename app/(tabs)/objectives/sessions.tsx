@@ -319,7 +319,7 @@ export default function Sessions() {
                     {currentObjectiveDescription}
                 </BetterText>
                 <GapView height={10} />
-                <SessionsPageInfoIcons objective={objective} t={t} />
+                <SessionsPageInfoIcons objective={objective} />
             </IslandDivision>
             <GapView height={20} />
             <CountdownCircleTimer

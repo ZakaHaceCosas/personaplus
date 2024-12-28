@@ -1,21 +1,45 @@
-// InfoIcons.tsx
-// Informative icons for the session page
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/components/ui/pages/sessions/info_icons.tsx
+ * Basically: Informative icons for the session page
+ *
+ * <=============================================================================>
+ */
 
 import React, { ReactElement } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import GapView from "@/components/ui/gap_view";
 import { ActiveObjective } from "@/types/active_objectives";
-import Ionicons from "@expo/vector-icons/MaterialIcons";
-import BetterText from "@/components/text/better_text";
 import Colors from "@/constants/colors";
-import { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
+import IconView from "../../icon_view";
+
+const styles = StyleSheet.create({
+    iconContainer: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    secondIconContainer: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 10,
+    },
+});
 
 // TypeScript, supongo...
 /**
  * InfoIconsProps
  *
  * @property {ActiveObjective} objective The objective of the current session.
- * @property {TFunction} t The translate function.
  */
 interface InfoIconsProps {
     /**
@@ -24,7 +48,6 @@ interface InfoIconsProps {
      * @type {ActiveObjective}
      */
     objective: ActiveObjective;
-    t: TFunction;
 }
 
 /**
@@ -32,14 +55,13 @@ interface InfoIconsProps {
  *
  * @param {InfoIconsProps} p The properties for the InfoIcons component.
  * @param {Objective} p.objective The objective of the current session.
- * @param {1 | 2} p.row Whether to show the 1st row (generic data) or the 2nd row (exercise-specific) data.
- * @param {TFunction} p.t The translate function.
  * @returns {ReactElement} The JSX component displaying the icons.
  */
 export default function SessionsPageInfoIcons({
     objective,
-    t,
 }: InfoIconsProps): ReactElement {
+    const { t } = useTranslation();
+
     /**
      * @deprecated Only use until the tracker experiment fully rolls out.
      */
@@ -60,128 +82,89 @@ export default function SessionsPageInfoIcons({
 
     return (
         <>
-            <View
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
-                <Ionicons name="snooze" size={15} color={Colors.BASIC.WHITE} />
-                <GapView width={5} />
-                <BetterText fontWeight="Regular" fontSize={15}>
-                    {objective.info.rests === 0
-                        ? t("globals.interaction.none")
-                        : t("pages.sessions.rests", {
-                              rests: objective.info.rests,
-                              duration: objective.info.restDurationMinutes,
-                          })}
-                </BetterText>
+            <View style={styles.iconContainer}>
+                <IconView
+                    name="snooze"
+                    size={15}
+                    color={Colors.BASIC.WHITE}
+                    text={
+                        objective.info.rests === 0
+                            ? t("globals.interaction.none")
+                            : t("pages.sessions.rests", {
+                                  rests: objective.info.rests,
+                                  duration: objective.info.restDurationMinutes,
+                              })
+                    }
+                />
             </View>
-            {objective.exercise.toLowerCase() === "running" && (
-                <View
-                    style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        marginTop: 10,
-                    }}
-                >
-                    <Ionicons
+
+            <View style={styles.secondIconContainer}>
+                {objective.exercise === "Running" && (
+                    <IconView
                         name="speed"
                         size={15}
                         color={Colors.BASIC.WHITE}
+                        text={
+                            objective.specificData.estimateSpeed !==
+                                undefined &&
+                            objective.specificData.estimateSpeed >= 0 &&
+                            objective.specificData.estimateSpeed <
+                                speedOptions.length
+                                ? `${speedOptions[objective.specificData.estimateSpeed][0]} (${speedOptions[objective.specificData.estimateSpeed][1]})`
+                                : "N/A"
+                        }
                     />
-                    <GapView width={5} />
-                    <BetterText
-                        fontWeight="Regular"
-                        textColor={Colors.BASIC.WHITE}
-                        fontSize={15}
-                    >
-                        {objective.specificData.estimateSpeed !== undefined &&
-                        objective.specificData.estimateSpeed >= 0 &&
-                        objective.specificData.estimateSpeed <
-                            speedOptions.length
-                            ? `${speedOptions[objective.specificData.estimateSpeed][0]} (${speedOptions[objective.specificData.estimateSpeed][1]})`
-                            : "N/A"}
-                    </BetterText>
-                </View>
-            )}
-            {objective.exercise.toLowerCase() === "lifting" && (
-                <View
-                    style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        marginTop: 10,
-                    }}
-                >
-                    <Ionicons
+                )}
+                {objective.exercise === "Lifting" && (
+                    <IconView
                         name="keyboard-double-arrow-down"
                         size={15}
                         color={Colors.BASIC.WHITE}
+                        text={
+                            objective?.specificData?.amountOfHands !== undefined
+                                ? t("pages.sessions.hands", {
+                                      hands: objective.specificData
+                                          .amountOfHands,
+                                  })
+                                : "N/A"
+                        }
                     />
-                    <BetterText
-                        fontWeight="Regular"
-                        textColor={Colors.BASIC.WHITE}
-                        fontSize={15}
-                    >
-                        {objective?.specificData?.amountOfHands !== undefined
-                            ? t("pages.sessions.hands", {
-                                  hands: objective.specificData.amountOfHands,
-                              })
-                            : "N/A"}
-                    </BetterText>
-                </View>
-            )}
-            {objective.exercise.toLowerCase() === "push up" && (
-                <View
-                    style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        marginTop: 10,
-                    }}
-                >
-                    <Ionicons
-                        name="repeat"
-                        size={15}
-                        color={Colors.BASIC.WHITE}
-                    />
-                    <GapView width={5} />
-                    <BetterText
-                        fontWeight="Regular"
-                        textColor={Colors.BASIC.WHITE}
-                        fontSize={15}
-                    >
-                        {objective?.specificData?.amountOfPushUps !== undefined
-                            ? t("pages.sessions.pushUps", {
-                                  pushUps:
-                                      objective.specificData.amountOfPushUps,
-                              })
-                            : "N/A"}
-                    </BetterText>
-                    <GapView width={10} />
-                    <Ionicons
-                        name="front-hand"
-                        size={15}
-                        color={Colors.BASIC.WHITE}
-                    />
-                    <GapView width={5} />
-                    <BetterText
-                        fontWeight="Regular"
-                        textColor={Colors.BASIC.WHITE}
-                        fontSize={15}
-                    >
-                        {objective?.specificData?.amountOfHands !== undefined
-                            ? t("pages.sessions.hands", {
-                                  hands: objective.specificData.amountOfHands,
-                              })
-                            : "N/A"}
-                    </BetterText>
-                </View>
-            )}
+                )}
+                {objective.exercise === "Push Ups" && (
+                    <>
+                        <IconView
+                            name="repeat"
+                            size={15}
+                            color={Colors.BASIC.WHITE}
+                            text={
+                                objective?.specificData?.amountOfPushUps !==
+                                undefined
+                                    ? t("pages.sessions.pushUps", {
+                                          pushUps:
+                                              objective.specificData
+                                                  .amountOfPushUps,
+                                      })
+                                    : "N/A"
+                            }
+                        />
+                        <GapView width={10} />
+                        <IconView
+                            name="front-hand"
+                            size={15}
+                            color={Colors.BASIC.WHITE}
+                            text={
+                                objective?.specificData?.amountOfHands !==
+                                undefined
+                                    ? t("pages.sessions.hands", {
+                                          hands: objective.specificData
+                                              .amountOfHands,
+                                      })
+                                    : "N/A"
+                            }
+                        />
+                    </>
+                )}
+            </View>
         </>
     );
 }
