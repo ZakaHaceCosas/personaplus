@@ -67,7 +67,7 @@ interface FontSizesProps {
  * @type {FontSizesProps}
  */
 const FontSizes: FontSizesProps = {
-    SMALL: 12,
+    SMALL: 11,
     MEDIUM: 13,
     ALMOST_REGULAR: 14,
     REGULAR: 15,
