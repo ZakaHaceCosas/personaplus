@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+
+- `IconView` component.
+
 ### Changed
 
 - `ROUTES` renamed to `Routes` and tweaked to match documentation.
