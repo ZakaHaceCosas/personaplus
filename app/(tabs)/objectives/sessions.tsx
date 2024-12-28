@@ -11,11 +11,16 @@
  * <=============================================================================>
  */
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+    ReactElement,
+    useCallback,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
 import { View, StyleSheet, Alert } from "react-native";
 import {
     GetActiveObjective,
-    CalculateSessionFragmentsDuration,
     SaveActiveObjectiveToDailyLog,
     CalculateSessionPerformance,
 } from "@/toolkit/objectives/active_objectives";
@@ -23,7 +28,6 @@ import { router, useGlobalSearchParams } from "expo-router";
 import BetterText from "@/components/text/better_text";
 import GapView from "@/components/ui/gap_view";
 import { logToConsole } from "@/toolkit/debug/console";
-import { CountdownCircleTimer } from "rn-countdown-timer";
 import { useTranslation } from "react-i18next";
 import BetterButton from "@/components/interaction/better_button";
 import SessionsPageInfoIcons from "@/components/ui/pages/sessions/info_icons";
@@ -40,6 +44,7 @@ import { Color } from "@/types/color";
 import { BasicUserHealthData } from "@/types/user";
 import { OrchestrateUserData } from "@/toolkit/user";
 import { ShowToast } from "@/toolkit/android";
+import SessionTimer from "@/components/ui/pages/sessions/timer";
 
 const styles = StyleSheet.create({
     mainView: {
@@ -53,7 +58,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function Sessions() {
+export default function Sessions(): ReactElement {
     // Stateful values and stuff
     const { t } = useTranslation();
 
@@ -71,7 +76,9 @@ export default function Sessions() {
     const [totalTime, setTotalTime] = useState<number>(0);
     // the verbal version of the objective name (i don't know how to call it)
     // like if the exercise is "Push ups" this variable is "Pushing up" (or "Doing pushups"? i don't remember)
-    const currentObjectiveVerbalName = useMemo(() => {
+    const currentObjectiveVerbalName: string | undefined = useMemo(():
+        | string
+        | undefined => {
         if (!objective) return;
 
         const { durationMinutes } = objective.info;
@@ -87,15 +94,15 @@ export default function Sessions() {
     const [currentObjectiveDescription, setObjectiveDescription] =
         useState<string>(t("page_sessions.resting"));
 
-    useEffect(() => {
-        async function handler() {
+    useEffect((): void => {
+        async function handler(): Promise<void> {
             setUserData(await OrchestrateUserData("health"));
         }
         handler();
     }, []);
 
-    useEffect(() => {
-        async function handler() {
+    useEffect((): void => {
+        async function handler(): Promise<void> {
             try {
                 if (objectiveIdentifier === null) {
                     throw new Error("objectiveIdentifier is null.");
@@ -120,9 +127,9 @@ export default function Sessions() {
         handler();
     }, [objectiveIdentifier]);
 
-    useEffect(() => {
+    useEffect((): void => {
         if (!objective) return;
-        const result = !isUserResting
+        const result: string | undefined = !isUserResting
             ? currentObjectiveVerbalName
             : t("page_sessions.resting");
 
@@ -154,7 +161,7 @@ export default function Sessions() {
                 {
                     text: t("globals.interaction.giveUp"),
                     style: "destructive",
-                    onPress: () => {
+                    onPress: (): void => {
                         router.replace(Routes.MAIN.HOME); // basically goes home without saving, easy.
                     },
                 },
@@ -165,26 +172,27 @@ export default function Sessions() {
 
     // pauses/plays the timer
     // you can pass a specific boolean value (true = play, false = pause), or don't pass anything for it to revert (true to false / false to true)
-    const toggleTimerStatus = useCallback((target: boolean) => {
-        setTimerStatus((prev) =>
-            typeof target === "boolean" ? target : !prev,
-        );
-    }, []);
+    const toggleTimerStatus: (target: boolean) => void = useCallback(
+        (target: boolean): void => {
+            setTimerStatus(target);
+        },
+        [],
+    );
 
     // total duration of the session, including rests
-    const calculateTotalTime = useCallback(() => {
+    const calculateTotalTime: () => number = useCallback((): number => {
         if (!objective) return 0;
         const { durationMinutes, rests, restDurationMinutes } = objective.info;
         return durationMinutes + (rests ?? 0) * restDurationMinutes;
     }, [objective]);
 
-    useEffect(() => {
+    useEffect((): void => {
         setTotalTime(calculateTotalTime());
     }, [calculateTotalTime]);
 
     // handle the state changes for resting
-    const handleRestState = useCallback(
-        (isResting: boolean) => {
+    const handleRestState: (isResting: boolean) => void = useCallback(
+        (isResting: boolean): void => {
             toggleTimerStatus(!isResting); // if resting, pause; if not, play
             setIsUserResting(isResting);
         },
@@ -199,10 +207,12 @@ export default function Sessions() {
             fragmentDuration: number,
             restDuration: number,
             rests: number,
-        ) => {
+        ): void => {
             if (rests === 0) return;
-            const elapsedTime = totalDuration - timeLeft; // Elapsed time. The circle timer is supposed to call this thing each second, so it should work
-            const currentFragment = Math.floor(elapsedTime / fragmentDuration);
+            const elapsedTime: number = totalDuration - timeLeft; // Elapsed time. The circle timer is supposed to call this thing each second, so it should work
+            const currentFragment: number = Math.floor(
+                elapsedTime / fragmentDuration,
+            );
 
             /*
             i'll try to explain what's up
@@ -218,7 +228,7 @@ export default function Sessions() {
             ) {
                 handleRestState(true); // Pauses
                 setTimeout(
-                    () => handleRestState(false), // Plays, after the time has passed
+                    (): void => handleRestState(false), // Plays, after the time has passed
                     restDuration * 60 * 1000, // Convert seconds to milliseconds
                 );
             }
@@ -233,7 +243,7 @@ export default function Sessions() {
 
     // this function is basically to finish the session
     // will mark the obj as done, save it, and head to the results page
-    const FinishSession = useCallback(() => {
+    const FinishSession: () => void = useCallback((): void => {
         if (!objective || !userData) return; // i mean if we finished we can asume we already have both things, but typescript disagrees
 
         try {
@@ -322,50 +332,13 @@ export default function Sessions() {
                 <SessionsPageInfoIcons objective={objective} />
             </IslandDivision>
             <GapView height={20} />
-            <CountdownCircleTimer
-                duration={objective.info.durationMinutes * 60}
-                size={160}
-                isPlaying={isTimerRunning}
-                colors={[timerColor, timerColor]}
-                colorsTime={[15, 5]}
-                isSmoothColorTransition={true}
+            <SessionTimer
+                objective={objective}
                 onComplete={FinishSession}
-                onUpdate={(remainingTime: number): void =>
-                    handleResting(
-                        objective.info.durationMinutes * 60,
-                        remainingTime,
-                        CalculateSessionFragmentsDuration(
-                            objective.info.durationMinutes * 60,
-                            objective.info.rests,
-                        ),
-                        objective.info.restDurationMinutes,
-                        objective.info.rests ?? 0,
-                    )
-                }
-                isGrowing={true}
-                trailColor={Colors.MAIN.DIVISION}
-                strokeLinecap="round"
-                trailStrokeWidth={10}
-                strokeWidth={15}
-            >
-                {({ remainingTime }) => {
-                    const minutes = Math.floor(remainingTime / 60);
-                    const seconds = remainingTime % 60;
-
-                    return (
-                        <BetterText
-                            fontSize={30}
-                            fontWeight="Bold"
-                            textAlign="center"
-                            textColor={timerColor}
-                        >
-                            {seconds < 10
-                                ? `${minutes}:0${seconds}`
-                                : `${minutes}:${seconds}`}
-                        </BetterText>
-                    );
-                }}
-            </CountdownCircleTimer>
+                timerColor={timerColor}
+                running={isTimerRunning}
+                restingHandler={handleResting}
+            />
             <GapView height={20} />
             <IslandDivision alignment="center" direction="horizontal">
                 <BetterButton
