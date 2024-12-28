@@ -18,6 +18,8 @@ import { BetterTextSmallText } from "@/components/text/better_text_presets";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
 import GenerateRandomKey from "@/toolkit/key_generator";
 import GapView from "@/components/ui/gap_view";
+import BetterText from "../text/better_text";
+import FontSizes from "@/constants/font_sizes";
 
 const styles = StyleSheet.create({
     textInput: {
@@ -64,6 +66,8 @@ interface BetterInputFieldProps {
     };
     /** Whether the value is valid or not. */
     isValid: boolean;
+    /** A message to be shown for invalid values. */
+    validatorMessage: string;
 }
 
 /**
@@ -83,6 +87,7 @@ interface BetterInputFieldProps {
  * @param {boolean} [p.shouldRef=false] If true, `refParams` will be used. It's used to auto-advance to the next input field in a screen upon submitting.
  * @param {{ inputRefs: { current: {}; }; totalRefs: number; }} p.refParams
  * @param {boolean} p.isValid Whether the value is valid or not.
+ * @param {boolean} p.validatorMessage A message to be shown for invalid values.
  * @returns {ReactNode} Returns a Fragment with a `<BetterText>` (label), `<TextInput />`, and a `<GapView />` between them.
  */
 export default function BetterInputField({
@@ -98,6 +103,7 @@ export default function BetterInputField({
     shouldRef = false,
     refParams,
     isValid = true,
+    validatorMessage,
 }: BetterInputFieldProps): ReactNode {
     /**
      * Focuses the next `<TextInput>` when the user presses the arrow / continue / next button on mobile keyboard.
@@ -114,18 +120,60 @@ export default function BetterInputField({
         }
     }
 
-    const nextFieldIndex = refIndex + 1;
-    const returnKeyType = shouldRef
+    const nextFieldIndex: number = refIndex + 1;
+    const returnKeyType: "done" | "next" = shouldRef
         ? nextFieldIndex === refParams.totalRefs
             ? "done"
             : "next"
         : "done";
 
-    if (shouldRef)
-        return (
-            <>
-                <BetterTextSmallText>{label}</BetterTextSmallText>
-                <GapView height={5} />
+    return (
+        <>
+            <BetterTextSmallText>{label}</BetterTextSmallText>
+            <GapView height={5} />
+            {shouldRef ? (
+                <TextInput
+                    placeholder={placeholder}
+                    value={typeof value === "string" ? value : String(value)}
+                    placeholderTextColor={
+                        isValid
+                            ? Colors.MAIN.DEFAULT_ITEM.TEXT
+                            : Colors.PRIMARIES.WOR.WOR
+                    }
+                    style={[
+                        styles.textInput,
+                        isValid
+                            ? {
+                                  backgroundColor:
+                                      Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
+                                  borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
+                              }
+                            : {
+                                  backgroundColor:
+                                      Colors.PRIMARIES.WOR.WOR_STROKE,
+                                  borderColor: Colors.PRIMARIES.WOR.WOR,
+                              },
+                    ]}
+                    autoCorrect={false}
+                    multiline={false}
+                    maxLength={length}
+                    textAlign="left"
+                    keyboardType={keyboardType}
+                    // inputMode={keyboardType}
+                    key={GenerateRandomKey(name)}
+                    returnKeyType={returnKeyType}
+                    enterKeyHint={returnKeyType}
+                    onChangeText={(text: string): void => {
+                        changeAction(text);
+                    }}
+                    onSubmitEditing={(): void => focusNextField(nextFieldIndex)}
+                    readOnly={readOnly}
+                    textContentType="none"
+                    ref={(ref: TextInput | null): TextInput | null =>
+                        ref && (refParams.inputRefs.current[refIndex] = ref)
+                    }
+                />
+            ) : (
                 <TextInput
                     placeholder={placeholder}
                     value={typeof value === "string" ? value : String(value)}
@@ -163,54 +211,20 @@ export default function BetterInputField({
                     onSubmitEditing={() => focusNextField(nextFieldIndex)}
                     readOnly={readOnly}
                     textContentType="none"
-                    ref={(ref) =>
-                        ref && (refParams.inputRefs.current[refIndex] = ref)
-                    }
                 />
-            </>
-        );
-
-    return (
-        <>
-            <BetterTextSmallText>{label}</BetterTextSmallText>
-            <GapView height={5} />
-            <TextInput
-                placeholder={placeholder}
-                value={typeof value === "string" ? value : String(value)}
-                placeholderTextColor={
-                    isValid
-                        ? Colors.MAIN.DEFAULT_ITEM.TEXT
-                        : Colors.PRIMARIES.WOR.WOR
-                }
-                style={[
-                    styles.textInput,
-                    isValid
-                        ? {
-                              backgroundColor:
-                                  Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
-                              borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
-                          }
-                        : {
-                              backgroundColor: Colors.PRIMARIES.WOR.WOR_STROKE,
-                              borderColor: Colors.PRIMARIES.WOR.WOR,
-                          },
-                ]}
-                autoCorrect={false}
-                multiline={false}
-                maxLength={length}
-                textAlign="left"
-                keyboardType={keyboardType}
-                // inputMode={keyboardType}
-                key={GenerateRandomKey(name)}
-                returnKeyType={returnKeyType}
-                enterKeyHint={returnKeyType}
-                onChangeText={(text) => {
-                    changeAction(text);
-                }}
-                onSubmitEditing={() => focusNextField(nextFieldIndex)}
-                readOnly={readOnly}
-                textContentType="none"
-            />
+            )}
+            {isValid === false && (
+                <>
+                    <GapView height={5} />
+                    <BetterText
+                        fontWeight="Regular"
+                        textColor={Colors.PRIMARIES.WOR.WOR}
+                        fontSize={FontSizes.SMALL}
+                    >
+                        {validatorMessage}
+                    </BetterText>
+                </>
+            )}
         </>
     );
 }

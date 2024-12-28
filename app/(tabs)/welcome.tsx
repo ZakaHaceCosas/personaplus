@@ -314,15 +314,8 @@ export default function WelcomePage() {
                     changeAction={(text) => handleChange(name, text)}
                     shouldRef={true}
                     isValid={isValid}
+                    validatorMessage={errorMessage}
                 />
-                {isValid === false && (
-                    <>
-                        <GapView height={5} />
-                        <BetterTextSmallText>
-                            {errorMessage}
-                        </BetterTextSmallText>
-                    </>
-                )}
             </>
         );
     }
@@ -391,33 +384,43 @@ export default function WelcomePage() {
      * @returns {ReactElement}
      */
     function NavigationButtons(): ReactElement {
-        const isTheLastOne: boolean = currentTab === amountOfTabs;
-        const buttonText: string = isStepOneValid
-            ? isTheLastOne
-                ? t("globals.interaction.goAheadGood")
-                : t("globals.interaction.continue")
-            : t("globals.interaction.somethingIsWrong");
+        let buttonText: string;
         let style: "GOD" | "HMM";
         let action: () => void;
 
         switch (currentTab) {
             case 1:
+                buttonText = isStepOneValid
+                    ? t("globals.interaction.continue")
+                    : t("globals.interaction.somethingIsWrong");
                 style = isStepOneValid ? "GOD" : "HMM";
                 action = isStepOneValid ? goNext : () => {};
                 break;
             case 2:
+                buttonText = isStepTwoValid
+                    ? t("globals.interaction.continue")
+                    : t("globals.interaction.somethingIsWrong");
                 style = isStepTwoValid ? "GOD" : "HMM";
                 action = isStepTwoValid ? goNext : () => {};
                 break;
             case 3:
+                buttonText = isStepThreeValid
+                    ? t("globals.interaction.continue")
+                    : t("globals.interaction.somethingIsWrong");
                 style = isStepThreeValid ? "GOD" : "HMM";
                 action = isStepThreeValid ? goNext : () => {};
                 break;
             case 4:
+                buttonText = isStepFourValid
+                    ? t("globals.interaction.continue")
+                    : t("globals.interaction.somethingIsWrong");
                 style = isStepFourValid ? "GOD" : "HMM";
                 action = isStepFourValid ? goNext : () => {};
                 break;
             case 5:
+                buttonText = isStepFiveValid
+                    ? t("globals.interaction.goAheadGood")
+                    : t("globals.interaction.somethingIsWrong");
                 style = isStepFiveValid ? "GOD" : "HMM";
                 action = isStepFiveValid ? goNext : () => {};
                 break;
@@ -426,6 +429,7 @@ export default function WelcomePage() {
                     `Someone forgot to assign a case for tab ${currentTab}.`,
                     "warn",
                 );
+                buttonText = "Error";
                 style = "HMM";
                 action = () => {};
         }
@@ -442,7 +446,7 @@ export default function WelcomePage() {
                 <BetterButton
                     buttonText={buttonText}
                     buttonHint={
-                        isTheLastOne
+                        currentTab === 5
                             ? "Registers the user and redirects to the home page"
                             : "Goes one page forward"
                     }
