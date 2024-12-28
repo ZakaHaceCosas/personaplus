@@ -37,8 +37,6 @@ export default function ViewerUserData() {
         handler();
     }, []);
 
-    if (loading) return <Loading />;
-
     return (
         <>
             <TopBar
@@ -46,9 +44,11 @@ export default function ViewerUserData() {
                 header="Notifications"
                 subHeader="These reminders to ensure you keep up."
             />
-            {notifications &&
-            Array.isArray(notifications) &&
-            notifications.length > 0 ? (
+            {loading ? (
+                <Loading />
+            ) : notifications &&
+              Array.isArray(notifications) &&
+              notifications.length > 0 ? (
                 <>
                     {error ? (
                         <BetterTextSmallText>{error}</BetterTextSmallText>
