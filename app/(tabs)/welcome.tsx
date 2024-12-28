@@ -43,6 +43,10 @@ import { SafelyOpenUrl } from "@/toolkit/routing";
 import BetterAlert from "@/components/ui/better_alert";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
 import PageEnd from "@/components/static/page_end";
+import MultiSelect, {
+    MultiSelectOption,
+} from "@/components/interaction/multi_select";
+import TopBar from "@/components/navigation/top_bar";
 
 // We define the styles
 const styles = StyleSheet.create({
@@ -100,7 +104,8 @@ const styles = StyleSheet.create({
 export default function WelcomePage() {
     const { t } = useTranslation();
     // what "tab" of the page the user's on
-    const [currentTab, setTab] = useState(0);
+    const [currentTab, setTab] = useState<number>(0);
+    const amountOfTabs: number = 5;
     // hmm i don't know how to explain this one (but it works)
     const inputRefs = useRef<TextInput[]>([]);
 
@@ -118,6 +123,7 @@ export default function WelcomePage() {
         theThinkHour: "",
         isNewUser: true,
         wantsNotifications: true,
+        healthConditions: "none",
     });
 
     // stateful logic to validate formData
@@ -125,6 +131,7 @@ export default function WelcomePage() {
     const [isStepTwoValid, validateStepTwo] = useState<boolean>(false);
     const [isStepThreeValid, validateStepThree] = useState<boolean>(false);
     const [isStepFourValid, validateStepFour] = useState<boolean>(false);
+    const [isStepFiveValid, validateStepFive] = useState<boolean>(false);
 
     const activenessSelectOptions = GetStuffForUserDataQuestion(
         "activeness",
@@ -134,24 +141,29 @@ export default function WelcomePage() {
     ) as SelectOption[];
     const focusOptions = GetStuffForUserDataQuestion("focus") as SwapOption[];
     const genderOptions = GetStuffForUserDataQuestion("gender") as SwapOption[];
+    const healthConditionOptions = GetStuffForUserDataQuestion(
+        "healthConditions",
+    ) as MultiSelectOption[];
 
     /* for the time picker to be displayed or not */
     const [showTimePicker, toggleTimePicker] = useState<boolean>(false);
 
     // pagination
-    /** Goes to the next "page" of the Welcome screen. If there are no more pages, calls `submitUser()`.
+    /** Goes to the next "tab" of the Welcome screen. If there are no more pages, calls `submitUser()`.
      * @see submitUser()
      */
     function goNext(): void {
-        if (currentTab >= 0 && currentTab <= 3) {
-            setTab((prevPage) => prevPage + 1);
+        if (currentTab >= 0 && currentTab <= amountOfTabs - 1) {
+            setTab((prevPage: number): number => prevPage + 1);
         } else {
             submitUser();
         }
     }
-    /** Goes to the previous "page" of the Welcome screen. */
+    /** Goes to the previous "tab" of the Welcome screen. */
     function goBack(): void {
-        setTab((prevPage) => prevPage - 1);
+        if (currentTab >= 0) {
+            setTab((prevPage: number): number => prevPage - 1);
+        }
     }
 
     /**
@@ -222,6 +234,7 @@ export default function WelcomePage() {
                     theThinkHour: validData.theThinkHour,
                     isNewUser: false,
                     wantsNotifications: validData.wantsNotifications,
+                    healthConditions: validData.healthConditions,
                 };
 
                 const stringData: string = JSON.stringify(userData);
@@ -365,7 +378,8 @@ export default function WelcomePage() {
                     formData.sleepHours < 12 &&
                     formData.activeness !== null,
             );
-            validateStepFour(formData.theThinkHour !== "");
+            validateStepFour(formData.healthConditions !== null);
+            validateStepFive(formData.theThinkHour !== "");
         } catch (e) {
             logToConsole(`Error validating user data: ${e}`, "error");
         }
@@ -374,55 +388,46 @@ export default function WelcomePage() {
     /**
      * Spawns the navigation buttons - "Go back" and "Continue" / "Let's go" if it's the last page.
      *
-     * @param {(1 | 2 | 3 | 4)} step On what step / page you're placing this. Used for data validation.
-     * @param {boolean} isTheLastOne Set to true if you're placing this in the last page. When `true` the continue button says "Let's go!" or something like that instead of "Continue".
      * @returns {ReactElement}
      */
-    function spawnNavigationButtons(
-        step: 1 | 2 | 3 | 4,
-        isTheLastOne: boolean,
-    ): ReactElement {
-        let buttonText: string;
+    function NavigationButtons(): ReactElement {
+        const isTheLastOne: boolean = currentTab === amountOfTabs;
+        const buttonText: string = isStepOneValid
+            ? isTheLastOne
+                ? t("globals.interaction.goAheadGood")
+                : t("globals.interaction.continue")
+            : t("globals.interaction.somethingIsWrong");
         let style: "GOD" | "HMM";
         let action: () => void;
 
-        switch (step) {
+        switch (currentTab) {
             case 1:
-                buttonText = isStepOneValid
-                    ? isTheLastOne
-                        ? t("globals.interaction.goAheadGood")
-                        : t("globals.interaction.continue")
-                    : t("globals.interaction.somethingIsWrong");
                 style = isStepOneValid ? "GOD" : "HMM";
                 action = isStepOneValid ? goNext : () => {};
                 break;
             case 2:
-                buttonText = isStepTwoValid
-                    ? isTheLastOne
-                        ? t("globals.interaction.goAheadGood")
-                        : t("globals.interaction.continue")
-                    : t("globals.interaction.somethingIsWrong");
                 style = isStepTwoValid ? "GOD" : "HMM";
                 action = isStepTwoValid ? goNext : () => {};
                 break;
             case 3:
-                buttonText = isStepThreeValid
-                    ? isTheLastOne
-                        ? t("globals.interaction.goAheadGood")
-                        : t("globals.interaction.continue")
-                    : t("globals.interaction.somethingIsWrong");
                 style = isStepThreeValid ? "GOD" : "HMM";
                 action = isStepThreeValid ? goNext : () => {};
                 break;
             case 4:
-                buttonText = isStepFourValid
-                    ? isTheLastOne
-                        ? t("globals.interaction.goAheadGood")
-                        : t("globals.interaction.continue")
-                    : t("globals.interaction.somethingIsWrong");
                 style = isStepFourValid ? "GOD" : "HMM";
                 action = isStepFourValid ? goNext : () => {};
                 break;
+            case 5:
+                style = isStepFiveValid ? "GOD" : "HMM";
+                action = isStepFiveValid ? goNext : () => {};
+                break;
+            default:
+                logToConsole(
+                    `Someone forgot to assign a case for tab ${currentTab}.`,
+                    "warn",
+                );
+                style = "HMM";
+                action = () => {};
         }
 
         return (
@@ -453,7 +458,7 @@ export default function WelcomePage() {
      *
      * @returns {ReactElement}
      */
-    function spawnProgressBar(): ReactElement {
+    function ProgressBar(): ReactElement {
         return (
             <View style={styles.progressBar}>
                 <View
@@ -503,6 +508,18 @@ export default function WelcomePage() {
                         },
                     ]}
                 />
+                <GapView width={5} />
+                <View
+                    style={[
+                        styles.progressBarItem,
+                        {
+                            backgroundColor:
+                                currentTab >= 5
+                                    ? Colors.PRIMARIES.GOD.GOD
+                                    : Colors.MAIN.DIVISION_BORDER,
+                        },
+                    ]}
+                />
             </View>
         );
     }
@@ -512,12 +529,9 @@ export default function WelcomePage() {
 
         return (
             <View style={styles.bottomWrapperView}>
-                {spawnNavigationButtons(
-                    currentTab as 1 | 2 | 3 | 4,
-                    currentTab === 4 ? true : false,
-                )}
+                <NavigationButtons />
                 <GapView height={10} />
-                {spawnProgressBar()}
+                <ProgressBar />
                 <PageEnd size="tiny" includeText={false} />
             </View>
         );
@@ -765,21 +779,62 @@ export default function WelcomePage() {
                 )}
                 {currentTab === 3 && (
                     <>
-                        <BetterTextHeader>
-                            {t("pages.welcome.questions.aboutYouAgain.ask")}
-                        </BetterTextHeader>
-                        <BetterTextSubHeader>
-                            {t(
+                        <TopBar
+                            header={t(
+                                "pages.welcome.questions.aboutYouAgain.ask",
+                            )}
+                            subHeader={t(
                                 "pages.welcome.questions.aboutYouAgain.description",
                             )}
-                        </BetterTextSubHeader>
-                        <GapView height={10} />
+                            includeBackButton={false}
+                        />
                         {spawnInputSelect("sleepHours")}
                         <GapView height={10} />
                         {spawnInputSelect("activeness")}
                     </>
                 )}
                 {currentTab === 4 && (
+                    <>
+                        <TopBar
+                            header={t(
+                                "pages.welcome.questions.medicalConditions.ask",
+                            )}
+                            subHeader={t(
+                                "pages.welcome.questions.medicalConditions.description",
+                            )}
+                            includeBackButton={false}
+                        />
+                        <MultiSelect
+                            options={healthConditionOptions}
+                            changeAction={(
+                                values: MultiSelectOption[],
+                            ): void => {
+                                setFormData({
+                                    ...formData,
+                                    healthConditions:
+                                        values.length === 0
+                                            ? "none"
+                                            : values.map(
+                                                  (
+                                                      value: MultiSelectOption,
+                                                  ): string => value.value,
+                                              ),
+                                });
+                            }}
+                        />
+                        <GapView height={5} />
+                        {(formData.healthConditions === "none" ||
+                            !formData.healthConditions ||
+                            formData.healthConditions.length === 0) && (
+                            <BetterTextSmallerText>
+                                {t(
+                                    "pages.welcome.questions.medicalConditions.none",
+                                )}
+                            </BetterTextSmallerText>
+                        )}
+                    </>
+                )}
+                {currentTab === 5 && (
                     <>
                         <BetterTextHeader>
                             {t("pages.welcome.questions.theThinkHour.ask")}

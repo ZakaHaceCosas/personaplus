@@ -1,5 +1,11 @@
 import { CoreLibraryType_Activeness } from "@/core/types/misc_types";
 
+type MedicalConditionId =
+    | "broCantBreathe"
+    | "broCantHeartbeat"
+    | "broCantMove"
+    | "broCantEat";
+
 export interface FullProfileForCreation {
     username: string;
     age: number | "";
@@ -19,6 +25,7 @@ export interface FullProfileForCreation {
     theThinkHour: string;
     isNewUser: boolean;
     wantsNotifications: boolean;
+    healthConditions: string[] | "none" | "" | null;
 }
 
 export interface FullProfile {
@@ -34,11 +41,21 @@ export interface FullProfile {
     theThinkHour: string;
     isNewUser: boolean;
     wantsNotifications: boolean;
+    healthConditions: MedicalConditionId[] | "none";
 }
+
+/* type AllUnknown<T> = {
+    [K in keyof T]: any;
+}; */
 
 export type BasicUserData = Omit<
     FullProfile,
-    "focus" | "language" | "isNewUser" | "wantsNotifications" | "theThinkHour"
+    | "focus"
+    | "language"
+    | "isNewUser"
+    | "wantsNotifications"
+    | "theThinkHour"
+    | "healthConditions"
 >;
 export type BasicUserHealthData = Omit<
     BasicUserData,

@@ -356,6 +356,11 @@
                         "super": "Super activo (diariamente)"
                     }
                 },
+                "medicalConditions": {
+                    "ask": "¿Tienes alguna condición médica?",
+                    "description": "Si es así, dinos, por favor. Tendremos esto en cuenta para garantizar que tus recomendaciones se adaptan a tí.",
+                    "none": "¿No tienes ninguna de estas? Dale a \"Continuar\"."
+                },
                 "theThinkHour": {
                     "ask": "Elige la hora para el 'Check Diario'",
                     "description": "Te enviaremos un cuestionario a esa hora y lo usaremos para mejorar tu experience.",
