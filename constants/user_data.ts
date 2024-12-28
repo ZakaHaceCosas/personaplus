@@ -1,11 +1,12 @@
+import { MultiSelectOption } from "@/components/interaction/multi_select";
 import { SelectOption } from "@/components/interaction/select";
 import { SwapOption } from "@/components/interaction/swap";
 import { CoreLibraryType_Activeness } from "@/core/types/misc_types";
 import { useTranslation } from "react-i18next";
 
 export default function GetStuffForUserDataQuestion(
-    query: "activeness" | "sleepTime" | "focus" | "gender",
-): SelectOption[] | SwapOption[] {
+    query: "activeness" | "sleepTime" | "focus" | "gender" | "healthConditions",
+): SelectOption[] | SwapOption[] | MultiSelectOption[] {
     const { t } = useTranslation();
 
     // options
@@ -89,6 +90,24 @@ export default function GetStuffForUserDataQuestion(
             enabled: true,
         }),
     );
+    const healthConditions: MultiSelectOption[] = [
+        {
+            label: t("globals.medicalConditions.broCantBreathe"),
+            value: "broCantBreathe",
+        },
+        {
+            label: t("globals.medicalConditions.broCantHeartbeat"),
+            value: "broCantHeartbeat",
+        },
+        {
+            label: t("globals.medicalConditions.broCantMove"),
+            value: "broCantMove",
+        },
+        {
+            label: t("globals.medicalConditions.broCantEat"),
+            value: "broCantEat",
+        },
+    ];
 
     switch (query) {
         case "activeness":
@@ -99,5 +118,7 @@ export default function GetStuffForUserDataQuestion(
             return focusOptions;
         case "gender":
             return genderOptions;
+        case "healthConditions":
+            return healthConditions;
     }
 }

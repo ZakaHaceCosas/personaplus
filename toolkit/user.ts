@@ -87,6 +87,7 @@ export function ValidateUserData(
         activeness,
         isNewUser,
         wantsNotifications,
+        healthConditions,
     } = user as FullProfileForCreation;
 
     const isGenderValid: boolean = gender === "male" || gender === "female";
@@ -140,9 +141,25 @@ export function ValidateUserData(
     const areGenericBooleansValid: boolean =
         typeof isNewUser === "boolean" &&
         typeof wantsNotifications === "boolean";
+    const areMedicalConditionsValid: boolean =
+        healthConditions !== "" &&
+        healthConditions !== null &&
+        (healthConditions === "none" ||
+            healthConditions.every((condition: string): boolean =>
+                [
+                    "broCantBreathe",
+                    "broCantHeartbeat",
+                    "broCantMove",
+                    "broCantEat",
+                ].includes(condition),
+            ));
 
     const isBasicHealthDataValid: boolean =
-        isGenderValid && isAgeValid && isWeightValid && isHeightValid;
+        isGenderValid &&
+        isAgeValid &&
+        isWeightValid &&
+        isHeightValid &&
+        areMedicalConditionsValid;
     const isBasicDataValid: boolean =
         isBasicHealthDataValid && areSleepHoursValid && isActivenessValid;
     const isFullProfileValid: boolean =
@@ -213,6 +230,7 @@ export async function OrchestrateUserData(
                 theThinkHour: fullData.theThinkHour,
                 activeness: fullData.activeness,
                 sleepHours: fullData.sleepHours,
+                healthConditions: fullData.healthConditions,
             };
         }
 
@@ -224,6 +242,7 @@ export async function OrchestrateUserData(
                 gender: fullData.gender,
                 activeness: fullData.activeness,
                 sleepHours: fullData.sleepHours,
+                healthConditions: fullData.healthConditions,
             };
         }
 
@@ -339,6 +358,7 @@ export const ErrorUserData: FullProfile = {
     sleepHours: 3,
     isNewUser: true,
     wantsNotifications: true,
+    healthConditions: "none",
 };
 
 const validatorPrefix = "errors.userData.formValidation";

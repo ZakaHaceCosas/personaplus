@@ -117,6 +117,12 @@
                 "doing": "Running for {{duration}} minute",
                 "help": "To start running, ensure you have comfortable running shoes and attire. Begin with a warm-up by walking briskly for 5-10 minutes to prepare your muscles. Start running at a pace that feels comfortable, and maintain a steady breathing pattern. Focus on keeping a good posture and staying relaxed. If you're a beginner, alternate between running and walking in intervals. Gradually increase your running time as your endurance improves. Cool down by walking for a few minutes and then stretching."
             }
+        },
+        "medicalConditions": {
+            "broCantBreathe": "Breathing or Respiratory Issues",
+            "broCantHeartbeat": "Heart or Circulatory Concerns",
+            "broCantMove": "Muscle, Joint, or Movement Issues",
+            "broCantEat": "Digestive problems"
         }
     },
     "EasterEggs": {
@@ -355,6 +361,11 @@
                         "intense": "Very active (5 days or more)",
                         "super": "Super active (daily)"
                     }
+                },
+                "medicalConditions": {
+                    "ask": "Have you got any medical issue?",
+                    "description": "If so, please tell us about it. We'll keep this in mind to ensure your recommendations fit you.",
+                    "none": "Don't have any of these? Tap \"continue\"."
                 },
                 "theThinkHour": {
                     "ask": "Choose the time for the 'Daily Check'",
