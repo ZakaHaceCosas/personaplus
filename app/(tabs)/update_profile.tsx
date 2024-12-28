@@ -27,10 +27,7 @@ import { Routes } from "@/constants/routes";
 import GetStuffForUserDataQuestion from "@/constants/user_data";
 import getCommonScreenSize from "@/constants/screen";
 import TopBar from "@/components/navigation/top_bar";
-import {
-    BetterTextSmallerText,
-    BetterTextSmallText,
-} from "@/components/text/better_text_presets";
+import { BetterTextSmallerText } from "@/components/text/better_text_presets";
 
 const styles = StyleSheet.create({
     buttonWrapper: {
@@ -144,15 +141,8 @@ export default function UpdateProfile() {
                     }
                     shouldRef={true}
                     isValid={isValid}
+                    validatorMessage={errorMessage}
                 />
-                {isValid === false && (
-                    <>
-                        <GapView height={5} />
-                        <BetterTextSmallText>
-                            {errorMessage}
-                        </BetterTextSmallText>
-                    </>
-                )}
             </>
         );
     }
