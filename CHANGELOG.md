@@ -13,7 +13,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added a question in the Welcome Screen to tell the app about medical conditions of the user.
 - (Dev) A page to view scheduled notifications.
+
+### Changed
+
+- (Experiment:Report) Replace BMR with TDEE.
+
+### Fixed
+
+- (Experiment:Report) Fix the BMI traffic light.
 
 ## [0.0.6-preapp.27] - 25-12-2024
 
