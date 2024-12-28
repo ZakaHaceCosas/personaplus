@@ -25,18 +25,18 @@ import Colors from "@/constants/colors";
 /**
  * Returns a view that represents the BMI context in a traffic light-like style.
  *
- * @param {("underweight" | "healthy weight" | "overweight" | "obesity" | "severe obesity")} context The BMI context
+ * @param {("severely underweight" | "underweight" | "healthy weight" | "overweight" | "obesity")} context The BMI context
  * @returns {ReactElement}
  */
 function BMIView({
     context,
 }: {
     context:
+        | "severely underweight"
         | "underweight"
         | "healthy weight"
         | "overweight"
-        | "obesity"
-        | "severe obesity";
+        | "obesity";
 }): ReactElement {
     const styles = StyleSheet.create({
         wrapper: {
@@ -55,32 +55,32 @@ function BMIView({
     });
 
     const getColorForFragment = (index: number, totalFragments: number) => {
-        if (context === "severe obesity") {
-            return Colors.PRIMARIES.WOR.WOR; // all bad all red
-        }
-
-        if (context === "underweight") {
+        if (context === "severely underweight") {
             return index < totalFragments / 5
                 ? Colors.PRIMARIES.WOR.WOR
                 : Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
         }
 
-        if (context === "healthy weight") {
+        if (context === "underweight") {
             return index < totalFragments / 3
+                ? Colors.PRIMARIES.HMM.HMM
+                : Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
+        }
+
+        if (context === "healthy weight") {
+            return index < totalFragments / 2
                 ? Colors.PRIMARIES.GOD.GOD
                 : Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
         }
 
         if (context === "overweight") {
-            return index < totalFragments / 2
+            return index < totalFragments / 1.5
                 ? Colors.PRIMARIES.HMM.HMM
                 : Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
         }
 
         if (context === "obesity") {
-            return index < totalFragments / 1.5
-                ? Colors.PRIMARIES.HMM.HMM
-                : Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
+            return Colors.PRIMARIES.WOR.WOR; // all bad all red
         }
 
         // default background color for stuff we haven't reached
@@ -115,7 +115,6 @@ export default function Report() {
     async function handler(): Promise<void> {
         try {
             const data: FullProfile = await OrchestrateUserData();
-
             const BMISource: CoreLibraryResponse =
                 CoreLibrary.physicalHealth.BodyMassIndex.calculate(
                     data.age,
@@ -126,25 +125,25 @@ export default function Report() {
             const BMI: number = BMISource.result;
             const BMIContext: string | undefined = BMISource.context;
 
-            const BMRSource: CoreLibraryResponse =
-                CoreLibrary.physicalHealth.BasalMetabolicRate.calculate(
+            const TDEESource: CoreLibraryResponse =
+                CoreLibrary.physicalHealth.TotalDailyEnergyExpenditure.calculate(
                     data.age,
                     data.gender,
                     data.weight,
                     data.height,
                     data.activeness,
                 );
-            const BMR: number = BMRSource.result;
-            const BMRContext: string | undefined = BMRSource.context;
+            const TDEE: number = TDEESource.result;
+            const TDEEContext: string | undefined = TDEESource.context;
 
             setReport({
                 BMI: {
                     value: BMI.toPrecision(4),
                     context: BMIContext,
                 },
-                BMR: {
-                    value: BMR.toPrecision(4),
-                    context: BMRContext,
+                TDEE: {
+                    value: TDEE.toPrecision(4),
+                    context: TDEEContext,
                 },
             });
 
@@ -195,9 +194,9 @@ export default function Report() {
                             <BMIView context={report.BMI.context} />
                         </Division>
                         <Division
-                            preHeader="BMR"
-                            header={report.BMR.value}
-                            subHeader={report.BMR.context}
+                            preHeader="TDEE"
+                            header={report.TDEE.value}
+                            subHeader={report.TDEE.context}
                         />
                     </>
                 ) : (
