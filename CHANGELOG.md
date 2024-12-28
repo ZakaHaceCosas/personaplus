@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added a question in the Welcome Screen to tell the app about medical conditions of the user.
+- (Experiment:Tracker) Added the Session timer to the running tracker page.
 - (Dev) A page to view scheduled notifications.
 
 ### Changed
