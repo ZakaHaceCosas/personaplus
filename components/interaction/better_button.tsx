@@ -90,16 +90,16 @@ const styles = StyleSheet.create({
  *
  * @export
  * @param {BetterButtonProps} p
- * @param {PrimaryColorsType} p.style The color style of the button.
- * @param {string | null} p.buttonText The text of the button.
- * @param {() => void | Promise<void>} p.action A function. The action the button will perform.
+ * @param {PrimaryColorsType} [p.style="DEFAULT"] The color style of the button.
+ * @param {string} p.buttonText The text of the button.
+ * @param {() => any | Promise<any>} p.action A function. The action the button will perform.
  * @param {("normal" | "box")} [p.layout="normal"] Whether it's a normal button or a box (50x50) button.
- * @param {BetterButtonIcon} p.icon An icon, in case you wanted to use one.
  * @param {string} p.buttonHint A hint, explaining in detail what is the button supposed to do. Use it for accessibility purposes.
+ * @param {BetterButtonIcon} p.icon An icon, in case you wanted to use one.
  * @returns {ReactElement} The button.
  */
 export default function BetterButton({
-    style,
+    style = "DEFAULT",
     buttonText,
     action,
     layout = "normal",
