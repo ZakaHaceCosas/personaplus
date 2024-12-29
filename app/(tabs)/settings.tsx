@@ -64,20 +64,26 @@ export default function Settings() {
         try {
             if (!userData) throw new Error("Why is userData (still) null?");
             userData.wantsNotifications = !userData.wantsNotifications;
-            if (userData.wantsNotifications === false) {
-                await cancelScheduledNotifications(t, true);
-            } else {
-                ShowToast(
-                    t("pages.settings.preferences.notifications.flow.enabled"),
-                );
-            }
             await AsyncStorage.setItem(
                 StoredItemNames.userData,
                 JSON.stringify(userData),
             );
+            switch (userData.wantsNotifications) {
+                case false:
+                    await cancelScheduledNotifications(t, true);
+                    break;
+                case true:
+                    ShowToast(
+                        t(
+                            "pages.settings.preferences.notifications.flow.enabled",
+                        ),
+                    );
+                    break;
+            }
+            router.replace(Routes.MAIN.PROFILE);
             router.replace(Routes.MAIN.SETTINGS.SETTINGS_PAGE);
         } catch (e) {
-            logToConsole(`Error toggling notifications: ${e}`, "error");
+            console.error(`Error toggling notifications: ${e}`, "error");
         }
     }
 
@@ -131,7 +137,9 @@ export default function Settings() {
                             `pages.settings.preferences.notifications.action.${userData.wantsNotifications}Hint`,
                         )}
                         style={userData.wantsNotifications ? "DEFAULT" : "ACE"}
-                        action={changeNotifications}
+                        action={async (): Promise<void> => {
+                            await changeNotifications();
+                        }}
                     />
                 </Division>
             </Section>

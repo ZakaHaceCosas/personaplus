@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - `ROUTES` renamed to `Routes` and tweaked to match documentation.
+- Extracted Session's timer to a separate component.
+- Avoid running notification disabling when no notifications exist.
 
 ## [0.0.6-preapp.27] - 25-12-2024
 

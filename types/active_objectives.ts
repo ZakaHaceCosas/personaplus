@@ -21,7 +21,6 @@ import { ExpoRouterParams } from "./glue_fix";
  * @export
  */
 export type SupportedActiveObjectives =
-    | ""
     | "Push Ups"
     | "Lifting"
     | "Running"

@@ -23,7 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed some missing / wrong translations in the sessions page.
+- Fixed some edge cases where your performance after a session wouldn't get saved.
 - (Experiment:Report) Fix the BMI traffic light.
+- (_possibly_) Fixed "Disable notifications" button from settings working, but not reflecting the changes on screen.
 
 ## [0.0.6-preapp.27] - 25-12-2024
 

@@ -189,7 +189,7 @@ export async function scheduleRandomNotifications(
  *
  * @async
  * @param {TFunction} t Pass the translate function here, please.
- * @param {?boolean} shouldTell If true, the user is told about the change.
+ * @param {boolean} shouldTell If true, the user is told about the change.
  * @returns {boolean} True if everything went alright, false if otherwise. Should log the try-catch error to termLog.
  */
 export async function cancelScheduledNotifications(
@@ -199,6 +199,10 @@ export async function cancelScheduledNotifications(
     try {
         const identifiers: NotificationRequest[] =
             await getAllScheduledNotificationsAsync();
+        if (identifiers.length === 0) {
+            logToConsole("No notifications to disable", "log");
+            return true;
+        }
         if (shouldTell) {
             ShowToast(
                 t("pages.settings.preferences.notifications.flow.disabling"),
