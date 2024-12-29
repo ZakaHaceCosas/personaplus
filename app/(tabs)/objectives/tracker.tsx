@@ -235,7 +235,7 @@ export default function PersonaPlusRunningTracker(): ReactElement {
                 objective={objective}
                 running={isTracking}
                 timerColor={Colors.PRIMARIES.ACE.ACE}
-                restingHandler={() => {}}
+                restingStateHandler={() => {}}
                 onComplete={() => {}}
             />
             <GapView height={10} />
