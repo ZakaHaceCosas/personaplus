@@ -95,27 +95,22 @@
         "supportedActiveObjectives": {
             "Push Ups": {
                 "name": "Push ups",
-                "doing": "Doing push ups for {{duration}} minute",
+                "doing": "Doing push ups for {{duration}}",
                 "help": "To do a regular push-up, begin in a plank position with your hands slightly wider than shoulder-width apart. Lower your body by bending your elbows until your chest nearly touches the floor, then push back up to the starting position. Keep your core engaged throughout for stability. Start with a comfortable number of repetitions and gradually increase as you build strength.\n\nTo do a one handed push-up, begin in a plank position with one hand centered beneath your shoulder and the other behind your back. Lower your body by bending your elbow until your chest nearly touches the floor, then push back up. Keep your core tight and maintain balance throughout the movement. Start with a few reps on each side and progress as your strength improves."
             },
             "Lifting": {
                 "name": "Lifting",
-                "doing": "Lifting for {{duration}} minute",
+                "doing": "Lifting for {{duration}}",
                 "help": "Distribute evenly the weights between both hands. For example, if your objective is to lift 6kg, put 3kg to each weight (as you'll lift two weights, one for each hand).\n\nWithout dropping it, extend your arm vertically, and start moving it up and down, making your elbow go from a 90º angle to a 45º angle and then again to a 90º one (that would count as one lift).\n\nKeep going until you do all the lifts specified (or the timer runs out)!"
             },
             "Walking": {
                 "name": "Walking",
-                "doing": "Walking for {{duration}} minute",
+                "doing": "Walking for {{duration}}",
                 "help": "Wear comfortable shoes and clothing suitable for the weather. Begin by walking at a natural pace, allowing your arms to swing naturally at your sides. Focus on maintaining a good posture, with your back straight and your head up. You can vary your speed, incorporating brisk walking intervals to increase your heart rate. Walking can be done almost anywhere, so choose a route you enjoy. Aim for at least 30 minutes of walking per session, and gradually increase your duration and intensity as you build stamina."
-            },
-            "Biking": {
-                "name": "Biking",
-                "doing": "Biking for {{duration}} minute",
-                "help": "to do."
             },
             "Running": {
                 "name": "Running",
-                "doing": "Running for {{duration}} minute",
+                "doing": "Running for {{duration}}",
                 "help": "To start running, ensure you have comfortable running shoes and attire. Begin with a warm-up by walking briskly for 5-10 minutes to prepare your muscles. Start running at a pace that feels comfortable, and maintain a steady breathing pattern. Focus on keeping a good posture and staying relaxed. If you're a beginner, alternate between running and walking in intervals. Gradually increase your running time as your endurance improves. Cool down by walking for a few minutes and then stretching."
             }
         },
@@ -464,6 +459,7 @@
                 "pauseHint": "Pause the timer.",
                 "playHint": "Resume the timer."
             },
+            "resting": "Resting ;)",
             "helpHint": "Opens a menu with basic help on what you should be doing right now.",
             "helpTimerPaused": "Psst... Don't worry, we'e stopped the timer so you can read.",
             "giveUpHint": "Leaves the current session without saving your progress.",

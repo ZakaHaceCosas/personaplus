@@ -11,13 +11,7 @@
  * <=============================================================================>
  */
 
-import React, {
-    ReactElement,
-    useCallback,
-    useEffect,
-    useMemo,
-    useState,
-} from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import { View, StyleSheet, Alert } from "react-native";
 import {
     GetActiveObjective,
@@ -45,6 +39,8 @@ import { BasicUserHealthData } from "@/types/user";
 import { OrchestrateUserData } from "@/toolkit/user";
 import { ShowToast } from "@/toolkit/android";
 import SessionTimer from "@/components/ui/pages/sessions/timer";
+import { StringifyMinutes } from "@/toolkit/today";
+import { CoreLibraryResponse } from "@/core/types/core_library_response";
 
 const styles = StyleSheet.create({
     mainView: {
@@ -74,25 +70,24 @@ export default function Sessions(): ReactElement {
     const [isUserCheckingHelp, setIsUserCheckingHelp] = useState(false);
     const [isUserResting, setIsUserResting] = useState(false);
     const [totalTime, setTotalTime] = useState<number>(0);
+
     // the verbal version of the objective name (i don't know how to call it)
     // like if the exercise is "Push ups" this variable is "Pushing up" (or "Doing pushups"? i don't remember)
-    const currentObjectiveVerbalName: string | undefined = useMemo(():
-        | string
-        | undefined => {
+    const [currentObjectiveVerbalName, setObjectiveVerbalName] =
+        useState<string>(t("pages.sessions.resting"));
+
+    useEffect((): void => {
         if (!objective) return;
-
         const { durationMinutes } = objective.info;
-
-        return objective?.exercise
-            ? `${t(
+        const result: string = !isUserResting
+            ? t(
                   `globals.supportedActiveObjectives.${objective.exercise}.doing`,
-                  { duration: durationMinutes },
-              )}${durationMinutes > 1 ? "s" : ""}`
-            : "Doing something";
-    }, [objective, t]);
+                  { duration: StringifyMinutes(durationMinutes) },
+              )
+            : t("pages.sessions.resting");
 
-    const [currentObjectiveDescription, setObjectiveDescription] =
-        useState<string>(t("page_sessions.resting"));
+        setObjectiveVerbalName(result);
+    }, [isUserResting, objective, t]);
 
     useEffect((): void => {
         async function handler(): Promise<void> {
@@ -126,21 +121,6 @@ export default function Sessions(): ReactElement {
         }
         handler();
     }, [objectiveIdentifier]);
-
-    useEffect((): void => {
-        if (!objective) return;
-        const result: string | undefined = !isUserResting
-            ? currentObjectiveVerbalName
-            : t("page_sessions.resting");
-
-        setObjectiveDescription(result!);
-    }, [
-        currentObjectiveVerbalName,
-        isUserResting,
-        objective,
-        objective?.info.durationMinutes,
-        t,
-    ]);
 
     // the color of the timer
     const timerColor: Color = isTimerRunning
@@ -199,43 +179,6 @@ export default function Sessions(): ReactElement {
         [toggleTimerStatus],
     );
 
-    // this handles pausing the timer for resting
-    const handleResting = useCallback(
-        (
-            totalDuration: number,
-            timeLeft: number,
-            fragmentDuration: number,
-            restDuration: number,
-            rests: number,
-        ): void => {
-            if (rests === 0) return;
-            const elapsedTime: number = totalDuration - timeLeft; // Elapsed time. The circle timer is supposed to call this thing each second, so it should work
-            const currentFragment: number = Math.floor(
-                elapsedTime / fragmentDuration,
-            );
-
-            /*
-            i'll try to explain what's up
-            sessions get divided in equally lasting "fragments", one division per rest
-            1 session (60 seconds) + 1 rest = 1 division = 2 fragments (30 seconds)
-            alright?
-            */
-
-            if (
-                elapsedTime > 0 &&
-                elapsedTime % fragmentDuration === 0 &&
-                currentFragment <= rests
-            ) {
-                handleRestState(true); // Pauses
-                setTimeout(
-                    (): void => handleRestState(false), // Plays, after the time has passed
-                    restDuration * 60 * 1000, // Convert seconds to milliseconds
-                );
-            }
-        },
-        [handleRestState],
-    );
-
     function toggleHelpMenu(status: boolean): void {
         setIsUserCheckingHelp(status);
         toggleTimerStatus(!status); // Pause if checking help, play otherwise
@@ -244,58 +187,45 @@ export default function Sessions(): ReactElement {
     // this function is basically to finish the session
     // will mark the obj as done, save it, and head to the results page
     const FinishSession: () => void = useCallback((): void => {
-        if (!objective || !userData) return; // i mean if we finished we can asume we already have both things, but typescript disagrees
+        async function handle(): Promise<void> {
+            try {
+                if (!objective || !userData) return; // i mean if we finished we can asume we already have both things, but typescript disagrees
 
-        try {
-            ShowToast(GenerateRandomMessage("sessionCompleted", t));
+                ShowToast(GenerateRandomMessage("sessionCompleted", t));
 
-            const response = CalculateSessionPerformance(
-                objective,
-                userData,
-                totalTime,
-            );
-            if (!response) throw new Error("Response is null or undefined");
+                const response: CoreLibraryResponse =
+                    CalculateSessionPerformance(objective, userData, totalTime);
+                if (!response) throw new Error("Response is null or undefined");
 
-            SaveActiveObjectiveToDailyLog(
-                objectiveIdentifier,
-                true,
-                objective,
-                response,
-            );
+                await SaveActiveObjectiveToDailyLog(
+                    objectiveIdentifier,
+                    true,
+                    objective,
+                    response,
+                );
 
-            const params: SessionParams = {
-                burntCalories: response.result,
-                elapsedTime: totalTime ?? 0,
-                id: objective.identifier,
-            };
+                const params: SessionParams = {
+                    burntCalories: response.result,
+                    elapsedTime: totalTime ?? 0,
+                    id: objective.identifier,
+                };
 
-            router.replace({
-                pathname: Routes.ACTIVE_OBJECTIVES.RESULTS,
-                params: params,
-            });
-        } catch (e) {
-            logToConsole(
-                `Error parsing active objectives for update: ${e}`,
-                "error",
-            );
+                router.replace({
+                    pathname: Routes.ACTIVE_OBJECTIVES.RESULTS,
+                    params: params,
+                });
+            } catch (e) {
+                logToConsole(
+                    `Error finishing session for ${objective ? objective.identifier : "(UNKNOWN OBJECTIVE)"}: ${e}`,
+                    "error",
+                );
+            }
         }
+        handle();
     }, [objective, userData, totalTime, t, objectiveIdentifier]);
 
     if (loading || !objective) {
         return <Loading />;
-    }
-
-    if (!loading && !objective) {
-        return (
-            <View>
-                <BetterText fontSize={20} fontWeight="Regular">
-                    Error
-                </BetterText>
-                <BetterText fontSize={10} fontWeight="Regular">
-                    {t("globals.react_error_check")}
-                </BetterText>
-            </View>
-        );
     }
 
     return (
@@ -326,7 +256,7 @@ export default function Sessions(): ReactElement {
                 </BetterText>
                 <GapView height={10} />
                 <BetterText fontWeight="Bold" fontSize={25} textAlign="center">
-                    {currentObjectiveDescription}
+                    {currentObjectiveVerbalName}
                 </BetterText>
                 <GapView height={10} />
                 <SessionsPageInfoIcons objective={objective} />
@@ -337,7 +267,7 @@ export default function Sessions(): ReactElement {
                 onComplete={FinishSession}
                 timerColor={timerColor}
                 running={isTimerRunning}
-                restingHandler={handleResting}
+                restingStateHandler={handleRestState}
             />
             <GapView height={20} />
             <IslandDivision alignment="center" direction="horizontal">
