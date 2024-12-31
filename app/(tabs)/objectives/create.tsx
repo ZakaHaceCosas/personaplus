@@ -11,24 +11,24 @@
  * <=============================================================================>
  */
 
-import React, { useEffect, useState } from "react";
-import { View, Pressable, StyleSheet, TextInput } from "react-native";
+import React, { ReactElement, useEffect, useState } from "react";
+import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import {
     BetterTextNormalText,
+    BetterTextSmallerText,
     BetterTextSmallHeader,
     BetterTextSmallText,
-    BetterTextSmallerText,
 } from "@/components/text/better_text_presets";
 import GapView from "@/components/ui/gap_view";
 import { useTranslation } from "react-i18next";
 import {
     ActiveObjectiveWithoutId,
-    SupportedActiveObjectivesList,
-    SupportedActiveObjectives,
-    WeekTuple,
-    ValidateActiveObjective,
-    RealEditObjectiveParams,
     EditObjectiveParams,
+    RealEditObjectiveParams,
+    SupportedActiveObjectives,
+    SupportedActiveObjectivesList,
+    ValidateActiveObjective,
+    WeekTuple,
 } from "@/types/active_objectives";
 import GenerateRandomMessage from "@/toolkit/random_message";
 import BetterText from "@/components/text/better_text";
@@ -44,7 +44,11 @@ import {
     CreateActiveObjective,
     EditActiveObjective,
 } from "@/toolkit/objectives/active_objectives";
-import { router, useGlobalSearchParams } from "expo-router";
+import {
+    router,
+    UnknownOutputParams,
+    useGlobalSearchParams,
+} from "expo-router";
 import { Routes } from "@/constants/routes";
 import { Experiments } from "@/types/user";
 import { GetExperiments } from "@/toolkit/experiments";
@@ -90,9 +94,9 @@ const styles = StyleSheet.create({
 });
 
 // We create the function
-export default function CreateActiveObjectivePage() {
+export default function CreateActiveObjectivePage(): ReactElement {
     const { t } = useTranslation();
-    const params = useGlobalSearchParams();
+    const params: UnknownOutputParams = useGlobalSearchParams();
 
     // objective and stuff
     const exerciseOptions: SelectOption[] = SupportedActiveObjectivesList.map(
@@ -132,7 +136,7 @@ export default function CreateActiveObjectivePage() {
         id: undefined,
     });
 
-    useEffect(() => {
+    useEffect((): void => {
         const typedParams: EditObjectiveParams = params as EditObjectiveParams;
         const realParams: RealEditObjectiveParams = {
             edit: typedParams.edit === "true" ? true : false,
@@ -178,8 +182,8 @@ export default function CreateActiveObjectivePage() {
 
     // experiments
     const [experiments, setExperiments] = useState<Experiments>();
-    useEffect(() => {
-        async function handle() {
+    useEffect((): void => {
+        async function handle(): Promise<void> {
             setExperiments(await GetExperiments());
         }
         handle();
@@ -189,76 +193,81 @@ export default function CreateActiveObjectivePage() {
         operation: "increase" | "decrease",
         value: Value,
     ): void {
-        updateObjectiveToCreate((prev: ActiveObjectiveWithoutId) => {
-            const delta = operation === "increase" ? 1 : -1;
-            let { durationMinutes, rests, restDurationMinutes } = prev.info;
-            let {
-                reps,
-                amountOfHands,
-                estimateSpeed,
-                dumbbellWeight,
-                amountOfPushUps,
-            } = prev.specificData;
-
-            function op(num: number): number {
-                return Math.max(parseFloat(String(num)) + delta, 0);
-            }
-
-            switch (value) {
-                case "durationMinutes":
-                    durationMinutes = op(durationMinutes);
-                    break;
-                case "rests":
-                    rests = op(rests);
-                    /* restDurationMinutes =
-                        rests === 0 ? 0 : restDurationMinutes || 1; */
-                    break;
-                case "restDurationMinutes":
-                    restDurationMinutes = op(restDurationMinutes);
-                    break;
-                case "amountOfPushUps":
-                    amountOfPushUps = op(amountOfPushUps);
-                    break;
-                case "dumbbellWeight":
-                    dumbbellWeight = op(dumbbellWeight);
-                    break;
-                case "estimateSpeed":
-                    const result = op(estimateSpeed);
-                    if (result >= speedOptions.length) {
-                        estimateSpeed = estimateSpeed; // don't do the operation
-                        break;
-                    }
-                    estimateSpeed = result;
-                    break;
-                case "reps":
-                    reps = op(reps);
-                    break;
-                case "amountOfHands":
-                    if (operation === "increase" && amountOfHands < 2) {
-                        amountOfHands = (amountOfHands + 1) as 1 | 2;
-                    } else if (operation === "decrease" && amountOfHands > 1) {
-                        amountOfHands = (amountOfHands - 1) as 1 | 2;
-                    }
-                    break;
-            }
-
-            return {
-                ...prev,
-                info: {
-                    days: prev.info.days, // (glue stick fix)
-                    durationMinutes,
-                    rests,
-                    restDurationMinutes,
-                },
-                specificData: {
+        updateObjectiveToCreate(
+            (prev: ActiveObjectiveWithoutId): ActiveObjectiveWithoutId => {
+                const delta: 1 | -1 = operation === "increase" ? 1 : -1;
+                let { durationMinutes, rests, restDurationMinutes } = prev.info;
+                let {
                     reps,
+                    amountOfHands,
                     estimateSpeed,
                     dumbbellWeight,
-                    amountOfHands,
                     amountOfPushUps,
-                },
-            };
-        });
+                } = prev.specificData;
+
+                function op(num: number): number {
+                    return Math.max(parseFloat(String(num)) + delta, 0);
+                }
+
+                switch (value) {
+                    case "durationMinutes":
+                        durationMinutes = op(durationMinutes);
+                        break;
+                    case "rests":
+                        rests = op(rests);
+                        /* restDurationMinutes =
+                        rests === 0 ? 0 : restDurationMinutes || 1; */
+                        break;
+                    case "restDurationMinutes":
+                        restDurationMinutes = op(restDurationMinutes);
+                        break;
+                    case "amountOfPushUps":
+                        amountOfPushUps = op(amountOfPushUps);
+                        break;
+                    case "dumbbellWeight":
+                        dumbbellWeight = op(dumbbellWeight);
+                        break;
+                    case "estimateSpeed":
+                        const result: number = op(estimateSpeed);
+                        if (result >= speedOptions.length) {
+                            estimateSpeed = estimateSpeed; // don't do the operation
+                            break;
+                        }
+                        estimateSpeed = result;
+                        break;
+                    case "reps":
+                        reps = op(reps);
+                        break;
+                    case "amountOfHands":
+                        if (operation === "increase" && amountOfHands < 2) {
+                            amountOfHands = (amountOfHands + 1) as 1 | 2;
+                        } else if (
+                            operation === "decrease" &&
+                            amountOfHands > 1
+                        ) {
+                            amountOfHands = (amountOfHands - 1) as 1 | 2;
+                        }
+                        break;
+                }
+
+                return {
+                    ...prev,
+                    info: {
+                        days: prev.info.days, // (glue stick fix)
+                        durationMinutes,
+                        rests,
+                        restDurationMinutes,
+                    },
+                    specificData: {
+                        reps,
+                        estimateSpeed,
+                        dumbbellWeight,
+                        amountOfHands,
+                        amountOfPushUps,
+                    },
+                };
+            },
+        );
     }
 
     /**
@@ -280,40 +289,48 @@ export default function CreateActiveObjectivePage() {
         [t("Maximum Speed"), t("more than 16.1 km/h")],
     ];
 
-    function handleChange(associatedValue: Value, value: number) {
+    function handleChange(associatedValue: Value, value: number): void {
         switch (associatedValue) {
             case "rests":
             case "restDurationMinutes":
             case "durationMinutes":
-                updateObjectiveToCreate((prev) => {
-                    return {
-                        ...prev,
-                        info: {
-                            ...prev.info,
-                            [associatedValue]: value,
-                        },
-                    };
-                });
+                updateObjectiveToCreate(
+                    (
+                        prev: ActiveObjectiveWithoutId,
+                    ): ActiveObjectiveWithoutId => {
+                        return {
+                            ...prev,
+                            info: {
+                                ...prev.info,
+                                [associatedValue]: value,
+                            },
+                        };
+                    },
+                );
                 break;
             case "amountOfHands":
             case "amountOfPushUps":
             case "dumbbellWeight":
             case "estimateSpeed":
             case "reps":
-                updateObjectiveToCreate((prev) => {
-                    return {
-                        ...prev,
-                        specificData: {
-                            ...prev.specificData,
-                            [associatedValue]: value,
-                        },
-                    };
-                });
+                updateObjectiveToCreate(
+                    (
+                        prev: ActiveObjectiveWithoutId,
+                    ): ActiveObjectiveWithoutId => {
+                        return {
+                            ...prev,
+                            specificData: {
+                                ...prev.specificData,
+                                [associatedValue]: value,
+                            },
+                        };
+                    },
+                );
                 break;
         }
     }
 
-    function spawnToggle(associatedValue: Value) {
+    function spawnToggle(associatedValue: Value): ReactElement {
         let displayValue;
         let target;
 
@@ -377,9 +394,9 @@ export default function CreateActiveObjectivePage() {
                         inputMode="decimal"
                         returnKeyType="done"
                         enterKeyHint="done"
-                        onChangeText={(value) => {
-                            const parsedValue = parseFloat(value);
-                            const validValue = isNaN(parsedValue)
+                        onChangeText={(value: string): void => {
+                            const parsedValue: number = parseFloat(value);
+                            const validValue: number = isNaN(parsedValue)
                                 ? 0
                                 : Math.max(0, parsedValue);
                             handleChange(associatedValue, validValue);
@@ -390,7 +407,9 @@ export default function CreateActiveObjectivePage() {
                         buttonText="+"
                         buttonHint="Increases the value this button is associated to"
                         style="ACE"
-                        action={() => handleToggle("increase", associatedValue)}
+                        action={(): void => {
+                            handleToggle("increase", associatedValue);
+                        }}
                     />
                 </View>
                 <GapView height={20} />
@@ -398,7 +417,7 @@ export default function CreateActiveObjectivePage() {
         );
     }
 
-    useEffect(() => {
+    useEffect((): void => {
         setCanCreateObjective(ValidateActiveObjective(objectiveToCreate, true));
     }, [objectiveToCreate]);
 
@@ -421,7 +440,11 @@ export default function CreateActiveObjectivePage() {
                 }
                 if (response !== 0) {
                     logToConsole(
-                        `Got 1 as the ${edit.enable ? "EditActiveObjective()" : "CreateActiveObjective()"} response`,
+                        `Got 1 as the ${
+                            edit.enable
+                                ? "EditActiveObjective()"
+                                : "CreateActiveObjective()"
+                        } response`,
                         "error",
                     );
                 }
@@ -429,7 +452,11 @@ export default function CreateActiveObjectivePage() {
             }
         } catch (e) {
             logToConsole(
-                `Error with ${edit.enable ? "EditActiveObjective()" : "CreateActiveObjective()"}:\n${e}`,
+                `Error with ${
+                    edit.enable
+                        ? "EditActiveObjective()"
+                        : "CreateActiveObjective()"
+                }:\n${e}`,
                 "error",
             );
         }
@@ -454,18 +481,23 @@ export default function CreateActiveObjectivePage() {
                     "pages.createActiveObjective.questions.whatToDo.options.title",
                 )}
                 selectOptions={exerciseOptions}
-                changeAction={(value: string | number) => {
+                changeAction={(value: string | number): void => {
                     if (
                         SupportedActiveObjectivesList.includes(
                             value as SupportedActiveObjectives,
                         )
                     ) {
-                        updateObjectiveToCreate((prev) => {
-                            return {
-                                ...prev,
-                                exercise: value as SupportedActiveObjectives,
-                            };
-                        });
+                        updateObjectiveToCreate(
+                            (
+                                prev: ActiveObjectiveWithoutId,
+                            ): ActiveObjectiveWithoutId => {
+                                return {
+                                    ...prev,
+                                    exercise:
+                                        value as SupportedActiveObjectives,
+                                };
+                            },
+                        );
                     } else if (value === "") {
                         logToConsole(
                             t(
@@ -493,66 +525,73 @@ export default function CreateActiveObjectivePage() {
             </BetterTextSmallText>
             <GapView height={10} />
             <View style={styles.dayContainer}>
-                {objectiveToCreate.info.days.map((day, index) => {
-                    const daysOfWeek: string[] = [
-                        t("globals.daysOfTheWeek.Monday.key"),
-                        t("globals.daysOfTheWeek.Tuesday.key"),
-                        t("globals.daysOfTheWeek.Wednesday.key"),
-                        t("globals.daysOfTheWeek.Thursday.key"),
-                        t("globals.daysOfTheWeek.Friday.key"),
-                        t("globals.daysOfTheWeek.Saturday.key"),
-                        t("globals.daysOfTheWeek.Sunday.key"),
-                    ];
-                    const thisDay = daysOfWeek[index];
+                {objectiveToCreate.info.days.map(
+                    (day: boolean, index: number): ReactElement => {
+                        const daysOfWeek: string[] = [
+                            t("globals.daysOfTheWeek.Monday.key"),
+                            t("globals.daysOfTheWeek.Tuesday.key"),
+                            t("globals.daysOfTheWeek.Wednesday.key"),
+                            t("globals.daysOfTheWeek.Thursday.key"),
+                            t("globals.daysOfTheWeek.Friday.key"),
+                            t("globals.daysOfTheWeek.Saturday.key"),
+                            t("globals.daysOfTheWeek.Sunday.key"),
+                        ];
+                        const thisDay: string = daysOfWeek[index];
 
-                    return (
-                        <React.Fragment key={index}>
-                            <View
-                                style={[
-                                    styles.day,
-                                    {
-                                        borderColor: day
-                                            ? Colors.PRIMARIES.ACE.ACE_STROKE
-                                            : Colors.MAIN.DEFAULT_ITEM.STROKE,
-                                        backgroundColor: day
-                                            ? Colors.PRIMARIES.ACE.ACE
-                                            : Colors.MAIN.DEFAULT_ITEM
-                                                  .BACKGROUND,
-                                    },
-                                ]}
-                            >
-                                <Pressable
-                                    onPress={() =>
-                                        updateObjectiveToCreate((prev) => {
-                                            const updatedDays: WeekTuple = [
-                                                ...prev.info.days,
-                                            ];
-                                            updatedDays[index] =
-                                                !updatedDays[index];
-                                            return {
-                                                ...prev,
-                                                info: {
-                                                    ...prev.info,
-                                                    days: updatedDays,
-                                                },
-                                            };
-                                        })
-                                    }
-                                    style={styles.dayActualContainer}
+                        return (
+                            <React.Fragment key={index}>
+                                <View
+                                    style={[
+                                        styles.day,
+                                        {
+                                            borderColor: day
+                                                ? Colors.PRIMARIES.ACE
+                                                      .ACE_STROKE
+                                                : Colors.MAIN.DEFAULT_ITEM
+                                                      .STROKE,
+                                            backgroundColor: day
+                                                ? Colors.PRIMARIES.ACE.ACE
+                                                : Colors.MAIN.DEFAULT_ITEM
+                                                      .BACKGROUND,
+                                        },
+                                    ]}
                                 >
-                                    <BetterText
-                                        textColor={Colors.BASIC.WHITE}
-                                        fontSize={FontSizes.REGULAR}
-                                        fontWeight="Medium"
+                                    <Pressable
+                                        onPress={(): void =>
+                                            updateObjectiveToCreate(
+                                                (
+                                                    prev: ActiveObjectiveWithoutId,
+                                                ): ActiveObjectiveWithoutId => {
+                                                    const updatedDays: WeekTuple =
+                                                        [...prev.info.days];
+                                                    updatedDays[index] =
+                                                        !updatedDays[index];
+                                                    return {
+                                                        ...prev,
+                                                        info: {
+                                                            ...prev.info,
+                                                            days: updatedDays,
+                                                        },
+                                                    };
+                                                },
+                                            )
+                                        }
+                                        style={styles.dayActualContainer}
                                     >
-                                        {thisDay.toUpperCase()}
-                                    </BetterText>
-                                </Pressable>
-                            </View>
-                            {index !== 6 && <GapView width={10} />}
-                        </React.Fragment>
-                    );
-                })}
+                                        <BetterText
+                                            textColor={Colors.BASIC.WHITE}
+                                            fontSize={FontSizes.REGULAR}
+                                            fontWeight="Medium"
+                                        >
+                                            {thisDay.toUpperCase()}
+                                        </BetterText>
+                                    </Pressable>
+                                </View>
+                                {index !== 6 && <GapView width={10} />}
+                            </React.Fragment>
+                        );
+                    },
+                )}
             </View>
             <GapView height={20} />
             {spawnToggle("durationMinutes")}
@@ -583,9 +622,9 @@ export default function CreateActiveObjectivePage() {
                             buttonText="-"
                             buttonHint="Reduces the value this button is associated to"
                             style="ACE"
-                            action={() =>
-                                handleToggle("decrease", "estimateSpeed")
-                            }
+                            action={(): void => {
+                                handleToggle("decrease", "estimateSpeed");
+                            }}
                         />
                         <View
                             style={{
@@ -614,9 +653,9 @@ export default function CreateActiveObjectivePage() {
                             buttonText="+"
                             buttonHint="Increases the value this button is associated to"
                             style="ACE"
-                            action={() =>
-                                handleToggle("increase", "estimateSpeed")
-                            }
+                            action={(): void => {
+                                handleToggle("increase", "estimateSpeed");
+                            }}
                         />
                     </View>
                     <GapView height={10} />
@@ -642,7 +681,7 @@ export default function CreateActiveObjectivePage() {
                         : t("globals.interaction.somethingIsWrong")
                 }
                 buttonHint={t("pages.createActiveObjective.createButtonHint")}
-                action={async () => {
+                action={async (): Promise<void> => {
                     if (canCreateObjective) {
                         await handleCreation();
                     }

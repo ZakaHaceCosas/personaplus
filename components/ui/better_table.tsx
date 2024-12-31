@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { BetterTextSmallText } from "@/components/text/better_text_presets";
 import Colors from "@/constants/colors";
 import GenerateRandomKey from "@/toolkit/key_generator";

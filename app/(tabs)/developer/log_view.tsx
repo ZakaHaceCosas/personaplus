@@ -2,8 +2,8 @@ import BetterButton from "@/components/interaction/better_button";
 import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
 import {
-    BetterTextSmallText,
     BetterTextSmallerText,
+    BetterTextSmallText,
 } from "@/components/text/better_text_presets";
 import GapView from "@/components/ui/gap_view";
 import { Routes } from "@/constants/routes";

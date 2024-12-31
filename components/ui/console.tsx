@@ -1,6 +1,6 @@
 import React from "react";
 import getCommonScreenSize from "@/constants/screen";
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { BetterTextSmallText } from "../text/better_text_presets";
 import GapView from "./gap_view";
 import { Logs } from "@/types/logs";
@@ -72,7 +72,7 @@ export default function Console({
                 </View>
             );
         } else {
-            if (logs.length === 0)
+            if (logs.length === 0) {
                 return (
                     <View style={styles.consoleView}>
                         <BetterTextSmallText>
@@ -82,6 +82,7 @@ export default function Console({
                         </BetterTextSmallText>
                     </View>
                 );
+            }
         }
     }
 
@@ -113,11 +114,7 @@ export default function Console({
                     type: log.type ? log.type.toUpperCase() : "",
                     date: formattedDate,
                     trace: log.traceback
-                        ? `{ TRACEBACK:\n  location:    ${
-                              log.traceback.location
-                          },\n  function:    ${
-                              log.traceback.function
-                          },\n  isHandler:   ${log.traceback.isHandler},\n${
+                        ? `{ TRACEBACK:\n  location:    ${log.traceback.location},\n  function:    ${log.traceback.function},\n  isHandler:   ${log.traceback.isHandler},\n${
                               log.traceback.isHandler &&
                               log.traceback.handlerName
                                   ? `  handlerName: ${log.traceback.handlerName}`

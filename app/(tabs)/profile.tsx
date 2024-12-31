@@ -14,7 +14,7 @@ import GapView from "@/components/ui/gap_view";
 import PageEnd from "@/components/static/page_end";
 import TopBar from "@/components/navigation/top_bar";
 import FontSizes from "@/constants/font_sizes";
-import { StyleSheet, View, Alert } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import { version as currentVersion } from "../../package.json";
 import URLs from "@/constants/urls";
 import semver from "semver";

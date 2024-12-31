@@ -14,7 +14,7 @@
 import React, { ReactElement, useState } from "react";
 import Colors from "@/constants/colors";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
-import { View, TouchableOpacity, StyleSheet } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import getCommonScreenSize from "@/constants/screen";
 import BetterText from "../text/better_text";
 import FontSizes from "@/constants/font_sizes";

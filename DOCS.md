@@ -138,7 +138,8 @@ Passive Objectives, on the other side, are more like goals. Ever seen any of tho
 You'll need `npm` (I personally prefer `pnpm` but it just doesn't work good enough with Expo...). Create a fork of this project, clone it locally, and run `npm install` from the root. After that, `npm run start` every time you want to test your changes.
 
 > [!WARNING]
-> **Please do not manually run `npm update` whatsoever. ONLY update dependencies using `npm run dep:check`.** Expo handles dependencies **by itself**, and it knows (probably better than both you and me) what versions of each package the project requires. Manual updates have proven to break stuff. We don't need the latest versions, we need versions that work!
+> **Please do not manually run `npm update` or any other command EXCEPT `npm run dep:check`.**
+> Expo handles dependencies **by itself**, and it knows (probably better than both you and me) what versions of each package the project requires. Manual updates have proven to break stuff. We don't need the latest versions, we need versions that work!
 
 As an extra, while not needed, it is highly recommended to use [Microsoft Visual Studio Code](https://code.visualstudio.com/) or [VS Codium](https://vscodium.com/) with the **[Expo Tools](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools)** extension. Additionally, `.vscode/extensions.json` includes other extensions we recommend you to have. They're optional, but will do a good job helping you work better with the project.
 
@@ -189,7 +190,9 @@ Functions like handlers, data fetching, or so, should go inside the main compone
 ### Naming stuff
 
 We encourage the usage of **camelCase** for most things, **PascalCase** for main / component functions, and **UNDERSCORED_UPPERCASE** for constants ("constants" refers to things that you export from `@/constants/`, not every `const` declaration).
+
 > To clarify, a constant parent is cased with PascalCase. Kinda like this:
+>
 > `Constant.VALUE`, `Constant.VALUE.NESTED_VALUE`.
 
 **❌ Do not:**
@@ -202,7 +205,7 @@ export default function mainComponent() {
 
     const other_thing = `${my_variable} ${someConstant.otherThing}`;
 
-    return other_thing
+    return other_thing;
 }
 ```
 
@@ -216,7 +219,7 @@ export default function MainComponent() {
 
     const otherThing = `${myVariable} ${SomeConstant.OTHER_THING}`;
 
-    return otherThing
+    return otherThing;
 }
 ```
 
@@ -225,17 +228,17 @@ Favor full words in variable names, except when the word becomes excessively lon
 **❌ Do not:**
 
 ```ts
-const h = "Hello there."
-async function myAsynchronousFunction()
-let test = true
+const h = "Hello there.";
+async function myAsynchronousFunction();
+let test = true;
 ```
 
 **✅ Do:**
 
 ```ts
-const hello = "Hello there."
-async function myAsyncFunction()
-let thisIsATest = true
+const hello = "Hello there.";
+async function myAsyncFunction();
+let thisIsATest = true;
 ```
 
 Make function names descriptive.
@@ -243,13 +246,13 @@ Make function names descriptive.
 **❌ Do not:**
 
 ```ts
-function ToDailyLog()
+function ToDailyLog();
 ```
 
 **✅ Do:**
 
 ```ts
-function SaveActiveObjectiveToDailyLog()
+function SaveActiveObjectiveToDailyLog();
 ```
 
 While PascalCase or camelCase look pretty, avoid them for naming files. Use snake_case or kebab-case (we prefer snake) for file names, as some filesystems aren't case sensitive but others are and it ends up breaking this.
@@ -291,7 +294,7 @@ function Greet(who: string): void {}
  * @param {string} who Who to greet
  */
 function Greet(who: string): void {
-    console.log(`Hi, ${who}!`)
+    console.log(`Hi, ${who}!`);
 }
 ```
 
@@ -336,7 +339,7 @@ if (usesPersonaPlus) {
 **✅ Do:**
 
 ```ts
-const isCool = usesPersonaPlus ? "yes" : "no :("
+const isCool = usesPersonaPlus ? "yes" : "no :(";
 ```
 
 Type everything, use JSDoc as extensively as possible. If using a JSDoc generator extension (which we recommend), remove the `@typedef` prop if generated.
@@ -365,9 +368,10 @@ Okay, so you did write some cool code, right? That's awesome! Now, here are a fe
 > - `(ui)` for visual changes
 >
 > Here are some sample valid (and good) commits:
-> `(page:WelcomeScreen)(ui): Remove unneeded spacing below headers`
-> `(chore): Rename variables in User toolkit for consistency`
-> `(ui): Update regular font size`
-> `(fix): Fix a typo ("are n't" -> "aren't")`
+>
+> - `(page:WelcomeScreen)(ui): Remove unneeded spacing below headers`
+> - `(chore): Rename variables in User toolkit for consistency`
+> - `(ui): Update regular font size`
+> - `(fix): Fix a typo ("are n't" -> "aren't")`
 
 And that's it for now. Keep in mind these docs _aren't fully done yet_. They will get updated in the future.

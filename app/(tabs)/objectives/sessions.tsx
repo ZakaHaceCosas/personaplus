@@ -12,13 +12,17 @@
  */
 
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
-import { View, StyleSheet, Alert } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import {
+    CalculateSessionPerformance,
     GetActiveObjective,
     SaveActiveObjectiveToDailyLog,
-    CalculateSessionPerformance,
 } from "@/toolkit/objectives/active_objectives";
-import { router, useGlobalSearchParams } from "expo-router";
+import {
+    router,
+    UnknownOutputParams,
+    useGlobalSearchParams,
+} from "expo-router";
 import BetterText from "@/components/text/better_text";
 import GapView from "@/components/ui/gap_view";
 import { logToConsole } from "@/toolkit/debug/console";
@@ -59,8 +63,8 @@ export default function Sessions(): ReactElement {
     const { t } = useTranslation();
 
     // data
-    const params = useGlobalSearchParams();
-    const objectiveIdentifier = Number(params.id);
+    const params: UnknownOutputParams = useGlobalSearchParams();
+    const objectiveIdentifier: number = Number(params.id);
     const [loading, setLoading] = useState<boolean>(true);
     const [objective, setObjective] = useState<ActiveObjective | null>(null);
     const [userData, setUserData] = useState<BasicUserHealthData>();
@@ -216,7 +220,9 @@ export default function Sessions(): ReactElement {
                 });
             } catch (e) {
                 logToConsole(
-                    `Error finishing session for ${objective ? objective.identifier : "(UNKNOWN OBJECTIVE)"}: ${e}`,
+                    `Error finishing session for ${
+                        objective ? objective.identifier : "(UNKNOWN OBJECTIVE)"
+                    }: ${e}`,
                     "error",
                 );
             }

@@ -178,30 +178,25 @@ b25 was cancelled (due to the huge amount of problems that were on top of each o
 >
 > - Fixed termLog() not making persistent logs for Dev Interface.
 > - Fixed sessions not being able to open.
-> >
-> > - This was fixed by adding the `react-native-svg` dependency.
-> >
-> - Fixed objectives not being stored correctly (`{}` instead of `[]`).
 >
+>> - This was fixed by adding the `react-native-svg` dependency.
+>
+> - Fixed objectives not being stored correctly (`{}` instead of `[]`).
+
 ---
 > [!NOTE]
 >
 > ### **KNOWN ERRORS - b21**
 >
 > - Wrong Welcome Screen layout (not centered).
-
 ## 0.0.1-R5-b20
-
 - Started working on the logic - as a side project: "OpenHealth".
-
 > [!INFO]
 > **What does that even mean?**
 >
 > See: Basically, the app needs to work with a lot of health data so that it can provide accurate statistics and tips to the end user, so the first idea would be to find a library or something that does provide functions for that stuff.
 > However - I thought it would be a nice idea to try to make our own "health.js" library, and just like that! There's a new directory called `/code` for _the core of the app_, on which I started working and then decided to give it's own name, documentation, and stuff. This new library will allow PersonaPlus to turn all the frontend we've been working on since 2023 into actual, worthy data for users to understand themselves, their performance, and their health.
-
 Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`. It's mentioned here only this time, as this is the most important change of this update.
-
 - Now `/WelcomeScreen` works! Users can register with basic info.
   - ~~Fixed the Welcome Screen layout; it is now centered.~~ _Nope._
   - Added form validation to `/WelcomeScreen` and placeholder options to arrays to avoid saving empty (`""`) strings.
@@ -249,7 +244,6 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 - Added a few reminders that the app is currently an unfinished WIP.
 - Added loading screens so the app looks cleaner (before you saw the placeholders for a few seconds, with a not-so-good looking "appear animation").
 - Worth noting: Made some parts of the source code way cleaner, thanks to these loaders and other things like function merging and usage of `AsyncStorage.multiGet` or `AsyncStorage.clear`.
-
 > [!NOTE]
 >
 > ### **FIXED ERRORS - b20**
@@ -264,6 +258,7 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 > - Fixed types
 >
 ---
+
 > [!NOTE]
 >
 > ### **KNOWN ERRORS - b20**
@@ -305,17 +300,15 @@ Note:
 >
 > ### **FIXED ERRORS - b17**
 >
-> `b11:` For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. **This was fixed by adding a placeholder invalid option, forcing the user to choose an option so `setExercise` gets called.**
-> `b15`: For some reason, the `objs`' name is not being displayed on mobile devices on Expo Go. **Fixing the error above also fixed this.**
+> `b11:` For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. **This was fixed by adding a placeholder invalid option, forcing the user to choose an option so `setExercise` gets called.** `b15`: For some reason, the `objs`' name is not being displayed on mobile devices on Expo Go. **Fixing the error above also fixed this.**
+
 ---
 > [!NOTE]
 >
 > ### **KNOWN ERRORS - b17**
 >
 > **No known errors at the moment! 🎉**
-
 ## 0.0.1-R5-b16
-
 - Made more changes to match the requirements of ESLint.
 - Made a lof of UI and design changes to improve the looks on mobile - _this lead to things looking bad on desktop -_ _**it's not a problem, as the only target devices are phones.**_
 - Made a peculiar change ;] - moved the bottom navigation bar to the top.
@@ -325,21 +318,19 @@ Note:
 - Made some improvements to types and other aspects of the codebase.
 - Updated `DOCS.md`, `README.md`, and `CONTRIBUTING.md` so that they look a bit more professional.
 - Other small changes and improvements.
-
 ## 0.0.1-R5-b15
-
 - Made several UI changes to improve the looks on end user mobile devices. There's still work to do, but good progress was made.
 - Made adjustments to the ESLINT config.
 - Other changes to the logic used to structure and render some components to ensure they look good.
 - Added a few extra comments to the code to explain some stuff better.
 - Made a few changes like replacing some `let` with `const` to match the requirements of ESLint.
-
 > [!NOTE]
 >
 > ### **FIXED ERRORS - b15**
 >
 > None
 ---
+
 > [!WARNING]
 >
 > ### **KNOWN ERRORS - b15**
@@ -371,9 +362,10 @@ Note:
 >
 > ### **FIXED ERRORS - b14**
 >
-> `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`". _The error was a stupid inline comment, LOL._
-> **And thanks to this fix, app was finally properly tested on mobile!**
+> `b9:` Console spamming "`Unexpected text node: . A text node cannot be a child of a <View>.`". _The error was a stupid inline comment, LOL._ **And thanks to this fix, app was finally properly tested on mobile!**
+
 ---
+
 > [!WARNING]
 >
 > ### **KNOWN ERRORS - b14**
@@ -387,6 +379,7 @@ Note:
 > `b11:` For some reason, sometimes the `exercise` prop from the objective's Object does not get stored on creation, giving it an empty name. Don't know it's origin & only happens sometimes, making it hard to replicate. Will look onto it.
 
 **Note:**
+
 > Now that it was finally possible to test on mobile, a LOT of visual issues were found. Will be addressed progressively.
 
 ## 0.0.1-R5-b13
@@ -438,8 +431,7 @@ Note:
 >
 > ### **KNOWN ERRORS - b10**
 >
-> _**New errors**_:
-> None 😎
+> _**New errors**_: None 😎
 >
 > _**Still not fixed from older dev versions**_:
 >
@@ -456,13 +448,11 @@ Note:
 - Uploaded all the app icons.
 - Created custom switch element `Swap.tsx`.
 
-> [!WARNING]
-> **KNOWN ERROR**: Swap not working correctly.
+> [!WARNING] **KNOWN ERROR**: Swap not working correctly.
 
 - Added icons to the app.
 
-> [!NOTE]
-> **KNOWN ISSUE:** For some reason, I didn't managed to make Microsoft's Fluent Icons (the ones used in the UI design) React package work, so I used Material Design Icons instead, via Expo's `@expo/vectoricons`
+> [!NOTE] **KNOWN ISSUE:** For some reason, I didn't managed to make Microsoft's Fluent Icons (the ones used in the UI design) React package work, so I used Material Design Icons instead, via Expo's `@expo/vectoricons`
 
 - Now the documentation is fully usable, can be considered "done". _Of course, it is still subject to changes at any time._
 - Licensed under Apache 2.0.
@@ -473,8 +463,7 @@ Note:
 - General changes and improvements to the Homepage (`/`).
 - Made some progress in the dashboard (`/Dash`). Implemented `Notis` and _fixed_ obj fetching. (Still looking forward to implementing obj creation).
 
-> [!WARNING]
-> **KNOWN ERROR**: Still doesn't access them 100% correctly.
+> [!WARNING] **KNOWN ERROR**: Still doesn't access them 100% correctly.
 
 - Fixed errors with the Profile (`/Prof`) page. Added a "current username is ..." text to the username change menu.
 - A lot of progress with the Welcome screen (`/Welc`). First page is complete, plus added (non-tested) data saving.
@@ -482,8 +471,7 @@ Note:
 - Made changes to types in different components.
 - Additional progress.
 
-> [!WARNING]
-> **OTHER KNOWN ERRORS**: Console spamming "Unexpected text node:  . A text node cannot be a child of a `<View>`.". I am trying to find were that comes from.
+> [!WARNING] **OTHER KNOWN ERRORS**: Console spamming "Unexpected text node: . A text node cannot be a child of a `<View>`.". I am trying to find were that comes from.
 
 ## 0.0.1-R5-b8
 

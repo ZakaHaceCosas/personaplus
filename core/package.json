@@ -1,22 +1,22 @@
 {
-  "name": "open-health",
-  "displayName": "OpenHealth",
-  "version": "0.2.0",
-  "private": "true",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc"
-  },
-  "files": [
-    "dist"
-  ],
-  "devDependencies": {
-    "typescript": "latest"
-  },
-  "author": "ZakaHaceCosas",
-  "contributors": [
-    "The PersonaPlus contributors"
-  ]
+    "name": "open-health",
+    "displayName": "OpenHealth",
+    "version": "0.2.0",
+    "private": "true",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "scripts": {
+        "build": "tsc"
+    },
+    "files": [
+        "dist"
+    ],
+    "devDependencies": {
+        "typescript": "latest"
+    },
+    "author": "ZakaHaceCosas",
+    "contributors": [
+        "The PersonaPlus contributors"
+    ]
 }

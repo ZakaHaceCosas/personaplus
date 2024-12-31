@@ -21,6 +21,7 @@ import { ExpoRouterParams } from "./glue_fix";
  * @export
  */
 export type SupportedActiveObjectives =
+    | ""
     | "Push Ups"
     | "Lifting"
     | "Running"
@@ -178,20 +179,23 @@ export function ValidateActiveObjective(
         if (!omitIdentifier && !obj.identifier) return false; // if no ID and no skip, invalid. can be skipped because you might be creating the objective yet
         if (!obj.info) return false; // no info, invalid
         const info = obj.info as ActiveObjectiveInfo; // (for vsc intellisense)
-        if (!Array.isArray(info.days) || !info.days.includes(true))
+        if (!Array.isArray(info.days) || !info.days.includes(true)) {
             return false; // if all days are disabled, invalid
+        }
         if (
             typeof info.durationMinutes !== "number" ||
             info.durationMinutes <= 0
-        )
+        ) {
             return false; // if eq or lower than 0, invalid
+        }
         if (typeof info.rests !== "number" || info.rests < 0) return false; // if not present, invalid. can be 0
         if (
             info.rests > 0 &&
             (typeof info.restDurationMinutes !== "number" ||
                 info.restDurationMinutes <= 0)
-        )
+        ) {
             return false; // if not present, or eq / lower than 0 WHILE HAVING rests, invalid
+        }
         if (!obj.specificData) return false;
         const specificData = obj.specificData as ActiveObjectiveSpecificData;
         const exercise = obj.exercise as SupportedActiveObjectives;

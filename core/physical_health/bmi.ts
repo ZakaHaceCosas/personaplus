@@ -5,8 +5,8 @@ CALCULATE BODY MASS INDEX
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
 import CreateComponentDataUtilities from "@/core/tools/core_library_data_builder";
 import {
-    MALE_PERCENTILES,
     FEMALE_PERCENTILES,
+    MALE_PERCENTILES,
 } from "@/core/physical_health/utils/bmi_percentiles";
 
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(

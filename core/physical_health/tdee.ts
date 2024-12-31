@@ -64,7 +64,9 @@ export default function calculateTotalDailyEnergyExpenditure(
             break;
     }
 
-    const context = `Recommended daily caloric ingest: ${calc.toPrecision(6)}cal, taking into account BMR is ${bmr.toPrecision(6)}.`;
+    const context = `Recommended daily caloric ingest: ${calc.toPrecision(
+        6,
+    )}cal, taking into account BMR is ${bmr.toPrecision(6)}.`;
 
     const response: CoreLibraryResponse = {
         result: calc,

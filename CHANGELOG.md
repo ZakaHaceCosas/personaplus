@@ -1,10 +1,10 @@
 <!-- markdownlint-disable-file MD024 -->
+
 # PersonaPlus Changelog
 
 All notable changes will be documented in this file.
 
-The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Dates use the DD-MM-YYYY format.
+The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Dates use the DD-MM-YYYY format.
 
 > [!NOTE]
 > For changes related to development, see [CHANGELOG_DEV.md](CHANGELOG_DEV.md).
@@ -108,4 +108,5 @@ Keep in mind there have been many visual and functional changes due to the R6 re
 ---
 
 > For versions prior to 0.0.6, see [the deprecated changelog](CHANGELOG.deprecated.md).
+>
 > P.S. Versions prior to 0.0.6 are not SemVer compliant and follow a different format.

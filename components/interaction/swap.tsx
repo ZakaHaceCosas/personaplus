@@ -1,5 +1,5 @@
-import React, { useState, useEffect, ReactElement } from "react";
-import { StyleSheet, View, Pressable } from "react-native";
+import React, { ReactElement, useEffect, useState } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
 import BetterText from "@/components/text/better_text";
 import Colors from "@/constants/colors";
 import getCommonScreenSize from "@/constants/screen";

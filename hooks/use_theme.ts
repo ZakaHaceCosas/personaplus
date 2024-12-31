@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { logToConsole } from "@/toolkit/debug/console";

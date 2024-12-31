@@ -360,7 +360,9 @@ async function CreateActiveObjective(
                 }),
             );
             logToConsole(
-                `Created ${newObjective.identifier} objective with ID ${newObjective.exercise} successfully! Full JSON of the created objective:\n${JSON.stringify(newObjective)}"`,
+                `Created ${newObjective.identifier} objective with ID ${newObjective.exercise} successfully! Full JSON of the created objective:\n${JSON.stringify(
+                    newObjective,
+                )}"`,
                 "success",
                 undefined,
                 false,
@@ -371,7 +373,9 @@ async function CreateActiveObjective(
         }
     } catch (e) {
         logToConsole(
-            `Something went wrong creating an objective. JSON:\n${JSON.stringify(target)}\n\nError: ${e}`,
+            `Something went wrong creating an objective. JSON:\n${JSON.stringify(
+                target,
+            )}\n\nError: ${e}`,
             "error",
         );
         ShowToast("Error :c");
@@ -436,7 +440,9 @@ async function EditActiveObjective(
                 }),
             );
             logToConsole(
-                `Created ${newObjective.identifier} objective with ID ${newObjective.exercise} successfully! Full JSON of the created objective:\n${JSON.stringify(newObjective)}"`,
+                `Created ${newObjective.identifier} objective with ID ${newObjective.exercise} successfully! Full JSON of the created objective:\n${JSON.stringify(
+                    newObjective,
+                )}"`,
                 "success",
                 undefined,
                 false,
@@ -679,8 +685,9 @@ async function FailObjectivesNotDoneYesterday(): Promise<void> {
 
             if (dailyLog[targetDate][objective.identifier]) continue; // if data is already saved, don't do anything
 
-            if (objective.createdAt === GetCurrentDateCorrectly().string)
+            if (objective.createdAt === GetCurrentDateCorrectly().string) {
                 continue; // if it was created today, don't do anything
+            }
 
             dailyLog[targetDate][objective.identifier] = {
                 wasDone: false,
@@ -696,17 +703,17 @@ async function FailObjectivesNotDoneYesterday(): Promise<void> {
 }
 
 export {
+    CalculateSessionFragmentsDuration,
+    CalculateSessionPerformance,
+    CheckForAnActiveObjectiveDailyStatus,
     CreateActiveObjective,
-    GetAllObjectives,
+    DeleteActiveObjective,
+    EditActiveObjective,
+    FailObjectivesNotDoneYesterday,
     GetActiveObjective,
     GetActiveObjectiveDailyLog,
-    SaveActiveObjectiveToDailyLog,
+    GetAllObjectives,
     GetAllPendingObjectives,
-    CheckForAnActiveObjectiveDailyStatus,
-    CalculateSessionFragmentsDuration,
-    DeleteActiveObjective,
     LaunchActiveObjective,
-    CalculateSessionPerformance,
-    FailObjectivesNotDoneYesterday,
-    EditActiveObjective,
+    SaveActiveObjectiveToDailyLog,
 };
