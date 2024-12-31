@@ -56,8 +56,7 @@ interface BetterInputFieldProps {
     changeAction: (text: string) => void;
     /** If true the input field will be read only (non-editable). */
     readOnly: boolean;
-    /** If true, `refParams` will be used. It's used to auto-advance to the next input field in a screen upon submitting. */
-    shouldRef: boolean;
+    /** Used to auto-advance to the next input field in a screen upon submitting. */
     refParams: {
         /** Your useRef */
         inputRefs: { current: TextInput[] };
@@ -84,7 +83,6 @@ interface BetterInputFieldProps {
  * @param {number} p.length Max length of the inputted text.
  * @param {(text: string) => void} p.changeAction A void function that will call upon the text is changed. Current text value is accessible from here.
  * @param {boolean} [p.readOnly=false] If true the input field will be read only (non-editable).
- * @param {boolean} [p.shouldRef=false] If true, `refParams` will be used. It's used to auto-advance to the next input field in a screen upon submitting.
  * @param {{ inputRefs: { current: {}; }; totalRefs: number; }} p.refParams
  * @param {boolean} p.isValid Whether the value is valid or not.
  * @param {boolean} p.validatorMessage A message to be shown for invalid values.
@@ -100,7 +98,6 @@ export default function BetterInputField({
     length,
     changeAction,
     readOnly = false,
-    shouldRef = false,
     refParams,
     isValid = true,
     validatorMessage,
@@ -111,7 +108,7 @@ export default function BetterInputField({
      * @param {number} index The **target** index - if your input has a `refIndex` of **2**, the *target* (this value) would be **3**. For `refIndex` see `spawnInputField()`.
      */
     function focusNextField(index: number): void {
-        const inputRef = refParams.inputRefs.current[index];
+        const inputRef: TextInput = refParams.inputRefs.current[index];
         if (inputRef) {
             inputRef.focus();
         } else {
@@ -121,98 +118,52 @@ export default function BetterInputField({
     }
 
     const nextFieldIndex: number = refIndex + 1;
-    const returnKeyType: "done" | "next" = shouldRef
-        ? nextFieldIndex === refParams.totalRefs
-            ? "done"
-            : "next"
-        : "done";
-
+    const returnKeyType: "done" | "next" =
+        nextFieldIndex === refParams.totalRefs ? "done" : "next";
     return (
         <>
             <BetterTextSmallText>{label}</BetterTextSmallText>
             <GapView height={5} />
-            {shouldRef ? (
-                <TextInput
-                    placeholder={placeholder}
-                    value={typeof value === "string" ? value : String(value)}
-                    placeholderTextColor={
-                        isValid
-                            ? Colors.MAIN.DEFAULT_ITEM.TEXT
-                            : Colors.PRIMARIES.WOR.WOR
-                    }
-                    style={[
-                        styles.textInput,
-                        isValid
-                            ? {
-                                  backgroundColor:
-                                      Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
-                                  borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
-                              }
-                            : {
-                                  backgroundColor:
-                                      Colors.PRIMARIES.WOR.WOR_STROKE,
-                                  borderColor: Colors.PRIMARIES.WOR.WOR,
-                              },
-                    ]}
-                    autoCorrect={false}
-                    multiline={false}
-                    maxLength={length}
-                    textAlign="left"
-                    keyboardType={keyboardType}
-                    // inputMode={keyboardType}
-                    key={GenerateRandomKey(name)}
-                    returnKeyType={returnKeyType}
-                    enterKeyHint={returnKeyType}
-                    onChangeText={(text: string): void => {
-                        changeAction(text);
-                    }}
-                    onSubmitEditing={(): void => focusNextField(nextFieldIndex)}
-                    readOnly={readOnly}
-                    textContentType="none"
-                    ref={(ref: TextInput | null): TextInput | null =>
-                        ref && (refParams.inputRefs.current[refIndex] = ref)
-                    }
-                />
-            ) : (
-                <TextInput
-                    placeholder={placeholder}
-                    value={typeof value === "string" ? value : String(value)}
-                    placeholderTextColor={
-                        isValid
-                            ? Colors.MAIN.DEFAULT_ITEM.TEXT
-                            : Colors.PRIMARIES.WOR.WOR
-                    }
-                    style={[
-                        styles.textInput,
-                        isValid
-                            ? {
-                                  backgroundColor:
-                                      Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
-                                  borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
-                              }
-                            : {
-                                  backgroundColor:
-                                      Colors.PRIMARIES.WOR.WOR_STROKE,
-                                  borderColor: Colors.PRIMARIES.WOR.WOR,
-                              },
-                    ]}
-                    autoCorrect={false}
-                    multiline={false}
-                    maxLength={length}
-                    textAlign="left"
-                    keyboardType={keyboardType}
-                    // inputMode={keyboardType}
-                    key={GenerateRandomKey(name)}
-                    returnKeyType={returnKeyType}
-                    enterKeyHint={returnKeyType}
-                    onChangeText={(text) => {
-                        changeAction(text);
-                    }}
-                    onSubmitEditing={() => focusNextField(nextFieldIndex)}
-                    readOnly={readOnly}
-                    textContentType="none"
-                />
-            )}
+            <TextInput
+                placeholder={placeholder}
+                value={typeof value === "string" ? value : String(value)}
+                placeholderTextColor={
+                    isValid
+                        ? Colors.MAIN.DEFAULT_ITEM.TEXT
+                        : Colors.PRIMARIES.WOR.WOR
+                }
+                style={[
+                    styles.textInput,
+                    isValid
+                        ? {
+                              backgroundColor:
+                                  Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
+                              borderColor: Colors.MAIN.DEFAULT_ITEM.STROKE,
+                          }
+                        : {
+                              backgroundColor: Colors.PRIMARIES.WOR.WOR_STROKE,
+                              borderColor: Colors.PRIMARIES.WOR.WOR,
+                          },
+                ]}
+                autoCorrect={false}
+                multiline={false}
+                maxLength={length}
+                textAlign="left"
+                keyboardType={keyboardType}
+                // inputMode={keyboardType}
+                key={GenerateRandomKey(name)}
+                returnKeyType={returnKeyType}
+                enterKeyHint={returnKeyType}
+                onChangeText={(text: string): void => {
+                    changeAction(text);
+                }}
+                onSubmitEditing={(): void => focusNextField(nextFieldIndex)}
+                readOnly={readOnly}
+                textContentType="none"
+                ref={(ref: TextInput | null): TextInput | null =>
+                    ref && (refParams.inputRefs.current[refIndex] = ref)
+                }
+            />
             {isValid === false && (
                 <>
                     <GapView height={5} />

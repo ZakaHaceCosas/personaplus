@@ -1,4 +1,18 @@
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/app/(tabs)/welcome.tsx
+ * Basically: Welcome to PersonaPlus!
+ *
+ * <=============================================================================>
+ */
+
 import React, {
+    MutableRefObject,
     ReactElement,
     ReactNode,
     useEffect,
@@ -100,13 +114,13 @@ const styles = StyleSheet.create({
 });
 
 // We create the function
-export default function WelcomePage() {
+export default function WelcomePage(): ReactElement {
     const { t } = useTranslation();
     // what "tab" of the page the user's on
     const [currentTab, setTab] = useState<number>(0);
     const amountOfTabs: number = 5;
     // hmm i don't know how to explain this one (but it works)
-    const inputRefs = useRef<TextInput[]>([]);
+    const inputRefs: MutableRefObject<TextInput[]> = useRef<TextInput[]>([]);
 
     // formData
     const [formData, setFormData] = useState<FullProfileForCreation>({
@@ -314,8 +328,9 @@ export default function WelcomePage() {
                     length={length}
                     refParams={{ inputRefs, totalRefs: 4 }}
                     keyboardType={keyboardType}
-                    changeAction={(text) => handleChange(name, text)}
-                    shouldRef={true}
+                    changeAction={(text: string): void =>
+                        handleChange(name, text)
+                    }
                     isValid={isValid}
                     validatorMessage={errorMessage}
                 />
