@@ -25,8 +25,8 @@ import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
 // Then, construct the data function. More onto this later.
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "date",
-    "sources"
-)
+    "sources",
+);
 
 /**
  JSDoc
@@ -38,19 +38,16 @@ export default function yourFunction(
     weight: number,
     // additional params (if needed)
 ): CoreLibraryResponse {
-
-
     // your stuff here :D
 
-
-    const sampleResult = 24
+    const sampleResult = 24;
 
     const response: CoreLibraryResponse = {
         result: sampleResult,
         alternate: sampleAlternateResult, // only if needed
-        context = "context",
-        explanation = "explanation."
-    }
+        context: "context",
+        explanation: "explanation.",
+    };
 
     return response;
 }
@@ -69,6 +66,7 @@ Just `export const { getSources, getLastUpdate }` the data utilities function an
 Then, you just need to create your main function and make it the **default** export. Be sure to give it the correct params and return one of the three valid CoreLibrary Responses. You can just copy & paste from other functions for that.
 
 Whatever you choose as a response, though, you should note that you'll have to define `context` and `explanation`, being both explanatory texts. `context` briefly explaining the received result and `explanation` explaining what does the calculation by itself mean.
+
 > You can always just write "FIXME" or "TODO" as a value, and let someone else (like me) take care of it.
 
 From here, you're now free to go make your contribution - thank you, by the way!

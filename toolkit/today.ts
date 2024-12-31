@@ -134,8 +134,8 @@ function StringifyMinutes(minutes: number): string {
 export {
     ADJUSTED_TODAY,
     AlterDate,
-    JavaScriptifyTodaysDate,
     GetCurrentDateCorrectly,
+    JavaScriptifyTodaysDate,
     StringifyDate,
     StringifyMinutes,
 };

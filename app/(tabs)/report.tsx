@@ -235,7 +235,9 @@ export default function Report() {
                                             Performance:{" "}
                                             {entry.performance === 0
                                                 ? "No data"
-                                                : `${entry.performance.result.toFixed(2)} burnt calories`}
+                                                : `${entry.performance.result.toFixed(
+                                                      2,
+                                                  )} burnt calories`}
                                         </BetterTextSmallText>
                                     </React.Fragment>
                                 ))}

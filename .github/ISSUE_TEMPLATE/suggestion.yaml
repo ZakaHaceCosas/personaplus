@@ -3,29 +3,29 @@ description: "Any ideas on how to improve the app? We'll love to hear them!"
 title: "[SUGGESTION]: "
 labels: ["suggestion"]
 assignees:
-  - ZakaHaceCosas
+    - ZakaHaceCosas
 body:
-  - type: textarea
-    id: suggestion-details
-    attributes:
-      label: Your suggestion
-      description: Explain your suggestion in detail
-      placeholder: What is exactly about that great idea you had?
-    validations:
-      required: true
-  - type: textarea
-    id: benefits
-    attributes:
-      label: Benefits of the suggestion
-      description: Describe how this suggestion will improve the app
-      placeholder: In your own words, why is your idea a great one?
-    validations:
-      required: true
-  - type: textarea
-    id: implementation-ideas
-    attributes:
-      label: Implementation ideas (optional)
-      description: Do you have any ideas on how we could implement this suggestion?
-      placeholder: Write your ideas here. How can we add your idea to the app?
-    validations:
-      required: false
+    - type: textarea
+      id: suggestion-details
+      attributes:
+          label: Your suggestion
+          description: Explain your suggestion in detail
+          placeholder: What is exactly about that great idea you had?
+      validations:
+          required: true
+    - type: textarea
+      id: benefits
+      attributes:
+          label: Benefits of the suggestion
+          description: Describe how this suggestion will improve the app
+          placeholder: In your own words, why is your idea a great one?
+      validations:
+          required: true
+    - type: textarea
+      id: implementation-ideas
+      attributes:
+          label: Implementation ideas (optional)
+          description: Do you have any ideas on how we could implement this suggestion?
+          placeholder: Write your ideas here. How can we add your idea to the app?
+      validations:
+          required: false

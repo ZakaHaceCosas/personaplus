@@ -1,8 +1,8 @@
 import React from "react";
 import Loading from "@/components/static/loading";
 import {
-    BetterTextSmallText,
     BetterTextSmallerText,
+    BetterTextSmallText,
 } from "@/components/text/better_text_presets";
 import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/console";
 import { Logs } from "@/types/logs";

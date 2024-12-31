@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import BetterButton from "@/components/interaction/better_button";
 import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
@@ -19,7 +19,7 @@ import {
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import TopBar from "@/components/navigation/top_bar";
 import GapView from "@/components/ui/gap_view";
 import { ShowToast } from "@/toolkit/android";
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function Dashboard() {
+export default function Dashboard(): ReactElement {
     const { t } = useTranslation();
 
     const [activeObjectives, setActiveObjectives] = useState<

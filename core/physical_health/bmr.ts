@@ -64,7 +64,9 @@ export default function calculateBasalMetabolicRate(
     }
     const bmr: number = sixthStep * activenessIndex;
 
-    const context: string = `Estimate of ${bmr.toPrecision(6)} daily burnt calories.`;
+    const context: string = `Estimate of ${bmr.toPrecision(
+        6,
+    )} daily burnt calories.`;
 
     const response: CoreLibraryResponse = {
         result: bmr,

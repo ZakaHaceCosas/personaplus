@@ -1,7 +1,7 @@
 // UpdateProfile.tsx
 // Update your profile.
 
-import React, { useRef, useState, useEffect, ReactNode } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "expo-sqlite/kv-store";

@@ -6,7 +6,7 @@ import React, {
     useState,
 } from "react";
 import { router } from "expo-router";
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import Swap, { SwapOption } from "@/components/interaction/swap";
 import GapView from "@/components/ui/gap_view";
 import BetterText from "@/components/text/better_text";
@@ -257,14 +257,18 @@ export default function WelcomePage() {
                 return 0;
             } catch (e) {
                 logToConsole(
-                    `Error creating profile! Data: ${JSON.stringify(formData)}\nError: ${e}.`,
+                    `Error creating profile! Data: ${JSON.stringify(
+                        formData,
+                    )}\nError: ${e}.`,
                     "error",
                 );
                 return 1;
             }
         } else {
             logToConsole(
-                `Error saving user data, some data is missing or not valid! JSON is:\n${JSON.stringify(formData)}`,
+                `Error saving user data, some data is missing or not valid! JSON is:\n${JSON.stringify(
+                    formData,
+                )}`,
                 "warn",
                 undefined,
                 true,
@@ -636,7 +640,6 @@ export default function WelcomePage() {
                             0,
                             "default",
                             40,
-
                             IndividualUserDataValidators.username.validator(
                                 formData.username,
                             ),

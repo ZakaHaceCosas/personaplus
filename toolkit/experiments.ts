@@ -90,4 +90,4 @@ async function ToggleExperiment(
     }
 }
 
-export { ToggleExperiment, GetExperiments };
+export { GetExperiments, ToggleExperiment };

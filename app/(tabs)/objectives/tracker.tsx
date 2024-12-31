@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, ReactElement } from "react";
+import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import * as Location from "expo-location";
 import { StyleSheet, View } from "react-native";
 import {

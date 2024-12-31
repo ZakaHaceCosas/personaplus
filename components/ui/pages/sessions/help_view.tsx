@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import BetterText from "@/components/text/better_text";
 import GapView from "@/components/ui/gap_view";
 import BetterButton from "@/components/interaction/better_button";

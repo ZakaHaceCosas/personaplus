@@ -110,7 +110,15 @@ export default function SessionsPageInfoIcons({
                             objective.specificData.estimateSpeed >= 0 &&
                             objective.specificData.estimateSpeed <
                                 speedOptions.length
-                                ? `${speedOptions[objective.specificData.estimateSpeed][0]} (${speedOptions[objective.specificData.estimateSpeed][1]})`
+                                ? `${
+                                      speedOptions[
+                                          objective.specificData.estimateSpeed
+                                      ][0]
+                                  } (${
+                                      speedOptions[
+                                          objective.specificData.estimateSpeed
+                                      ][1]
+                                  })`
                                 : "N/A"
                         }
                     />

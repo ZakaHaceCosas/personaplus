@@ -11,16 +11,23 @@ La PersonaPlus CoreLibrary (antes conocida como "_OpenHealth_") es, como el nomb
 
 ```tsx
 // 1. haz la importación
-import CoreLibrary from "@core/CoreLibrary.ts"
+import CoreLibrary from "@core/CoreLibrary.ts";
 
 // 2. verás que todo está agrupado según el ámbito de la salud al que pertenece
-CoreLibrary.physicalHealth
-CoreLibrary.performance
+CoreLibrary.physicalHealth;
+CoreLibrary.performance;
 // etc...
 
 // 3. todas las funciones tienen nombres descriptivos (en inglés), así te será fácil encontrar lo que buscas
 // proporciona la información necesaria y ya estás listo!
-let bmi = CoreLibrary.physicalHealth.BodyMassIndex.calculate(30, "male", 170, 40, true, true)
+let bmi = CoreLibrary.physicalHealth.BodyMassIndex.calculate(
+    30,
+    "male",
+    170,
+    40,
+    true,
+    true,
+);
 
 // échale un vistazo a DOCS.es.md para un manual completo de lo que hace cada función
 ```

@@ -1,10 +1,10 @@
 <!-- markdownlint-disable-file MD024 -->
+
 # PersonaPlus Developer Changelog
 
 All changes related to the app's development (codebase and others) will be documented in this file.
 
-The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Dates use the DD-MM-YYYY format.
+The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Dates use the DD-MM-YYYY format.
 
 > [!NOTE]
 > For changes related to app itself, see [CHANGELOG.md](CHANGELOG.md).

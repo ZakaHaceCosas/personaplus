@@ -66,25 +66,9 @@ export default function HomeScreen() {
                 style="DEFAULT"
                 preTitle="Generic info from your device"
                 title={`Client details`}
-                bodyText={`Manufacturer: ${Device.manufacturer}\nBrand: ${
-                    Device.brand
-                }\nCodename: ${Device.designName}\nDevice name: ${
-                    Device.deviceName
-                }\nDevice type: ${
-                    Device.deviceType
-                } - Expo's DeviceType Enum\nYear: ${
-                    Device.deviceYearClass
-                }\nIs device or is emulator: ${
+                bodyText={`Manufacturer: ${Device.manufacturer}\nBrand: ${Device.brand}\nCodename: ${Device.designName}\nDevice name: ${Device.deviceName}\nDevice type: ${Device.deviceType} - Expo's DeviceType Enum\nYear: ${Device.deviceYearClass}\nIs device or is emulator: ${
                     Device.isDevice ? "is device" : "is emulator"
-                }\nModel name: ${Device.modelName}\nOS BUILD ID: ${
-                    Device.osBuildId
-                }\nOS NAME + VERSION: ${Device.osName} ${
-                    Device.osVersion
-                }\nANDROID API LEVEL: ${
-                    Device.platformApiLevel
-                }\nProduct name: ${Device.productName}\nTotal memory: ${
-                    Device.totalMemory
-                } (in bytes)`}
+                }\nModel name: ${Device.modelName}\nOS BUILD ID: ${Device.osBuildId}\nOS NAME + VERSION: ${Device.osName} ${Device.osVersion}\nANDROID API LEVEL: ${Device.platformApiLevel}\nProduct name: ${Device.productName}\nTotal memory: ${Device.totalMemory} (in bytes)`}
                 layout="alert"
             />
             <GapView height={20} />

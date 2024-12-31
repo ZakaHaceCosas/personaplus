@@ -20,13 +20,21 @@ const toBeWithinMargin: MatcherFunction<[expected: number, margin?: number]> =
         if (pass) {
             return {
                 message: (): string =>
-                    `expected ${this.utils.printReceived(received)} not to be within ${margin} of ${this.utils.printExpected(expected)}`,
+                    `expected ${this.utils.printReceived(
+                        received,
+                    )} not to be within ${margin} of ${this.utils.printExpected(
+                        expected,
+                    )}`,
                 pass: true,
             };
         } else {
             return {
                 message: (): string =>
-                    `expected ${this.utils.printReceived(received)} to be within ${margin} of ${this.utils.printExpected(expected)}`,
+                    `expected ${this.utils.printReceived(
+                        received,
+                    )} to be within ${margin} of ${this.utils.printExpected(
+                        expected,
+                    )}`,
                 pass: false,
             };
         }

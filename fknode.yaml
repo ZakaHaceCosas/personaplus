@@ -3,7 +3,7 @@ prettyCmd: "prettify"
 destroy:
     intensities: ["*"]
     targets:
-      - ".expo/"
+        - ".expo/"
 commitActions: true
 commitMessage: "(chore) code quality task (automated by F*ckingNode)"
 updateCmdOverride: "dep:fix"
