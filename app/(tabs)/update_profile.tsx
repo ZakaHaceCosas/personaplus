@@ -1,7 +1,23 @@
-// UpdateProfile.tsx
-// Update your profile.
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/app/(tabs)/update_profile.tsx
+ * Basically: A page for you to update your profile.
+ *
+ * <=============================================================================>
+ */
 
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, {
+    MutableRefObject,
+    ReactNode,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import { router } from "expo-router";
 import AsyncStorage from "expo-sqlite/kv-store";
@@ -45,10 +61,10 @@ export default function UpdateProfile() {
     const [workingData, setWorkingData] = useState<BasicUserData>(); // Store previous data
 
     // Fetch all user data
-    useEffect(() => {
-        async function handle() {
+    useEffect((): void => {
+        async function handle(): Promise<void> {
             try {
-                const data = await OrchestrateUserData("basic");
+                const data: BasicUserData = await OrchestrateUserData("basic");
                 if (!data) {
                     router.replace(Routes.MAIN.WELCOME_SCREEN);
                     throw new Error("no work data");
@@ -65,9 +81,9 @@ export default function UpdateProfile() {
     const genderOptions: SwapOption[] = GetStuffForUserDataQuestion(
         "gender",
     ) as SwapOption[];
-    const inputRefs = useRef<TextInput[]>([]);
+    const inputRefs: MutableRefObject<TextInput[]> = useRef<TextInput[]>([]);
 
-    async function submit() {
+    async function submit(): Promise<void> {
         if (workingData && ValidateUserData(workingData, "Basic")) {
             try {
                 const data: FullProfile = await OrchestrateUserData();
@@ -134,12 +150,15 @@ export default function UpdateProfile() {
                     refParams={{ inputRefs, totalRefs: 4 }}
                     keyboardType={keyboardType}
                     changeAction={(text: string): void =>
-                        setWorkingData((prev: BasicUserData | undefined) => ({
-                            ...prev!,
-                            [name]: text,
-                        }))
+                        setWorkingData(
+                            (
+                                prev: BasicUserData | undefined,
+                            ): BasicUserData => ({
+                                ...prev!,
+                                [name]: text,
+                            }),
+                        )
                     }
-                    shouldRef={true}
                     isValid={isValid}
                     validatorMessage={errorMessage}
                 />
@@ -262,10 +281,12 @@ export default function UpdateProfile() {
                 options={genderOptions}
                 value={workingData!.gender}
                 onValueChange={(value: string | null): void =>
-                    setWorkingData((prev) => ({
-                        ...prev!,
-                        gender: value as "male" | "female",
-                    }))
+                    setWorkingData(
+                        (prev: BasicUserData | undefined): BasicUserData => ({
+                            ...prev!,
+                            gender: value as "male" | "female",
+                        }),
+                    )
                 }
                 order="horizontal"
             />
@@ -280,7 +301,7 @@ export default function UpdateProfile() {
                 <GapView width={10} />
                 <BetterButton
                     style="ACE"
-                    action={async () => {
+                    action={async (): Promise<void> => {
                         await submit();
                     }}
                     buttonText={t("globals.interaction.save")}
