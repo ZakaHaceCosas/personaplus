@@ -75,21 +75,11 @@ local.properties
 # assets meant for public repo
 **/assets/design/**
 
-# markdown, only meant for public repo, not the app
-**/README.md
-**/README.es.md
-**/PRIVACY.md
-**/SECURITY.md
-**/LICENSE.md
-# (license still ships to production, don't worry (see app/License.tsx))
-**/DOCS.md
-**/DOCS.es.md
-**/CONTRIBUTING.md
-**/FIXED_ERROR_LOG.md
-**/CODE_OF_CONDUCT.md
-**/CHANGELOG.md
-**/CHANGELOG_DEV.md
-**/USAGE.md
-**/USAGE.es
+# files only meant for public repo, not the app
+**/.md
+**/.yaml
+**/.vscode/**
+**/__tests__/**
 
+# pre-build opt-out
 **/android/**
