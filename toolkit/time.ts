@@ -1,6 +1,27 @@
+/**
+ * An object that stores hours, minutes, and seconds numeric values.
+ *
+ * @export
+ * @interface Time
+ */
 export interface Time {
+    /**
+     * Hours.
+     *
+     * @type {?number}
+     */
     hours?: number;
+    /**
+     * Minutes.
+     *
+     * @type {?number}
+     */
     minutes?: number;
+    /**
+     * Seconds.
+     *
+     * @type {?number}
+     */
     seconds?: number;
 }
 

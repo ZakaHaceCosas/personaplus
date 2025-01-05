@@ -1,21 +1,21 @@
 import AsyncStorage from "expo-sqlite/kv-store";
-import { Log, LogTraceback } from "@/types/logs";
+import { Log, Logs, LogTraceback } from "@/types/logs";
 import StoredItemNames from "@/constants/stored_item_names";
 import { ShowToast } from "../android";
 
 /**
  * Returns logs saved on the AsyncStorage.
  *
- * @returns {Log[]} A Log array (`Log[]`)
+ * @returns {Logs} A Log array (`Logs`)
  */
-export function getLogsFromStorage(): Log[] {
+export function getLogsFromStorage(): Logs {
     try {
         const logsString: string | null = AsyncStorage.getItemSync(
             StoredItemNames.consoleLogs,
         );
         if (!logsString) return [];
         try {
-            const parsedLogs = JSON.parse(logsString);
+            const parsedLogs: Logs = JSON.parse(logsString);
             if (Array.isArray(parsedLogs)) {
                 return parsedLogs;
             } else {
@@ -55,8 +55,8 @@ export function getLogsFromStorage(): Log[] {
  */
 function addLogToGlobal(log: Log): 0 | 1 {
     try {
-        const currentLogs: Log[] = getLogsFromStorage();
-        const updatedLogs: Log[] = [...currentLogs, log];
+        const currentLogs: Logs = getLogsFromStorage();
+        const updatedLogs: Logs = [...currentLogs, log];
         AsyncStorage.setItemSync(
             StoredItemNames.consoleLogs,
             JSON.stringify(updatedLogs),

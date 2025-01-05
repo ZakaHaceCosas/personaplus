@@ -1,9 +1,9 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import getCommonScreenSize from "@/constants/screen";
 import { StyleSheet, Text, View } from "react-native";
 import { BetterTextSmallText } from "../text/better_text_presets";
 import GapView from "./gap_view";
-import { Logs } from "@/types/logs";
+import { Log, Logs } from "@/types/logs";
 import Colors from "@/constants/colors";
 
 const styles = StyleSheet.create({
@@ -37,13 +37,26 @@ const styles = StyleSheet.create({
     },
 });
 
+/**
+ * Renders a console view with the given logs.
+ * @author ZakaHaceCosas
+ *
+ * @export
+ * @param {{
+ *     logs: Logs;
+ *     errorOnly: boolean;
+ * }} p0
+ * @param {Logs} p0.logs Logs to be rendered.
+ * @param {boolean} p0.errorOnly If true, only warning and error logs from your `Logs` array will be shown.
+ * @returns {ReactElement}
+ */
 export default function Console({
     logs,
     errorOnly,
 }: {
     logs: Logs;
     errorOnly: boolean;
-}) {
+}): ReactElement {
     const timeFormatOptions: Intl.DateTimeFormatOptions = {
         day: "2-digit",
         month: "2-digit",
@@ -54,11 +67,11 @@ export default function Console({
         hour12: false, // 24h format
     };
 
-    const errorLogs = logs.filter(
-        (log) => log.type === "warn" || log.type === "error",
+    const errorLogs: Logs = logs.filter(
+        (log: Log): boolean => log.type === "warn" || log.type === "error",
     );
 
-    const workingLogs = errorOnly ? errorLogs : logs;
+    const workingLogs: Logs = errorOnly ? errorLogs : logs;
 
     if (errorLogs.length === 0) {
         if (errorOnly) {
@@ -88,11 +101,11 @@ export default function Console({
 
     return (
         <View style={styles.consoleView}>
-            {workingLogs.map((log, index) => {
+            {workingLogs.map((log: Log, index: number): ReactElement => {
                 const logStyle = styles[log.type] || {};
 
                 // formats date in a more sense-making way than what R5 used to do
-                const formattedDate = new Date(log.timestamp)
+                const formattedDate: string = new Date(log.timestamp)
                     .toLocaleString("es-ES", timeFormatOptions)
                     .replace(",", "");
 
