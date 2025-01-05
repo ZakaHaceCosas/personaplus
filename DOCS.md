@@ -37,8 +37,6 @@ It is a simple yet functional structure. Remember we use `@` to mark the root of
 
 ### Understanding comments
 
-<!-- NOTE: uncomment when we actually start using them again. the only one (for raw R5 code) is gone). JSDoc does not support "custom properties" whatsoever, yet that doesn't stop us from writing them down. We use them to avoid text repetition. -->
-
 We use certain keywords in comments, so it's easier to find problems when anyone wants to contribute to the project. You know we always tend to add stuff like "TODO" to our comments, right? Well, we don't only use TODO but also a few extra words:
 
 ```ts
@@ -342,7 +340,9 @@ if (usesPersonaPlus) {
 const isCool = usesPersonaPlus ? "yes" : "no :(";
 ```
 
-Type everything, use JSDoc as extensively as possible. If using a JSDoc generator extension (which we recommend), remove the `@typedef` prop if generated.
+Type everything exhaustively. Even basic types like `string` and `number` are _recommended_ - of course you don't need to waste your time with this, but preventing the TypeScript LSP from inferring so many times can slightly reduce editor launch time, so every type is acknowledge.
+
+Also, use JSDoc as extensively as possible. If using a JSDoc generator extension (which we recommend), remove the `@typedef` prop if generated; it breaks stuff on VSCode.
 
 ## 4. Contributing your cool code in a cool way
 
