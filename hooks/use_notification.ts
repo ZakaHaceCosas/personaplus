@@ -15,7 +15,7 @@ import {
     scheduleNotificationAsync,
     setNotificationChannelAsync,
 } from "expo-notifications";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import Constants from "expo-constants";
 import { TFunction } from "i18next";
 import GenerateRandomMessage from "@/toolkit/random_message";

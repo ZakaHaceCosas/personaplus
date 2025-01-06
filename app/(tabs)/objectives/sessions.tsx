@@ -25,7 +25,7 @@ import {
 } from "expo-router";
 import BetterText from "@/components/text/better_text";
 import GapView from "@/components/ui/gap_view";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import { useTranslation } from "react-i18next";
 import BetterButton from "@/components/interaction/better_button";
 import SessionsPageInfoIcons from "@/components/ui/pages/sessions/info_icons";

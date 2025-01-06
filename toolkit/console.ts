@@ -1,7 +1,20 @@
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/toolkit/console.ts
+ * Basically: A toolkit for console logging.
+ *
+ * <=============================================================================>
+ */
+
 import AsyncStorage from "expo-sqlite/kv-store";
 import { Log, Logs, LogTraceback } from "@/types/logs";
 import StoredItemNames from "@/constants/stored_item_names";
-import { ShowToast } from "../android";
+import { ShowToast } from "./android";
 
 /**
  * Returns logs saved on the AsyncStorage.
@@ -26,7 +39,7 @@ export function getLogsFromStorage(): Logs {
                 `Error parsing logs from AsyncStorage: ${e}`,
                 "\nTRACEBACK\n", // these hope that the terminal auto-formats the JSON from the traceback as it would do in the browser
                 {
-                    location: "@/toolkit/debug/console.ts",
+                    location: "@/toolkit/console.ts",
                     function: "getLogsFromStorage()",
                     isHandler: false,
                 },
@@ -38,7 +51,7 @@ export function getLogsFromStorage(): Logs {
             `Error accessing logs from AsyncStorage: ${e}`,
             "\nTRACEBACK\n",
             {
-                location: "@/toolkit/debug/console.ts",
+                location: "@/toolkit/console.ts",
                 function: "getLogsFromStorage()",
                 isHandler: false,
             },

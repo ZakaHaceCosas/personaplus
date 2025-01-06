@@ -8,7 +8,7 @@ import {
 import GapView from "@/components/ui/gap_view";
 import { Routes } from "@/constants/routes";
 import StoredItemNames from "@/constants/stored_item_names";
-import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/console";
+import { getLogsFromStorage, logToConsole } from "@/toolkit/console";
 import { Logs } from "@/types/logs";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { router } from "expo-router";

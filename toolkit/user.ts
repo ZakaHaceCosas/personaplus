@@ -12,7 +12,7 @@
  */
 
 import AsyncStorage from "expo-sqlite/kv-store";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import { Alert } from "react-native";
 import {
     BasicUserData,

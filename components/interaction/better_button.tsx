@@ -19,7 +19,7 @@ import FontSizes from "@/constants/font_sizes";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
 import { Color, PrimaryColorsType } from "@/types/color";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import GapView from "../ui/gap_view";
 
 // TypeScript, supongo

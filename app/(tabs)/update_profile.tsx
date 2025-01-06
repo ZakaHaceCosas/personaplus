@@ -23,7 +23,7 @@ import { router } from "expo-router";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import {
     IndividualUserDataValidators,
     OrchestrateUserData,

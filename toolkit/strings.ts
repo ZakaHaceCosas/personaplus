@@ -1,35 +1,37 @@
 /**
- * Handles pluralization of strings
- * @author ZakaHaceCosas (actually, I borrowed this code from [here](https://github.com/SokoraDesu/Sokora/blob/dev/src/utils/pluralOrNot.ts) ngl)
+ * Handles pluralization of strings.
+ * @author ZakaHaceCosas (Borrowed from [here](https://github.com/SokoraDesu/Sokora/blob/dev/src/utils/pluralOrNot.ts) ngl)
  *
  * @export
- * @param {string} word Word to pluralize (or not)
- * @param {number} numberToCheck Number that's associated to the word
- * @param {("es" | "en")} lang Language to be used. This affects rules used for pluralization.
- * @returns {string} The word to be pluralized with the `numberToCheck` preceding it.
+ * @param {string} word The word itself.
+ * @param {number} numberToCheck The number you depend on to check if you should be using plural or singular.
+ * @param {("es" | "en")} lang Pass the user's language. Most places are already fetching UserData anyway - this is better than making this function async ;).
+ * @returns {string} The string.
  */
 export function PluralOrNot(
     word: string,
     numberToCheck: number,
     lang: "es" | "en",
 ): string {
-    if (numberToCheck === 1) return `1 ${word}`;
+    if (numberToCheck === 1) return word;
 
-    function pluralize(lang: "es" | "en"): string {
-        if (lang === "es") {
-            if (word.endsWith("z")) {
-                return word.slice(0, -1) + "ces"; // lápiz -> lápices
-            } else if (word.endsWith("ón")) {
-                return word.slice(0, -2) + "ones"; // flexión -> flexiones
-            } else if (!word.endsWith("s")) {
-                return `${word}s`;
-            } else {
-                return word;
-            }
-        } /* else if (lang === "en") */ else {
-            return word.endsWith("y") ? `${word.slice(0, -1)}ies` : `${word}s`;
+    if (lang === "en") {
+        return word.charAt(word.length - 1) === "y"
+            ? `${word.slice(0, -1)}ies` // "city" -> "cities"
+            : `${word}s`; // "constant" -> "constants"
+    }
+
+    if (lang === "es") {
+        if (word.endsWith("z")) {
+            return `${word.slice(0, -1)}ces`; // "luz" -> "luces"
+        } else if (word.endsWith("ión")) {
+            return `${word.slice(0, -3)}iones`; // "canción" -> "canciones"
+        } else if (word.endsWith("s")) {
+            return word; // already plural, probably
+        } else {
+            return `${word}s`; // General: "libro" -> "libros"
         }
     }
 
-    return `${numberToCheck} ${pluralize(lang)}`;
+    return word;
 }

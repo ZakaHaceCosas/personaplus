@@ -36,7 +36,7 @@ import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
 import Select, { SelectOption } from "@/components/interaction/select";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import BetterButton from "@/components/interaction/better_button";
 import getCommonScreenSize from "@/constants/screen";
 import PageEnd from "@/components/static/page_end";

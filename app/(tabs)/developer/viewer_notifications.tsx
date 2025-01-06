@@ -6,7 +6,7 @@ import {
     BetterTextSmallText,
 } from "@/components/text/better_text_presets";
 import GapView from "@/components/ui/gap_view";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import {
     getAllScheduledNotificationsAsync,
     NotificationRequest,

@@ -4,7 +4,7 @@ import PageEnd from "@/components/static/page_end";
 import { BetterTextSmallText } from "@/components/text/better_text_presets";
 import BetterTable, { BetterTableItem } from "@/components/ui/better_table";
 import GapView from "@/components/ui/gap_view";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import { OrchestrateUserData } from "@/toolkit/user";
 import { FullProfile } from "@/types/user";
 import React, { useEffect, useState } from "react";

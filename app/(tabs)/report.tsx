@@ -11,7 +11,7 @@ import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
 import CoreLibrary from "@/core/core";
 import { OrchestrateUserData } from "@/toolkit/user";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import { useEffect, useState } from "react";
 import TopBar from "@/components/navigation/top_bar";
 import { useTranslation } from "react-i18next";

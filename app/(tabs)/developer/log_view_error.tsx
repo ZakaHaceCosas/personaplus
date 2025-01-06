@@ -4,7 +4,7 @@ import {
     BetterTextSmallerText,
     BetterTextSmallText,
 } from "@/components/text/better_text_presets";
-import { getLogsFromStorage, logToConsole } from "@/toolkit/debug/console";
+import { getLogsFromStorage, logToConsole } from "@/toolkit/console";
 import { Logs } from "@/types/logs";
 import { useEffect, useState } from "react";
 import GapView from "@/components/ui/gap_view";

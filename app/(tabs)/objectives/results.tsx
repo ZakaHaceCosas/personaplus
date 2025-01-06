@@ -19,7 +19,7 @@ import {
     areNotificationsScheduledForToday,
     cancelScheduledNotifications,
 } from "@/hooks/use_notification";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import { GetAllPendingObjectives } from "@/toolkit/objectives/active_objectives";
 
 export default function Results() {
