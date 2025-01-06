@@ -1,10 +1,13 @@
 // Results.tsx
 // Results page for when a session is done.
 
-import React, { useEffect, useState } from "react";
-import { router, useGlobalSearchParams } from "expo-router";
+import React, { ReactElement, useEffect, useState } from "react";
+import {
+    router,
+    UnknownOutputParams,
+    useGlobalSearchParams,
+} from "expo-router";
 import { useTranslation } from "react-i18next";
-import GenerateRandomMessage from "@/toolkit/random_message";
 import GapView from "@/components/ui/gap_view";
 import Section from "@/components/ui/sections/section";
 import Division from "@/components/ui/sections/division";
@@ -21,17 +24,20 @@ import {
 } from "@/hooks/use_notification";
 import { logToConsole } from "@/toolkit/console";
 import { GetAllPendingObjectives } from "@/toolkit/objectives/active_objectives";
+import { GenerateRandomMessage } from "@/toolkit/strings";
 
-export default function Results() {
+export default function Results(): ReactElement {
     // Params
-    const originalParams = useGlobalSearchParams();
-    const parseNumber = (value: any) => Number(value) || 0;
+    const originalParams: UnknownOutputParams = useGlobalSearchParams();
+    const parseNumber: (value: string | string[]) => number = (
+        value: string | string[],
+    ): number => Number(value) || 0;
     const [userData, setUserData] = useState<FullProfile>();
     const [notificationsHandled, setNotificationsHandled] =
         useState<boolean>(false);
     const { t } = useTranslation();
 
-    useEffect(() => {
+    useEffect((): void => {
         async function fetchData(): Promise<void> {
             try {
                 // fetch user
@@ -55,7 +61,7 @@ export default function Results() {
         id: parseNumber(originalParams.identifier),
     };
 
-    useEffect(() => {
+    useEffect((): void => {
         async function handle(): Promise<void> {
             if (notificationsHandled || !userData) return;
 
@@ -98,7 +104,7 @@ export default function Results() {
             </BetterText>
             <GapView height={10} />
             <BetterButton
-                action={() => {
+                action={(): void => {
                     router.replace(Routes.MAIN.HOME);
                 }}
                 style="ACE"
