@@ -5,7 +5,7 @@ import { BetterTextSmallText } from "../text/better_text_presets";
 import GapView from "./gap_view";
 import { Log, Logs } from "@/types/logs";
 import Colors from "@/constants/colors";
-import { Color } from "@/types/color";
+import { HexColorString } from "@/types/color";
 
 const styles = StyleSheet.create({
     consoleView: {
@@ -103,8 +103,10 @@ export default function Console({
     return (
         <View style={styles.consoleView}>
             {workingLogs.map((log: Log, index: number): ReactElement => {
-                const logStyle: { color: Color; borderLeftColor: Color } =
-                    styles[log.type];
+                const logStyle: {
+                    color: HexColorString;
+                    borderLeftColor: HexColorString;
+                } = styles[log.type];
 
                 // formats date in a more sense-making way than what R5 used to do
                 const formattedDate: string = new Date(log.timestamp)

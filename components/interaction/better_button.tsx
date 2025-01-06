@@ -17,7 +17,7 @@ import BetterText from "@/components/text/better_text";
 import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
-import { Color, PrimaryColorsType } from "@/types/color";
+import { HexColorString, PrimaryColorsType } from "@/types/color";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import { logToConsole } from "@/toolkit/console";
 import GapView from "../ui/gap_view";
@@ -29,7 +29,7 @@ interface BetterButtonIcon {
     /** Size in px. */
     size: number;
     /** Icon color. */
-    color: Color;
+    color: HexColorString;
 }
 
 /**
