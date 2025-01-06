@@ -10,6 +10,7 @@ import {
     getExpoPushTokenAsync,
     getPermissionsAsync,
     NotificationRequest,
+    PermissionStatus,
     requestPermissionsAsync,
     SchedulableTriggerInputTypes,
     scheduleNotificationAsync,
@@ -18,8 +19,8 @@ import {
 import { logToConsole } from "@/toolkit/console";
 import Constants from "expo-constants";
 import { TFunction } from "i18next";
-import GenerateRandomMessage from "@/toolkit/random_message";
 import { ShowToast } from "@/toolkit/android";
+import { GenerateRandomMessage } from "@/toolkit/strings";
 
 /**
  * Function to register for using the push notifications.
@@ -43,7 +44,7 @@ async function registerForPushNotificationsAsync(
         }
 
         const { status: existingStatus } = await getPermissionsAsync();
-        let finalStatus = existingStatus;
+        let finalStatus: PermissionStatus = existingStatus;
         if (existingStatus !== "granted") {
             const { status } = await requestPermissionsAsync();
             finalStatus = status;
@@ -127,8 +128,8 @@ export async function handleNotificationsAsync(
  * This function registers today's reminders.
  *
  * @async
- * @param t Pass here the translate function
- * @param {boolean} shouldTell if true, the user is told about the change.
+ * @param {number} amountOfNotifications Amount of notifications to be registered.
+ * @param {TFunction} t Pass here the translate function
  * @returns {boolean} True if everything went alright, false if otherwise. Should log the try-catch error to termLog.
  */
 export async function scheduleRandomNotifications(
@@ -142,7 +143,7 @@ export async function scheduleRandomNotifications(
 
         const scheduledNotifications: NotificationIdentifier[] = [];
 
-        for (let i = 0; i < amountOfNotifications; i++) {
+        for (let i: number = 0; i < amountOfNotifications; i++) {
             const randomMessage: string = GenerateRandomMessage(
                 "activeObjectiveReminders",
                 t,

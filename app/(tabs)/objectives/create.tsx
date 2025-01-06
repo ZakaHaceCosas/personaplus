@@ -30,7 +30,6 @@ import {
     ValidateActiveObjective,
     WeekTuple,
 } from "@/types/active_objectives";
-import GenerateRandomMessage from "@/toolkit/random_message";
 import BetterText from "@/components/text/better_text";
 import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
@@ -55,6 +54,7 @@ import { GetExperiments } from "@/toolkit/experiments";
 import TopBar from "@/components/navigation/top_bar";
 import { ShowToast } from "@/toolkit/android";
 import { GetCurrentDateCorrectly } from "@/toolkit/today";
+import { GenerateRandomMessage } from "@/toolkit/strings";
 
 const styles = StyleSheet.create({
     dayContainer: {

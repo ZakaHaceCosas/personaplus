@@ -36,7 +36,6 @@ import SessionsPageHelpView from "@/components/ui/pages/sessions/help_view";
 import { ActiveObjective, SessionParams } from "@/types/active_objectives";
 import getCommonScreenSize from "@/constants/screen";
 import IslandDivision from "@/components/ui/sections/island_division";
-import GenerateRandomMessage from "@/toolkit/random_message";
 import { Routes } from "@/constants/routes";
 import { Color } from "@/types/color";
 import { BasicUserHealthData } from "@/types/user";
@@ -45,6 +44,7 @@ import { ShowToast } from "@/toolkit/android";
 import SessionTimer from "@/components/ui/pages/sessions/timer";
 import { StringifyMinutes } from "@/toolkit/today";
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
+import { GenerateRandomMessage } from "@/toolkit/strings";
 
 const styles = StyleSheet.create({
     mainView: {

@@ -1,3 +1,19 @@
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/toolkit/strings
+ * Basically: Various string-related utilities.
+ *
+ * <=============================================================================>
+ */
+
+import { logToConsole } from "@/toolkit/console";
+import { TFunction } from "i18next";
+
 /**
  * Handles pluralization of strings.
  * @author ZakaHaceCosas (Borrowed from [here](https://github.com/SokoraDesu/Sokora/blob/dev/src/utils/pluralOrNot.ts) ngl)
@@ -8,7 +24,7 @@
  * @param {("es" | "en")} lang Pass the user's language. Most places are already fetching UserData anyway - this is better than making this function async ;).
  * @returns {string} The string.
  */
-export function PluralOrNot(
+function PluralOrNot(
     word: string,
     numberToCheck: number,
     lang: "es" | "en",
@@ -35,3 +51,38 @@ export function PluralOrNot(
 
     return word;
 }
+
+/**
+ * Generates a random message for certain parts of the UI to make the app feel more friendly. *Due to React's Rules of Hooks, you need to manually pass the `t`(translate) function as the second param.*
+ *
+ * @export
+ * @param {string} target The type of random message you're seeking. It uses the name of the `translations/*.json` files, e.g. "`allObjectivesDone`" will return a random message from `coolRandomMessages.allObjectivesDone`.
+ * @param {TFunction} t Pass the translate function
+ * @returns {string} A random message string.
+ */
+function GenerateRandomMessage(
+    target:
+        | "allObjectivesDone"
+        | "sessionCompleted"
+        | "activeObjectiveReminders"
+        | "createActiveObjective",
+    t: TFunction,
+): string {
+    // Get all messages for the specified target
+    // so the app feels more friendly :D
+    const allMessages = t(`coolRandomMessages.${target}`, {
+        returnObjects: true,
+    });
+
+    // Handle case where no messages are found
+    if (!Array.isArray(allMessages) || allMessages.length === 0) {
+        logToConsole(`No messages found for target: ${target}`, "warn");
+        throw new Error(`No messages found for target: ${target}`);
+    }
+
+    // Choose a random message
+    const randomIndex: number = Math.floor(Math.random() * allMessages.length);
+    return allMessages[randomIndex];
+}
+
+export { GenerateRandomMessage, PluralOrNot };
