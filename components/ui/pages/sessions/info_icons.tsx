@@ -18,6 +18,8 @@ import { ActiveObjective } from "@/types/active_objectives";
 import Colors from "@/constants/colors";
 import { useTranslation } from "react-i18next";
 import IconView from "../../icon_view";
+import { PluralOrNot } from "@/toolkit/strings";
+import { StringifyMinutes } from "@/toolkit/today";
 
 const styles = StyleSheet.create({
     iconContainer: {
@@ -80,6 +82,22 @@ export default function SessionsPageInfoIcons({
         [t("Maximum Speed"), t("more than 16.1 km/h")],
     ];
 
+    const restsString: string = PluralOrNot(
+        t("pages.sessions.rests", {
+            rests: objective.info.rests,
+        }),
+        objective.info.rests,
+        "en", // TODO - should use userData, though it's not really needed (rest/rests & descanso/descansos work both with english ruling)
+    );
+
+    const handsString: string = PluralOrNot(
+        t("pages.sessions.hands", {
+            hands: objective.specificData.amountOfHands,
+        }),
+        objective.specificData.amountOfHands,
+        "en", // TODO - also this
+    );
+
     return (
         <>
             <View style={styles.iconContainer}>
@@ -90,10 +108,7 @@ export default function SessionsPageInfoIcons({
                     text={
                         objective.info.rests === 0
                             ? t("globals.interaction.none")
-                            : t("pages.sessions.rests", {
-                                  rests: objective.info.rests,
-                                  duration: objective.info.restDurationMinutes,
-                              })
+                            : `${restsString} (${StringifyMinutes(objective.info.restDurationMinutes)})`
                     }
                 />
             </View>
@@ -110,15 +125,11 @@ export default function SessionsPageInfoIcons({
                             objective.specificData.estimateSpeed >= 0 &&
                             objective.specificData.estimateSpeed <
                                 speedOptions.length
-                                ? `${
-                                      speedOptions[
-                                          objective.specificData.estimateSpeed
-                                      ][0]
-                                  } (${
+                                ? `~${
                                       speedOptions[
                                           objective.specificData.estimateSpeed
                                       ][1]
-                                  })`
+                                  }`
                                 : "N/A"
                         }
                     />
@@ -130,10 +141,7 @@ export default function SessionsPageInfoIcons({
                         color={Colors.BASIC.WHITE}
                         text={
                             objective?.specificData?.amountOfHands !== undefined
-                                ? t("pages.sessions.hands", {
-                                      hands: objective.specificData
-                                          .amountOfHands,
-                                  })
+                                ? handsString
                                 : "N/A"
                         }
                     />
@@ -147,11 +155,16 @@ export default function SessionsPageInfoIcons({
                             text={
                                 objective?.specificData?.amountOfPushUps !==
                                 undefined
-                                    ? t("pages.sessions.pushUps", {
-                                          pushUps:
-                                              objective.specificData
-                                                  .amountOfPushUps,
-                                      })
+                                    ? PluralOrNot(
+                                          t("pages.sessions.pushUps", {
+                                              pushUps:
+                                                  objective.specificData
+                                                      .amountOfPushUps,
+                                          }),
+                                          objective.specificData
+                                              .amountOfPushUps,
+                                          "en",
+                                      )
                                     : "N/A"
                             }
                         />
@@ -163,10 +176,7 @@ export default function SessionsPageInfoIcons({
                             text={
                                 objective?.specificData?.amountOfHands !==
                                 undefined
-                                    ? t("pages.sessions.hands", {
-                                          hands: objective.specificData
-                                              .amountOfHands,
-                                      })
+                                    ? handsString
                                     : "N/A"
                             }
                         />
