@@ -7,7 +7,7 @@ import {
 } from "@/components/text/better_text_presets";
 import BetterTable, { BetterTableItem } from "@/components/ui/better_table";
 import GapView from "@/components/ui/gap_view";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import { GetAllObjectives } from "@/toolkit/objectives/active_objectives";
 import { ActiveObjective } from "@/types/active_objectives";
 import React, { useEffect, useState } from "react";

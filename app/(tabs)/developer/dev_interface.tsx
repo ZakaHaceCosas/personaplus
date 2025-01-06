@@ -9,7 +9,7 @@ import BetterAlert from "@/components/ui/better_alert";
 import GapView from "@/components/ui/gap_view";
 import { Routes } from "@/constants/routes";
 import StoredItemNames from "@/constants/stored_item_names";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import AsyncStorage from "expo-sqlite/kv-store";
 import * as Device from "expo-device";
 import { router } from "expo-router";

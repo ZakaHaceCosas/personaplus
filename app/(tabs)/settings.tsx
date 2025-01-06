@@ -1,7 +1,7 @@
 import BetterButton from "@/components/interaction/better_button";
 import Loading from "@/components/static/loading";
 import Division from "@/components/ui/sections/division";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import React, { useEffect, useState } from "react";
 import StoredItemNames from "@/constants/stored_item_names";
 import AsyncStorage from "expo-sqlite/kv-store";

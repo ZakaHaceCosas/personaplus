@@ -1,5 +1,5 @@
 import { router } from "expo-router";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import { Routes } from "@/constants/routes";
 import { URLValues } from "@/constants/urls";
 import { Linking } from "react-native";

@@ -1,4 +1,4 @@
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import { TFunction } from "i18next";
 
 /**

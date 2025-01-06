@@ -4,7 +4,7 @@ import type { FullProfile } from "@/types/user";
 import BetterButton from "@/components/interaction/better_button";
 import { ErrorUserData, OrchestrateUserData } from "@/toolkit/user";
 import { router } from "expo-router";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import { Routes } from "@/constants/routes";
 import { useEffect, useState } from "react";
 import Section from "@/components/ui/sections/section";

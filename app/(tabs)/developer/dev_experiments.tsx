@@ -26,7 +26,7 @@ import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
 import { GetExperiments, ToggleExperiment } from "@/toolkit/experiments";
 import { SafelyGoBack } from "@/toolkit/routing";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import { Experiment, Experiments } from "@/types/user";
 import { Alert } from "react-native";
 import TopBar from "@/components/navigation/top_bar";

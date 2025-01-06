@@ -5,7 +5,7 @@
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
  *
- * You are in: @&toolkit/debug/today.ts
+ * You are in: @&toolkit/today.ts
  * Basically: Attempt to reduce the headache of dealing with JS dates within the project.
  *
  * <=============================================================================>
@@ -86,7 +86,6 @@ function JavaScriptifyTodaysDate(date: TodaysDate): Date {
 /**
  * Alters a given date, shifting it by the amount of days provided. You can pass negatives.
  *
- * @export
  * @param {TodaysDateObject} date Date to alter
  * @param {number} shift Amount of days to shift
  * @returns {TodaysDateObject} Shifted date
@@ -131,6 +130,95 @@ function StringifyMinutes(minutes: number): string {
     return `${duration} ${word}`;
 }
 
+/**
+ * An object that stores hours, minutes, and seconds numeric values.
+ *
+ * @interface TimeObject
+ */
+interface TimeObject {
+    /**
+     * Hours.
+     *
+     * @type {?number}
+     */
+    hours?: number;
+    /**
+     * Minutes.
+     *
+     * @type {?number}
+     */
+    minutes?: number;
+    /**
+     * Seconds.
+     *
+     * @type {?number}
+     */
+    seconds?: number;
+}
+
+/**
+ * Formats a time string, from a `TimeObject` to a "HH:MM:SS" string.
+ *
+ * @param {TimeObject} time The `TimeObject`.
+ * @returns {string} A formatted "HH:MM:SS" string.
+ */
+function formatTimeString({ hours, minutes, seconds }: TimeObject): string {
+    const timeParts: string[] = [];
+
+    if (hours !== undefined) {
+        timeParts.push(hours.toString().padStart(2, "0"));
+    }
+    if (minutes !== undefined) {
+        timeParts.push(minutes.toString().padStart(2, "0"));
+    }
+    if (seconds !== undefined) {
+        timeParts.push(seconds.toString().padStart(2, "0"));
+    }
+
+    return timeParts.join(":");
+}
+
+/**
+ * Converts a time string in the format "HH:MM:SS" to a `TimeObject`.
+ *
+ * @param {string} timeString The time string to convert.
+ * @returns {TimeObject} The corresponding `TimeObject`.
+ */
+function parseTimeString(timeString: string): TimeObject {
+    const parts: number[] = timeString.split(":").map(Number);
+    const time: TimeObject = {};
+
+    if (parts.length === 3) {
+        time.hours = parts[0];
+        time.minutes = parts[1];
+        time.seconds = parts[2];
+    } else if (parts.length === 2) {
+        time.minutes = parts[0];
+        time.seconds = parts[1];
+    } else if (parts.length === 1) {
+        time.seconds = parts[0];
+    }
+
+    return time;
+}
+
+const TimeStringUtilities = {
+    Format: ({
+        hours,
+        minutes,
+        seconds,
+    }: {
+        hours: number;
+        minutes: number;
+        seconds: number;
+    }): string => {
+        return formatTimeString({ hours, minutes, seconds });
+    },
+    Parse: (timeString: string): TimeObject => {
+        return parseTimeString(timeString);
+    },
+};
+
 export {
     ADJUSTED_TODAY,
     AlterDate,
@@ -138,4 +226,5 @@ export {
     JavaScriptifyTodaysDate,
     StringifyDate,
     StringifyMinutes,
+    TimeStringUtilities,
 };

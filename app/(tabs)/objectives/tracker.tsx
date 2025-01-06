@@ -7,7 +7,7 @@ import {
 } from "@/components/text/better_text_presets";
 import GapView from "@/components/ui/gap_view";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import BetterButton from "@/components/interaction/better_button";
 import TopBar from "@/components/navigation/top_bar";
 import SessionTimer from "@/components/ui/pages/sessions/timer";

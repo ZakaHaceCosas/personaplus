@@ -17,7 +17,7 @@ import {
     ActiveObjectiveWithoutId,
     SupportedActiveObjectives,
 } from "@/types/active_objectives";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import AsyncStorage from "expo-sqlite/kv-store";
 import {
     ADJUSTED_TODAY,

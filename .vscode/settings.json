@@ -64,7 +64,7 @@
     },
     "editor.formatOnSaveMode": "file",
     "workbench.editor.customLabels.patterns": {
-        "**/core/**": "Core library, ${filename}.${extname} @ ${dirname}",
+        "**/core/**": "Core Library @ ${dirname}, ${filename}.${extname} ",
         "**/app/**": "App layout, ${filename}.${extname}",
         "**/app/(tabs)/**": "App pages, ${filename}.${extname}",
         "**/assets/**": "Assets, ${filename}.${extname}",
@@ -76,7 +76,6 @@
         "**/hooks/**": "Hooks, ${filename}.${extname}",
         "**/translations/**": "Localization, ${filename}.${extname}",
         "**/toolkit/**": "Toolkit, ${filename}.${extname}",
-        "**/toolkit/debug/**": "Debug toolkit, ${filename}.${extname}",
         "**/types/**": "TS types, ${filename}.${extname}"
     },
     "typescript.tsdk": "node_modules\\typescript\\lib",

@@ -8,7 +8,7 @@ import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
 import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import {
     CheckForAnActiveObjectiveDailyStatus,
     FailObjectivesNotDoneYesterday,

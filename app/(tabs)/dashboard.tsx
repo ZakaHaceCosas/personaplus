@@ -5,7 +5,7 @@ import PageEnd from "@/components/static/page_end";
 import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import {
     DeleteActiveObjective,
     GetActiveObjective,

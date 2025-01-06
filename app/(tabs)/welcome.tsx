@@ -25,7 +25,7 @@ import Swap, { SwapOption } from "@/components/interaction/swap";
 import GapView from "@/components/ui/gap_view";
 import BetterText from "@/components/text/better_text";
 import AsyncStorage from "expo-sqlite/kv-store";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";
 import { FullProfile, FullProfileForCreation } from "@/types/user";
@@ -47,7 +47,7 @@ import Select, { SelectOption } from "@/components/interaction/select";
 import BetterButton from "@/components/interaction/better_button";
 import BetterInputField from "@/components/interaction/better_input_field";
 import StoredItemNames from "@/constants/stored_item_names";
-import { formatTimeString } from "@/toolkit/time";
+import { TimeStringUtilities } from "@/toolkit/today";
 import { Routes } from "@/constants/routes";
 import GetStuffForUserDataQuestion from "@/constants/user_data";
 import URLs from "@/constants/urls";
@@ -880,7 +880,7 @@ export default function WelcomePage(): ReactElement {
                             onConfirm={(pickedDuration) => {
                                 handleChange(
                                     "theThinkHour",
-                                    formatTimeString(pickedDuration),
+                                    TimeStringUtilities.Format(pickedDuration),
                                 );
                                 toggleTimePicker(false);
                             }}

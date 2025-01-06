@@ -18,7 +18,7 @@ import { getLocales, Locale } from "expo-localization";
 import enTranslations from "@/translations/en.json";
 import esTranslations from "@/translations/es.json";
 import { FullProfile } from "@/types/user";
-import { logToConsole } from "@/toolkit/debug/console";
+import { logToConsole } from "@/toolkit/console";
 import StoredItemNames from "@/constants/stored_item_names";
 import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
 
