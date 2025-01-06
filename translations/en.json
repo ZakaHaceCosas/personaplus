@@ -464,9 +464,9 @@
             "helpTimerPaused": "Psst... Don't worry, we'e stopped the timer so you can read.",
             "giveUpHint": "Leaves the current session without saving your progress.",
             "giveUpDescription": "If you give up, all your progress will be lost! Can't you last a little longer?",
-            "rests": "{{rests}} rest(s) of {{duration}} minute(s)",
-            "hands": "{{hands}} hands(s)",
-            "pushUps": "{{pushUps}} push ups"
+            "rests": "{{rests}} rest",
+            "hands": "{{hands}} hand",
+            "pushUps": "{{pushUps}} push up"
         },
         "results": {
             "header": "Session completed",

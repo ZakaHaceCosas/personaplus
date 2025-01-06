@@ -458,9 +458,9 @@
             "helpTimerPaused": "Psst... No te preocupes, hemos pausado el temporizador para que puedas leer a tu ritmo.",
             "giveUpHint": "Abandona la sesión actual sin guardar tu progreso.",
             "giveUpDescription": "Si te rindes, ¡todo tu progreso se perderá! ¿No puedes aguantar un rato más?",
-            "rests": "{{rests}} descanso(s) de {{duration}} minuto(s)",
-            "hands": "{{hands}} mano(s)",
-            "pushUps": "{{pushUps}} flexiones"
+            "rests": "{{rests}} descanso",
+            "hands": "{{hands}} mano",
+            "pushUps": "{{pushUps}} flexión"
         },
         "results": {
             "header": "Sesión completada",
