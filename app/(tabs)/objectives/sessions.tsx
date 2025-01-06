@@ -37,7 +37,7 @@ import { ActiveObjective, SessionParams } from "@/types/active_objectives";
 import getCommonScreenSize from "@/constants/screen";
 import IslandDivision from "@/components/ui/sections/island_division";
 import { Routes } from "@/constants/routes";
-import { Color } from "@/types/color";
+import { HexColorString } from "@/types/color";
 import { BasicUserHealthData } from "@/types/user";
 import { OrchestrateUserData } from "@/toolkit/user";
 import { ShowToast } from "@/toolkit/android";
@@ -127,7 +127,7 @@ export default function Sessions(): ReactElement {
     }, [objectiveIdentifier]);
 
     // the color of the timer
-    const timerColor: Color = isTimerRunning
+    const timerColor: HexColorString = isTimerRunning
         ? Colors.PRIMARIES.GOD.GOD
         : Colors.PRIMARIES.HMM.HMM;
 

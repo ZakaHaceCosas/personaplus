@@ -3,13 +3,13 @@ import BetterText from "@/components/text/better_text";
 import Colors from "@/constants/colors";
 import { CalculateSessionFragmentsDuration } from "@/toolkit/objectives/active_objectives";
 import { ActiveObjective } from "@/types/active_objectives";
-import { Color } from "@/types/color";
+import { HexColorString } from "@/types/color";
 import { CountdownCircleTimer, TimeProps } from "rn-countdown-timer";
 
 interface SessionTimerProps {
     objective: ActiveObjective;
     running: boolean;
-    timerColor: Color;
+    timerColor: HexColorString;
     restingStateHandler: (state: boolean) => void;
     onComplete: () => void;
 }

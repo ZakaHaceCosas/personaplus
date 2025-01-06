@@ -3,7 +3,7 @@
  *
  * @export
  */
-export type Color = `#${string}`;
+export type HexColorString = `#${string}`;
 
 /**
  * Colors for the bottom navigation.
@@ -12,11 +12,11 @@ export type Color = `#${string}`;
  */
 interface FooterColors {
     /** Background for the bottom navigation */
-    BACKGROUND: Color;
+    BACKGROUND: HexColorString;
     /** Non-selected footer items */
-    FOOTER_UNS: Color;
+    FOOTER_UNS: HexColorString;
     /** Selected footer items */
-    FOOTER_SEL: Color;
+    FOOTER_SEL: HexColorString;
 }
 
 /**
@@ -26,11 +26,11 @@ interface FooterColors {
  */
 interface DefaultColors {
     /** Item background */
-    BACKGROUND: Color;
+    BACKGROUND: HexColorString;
     /** Item text / placeholder */
-    TEXT: Color;
+    TEXT: HexColorString;
     /** Item stroke / border */
-    STROKE: Color;
+    STROKE: HexColorString;
 }
 
 /**
@@ -40,13 +40,13 @@ interface DefaultColors {
  */
 interface MainColors {
     /** The very background of the app */
-    APP: Color;
+    APP: HexColorString;
     /** The background of sections */
-    SECTION: Color;
+    SECTION: HexColorString;
     /** Default background of divisions */
-    DIVISION: Color;
+    DIVISION: HexColorString;
     /** In case of a floating division, the color of its border */
-    DIVISION_BORDER: Color;
+    DIVISION_BORDER: HexColorString;
     /** Color for the bottom navigation */
     FOOTER: FooterColors;
     /** Colors for "default" elements, like inputs, secondary buttons, etc... */
@@ -60,11 +60,11 @@ interface MainColors {
  */
 interface LabelColors {
     /** Used for the title of sections */
-    SHL: Color;
+    SHL: HexColorString;
     /** Small labels giving extra details */
-    SDD: Color;
+    SDD: HexColorString;
     /** In a table, the row headers */
-    TABLE_HEADER: Color;
+    TABLE_HEADER: HexColorString;
 }
 
 /**
@@ -74,9 +74,9 @@ interface LabelColors {
  */
 interface GodColors {
     /** Main color */
-    GOD: Color;
+    GOD: HexColorString;
     /** Stroke color for GOD */
-    GOD_STROKE: Color;
+    GOD_STROKE: HexColorString;
 }
 
 /**
@@ -86,11 +86,11 @@ interface GodColors {
  */
 interface AceColors {
     /** Main color */
-    ACE: Color;
+    ACE: HexColorString;
     /** Stroke color for ACE */
-    ACE_STROKE: Color;
+    ACE_STROKE: HexColorString;
     /** Special color used for sliders */
-    ACE_SCROLL: Color;
+    ACE_SCROLL: HexColorString;
 }
 
 /**
@@ -100,9 +100,9 @@ interface AceColors {
  */
 interface WorColors {
     /** Main color */
-    WOR: Color;
+    WOR: HexColorString;
     /** Stroke color for WOR */
-    WOR_STROKE: Color;
+    WOR_STROKE: HexColorString;
 }
 
 /**
@@ -112,9 +112,9 @@ interface WorColors {
  */
 interface HmmColors {
     /** Main color */
-    HMM: Color;
+    HMM: HexColorString;
     /** Stroke color for HMM */
-    HMM_STROKE: Color;
+    HMM_STROKE: HexColorString;
 }
 
 /**
@@ -140,9 +140,9 @@ interface PrimaryColors {
  */
 interface BasicColors {
     /** Pure black */
-    BLACK: Color;
+    BLACK: HexColorString;
     /** Pure white */
-    WHITE: Color;
+    WHITE: HexColorString;
 }
 
 /**

@@ -2,7 +2,7 @@ import React, { ComponentProps, ReactElement } from "react";
 import FontSizes from "@/constants/font_sizes";
 import GapView from "./gap_view";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import { Color } from "@/types/color";
+import { HexColorString } from "@/types/color";
 import BetterText from "../text/better_text";
 
 /**
@@ -12,12 +12,12 @@ import BetterText from "../text/better_text";
  * @param {{
  *     name: ComponentProps<typeof Ionicons>["name"];
  *     size: number;
- *     color: Color;
+ *     color: HexColorString;
  *     text: string;
  * }} p
  * @param {ComponentProps<any>} p.name
  * @param {number} [p.size=FontSizes.REGULAR]
- * @param {Color} [p.color="#FFF"]
+ * @param {HexColorString} [p.color="#FFF"]
  * @param {string} p.text
  * @returns {ReactElement}
  */
@@ -29,7 +29,7 @@ export default function IconView({
 }: {
     name: ComponentProps<typeof Ionicons>["name"];
     size: number;
-    color: Color;
+    color: HexColorString;
     text: string;
 }): ReactElement {
     return (
