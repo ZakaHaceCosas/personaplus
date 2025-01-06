@@ -26,7 +26,7 @@
 
 ### Download the app
 
-> [!DANGER]
+> [!CAUTION]
 > Note that as the app isn't done yet, we may change how data is stored, making you **loose your data** from one preapp release to another. Don't use (just yet :wink:) PersonaPlus as your daily companion app.
 
 PersonaPlus is still under development (CURRENT STAGE: "PRE-APP"). You can try out the app downloading a pre-release version from the [releases page](https://github.com/ZakaHaceCosas/personaplus/releases). **No version is stable / finished**, so expect issues & missing features. As an early app, we kindly ask you to [report here any issue you find](https://github.com/ZakaHaceCosas/personaplus/issues). Thank you!
