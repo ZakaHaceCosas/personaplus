@@ -5,6 +5,7 @@ import { BetterTextSmallText } from "../text/better_text_presets";
 import GapView from "./gap_view";
 import { Log, Logs } from "@/types/logs";
 import Colors from "@/constants/colors";
+import { Color } from "@/types/color";
 
 const styles = StyleSheet.create({
     consoleView: {
@@ -102,7 +103,8 @@ export default function Console({
     return (
         <View style={styles.consoleView}>
             {workingLogs.map((log: Log, index: number): ReactElement => {
-                const logStyle = styles[log.type] || {};
+                const logStyle: { color: Color; borderLeftColor: Color } =
+                    styles[log.type];
 
                 // formats date in a more sense-making way than what R5 used to do
                 const formattedDate: string = new Date(log.timestamp)
@@ -112,7 +114,7 @@ export default function Console({
                 let finalMessage: string;
 
                 if (!log.message) {
-                    finalMessage = "";
+                    finalMessage = "<<< empty log >>>";
                 } else if (typeof log.message === "string") {
                     finalMessage = log.message;
                 } else if (Array.isArray(log.message)) {
@@ -124,7 +126,7 @@ export default function Console({
                 }
 
                 const finalContent = {
-                    type: log.type ? log.type.toUpperCase() : "",
+                    type: log.type ? log.type.toUpperCase() : "?LOG",
                     date: formattedDate,
                     trace: log.traceback
                         ? `{ TRACEBACK:\n  location:    ${log.traceback.location},\n  function:    ${log.traceback.function},\n  isHandler:   ${log.traceback.isHandler},\n${
