@@ -24,6 +24,7 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 ### Fixed
 
 - Fixed some missing / wrong translations in the sessions page.
+- Fixed pluralization of some texts.
 - Fixed some edge cases where your performance after a session wouldn't get saved.
 - (Experiment:Report) Fix the BMI traffic light.
 - (_possibly_) Fixed "Disable notifications" button from settings working, but not reflecting the changes on screen.
