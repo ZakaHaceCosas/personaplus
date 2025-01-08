@@ -9,7 +9,7 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 > [!NOTE]
 > For changes related to development, see [CHANGELOG_DEV.md](CHANGELOG_DEV.md).
 
-## Unreleased
+## [0.0.6-preapp.28] - 08-01-2025
 
 ### Added
 
