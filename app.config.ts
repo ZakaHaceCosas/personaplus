@@ -52,7 +52,7 @@ const config: ExpoConfig.ExpoConfig = {
             "android.permission.WAKE_LOCK",
             "android.permission.ACCESS_FINE_LOCATION",
         ],
-        versionCode: 27,
+        versionCode: 28,
         backgroundColor: "#0E1013",
     },
     ios: {
