@@ -41,7 +41,9 @@
             "none": "None",
             "wellDoneBud": "Well done, bud!",
             "gotIt": "Got it!",
-            "privacy": "See our privacy policy."
+            "privacy": "See our privacy policy.",
+            "done": "Done!",
+            "missed": "Missed!"
         },
         "daysOfTheWeek": {
             "Monday": {
@@ -447,9 +449,19 @@
         "report": {
             "header": "Your report",
             "subheader": "This is how you're doing",
-            "disclaimer": {
-                "header": "This page is an experiment",
-                "subheader": "This page is expected to change quite a bit. Until we remove this notice, don't rely on these calculations: they are inaccurate."
+            "yourHealth": {
+                "BMI": {
+                    "severely underweight": "You're SEVERELY underweight. It's nothing we can't fix, but you must take action—now.",
+                    "underweight": "You're underweight. Don't worry, you'll soon get this resolved. Trust!",
+                    "healthy weight": "Great! You're exactly where you should, keep it like that and you'll stay healthy!",
+                    "overweight": "Feel a bit fat? We're so close to perfection, just a few kilograms less!",
+                    "obesity": "Damn, bro. You need to get rid of some kilos to restore your health. Don't worry, we'll make it!"
+                },
+                "TDEE": "Your recommended daily ingest is of {{cal}}cal."
+            },
+            "dailyLog": {
+                "header": "Here'll go your daily log",
+                "subheader": "We log your results each time you do a session. Here we store all the metadata of each session. As soon as you do something, you'll see results here."
             }
         },
         "sessions": {
@@ -530,8 +542,7 @@
                 "enabledFeedback": "{{exp}} enabled. Have fun!",
                 "disabledFeedback": "{{exp}} disabled. Back to normality."
             },
-            "exp_tracker": "PersonaPlus asks you 'how fast you will run' to calculate the calories burned after a running session. Stupid, I know, that's what this experiment is for: a motion tracker (similar to apps like 'Adidas Running').",
-            "exp_report": "Enables a page called 'Report' that shows (based on calculations that the app makes with your data) whether you are healthy / underweight / overweight, and how many calories you burn as a minimum per day to survive."
+            "exp_tracker": "PersonaPlus asks you 'how fast you will run' to calculate the calories burned after a running session. Stupid, I know, that's what this experiment is for: a motion tracker (similar to apps like 'Adidas Running')."
         }
     },
     "experimentNotes": {
