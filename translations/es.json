@@ -41,7 +41,9 @@
             "none": "Ninguno",
             "wellDoneBud": "¡Bien hecho, colega!",
             "gotIt": "¡Lo pillo!",
-            "privacy": "See our privacy policy."
+            "privacy": "See our privacy policy.",
+            "done": "¡Hecho!",
+            "missed": "¡Fallido!"
         },
         "daysOfTheWeek": {
             "Monday": {
@@ -441,9 +443,19 @@
         "report": {
             "header": "Tu reporte",
             "subheader": "Así te está yendo",
-            "disclaimer": {
-                "header": "Esta página es un experimento",
-                "subheader": "Se espera que esta página cambie un montón. Mientras no quitemos este aviso, no te fíes de estos cálculos: son imprecisos."
+            "yourHealth": {
+                "BMI": {
+                    "severely underweight": "Tienes MUY bajo peso. No es nada que no podamos solucionar, pero debes actuar—ahora.",
+                    "underweight": "Estás bajo de peso No te preocupes, pronto solucionarás esto. ¡Confía!",
+                    "healthy weight": "¡Estupendo! Estás exactamente donde debes estar, ¡sigue así y te mantendrás saludable!",
+                    "overweight": "¿Te sientes un poco gordo? ¡Estamos muy cerca de la perfección, solo unos kilos menos!",
+                    "obesity": "Joder, hermano. Necesitas deshacerte de algunos kilos para recuperar tu salud. No te preocupes, ¡lo lograremos!"
+                },
+                "TDEE": "Tu ingesta diaria recomendada es de {{cal}}cal."
+            },
+            "dailyLog": {
+                "header": "Here'll go your daily log",
+                "subheader": "We log your results each time you do a session. Here we store all the metadata of each session. As soon as you do something, you'll see results here."
             }
         },
         "sessions": {
@@ -524,8 +536,7 @@
                 "enabledFeedback": "{{exp}} habilitado. ¡Diviértete!",
                 "disabledFeedback": "{{exp}} deshabilitado. Vuelta a la normalidad."
             },
-            "exp_tracker": "PersonaPlus te pregunta 'a que velocidad vas a correr' para calcular las calorías quemadas tras una sesión de correr. Estúpido, lo sé, para eso es este experimento: un tracker de movimiento (parecido a apps como 'Adidas Running').",
-            "exp_report": "Activa una página llamada 'Reporte' que muestra (en base a unos cálculos que la app hace con tus datos) si estás bien / bajo peso / sobre peso, y cuantas calorías quemas como mínimo al día para sobrevivir."
+            "exp_tracker": "PersonaPlus te pregunta 'a que velocidad vas a correr' para calcular las calorías quemadas tras una sesión de correr. Estúpido, lo sé, para eso es este experimento: un tracker de movimiento (parecido a apps como 'Adidas Running')."
         }
     },
     "experimentNotes": {

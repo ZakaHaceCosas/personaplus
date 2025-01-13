@@ -7,6 +7,10 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 
 ## Unreleased
 
+### Added
+
+- Report page!
+
 ### Fixed
 
 - Fixed top being slightly cutoff on some displays.

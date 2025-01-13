@@ -7,6 +7,7 @@ export const Routes = {
         PROFILE: "/profile",
         DASHBOARD: "/dashboard",
         WELCOME_SCREEN: "/welcome",
+        REPORT: "/report",
         SETTINGS: {
             UPDATE_PROFILE: "/update_profile",
             SETTINGS_PAGE: "/settings",
@@ -36,6 +37,5 @@ export const Routes = {
      */
     EXPERIMENTS: {
         TRACKER: "/objectives/tracker",
-        REPORT: "/report",
     },
 };

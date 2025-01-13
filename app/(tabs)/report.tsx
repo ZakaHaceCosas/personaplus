@@ -5,7 +5,6 @@ import {
     BetterTextNormalText,
     BetterTextSmallText,
 } from "@/components/text/better_text_presets";
-import BetterAlert from "@/components/ui/better_alert";
 import GapView from "@/components/ui/gap_view";
 import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
@@ -15,7 +14,10 @@ import { logToConsole } from "@/toolkit/console";
 import { useEffect, useState } from "react";
 import TopBar from "@/components/navigation/top_bar";
 import { useTranslation } from "react-i18next";
-import { ActiveObjectiveDailyLog } from "@/types/active_objectives";
+import {
+    ActiveObjectiveDailyLog,
+    ActiveObjectiveDailyLogEntry,
+} from "@/types/active_objectives";
 import { GetActiveObjectiveDailyLog } from "@/toolkit/objectives/active_objectives";
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
 import { FullProfile } from "@/types/user";
@@ -89,22 +91,24 @@ function BMIView({
 
     return (
         <View style={styles.wrapper}>
-            {Array.from({ length: 5 }).map((_, index) => (
-                <View
-                    key={index}
-                    style={[
-                        styles.cell,
-                        {
-                            backgroundColor: getColorForFragment(index, 5),
-                        },
-                    ]}
-                />
-            ))}
+            {Array.from({ length: 5 }).map(
+                (_: unknown, index: number): ReactElement => (
+                    <View
+                        key={index}
+                        style={[
+                            styles.cell,
+                            {
+                                backgroundColor: getColorForFragment(index, 5),
+                            },
+                        ]}
+                    />
+                ),
+            )}
         </View>
     );
 }
 
-export default function Report() {
+export default function Report(): ReactElement {
     const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean>(true);
     const [report, setReport] = useState<any>();
@@ -166,6 +170,14 @@ export default function Report() {
         handler();
     }, []);
 
+    /** yeah naming stuff ain't easy */
+    type dateComparisonType = [
+        string,
+        {
+            [identifier: number]: ActiveObjectiveDailyLogEntry;
+        },
+    ];
+
     if (loading) return <Loading />;
 
     return (
@@ -175,28 +187,24 @@ export default function Report() {
                 header={t("pages.report.header")}
                 subHeader={t("pages.report.subheader")}
             />
-            <BetterAlert
-                style="HMM"
-                layout="alert"
-                preTitle="Disclaimer"
-                title={t("pages.report.disclaimer.header")}
-                bodyText={t("pages.report.disclaimer.subheader")}
-            />
-            <GapView height={20} />
             <Section kind="YourHealth">
                 {report ? (
                     <>
                         <Division
                             preHeader="BMI"
                             header={report.BMI.value}
-                            subHeader={report.BMI.context}
+                            subHeader={t(
+                                `pages.report.yourHealth.BMI.${report.BMI.context}`,
+                            )}
                         >
                             <BMIView context={report.BMI.context} />
                         </Division>
                         <Division
                             preHeader="TDEE"
                             header={report.TDEE.value}
-                            subHeader={report.TDEE.context}
+                            subHeader={t("pages.report.yourHealth.TDEE", {
+                                cal: report.TDEE.value,
+                            })}
                         />
                     </>
                 ) : (
@@ -210,43 +218,68 @@ export default function Report() {
                 {dailyLog ? (
                     Object.entries(dailyLog)
                         .sort(
-                            ([dateA], [dateB]) =>
+                            (
+                                [dateA]: dateComparisonType,
+                                [dateB]: dateComparisonType,
+                            ): number =>
                                 new Date(dateB).getMilliseconds() -
                                 new Date(dateA).getMilliseconds(),
                         ) // sort by date
                         .slice(0, 7) // get the latest 7
-                        .map(([date, entries]) => (
-                            <Division
-                                header={date}
-                                key={date}
-                                direction="vertical"
-                            >
-                                {Object.entries(entries).map(([id, entry]) => (
-                                    <React.Fragment key={id}>
-                                        <BetterTextNormalText>
-                                            {entry.objective
-                                                ? entry.objective.exercise
-                                                : id}
-                                        </BetterTextNormalText>
-                                        <BetterTextSmallText>
-                                            {entry.wasDone ? "Done" : "Missed!"}
-                                        </BetterTextSmallText>
-                                        <BetterTextSmallText>
-                                            Performance:{" "}
-                                            {entry.performance === 0
-                                                ? "No data"
-                                                : `${entry.performance.result.toFixed(
-                                                      2,
-                                                  )} burnt calories`}
-                                        </BetterTextSmallText>
-                                    </React.Fragment>
-                                ))}
-                            </Division>
-                        ))
+                        .map(
+                            ([
+                                date,
+                                entries,
+                            ]: dateComparisonType): ReactElement => (
+                                <Division
+                                    header={date}
+                                    key={date}
+                                    direction="vertical"
+                                >
+                                    {Object.entries(entries).map(
+                                        ([id, entry]: [
+                                            string,
+                                            ActiveObjectiveDailyLogEntry,
+                                        ]): ReactElement => (
+                                            <React.Fragment key={id}>
+                                                <BetterTextNormalText>
+                                                    {entry.objective
+                                                        ? t(
+                                                              `globals.supportedActiveObjectives.${
+                                                                  entry
+                                                                      .objective
+                                                                      .exercise
+                                                              }.name`,
+                                                          )
+                                                        : id}
+                                                </BetterTextNormalText>
+                                                <BetterTextSmallText>
+                                                    {entry.wasDone
+                                                        ? t(
+                                                              "globals.interaction.done",
+                                                          )
+                                                        : t(
+                                                              "globals.interaction.missed",
+                                                          )}
+                                                </BetterTextSmallText>
+                                                <BetterTextSmallText>
+                                                    Performance:{" "}
+                                                    {entry.performance === 0
+                                                        ? "N/A"
+                                                        : `${entry.performance.result.toFixed(
+                                                              2,
+                                                          )}cal`}
+                                                </BetterTextSmallText>
+                                            </React.Fragment>
+                                        ),
+                                    )}
+                                </Division>
+                            ),
+                        )
                 ) : (
                     <Division
-                        header="Here'll go your daily log"
-                        subHeader="We log your results each time you do a session. Here we store all the metadata of each session. As soon as you do something, you'll see results here."
+                        header={t("pages.report.dailyLog.header")}
+                        subHeader={t("pages.report.dailyLog.subheader")}
                     />
                 )}
             </Section>
