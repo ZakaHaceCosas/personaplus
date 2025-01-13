@@ -232,9 +232,10 @@ export type ActiveObjectiveWithoutId = Omit<ActiveObjective, "identifier">;
 /**
  * An entry within the ActiveObjectiveDailyLog
  *
+ * @export
  * @interface ActiveObjectiveDailyLogEntry
  */
-interface ActiveObjectiveDailyLogEntry {
+export interface ActiveObjectiveDailyLogEntry {
     /**
      * Whether the objective was done or not.
      *

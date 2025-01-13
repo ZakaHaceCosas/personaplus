@@ -22,7 +22,7 @@ import { ScrollView, StyleSheet } from "react-native";
 const styles = StyleSheet.create({
     mainScrollView: {
         padding: 20,
-        paddingTop: 40,
+        paddingTop: 45,
         display: "flex",
         flexDirection: "column",
         backgroundColor: Colors.MAIN.APP,

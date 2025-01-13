@@ -7,15 +7,13 @@ import { Dimensions } from "react-native";
  * @param {("width" | "height")} request Whether you want the width or the height of the screen.
  * @returns {number} The common screen size
  */
-export default function getCommonScreenSize(
-    request: "width" | "height",
-): number {
+export function GetCommonScreenSize(request: "width" | "height"): number {
     const CommonWidth: number = Dimensions.get("screen").width - 40;
-    const CommonHeight: number = Dimensions.get("screen").height - 40 - 20;
+    const CommonHeight: number = Dimensions.get("screen").height - 40 - 25;
     /**
     explanation:
     Dimensions - 40 (because of the padding of 20 that's applied by _layout to all pages)
-    then height has an additional - 20 to compensate the extra 20 of padding thats applied to the top
+    then height has an additional - 25 to compensate the extra 25 of padding thats applied to the top
     */
     const returnWidth = request === "width" ? CommonWidth : CommonHeight;
     return returnWidth;

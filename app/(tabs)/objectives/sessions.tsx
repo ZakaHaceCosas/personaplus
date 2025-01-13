@@ -34,7 +34,7 @@ import Loading from "@/components/static/loading";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import SessionsPageHelpView from "@/components/ui/pages/sessions/help_view";
 import { ActiveObjective, SessionParams } from "@/types/active_objectives";
-import getCommonScreenSize from "@/constants/screen";
+import { GetCommonScreenSize } from "@/constants/screen";
 import IslandDivision from "@/components/ui/sections/island_division";
 import { Routes } from "@/constants/routes";
 import { HexColorString } from "@/types/color";
@@ -48,8 +48,8 @@ import { GenerateRandomMessage } from "@/toolkit/strings";
 
 const styles = StyleSheet.create({
     mainView: {
-        width: getCommonScreenSize("width"),
-        height: getCommonScreenSize("height"),
+        width: GetCommonScreenSize("width"),
+        height: GetCommonScreenSize("height"),
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

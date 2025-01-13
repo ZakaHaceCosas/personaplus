@@ -29,7 +29,7 @@ import { logToConsole } from "@/toolkit/console";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";
 import { FullProfile, FullProfileForCreation } from "@/types/user";
-import getCommonScreenSize from "@/constants/screen";
+import { GetCommonScreenSize } from "@/constants/screen";
 import {
     BetterTextSmallerText,
     BetterTextSmallText,
@@ -64,8 +64,8 @@ import TopBar from "@/components/navigation/top_bar";
 // We define the styles
 const styles = StyleSheet.create({
     mainView: {
-        height: getCommonScreenSize("height"),
-        width: getCommonScreenSize("width"),
+        height: GetCommonScreenSize("height"),
+        width: GetCommonScreenSize("width"),
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
@@ -73,21 +73,21 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.MAIN.APP,
     },
     wrapperView: {
-        width: getCommonScreenSize("width"),
+        width: GetCommonScreenSize("width"),
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
     },
     bottomWrapperView: {
-        width: getCommonScreenSize("width"),
+        width: GetCommonScreenSize("width"),
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
     },
     welcomeView: {
-        height: getCommonScreenSize("height"),
-        width: getCommonScreenSize("width"),
+        height: GetCommonScreenSize("height"),
+        width: GetCommonScreenSize("width"),
         display: "flex",
         flexDirection: "column",
         alignItems: "flex-start",
@@ -96,12 +96,12 @@ const styles = StyleSheet.create({
     buttonWrapper: {
         display: "flex",
         flexDirection: "row",
-        width: getCommonScreenSize("width"),
+        width: GetCommonScreenSize("width"),
         alignItems: "center",
         justifyContent: "center",
     },
     progressBar: {
-        width: getCommonScreenSize("width"),
+        width: GetCommonScreenSize("width"),
         height: 5,
         borderRadius: 100,
         overflow: "hidden",

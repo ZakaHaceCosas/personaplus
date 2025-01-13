@@ -8,7 +8,7 @@ import GapView from "@/components/ui/gap_view";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
-import getCommonScreenSize from "@/constants/screen";
+import { GetCommonScreenSize } from "@/constants/screen";
 
 // TypeScript, supongo
 /**
@@ -157,7 +157,7 @@ export default function Section({
             break;
         case "total":
         default:
-            sectionWidth = getCommonScreenSize("width");
+            sectionWidth = GetCommonScreenSize("width");
             break;
     }
 

@@ -1,6 +1,6 @@
 // About.tsx
 // Info about the app
-import React from "react";
+import React, { ReactElement } from "react";
 import { version } from "../../../package.json";
 import { Pressable, StyleSheet, View } from "react-native";
 import { router } from "expo-router";
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
 });
 
 // We create the function
-export default function About() {
+export default function About(): ReactElement {
     const { t } = useTranslation(); // translate
 
     return (
@@ -119,7 +119,7 @@ export default function About() {
                     buttonHint={t("pages.about.grid.openSource.hint")}
                     buttonText={t("pages.about.grid.openSource.text")}
                     style="ACE"
-                    action={async () => {
+                    action={async (): Promise<void> => {
                         await SafelyOpenUrl(URLs.repo);
                     }}
                 />
@@ -137,7 +137,7 @@ export default function About() {
                 {/* i don't post stuff here but well, keep it here anyway */}
                 <Pressable
                     style={styles.buttonContainer}
-                    onPress={async () => {
+                    onPress={async (): Promise<void> => {
                         await SafelyOpenUrl(URLs.instagram);
                     }}
                 >
@@ -151,7 +151,7 @@ export default function About() {
                 </Pressable>
                 <Pressable
                     style={styles.buttonContainer}
-                    onPress={async () => {
+                    onPress={async (): Promise<void> => {
                         await SafelyOpenUrl(URLs.instagram);
                     }}
                 >

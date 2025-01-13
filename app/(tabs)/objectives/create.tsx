@@ -37,7 +37,7 @@ import { UniversalItemStyle } from "@/constants/ui/pressables";
 import Select, { SelectOption } from "@/components/interaction/select";
 import { logToConsole } from "@/toolkit/console";
 import BetterButton from "@/components/interaction/better_button";
-import getCommonScreenSize from "@/constants/screen";
+import { GetCommonScreenSize } from "@/constants/screen";
 import PageEnd from "@/components/static/page_end";
 import {
     CreateActiveObjective,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         flex: 7,
     },
     toggleView: {
-        width: getCommonScreenSize("width"),
+        width: GetCommonScreenSize("width"),
         display: "flex",
         flexDirection: "row",
         alignItems: "center",

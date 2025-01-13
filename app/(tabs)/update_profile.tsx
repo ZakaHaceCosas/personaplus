@@ -41,7 +41,7 @@ import StoredItemNames from "@/constants/stored_item_names";
 import { SafelyGoBack } from "@/toolkit/routing";
 import { Routes } from "@/constants/routes";
 import GetStuffForUserDataQuestion from "@/constants/user_data";
-import getCommonScreenSize from "@/constants/screen";
+import { GetCommonScreenSize } from "@/constants/screen";
 import TopBar from "@/components/navigation/top_bar";
 import { BetterTextSmallerText } from "@/components/text/better_text_presets";
 
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     buttonWrapper: {
         display: "flex",
         flexDirection: "row",
-        width: getCommonScreenSize("width"),
+        width: GetCommonScreenSize("width"),
         alignItems: "center",
         justifyContent: "center",
     },

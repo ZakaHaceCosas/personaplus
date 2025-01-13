@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import Colors from "@/constants/colors";
-import getCommonScreenSize from "@/constants/screen";
+import { GetCommonScreenSize } from "@/constants/screen";
 
 interface IslandDivisionProps {
     alignment: "center" | "start";
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.MAIN.SECTION,
         borderRadius: 15,
         alignItems: "center",
-        width: getCommonScreenSize("width"),
+        width: GetCommonScreenSize("width"),
     },
 });
 

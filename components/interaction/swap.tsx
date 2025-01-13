@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect, useState } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import BetterText from "@/components/text/better_text";
 import Colors from "@/constants/colors";
-import getCommonScreenSize from "@/constants/screen";
+import { GetCommonScreenSize } from "@/constants/screen";
 import FontSizes from "@/constants/font_sizes";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
 
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: getCommonScreenSize("width"),
+        width: GetCommonScreenSize("width"),
         gap: 10,
     },
     swapOption: {

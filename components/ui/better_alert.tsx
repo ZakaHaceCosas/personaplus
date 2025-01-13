@@ -16,7 +16,7 @@ import { StyleSheet, View } from "react-native";
 import BetterText from "@/components/text/better_text";
 import GapView from "@/components/ui/gap_view";
 import Colors from "@/constants/colors";
-import getCommonScreenSize from "@/constants/screen";
+import { GetCommonScreenSize } from "@/constants/screen";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
 import { PrimaryColorsType } from "@/types/color";
 
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         padding: UniversalItemStyle.padding,
         borderRadius: UniversalItemStyle.borderRadius,
         borderWidth: UniversalItemStyle.borderWidth,
-        width: getCommonScreenSize("width"),
+        width: GetCommonScreenSize("width"),
         display: "flex",
         flexDirection: "column",
     },
