@@ -28,6 +28,7 @@ const samplesValidProfile: FullProfile = {
     isNewUser: false,
     sleepHours: 9,
     wantsNotifications: false,
+    healthConditions: ["broCantBreathe"],
 };
 
 describe("OrchestrateUserData", () => {

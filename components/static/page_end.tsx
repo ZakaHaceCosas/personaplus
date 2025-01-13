@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import BetterText from "@/components/text/better_text";
 import FontSizes from "@/constants/font_sizes";
 import Colors from "@/constants/colors";
-import getCommonScreenSize from "@/constants/screen";
+import { GetCommonScreenSize } from "@/constants/screen";
 
 interface PageEndProps {
     includeText: boolean;
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         justifyContent: "flex-start",
-        width: getCommonScreenSize("width"),
+        width: GetCommonScreenSize("width"),
     },
 });
 

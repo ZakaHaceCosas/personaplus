@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import getCommonScreenSize from "@/constants/screen";
+import { GetCommonScreenSize } from "@/constants/screen";
 import { StyleSheet, Text, View } from "react-native";
 import { BetterTextSmallText } from "../text/better_text_presets";
 import GapView from "./gap_view";
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     consoleView: {
         backgroundColor: Colors.BASIC.BLACK,
         padding: 10,
-        width: getCommonScreenSize("width"),
+        width: GetCommonScreenSize("width"),
     },
     logText: {
         marginBottom: 5,

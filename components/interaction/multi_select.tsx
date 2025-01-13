@@ -15,7 +15,7 @@ import React, { ReactElement, useState } from "react";
 import Colors from "@/constants/colors";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import getCommonScreenSize from "@/constants/screen";
+import { GetCommonScreenSize } from "@/constants/screen";
 import BetterText from "../text/better_text";
 import FontSizes from "@/constants/font_sizes";
 
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "column",
         gap: 10,
-        width: getCommonScreenSize("width"),
+        width: GetCommonScreenSize("width"),
     },
     option: {
         padding: UniversalItemStyle.padding,
