@@ -23,16 +23,12 @@ import {
     UnknownOutputParams,
     useGlobalSearchParams,
 } from "expo-router";
-import BetterText from "@/components/text/better_text";
 import GapView from "@/components/ui/gap_view";
 import { logToConsole } from "@/toolkit/console";
 import { useTranslation } from "react-i18next";
 import BetterButton from "@/components/interaction/better_button";
-import SessionsPageInfoIcons from "@/components/ui/pages/sessions/info_icons";
 import Colors from "@/constants/colors";
 import Loading from "@/components/static/loading";
-import Ionicons from "@expo/vector-icons/MaterialIcons";
-import SessionsPageHelpView from "@/components/ui/pages/sessions/help_view";
 import { ActiveObjective, SessionParams } from "@/types/active_objectives";
 import { GetCommonScreenSize } from "@/constants/screen";
 import IslandDivision from "@/components/ui/sections/island_division";
@@ -41,10 +37,11 @@ import { HexColorString } from "@/types/color";
 import { BasicUserHealthData } from "@/types/user";
 import { OrchestrateUserData } from "@/toolkit/user";
 import { ShowToast } from "@/toolkit/android";
-import SessionTimer from "@/components/ui/pages/sessions/timer";
+import SessionTimer from "@/components/ui/pages/timer";
 import { StringifyMinutes } from "@/toolkit/today";
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
 import { GenerateRandomMessage } from "@/toolkit/strings";
+import { HelpView, TopView } from "@/components/ui/pages/sessions";
 
 const styles = StyleSheet.create({
     mainView: {
@@ -140,7 +137,7 @@ export default function Sessions(): ReactElement {
                 {
                     text: t("globals.interaction.nevermind"),
                     style: "cancel",
-                    onPress: () => {},
+                    onPress: (): void => {},
                 },
                 {
                     text: t("globals.interaction.giveUp"),
@@ -236,37 +233,10 @@ export default function Sessions(): ReactElement {
 
     return (
         <View style={styles.mainView}>
-            <IslandDivision alignment="start" direction="horizontal">
-                <Ionicons
-                    name="play-arrow"
-                    size={20}
-                    color={Colors.LABELS.SHL}
-                />
-                <GapView width={10} />
-                <BetterText
-                    fontSize={15}
-                    fontWeight="Bold"
-                    textColor={Colors.LABELS.SHL}
-                >
-                    {t("pages.sessions.live").toUpperCase()}
-                </BetterText>
-            </IslandDivision>
-            <GapView height={20} />
-            <IslandDivision direction="vertical" alignment="center">
-                <BetterText
-                    fontWeight="Regular"
-                    fontSize={12}
-                    textAlign="center"
-                >
-                    {t("pages.sessions.currentObjective")}
-                </BetterText>
-                <GapView height={10} />
-                <BetterText fontWeight="Bold" fontSize={25} textAlign="center">
-                    {currentObjectiveVerbalName}
-                </BetterText>
-                <GapView height={10} />
-                <SessionsPageInfoIcons objective={objective} />
-            </IslandDivision>
+            <TopView
+                objective={objective}
+                verbalName={currentObjectiveVerbalName}
+            />
             <GapView height={20} />
             <SessionTimer
                 objective={objective}
@@ -313,9 +283,9 @@ export default function Sessions(): ReactElement {
                 />
             </IslandDivision>
             {isUserCheckingHelp && (
-                <SessionsPageHelpView
+                <HelpView
                     objective={objective}
-                    toggleHelpMenu={() => toggleHelpMenu(false)}
+                    toggleHelpMenu={(): void => toggleHelpMenu(false)}
                 />
             )}
         </View>
