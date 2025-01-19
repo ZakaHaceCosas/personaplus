@@ -5,5 +5,10 @@ destroy:
     targets:
         - ".expo/"
 commitActions: true
-commitMessage: "(chore) code quality task (automated by F*ckingNode)"
 updateCmdOverride: "dep:fix"
+flagless:
+    flaglessLint: true
+    flaglessPretty: true
+    flaglessCommit: true
+    flaglessDestroy: true
+    flaglessUpdate: true
