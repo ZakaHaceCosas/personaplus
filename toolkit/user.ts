@@ -319,7 +319,7 @@ export async function updateBrm5(
                     isPreferred: false,
                     text: t("globals.interaction.goAheadBad"),
                     style: "destructive",
-                    onPress: async () => {
+                    onPress: async (): Promise<void> => {
                         await releaseOperationResurgence();
                     },
                 },

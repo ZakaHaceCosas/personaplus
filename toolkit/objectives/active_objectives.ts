@@ -14,6 +14,7 @@
 import {
     ActiveObjective,
     ActiveObjectiveDailyLog,
+    ActiveObjectiveDailyLogEntry,
     ActiveObjectiveWithoutId,
     SupportedActiveObjectives,
 } from "@/types/active_objectives";
@@ -83,7 +84,7 @@ async function GetAllObjectives(): Promise<ActiveObjective[] | null> {
 /**
  * Returns the ActiveObjectiveDailyLog.
  *
- * @returns {ActiveObjectiveDailyLog} The entire daily log.
+ * @returns {ActiveObjectiveDailyLog | null} The entire daily log, or null if it doesn't exist.
  */
 async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog | null> {
     try {
@@ -115,13 +116,14 @@ async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog | n
  * @param {number} id ID of the objective
  * @param {boolean} wasDone Whether the objective was done or not.
  * @param {?CoreLibraryResponse} [performance] Results for the session from CoreLibrary. Optional (the user could have not done the objective, so no data would exist).
+ * @returns {Promise<void>}
  */
 async function SaveActiveObjectiveToDailyLog(
     id: number,
     wasDone: boolean,
     objective: ActiveObjective,
     performance?: CoreLibraryResponse,
-) {
+): Promise<void> {
     try {
         // Fetch old data
         const prevDailySavedData: ActiveObjectiveDailyLog | null =
@@ -154,7 +156,7 @@ async function SaveActiveObjectiveToDailyLog(
             "success",
         );
     } catch (e) {
-        const message = id
+        const message: string = id
             ? `Error saving user's performance for objective ${id}: ${e}`
             : `Error saving user's performance (no objective ID): ${e}`;
         logToConsole(message, "error");
@@ -184,7 +186,8 @@ async function CheckForAnActiveObjectiveDailyStatus(
 
         // Validate if dailyLog and the specific identifier exist
         if (dailyLog[date] && dailyLog[date][identifier]) {
-            const entry = dailyLog[date][identifier];
+            const entry: ActiveObjectiveDailyLogEntry =
+                dailyLog[date][identifier];
             if (typeof entry.wasDone === "boolean") {
                 return entry.wasDone;
             } else {
@@ -255,7 +258,7 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
         // hope this works
         // check if all objectives due today are done
         const allDone: boolean = activeObjectivesDueToday.every(
-            (obj) => obj.status,
+            (obj: safeThing): boolean => obj.status,
         );
 
         if (allDone) return 0; // all objectives for today are done
@@ -263,8 +266,8 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
         // get the identifiers of objectives that are not done yet
         const pendingObjectives: number[] = activeObjectivesDueToday
             // no i did not write this
-            .filter((obj) => obj.status === false)
-            .map((obj) => obj.identifier);
+            .filter((obj: safeThing): boolean => obj.status === false)
+            .map((obj: safeThing): number => obj.identifier);
 
         return pendingObjectives.length > 0 ? pendingObjectives : 0; // return pending objectives or 0 if none
     } catch (e) {
@@ -323,7 +326,7 @@ async function CreateActiveObjective(
         }
 
         function generateIdentifier(objs: ActiveObjective[]): number {
-            const generateObjectiveId = (): number => {
+            const generateObjectiveId: () => number = (): number => {
                 return Math.floor(Math.random() * 9000000000) + 1000000000;
             };
 
@@ -413,7 +416,7 @@ async function EditActiveObjective(
             objs = [];
         }
 
-        const index = objs.findIndex(
+        const index: number = objs.findIndex(
             (o: ActiveObjective): boolean => o.identifier === id,
         );
 
