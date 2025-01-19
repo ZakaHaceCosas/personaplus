@@ -67,7 +67,7 @@ export default function SessionTimer({
     return (
         <CountdownCircleTimer
             duration={totalDuration}
-            size={160}
+            size={180}
             isPlaying={running}
             colors={[timerColor, timerColor]}
             colorsTime={[15, 5]}
@@ -88,7 +88,7 @@ export default function SessionTimer({
 
                 return (
                     <BetterText
-                        fontSize={30}
+                        fontSize={35}
                         fontWeight="Bold"
                         textAlign="center"
                         textColor={timerColor}

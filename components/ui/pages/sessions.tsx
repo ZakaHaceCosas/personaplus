@@ -5,23 +5,44 @@
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
  *
- * You are in: @/components/ui/pages/sessions/info_icons.tsx
- * Basically: Informative icons for the session page
+ * You are in: @/components/ui/pages/sessions.tsx
+ * Basically: UI components specific to the sessions page.
  *
  * <=============================================================================>
  */
 
 import React, { ReactElement } from "react";
 import { StyleSheet, View } from "react-native";
-import GapView from "@/components/ui/gap_view";
 import { ActiveObjective } from "@/types/active_objectives";
 import Colors from "@/constants/colors";
 import { useTranslation } from "react-i18next";
-import IconView from "../../icon_view";
+import IconView from "../icon_view";
 import { PluralOrNot } from "@/toolkit/strings";
 import { StringifyMinutes } from "@/toolkit/today";
+import BetterText from "@/components/text/better_text";
+import GapView from "@/components/ui/gap_view";
+import BetterButton from "@/components/interaction/better_button";
+import {
+    BetterTextSmallHeader,
+    BetterTextSmallText,
+} from "@/components/text/better_text_presets";
+import IslandDivision from "../sections/island_division";
+import Ionicons from "@expo/vector-icons/MaterialIcons";
 
 const styles = StyleSheet.create({
+    helpContainer: {
+        backgroundColor: Colors.MAIN.SECTION,
+        position: "absolute",
+        top: "40%",
+        left: 0,
+        right: 0,
+        bottom: 0,
+        overflow: "visible",
+        padding: 20,
+        borderRadius: 20,
+        borderColor: Colors.MAIN.DIVISION_BORDER,
+        borderWidth: 4,
+    },
     iconContainer: {
         display: "flex",
         flexDirection: "row",
@@ -37,19 +58,68 @@ const styles = StyleSheet.create({
     },
 });
 
-// TypeScript, supongo...
 /**
- * InfoIconsProps
+ * A view with helpful info for the user during a session.
  *
- * @property {ActiveObjective} objective The objective of the current session.
+ * @export
+ * @param {HelpViewProps} p HelpViewProps
+ * @param {ActiveObjective} p.objective The ActiveObjective you want help with.
+ * @param {() => void} p.toggleHelpMenu The stateful function you'll use to close / toggle this menu.
+ * @returns {ReactElement}
  */
-interface InfoIconsProps {
+export function HelpView({
+    objective,
+    toggleHelpMenu,
+}: {
     /**
-     * The objective of the current session.
+     * The ActiveObjective you want help with.
      *
      * @type {ActiveObjective}
      */
     objective: ActiveObjective;
+    /**
+     * The stateful function you'll use to close / toggle this menu.
+     *
+     * @type {() => void}
+     */
+    toggleHelpMenu: () => void;
+}): ReactElement {
+    const { t } = useTranslation();
+
+    return (
+        <View style={styles.helpContainer}>
+            <BetterTextSmallHeader>
+                {t("globals.interaction.help")}
+            </BetterTextSmallHeader>
+            <BetterTextSmallText>
+                {t(
+                    `globals.supportedActiveObjectives.${objective.exercise}.name`,
+                )}
+            </BetterTextSmallText>
+            <GapView height={10} />
+            <BetterTextSmallText>
+                {t(
+                    `globals.supportedActiveObjectives.${objective.exercise}.help`,
+                )}
+            </BetterTextSmallText>
+            <GapView height={10} />
+            <BetterButton
+                style="ACE"
+                buttonText={t("globals.interaction.gotIt")}
+                buttonHint="Closes the help menu"
+                action={toggleHelpMenu}
+            />
+            <GapView height={10} />
+            <BetterText
+                fontSize={10}
+                fontWeight="Light"
+                textColor={Colors.LABELS.SDD}
+                textAlign="center"
+            >
+                {t("pages.sessions.helpTimerPaused")}
+            </BetterText>
+        </View>
+    );
 }
 
 /**
@@ -59,9 +129,16 @@ interface InfoIconsProps {
  * @param {Objective} p.objective The objective of the current session.
  * @returns {ReactElement} The JSX component displaying the icons.
  */
-export default function SessionsPageInfoIcons({
+function InfoIcons({
     objective,
-}: InfoIconsProps): ReactElement {
+}: {
+    /**
+     * The objective of the current session.
+     *
+     * @type {ActiveObjective}
+     */
+    objective: ActiveObjective;
+}): ReactElement {
     const { t } = useTranslation();
 
     /**
@@ -183,6 +260,73 @@ export default function SessionsPageInfoIcons({
                     </>
                 )}
             </View>
+        </>
+    );
+}
+
+/**
+ * The top view for the sessions page.
+ *
+ * @param {{
+ *     objective: ActiveObjective;
+ *     verbalName: string;
+ * }} p0
+ * @param {ActiveObjective} p0.objective Objective to show data for.
+ * @param {string} p0.verbalName "Verbal name" of the objective.
+ * @returns {ReactElement}
+ */
+export function TopView({
+    objective,
+    verbalName,
+}: {
+    /**
+     * Objective to show data for.
+     *
+     * @type {ActiveObjective}
+     */
+    objective: ActiveObjective;
+    /**
+     * "Verbal name" of the objective.
+     *
+     * @type {string}
+     */
+    verbalName: string;
+}): ReactElement {
+    const { t } = useTranslation();
+
+    return (
+        <>
+            <IslandDivision alignment="start" direction="horizontal">
+                <Ionicons
+                    name="play-arrow"
+                    size={20}
+                    color={Colors.LABELS.SHL}
+                />
+                <GapView width={10} />
+                <BetterText
+                    fontSize={15}
+                    fontWeight="Bold"
+                    textColor={Colors.LABELS.SHL}
+                >
+                    {t("pages.sessions.live").toUpperCase()}
+                </BetterText>
+            </IslandDivision>
+            <GapView height={20} />
+            <IslandDivision direction="vertical" alignment="center">
+                <BetterText
+                    fontWeight="Regular"
+                    fontSize={12}
+                    textAlign="center"
+                >
+                    {t("pages.sessions.currentObjective")}
+                </BetterText>
+                <GapView height={10} />
+                <BetterText fontWeight="Bold" fontSize={25} textAlign="center">
+                    {verbalName}
+                </BetterText>
+                <GapView height={10} />
+                <InfoIcons objective={objective} />
+            </IslandDivision>
         </>
     );
 }
