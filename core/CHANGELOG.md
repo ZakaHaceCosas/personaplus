@@ -1,6 +1,8 @@
 # Changelog
 
-<!-- 0.2 will be done as soon as I finish (WIP) stuff -->
+## 0.3.0
+
+- Changed how pushing up performance is calculated.
 
 ## 0.2.0
 
