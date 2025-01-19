@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import BetterButton from "@/components/interaction/better_button";
 import PageEnd from "@/components/static/page_end";
 import {
@@ -9,7 +9,7 @@ import BetterAlert from "@/components/ui/better_alert";
 import GapView from "@/components/ui/gap_view";
 import { Routes } from "@/constants/routes";
 import StoredItemNames from "@/constants/stored_item_names";
-import { logToConsole } from "@/toolkit/console";
+import { getLogsFromStorage, logToConsole } from "@/toolkit/console";
 import AsyncStorage from "expo-sqlite/kv-store";
 import * as Device from "expo-device";
 import { router } from "expo-router";
@@ -18,35 +18,25 @@ import { ShowToast } from "@/toolkit/android";
 import { Logs } from "@/types/logs";
 import Loading from "@/components/static/loading";
 
-export default function HomeScreen() {
+export default function DevInterface(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
     const [logs, setLogs] = useState<Logs>([]);
 
-    useEffect(() => {
-        async function handler() {
-            try {
-                // logs
-                setLogs(
-                    JSON.parse(
-                        (await AsyncStorage.getItem(
-                            StoredItemNames.consoleLogs,
-                        )) ?? "[]",
-                    ) ?? [],
-                );
-            } catch (e) {
-                const err = `Error fetching data at DevInterface: ${e}`;
-                logToConsole(err, "error");
-            } finally {
-                setLoading(false);
-            }
+    useEffect((): void => {
+        try {
+            // logs
+            setLogs(getLogsFromStorage());
+        } catch (e) {
+            const err = `Error fetching logs at DevInterface: ${e}`;
+            logToConsole(err, "error");
+        } finally {
+            setLoading(false);
         }
-
-        handler();
-    });
+    }, []);
 
     if (loading) return <Loading />;
 
-    async function clearLogs() {
+    async function clearLogs(): Promise<void> {
         try {
             await AsyncStorage.setItem(StoredItemNames.consoleLogs, "");
             ShowToast("Clear!");
@@ -66,9 +56,7 @@ export default function HomeScreen() {
                 style="DEFAULT"
                 preTitle="Generic info from your device"
                 title={`Client details`}
-                bodyText={`Manufacturer: ${Device.manufacturer}\nBrand: ${Device.brand}\nCodename: ${Device.designName}\nDevice name: ${Device.deviceName}\nDevice type: ${Device.deviceType} - Expo's DeviceType Enum\nYear: ${Device.deviceYearClass}\nIs device or is emulator: ${
-                    Device.isDevice ? "is device" : "is emulator"
-                }\nModel name: ${Device.modelName}\nOS BUILD ID: ${Device.osBuildId}\nOS NAME + VERSION: ${Device.osName} ${Device.osVersion}\nANDROID API LEVEL: ${Device.platformApiLevel}\nProduct name: ${Device.productName}\nTotal memory: ${Device.totalMemory} (in bytes)`}
+                bodyText={`Manufacturer: ${Device.manufacturer}\nBrand: ${Device.brand}\nCodename: ${Device.designName}\nDevice name: ${Device.deviceName}\nYear: ${Device.deviceYearClass}\nModel name: ${Device.modelName}\nOS BUILD ID: ${Device.osBuildId}\nOS NAME + VERSION: ${Device.osName} ${Device.osVersion}\nANDROID API LEVEL: ${Device.platformApiLevel}\nProduct name: ${Device.productName}\nTotal memory: ${Device.totalMemory} (in bytes)`}
                 layout="alert"
             />
             <GapView height={20} />
@@ -78,7 +66,7 @@ export default function HomeScreen() {
                 buttonText="View all Active Objectives"
                 buttonHint="Opens up a dedicated page for viewing all your active objectives."
                 style="ACE"
-                action={() =>
+                action={(): void =>
                     router.push(Routes.DEV_INTERFACE.VIEWER_ACTIVE_OBJECTIVES)
                 }
             />
@@ -89,7 +77,7 @@ export default function HomeScreen() {
                 buttonText="See all user data"
                 buttonHint="Opens up a dedicated page for viewing all of your data."
                 style="ACE"
-                action={() =>
+                action={(): void =>
                     router.push(Routes.DEV_INTERFACE.VIEWER_USER_DATA)
                 }
             />
@@ -100,7 +88,7 @@ export default function HomeScreen() {
                 buttonText="See all scheduled notifications"
                 buttonHint="Opens up a dedicated page for viewing all of your scheduled notification reminders."
                 style="ACE"
-                action={() =>
+                action={(): void =>
                     router.push(Routes.DEV_INTERFACE.VIEWER_NOTIFICATIONS)
                 }
             />
@@ -111,14 +99,16 @@ export default function HomeScreen() {
                 buttonText="See all logs"
                 buttonHint="Opens up a dedicated page for viewing all console logs."
                 style="ACE"
-                action={() => router.push(Routes.DEV_INTERFACE.VIEWER_LOGS)}
+                action={(): void =>
+                    router.push(Routes.DEV_INTERFACE.VIEWER_LOGS)
+                }
             />
             <GapView height={10} />
             <BetterButton
                 buttonText="See error logs only"
                 buttonHint="Opens up a dedicated page for viewing warning and error console logs."
                 style="DEFAULT"
-                action={() =>
+                action={(): void =>
                     router.push(Routes.DEV_INTERFACE.VIEWER_ERROR_LOGS)
                 }
             />

@@ -11,15 +11,15 @@ import {
     getAllScheduledNotificationsAsync,
     NotificationRequest,
 } from "expo-notifications";
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 
-export default function ViewerUserData() {
+export default function ViewerNotifications(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [notifications, setNotifications] = useState<NotificationRequest[]>();
 
-    useEffect(() => {
-        async function handler() {
+    useEffect((): void => {
+        async function handler(): Promise<void> {
             try {
                 // user data
                 const allNotifications: NotificationRequest[] =
@@ -54,7 +54,9 @@ export default function ViewerUserData() {
                         <BetterTextSmallText>{error}</BetterTextSmallText>
                     ) : (
                         notifications.map(
-                            (notification: NotificationRequest) => {
+                            (
+                                notification: NotificationRequest,
+                            ): ReactElement => {
                                 const { title, body, sound } =
                                     notification.content;
 

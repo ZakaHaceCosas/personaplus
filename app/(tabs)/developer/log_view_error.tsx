@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import Loading from "@/components/static/loading";
 import {
     BetterTextSmallerText,
@@ -7,35 +7,30 @@ import {
 import { getLogsFromStorage, logToConsole } from "@/toolkit/console";
 import { Logs } from "@/types/logs";
 import { useEffect, useState } from "react";
-import GapView from "@/components/ui/gap_view";
 import PageEnd from "@/components/static/page_end";
 import TopBar from "@/components/navigation/top_bar";
 import Console from "@/components/ui/console";
 
-export default function ErrorLogger() {
+export default function ErrorLogger(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
     const [logs, setLogs] = useState<Logs>([]);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        function handler() {
-            try {
-                // logs
-                const bareLogs: Logs = getLogsFromStorage();
-                if (!bareLogs) {
-                    throw new Error("HOW CAN LOGS BE NULL?");
-                }
-                setLogs(bareLogs);
-            } catch (e) {
-                const err = `Error fetching data at DevInterface: ${e}`;
-                logToConsole(err, "error");
-                setError(err);
-            } finally {
-                setLoading(false);
+    useEffect((): void => {
+        try {
+            // logs
+            const bareLogs: Logs = getLogsFromStorage();
+            if (!bareLogs) {
+                throw new Error("HOW CAN LOGS BE NULL?");
             }
+            setLogs(bareLogs);
+        } catch (e) {
+            const err = `Error fetching data at DevInterface: ${e}`;
+            logToConsole(err, "error");
+            setError(err);
+        } finally {
+            setLoading(false);
         }
-
-        handler();
     }, []);
 
     if (loading) return <Loading />;
@@ -48,14 +43,9 @@ export default function ErrorLogger() {
                 subHeader={null}
             />
             <BetterTextSmallerText>
-                Note: Logs are SOMETIMES formatted as MM/DD/YYYY due to React's
-                constraints. Apologies for the inconvenience.
-            </BetterTextSmallerText>
-            <GapView height={5} />
-            <BetterTextSmallerText>
-                Note 2: Each log consists of two parts: the first entry is for
-                type, timestamp, and traceback, while the second entry, contains
-                the log's text. Both entries are color-coded.
+                Each log consists of two parts: the first entry is for type,
+                timestamp, and traceback, while the second entry, contains the
+                log's text. Both entries are color-coded.
             </BetterTextSmallerText>
             {error ? (
                 <BetterTextSmallText>{error}</BetterTextSmallText>

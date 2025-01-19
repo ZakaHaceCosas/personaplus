@@ -7,22 +7,22 @@ import GapView from "@/components/ui/gap_view";
 import { logToConsole } from "@/toolkit/console";
 import { OrchestrateUserData } from "@/toolkit/user";
 import { FullProfile } from "@/types/user";
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 
-export default function ViewerUserData() {
+export default function ViewerUserData(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [userData, setUserData] = useState<BetterTableItem[]>([]);
 
-    useEffect(() => {
-        async function handler() {
+    useEffect((): void => {
+        async function handler(): Promise<void> {
             try {
                 // user data
                 const userData: FullProfile = await OrchestrateUserData();
                 const mappedArray: BetterTableItem[] = Object.entries(
                     userData,
                 ).map(
-                    ([key, value]): BetterTableItem =>
+                    ([key, value]: [string, string]): BetterTableItem =>
                         ({
                             name: key,
                             value: String(value),

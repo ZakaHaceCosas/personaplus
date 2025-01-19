@@ -19,6 +19,7 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 ### Fixed
 
 - Fixed top being slightly cutoff on some displays.
+- Fixed some minor issues with Dev Interface.
 
 ### Removed
 
