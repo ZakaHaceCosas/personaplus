@@ -1,21 +1,19 @@
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import * as Location from "expo-location";
 import { StyleSheet, View } from "react-native";
-import {
-    BetterTextNormalText,
-    BetterTextSmallText,
-} from "@/components/text/better_text_presets";
+import { BetterTextNormalText } from "@/components/text/better_text_presets";
 import GapView from "@/components/ui/gap_view";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import { logToConsole } from "@/toolkit/console";
 import BetterButton from "@/components/interaction/better_button";
 import TopBar from "@/components/navigation/top_bar";
-import SessionTimer from "@/components/ui/pages/sessions/timer";
+import SessionTimer from "@/components/ui/pages/timer";
 import { ActiveObjective } from "@/types/active_objectives";
 import { useGlobalSearchParams } from "expo-router/build/hooks";
 import { UnknownOutputParams } from "expo-router";
 import { GetActiveObjective } from "@/toolkit/objectives/active_objectives";
 import Colors from "@/constants/colors";
+import { TopView } from "@/components/ui/pages/sessions";
 
 // settings for this thingy
 const SETTINGS = {
@@ -174,7 +172,7 @@ export default function PersonaPlusRunningTracker(): ReactElement {
             stopTracking();
         }
 
-        return () => {
+        return (): void => {
             // cleanup on unmount
             stopTracking();
         };
@@ -195,20 +193,18 @@ export default function PersonaPlusRunningTracker(): ReactElement {
                 header="Running tracker"
                 subHeader="Experimental feature!"
             />
-            <View style={styles.buttonContainer}>
-                <Ionicons name="run-circle" size={25} color="#FFF" />
-                <BetterTextNormalText>
-                    Total distance: {distance.toFixed(2)} m
-                </BetterTextNormalText>
-            </View>
-            <GapView height={5} />
-            <View style={styles.buttonContainer}>
-                <Ionicons name="pin-drop" size={25} color="#FFF" />
-                <BetterTextNormalText>
-                    LAT {location.latitude.toFixed(3)}, LON{" "}
-                    {location.longitude.toFixed(3)}
-                </BetterTextNormalText>
-            </View>
+            <TopView
+                objective={objective}
+                verbalName={isTracking ? "Running" : "(PAUSED)"}
+            />
+            <GapView height={10} />
+            <SessionTimer
+                objective={objective}
+                running={isTracking}
+                timerColor={Colors.PRIMARIES.ACE.ACE}
+                restingStateHandler={(): void => {}}
+                onComplete={(): void => {}}
+            />
             <GapView height={10} />
             <View style={styles.buttonContainer}>
                 <BetterButton
@@ -231,23 +227,34 @@ export default function PersonaPlusRunningTracker(): ReactElement {
                 />
             </View>
             <GapView height={10} />
-            <SessionTimer
-                objective={objective}
-                running={isTracking}
-                timerColor={Colors.PRIMARIES.ACE.ACE}
-                restingStateHandler={() => {}}
-                onComplete={() => {}}
-            />
-            <GapView height={10} />
-            <BetterTextSmallText>
-                PARAMS (this is just for app developers):{"\n\n"}
-                DISTANCE INTERVAL (METERS): {SETTINGS.DIST_INTERVAL_METERS}
-                {"\n"}TIME INTERVAL (MILLISECONDS): {SETTINGS.TIME_INTERVAL_MS}
-                {"\n"}
-                MIN DISTANCE FOR BUMP (METERS): {SETTINGS.MIN_BUMP_DISTANCE}
-                {"\n"}
-                MAX DISTANCE FOR BUMP (METERS): {SETTINGS.MAX_BUMP_DISTANCE}
-            </BetterTextSmallText>
+            <View
+                style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "100%",
+                }}
+            >
+                <View style={styles.buttonContainer}>
+                    <Ionicons name="run-circle" size={25} color="#FFF" />
+                    <BetterTextNormalText>
+                        DIST {distance.toFixed(2)} m
+                    </BetterTextNormalText>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <Ionicons name="pin-drop" size={25} color="#FFF" />
+                    <BetterTextNormalText>
+                        LAT {location.latitude.toFixed(2)}
+                    </BetterTextNormalText>
+                </View>
+                <View style={styles.buttonContainer}>
+                    <Ionicons name="pin-drop" size={25} color="#FFF" />
+                    <BetterTextNormalText>
+                        LON {location.longitude.toFixed(2)}
+                    </BetterTextNormalText>
+                </View>
+            </View>
         </>
     );
 }
