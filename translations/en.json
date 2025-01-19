@@ -489,11 +489,7 @@
         "about": {
             "aboutApp": {
                 "header": "About the app",
-                "subheader": "PersonaPlus is an app to help you take care of your health. Free, private, and trying its best to improve every that the way it helps you. Hope you improve every day too!"
-            },
-            "aboutTheMaker": {
-                "header": "About the maker",
-                "subheader": "I'm Zaka and I Make Stuff. It's a pleasure to dedicate as much time as possible to this app - which at the moment seems like a draft - so that it eventually becomes your best ally to improve as a person.\n\nGive yourself a plus!"
+                "subheader": "PersonaPlus is an app to help you take care of your health. Free, private, and trying its best to improve every that the way it helps you - and hoping you improve every day too.\n\nGive yourself a plus!"
             },
             "grid": {
                 "credits": {
@@ -513,7 +509,7 @@
                     "hint": "Opens our GiHub repo, where all the source code of our app is public for view and contribution."
                 }
             },
-            "ps": "PS. You're in an early version of the app. Thanks for being among the first ones to try it out! If you find any issue, tell us about it and we'll fix it! Thank you"
+            "ps": "PS. You're in an early version of the app. If you find any issue, report it and we'll fix it ASAP. Thank you!"
         },
         "credits": {
             "header": "Credits",

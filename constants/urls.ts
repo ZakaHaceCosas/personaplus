@@ -26,6 +26,8 @@ const URLs = {
     latestChangelog:
         "https://github.com/ZakaHaceCosas/personaplus/releases/latest",
     instagram: "https://www.instagram.com/giveitaplus/",
+    youtube:
+        "https://youtube.com/playlist?list=PLdif1flfmG__g_a1QSmBNnSh_6pAeRizW",
 } as const;
 
 /** TS type for functions that only take app URLs. */

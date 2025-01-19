@@ -83,10 +83,6 @@ export default function About(): ReactElement {
                     header={t("pages.about.aboutApp.header")}
                     subHeader={t("pages.about.aboutApp.subheader")}
                 />
-                <Division
-                    header={t("pages.about.aboutTheMaker.header")}
-                    subHeader={t("pages.about.aboutTheMaker.subheader")}
-                />
             </Section>
             <GapView height={20} />
             <View style={styles.buttonContainer}>
@@ -94,14 +90,14 @@ export default function About(): ReactElement {
                     buttonHint={t("pages.about.grid.license.hint")}
                     buttonText={t("pages.about.grid.license.text")}
                     style="GOD"
-                    action={() => router.push(Routes.ABOUT.LICENSE)}
+                    action={(): void => router.push(Routes.ABOUT.LICENSE)}
                 />
                 <GapView width={10} />
                 <BetterButton
                     buttonHint={t("pages.about.grid.credits.hint")}
                     buttonText={t("pages.about.grid.credits.text")}
                     style="GOD"
-                    action={() => router.push(Routes.ABOUT.CREDITS)}
+                    action={(): void => router.push(Routes.ABOUT.CREDITS)}
                 />
             </View>
             <GapView height={10} />
@@ -110,7 +106,7 @@ export default function About(): ReactElement {
                     buttonHint={t("pages.about.grid.privacy.hint")}
                     buttonText={t("pages.about.grid.privacy.text")}
                     style="ACE"
-                    action={async () => {
+                    action={async (): Promise<void> => {
                         await SafelyOpenUrl(URLs.privacy);
                     }}
                 />
@@ -152,7 +148,7 @@ export default function About(): ReactElement {
                 <Pressable
                     style={styles.buttonContainer}
                     onPress={async (): Promise<void> => {
-                        await SafelyOpenUrl(URLs.instagram);
+                        await SafelyOpenUrl(URLs.discord);
                     }}
                 >
                     <MaterialCommunityIcons
@@ -162,6 +158,20 @@ export default function About(): ReactElement {
                     />
                     <GapView width={5} />
                     <BetterTextNormalText>discord</BetterTextNormalText>
+                </Pressable>
+                <Pressable
+                    style={styles.buttonContainer}
+                    onPress={async (): Promise<void> => {
+                        await SafelyOpenUrl(URLs.youtube);
+                    }}
+                >
+                    <MaterialCommunityIcons
+                        name="youtube"
+                        color={Colors.BASIC.WHITE}
+                        size={FontSizes.LARGE}
+                    />
+                    <GapView width={5} />
+                    <BetterTextNormalText>@zakahacecosas</BetterTextNormalText>
                 </Pressable>
             </View>
             <PageEnd includeText={false} size="tiny" />
