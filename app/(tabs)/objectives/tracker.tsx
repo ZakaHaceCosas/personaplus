@@ -18,13 +18,17 @@ import { TopView } from "@/components/ui/pages/sessions";
 // settings for this thingy
 const SETTINGS = {
     /** Interval (in meters) for the location to update. */
-    DIST_INTERVAL_METERS: 0.5,
-    /** Minimum amount of time (in milliseconds) for the location to update. */
+    DIST_INTERVAL_METERS: 0.45,
+    /** Min amount of time (in milliseconds) for the location to update. */
     TIME_INTERVAL_MS: 1000,
     /** Min distance in meters required for the distance to update. */
     MIN_BUMP_DISTANCE: 0.1,
     /** Max distance in meters required for the distance to update. */
     MAX_BUMP_DISTANCE: 20,
+    /** Min user speed for location for the distance to update. */
+    MIN_BELIEVABLE_SPEED: 0,
+    /** Max user speed for location for the distance to update. */
+    MAX_BELIEVABLE_SPEED: 15,
 };
 
 const styles = StyleSheet.create({
@@ -33,6 +37,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         gap: 10,
+    },
+    labelWrapper: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: "100%",
     },
 });
 
@@ -138,10 +149,15 @@ export default function PersonaPlusRunningTracker(): ReactElement {
                                     latitude,
                                     longitude,
                                 );
+
+                            const speed: number =
+                                dist / (SETTINGS.TIME_INTERVAL_MS / 1000); // m/s
                             // min & max are to ignore stupid values that can mess up the stats
                             if (
                                 dist > SETTINGS.MIN_BUMP_DISTANCE &&
-                                dist < SETTINGS.MAX_BUMP_DISTANCE
+                                dist < SETTINGS.MAX_BUMP_DISTANCE &&
+                                speed > SETTINGS.MIN_BELIEVABLE_SPEED &&
+                                speed < SETTINGS.MAX_BELIEVABLE_SPEED
                             ) {
                                 setDistance(
                                     (prevDistance: number): number =>
@@ -173,10 +189,11 @@ export default function PersonaPlusRunningTracker(): ReactElement {
         }
 
         return (): void => {
-            // cleanup on unmount
-            stopTracking();
+            if (locationSubscription) {
+                locationSubscription.remove();
+            }
         };
-    }, [isTracking, startTracking, stopTracking]);
+    }, [isTracking, startTracking, stopTracking, locationSubscription]);
 
     if (!objective) {
         return (
@@ -227,15 +244,7 @@ export default function PersonaPlusRunningTracker(): ReactElement {
                 />
             </View>
             <GapView height={10} />
-            <View
-                style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    width: "100%",
-                }}
-            >
+            <View style={styles.labelWrapper}>
                 <View style={styles.buttonContainer}>
                     <Ionicons name="run-circle" size={25} color="#FFF" />
                     <BetterTextNormalText>
