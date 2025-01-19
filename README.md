@@ -1,9 +1,8 @@
-<!--markdownlint-disable-next-line-->
+<!--markdownlint-disable md033-->
 <h1 align="center">PersonaPlus</h1>
 
 ![PersonaPlus banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/design/PP_BANNER.webp)
 
-<!--markdownlint-disable-next-line-->
 <div align="center">
 
 <!--Se destacará el vídeo que a mi me parezca :v-->
@@ -19,15 +18,14 @@
 
 </div>
 
-<!-- markdownlint-disable-next-line -->
-## Give yourself a plus!
+## Give yourself a plus
 
-**PersonaPlus** is an open source, work in progress app intended to help you create healthy routines & habits so you give yourself a better life. "Give yourself a plus", like we like to say.
+**PersonaPlus** is a free and open source Android app to help you create healthy routines & habits, so you give yourself a better life, or "_give yourself a plus_" as we like to say.
 
 ### Download the app
 
 > [!CAUTION]
-> Note that as the app isn't done yet, we may change how data is stored, making you **loose your data** from one preapp release to another. Don't use (just yet :wink:) PersonaPlus as your daily companion app.
+> Note that as the app is still a work in progress, we may change how data is stored, making you **loose your data** from one preapp release to another. Don't use (just yet :wink:) PersonaPlus as your daily companion app.
 
 PersonaPlus is still under development (CURRENT STAGE: "PRE-APP"). You can try out the app downloading a pre-release version from the [releases page](https://github.com/ZakaHaceCosas/personaplus/releases). **No version is stable / finished**, so expect issues & missing features. As an early app, we kindly ask you to [report here any issue you find](https://github.com/ZakaHaceCosas/personaplus/issues). Thank you!
 
@@ -76,11 +74,9 @@ Thanks to all this wonderful open source software, PersonaPlus was possible. Tha
 PersonaPlus is under the GPL-3.0-only license. In short: You are free to use the application for any purpose, freely browse, download, reuse, modify and redistribute the source code and modified versions. However, any redistribution or modification must be under the same GPL-3.0-only license. This means that your redistribution must be open source, include clear access to the source code, and provide credit to both the original creator and any other contributors under GPL-3.0 or other licenses requiring attribution.
 
 Make sure that any third-party software used that is under different licenses (such as MIT) is also handled appropriately under their specific terms.
-
 <!--markdownlint-disable-next-line-->
 ## Join the club of the ones who give themselves a plus!
 
-<!--markdownlint-disable-next-line-->
 <div align="center">
 
 [![YouTube button](https://img.shields.io/badge/YouTube-PersonaPlus-%23fb100a?style=for-the-badge&labelColor=%23000&logo=youtube)](https://www.youtube.com/playlist?list=PLdif1flfmG__g_a1QSmBNnSh_6pAeRizW)
