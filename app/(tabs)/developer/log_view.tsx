@@ -12,41 +12,37 @@ import { getLogsFromStorage, logToConsole } from "@/toolkit/console";
 import { Logs } from "@/types/logs";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { router } from "expo-router";
-import React from "react";
+import React, { ReactElement } from "react";
 import { useEffect, useState } from "react";
 import TopBar from "@/components/navigation/top_bar";
 import Console from "@/components/ui/console";
 
-export default function HomeScreen() {
+export default function Logger(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
     const [logs, setLogs] = useState<Logs>([]);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        function handler() {
-            try {
-                // logs
-                const bareLogs: Logs = getLogsFromStorage();
-                if (!bareLogs) {
-                    throw new Error("HOW CAN LOGS BE NULL?");
-                }
-                setLogs(bareLogs);
-            } catch (e) {
-                const err = `Error fetching data at DevInterface: ${e}`;
-                logToConsole(err, "error");
-                setError(err);
-            } finally {
-                setLoading(false);
+    useEffect((): void => {
+        try {
+            // logs
+            const bareLogs: Logs = getLogsFromStorage();
+            if (!bareLogs) {
+                throw new Error("HOW CAN LOGS BE NULL?");
             }
+            setLogs(bareLogs);
+        } catch (e) {
+            const err = `Error fetching data at DevInterface: ${e}`;
+            logToConsole(err, "error");
+            setError(err);
+        } finally {
+            setLoading(false);
         }
-
-        handler();
     }, []);
 
-    async function clearLogs() {
+    async function clearLogs(): Promise<void> {
         try {
             await AsyncStorage.setItem(StoredItemNames.consoleLogs, "");
-            router.replace(Routes.DEV_INTERFACE.LOG_VIEW);
+            router.replace(Routes.DEV_INTERFACE.VIEWER_LOGS);
         } catch (e) {
             logToConsole(`Failed to clear logs: ${e}`, "error");
         }
@@ -70,14 +66,9 @@ export default function HomeScreen() {
             </BetterTextSmallerText>
             <GapView height={5} />
             <BetterTextSmallerText>
-                Note 2: Logs are SOMETIMES formatted as MM/DD/YYYY due to
-                React's constraints. Apologies for the inconvenience.
-            </BetterTextSmallerText>
-            <GapView height={5} />
-            <BetterTextSmallerText>
-                Note 3: Each log consists of two parts: the first entry is for
-                type, timestamp, and traceback, while the second entry, contains
-                the log's text. Both entries are color-coded.
+                Each log consists of two parts: the first entry is for type,
+                timestamp, and traceback, while the second entry, contains the
+                log's text. Both entries are color-coded.
             </BetterTextSmallerText>
             <GapView height={5} />
             <BetterButton

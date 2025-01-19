@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import BetterButton from "@/components/interaction/better_button";
 import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
@@ -32,10 +32,9 @@ import { Alert } from "react-native";
 import TopBar from "@/components/navigation/top_bar";
 import { ShowToast } from "@/toolkit/android";
 import { useTranslation } from "react-i18next";
-// import { router } from "expo-router";
 
 // i gave myself the freedom to write in an informal way on this page.
-export default function EpicExperiments() {
+export default function EpicExperiments(): ReactElement {
     const { t } = useTranslation();
 
     function ExperimentDivision({
@@ -44,7 +43,7 @@ export default function EpicExperiments() {
     }: {
         id: Experiment;
         isEnabled: boolean;
-    }) {
+    }): ReactElement {
         return (
             <Division
                 key={id}
@@ -65,7 +64,7 @@ export default function EpicExperiments() {
                             : t("pages.experiments.toggle.enable")
                     }
                     buttonHint={t("pages.experiments.toggle.hint")}
-                    action={() => {
+                    action={(): void => {
                         HandleExperiment(id, !isEnabled);
                     }}
                 />
@@ -76,10 +75,10 @@ export default function EpicExperiments() {
     const [loading, setLoading] = useState<boolean>(true);
     const [experiments, setExperiments] = useState<Experiments>();
 
-    useEffect(() => {
-        async function handler() {
+    useEffect((): void => {
+        async function handler(): Promise<void> {
             try {
-                const theExperiments = await GetExperiments();
+                const theExperiments: Experiments = await GetExperiments();
                 setExperiments(theExperiments);
             } catch (e) {
                 logToConsole(`Error getting experiments: ${e}`, "error");
@@ -90,7 +89,7 @@ export default function EpicExperiments() {
         handler();
     }, []);
 
-    function HandleExperiment(experiment: Experiment, value: boolean) {
+    function HandleExperiment(experiment: Experiment, value: boolean): void {
         if (value === true) {
             Alert.alert(
                 t("globals.interaction.areYouSure"),
@@ -111,7 +110,7 @@ export default function EpicExperiments() {
                     },
                     {
                         text: t("globals.interaction.nevermind"),
-                        onPress: () => {},
+                        onPress: (): void => {},
                     },
                 ],
             );
@@ -151,13 +150,16 @@ export default function EpicExperiments() {
             </BetterTextSmallerText>
             <GapView height={10} />
             <Section kind="Experiments">
-                {Object.entries(experiments!).map(([id, isEnabled]) => (
-                    <ExperimentDivision
-                        key={id}
-                        id={id as Experiment}
-                        isEnabled={isEnabled}
-                    />
-                ))}
+                {experiments &&
+                    Object.entries(experiments).map(
+                        ([id, isEnabled]: [string, boolean]): ReactElement => (
+                            <ExperimentDivision
+                                key={id}
+                                id={id as Experiment}
+                                isEnabled={isEnabled}
+                            />
+                        ),
+                    )}
             </Section>
             <PageEnd includeText={true} size={"tiny"} />
         </>

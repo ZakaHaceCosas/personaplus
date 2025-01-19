@@ -58,16 +58,6 @@ export default function Console({
     logs: Logs;
     errorOnly: boolean;
 }): ReactElement {
-    const timeFormatOptions: Intl.DateTimeFormatOptions = {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false, // 24h format
-    };
-
     const errorLogs: Logs = logs.filter(
         (log: Log): boolean => log.type === "warn" || log.type === "error",
     );
@@ -110,7 +100,15 @@ export default function Console({
 
                 // formats date in a more sense-making way than what R5 used to do
                 const formattedDate: string = new Date(log.timestamp)
-                    .toLocaleString("es-ES", timeFormatOptions)
+                    .toLocaleString("es-ES", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                        hour12: false, // 24h format
+                    })
                     .replace(",", "");
 
                 let finalMessage: string;
