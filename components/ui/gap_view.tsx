@@ -1,8 +1,18 @@
-// src/GapView.tsx
-// ¿flex-gap no funciona? ¿No quieres usar Flexbox? Un espaciador que no ocupa espacio en tu código
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/components/ui/gap_view.tsx
+ * Basically: A vertical and horizontal spacer, to avoid flex-gap. Performance wise.
+ *
+ * <=============================================================================>
+ */
 
-import React, { ReactElement } from "react";
-import { View } from "react-native";
+import React, { NamedExoticComponent, ReactElement } from "react";
+import { StyleSheet, View } from "react-native";
 
 // TypeScript, supongo
 /**
@@ -34,6 +44,16 @@ interface GapViewProps {
  * @param {number} p.width
  * @returns {ReactElement}
  */
-export default function GapView({ height, width }: GapViewProps): ReactElement {
-    return <View style={{ height: height, width: width }} />;
-}
+const GapView: NamedExoticComponent<GapViewProps> = React.memo(
+    function GapView({ height, width }: GapViewProps): ReactElement {
+        const styles: {
+            view: { height: number | undefined; width: number | undefined };
+        } = StyleSheet.create({
+            view: { height, width },
+        });
+
+        return <View style={styles.view} />;
+    },
+);
+
+export default GapView;

@@ -14,9 +14,8 @@
 import NavigationBar from "@/components/navigation/navigation_bar";
 import Colors from "@/constants/colors";
 import { Routes } from "@/constants/routes";
-
-import * as Router from "expo-router";
-import React, { ReactNode, useEffect, useState } from "react";
+import { Slot, usePathname } from "expo-router";
+import React, { ReactElement, ReactNode, useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
@@ -34,7 +33,9 @@ interface LayoutContainerProps {
     children: ReactNode;
 }
 
-export function LayoutContainer({ children }: LayoutContainerProps) {
+export function LayoutContainer({
+    children,
+}: LayoutContainerProps): ReactElement {
     return (
         <ScrollView
             style={styles.mainScrollView}
@@ -48,15 +49,15 @@ export function LayoutContainer({ children }: LayoutContainerProps) {
         </ScrollView>
     );
 }
-export default function Layout() {
+export default function Layout(): ReactElement {
     // Get the current route (directly in the top-level function so it updates on each redraw)
-    const currentRoute = Router.usePathname();
+    const currentRoute: string = usePathname();
     // Save it as a stateful value
     const [currentLocation, setCurrentLocation] =
         useState<string>(currentRoute);
 
     // on redraw, update the state so the NavigationBar has the currentLocation up to date
-    useEffect(() => {
+    useEffect((): void => {
         setCurrentLocation(currentRoute);
     }, [currentRoute]);
 
@@ -64,10 +65,8 @@ export default function Layout() {
         Routes.MAIN.WELCOME_SCREEN,
         Routes.MAIN.SETTINGS.UPDATE_PROFILE,
         Routes.MAIN.SETTINGS.SETTINGS_PAGE,
-        Routes.ACTIVE_OBJECTIVES.CREATE,
-        Routes.ACTIVE_OBJECTIVES.SESSION,
-        Routes.ACTIVE_OBJECTIVES.RESULTS,
         Routes.EXPERIMENTS.TRACKER,
+        ...Object.values(Routes.ACTIVE_OBJECTIVES),
         ...Object.values(Routes.DEV_INTERFACE),
         ...Object.values(Routes.ABOUT),
     ];
@@ -75,7 +74,7 @@ export default function Layout() {
     return (
         <>
             <LayoutContainer>
-                <Router.Slot />
+                <Slot />
             </LayoutContainer>
             {!noNavigationRoutes.includes(currentLocation) && (
                 <NavigationBar currentLocation={currentLocation} />
