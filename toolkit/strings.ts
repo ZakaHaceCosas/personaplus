@@ -13,6 +13,7 @@
 
 import { logToConsole } from "@/toolkit/console";
 import { TFunction } from "i18next";
+import { $SpecialObject } from "i18next/typescript/helpers";
 
 /**
  * Handles pluralization of strings.
@@ -70,7 +71,7 @@ function GenerateRandomMessage(
 ): string {
     // Get all messages for the specified target
     // so the app feels more friendly :D
-    const allMessages = t(`coolRandomMessages.${target}`, {
+    const allMessages: $SpecialObject = t(`coolRandomMessages.${target}`, {
         returnObjects: true,
     });
 

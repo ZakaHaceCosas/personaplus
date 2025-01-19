@@ -12,7 +12,9 @@ import { DEFAULT_EXPERIMENTS } from "@/constants/experiments";
  */
 async function GetExperiments(): Promise<Experiments> {
     try {
-        const stuff = await AsyncStorage.getItem(StoredItemNames.experiments);
+        const stuff: string | null = await AsyncStorage.getItem(
+            StoredItemNames.experiments,
+        );
         if (!stuff || stuff === null || stuff === "") {
             logToConsole(
                 "Turns out experiments don't exist? Something has probably gone wrong during the onboarding process. Whatever, no error thrown, we'll set everything to disabled and carry on.",
