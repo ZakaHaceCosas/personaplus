@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React from "react";
+import React, { ReactElement } from "react";
 import {
     BetterTextLicenseHeader,
     BetterTextLicenseText,
@@ -23,8 +23,8 @@ import URLs from "@/constants/urls";
 import PageEnd from "../../../components/static/page_end";
 import TopBar from "@/components/navigation/top_bar";
 
-export default function License() {
-    // yes, i did spend more than an hour formatting the General Public License into a lot of <BetterText> blocks. :]
+export default function License(): ReactElement {
+    // yes, i did spend more than an hour formatting the General Public License into a lot of BetterText blocks. :]
     return (
         <>
             <TopBar
@@ -32,12 +32,11 @@ export default function License() {
                 header="License"
                 subHeader="GPL-3.0-only"
             />
-            <BetterText fontSize={12} fontWeight="Regular">
-                Copyright (C) 2024 ZakaHaceCosas{"\n"}This legal text is only
-                available in English.
+            <BetterText fontSize={10} fontWeight="Regular">
+                Copyright (C) 2024 ZakaHaceCosas
             </BetterText>
             <GapView height={10} />
-            <BetterText fontSize={15} fontWeight="Regular">
+            <BetterText fontSize={14} fontWeight="Regular">
                 This program is free software: you can redistribute it and/or
                 modify it under the terms of the GNU General Public License as
                 published by the Free Software Foundation, either version 3 of
@@ -52,7 +51,9 @@ export default function License() {
                     fontSize={15}
                     fontWeight="Regular"
                     isLink={true}
-                    onTap={async () => await SafelyOpenUrl(URLs.license)}
+                    onTap={async (): Promise<void> => {
+                        await SafelyOpenUrl(URLs.license);
+                    }}
                 >
                     https://www.gnu.org/licenses/
                 </BetterText>
@@ -75,12 +76,12 @@ export default function License() {
                 </BetterText>
             </BetterText>
             <BetterTextLicenseText>
-                {"\n"}Copyright (C) 2007 Free Software Foundation, Inc.{" "}
+                Copyright (C) 2007 Free Software Foundation, Inc.{" "}
                 {"https://fsf.org/"}.{"\n"}
                 Everyone is permitted to copy and distribute verbatim copies of
                 this license document, but changing it is not allowed.
             </BetterTextLicenseText>
-            <GapView height={20} />
+            <GapView height={15} />
             <BetterTextLicenseHeader>Preamble</BetterTextLicenseHeader>
             <BetterTextLicenseText>
                 The GNU General Public License is a free, copyleft license for
