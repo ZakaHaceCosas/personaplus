@@ -483,11 +483,7 @@
         "about": {
             "aboutApp": {
                 "header": "Sobre la app",
-                "subheader": "PersonaPlus es una app para ayudarte a cuidar de tu salud. Gratis, privada, y haciendo lo posible por mejorar como cada día la forma en que te ayuda. ¡Espero que mejores cada día tú también!"
-            },
-            "aboutTheMaker": {
-                "header": "Sobre el creador",
-                "subheader": "Soy Zaka y Hago Cosas. Un placer dedicar todo el tiempo posible a esta app - que de momento parece un boceto - para que sea eventualmente tu mejor aliada a la hora de mejorar como persona.\n\n¡Date un plus!"
+                "subheader": "PersonaPlus es una app para ayudarte a cuidar de tu salud. Gratis, privada, y haciendo lo posible por mejorar como cada día la forma en que te ayuda - y esperando que mejores cada día tú también.\n\n¡Date un plus!"
             },
             "grid": {
                 "credits": {
@@ -507,7 +503,7 @@
                     "hint": "Abre nuestro repositorio de GitHub, donde todo el código fuente de la app es público para ver y contribuir."
                 }
             },
-            "ps": "PD. Estás en una versión temprana de la app. ¡Gracias por ser de los primeros en probarla! Si encuentras fallos, ¡avísanos y los arreglaremos! Gracias."
+            "ps": "PD. Estás en una versión temprana de la app. Si encuentras fallos repórtalos y los arreglaremos cuanto antes. ¡Gracias!"
         },
         "credits": {
             "header": "Créditos",

@@ -1,7 +1,7 @@
 // OpenSourceCredits.tsx
 // Credits to the amazing software that has saved me from my laziness to learn how to make a timer in React
 
-import React from "react";
+import React, { ReactElement } from "react";
 import { View } from "react-native";
 import TopBar from "@/components/navigation/top_bar";
 import BetterText from "@/components/text/better_text";
@@ -151,7 +151,7 @@ const contributors: Contributor[] = [
     // - del
 ];
 
-export default function OpenSourceCredits() {
+export default function OpenSourceCredits(): ReactElement {
     const { t } = useTranslation();
 
     return (
@@ -168,105 +168,109 @@ export default function OpenSourceCredits() {
                 {t("pages.credits.contributorsNote")}
             </BetterTextSmallText>
             <GapView height={20} />
-            {contributors.map((contributor, index) => (
-                <View key={index}>
-                    {contributor.name ? (
-                        <>
-                            <BetterTextSmallHeader>
-                                {contributor.name}
-                            </BetterTextSmallHeader>
+            {contributors.map(
+                (contributor: Contributor, index: number): ReactElement => (
+                    <View key={index}>
+                        {contributor.name ? (
+                            <>
+                                <BetterTextSmallHeader>
+                                    {contributor.name}
+                                </BetterTextSmallHeader>
+                                <BetterText
+                                    textColor={Colors.LABELS.SHL}
+                                    fontWeight="Regular"
+                                    fontSize={14}
+                                >
+                                    @{contributor.username}
+                                </BetterText>
+                            </>
+                        ) : (
                             <BetterText
                                 textColor={Colors.LABELS.SHL}
-                                fontWeight="Regular"
-                                fontSize={14}
+                                fontWeight="Italic"
+                                fontSize={FontSizes.LARGE}
                             >
                                 @{contributor.username}
                             </BetterText>
-                        </>
-                    ) : (
-                        <BetterText
-                            textColor={Colors.LABELS.SHL}
-                            fontWeight="Italic"
-                            fontSize={FontSizes.LARGE}
-                        >
-                            @{contributor.username}
+                        )}
+                        {contributor.bio && (
+                            <BetterText
+                                textColor={Colors.LABELS.SDD}
+                                fontWeight="SemiBold"
+                                fontSize={14}
+                            >
+                                {contributor.bio}
+                            </BetterText>
+                        )}
+                        <GapView height={5} />
+                        <BetterText fontWeight="Light" fontSize={15}>
+                            {contributor.contribution}
                         </BetterText>
-                    )}
-                    {contributor.bio && (
+                        <GapView height={5} />
                         <BetterText
-                            textColor={Colors.LABELS.SDD}
-                            fontWeight="SemiBold"
-                            fontSize={14}
+                            fontWeight="Light"
+                            fontSize={15}
+                            isLink={true}
+                            onTap={async (): Promise<void> => {
+                                await SafelyOpenUrl(contributor.url);
+                            }}
                         >
-                            {contributor.bio}
+                            {contributor.url}
                         </BetterText>
-                    )}
-                    <GapView height={5} />
-                    <BetterText fontWeight="Light" fontSize={15}>
-                        {contributor.contribution}
-                    </BetterText>
-                    <GapView height={5} />
-                    <BetterText
-                        fontWeight="Light"
-                        fontSize={15}
-                        isLink={true}
-                        onTap={async () => {
-                            await SafelyOpenUrl(contributor.url);
-                        }}
-                    >
-                        {contributor.url}
-                    </BetterText>
-                    <GapView height={20} />
-                </View>
-            ))}
+                        <GapView height={20} />
+                    </View>
+                ),
+            )}
             <BetterTextExtraHeader>
                 {t("pages.credits.libraries")}
             </BetterTextExtraHeader>
             <GapView height={20} />
-            {libraries.map((library, index) => (
-                <View key={index}>
-                    <BetterTextSmallHeader>
-                        {library.name}
-                    </BetterTextSmallHeader>
-                    <BetterText
-                        textColor={Colors.LABELS.SHL}
-                        fontWeight="Regular"
-                        fontSize={14}
-                    >
-                        {library.license}
-                    </BetterText>
-                    <BetterText
-                        textColor={Colors.LABELS.SDD}
-                        fontWeight="Light"
-                        fontSize={14}
-                    >
-                        Made by{" "}
+            {libraries.map(
+                (library: OpenSourceLibrary, index: number): ReactElement => (
+                    <View key={index}>
+                        <BetterTextSmallHeader>
+                            {library.name}
+                        </BetterTextSmallHeader>
                         <BetterText
-                            textColor={Colors.LABELS.SDD}
-                            fontWeight="SemiBold"
+                            textColor={Colors.LABELS.SHL}
+                            fontWeight="Regular"
                             fontSize={14}
                         >
-                            {library.author}
+                            {library.license}
                         </BetterText>
-                    </BetterText>
-                    <GapView height={5} />
-                    <BetterText fontWeight="Light" fontSize={15}>
-                        {library.description}
-                    </BetterText>
-                    <GapView height={5} />
-                    <BetterText
-                        fontWeight="Light"
-                        fontSize={15}
-                        isLink={true}
-                        onTap={async () => {
-                            await SafelyOpenUrl(library.url);
-                        }}
-                    >
-                        {library.url}
-                    </BetterText>
-                    <GapView height={20} />
-                </View>
-            ))}
+                        <BetterText
+                            textColor={Colors.LABELS.SDD}
+                            fontWeight="Light"
+                            fontSize={14}
+                        >
+                            Made by{" "}
+                            <BetterText
+                                textColor={Colors.LABELS.SDD}
+                                fontWeight="SemiBold"
+                                fontSize={14}
+                            >
+                                {library.author}
+                            </BetterText>
+                        </BetterText>
+                        <GapView height={5} />
+                        <BetterText fontWeight="Light" fontSize={15}>
+                            {library.description}
+                        </BetterText>
+                        <GapView height={5} />
+                        <BetterText
+                            fontWeight="Light"
+                            fontSize={15}
+                            isLink={true}
+                            onTap={async (): Promise<void> => {
+                                await SafelyOpenUrl(library.url);
+                            }}
+                        >
+                            {library.url}
+                        </BetterText>
+                        <GapView height={20} />
+                    </View>
+                ),
+            )}
             <BetterTextSmallText>
                 {t("pages.credits.librariesNoteOne")}
             </BetterTextSmallText>

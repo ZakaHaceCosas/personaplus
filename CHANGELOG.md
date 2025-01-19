@@ -11,9 +11,18 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 
 - Report page!
 
+### Changed
+
+- Made session's timer slightly bigger.
+- (Experiment:Tracker) Now the running tracker better resembles the sessions page.
+
 ### Fixed
 
 - Fixed top being slightly cutoff on some displays.
+
+### Removed
+
+- License page, now only the small text is shown. For the larger one, a button to open the web is provided.
 
 ## [0.0.6-preapp.28] - 08-01-2025
 
