@@ -5,20 +5,13 @@
   "scripts": {
     "start": "expo start --go",
     "start:clear": "expo start --go --clear",
-    "start:super-clear": "expo prebuild --clean && expo start --go --clear",
-    "start:dev": "expo start --clear",
     "test": "jest --verbose",
     "lint": "eslint --fix .",
     "prettify": "prettier --w .",
     "dep:check": "expo install --check",
     "dep:fix": "expo install --fix",
     "build": "eas build -p android --profile production",
-    "build:pre:only": "expo prebuild --clean",
-    "build:pre": "expo prebuild --clean && eas build -p android --profile production",
-    "build:dev": "eas build -p android --profile development",
-    "build:dev:pre": "expo prebuild --clean && eas build -p android --profile development",
-    "android": "expo run:android",
-    "ios": "expo run:ios"
+    "build:dev": "eas build -p android --profile development"
   },
   "jest": {
     "preset": "jest-expo",
