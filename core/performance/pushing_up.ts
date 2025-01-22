@@ -6,7 +6,7 @@ import CreateComponentDataUtilities from "@/core/tools/core_library_data_builder
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
 
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
-    "19/01/2025",
+    "22/01/2025",
     [
         "https://fitnessvolt.com/calories-burned-push-up-calculator/",
         "https://download.lww.com/wolterskluwer_vitalstream_com/PermaLink/MSS/A/MSS_43_8_2011_06_13_AINSWORTH_202093_SDC1.pdf",
@@ -73,8 +73,7 @@ export default function calculateLiftingPerformance(
             const thirdStep: number = secondStep / 200; // CALORIES FOR ONE MINUTE
             return thirdStep;
         };
-        const caloriesBurnt: number =
-            calculateCaloriesBurntPerMinute() * (time / 60);
+        const caloriesBurnt: number = calculateCaloriesBurntPerMinute() * time;
         return caloriesBurnt;
     };
 
