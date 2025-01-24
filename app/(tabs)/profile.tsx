@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { useTranslation } from "react-i18next";
 import type { FullProfile } from "@/types/user";
 import BetterButton from "@/components/interaction/better_button";
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function HomeScreen() {
+export default function HomeScreen(): ReactElement {
     const [userData, setUserData] = useState<FullProfile>(ErrorUserData);
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -84,11 +84,15 @@ export default function HomeScreen() {
             const releases: Release[] = await response.json(); // gets releases
 
             // sorts releases by date and gets the most recent
-            const latestRelease = releases
-                .filter((release) => semver.valid(release.tag_name)) // validate tags
-                .sort((a, b) => semver.rcompare(a.tag_name, b.tag_name))[0];
+            const latestRelease: Release = releases
+                .filter((release: Release): string | null =>
+                    semver.valid(release.tag_name),
+                ) // validate tags
+                .sort((a: Release, b: Release): 0 | 1 | -1 =>
+                    semver.rcompare(a.tag_name, b.tag_name),
+                )[0];
 
-            const latestVersion = latestRelease.tag_name; // gets the tagname
+            const latestVersion: string = latestRelease.tag_name; // gets the tagname
             logToConsole(`Latest version: ${latestVersion}`, "log");
 
             if (semver.gt(latestVersion, currentVersion)) {
@@ -109,7 +113,7 @@ export default function HomeScreen() {
                                 "pages.profile.divisions.update.updateFlow.buttons.update",
                             ),
                             style: "default",
-                            onPress: async () =>
+                            onPress: async (): Promise<void> =>
                                 await SafelyOpenUrl(
                                     latestRelease.assets[0]
                                         .browser_download_url,
@@ -119,13 +123,13 @@ export default function HomeScreen() {
                             text: t(
                                 "pages.profile.divisions.update.updateFlow.buttons.changelog",
                             ),
-                            onPress: async () =>
+                            onPress: async (): Promise<void> =>
                                 await SafelyOpenUrl(URLs.latestChangelog), // changelog will just open the page so you see whats new
                         },
                         {
                             text: t("globals.nevermind"),
                             style: "destructive",
-                            onPress: () => {}, // closes
+                            onPress: (): void => {}, // closes
                         },
                     ],
                 );
@@ -194,7 +198,7 @@ export default function HomeScreen() {
                             "pages.profile.interactions.updateProfile.hint",
                         )}
                         style="DEFAULT"
-                        action={() =>
+                        action={(): void =>
                             router.push(Routes.MAIN.SETTINGS.UPDATE_PROFILE)
                         }
                     />
@@ -216,7 +220,7 @@ export default function HomeScreen() {
                             "pages.profile.divisions.settings.action.hint",
                         )}
                         style="ACE"
-                        action={() => {
+                        action={(): void => {
                             router.push(Routes.MAIN.SETTINGS.SETTINGS_PAGE);
                         }}
                     />
@@ -224,27 +228,6 @@ export default function HomeScreen() {
             </Section>
             <GapView height={20} />
             <Section kind="About">
-                <Division
-                    preHeader={t("globals.about")}
-                    header={t("pages.profile.divisions.about.header")}
-                    subHeader={t("pages.profile.divisions.about.subheader")}
-                    /* subHeader="Find out who's behind the app you're (hopefully!) enjoying right now." */
-                    direction="vertical"
-                    gap={0}
-                >
-                    <BetterButton
-                        buttonText={t(
-                            "pages.profile.divisions.about.action.text",
-                        )}
-                        buttonHint={t(
-                            "pages.profile.divisions.about.action.hint",
-                        )}
-                        style="DEFAULT"
-                        action={() => {
-                            router.push(Routes.ABOUT.ABOUT_PAGE);
-                        }}
-                    />
-                </Division>
                 <Division
                     header={t("pages.profile.divisions.update.header")}
                     subHeader={t("pages.profile.divisions.update.subheader", {
@@ -261,8 +244,29 @@ export default function HomeScreen() {
                             "pages.profile.divisions.update.action.hint",
                         )}
                         style="DEFAULT"
-                        action={async () => {
+                        action={async (): Promise<void> => {
                             await CheckForUpdates();
+                        }}
+                    />
+                </Division>
+                <Division
+                    preHeader={t("globals.about")}
+                    header={t("pages.profile.divisions.about.header")}
+                    subHeader={t("pages.profile.divisions.about.subheader")}
+                    /* subHeader="Find out who's behind the app you're (hopefully!) enjoying right now." */
+                    direction="vertical"
+                    gap={0}
+                >
+                    <BetterButton
+                        buttonText={t(
+                            "pages.profile.divisions.about.action.text",
+                        )}
+                        buttonHint={t(
+                            "pages.profile.divisions.about.action.hint",
+                        )}
+                        style="DEFAULT"
+                        action={(): void => {
+                            router.push(Routes.ABOUT.ABOUT_PAGE);
                         }}
                     />
                 </Division>

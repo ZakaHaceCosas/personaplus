@@ -1,16 +1,13 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import BetterButton from "@/components/interaction/better_button";
 import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
-import BetterTable, { BetterTableItem } from "@/components/ui/better_table";
-import GapView from "@/components/ui/gap_view";
 import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
 import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
 import { logToConsole } from "@/toolkit/console";
 import {
-    CheckForAnActiveObjectiveDailyStatus,
     FailObjectivesNotDoneYesterday,
     GetActiveObjective,
     GetAllPendingObjectives,
@@ -38,13 +35,10 @@ setNotificationHandler({
     }),
 });
 
-export default function HomeScreen() {
+export default function HomeScreen(): ReactElement {
     const { t } = useTranslation();
     const [userData, setUserData] = useState<FullProfile>();
     const [loading, setLoading] = useState<boolean>(true);
-    const [allObjectivesForTable, setAllObjectivesForTable] = useState<
-        BetterTableItem[]
-    >([]);
     const [renderedObjectives, setRenderedObjectives] = useState<
         ActiveObjective[] | null
     >(null);
@@ -55,7 +49,7 @@ export default function HomeScreen() {
     const [notificationsHandled, setNotificationsHandled] =
         useState<boolean>(false);
 
-    useEffect(() => {
+    useEffect((): void => {
         async function fetchData(): Promise<void> {
             try {
                 // fetch user
@@ -73,56 +67,22 @@ export default function HomeScreen() {
                 setIdentifiers(pending);
 
                 // handle objectives
-                // PS. if you wonder why i didn't instead do
-                // if (!array.isArray(pending)) { setStuff([]) }
-                // to save an indent level, it's because type error happens
-                // if i do that :/
-                if (Array.isArray(pending)) {
-                    const objectives: (ActiveObjective | null)[] =
-                        await Promise.all(
-                            pending.map(
-                                (id: number): Promise<ActiveObjective | null> =>
-                                    GetActiveObjective(id),
-                            ),
-                        );
-                    const filteredObjectives: ActiveObjective[] =
-                        objectives.filter(
-                            (
-                                obj: ActiveObjective | null,
-                            ): obj is ActiveObjective => obj !== null,
-                        );
-                    setRenderedObjectives(filteredObjectives);
-
-                    if (filteredObjectives.length > 0) {
-                        const objectivesForTable: BetterTableItem[] =
-                            await Promise.all(
-                                filteredObjectives.map(
-                                    async (
-                                        obj: ActiveObjective,
-                                    ): Promise<BetterTableItem> => ({
-                                        name: t(
-                                            `globals.supportedActiveObjectives.${obj.exercise}.name`,
-                                        ),
-                                        value: (await CheckForAnActiveObjectiveDailyStatus(
-                                            obj.identifier,
-                                        ))
-                                            ? t(
-                                                  "activeObjectives.today.content.headers.statusOptions.yes",
-                                              )
-                                            : t(
-                                                  "activeObjectives.today.content.headers.statusOptions.no",
-                                              ),
-                                    }),
-                                ),
-                            );
-                        setAllObjectivesForTable(objectivesForTable);
-                    } else {
-                        setAllObjectivesForTable([]);
-                    }
-                } else {
+                if (!Array.isArray(pending)) {
                     setRenderedObjectives([]);
-                    setAllObjectivesForTable([]);
+                    return;
                 }
+                const objectives: (ActiveObjective | null)[] =
+                    await Promise.all(
+                        pending.map(
+                            (id: number): Promise<ActiveObjective | null> =>
+                                GetActiveObjective(id),
+                        ),
+                    );
+                const filteredObjectives: ActiveObjective[] = objectives.filter(
+                    (obj: ActiveObjective | null): obj is ActiveObjective =>
+                        obj !== null,
+                );
+                setRenderedObjectives(filteredObjectives);
             } catch (e) {
                 logToConsole(`Error fetching data: ${e}`, "error");
                 router.replace(Routes.MAIN.WELCOME_SCREEN);
@@ -136,7 +96,7 @@ export default function HomeScreen() {
     }, [t]);
 
     // handle notifications (most issues came from here bruh)
-    useEffect(() => {
+    useEffect((): void => {
         async function handle(): Promise<void> {
             if (notificationsHandled || !userData || !identifiersLoaded) return;
 
@@ -152,7 +112,7 @@ export default function HomeScreen() {
                     Array.isArray(identifiers) &&
                     identifiers.length > 0
                 ) {
-                    await scheduleRandomNotifications(3, t);
+                    await scheduleRandomNotifications(t);
                 }
             } catch (e) {
                 logToConsole(`Error handling notifications: ${e}`, "error");
@@ -165,8 +125,7 @@ export default function HomeScreen() {
     }, [userData, identifiers, identifiersLoaded, notificationsHandled, t]);
 
     // render stuff
-    if (loading) return <Loading />;
-    if (!userData || !renderedObjectives || !allObjectivesForTable) {
+    if (loading || !userData || !renderedObjectives) {
         return <Loading />;
     }
 
@@ -211,8 +170,8 @@ export default function HomeScreen() {
                             )}
                         />
                     ) : (
-                        renderedObjectives.map((obj: ActiveObjective) => {
-                            return (
+                        renderedObjectives.map(
+                            (obj: ActiveObjective): ReactElement => (
                                 <Division
                                     key={obj.identifier}
                                     header={t(
@@ -239,41 +198,10 @@ export default function HomeScreen() {
                                         }
                                     />
                                 </Division>
-                            );
-                        })
+                            ),
+                        )
                     )}
                 </>
-            </Section>
-            <GapView height={20} />
-            <Section kind="HowYouAreDoing">
-                {identifiers &&
-                Array.isArray(identifiers) &&
-                identifiers.length > 0 ? (
-                    <Division
-                        header={t("activeObjectives.today.content.header")}
-                        subHeader={t(
-                            "activeObjectives.today.content.subheader",
-                        )}
-                    >
-                        <BetterTable
-                            headers={[
-                                t(
-                                    "activeObjectives.today.content.headers.objective",
-                                ),
-                                t(
-                                    "activeObjectives.today.content.headers.status",
-                                ),
-                            ]}
-                            items={allObjectivesForTable}
-                        />
-                        <GapView height={5} />
-                    </Division>
-                ) : (
-                    <Division
-                        header={t("activeObjectives.today.content.header")}
-                        subHeader={t("activeObjectives.today.noContent")}
-                    />
-                )}
             </Section>
             <PageEnd includeText={true} />
         </>

@@ -482,7 +482,7 @@
         },
         "about": {
             "aboutApp": {
-                "header": "Sobre la app",
+                "header": "Sobre nosotros",
                 "subheader": "PersonaPlus es una app para ayudarte a cuidar de tu salud. Gratis, privada, y haciendo lo posible por mejorar como cada día la forma en que te ayuda - y esperando que mejores cada día tú también.\n\n¡Date un plus!"
             },
             "grid": {
@@ -555,21 +555,6 @@
         "feedback": {
             "created": "¡Objetivo creado con éxito!",
             "deleted": "¡Objetivo {{id}} eliminado exitosamente!"
-        },
-        "today": {
-            "noContent": "Aquí siempre verás el progreso de hoy (siempre y cuando tengas objetivos para hoy y que estén sin hacer).",
-            "content": {
-                "header": "Hoy",
-                "subheader": "(Sí, esta tabla es bastante básica. La app aún está en desarrollo, en una futura versión se renovará la sección 'Hoy'.)",
-                "headers": {
-                    "objective": "Objetivo",
-                    "status": "¿Lo has hecho?",
-                    "statusOptions": {
-                        "yes": "¡Sip!",
-                        "no": "Pendiente..."
-                    }
-                }
-            }
         }
     },
     "errors": {

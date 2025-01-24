@@ -488,7 +488,7 @@
         },
         "about": {
             "aboutApp": {
-                "header": "About the app",
+                "header": "About us",
                 "subheader": "PersonaPlus is an app to help you take care of your health. Free, private, and trying its best to improve every that the way it helps you - and hoping you improve every day too.\n\nGive yourself a plus!"
             },
             "grid": {
@@ -561,21 +561,6 @@
         "feedback": {
             "created": "Objective successfully created!",
             "deleted": "Objetive {{id}} successfully removed!"
-        },
-        "today": {
-            "noContent": "Here you'll always see todays progress (as long as you have objectives for today that aren't done).",
-            "content": {
-                "header": "Today",
-                "subheader": "(Yeah, this table is pretty basic. The app is still in development, in a future version the 'Today' section will be overhauled.)",
-                "headers": {
-                    "objective": "Objective",
-                    "status": "Done it?",
-                    "statusOptions": {
-                        "yes": "Yep!",
-                        "no": "Pending..."
-                    }
-                }
-            }
         }
     },
     "errors": {

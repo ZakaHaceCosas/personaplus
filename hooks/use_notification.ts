@@ -128,15 +128,15 @@ export async function handleNotificationsAsync(
  * This function registers today's reminders.
  *
  * @async
- * @param {number} amountOfNotifications Amount of notifications to be registered.
  * @param {TFunction} t Pass here the translate function
  * @returns {boolean} True if everything went alright, false if otherwise. Should log the try-catch error to termLog.
  */
 export async function scheduleRandomNotifications(
-    amountOfNotifications: number,
     t: TFunction,
 ): Promise<boolean> {
     try {
+        const amountOfNotifications = 5;
+
         interface NotificationIdentifier {
             identifier: string;
         }

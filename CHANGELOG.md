@@ -14,6 +14,7 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 ### Changed
 
 - Made session's timer slightly bigger.
+- Now the profile page shows "check for updates" before "about us".
 - (Experiment:Tracker) Now the running tracker better resembles the sessions page.
 
 ### Fixed
@@ -23,6 +24,7 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 
 ### Removed
 
+- "Today" table in the home page. It's been replaced by the report page.
 - License page, now only the small text is shown. For the larger one, a button to open the web is provided.
 
 ## [0.0.6-preapp.28] - 08-01-2025
