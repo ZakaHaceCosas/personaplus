@@ -20,6 +20,7 @@ export const Routes = {
         VIEWER_USER_DATA: "/developer/viewer_user_data",
         VIEWER_ACTIVE_OBJECTIVES: "/developer/viewer_active_objectives",
         VIEWER_NOTIFICATIONS: "/developer/viewer_notifications",
+        VIEWER_DAILY_LOG: "/developer/viewer_daily_log",
         EXPERIMENTS: "/developer/dev_experiments",
     },
     ACTIVE_OBJECTIVES: {
