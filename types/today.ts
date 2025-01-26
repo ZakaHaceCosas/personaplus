@@ -36,3 +36,29 @@ export type TodaysDateObject = {
     month: number;
     year: number;
 };
+
+/**
+ * An object that stores hours, minutes, and seconds numeric values.
+ *
+ * @interface TimeObject
+ */
+export interface TimeObject {
+    /**
+     * Hours.
+     *
+     * @type {?number}
+     */
+    hours?: number;
+    /**
+     * Minutes.
+     *
+     * @type {?number}
+     */
+    minutes?: number;
+    /**
+     * Seconds.
+     *
+     * @type {?number}
+     */
+    seconds?: number;
+}
