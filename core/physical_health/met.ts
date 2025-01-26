@@ -8,7 +8,8 @@ import { CoreLibraryResponse } from "@/core/types/core_library_response";
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "01/07/2024",
     [
-        "https://en.wikipedia.org/wiki/Metabolic_equivalent_of_task > https://www.ahajournals.org/doi/10.1161/CIRCULATIONAHA.107.185649", // TODO - further update the getSources() type to reflect related URLs
+        "https://en.wikipedia.org/wiki/Metabolic_equivalent_of_task",
+        "https://www.ahajournals.org/doi/10.1161/CIRCULATIONAHA.107.185649",
         "https://www.inchcalculator.com/calories-burned-weight-lifting-calculator/",
     ],
 );
