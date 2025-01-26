@@ -42,7 +42,7 @@ export default function Dashboard(): ReactElement {
     >(null);
     const [loading, setLoading] = useState<boolean>(true);
 
-    useEffect(() => {
+    useEffect((): void => {
         async function handler(): Promise<void> {
             try {
                 const objectives: ActiveObjective[] | null =
@@ -58,21 +58,22 @@ export default function Dashboard(): ReactElement {
         handler();
     }, []);
 
-    const handleObjective = async (
+    async function handleObjective(
         identifier: number,
         action: "delete" | "edit",
-    ) => {
+    ): Promise<void> {
         try {
             if (action === "delete") {
                 await DeleteActiveObjective(identifier);
                 // update & redraw without re-fetching everything upon update.
                 setActiveObjectives(
                     activeObjectives?.filter(
-                        (obj) => obj.identifier !== identifier,
+                        (obj: ActiveObjective): boolean =>
+                            obj.identifier !== identifier,
                     ) || null,
                 );
                 return;
-            } else {
+            } else if (action === "edit") {
                 const obj: ActiveObjective | null =
                     await GetActiveObjective(identifier);
                 if (!obj) {
@@ -96,7 +97,7 @@ export default function Dashboard(): ReactElement {
                 "error",
             );
         }
-    };
+    }
 
     if (loading) return <Loading />;
 
@@ -113,55 +114,57 @@ export default function Dashboard(): ReactElement {
                         header={t("activeObjectives.noObjectives.noObjectives")}
                     />
                 ) : (
-                    activeObjectives.map((obj: ActiveObjective) => {
-                        return (
-                            <Division
-                                key={obj.identifier}
-                                header={t(
-                                    `globals.supportedActiveObjectives.${obj.exercise}.name`,
-                                )}
-                                preHeader={t(
-                                    "activeObjectives.allCapsSingular",
-                                )}
-                                direction="vertical"
-                            >
-                                <ObjectiveDescriptiveIcons obj={obj} />
-                                <View style={styles.divButtons}>
-                                    <BetterButton
-                                        style="WOR"
-                                        buttonText={t(
-                                            "pages.dashboard.deleteObjective.text",
-                                        )}
-                                        buttonHint={t(
-                                            "pages.dashboard.deleteObjective.hint",
-                                        )}
-                                        action={() =>
-                                            handleObjective(
-                                                obj.identifier,
-                                                "delete",
-                                            )
-                                        }
-                                    />
-                                    <GapView width={10} />
-                                    <BetterButton
-                                        style="ACE"
-                                        buttonText={t(
-                                            "pages.dashboard.editObjective.text",
-                                        )}
-                                        buttonHint={t(
-                                            "pages.dashboard.editObjective.hint",
-                                        )}
-                                        action={() =>
-                                            handleObjective(
-                                                obj.identifier,
-                                                "edit",
-                                            )
-                                        }
-                                    />
-                                </View>
-                            </Division>
-                        );
-                    })
+                    activeObjectives.map(
+                        (obj: ActiveObjective): ReactElement => {
+                            return (
+                                <Division
+                                    key={obj.identifier}
+                                    header={t(
+                                        `globals.supportedActiveObjectives.${obj.exercise}.name`,
+                                    )}
+                                    preHeader={t(
+                                        "activeObjectives.allCapsSingular",
+                                    )}
+                                    direction="vertical"
+                                >
+                                    <ObjectiveDescriptiveIcons obj={obj} />
+                                    <View style={styles.divButtons}>
+                                        <BetterButton
+                                            style="WOR"
+                                            buttonText={t(
+                                                "pages.dashboard.deleteObjective.text",
+                                            )}
+                                            buttonHint={t(
+                                                "pages.dashboard.deleteObjective.hint",
+                                            )}
+                                            action={async (): Promise<void> =>
+                                                await handleObjective(
+                                                    obj.identifier,
+                                                    "delete",
+                                                )
+                                            }
+                                        />
+                                        <GapView width={10} />
+                                        <BetterButton
+                                            style="ACE"
+                                            buttonText={t(
+                                                "pages.dashboard.editObjective.text",
+                                            )}
+                                            buttonHint={t(
+                                                "pages.dashboard.editObjective.hint",
+                                            )}
+                                            action={async (): Promise<void> =>
+                                                await handleObjective(
+                                                    obj.identifier,
+                                                    "edit",
+                                                )
+                                            }
+                                        />
+                                    </View>
+                                </Division>
+                            );
+                        },
+                    )
                 )}
                 <View style={styles.buttonWrapper}>
                     <BetterButton
