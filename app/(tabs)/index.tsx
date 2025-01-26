@@ -50,6 +50,14 @@ export default function HomeScreen(): ReactElement {
         useState<boolean>(false);
 
     useEffect((): void => {
+        async function handler(): Promise<void> {
+            // handle stuff not done yesterday
+            await FailObjectivesNotDoneYesterday();
+        }
+        handler();
+    }, []);
+
+    useEffect((): void => {
         async function fetchData(): Promise<void> {
             try {
                 // fetch user
@@ -61,7 +69,6 @@ export default function HomeScreen(): ReactElement {
                 setUserData(userData);
 
                 // fetch IDs
-                await FailObjectivesNotDoneYesterday();
                 const pending: number[] | 0 | false | null =
                     await GetAllPendingObjectives();
                 setIdentifiers(pending);

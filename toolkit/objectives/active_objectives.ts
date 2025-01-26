@@ -21,13 +21,15 @@ import {
 import { logToConsole } from "@/toolkit/console";
 import AsyncStorage from "expo-sqlite/kv-store";
 import {
-    ADJUSTED_TODAY,
+    ADJUSTED_TODAY_INDEX,
     AlterDate,
     GetCurrentDateCorrectly,
     JavaScriptifyTodaysDate,
     StringifyDate,
+    TODAY_CODE_ARRAY,
+    TurnJavaScriptDateIntoCurrentDate,
 } from "@/toolkit/today";
-import type { TodaysDate } from "@/types/today";
+import type { CorrectCurrentDate, TodaysDate } from "@/types/today";
 import StoredItemNames from "@/constants/stored_item_names";
 import { Routes } from "@/constants/routes";
 import { router } from "expo-router";
@@ -84,9 +86,9 @@ async function GetAllObjectives(): Promise<ActiveObjective[] | null> {
 /**
  * Returns the ActiveObjectiveDailyLog.
  *
- * @returns {ActiveObjectiveDailyLog | null} The entire daily log, or null if it doesn't exist.
+ * @returns {ActiveObjectiveDailyLog} The entire daily log, or an empty object if it doesn't exist.
  */
-async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog | null> {
+async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog> {
     try {
         const response: string | null = await AsyncStorage.getItem(
             StoredItemNames.dailyLog,
@@ -97,11 +99,11 @@ async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog | n
                 StoredItemNames.dailyLog,
                 JSON.stringify(newDailyLog),
             );
-            return null;
+            return newDailyLog;
         }
         const dailyLog: ActiveObjectiveDailyLog = JSON.parse(response);
         if (Object.keys(dailyLog).length === 0) {
-            return null;
+            return {};
         }
         return dailyLog;
     } catch (e) {
@@ -126,9 +128,8 @@ async function SaveActiveObjectiveToDailyLog(
 ): Promise<void> {
     try {
         // Fetch old data
-        const prevDailySavedData: ActiveObjectiveDailyLog | null =
+        const dailyData: ActiveObjectiveDailyLog =
             await GetActiveObjectiveDailyLog();
-        const dailyData: ActiveObjectiveDailyLog = prevDailySavedData ?? {};
         const today: TodaysDate = GetCurrentDateCorrectly().string;
 
         // If there's no old data for today, creates an {} for today
@@ -168,17 +169,21 @@ async function SaveActiveObjectiveToDailyLog(
  * Checks if an objective was already done today or needs to be done.
  *
  * @async
- * @param {number} identifier The objective's identifier
- * @returns {Promise<boolean>} Returns **true** if the objective IS done and doesn't need to be done. Returns **false** if otherwise (DOES need to be done today).
+ * @param {ActiveObjective} objective The objective.
+ * @returns {Promise<boolean>} Returns **true** if the objective IS NOT done and NEEDS TO BE DONE. Returns **false** if otherwise (DOES NOT NEED to be done today).
  */
-async function CheckForAnActiveObjectiveDailyStatus(
-    identifier: number,
+async function IsActiveObjectivePending(
+    objective: ActiveObjective,
 ): Promise<boolean> {
     try {
-        const dailyLog: ActiveObjectiveDailyLog | null =
+        const { identifier } = objective;
+
+        const dailyLog: ActiveObjectiveDailyLog =
             await GetActiveObjectiveDailyLog();
 
-        if (dailyLog === null) {
+        if (objective.info.days[ADJUSTED_TODAY_INDEX] === false) return false; // not due today
+
+        if (Object.keys(dailyLog).length === 0) {
             return false; // log does not exist, so the objective isn't done today.
         }
 
@@ -204,7 +209,7 @@ async function CheckForAnActiveObjectiveDailyStatus(
         }
     } catch (e) {
         throw new Error(
-            `Error checking if the ${identifier} active objective is due today: ${e}`,
+            `Error checking if the ${objective.identifier} active objective is due today: ${e}`,
         );
     }
 }
@@ -234,11 +239,8 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
             Object.values(objectives).map(async function (
                 obj: ActiveObjective,
             ): Promise<thing> {
-                if (obj.info.days[ADJUSTED_TODAY]) {
-                    const status: boolean =
-                        await CheckForAnActiveObjectiveDailyStatus(
-                            obj.identifier,
-                        );
+                if (obj.info.days[ADJUSTED_TODAY_INDEX]) {
+                    const status: boolean = await IsActiveObjectivePending(obj);
                     return { identifier: obj.identifier, status };
                 }
                 return null; // not due today
@@ -636,6 +638,16 @@ async function HandleSavingActiveObjectiveDailyLog(
     log: ActiveObjectiveDailyLog,
 ): Promise<void> {
     try {
+        function removeDuplicates(
+            obj: ActiveObjectiveDailyLog,
+        ): ActiveObjectiveDailyLog {
+            const uniqueEntries = new Map<string, any>();
+            for (const [date, value] of Object.entries(obj)) {
+                uniqueEntries.set(date, value);
+            }
+            return Object.fromEntries(uniqueEntries);
+        }
+
         function sortObjectByDate(
             obj: ActiveObjectiveDailyLog,
         ): ActiveObjectiveDailyLog {
@@ -649,7 +661,11 @@ async function HandleSavingActiveObjectiveDailyLog(
             );
         }
 
-        const sortedLog: ActiveObjectiveDailyLog = sortObjectByDate(log);
+        const logWithoutDuplicates: ActiveObjectiveDailyLog =
+            removeDuplicates(log);
+        const sortedLog: ActiveObjectiveDailyLog =
+            sortObjectByDate(logWithoutDuplicates);
+
         await AsyncStorage.setItem(
             StoredItemNames.dailyLog,
             JSON.stringify(sortedLog),
@@ -660,7 +676,7 @@ async function HandleSavingActiveObjectiveDailyLog(
 }
 
 /**
- * Gets all objectives, finds the ones that you had to do yesterday, and if they weren't done, it adds them as not done to the daily log.
+ * Gets all objectives, finds the ones that you had to do yesterday (and previous days), and if they weren't done, it adds them as not done to the daily log.
  *
  * @async
  * @returns {Promise<void>}
@@ -669,34 +685,71 @@ async function FailObjectivesNotDoneYesterday(): Promise<void> {
     try {
         const allObjectives: ActiveObjective[] | null =
             await GetAllObjectives();
-        const dailyLog: ActiveObjectiveDailyLog | null =
+        const dailyLog: ActiveObjectiveDailyLog =
             await GetActiveObjectiveDailyLog();
 
-        const targetDate: TodaysDate = StringifyDate(
-            AlterDate(GetCurrentDateCorrectly().object, -1),
+        if (!allObjectives) return;
+
+        const currentDate: CorrectCurrentDate = GetCurrentDateCorrectly();
+        let targetDateObj: Date = new Date(
+            JavaScriptifyTodaysDate(currentDate.string),
         );
 
-        if (!allObjectives) return;
-        if (!dailyLog) return;
-
-        if (!dailyLog[targetDate]) {
-            dailyLog[targetDate] = {};
+        // find the earliest not logged date
+        let earliestNotLoggedDate: TodaysDate | null = null;
+        for (let i: number = 0; i < 365; i++) {
+            const dateToCheck: TodaysDate = StringifyDate(
+                AlterDate(
+                    TurnJavaScriptDateIntoCurrentDate(targetDateObj).object,
+                    -i,
+                ),
+            );
+            if (!dailyLog[dateToCheck]) {
+                earliestNotLoggedDate = dateToCheck;
+            } else {
+                break;
+            }
         }
 
-        for (const objective of allObjectives) {
-            if (!objective.info.days[ADJUSTED_TODAY - 1]) continue; // if you weren't supposed to do it anyway, don't do anything
+        if (!earliestNotLoggedDate) return;
 
-            if (dailyLog[targetDate][objective.identifier]) continue; // if data is already saved, don't do anything
+        let dateObj: Date = JavaScriptifyTodaysDate(earliestNotLoggedDate);
+        const endDate: Date = JavaScriptifyTodaysDate(currentDate.string);
+        // loop through all not logged dates
+        while (dateObj <= endDate) {
+            const dateString: TodaysDate = StringifyDate(dateObj);
 
-            if (objective.createdAt === GetCurrentDateCorrectly().string) {
-                continue; // if it was created today, don't do anything
+            for (const objective of allObjectives) {
+                const daysIndex: number = Math.floor(
+                    (dateObj.getTime() -
+                        JavaScriptifyTodaysDate(
+                            objective.createdAt,
+                        ).getTime()) /
+                        (1000 * 60 * 60 * 24),
+                );
+
+                if (
+                    daysIndex < 0 ||
+                    daysIndex >= TODAY_CODE_ARRAY.length ||
+                    !objective.info.days[TODAY_CODE_ARRAY[daysIndex]]
+                )
+                    continue;
+
+                if (!dailyLog[dateString]) {
+                    dailyLog[dateString] = {};
+                }
+
+                if (dailyLog[dateString][objective.identifier]) continue;
+
+                dailyLog[dateString][objective.identifier] = {
+                    wasDone: false,
+                    objective: objective,
+                    performance: 0,
+                };
             }
 
-            dailyLog[targetDate][objective.identifier] = {
-                wasDone: false,
-                objective: objective,
-                performance: 0,
-            };
+            // Increment dateObj by one day
+            dateObj.setDate(dateObj.getDate() + 1);
         }
 
         await HandleSavingActiveObjectiveDailyLog(dailyLog);
@@ -708,7 +761,7 @@ async function FailObjectivesNotDoneYesterday(): Promise<void> {
 export {
     CalculateSessionFragmentsDuration,
     CalculateSessionPerformance,
-    CheckForAnActiveObjectiveDailyStatus,
+    IsActiveObjectivePending,
     CreateActiveObjective,
     DeleteActiveObjective,
     EditActiveObjective,

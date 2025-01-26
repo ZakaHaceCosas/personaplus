@@ -111,7 +111,15 @@ export default function CreateActiveObjectivePage(): ReactElement {
             exercise: "",
             createdAt: GetCurrentDateCorrectly().string,
             info: {
-                days: [false, false, false, false, false, false, false],
+                days: {
+                    MO: false,
+                    TU: false,
+                    WE: false,
+                    TH: false,
+                    FR: false,
+                    SA: false,
+                    SU: false,
+                },
                 durationMinutes: 0,
                 rests: 0,
                 restDurationMinutes: 0,
@@ -525,21 +533,25 @@ export default function CreateActiveObjectivePage(): ReactElement {
             </BetterTextSmallText>
             <GapView height={10} />
             <View style={styles.dayContainer}>
-                {objectiveToCreate.info.days.map(
-                    (day: boolean, index: number): ReactElement => {
-                        const daysOfWeek: string[] = [
-                            t("globals.daysOfTheWeek.Monday.key"),
-                            t("globals.daysOfTheWeek.Tuesday.key"),
-                            t("globals.daysOfTheWeek.Wednesday.key"),
-                            t("globals.daysOfTheWeek.Thursday.key"),
-                            t("globals.daysOfTheWeek.Friday.key"),
-                            t("globals.daysOfTheWeek.Saturday.key"),
-                            t("globals.daysOfTheWeek.Sunday.key"),
-                        ];
-                        const thisDay: string = daysOfWeek[index];
+                {Object.entries(objectiveToCreate.info.days).map(
+                    (
+                        [key, day]: [string, boolean],
+                        index: number,
+                    ): ReactElement => {
+                        const daysOfWeek: Record<keyof WeekTuple, string> = {
+                            MO: t("globals.daysOfTheWeek.Monday.key"),
+                            TU: t("globals.daysOfTheWeek.Tuesday.key"),
+                            WE: t("globals.daysOfTheWeek.Wednesday.key"),
+                            TH: t("globals.daysOfTheWeek.Thursday.key"),
+                            FR: t("globals.daysOfTheWeek.Friday.key"),
+                            SA: t("globals.daysOfTheWeek.Saturday.key"),
+                            SU: t("globals.daysOfTheWeek.Sunday.key"),
+                        };
+                        const thisDay: string =
+                            daysOfWeek[key as keyof WeekTuple];
 
                         return (
-                            <React.Fragment key={index}>
+                            <React.Fragment key={key}>
                                 <View
                                     style={[
                                         styles.day,
@@ -562,10 +574,10 @@ export default function CreateActiveObjectivePage(): ReactElement {
                                                 (
                                                     prev: ActiveObjectiveWithoutId,
                                                 ): ActiveObjectiveWithoutId => {
-                                                    const updatedDays: WeekTuple =
-                                                        [...prev.info.days];
-                                                    updatedDays[index] =
-                                                        !updatedDays[index];
+                                                    const updatedDays = {
+                                                        ...prev.info.days,
+                                                        [key]: !day,
+                                                    };
                                                     return {
                                                         ...prev,
                                                         info: {

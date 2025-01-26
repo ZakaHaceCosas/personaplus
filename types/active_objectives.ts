@@ -46,15 +46,15 @@ export const SupportedActiveObjectivesList: string[] = [
  *
  * @export
  */
-export type WeekTuple = [
-    boolean,
-    boolean,
-    boolean,
-    boolean,
-    boolean,
-    boolean,
-    boolean,
-];
+export type WeekTuple = {
+    MO: boolean;
+    TU: boolean;
+    WE: boolean;
+    TH: boolean;
+    FR: boolean;
+    SA: boolean;
+    SU: boolean;
+};
 
 /**
  * Info from an active objective, like what days should it be done, it's duration, etc...
@@ -179,7 +179,11 @@ export function ValidateActiveObjective(
         if (!omitIdentifier && !obj.identifier) return false; // if no ID and no skip, invalid. can be skipped because you might be creating the objective yet
         if (!obj.info) return false; // no info, invalid
         const info = obj.info as ActiveObjectiveInfo; // (for vsc intellisense)
-        if (!Array.isArray(info.days) || !info.days.includes(true)) {
+        if (
+            !Array.isArray(Object.values(info.days)) ||
+            !Object.values(info.days).includes(true) ||
+            Object.keys(info.days).length !== 7
+        ) {
             return false; // if all days are disabled, invalid
         }
         if (

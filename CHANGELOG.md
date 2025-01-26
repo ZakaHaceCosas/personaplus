@@ -9,7 +9,9 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 
 ### Added
 
-- Report page!
+- Report page! Includes the following:
+  - Daily log, showing what you did and what you didn't do each day (from your objectives).
+  - Basic health insights (currently BMI and TDEE, which translates into how healthy your weight is and a rough estimate of the daily caloric ingest you should take).
 
 ### Changed
 

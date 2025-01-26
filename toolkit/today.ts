@@ -5,14 +5,16 @@
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
  *
- * You are in: @&toolkit/today.ts
+ * You are in: @toolkit/today.ts
  * Basically: Attempt to reduce the headache of dealing with JS dates within the project.
  *
  * <=============================================================================>
  */
 
+import { WeekTuple } from "@/types/active_objectives";
 import {
     CorrectCurrentDate,
+    TimeObject,
     TodaysDate,
     TodaysDateObject,
 } from "@/types/today";
@@ -39,6 +41,17 @@ const reactsFunnyDate: Date = new Date();
 const ADJUSTED_TODAY: number =
     reactsFunnyDate.getDay() === 0 ? 6 : new Date().getDay() - 1; // Adjust Sunday to index 6, otherwise shift back by one
 
+const TODAY_CODE_ARRAY: (keyof WeekTuple)[] = [
+    "MO",
+    "TU",
+    "WE",
+    "TH",
+    "FR",
+    "SA",
+    "SU",
+];
+
+const ADJUSTED_TODAY_INDEX: keyof WeekTuple = TODAY_CODE_ARRAY[ADJUSTED_TODAY];
 /**
  * Turns either a JS `Date()` or a `TodaysDateObject` into a `TodaysDate` string.
  *
@@ -46,13 +59,19 @@ const ADJUSTED_TODAY: number =
  * @returns {TodaysDate}
  */
 function StringifyDate(date: Date | TodaysDateObject): TodaysDate {
+    const parse: (d: string | number) => string = (
+        d: string | number,
+    ): string => {
+        return d.toString().trim().padStart(2, "0");
+    };
+
     if (date instanceof Date) {
-        const day: string = String(date.getDate()).padStart(2, "0");
-        const month: string = String(date.getMonth() + 1).padStart(2, "0");
-        const year: number = date.getFullYear();
+        const day: string = parse(date.getDate());
+        const month: string = parse(date.getMonth() + 1);
+        const year: string = parse(date.getFullYear());
         return `${day}/${month}/${year}`;
     } else {
-        return `${date.day}/${date.month}/${date.year}`;
+        return `${parse(date.day)}/${parse(date.month)}/${parse(date.year)}`;
     }
 }
 
@@ -81,6 +100,23 @@ function GetCurrentDateCorrectly(): CorrectCurrentDate {
 function JavaScriptifyTodaysDate(date: TodaysDate): Date {
     const [day, month, year] = date.split("/").map(Number);
     return new Date(year, month - 1, day);
+}
+
+function TurnJavaScriptDateIntoCurrentDate(date: Date): CorrectCurrentDate {
+    const workingDate: Date = new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+    );
+
+    return {
+        object: {
+            day: workingDate.getDate(),
+            month: workingDate.getMonth() + 1,
+            year: workingDate.getFullYear(),
+        },
+        string: StringifyDate(workingDate),
+    };
 }
 
 /**
@@ -128,32 +164,6 @@ function StringifyMinutes(minutes: number): string {
     }
 
     return `${duration} ${word}`;
-}
-
-/**
- * An object that stores hours, minutes, and seconds numeric values.
- *
- * @interface TimeObject
- */
-interface TimeObject {
-    /**
-     * Hours.
-     *
-     * @type {?number}
-     */
-    hours?: number;
-    /**
-     * Minutes.
-     *
-     * @type {?number}
-     */
-    minutes?: number;
-    /**
-     * Seconds.
-     *
-     * @type {?number}
-     */
-    seconds?: number;
 }
 
 /**
@@ -221,10 +231,13 @@ const TimeStringUtilities = {
 
 export {
     ADJUSTED_TODAY,
+    ADJUSTED_TODAY_INDEX,
+    TODAY_CODE_ARRAY,
     AlterDate,
     GetCurrentDateCorrectly,
     JavaScriptifyTodaysDate,
     StringifyDate,
     StringifyMinutes,
+    TurnJavaScriptDateIntoCurrentDate,
     TimeStringUtilities,
 };
