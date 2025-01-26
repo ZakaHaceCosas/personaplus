@@ -265,7 +265,7 @@
         "createActiveObjective": {
             "header": "Lets do it!",
             "questions": {
-                "whatToDo": {
+                "exercise": {
                     "question": "What will you do?",
                     "options": {
                         "title": "Choose an exercise, your favorite :]"
