@@ -215,7 +215,7 @@ export default function Report(): ReactElement {
             </Section>
             <GapView height={20} />
             <Section kind="HowYouAreDoing">
-                {dailyLog ? (
+                {dailyLog && Object.values(dailyLog).length > 0 ? (
                     Object.entries(dailyLog)
                         .sort(
                             (

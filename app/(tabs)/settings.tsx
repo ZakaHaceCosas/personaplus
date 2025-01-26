@@ -83,7 +83,7 @@ export default function Settings() {
             router.replace(Routes.MAIN.PROFILE);
             router.replace(Routes.MAIN.SETTINGS.SETTINGS_PAGE);
         } catch (e) {
-            console.error(`Error toggling notifications: ${e}`, "error");
+            logToConsole(`Error toggling notifications: ${e}`, "error");
         }
     }
 

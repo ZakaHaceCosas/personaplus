@@ -9,22 +9,32 @@ import BetterTable, { BetterTableItem } from "@/components/ui/better_table";
 import GapView from "@/components/ui/gap_view";
 import { logToConsole } from "@/toolkit/console";
 import { GetAllObjectives } from "@/toolkit/objectives/active_objectives";
-import {
-    ActiveObjective,
-    SupportedActiveObjectives,
-    WeekTuple,
-} from "@/types/active_objectives";
+import { ActiveObjective, WeekTuple } from "@/types/active_objectives";
 import React, { ReactElement, useEffect, useState } from "react";
 
 export default function ViewerActiveObjectives(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [objectivesForTable, setObjectivesForTable] = useState<
-        BetterTableItem[]
-    >([]);
     const [detailedObjectives, setDetailedObjectives] = useState<
         ActiveObjective[]
     >([]);
+
+    function representDataAsBetterTable(
+        data: ActiveObjective["info"] | ActiveObjective["specificData"],
+    ): BetterTableItem[] {
+        return Object.entries(data).map(
+            ([key, value]: [string, number | WeekTuple]): {
+                name: string;
+                value: string;
+            } => ({
+                name: key,
+                value:
+                    typeof value === "object"
+                        ? JSON.stringify(value)
+                        : String(value),
+            }),
+        );
+    }
 
     useEffect((): void => {
         async function handler(): Promise<void> {
@@ -34,20 +44,6 @@ export default function ViewerActiveObjectives(): ReactElement {
                     await GetAllObjectives();
 
                 if (objectives) {
-                    setObjectivesForTable(
-                        objectives.map(
-                            (
-                                obj: ActiveObjective,
-                            ): {
-                                name: SupportedActiveObjectives;
-                                value: string;
-                            } => ({
-                                name: obj.exercise,
-                                value: String(obj.identifier),
-                            }),
-                        ),
-                    );
-
                     setDetailedObjectives(objectives);
                 }
             } catch (e) {
@@ -60,7 +56,7 @@ export default function ViewerActiveObjectives(): ReactElement {
         }
 
         handler();
-    }, [objectivesForTable]);
+    }, []);
 
     if (loading) return <Loading />;
 
@@ -71,7 +67,7 @@ export default function ViewerActiveObjectives(): ReactElement {
                 header="Active Objectives"
                 subHeader="View all your active objectives and their internal data."
             />
-            {objectivesForTable.length > 0 ? (
+            {detailedObjectives.length > 0 ? (
                 <>
                     <BetterTextSmallText>
                         All your objectives. The ID is just used by the app, to
@@ -83,7 +79,14 @@ export default function ViewerActiveObjectives(): ReactElement {
                     ) : (
                         <BetterTable
                             headers={["Objective", "ID"]}
-                            items={objectivesForTable}
+                            items={detailedObjectives.map(
+                                (obj: ActiveObjective): BetterTableItem => {
+                                    return {
+                                        name: obj.exercise,
+                                        value: obj.identifier.toString(),
+                                    };
+                                },
+                            )}
                         />
                     )}
                 </>
@@ -101,47 +104,7 @@ export default function ViewerActiveObjectives(): ReactElement {
                         <BetterTable
                             key={`TABLE_${index}`}
                             headers={["Key", "Value"]}
-                            items={Object.entries(obj)
-                                .filter(
-                                    ([_, value]: [string, unknown]): boolean =>
-                                        typeof value !== "object",
-                                )
-                                .map(
-                                    ([key, value]: [string, unknown]): {
-                                        name: string;
-                                        value: string;
-                                    } => ({
-                                        name: key,
-                                        value:
-                                            typeof value === "object"
-                                                ? JSON.stringify(value)
-                                                : String(value),
-                                    }),
-                                )}
-                        />
-                        <GapView height={5} />
-                        <BetterTextSmallText>Generic info</BetterTextSmallText>
-                        <GapView height={5} />
-                        <BetterTable
-                            key={`TABLE_${index}_INFO`}
-                            headers={["Key", "Value"]}
-                            items={Object.entries(obj.info).map(
-                                ([key, value]: [string, number | WeekTuple]): {
-                                    name: string;
-                                    value: string;
-                                } => ({
-                                    name: key,
-                                    value: String(value),
-                                }),
-                            )}
-                        />
-                        <GapView height={5} />
-                        <BetterTextSmallText>Specific data</BetterTextSmallText>
-                        <GapView height={5} />
-                        <BetterTable
-                            key={`TABLE_${index}_SPECIFIC_DATA`}
-                            headers={["Key", "Value"]}
-                            items={Object.entries(obj.specificData).map(
+                            items={Object.entries(obj).map(
                                 ([key, value]: [string, unknown]): {
                                     name: string;
                                     value: string;
@@ -150,6 +113,22 @@ export default function ViewerActiveObjectives(): ReactElement {
                                     value: String(value),
                                 }),
                             )}
+                        />
+                        <GapView height={5} />
+                        <BetterTextSmallText>Generic info</BetterTextSmallText>
+                        <GapView height={5} />
+                        <BetterTable
+                            key={`TABLE_${index}_INFO`}
+                            headers={["Key", "Value"]}
+                            items={representDataAsBetterTable(obj.info)}
+                        />
+                        <GapView height={5} />
+                        <BetterTextSmallText>Specific data</BetterTextSmallText>
+                        <GapView height={5} />
+                        <BetterTable
+                            key={`TABLE_${index}_SPECIFIC_DATA`}
+                            headers={["Key", "Value"]}
+                            items={representDataAsBetterTable(obj.specificData)}
                         />
                     </>
                 ),
