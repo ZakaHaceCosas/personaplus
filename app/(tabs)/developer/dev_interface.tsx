@@ -93,6 +93,17 @@ export default function DevInterface(): ReactElement {
                 }
             />
             <GapView height={20} />
+            <BetterTextSubHeader>Daily log</BetterTextSubHeader>
+            <GapView height={10} />
+            <BetterButton
+                buttonText="See daily log"
+                buttonHint="Opens up a dedicated page for viewing the raw daily log."
+                style="ACE"
+                action={(): void =>
+                    router.push(Routes.DEV_INTERFACE.VIEWER_DAILY_LOG)
+                }
+            />
+            <GapView height={20} />
             <BetterTextSubHeader>Console logs</BetterTextSubHeader>
             <GapView height={10} />
             <BetterButton
