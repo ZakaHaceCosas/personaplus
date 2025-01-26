@@ -479,14 +479,14 @@ export default function CreateActiveObjectivePage(): ReactElement {
                 subHeader={randomMessage}
             />
             <BetterTextSmallHeader>
-                {t("pages.createActiveObjective.questions.whatToDo.question")}
+                {t("pages.createActiveObjective.questions.exercise.question")}
             </BetterTextSmallHeader>
             <GapView height={10} />
             <Select
                 currentValue={objectiveToCreate.exercise}
                 mode="dropdown"
                 dialogPrompt={t(
-                    "pages.createActiveObjective.questions.whatToDo.options.title",
+                    "pages.createActiveObjective.questions.exercise.options.title",
                 )}
                 selectOptions={exerciseOptions}
                 changeAction={(value: string | number): void => {

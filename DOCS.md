@@ -363,7 +363,7 @@ Okay, so you did write some cool code, right? That's awesome! Now, here are a fe
 > - `(better)` for enhancements to existing features
 > - `(CL)` for updates to CoreLibrary
 > - `(doc)` for changes to MarkDown files
-> - `(tests)` for changes or additions to testing
+> - `(dev)` for dev related changes
 > - `(chore)` for chores (small tasks or maintenance work)
 > - `(ui)` for visual changes
 >
@@ -374,4 +374,4 @@ Okay, so you did write some cool code, right? That's awesome! Now, here are a fe
 > - `(ui): Update regular font size`
 > - `(fix): Fix a typo ("are n't" -> "aren't")`
 
-And that's it for now. Keep in mind these docs _aren't fully done yet_. They will get updated in the future.
+And that's it for now. Keep in mind these docs are subject to future expansions.

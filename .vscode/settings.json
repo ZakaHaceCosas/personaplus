@@ -125,7 +125,7 @@
             "tag": "TODO",
             "color": "#45AAFF",
             "strikethrough": false,
-            "underline": true,
+            "underline": false,
             "backgroundColor": "transparent",
             "bold": true,
             "italic": false

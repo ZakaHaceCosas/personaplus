@@ -259,7 +259,7 @@
         "createActiveObjective": {
             "header": "¡Hagámoslo!",
             "questions": {
-                "whatToDo": {
+                "exercise": {
                     "question": "¿Qué quieres hacer?",
                     "options": {
                         "title": "Escoge un ejercicio, el que más te guste :]"
