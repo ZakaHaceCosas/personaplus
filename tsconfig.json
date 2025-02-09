@@ -31,7 +31,8 @@
         "suppressExcessPropertyErrors": false,
         "suppressImplicitAnyIndexErrors": false,
         "diagnostics": true,
-        "downlevelIteration": false
+        "downlevelIteration": false,
+        "moduleResolution": "bundler", // this should fix JSR import from string-utils.
     },
     "include": [
         "**/*.ts",
