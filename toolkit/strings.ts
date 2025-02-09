@@ -1,6 +1,6 @@
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
@@ -13,7 +13,6 @@
 
 import { logToConsole } from "@/toolkit/console";
 import { TFunction } from "i18next";
-import { $SpecialObject } from "i18next/typescript/helpers";
 
 /**
  * Handles pluralization of strings.
@@ -71,7 +70,7 @@ function GenerateRandomMessage(
 ): string {
     // Get all messages for the specified target
     // so the app feels more friendly :D
-    const allMessages: $SpecialObject = t(`coolRandomMessages.${target}`, {
+    const allMessages = t(`coolRandomMessages.${target}`, {
         returnObjects: true,
     });
 

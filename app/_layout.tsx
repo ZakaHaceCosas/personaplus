@@ -1,6 +1,6 @@
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
@@ -14,7 +14,7 @@
 import { useFonts } from "expo-font";
 import { Slot } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { Fragment, useEffect } from "react";
+import { Fragment, ReactElement, useEffect } from "react";
 import "@/translations/translate";
 import { StatusBar } from "react-native";
 import Colors from "@/constants/colors";
@@ -24,11 +24,11 @@ SplashScreen.preventAutoHideAsync();
 
 // Set the animation options. This is optional.
 SplashScreen.setOptions({
-    duration: 1000,
+    duration: 500,
     fade: true,
 });
 
-export default function RootLayout() {
+export default function RootLayout(): ReactElement | null {
     const [loaded] = useFonts({
         "RobotoSerif-Light": require("../assets/fonts/RobotoSerif-Light.ttf"),
         "BeVietnamPro-ThinItalic": require("../assets/fonts/BeVietnamPro-ThinItalic.ttf"),
@@ -83,7 +83,7 @@ export default function RootLayout() {
         "RobotoSerif-ExtraLightItalic": require("../assets/fonts/RobotoSerif-ExtraLightItalic.ttf"),
     });
 
-    useEffect(() => {
+    useEffect((): void => {
         if (loaded) {
             SplashScreen.hideAsync();
         }
