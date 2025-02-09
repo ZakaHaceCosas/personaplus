@@ -526,10 +526,10 @@ export default function CreateActiveObjectivePage(): ReactElement {
             />
             <GapView height={20} />
             <BetterTextSmallHeader>
-                {t("pages.createActiveObjective.questions.whenToDo.question")}
+                {t("pages.createActiveObjective.questions.whatDays.question")}
             </BetterTextSmallHeader>
             <BetterTextSmallText>
-                {t("pages.createActiveObjective.questions.whenToDo.proTip")}
+                {t("pages.createActiveObjective.questions.whatDays.proTip")}
             </BetterTextSmallText>
             <GapView height={10} />
             <View style={styles.dayContainer}>

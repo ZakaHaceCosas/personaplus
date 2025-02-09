@@ -16,7 +16,6 @@ import { StyleSheet, TextInput } from "react-native";
 import Colors from "@/constants/colors";
 import { BetterTextSmallText } from "@/components/text/better_text_presets";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
-import GenerateRandomKey from "@/toolkit/key_generator";
 import GapView from "@/components/ui/gap_view";
 import BetterText from "../text/better_text";
 import FontSizes from "@/constants/font_sizes";
@@ -150,8 +149,8 @@ export default function BetterInputField({
                 maxLength={length}
                 textAlign="left"
                 keyboardType={keyboardType}
-                // inputMode={keyboardType}
-                key={GenerateRandomKey(name)}
+                inputMode={keyboardType === "default" ? "text" : "numeric"}
+                key={name}
                 returnKeyType={returnKeyType}
                 enterKeyHint={returnKeyType}
                 onChangeText={(text: string): void => {

@@ -2,7 +2,6 @@ import { ReactElement } from "react";
 import { StyleSheet, View } from "react-native";
 import { BetterTextSmallText } from "@/components/text/better_text_presets";
 import Colors from "@/constants/colors";
-import GenerateRandomKey from "@/toolkit/key_generator";
 
 /**
  * BetterTableItem
@@ -102,33 +101,30 @@ export default function BetterTable({
     return (
         <View style={styles.table}>
             <View style={styles.header}>
-                {headers.map((header: string) => (
-                    <View
-                        key={GenerateRandomKey(
-                            `BETTER_TABLE_HEADER__${header}`,
-                        )}
-                        style={styles.item}
-                    >
-                        <BetterTextSmallText>{header}</BetterTextSmallText>
-                    </View>
-                ))}
+                {headers.map(
+                    (header: string): ReactElement => (
+                        <View key={header} style={styles.item}>
+                            <BetterTextSmallText>{header}</BetterTextSmallText>
+                        </View>
+                    ),
+                )}
             </View>
-            {items.map((item: BetterTableItem) => (
-                <View
-                    key={
-                        GenerateRandomKey(`BETTER_TABLE_ITEM__${item.name}`) +
-                        Math.random() * 25 // TODO - fix this bit-
-                    }
-                    style={styles.row}
-                >
-                    <View style={styles.item}>
-                        <BetterTextSmallText>{item.name}</BetterTextSmallText>
+            {items.map(
+                (item: BetterTableItem): ReactElement => (
+                    <View key={item.name} style={styles.row}>
+                        <View style={styles.item}>
+                            <BetterTextSmallText>
+                                {item.name}
+                            </BetterTextSmallText>
+                        </View>
+                        <View style={styles.item}>
+                            <BetterTextSmallText>
+                                {item.value}
+                            </BetterTextSmallText>
+                        </View>
                     </View>
-                    <View style={styles.item}>
-                        <BetterTextSmallText>{item.value}</BetterTextSmallText>
-                    </View>
-                </View>
-            ))}
+                ),
+            )}
         </View>
     );
 }

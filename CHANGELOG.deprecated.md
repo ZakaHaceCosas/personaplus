@@ -189,14 +189,19 @@ b25 was cancelled (due to the huge amount of problems that were on top of each o
 > ### **KNOWN ERRORS - b21**
 >
 > - Wrong Welcome Screen layout (not centered).
+>
+
 ## 0.0.1-R5-b20
+
 - Started working on the logic - as a side project: "OpenHealth".
+
 > [!INFO]
 > **What does that even mean?**
 >
 > See: Basically, the app needs to work with a lot of health data so that it can provide accurate statistics and tips to the end user, so the first idea would be to find a library or something that does provide functions for that stuff.
 > However - I thought it would be a nice idea to try to make our own "health.js" library, and just like that! There's a new directory called `/code` for _the core of the app_, on which I started working and then decided to give it's own name, documentation, and stuff. This new library will allow PersonaPlus to turn all the frontend we've been working on since 2023 into actual, worthy data for users to understand themselves, their performance, and their health.
 Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`. It's mentioned here only this time, as this is the most important change of this update.
+
 - Now `/WelcomeScreen` works! Users can register with basic info.
   - ~~Fixed the Welcome Screen layout; it is now centered.~~ _Nope._
   - Added form validation to `/WelcomeScreen` and placeholder options to arrays to avoid saving empty (`""`) strings.
@@ -244,6 +249,7 @@ Quick note: OpenHealth will have **it's own changelog**, on `core/CHANGELOG.md`.
 - Added a few reminders that the app is currently an unfinished WIP.
 - Added loading screens so the app looks cleaner (before you saw the placeholders for a few seconds, with a not-so-good looking "appear animation").
 - Worth noting: Made some parts of the source code way cleaner, thanks to these loaders and other things like function merging and usage of `AsyncStorage.multiGet` or `AsyncStorage.clear`.
+
 > [!NOTE]
 >
 > ### **FIXED ERRORS - b20**
@@ -308,7 +314,9 @@ Note:
 > ### **KNOWN ERRORS - b17**
 >
 > **No known errors at the moment! 🎉**
+
 ## 0.0.1-R5-b16
+
 - Made more changes to match the requirements of ESLint.
 - Made a lof of UI and design changes to improve the looks on mobile - _this lead to things looking bad on desktop -_ _**it's not a problem, as the only target devices are phones.**_
 - Made a peculiar change ;] - moved the bottom navigation bar to the top.
@@ -318,12 +326,15 @@ Note:
 - Made some improvements to types and other aspects of the codebase.
 - Updated `DOCS.md`, `README.md`, and `CONTRIBUTING.md` so that they look a bit more professional.
 - Other small changes and improvements.
+
 ## 0.0.1-R5-b15
+
 - Made several UI changes to improve the looks on end user mobile devices. There's still work to do, but good progress was made.
 - Made adjustments to the ESLINT config.
 - Other changes to the logic used to structure and render some components to ensure they look good.
 - Added a few extra comments to the code to explain some stuff better.
 - Made a few changes like replacing some `let` with `const` to match the requirements of ESLint.
+
 > [!NOTE]
 >
 > ### **FIXED ERRORS - b15**

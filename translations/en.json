@@ -271,7 +271,7 @@
                         "title": "Choose an exercise, your favorite :]"
                     }
                 },
-                "whenToDo": {
+                "whatDays": {
                     "question": "What days will you exercise?",
                     "proTip": "Tap a day to enable or disable it. Colored days are enabled, gray ones are disabled."
                 },
