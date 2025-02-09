@@ -26,7 +26,7 @@ If you find an error, please [open up an issue](https://github.com/ZakaHaceCosas
 - Environment info (app version, phone and OS details, ...).
 
 > [!WARNING]
-> **If it's a** _**security**_ **issue what we're talking about, DO NOT make a public issue, report via email to <zakahacecosas@protonmail.com> instead**. See [SECURITY.md](https://github.com/ZakaHaceCosas/personaplus/blob/main/SECURITY.md) for more info. **Thank you.**
+> **If it's a** _**security**_ **issue what we're talking about, DO NOT make a public issue, report it privately instead**. See [SECURITY.md](https://github.com/ZakaHaceCosas/personaplus/blob/main/SECURITY.md) for more info. **Thank you.**
 
 ## Suggestions
 
