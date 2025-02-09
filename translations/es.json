@@ -265,7 +265,7 @@
                         "title": "Escoge un ejercicio, el que más te guste :]"
                     }
                 },
-                "whenToDo": {
+                "whatDays": {
                     "question": "¿Qué días harás ejercicio?",
                     "proTip": "Toca un día para activarlo o desactivarlo. Los días a color están activados, y los grises, desactivados."
                 },

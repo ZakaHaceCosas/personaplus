@@ -1,5 +1,4 @@
 import Colors from "@/constants/colors";
-import GenerateRandomKey from "@/toolkit/key_generator";
 import { Picker } from "@react-native-picker/picker";
 import { TFunction } from "i18next";
 import { ReactElement } from "react";
@@ -124,7 +123,7 @@ export default function Select({
             style={styles.picker}
         >
             <Picker.Item
-                key={GenerateRandomKey("SELECT_EMPTY_ITEM")}
+                key={"SELECT_EMPTY_ITEM"}
                 label={t("globals.interaction.chooseAnOption")}
                 value=""
                 fontFamily="BeVietnamPro-Regular"
@@ -132,17 +131,19 @@ export default function Select({
                 color={Colors.MAIN.DEFAULT_ITEM.TEXT}
                 style={styles.background}
             />
-            {selectOptions.map((option) => (
-                <Picker.Item
-                    key={option.value}
-                    label={option.label}
-                    value={option.value}
-                    fontFamily="BeVietnamPro-Regular"
-                    enabled={option.enabled}
-                    color={Colors.BASIC.WHITE}
-                    style={styles.background}
-                />
-            ))}
+            {selectOptions.map(
+                (option: SelectOption): ReactElement => (
+                    <Picker.Item
+                        key={option.value}
+                        label={option.label}
+                        value={option.value}
+                        fontFamily="BeVietnamPro-Regular"
+                        enabled={option.enabled}
+                        color={Colors.BASIC.WHITE}
+                        style={styles.background}
+                    />
+                ),
+            )}
         </Picker>
     );
 }

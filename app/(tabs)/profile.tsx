@@ -66,9 +66,6 @@ export default function HomeScreen(): ReactElement {
     /**
      * Checks for updates. Shows a modal if you're not up to date, prompting to update.
      *
-     * TODO: this should be in the toolkit, but hook calls are making me go crazy
-     *
-     * @export
      * @async
      * @returns {Promise<void>}
      */
