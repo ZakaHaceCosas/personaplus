@@ -5,7 +5,7 @@ Found a security vulnerability reading code or testing the app? This is what to 
 ## Reporting a vulnerability
 
 1. **Do NOT publish** anything about the vulnerability in public places like the Issues tab, Discord server, or anything similar.
-2. **Contact the PersonaPlus team** by emailing [zakahacecosas@protonmail.com] or sending a DM to [Discord](https://discord.gg/wwzddK4Zpc) members with the `@team - security` role. In your message, please include:
+2. **Contact the PersonaPlus team** by sending a DM to [Discord](https://discord.gg/wwzddK4Zpc) members with the `@team - security` role. In your message, please include:
 
    - Description of the vulnerability.
    - Steps to reproduce.
