@@ -148,7 +148,7 @@ Before your actual code, care to place this comment at the beginning.
 ```ts
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2024 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
