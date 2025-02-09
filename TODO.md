@@ -2,6 +2,16 @@
 
 Here I'll keep track of what I want to do short-term so I don't forget about it.
 
+## Overall plan
+
+- actual active objectives (push ups, running, etc...) are "paused" as of now, they imply a lot of nerdy medical stuff i don't want to waste my time with. CoreLibrary is "paused" as well (nothing official whatsoever, it's just that i'm not gonna focus on them for now).
+- for now i'll try to get passive objectives, streaks, and some basic user-data-based personalization
+- once the above is done, passive objectives = something actually useful (and usable, i hope) = ALPHA (possibly)
+- after that we'll see, by then i'll likely start suffering again with active objectives
+- diet and wellbeing can wait, lol
+
+----
+
 ## Fixing stuff
 
 - [x] Add `createdAt` property to active objectives so `FailObjectivesNotDoneYesterday()` doesn't fail an objective you "didn't do yesterday" because it's new.
