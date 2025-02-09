@@ -11,19 +11,19 @@
  * <=============================================================================>
  */
 
-import AsyncStorage from "expo-sqlite/kv-store";
+import SyncStorage from "expo-sqlite/kv-store";
 import { Log, Logs, LogTraceback } from "@/types/logs";
 import StoredItemNames from "@/constants/stored_item_names";
 import { ShowToast } from "./android";
 
 /**
- * Returns logs saved on the AsyncStorage.
+ * Returns logs saved on the SyncStorage.
  *
  * @returns {Logs} A Log array (`Logs`)
  */
 export function getLogsFromStorage(): Logs {
     try {
-        const logsString: string | null = AsyncStorage.getItemSync(
+        const logsString: string | null = SyncStorage.getItemSync(
             StoredItemNames.consoleLogs,
         );
         if (!logsString) return [];
@@ -36,7 +36,7 @@ export function getLogsFromStorage(): Logs {
             }
         } catch (e) {
             console.error(
-                `Error parsing logs from AsyncStorage: ${e}`,
+                `Error parsing logs from SyncStorage: ${e}`,
                 "\nTRACEBACK\n", // these hope that the terminal auto-formats the JSON from the traceback as it would do in the browser
                 {
                     location: "@/toolkit/console.ts",
@@ -48,7 +48,7 @@ export function getLogsFromStorage(): Logs {
         }
     } catch (e) {
         console.error(
-            `Error accessing logs from AsyncStorage: ${e}`,
+            `Error accessing logs from SyncStorage: ${e}`,
             "\nTRACEBACK\n",
             {
                 location: "@/toolkit/console.ts",
@@ -61,7 +61,7 @@ export function getLogsFromStorage(): Logs {
 }
 
 /**
- * Securely updates logs in the AsyncStorage. ("securely" means if you used the `saveLogsToStorage()` function directly it would overwrite the file, while this one will keep the past logs).
+ * Securely updates logs in the SyncStorage. ("securely" means if you used the `saveLogsToStorage()` function directly it would overwrite the file, while this one will keep the past logs).
  *
  * @param {Log} log The log to be added.
  * @returns {0 | 1} 0 if success, 1 if failure.
@@ -70,14 +70,14 @@ function addLogToGlobal(log: Log): 0 | 1 {
     try {
         const currentLogs: Logs = getLogsFromStorage();
         const updatedLogs: Logs = [...currentLogs, log];
-        AsyncStorage.setItemSync(
+        SyncStorage.setItemSync(
             StoredItemNames.consoleLogs,
             JSON.stringify(updatedLogs),
         );
         return 0;
     } catch (e) {
         console.error(
-            `Error adding log to AsyncStorage: ${e}`,
+            `Error adding log to SyncStorage: ${e}`,
             "error",
             undefined,
         );
