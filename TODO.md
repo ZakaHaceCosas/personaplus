@@ -29,6 +29,17 @@ Here I'll keep track of what I want to do short-term so I don't forget about it.
 ### From planned features
 
 - [ ] passive objectives
+  - [x] base code
+    - [x] types
+    - [x] toolkit
+    - [ ] daily log
+  - [ ] make them work
+    - [x] create
+    - [x] delete
+    - [ ] edit
+    - [ ] mark done
+    - [ ] fail
+
 - [ ] using user data to personalize the app
   - [ ] eg. if a person isn't very active and sets a high-intensity objective, show a warning that won't be shown to a more active user telling them to start smaller and increase eventually (for example)
 - [ ] an assistant that automatically makes objectives, from a set of templates and doing a bit of math with the user's data

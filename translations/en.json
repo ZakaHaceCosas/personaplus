@@ -574,6 +574,10 @@
             "create": {
                 "text": "Create passive objective",
                 "hint": "Opens a page from which you can create a passive objective."
+            },
+            "log": {
+                "text": "Achieved!",
+                "hint": "Log this objective as achieved for today."
             }
         }
     },
