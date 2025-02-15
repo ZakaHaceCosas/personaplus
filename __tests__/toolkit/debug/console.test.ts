@@ -14,6 +14,9 @@ jest.mock("react-native", () => ({
         OS: "android",
     },
 }));
+jest.mock("@/toolkit/android", () => ({
+    ShowToast: jest.fn(),
+}));
 
 const mockGetItem = AsyncStorage.getItem as jest.MockedFunction<
     typeof AsyncStorage.getItem
@@ -54,7 +57,7 @@ describe("logToConsole Toolkit", () => {
         test("should return logs from AsyncStorage", async () => {
             mockGetItem.mockResolvedValueOnce(JSON.stringify(sampleLogs));
 
-            const logs = await getLogsFromStorage();
+            const logs = getLogsFromStorage();
 
             expect(logs).toEqual(sampleLogs);
             expect(AsyncStorage.getItem).toHaveBeenCalledWith("globalLogs");
@@ -64,10 +67,10 @@ describe("logToConsole Toolkit", () => {
         test("should return an empty array if there are no logs", async () => {
             mockGetItem.mockResolvedValueOnce(null);
 
-            const logs = await getLogsFromStorage();
+            const logs = getLogsFromStorage();
 
             expect(logs).toEqual([]);
-            expect(AsyncStorage.getItem).toHaveBeenCalledWith("globalLogs");
+            expect(AsyncStorage.getItemSync).toHaveBeenCalledWith("globalLogs");
         });
 
         // upon error, empty array also
@@ -77,7 +80,7 @@ describe("logToConsole Toolkit", () => {
             const logs = getLogsFromStorage();
 
             expect(logs).toEqual([]);
-            expect(AsyncStorage.getItemSync).toHaveBeenCalledWith(
+            expect(AsyncStorage.getItem).toHaveBeenCalledWith(
                 StoredItemNames.consoleLogs,
             );
         });

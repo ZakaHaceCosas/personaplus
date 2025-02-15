@@ -75,9 +75,20 @@ describe("body mass index calculations", () => {
         expect(calculation.result).toBeWithinMargin(22.0, 0.1);
     });
 
-    test("should handle and return all BMI contexts (underweight, healthy weight, overweight, obesity)", () => {
+    test("should handle and return all BMI contexts", () => {
         const cases = [
-            { age: 25, weight: 45, height: 170, expected: "underweight" },
+            {
+                age: 25,
+                weight: 45,
+                height: 170,
+                expected: "severely underweight",
+            },
+            {
+                age: 25,
+                weight: 50,
+                height: 170,
+                expected: "underweight",
+            },
             { age: 25, weight: 60, height: 170, expected: "healthy weight" },
             { age: 25, weight: 80, height: 170, expected: "overweight" },
             { age: 25, weight: 100, height: 170, expected: "obesity" },
@@ -122,7 +133,7 @@ describe("body mass index underage calculations", () => {
     test("should return accurate BMI value for age 14, male", () => {
         const calculation = calculateBodyMassIndex(14, "male", 45, 170);
         expect(calculation.result).toBeWithinMargin(15.6, 0.1);
-        expect(calculation.context).toBe("underweight");
+        expect(calculation.context).toBe("severely underweight");
     });
 });
 
