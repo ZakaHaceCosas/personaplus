@@ -577,7 +577,11 @@
             },
             "log": {
                 "text": "Achieved!",
-                "hint": "Log this objective as achieved for today."
+                "hint": "Log this passive objective as achieved for today."
+            },
+            "fail": {
+                "text": "Failed...",
+                "hint": "Log this passive objective as failed and reset the counter."
             }
         }
     },
