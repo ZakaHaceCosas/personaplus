@@ -6,7 +6,6 @@ import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
 import { logToConsole } from "@/toolkit/console";
-import { ObjectiveDescriptiveIcons } from "@/toolkit/objectives/active_objectives_ui";
 import {
     ActiveObjective,
     EditObjectiveParams,
@@ -24,6 +23,7 @@ import {
     GetObjective,
 } from "@/toolkit/objectives/common";
 import { PassiveObjective } from "@/types/passive_objectives";
+import { DisplayObjectives } from "@/toolkit/objectives/common_ui";
 
 const styles = StyleSheet.create({
     buttonWrapper: {
@@ -125,59 +125,10 @@ export default function Dashboard(): ReactElement {
                 {activeObjectives === null || activeObjectives.length === 0 ? (
                     <Division header={t("objectives.common.noObjectives")} />
                 ) : (
-                    activeObjectives.map(
-                        (obj: ActiveObjective): ReactElement => {
-                            return (
-                                <Division
-                                    key={obj.identifier}
-                                    header={t(
-                                        `globals.supportedActiveObjectives.${obj.exercise}.name`,
-                                    )}
-                                    preHeader={t(
-                                        "objectives.active.allCapsSingular",
-                                    )}
-                                    direction="vertical"
-                                >
-                                    <ObjectiveDescriptiveIcons obj={obj} />
-                                    <View style={styles.divButtons}>
-                                        <BetterButton
-                                            style="WOR"
-                                            buttonText={t(
-                                                "pages.dashboard.deleteObjective.text",
-                                            )}
-                                            buttonHint={t(
-                                                "pages.dashboard.deleteObjective.hint",
-                                            )}
-                                            action={async (): Promise<void> =>
-                                                await handleObjective(
-                                                    obj.identifier,
-                                                    "delete",
-                                                    "active",
-                                                )
-                                            }
-                                        />
-                                        <GapView width={10} />
-                                        <BetterButton
-                                            style="ACE"
-                                            buttonText={t(
-                                                "pages.dashboard.editObjective.text",
-                                            )}
-                                            buttonHint={t(
-                                                "pages.dashboard.editObjective.hint",
-                                            )}
-                                            action={async (): Promise<void> =>
-                                                await handleObjective(
-                                                    obj.identifier,
-                                                    "edit",
-                                                    "active",
-                                                )
-                                            }
-                                        />
-                                    </View>
-                                </Division>
-                            );
-                        },
-                    )
+                    <DisplayObjectives
+                        objectivesToRender={activeObjectives}
+                        handler={handleObjective}
+                    />
                 )}
                 <View style={styles.buttonWrapper}>
                     <BetterButton
@@ -196,7 +147,11 @@ export default function Dashboard(): ReactElement {
                 passiveObjectives.length === 0 ? (
                     <Division header={t("objectives.common.noObjectives")} />
                 ) : (
-                    passiveObjectives.map(
+                    <DisplayObjectives
+                        objectivesToRender={passiveObjectives}
+                        handler={handleObjective}
+                    />
+                    /* passiveObjectives.map(
                         (obj: PassiveObjective): ReactElement => {
                             return (
                                 <Division
@@ -228,7 +183,7 @@ export default function Dashboard(): ReactElement {
                                 </Division>
                             );
                         },
-                    )
+                    ) */
                 )}
                 <View style={styles.buttonWrapper}>
                     <BetterButton

@@ -10,9 +10,7 @@ import { logToConsole } from "@/toolkit/console";
 import {
     FailObjectivesNotDoneYesterday,
     GetAllPendingObjectives,
-    LaunchActiveObjective,
 } from "@/toolkit/objectives/active_objectives";
-import { ObjectiveDescriptiveIcons } from "@/toolkit/objectives/active_objectives_ui";
 import { ActiveObjective } from "@/types/active_objectives";
 import { FullProfile } from "@/types/user";
 import { router } from "expo-router";
@@ -26,6 +24,7 @@ import {
     scheduleRandomNotifications,
 } from "@/hooks/use_notification";
 import { GetObjective } from "@/toolkit/objectives/common";
+import { DisplayObjectives } from "@/toolkit/objectives/common_ui";
 
 setNotificationHandler({
     handleNotification: async () => ({
@@ -169,36 +168,10 @@ export default function HomeScreen(): ReactElement {
                             )}
                         />
                     ) : (
-                        renderedObjectives.map(
-                            (obj: ActiveObjective): ReactElement => (
-                                <Division
-                                    key={obj.identifier}
-                                    header={t(
-                                        `globals.supportedActiveObjectives.${obj.exercise}.name`,
-                                    )}
-                                    preHeader={t(
-                                        "objectives.active.allCapsSingular",
-                                    )}
-                                    direction="vertical"
-                                >
-                                    <ObjectiveDescriptiveIcons obj={obj} />
-                                    <BetterButton
-                                        buttonText={t(
-                                            "globals.interaction.goAheadGood",
-                                        )}
-                                        buttonHint={t(
-                                            "objectives.active.start.hint",
-                                        )}
-                                        style="ACE"
-                                        action={async (): Promise<void> =>
-                                            await LaunchActiveObjective(
-                                                obj.identifier,
-                                            )
-                                        }
-                                    />
-                                </Division>
-                            ),
-                        )
+                        <DisplayObjectives
+                            objectivesToRender={renderedObjectives}
+                            handler="launch"
+                        />
                     )}
                 </>
             </Section>
