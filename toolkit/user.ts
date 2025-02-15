@@ -145,14 +145,15 @@ export function ValidateUserData(
         healthConditions !== "" &&
         healthConditions !== null &&
         (healthConditions === "none" ||
-            healthConditions.every((condition: string): boolean =>
-                [
-                    "broCantBreathe",
-                    "broCantHeartbeat",
-                    "broCantMove",
-                    "broCantEat",
-                ].includes(condition),
-            ));
+            (Array.isArray(healthConditions) &&
+                healthConditions.every((condition: string): boolean =>
+                    [
+                        "broCantBreathe",
+                        "broCantHeartbeat",
+                        "broCantMove",
+                        "broCantEat",
+                    ].includes(condition),
+                )));
 
     const isBasicHealthDataValid: boolean =
         isGenderValid &&

@@ -72,6 +72,9 @@ describe("ValidateUserData", () => {
                 height: 180,
                 username: "validUser",
                 theThinkHour: "15:35:00",
+                sleepHours: 6,
+                activeness: "moderate",
+                healthConditions: [],
             },
             "Basic",
         );
@@ -86,6 +89,7 @@ describe("ValidateUserData", () => {
                 weight: 75,
                 height: 180,
                 username: "validUser",
+                healthConditions: [],
             },
             "Basic",
         );
@@ -100,6 +104,7 @@ describe("ValidateUserData", () => {
                 weight: 75,
                 height: 180,
                 username: "validUser",
+                healthConditions: [],
             },
             "Basic",
         );
@@ -114,6 +119,7 @@ describe("ValidateUserData", () => {
                 weight: 75,
                 height: 180,
                 username: "validUser",
+                healthConditions: [],
             },
             "Basic",
         );
@@ -128,6 +134,7 @@ describe("ValidateUserData", () => {
                 weight: 12,
                 height: 4,
                 username: "validUser",
+                healthConditions: [],
             },
             "Basic",
         );
@@ -142,6 +149,7 @@ describe("ValidateUserData", () => {
                 weight: 75,
                 height: 2180,
                 username: "validUser",
+                healthConditions: [],
             },
             "Basic",
         );
@@ -156,6 +164,7 @@ describe("ValidateUserData", () => {
                 weight: 5,
                 height: 180,
                 username: "validUser",
+                healthConditions: [],
             },
             "Basic",
         );
@@ -170,6 +179,7 @@ describe("ValidateUserData", () => {
                 weight: 75312,
                 height: 180,
                 username: "validUser",
+                healthConditions: [],
             },
             "Basic",
         );
@@ -184,6 +194,7 @@ describe("ValidateUserData", () => {
                 weight: 75,
                 height: 180,
                 username: "a",
+                healthConditions: [],
             },
             "Basic",
         );
@@ -198,6 +209,7 @@ describe("ValidateUserData", () => {
                 weight: 75,
                 height: 180,
                 username: "a".repeat(41),
+                healthConditions: [],
             },
             "Basic",
         );
@@ -212,6 +224,7 @@ describe("ValidateUserData", () => {
                 weight: 75,
                 height: 180,
                 username: "",
+                healthConditions: [],
             },
             "Basic",
         );
@@ -222,6 +235,7 @@ describe("ValidateUserData", () => {
                 weight: 75,
                 height: 180,
                 username: null,
+                healthConditions: [],
             },
             "Basic",
         );
@@ -237,6 +251,7 @@ describe("ValidateUserData", () => {
                 weight: 75,
                 height: 180,
                 username: "ErrOr.",
+                healthConditions: [],
             },
             "Basic",
         );
@@ -247,6 +262,7 @@ describe("ValidateUserData", () => {
                 weight: 75,
                 height: 180,
                 username: "PEdro Sánchez",
+                healthConditions: [],
             },
             "Basic",
         );
