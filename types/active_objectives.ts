@@ -12,8 +12,12 @@
  */
 
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
-import type { TodaysDate } from "@/types/today";
 import { ExpoRouterParams } from "./glue_fix";
+import {
+    GenericDailyLog,
+    GenericObjective,
+    ValidateGenericObjective,
+} from "./common_objectives";
 
 /**
  * A type with all supported active objectives. **Tied to const `SupportedActiveObjectivesList`, note that in case of modifications.**
@@ -129,25 +133,13 @@ interface ActiveObjectiveSpecificData {
  *
  * @export
  */
-export interface ActiveObjective {
+export interface ActiveObjective extends GenericObjective {
     /**
      * What exercise is the user supposed to do.
      *
      * @type {SupportedActiveObjectives}
      */
     exercise: SupportedActiveObjectives;
-    /**
-     * A unique, numeric, 10-character long, identifier.
-     *
-     * @type {number}
-     */
-    identifier: number;
-    /**
-     * Date of the creation of this objective.
-     *
-     * @type {TodaysDate}
-     */
-    createdAt: TodaysDate;
     /**
      * Global info about the objective, such as it's duration.
      *
@@ -175,8 +167,7 @@ export function ValidateActiveObjective(
     omitIdentifier?: boolean,
 ): obj is ActiveObjective {
     try {
-        if (!obj || typeof obj !== "object") return false;
-        if (!omitIdentifier && !obj.identifier) return false; // if no ID and no skip, invalid. can be skipped because you might be creating the objective yet
+        if (!ValidateGenericObjective(obj, omitIdentifier)) return false;
         if (!obj.info) return false; // no info, invalid
         const info = obj.info as ActiveObjectiveInfo; // (for vsc intellisense)
         if (
@@ -265,17 +256,8 @@ export interface ActiveObjectiveDailyLogEntry {
  *
  * @export
  */
-export type ActiveObjectiveDailyLog = {
-    /**
-     * Each entry uses the date as a key, and then each objective has it's own entry.
-     */
-    [date: TodaysDate]: {
-        /**
-         * Each objective uses it's ID as the key, then an `ActiveObjectiveDailyLogEntry` as the value.
-         */
-        [identifier: number]: ActiveObjectiveDailyLogEntry;
-    };
-};
+export type ActiveObjectiveDailyLog =
+    GenericDailyLog<ActiveObjectiveDailyLogEntry>;
 
 /**
  * URL params for the live sessions page. Concretely, for passing data from `sessions.tsx` to `results.tsx`.

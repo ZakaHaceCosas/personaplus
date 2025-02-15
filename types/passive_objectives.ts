@@ -11,34 +11,25 @@
  * <=============================================================================>
  */
 
-import type { TodaysDate } from "@/types/today";
 import { StringUtils } from "@zakahacecosas/string-utils";
-import { TodaysDateRegularExpression } from "./today";
+import {
+    GenericDailyLog,
+    GenericObjective,
+    ValidateGenericObjective,
+} from "./common_objectives";
 
 /**
  * A PersonaPlus Passive Objective™
  *
  * @export
  */
-export interface PassiveObjective {
+export interface PassiveObjective extends GenericObjective {
     /**
      * What passive objective is the user supposed to do.
      *
      * @type {string}
      */
     goal: string;
-    /**
-     * A unique, numeric, 10-character long, identifier.
-     *
-     * @type {number}
-     */
-    identifier: number;
-    /**
-     * Date of the creation of this objective.
-     *
-     * @type {TodaysDate}
-     */
-    createdAt: TodaysDate;
 }
 
 /**
@@ -54,28 +45,15 @@ export function ValidatePassiveObjective(
     omitIdentifier?: boolean,
 ): obj is PassiveObjective {
     try {
-        if (!obj || typeof obj !== "object") return false;
-        if (!omitIdentifier && !obj.identifier) return false; // if no ID and no skip, invalid. can be skipped because you might be creating the objective yet
+        if (!ValidateGenericObjective(obj, omitIdentifier)) return false;
         if (
             !obj.goal ||
             typeof obj.goal !== "string" ||
-            !StringUtils.validate(obj.goal)
+            !StringUtils.validate(obj.goal) ||
+            obj.goal.length < 3 ||
+            obj.goal.length < 120
         )
             return false; // if no goal, or invalid value, invalid.
-        if (
-            !obj.createdAt ||
-            typeof obj.createdAt !== "string" ||
-            !StringUtils.validate(obj.createdAt) ||
-            !TodaysDateRegularExpression.test(obj.createdAt)
-        )
-            return false; // if no creation date, or no valid value, invalid.
-        if (
-            !obj.identifier ||
-            typeof obj.identifier !== "number" ||
-            !StringUtils.validate(obj.identifier.toString()) ||
-            obj.identifier.toString().length !== 10
-        )
-            return false; // if no ID or invalid ID, invalid.
 
         return true;
     } catch {
@@ -116,14 +94,5 @@ export interface PassiveObjectiveDailyLogEntry {
  *
  * @export
  */
-export type PassiveObjectiveDailyLog = {
-    /**
-     * Each entry uses the date as a key, and then each objective has it's own entry.
-     */
-    [date: TodaysDate]: {
-        /**
-         * Each objective uses it's ID as the key, then an `PassiveObjectiveDailyLogEntry` as the value.
-         */
-        [identifier: number]: PassiveObjectiveDailyLogEntry;
-    };
-};
+export type PassiveObjectiveDailyLog =
+    GenericDailyLog<PassiveObjectiveDailyLogEntry>;

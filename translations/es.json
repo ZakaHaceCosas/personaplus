@@ -565,6 +565,14 @@
             "create": {
                 "text": "Crear objetivo pasivo",
                 "hint": "Abre una página desde la que puedes crear un objetivo pasivo."
+            },
+            "log": {
+                "text": "¡Conseguido!",
+                "hint": "Registra este objetivo pasivo como completado hoy."
+            },
+            "fail": {
+                "text": "Fallido...",
+                "hint": "Registra este objetivo pasivo como fallado y reinicia el contador."
             }
         }
     },

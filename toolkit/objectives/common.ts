@@ -11,6 +11,9 @@ import AsyncStorage from "expo-sqlite/kv-store";
 import { logToConsole } from "../console";
 import { TFunction } from "i18next";
 import { ShowToast } from "../android";
+import { GenericDailyLog } from "@/types/common_objectives";
+import { JavaScriptifyTodaysDate } from "../today";
+import { TodaysDate } from "@/types/today";
 
 /**
  * Returns all objectives from AsyncStorage as an `ActiveObjective[]` or a `PassiveObjective[]` (depending on chosen category), or `null` if there aren't any objectives.
@@ -276,4 +279,58 @@ async function CreateObjective(
     }
 }
 
-export { GetAllObjectives, GetObjective, DeleteObjective, CreateObjective };
+type UncheckedDailyLog = GenericDailyLog<any>;
+
+/**
+ * Handles saving the daily log, sorting stuff by date.
+ *
+ * @async
+ * @param {GenericDailyLog<any>} log Any log.
+ * @param {"active" | "passive"} category Category to save to.
+ * @returns {Promise<void>}
+ */
+async function HandleSavingGenericObjectiveDailyLog(
+    log: UncheckedDailyLog,
+    category: "active" | "passive",
+): Promise<void> {
+    try {
+        function removeDuplicates(obj: UncheckedDailyLog): UncheckedDailyLog {
+            const uniqueEntries = new Map<string, any>();
+            for (const [date, value] of Object.entries(obj)) {
+                uniqueEntries.set(date, value);
+            }
+            return Object.fromEntries(uniqueEntries);
+        }
+
+        function sortObjectByDate(obj: UncheckedDailyLog): UncheckedDailyLog {
+            return Object.fromEntries(
+                Object.entries(obj).sort(([dateA], [dateB]) => {
+                    return (
+                        JavaScriptifyTodaysDate(dateA as TodaysDate).getTime() -
+                        JavaScriptifyTodaysDate(dateB as TodaysDate).getTime()
+                    );
+                }),
+            );
+        }
+
+        const dedupedLog: UncheckedDailyLog = removeDuplicates(log);
+        const sortedLog: UncheckedDailyLog = sortObjectByDate(dedupedLog);
+
+        await AsyncStorage.setItem(
+            category === "active"
+                ? StoredItemNames.dailyLog
+                : StoredItemNames.passiveDailyLog,
+            JSON.stringify(sortedLog),
+        );
+    } catch (e) {
+        logToConsole(`Error saving to ${category} daily log: ${e}`, "error");
+    }
+}
+
+export {
+    GetAllObjectives,
+    GetObjective,
+    DeleteObjective,
+    CreateObjective,
+    HandleSavingGenericObjectiveDailyLog,
+};

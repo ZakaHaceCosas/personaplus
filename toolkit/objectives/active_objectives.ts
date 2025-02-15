@@ -44,6 +44,7 @@ import {
     DeleteObjective,
     GetAllObjectives,
     GetObjective,
+    HandleSavingGenericObjectiveDailyLog,
 } from "./common";
 
 /**
@@ -110,12 +111,6 @@ async function SaveActiveObjectiveToDailyLog(
             dailyData[today] = {};
         }
 
-        if (!objective) {
-            throw new Error(
-                `${id} is not a valid identifier - no objective has it.`,
-            );
-        }
-
         // Saves the objective data
         dailyData[today][id] = {
             wasDone: wasDone,
@@ -124,7 +119,7 @@ async function SaveActiveObjectiveToDailyLog(
         };
 
         // Updates data and puts it back to AsyncStorage
-        await HandleSavingActiveObjectiveDailyLog(dailyData);
+        await HandleSavingGenericObjectiveDailyLog(dailyData, "active");
         logToConsole(
             `Success! Session ${id} data saved for ${today}.`,
             "success",
@@ -507,54 +502,6 @@ function CalculateSessionPerformance(
 }
 
 /**
- * Handles saving the daily log, sorting stuff by date.
- *
- * @async
- * @param {ActiveObjectiveDailyLog} log
- * @returns {Promise<void>}
- */
-async function HandleSavingActiveObjectiveDailyLog(
-    log: ActiveObjectiveDailyLog,
-): Promise<void> {
-    try {
-        function removeDuplicates(
-            obj: ActiveObjectiveDailyLog,
-        ): ActiveObjectiveDailyLog {
-            const uniqueEntries = new Map<string, any>();
-            for (const [date, value] of Object.entries(obj)) {
-                uniqueEntries.set(date, value);
-            }
-            return Object.fromEntries(uniqueEntries);
-        }
-
-        function sortObjectByDate(
-            obj: ActiveObjectiveDailyLog,
-        ): ActiveObjectiveDailyLog {
-            return Object.fromEntries(
-                Object.entries(obj).sort(([dateA], [dateB]) => {
-                    return (
-                        JavaScriptifyTodaysDate(dateA as TodaysDate).getTime() -
-                        JavaScriptifyTodaysDate(dateB as TodaysDate).getTime()
-                    );
-                }),
-            );
-        }
-
-        const logWithoutDuplicates: ActiveObjectiveDailyLog =
-            removeDuplicates(log);
-        const sortedLog: ActiveObjectiveDailyLog =
-            sortObjectByDate(logWithoutDuplicates);
-
-        await AsyncStorage.setItem(
-            StoredItemNames.dailyLog,
-            JSON.stringify(sortedLog),
-        );
-    } catch (e) {
-        logToConsole(`Error handling the daily log: ${e}`, "error");
-    }
-}
-
-/**
  * Gets all objectives, finds the ones that you had to do yesterday (and previous days), and if they weren't done, it adds them as not done to the daily log.
  *
  * @async
@@ -631,7 +578,7 @@ async function FailObjectivesNotDoneYesterday(): Promise<void> {
             dateObj.setDate(dateObj.getDate() + 1);
         }
 
-        await HandleSavingActiveObjectiveDailyLog(dailyLog);
+        await HandleSavingGenericObjectiveDailyLog(dailyLog, "active");
     } catch (e) {
         logToConsole(`Error failing objectives: ${e}`, "error");
     }
