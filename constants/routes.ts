@@ -23,8 +23,9 @@ export const Routes = {
         VIEWER_DAILY_LOG: "/developer/viewer_daily_log",
         EXPERIMENTS: "/developer/dev_experiments",
     },
-    ACTIVE_OBJECTIVES: {
-        CREATE: "/objectives/create",
+    OBJECTIVES: {
+        CREATE_ACTIVE: "/objectives/create",
+        CREATE_PASSIVE: "/objectives/create_passive",
         SESSION: "/objectives/sessions",
         RESULTS: "/objectives/results",
     },

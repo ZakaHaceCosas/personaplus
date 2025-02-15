@@ -5,7 +5,7 @@
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
  *
- * You are in: @/components/interaction/BetterInputField.tsx
+ * You are in: @/components/interaction/better_input_field.tsx
  * Basically: Better TextInput fields.
  *
  * <=============================================================================>

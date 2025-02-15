@@ -65,7 +65,8 @@ function GenerateRandomMessage(
         | "allObjectivesDone"
         | "sessionCompleted"
         | "activeObjectiveReminders"
-        | "createActiveObjective",
+        | "createActiveObjective"
+        | "createPassiveObjective",
     t: TFunction,
 ): string {
     // Get all messages for the specified target

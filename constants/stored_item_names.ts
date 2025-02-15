@@ -5,7 +5,7 @@
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
  *
- * You are in: @/constants/StoredItemNames.ts
+ * You are in: @/constants/stored_item_names.ts
  * Basically: The name of each AsyncStorage entry, so you don't mess them up.
  *
  * <=============================================================================>
@@ -16,7 +16,8 @@
  */
 const StoredItemNames = {
     userData: "userData",
-    objectives: "objectives",
+    activeObjectives: "objectives",
+    passiveObjectives: "passiveObjectives",
     dailyLog: "activeObjectiveDailyLog",
     consoleLogs: "globalLogs",
     colorTheme: "colorTheme",

@@ -6,11 +6,6 @@ import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
 import { logToConsole } from "@/toolkit/console";
-import {
-    DeleteActiveObjective,
-    GetActiveObjective,
-    GetAllObjectives,
-} from "@/toolkit/objectives/active_objectives";
 import { ObjectiveDescriptiveIcons } from "@/toolkit/objectives/active_objectives_ui";
 import {
     ActiveObjective,
@@ -23,6 +18,12 @@ import { StyleSheet, View } from "react-native";
 import TopBar from "@/components/navigation/top_bar";
 import GapView from "@/components/ui/gap_view";
 import { ShowToast } from "@/toolkit/android";
+import {
+    DeleteObjective,
+    GetAllObjectives,
+    GetObjective,
+} from "@/toolkit/objectives/common";
+import { PassiveObjective } from "@/types/passive_objectives";
 
 const styles = StyleSheet.create({
     buttonWrapper: {
@@ -40,14 +41,16 @@ export default function Dashboard(): ReactElement {
     const [activeObjectives, setActiveObjectives] = useState<
         ActiveObjective[] | null
     >(null);
+    const [passiveObjectives, setPassiveObjectives] = useState<
+        PassiveObjective[] | null
+    >(null);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect((): void => {
         async function handler(): Promise<void> {
             try {
-                const objectives: ActiveObjective[] | null =
-                    await GetAllObjectives();
-                setActiveObjectives(objectives);
+                setActiveObjectives(await GetAllObjectives("active"));
+                setPassiveObjectives(await GetAllObjectives("passive"));
             } catch (e) {
                 logToConsole(`Error fetching Active Objectives: ${e}`, "error");
             } finally {
@@ -61,10 +64,11 @@ export default function Dashboard(): ReactElement {
     async function handleObjective(
         identifier: number,
         action: "delete" | "edit",
+        category: "active" | "passive",
     ): Promise<void> {
         try {
             if (action === "delete") {
-                await DeleteActiveObjective(identifier);
+                await DeleteObjective(identifier, category);
                 // update & redraw without re-fetching everything upon update.
                 setActiveObjectives(
                     activeObjectives?.filter(
@@ -72,10 +76,19 @@ export default function Dashboard(): ReactElement {
                             obj.identifier !== identifier,
                     ) || null,
                 );
+                setPassiveObjectives(
+                    passiveObjectives?.filter(
+                        (obj: PassiveObjective): boolean =>
+                            obj.identifier !== identifier,
+                    ) || null,
+                );
                 return;
             } else if (action === "edit") {
-                const obj: ActiveObjective | null =
-                    await GetActiveObjective(identifier);
+                // TODO - support editing passive objectives
+                const obj: ActiveObjective | null = await GetObjective(
+                    identifier,
+                    "active",
+                );
                 if (!obj) {
                     ShowToast(
                         t("errors.objectiveNotExists", { id: identifier }),
@@ -87,7 +100,7 @@ export default function Dashboard(): ReactElement {
                     objective: JSON.stringify(obj),
                 };
                 router.push({
-                    pathname: Routes.ACTIVE_OBJECTIVES.CREATE,
+                    pathname: Routes.OBJECTIVES.CREATE_ACTIVE,
                     params,
                 });
             }
@@ -141,6 +154,7 @@ export default function Dashboard(): ReactElement {
                                                 await handleObjective(
                                                     obj.identifier,
                                                     "delete",
+                                                    "active",
                                                 )
                                             }
                                         />
@@ -157,6 +171,7 @@ export default function Dashboard(): ReactElement {
                                                 await handleObjective(
                                                     obj.identifier,
                                                     "edit",
+                                                    "active",
                                                 )
                                             }
                                         />
@@ -170,10 +185,83 @@ export default function Dashboard(): ReactElement {
                     <BetterButton
                         style="GOD"
                         action={(): void =>
-                            router.push(Routes.ACTIVE_OBJECTIVES.CREATE)
+                            router.push(Routes.OBJECTIVES.CREATE_ACTIVE)
                         }
                         buttonText={t("activeObjectives.createObjective.text")}
                         buttonHint={t("activeObjectives.createObjective.hint")}
+                    />
+                </View>
+            </Section>
+            <GapView height={20} />
+            <Section kind="PassiveObjectives">
+                {passiveObjectives === null ||
+                passiveObjectives.length === 0 ? (
+                    <Division
+                        header={t(
+                            "passiveObjectives.noObjectives.noObjectives",
+                        )}
+                    />
+                ) : (
+                    passiveObjectives.map(
+                        (obj: PassiveObjective): ReactElement => {
+                            return (
+                                <Division
+                                    key={obj.identifier}
+                                    header={obj.goal}
+                                    preHeader={t(
+                                        "passiveObjectives.allCapsSingular",
+                                    )}
+                                    direction="vertical"
+                                >
+                                    <View style={styles.divButtons}>
+                                        <BetterButton
+                                            style="WOR"
+                                            buttonText={t(
+                                                "pages.dashboard.deleteObjective.text",
+                                            )}
+                                            buttonHint={t(
+                                                "pages.dashboard.deleteObjective.hint",
+                                            )}
+                                            action={async (): Promise<void> =>
+                                                await handleObjective(
+                                                    obj.identifier,
+                                                    "delete",
+                                                    "passive",
+                                                )
+                                            }
+                                        />
+                                        {/*
+                                        <GapView width={10} />
+                                        <BetterButton
+                                            style="ACE"
+                                            buttonText={t(
+                                                "pages.dashboard.editObjective.text",
+                                            )}
+                                            buttonHint={t(
+                                                "pages.dashboard.editObjective.hint",
+                                            )}
+                                            action={async (): Promise<void> =>
+                                                await handleObjective(
+                                                    obj.identifier,
+                                                    "edit",
+                                                    "passive",
+                                                )
+                                            }
+                                        /> */}
+                                    </View>
+                                </Division>
+                            );
+                        },
+                    )
+                )}
+                <View style={styles.buttonWrapper}>
+                    <BetterButton
+                        style="GOD"
+                        action={(): void =>
+                            router.push(Routes.OBJECTIVES.CREATE_PASSIVE)
+                        }
+                        buttonText={t("passiveObjectives.createObjective.text")}
+                        buttonHint={t("passiveObjectives.createObjective.hint")}
                     />
                 </View>
             </Section>

@@ -66,7 +66,7 @@ export default function Layout(): ReactElement {
         Routes.MAIN.SETTINGS.UPDATE_PROFILE,
         Routes.MAIN.SETTINGS.SETTINGS_PAGE,
         Routes.EXPERIMENTS.TRACKER,
-        ...Object.values(Routes.ACTIVE_OBJECTIVES),
+        ...Object.values(Routes.OBJECTIVES),
         ...Object.values(Routes.DEV_INTERFACE),
         ...Object.values(Routes.ABOUT),
     ];

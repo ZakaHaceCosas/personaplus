@@ -60,11 +60,11 @@ export default function DevInterface(): ReactElement {
                 layout="alert"
             />
             <GapView height={20} />
-            <BetterTextSubHeader>Active objectives</BetterTextSubHeader>
+            <BetterTextSubHeader>All objectives</BetterTextSubHeader>
             <GapView height={10} />
             <BetterButton
-                buttonText="View all Active Objectives"
-                buttonHint="Opens up a dedicated page for viewing all your active objectives."
+                buttonText="View all Active & Passive Objectives"
+                buttonHint="Opens up a dedicated page for viewing all your active and passive objectives."
                 style="ACE"
                 action={(): void =>
                     router.push(Routes.DEV_INTERFACE.VIEWER_ACTIVE_OBJECTIVES)

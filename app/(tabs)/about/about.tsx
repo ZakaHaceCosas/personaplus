@@ -162,7 +162,7 @@ export default function About(): ReactElement {
                 <Pressable
                     style={styles.buttonContainer}
                     onPress={async (): Promise<void> => {
-                        await SafelyOpenUrl(URLs.youtube);
+                        await SafelyOpenUrl(URLs.yt);
                     }}
                 >
                     <MaterialCommunityIcons

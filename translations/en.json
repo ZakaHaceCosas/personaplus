@@ -155,6 +155,9 @@
             "Remember: champions are made, not born.",
             "Give your day a purpose: create an objective."
         ],
+        "createPassiveObjective": [
+            "Building routines is building discipline."
+        ],
         "sessionCompleted": [
             "You finished! How great you are.",
             "How cool was that?",

@@ -262,7 +262,14 @@ export default function WelcomePage(): ReactElement {
                     StoredItemNames.experiments,
                     JSON.stringify(DEFAULT_EXPERIMENTS),
                 );
-                await AsyncStorage.setItem(StoredItemNames.objectives, "[]");
+                await AsyncStorage.setItem(
+                    StoredItemNames.activeObjectives,
+                    "[]",
+                );
+                await AsyncStorage.setItem(
+                    StoredItemNames.passiveObjectives,
+                    "[]",
+                );
                 router.replace(Routes.MAIN.HOME);
                 logToConsole(
                     `${userData.username} was successfully registered with no errors. Give yourself a plus!`,

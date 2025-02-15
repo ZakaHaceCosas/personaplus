@@ -5,8 +5,8 @@
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
  *
- * You are in: @/toolkit/objectives/ActiveObjectives.ts
- * Basically: One of the most important parts of the app, this toolkit contains all the base functions to interact with active objectives.
+ * You are in: @/toolkit/objectives/active_objectives.ts
+ * Basically: Objectives are one of the most important parts of the app, and this toolkit contains all the base functions to interact with ACTIVE objectives.
  *
  * <=============================================================================>
  */
@@ -39,6 +39,12 @@ import { CoreLibraryResponse } from "@/core/types/core_library_response";
 import { BasicUserHealthData } from "@/types/user";
 import { ShowToast } from "../android";
 import { TFunction } from "i18next";
+import {
+    CreateObjective,
+    DeleteObjective,
+    GetAllObjectives,
+    GetObjective,
+} from "./common";
 
 /**
  * Returns the objectives from AsyncStorage as an `ActiveObjective[]`, or `null` if there aren't any objectives.
@@ -46,41 +52,8 @@ import { TFunction } from "i18next";
  * @async
  * @returns {Promise<ActiveObjective[] | null>} - Returns the objectives as an `Objective[]`.
  */
-async function GetAllObjectives(): Promise<ActiveObjective[] | null> {
-    try {
-        const storedObjectives: string | null = await AsyncStorage.getItem(
-            StoredItemNames.objectives,
-        );
-
-        if (!storedObjectives || storedObjectives === "") {
-            logToConsole("Warning! There are no objectives", "warn", undefined);
-            return null;
-        }
-
-        const objectives: ActiveObjective[] = JSON.parse(storedObjectives);
-
-        if (!Array.isArray(objectives)) {
-            logToConsole(
-                "Warning! Objectives are not an array",
-                "warn",
-                undefined,
-            );
-            return null;
-        }
-
-        if (objectives.length === 0) {
-            return null;
-        }
-
-        return objectives;
-    } catch (e) {
-        logToConsole(`Failed to get objectives: ${e}`, "error", {
-            location: "@/toolkit/objectives/ActiveObjectives.ts",
-            isHandler: false,
-            function: "GetAllObjectives()",
-        });
-        return null;
-    }
+async function GetAllActiveObjectives(): Promise<ActiveObjective[] | null> {
+    return await GetAllObjectives("active");
 }
 
 /**
@@ -222,7 +195,8 @@ async function IsActiveObjectivePending(
  */
 async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
     try {
-        const objectives: ActiveObjective[] | null = await GetAllObjectives();
+        const objectives: ActiveObjective[] | null =
+            await GetAllObjectives("active");
         if (objectives === null || Object.keys(objectives).length === 0) {
             return null; // no objectives at all
         }
@@ -287,26 +261,7 @@ async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
 async function GetActiveObjective(
     identifier: number,
 ): Promise<ActiveObjective | null> {
-    try {
-        const objectives: ActiveObjective[] | null = await GetAllObjectives();
-
-        if (!objectives) {
-            logToConsole("No objectives exist!", "error");
-            return null;
-        }
-
-        const objective: ActiveObjective | undefined = objectives.find(
-            (obj: ActiveObjective): boolean => obj.identifier === identifier,
-        );
-
-        if (objective === undefined) {
-            return null;
-        }
-
-        return objective;
-    } catch (e) {
-        throw new Error(`Got an error getting objective ${identifier}: ${e}`);
-    }
+    return await GetObjective(identifier, "active");
 }
 
 /**
@@ -321,71 +276,7 @@ async function CreateActiveObjective(
     target: ActiveObjectiveWithoutId,
     t: TFunction,
 ): Promise<0 | 1> {
-    try {
-        let objs: ActiveObjective[] | null = await GetAllObjectives();
-        if (!objs || objs.length === 0) {
-            objs = [];
-        }
-
-        function generateIdentifier(objs: ActiveObjective[]): number {
-            const generateObjectiveId: () => number = (): number => {
-                return Math.floor(Math.random() * 9000000000) + 1000000000;
-            };
-
-            let newIdentifier: number = generateObjectiveId();
-            // verify there aren't duplicates
-            while (
-                objs.some(
-                    (obj: ActiveObjective): boolean =>
-                        obj.identifier === newIdentifier,
-                )
-            ) {
-                newIdentifier = generateObjectiveId();
-            }
-            return newIdentifier;
-        }
-
-        const newObjective: ActiveObjective = {
-            ...target,
-            identifier: generateIdentifier(objs),
-        };
-
-        objs.push(newObjective);
-
-        try {
-            await AsyncStorage.setItem(
-                StoredItemNames.objectives,
-                JSON.stringify(objs),
-            );
-            ShowToast(
-                t("pages.createActiveObjective.doneFeedback", {
-                    obj: t(
-                        `globals.supportedActiveObjectives.${target.exercise}.name`,
-                    ),
-                }),
-            );
-            logToConsole(
-                `Created ${newObjective.identifier} objective with ID ${newObjective.exercise} successfully! Full JSON of the created objective:\n${JSON.stringify(
-                    newObjective,
-                )}"`,
-                "success",
-                undefined,
-                false,
-            );
-            return 0;
-        } catch (e) {
-            throw new Error(`Failed to save objectives! ${e}`);
-        }
-    } catch (e) {
-        logToConsole(
-            `Something went wrong creating an objective. JSON:\n${JSON.stringify(
-                target,
-            )}\n\nError: ${e}`,
-            "error",
-        );
-        ShowToast("Error :c");
-        return 1;
-    }
+    return await CreateObjective(target, "active", t);
 }
 
 /**
@@ -403,7 +294,7 @@ async function EditActiveObjective(
     t: TFunction,
 ): Promise<0 | 1> {
     try {
-        const oldObj: ActiveObjective | null = await GetActiveObjective(id);
+        const oldObj: ActiveObjective | null = await GetObjective(id, "active");
 
         if (!oldObj) throw new Error(`No active objective with ID ${id}`);
 
@@ -413,7 +304,7 @@ async function EditActiveObjective(
             identifier: id, // 3rd goes the ID override
         };
 
-        let objs: ActiveObjective[] | null = await GetAllObjectives();
+        let objs: ActiveObjective[] | null = await GetAllObjectives("active");
         if (!objs || objs.length === 0) {
             objs = [];
         }
@@ -434,7 +325,7 @@ async function EditActiveObjective(
 
         try {
             await AsyncStorage.setItem(
-                StoredItemNames.objectives,
+                StoredItemNames.activeObjectives,
                 JSON.stringify(objs),
             );
             ShowToast(
@@ -495,26 +386,14 @@ function CalculateSessionFragmentsDuration(
 }
 
 /**
- * Deletes a specific objective from the AsyncStorage, given it's identifier.
+ * Deletes a specific active objective from the AsyncStorage, given it's identifier.
  *
  * @async
  * @param {number} identifier The identifier.
  * @returns {Promise<void>}
  */
 async function DeleteActiveObjective(identifier: number): Promise<void> {
-    try {
-        const objectives: ActiveObjective[] | null = await GetAllObjectives();
-        if (!objectives) return;
-        const updatedObjectives: ActiveObjective[] = objectives.filter(
-            (obj: ActiveObjective): boolean => obj.identifier !== identifier,
-        );
-        await AsyncStorage.setItem(
-            StoredItemNames.objectives,
-            JSON.stringify(updatedObjectives),
-        );
-    } catch (e) {
-        logToConsole(`Error in deleteObjective: ${e}`, "error");
-    }
+    await DeleteObjective(identifier, "active");
 }
 
 /**
@@ -527,7 +406,7 @@ async function DeleteActiveObjective(identifier: number): Promise<void> {
 async function LaunchActiveObjective(identifier: number): Promise<void> {
     try {
         const [obj, experiments] = await Promise.all([
-            GetActiveObjective(identifier),
+            GetObjective(identifier, "active"),
             GetExperiments(),
         ]);
 
@@ -550,14 +429,14 @@ async function LaunchActiveObjective(identifier: number): Promise<void> {
         }
 
         router.replace({
-            pathname: Routes.ACTIVE_OBJECTIVES.SESSION,
+            pathname: Routes.OBJECTIVES.SESSION,
             params: { id: identifier },
         });
 
         // TODO - at some point, merge the tracker with the standard session experience
         /*
          router.replace({
-            pathname: Routes.ACTIVE_OBJECTIVES.SESSION,
+            pathname: Routes.OBJECTIVES.SESSION,
             params: { id: identifier, tracker: track ? "yeah" : "nah" },
         });
         */
@@ -684,7 +563,7 @@ async function HandleSavingActiveObjectiveDailyLog(
 async function FailObjectivesNotDoneYesterday(): Promise<void> {
     try {
         const allObjectives: ActiveObjective[] | null =
-            await GetAllObjectives();
+            await GetAllObjectives("active");
         const dailyLog: ActiveObjectiveDailyLog =
             await GetActiveObjectiveDailyLog();
 
@@ -768,7 +647,7 @@ export {
     FailObjectivesNotDoneYesterday,
     GetActiveObjective,
     GetActiveObjectiveDailyLog,
-    GetAllObjectives,
+    GetAllActiveObjectives,
     GetAllPendingObjectives,
     LaunchActiveObjective,
     SaveActiveObjectiveToDailyLog,

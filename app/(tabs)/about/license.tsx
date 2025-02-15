@@ -5,7 +5,7 @@
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
  *
- * You are in: @/app/(tabs)/about/License.tsx
+ * You are in: @/app/(tabs)/about/license.tsx
  * Basically: The GPL license. A bit strict, but it is what it is.
  *
  * <=============================================================================>

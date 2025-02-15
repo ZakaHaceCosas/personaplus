@@ -8,15 +8,19 @@ import {
 import BetterTable, { BetterTableItem } from "@/components/ui/better_table";
 import GapView from "@/components/ui/gap_view";
 import { logToConsole } from "@/toolkit/console";
-import { GetAllObjectives } from "@/toolkit/objectives/active_objectives";
+import { GetAllObjectives } from "@/toolkit/objectives/common";
 import { ActiveObjective, WeekTuple } from "@/types/active_objectives";
+import { PassiveObjective } from "@/types/passive_objectives";
 import React, { ReactElement, useEffect, useState } from "react";
 
 export default function ViewerActiveObjectives(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [detailedObjectives, setDetailedObjectives] = useState<
-        ActiveObjective[]
+    const [activeObjectives, setActiveObjectives] = useState<ActiveObjective[]>(
+        [],
+    );
+    const [passiveObjectives, setPassiveObjectives] = useState<
+        PassiveObjective[]
     >([]);
 
     function representDataAsBetterTable(
@@ -41,10 +45,17 @@ export default function ViewerActiveObjectives(): ReactElement {
             try {
                 // objectives
                 const objectives: ActiveObjective[] | null =
-                    await GetAllObjectives();
+                    await GetAllObjectives("active");
 
                 if (objectives) {
-                    setDetailedObjectives(objectives);
+                    setActiveObjectives(objectives);
+                }
+
+                const passiveObjectives: PassiveObjective[] | null =
+                    await GetAllObjectives("passive");
+
+                if (passiveObjectives) {
+                    setPassiveObjectives(passiveObjectives);
                 }
             } catch (e) {
                 const err = `Error fetching data at DevInterface: ${e}`;
@@ -64,14 +75,40 @@ export default function ViewerActiveObjectives(): ReactElement {
         <>
             <TopBar
                 includeBackButton={true}
-                header="Active Objectives"
-                subHeader="View all your active objectives and their internal data."
+                header="Objectives"
+                subHeader="View all your active & passive objectives and their internal data."
             />
-            {detailedObjectives.length > 0 ? (
+            {passiveObjectives.length > 0 ? (
                 <>
                     <BetterTextSmallText>
-                        All your objectives. The ID is just used by the app, to
-                        differentiate objectives.
+                        All your passive objectives. The ID is just used by the
+                        app, to differentiate objectives.
+                    </BetterTextSmallText>
+                    <GapView height={5} />
+                    {error ? (
+                        <BetterTextSmallText>{error}</BetterTextSmallText>
+                    ) : (
+                        <BetterTable
+                            headers={["Goal", "ID"]}
+                            items={passiveObjectives.map(
+                                (obj: PassiveObjective): BetterTableItem => {
+                                    return {
+                                        name: obj.goal,
+                                        value: obj.identifier.toString(),
+                                    };
+                                },
+                            )}
+                        />
+                    )}
+                </>
+            ) : (
+                <BetterTextSmallText>No objectives!</BetterTextSmallText>
+            )}
+            {activeObjectives.length > 0 ? (
+                <>
+                    <BetterTextSmallText>
+                        All your active objectives. The ID is just used by the
+                        app, to differentiate objectives.
                     </BetterTextSmallText>
                     <GapView height={5} />
                     {error ? (
@@ -79,7 +116,7 @@ export default function ViewerActiveObjectives(): ReactElement {
                     ) : (
                         <BetterTable
                             headers={["Objective", "ID"]}
-                            items={detailedObjectives.map(
+                            items={activeObjectives.map(
                                 (obj: ActiveObjective): BetterTableItem => {
                                     return {
                                         name: obj.exercise,
@@ -94,7 +131,7 @@ export default function ViewerActiveObjectives(): ReactElement {
                 <BetterTextSmallText>No objectives!</BetterTextSmallText>
             )}
             <GapView height={10} />
-            {detailedObjectives.map(
+            {activeObjectives.map(
                 (obj: ActiveObjective, index: number): ReactElement => (
                     <>
                         <BetterTextSmallHeader>

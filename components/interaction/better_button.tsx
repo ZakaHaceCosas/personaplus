@@ -5,7 +5,7 @@
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
  *
- * You are in: @/components/interaction/BetterButton.tsx
+ * You are in: @/components/interaction/better_button.tsx
  * Basically: Buttons, botones, elementos presionables, ENTIDADES INTERACTIVAS UTILIZABLES POR MEDIO DE CLICS / TOCAMIENTOS DE LA PANTALLA xd
  *
  * <=============================================================================>

@@ -1,3 +1,16 @@
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/constants/user_data.ts
+ * Basically: User-data related constants.
+ *
+ * <=============================================================================>
+ */
+
 import { MultiSelectOption } from "@/components/interaction/multi_select";
 import { SelectOption } from "@/components/interaction/select";
 import { SwapOption } from "@/components/interaction/swap";
@@ -70,7 +83,9 @@ export default function GetStuffForUserDataQuestion(
         [t("pages.welcome.questions.sleepTime.options.moreThanTen"), 11],
     ];
     const sleepTimeSelectOptions: SelectOption[] = sleepTimeOptions.map(
-        (option) => ({
+        (
+            option: [string, number],
+        ): { label: string; value: number; enabled: boolean } => ({
             label: option[0],
             value: option[1],
             enabled: true,
@@ -84,7 +99,13 @@ export default function GetStuffForUserDataQuestion(
         [t("pages.welcome.questions.activeness.options.super"), "super"],
     ];
     const activenessSelectOptions: SelectOption[] = activenessOptions.map(
-        (option) => ({
+        (
+            option: [string, CoreLibraryType_Activeness],
+        ): {
+            label: string;
+            value: CoreLibraryType_Activeness;
+            enabled: boolean;
+        } => ({
             label: option[0],
             value: option[1],
             enabled: true,
