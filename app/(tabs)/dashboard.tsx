@@ -123,9 +123,7 @@ export default function Dashboard(): ReactElement {
             />
             <Section kind="ActiveObjectives">
                 {activeObjectives === null || activeObjectives.length === 0 ? (
-                    <Division
-                        header={t("activeObjectives.noObjectives.noObjectives")}
-                    />
+                    <Division header={t("objectives.common.noObjectives")} />
                 ) : (
                     activeObjectives.map(
                         (obj: ActiveObjective): ReactElement => {
@@ -136,7 +134,7 @@ export default function Dashboard(): ReactElement {
                                         `globals.supportedActiveObjectives.${obj.exercise}.name`,
                                     )}
                                     preHeader={t(
-                                        "activeObjectives.allCapsSingular",
+                                        "objectives.active.allCapsSingular",
                                     )}
                                     direction="vertical"
                                 >
@@ -187,8 +185,8 @@ export default function Dashboard(): ReactElement {
                         action={(): void =>
                             router.push(Routes.OBJECTIVES.CREATE_ACTIVE)
                         }
-                        buttonText={t("activeObjectives.createObjective.text")}
-                        buttonHint={t("activeObjectives.createObjective.hint")}
+                        buttonText={t("objectives.active.create.text")}
+                        buttonHint={t("objectives.active.create.hint")}
                     />
                 </View>
             </Section>
@@ -196,11 +194,7 @@ export default function Dashboard(): ReactElement {
             <Section kind="PassiveObjectives">
                 {passiveObjectives === null ||
                 passiveObjectives.length === 0 ? (
-                    <Division
-                        header={t(
-                            "passiveObjectives.noObjectives.noObjectives",
-                        )}
-                    />
+                    <Division header={t("objectives.common.noObjectives")} />
                 ) : (
                     passiveObjectives.map(
                         (obj: PassiveObjective): ReactElement => {
@@ -209,7 +203,7 @@ export default function Dashboard(): ReactElement {
                                     key={obj.identifier}
                                     header={obj.goal}
                                     preHeader={t(
-                                        "passiveObjectives.allCapsSingular",
+                                        "objectives.passive.allCapsSingular",
                                     )}
                                     direction="vertical"
                                 >
@@ -230,24 +224,6 @@ export default function Dashboard(): ReactElement {
                                                 )
                                             }
                                         />
-                                        {/*
-                                        <GapView width={10} />
-                                        <BetterButton
-                                            style="ACE"
-                                            buttonText={t(
-                                                "pages.dashboard.editObjective.text",
-                                            )}
-                                            buttonHint={t(
-                                                "pages.dashboard.editObjective.hint",
-                                            )}
-                                            action={async (): Promise<void> =>
-                                                await handleObjective(
-                                                    obj.identifier,
-                                                    "edit",
-                                                    "passive",
-                                                )
-                                            }
-                                        /> */}
                                     </View>
                                 </Division>
                             );
@@ -260,8 +236,8 @@ export default function Dashboard(): ReactElement {
                         action={(): void =>
                             router.push(Routes.OBJECTIVES.CREATE_PASSIVE)
                         }
-                        buttonText={t("passiveObjectives.createObjective.text")}
-                        buttonHint={t("passiveObjectives.createObjective.hint")}
+                        buttonText={t("objectives.passive.create.text")}
+                        buttonHint={t("objectives.passive.create.hint")}
                     />
                 </View>
             </Section>
