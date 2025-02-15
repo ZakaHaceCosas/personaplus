@@ -5,7 +5,7 @@
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
  *
- * You are in: @/constants/Colors.ts
+ * You are in: @/constants/colors.ts
  * Basically: An export of all UI colors, for consistency
  *
  * <=============================================================================>

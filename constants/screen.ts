@@ -1,3 +1,16 @@
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/constants/screen.ts
+ * Basically: A simple function to ensure the app stays responsive to all mobile screens.
+ *
+ * <=============================================================================>
+ */
+
 import { Dimensions } from "react-native";
 
 /**

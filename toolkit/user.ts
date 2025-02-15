@@ -282,7 +282,8 @@ export async function updateBrm5(
         try {
             await AsyncStorage.multiRemove([
                 StoredItemNames.userData,
-                StoredItemNames.objectives,
+                StoredItemNames.activeObjectives,
+                StoredItemNames.passiveObjectives,
                 StoredItemNames.dailyLog,
                 StoredItemNames.colorTheme,
                 StoredItemNames.experiments,

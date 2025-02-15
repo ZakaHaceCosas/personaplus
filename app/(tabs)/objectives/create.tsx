@@ -431,33 +431,29 @@ export default function CreateActiveObjectivePage(): ReactElement {
 
     async function handleCreation(): Promise<void> {
         try {
-            if (canCreateObjective) {
-                let response: 0 | 1;
+            if (!canCreateObjective) return;
+            let response: 0 | 1;
 
-                if (edit.enable && edit.id !== undefined) {
-                    response = await EditActiveObjective(
-                        objectiveToCreate,
-                        edit.id,
-                        t,
-                    );
-                } else {
-                    response = await CreateActiveObjective(
-                        objectiveToCreate,
-                        t,
-                    );
-                }
-                if (response !== 0) {
-                    logToConsole(
-                        `Got 1 as the ${
-                            edit.enable
-                                ? "EditActiveObjective()"
-                                : "CreateActiveObjective()"
-                        } response`,
-                        "error",
-                    );
-                }
-                router.replace(Routes.MAIN.HOME);
+            if (edit.enable && edit.id !== undefined) {
+                response = await EditActiveObjective(
+                    objectiveToCreate,
+                    edit.id,
+                    t,
+                );
+            } else {
+                response = await CreateActiveObjective(objectiveToCreate, t);
             }
+            if (response !== 0) {
+                logToConsole(
+                    `Got 1 as the ${
+                        edit.enable
+                            ? "EditActiveObjective()"
+                            : "CreateActiveObjective()"
+                    } response`,
+                    "error",
+                );
+            }
+            router.replace(Routes.MAIN.HOME);
         } catch (e) {
             logToConsole(
                 `Error with ${

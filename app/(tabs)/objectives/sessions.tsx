@@ -212,7 +212,7 @@ export default function Sessions(): ReactElement {
                 };
 
                 router.replace({
-                    pathname: Routes.ACTIVE_OBJECTIVES.RESULTS,
+                    pathname: Routes.OBJECTIVES.RESULTS,
                     params: params,
                 });
             } catch (e) {

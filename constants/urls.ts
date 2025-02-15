@@ -5,7 +5,7 @@
  *  See the LICENSE file in the root of this for more details.
  * <=============================================================================>
  *
- * You are in: @/constants/Urls.ts
+ * You are in: @/constants/urls.ts
  * Basically: An export of all URLs relative to the project.
  *
  * <=============================================================================>
@@ -26,8 +26,7 @@ const URLs = {
     latestChangelog:
         "https://github.com/ZakaHaceCosas/personaplus/releases/latest",
     instagram: "https://www.instagram.com/giveitaplus/",
-    youtube:
-        "https://youtube.com/playlist?list=PLdif1flfmG__g_a1QSmBNnSh_6pAeRizW",
+    yt: "https://youtube.com/playlist?list=PLdif1flfmG__g_a1QSmBNnSh_6pAeRizW",
 } as const;
 
 /** TS type for functions that only take app URLs. */

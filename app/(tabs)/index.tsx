@@ -9,7 +9,6 @@ import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
 import { logToConsole } from "@/toolkit/console";
 import {
     FailObjectivesNotDoneYesterday,
-    GetActiveObjective,
     GetAllPendingObjectives,
     LaunchActiveObjective,
 } from "@/toolkit/objectives/active_objectives";
@@ -26,6 +25,7 @@ import {
     cancelScheduledNotifications,
     scheduleRandomNotifications,
 } from "@/hooks/use_notification";
+import { GetObjective } from "@/toolkit/objectives/common";
 
 setNotificationHandler({
     handleNotification: async () => ({
@@ -82,7 +82,7 @@ export default function HomeScreen(): ReactElement {
                     await Promise.all(
                         pending.map(
                             (id: number): Promise<ActiveObjective | null> =>
-                                GetActiveObjective(id),
+                                GetObjective(id, "active"),
                         ),
                     );
                 const filteredObjectives: ActiveObjective[] = objectives.filter(
@@ -160,7 +160,7 @@ export default function HomeScreen(): ReactElement {
                             <BetterButton
                                 style="GOD"
                                 action={(): void =>
-                                    router.push(Routes.ACTIVE_OBJECTIVES.CREATE)
+                                    router.push(Routes.OBJECTIVES.CREATE_ACTIVE)
                                 }
                                 buttonText={t(
                                     "activeObjectives.createObjective.text",
