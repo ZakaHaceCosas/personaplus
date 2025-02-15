@@ -538,23 +538,34 @@
     "experimentNotes": {
         "exp_tracker": "PD. Tienes el experimento exp_tracker activado, por lo que este valor es inútil y no se usará para estimar tu velocidad."
     },
-    "activeObjectives": {
-        "allCapsSingular": "OBJETIVO ACTIVO",
-        "noObjectives": {
-            "allDone": "¡Parece que lo hiciste todo!",
+    "objectives": {
+        "common": {
             "noObjectives": "No tienes ningún objetivo. ¡Crea uno ahora!",
-            "todayFree": "No tienes objetivos para hoy. ¡Disfruta tu descanso!"
+            "feedback": {
+                "created": "¡Objetivo creado con éxito!",
+                "deleted": "¡Objetivo {{id}} eliminado exitosamente!"
+            }
         },
-        "createObjective": {
-            "text": "Crear objetivo activo",
-            "hint": "Abre una página desde la que puedes crear un objetivo activo."
+        "active": {
+            "allCapsSingular": "OBJETIVO ACTIVO",
+            "noObjectives": {
+                "allDone": "¡Parece que lo hiciste todo!",
+                "todayFree": "No tienes objetivos para hoy. ¡Disfruta tu descanso!"
+            },
+            "create": {
+                "text": "Crear objetivo activo",
+                "hint": "Abre una página desde la que puedes crear un objetivo activo."
+            },
+            "start": {
+                "hint": "Empieza una sesión en vivo para este objetivo."
+            }
         },
-        "start": {
-            "hint": "Empieza una sesión en vivo para este objetivo."
-        },
-        "feedback": {
-            "created": "¡Objetivo creado con éxito!",
-            "deleted": "¡Objetivo {{id}} eliminado exitosamente!"
+        "passive": {
+            "allCapsSingular": "PASSIVE OBJECTIVE",
+            "create": {
+                "text": "Crear objetivo pasivo",
+                "hint": "Abre una página desde la que puedes crear un objetivo pasivo."
+            }
         }
     },
     "errors": {

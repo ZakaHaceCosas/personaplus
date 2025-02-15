@@ -149,31 +149,23 @@ export default function HomeScreen(): ReactElement {
                 <>
                     {identifiers === 0 ? (
                         <Division
-                            header={t("activeObjectives.noObjectives.allDone")}
+                            header={t("objectives.active.noObjectives.allDone")}
                         />
                     ) : identifiers === null ? (
-                        <Division
-                            header={t(
-                                "activeObjectives.noObjectives.noObjectives",
-                            )}
-                        >
+                        <Division header={t("objectives.common.noObjectives")}>
                             <BetterButton
                                 style="GOD"
                                 action={(): void =>
                                     router.push(Routes.OBJECTIVES.CREATE_ACTIVE)
                                 }
-                                buttonText={t(
-                                    "activeObjectives.createObjective.text",
-                                )}
-                                buttonHint={t(
-                                    "activeObjectives.createObjective.hint",
-                                )}
+                                buttonText={t("objectives.active.create.text")}
+                                buttonHint={t("objectives.active.create.hint")}
                             />
                         </Division>
                     ) : identifiers === false ? (
                         <Division
                             header={t(
-                                "activeObjectives.noObjectives.todayFree",
+                                "objectives.active.noObjectives.todayFree",
                             )}
                         />
                     ) : (
@@ -185,7 +177,7 @@ export default function HomeScreen(): ReactElement {
                                         `globals.supportedActiveObjectives.${obj.exercise}.name`,
                                     )}
                                     preHeader={t(
-                                        "activeObjectives.allCapsSingular",
+                                        "objectives.active.allCapsSingular",
                                     )}
                                     direction="vertical"
                                 >
@@ -195,7 +187,7 @@ export default function HomeScreen(): ReactElement {
                                             "globals.interaction.goAheadGood",
                                         )}
                                         buttonHint={t(
-                                            "activeObjectives.start.hint",
+                                            "objectives.active.start.hint",
                                         )}
                                         style="ACE"
                                         action={async (): Promise<void> =>
