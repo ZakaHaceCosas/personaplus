@@ -11,12 +11,12 @@
  * <=============================================================================>
  */
 
-import { StringUtils } from "@zakahacecosas/string-utils";
 import {
     GenericDailyLog,
     GenericObjective,
     ValidateGenericObjective,
 } from "./common_objectives";
+import { StrUtils } from "./glue_fix";
 
 /**
  * A PersonaPlus Passive Objective™
@@ -49,7 +49,7 @@ export function ValidatePassiveObjective(
         if (
             !obj.goal ||
             typeof obj.goal !== "string" ||
-            !StringUtils.validate(obj.goal) ||
+            !StrUtils.validate(obj.goal) ||
             obj.goal.length < 3 ||
             obj.goal.length < 120
         )

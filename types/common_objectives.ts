@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import { StringUtils } from "@zakahacecosas/string-utils";
+import { StrUtils } from "./glue_fix";
 import { TodaysDate, TodaysDateRegularExpression } from "./today";
 
 export interface GenericObjective {
@@ -46,14 +46,14 @@ export function ValidateGenericObjective(
         !omitIdentifier &&
         (!obj.identifier ||
             typeof obj.identifier !== "number" ||
-            !StringUtils.validate(obj.identifier.toString()) ||
+            !StrUtils.validate(obj.identifier.toString()) ||
             obj.identifier.toString().length !== 10)
     )
         return false; // if no ID or invalid ID, invalid. can be skipped because you might be creating the objective still.
     if (
         !obj.createdAt ||
         typeof obj.createdAt !== "string" ||
-        !StringUtils.validate(obj.createdAt) ||
+        !StrUtils.validate(obj.createdAt) ||
         !TodaysDateRegularExpression.test(obj.createdAt)
     ) {
         return false;
