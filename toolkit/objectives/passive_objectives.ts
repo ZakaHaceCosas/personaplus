@@ -17,11 +17,12 @@ import {
     DeleteObjective,
     GetAllObjectives,
     GetObjective,
-} from "./common";
+} from "@/toolkit/objectives/common";
 import {
     PassiveObjective,
     PassiveObjectiveWithoutId,
 } from "@/types/passive_objectives";
+import { logToConsole } from "@/toolkit/console";
 
 /**
  * Creates a passive objective and saves it. You need to provide all the data for it (except the ID) as an `PassiveObjectiveWithoutId` object.
@@ -72,9 +73,20 @@ async function DeletePassiveObjective(identifier: number): Promise<void> {
     await DeleteObjective(identifier, "passive");
 }
 
+async function MarkPassiveObjectiveAsDoneToday(
+    identifier: number,
+): Promise<void> {
+    logToConsole(
+        "Marked passive obj as done (placeholder lol, this is a TODO) " +
+            identifier,
+        "log",
+    );
+}
+
 export {
     CreatePassiveObjective,
     DeletePassiveObjective,
     GetPassiveObjective,
     GetAllPassiveObjectives,
+    MarkPassiveObjectiveAsDoneToday,
 };

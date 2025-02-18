@@ -25,6 +25,9 @@ import {
 } from "@/hooks/use_notification";
 import { GetObjective } from "@/toolkit/objectives/common";
 import { DisplayObjectives } from "@/toolkit/objectives/common_ui";
+import GapView from "@/components/ui/gap_view";
+import { GetAllPassiveObjectives } from "@/toolkit/objectives/passive_objectives";
+import { PassiveObjective } from "@/types/passive_objectives";
 
 setNotificationHandler({
     handleNotification: async () => ({
@@ -40,6 +43,9 @@ export default function HomeScreen(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
     const [renderedObjectives, setRenderedObjectives] = useState<
         ActiveObjective[] | null
+    >(null);
+    const [renderedPassiveObjectives, setPassiveRenderedObjectives] = useState<
+        PassiveObjective[] | null
     >(null);
     const [identifiers, setIdentifiers] = useState<number[] | false | 0 | null>(
         null,
@@ -72,7 +78,7 @@ export default function HomeScreen(): ReactElement {
                     await GetAllPendingObjectives();
                 setIdentifiers(pending);
 
-                // handle objectives
+                // handle active objectives
                 if (!Array.isArray(pending)) {
                     setRenderedObjectives([]);
                     return;
@@ -89,6 +95,11 @@ export default function HomeScreen(): ReactElement {
                         obj !== null,
                 );
                 setRenderedObjectives(filteredObjectives);
+
+                // handle passive objectives
+                setPassiveRenderedObjectives(
+                    (await GetAllPassiveObjectives()) ?? [],
+                );
             } catch (e) {
                 logToConsole(`Error fetching data: ${e}`, "error");
                 router.replace(Routes.MAIN.WELCOME_SCREEN);
@@ -170,6 +181,20 @@ export default function HomeScreen(): ReactElement {
                     ) : (
                         <DisplayObjectives
                             objectivesToRender={renderedObjectives}
+                            handler="launch"
+                        />
+                    )}
+                </>
+            </Section>
+            <GapView height={20} />
+            <Section width="total" kind="PassiveObjectives">
+                <>
+                    {!renderedPassiveObjectives ||
+                    renderedPassiveObjectives.length === 0 ? (
+                        <Division header={t("objectives.noObjectives")} />
+                    ) : (
+                        <DisplayObjectives
+                            objectivesToRender={renderedPassiveObjectives}
                             handler="launch"
                         />
                     )}

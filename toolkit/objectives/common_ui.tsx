@@ -2,12 +2,13 @@ import Division from "@/components/ui/sections/division";
 import { ActiveObjective } from "@/types/active_objectives";
 import { ReactElement } from "react";
 import { useTranslation } from "react-i18next";
-import { ObjectiveDescriptiveIcons } from "./active_objectives_ui";
+import { ObjectiveDescriptiveIcons } from "@/toolkit/objectives/active_objectives_ui";
 import BetterButton from "@/components/interaction/better_button";
-import { LaunchActiveObjective } from "./active_objectives";
+import { LaunchActiveObjective } from "@/toolkit/objectives/active_objectives";
 import { View, StyleSheet } from "react-native";
 import GapView from "@/components/ui/gap_view";
 import { PassiveObjective } from "@/types/passive_objectives";
+import { MarkPassiveObjectiveAsDoneToday } from "@/toolkit/objectives/passive_objectives";
 
 const styles = StyleSheet.create({
     buttonWrapper: {
@@ -81,7 +82,13 @@ export function DisplayObjectives({
                                 )}
                                 style="ACE"
                                 action={async (): Promise<void> =>
-                                    await LaunchActiveObjective(obj.identifier)
+                                    isActive(obj)
+                                        ? await LaunchActiveObjective(
+                                              obj.identifier,
+                                          )
+                                        : await MarkPassiveObjectiveAsDoneToday(
+                                              obj.identifier,
+                                          )
                                 }
                             />
                         ) : (
