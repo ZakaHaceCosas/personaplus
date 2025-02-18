@@ -12,7 +12,7 @@
  */
 
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
-import { ExpoRouterParams } from "./glue_fix";
+import { ExpoRouterParams } from "../toolkit/glue_fix";
 import {
     GenericDailyLog,
     GenericObjective,

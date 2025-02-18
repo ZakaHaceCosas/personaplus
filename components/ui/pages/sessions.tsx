@@ -16,7 +16,7 @@ import { StyleSheet, View } from "react-native";
 import { ActiveObjective } from "@/types/active_objectives";
 import Colors from "@/constants/colors";
 import { useTranslation } from "react-i18next";
-import IconView from "../icon_view";
+import IconView from "@/components/ui/icon_view";
 import { PluralOrNot } from "@/toolkit/strings";
 import { StringifyMinutes } from "@/toolkit/today";
 import BetterText from "@/components/text/better_text";

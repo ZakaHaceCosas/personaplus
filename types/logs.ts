@@ -52,7 +52,7 @@ export interface Log {
  */
 export interface LogTraceback {
     /**
-     * The FILE location using the project's schema, e.g. @/types/Logs.ts.
+     * The FILE location using the project's schema, e.g. @/toolkit/android.ts.
      *
      * @type {string}
      */
@@ -76,10 +76,3 @@ export interface LogTraceback {
      */
     handlerName?: string;
 }
-
-/**
- * An array of logs.
- *
- * @export
- */
-export type Logs = Log[];

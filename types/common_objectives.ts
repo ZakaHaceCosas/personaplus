@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import { StrUtils } from "./glue_fix";
+import { StrUtils } from "../toolkit/glue_fix";
 import { TodaysDate, TodaysDateRegularExpression } from "./today";
 
 export interface GenericObjective {

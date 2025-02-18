@@ -2,9 +2,9 @@ import React, { ReactElement } from "react";
 import {
     BetterTextHeader,
     BetterTextSubHeader,
-} from "../text/better_text_presets";
-import GapView from "../ui/gap_view";
-import BackButton from "./back_button";
+} from "@/components/text/better_text_presets";
+import GapView from "@/components/ui/gap_view";
+import BackButton from "@/components/navigation/back_button";
 import { useTranslation } from "react-i18next";
 
 /**

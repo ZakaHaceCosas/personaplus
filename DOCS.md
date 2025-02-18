@@ -20,7 +20,7 @@ PersonaPlus is a simple app written in React Native, which - while I admit is no
 
 ### Understanding the file structure
 
-It is a simple yet functional structure. Remember we use `@` to mark the root of the project. It is also used for TypeScript code as an alias.
+It is a simple yet functional structure. While not mandatory, we recommend to use the `@/` `src/` import alias.
 
 - `@/app/` is where each page lives. It starts with the main layout and a not-found page, while the _actual pages_ live in `app/(tabs)/`.
 - `@/core/` is where the PersonaPlus Core lives. It's a "library" (to call it somehow) that provides all the medical calculations, functions, and other tools needed to turn our buttons and timers into meaningful data, stats, and more, for the user.
