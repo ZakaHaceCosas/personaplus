@@ -5,7 +5,7 @@ import {
     BetterTextSmallText,
 } from "@/components/text/better_text_presets";
 import { getLogsFromStorage, logToConsole } from "@/toolkit/console";
-import { Logs } from "@/types/logs";
+import { Log } from "@/types/logs";
 import { useEffect, useState } from "react";
 import PageEnd from "@/components/static/page_end";
 import TopBar from "@/components/navigation/top_bar";
@@ -13,13 +13,13 @@ import Console from "@/components/ui/console";
 
 export default function ErrorLogger(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
-    const [logs, setLogs] = useState<Logs>([]);
+    const [logs, setLogs] = useState<Log[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     useEffect((): void => {
         try {
             // logs
-            const bareLogs: Logs = getLogsFromStorage();
+            const bareLogs: Log[] = getLogsFromStorage();
             if (!bareLogs) {
                 throw new Error("HOW CAN LOGS BE NULL?");
             }

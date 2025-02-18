@@ -15,12 +15,12 @@ import * as Device from "expo-device";
 import { router } from "expo-router";
 import TopBar from "@/components/navigation/top_bar";
 import { ShowToast } from "@/toolkit/android";
-import { Logs } from "@/types/logs";
+import { Log } from "@/types/logs";
 import Loading from "@/components/static/loading";
 
 export default function DevInterface(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
-    const [logs, setLogs] = useState<Logs>([]);
+    const [logs, setLogs] = useState<Log[]>([]);
 
     useEffect((): void => {
         try {

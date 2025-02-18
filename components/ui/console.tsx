@@ -3,7 +3,7 @@ import { GetCommonScreenSize } from "@/constants/screen";
 import { StyleSheet, Text, View } from "react-native";
 import { BetterTextSmallText } from "../text/better_text_presets";
 import GapView from "./gap_view";
-import { Log, Logs } from "@/types/logs";
+import { Log } from "@/types/logs";
 import Colors from "@/constants/colors";
 import { HexColorString } from "@/types/color";
 
@@ -44,25 +44,25 @@ const styles = StyleSheet.create({
  *
  * @export
  * @param {{
- *     logs: Logs;
+ *     logs: Log[];
  *     errorOnly: boolean;
  * }} p0
- * @param {Logs} p0.logs Logs to be rendered.
- * @param {boolean} p0.errorOnly If true, only warning and error logs from your `Logs` array will be shown.
+ * @param {Log[]} p0.logs Logs to be rendered.
+ * @param {boolean} p0.errorOnly If true, only warning and error logs from your `Log[]` array will be shown.
  * @returns {ReactElement}
  */
 export default function Console({
     logs,
     errorOnly,
 }: {
-    logs: Logs;
+    logs: Log[];
     errorOnly: boolean;
 }): ReactElement {
-    const errorLogs: Logs = logs.filter(
+    const errorLogs: Log[] = logs.filter(
         (log: Log): boolean => log.type === "warn" || log.type === "error",
     );
 
-    const workingLogs: Logs = errorOnly ? errorLogs : logs;
+    const workingLogs: Log[] = errorOnly ? errorLogs : logs;
 
     if (errorLogs.length === 0) {
         if (errorOnly) {

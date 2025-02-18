@@ -16,7 +16,7 @@ import {
     GenericObjective,
     ValidateGenericObjective,
 } from "./common_objectives";
-import { StrUtils } from "./glue_fix";
+import { StrUtils } from "../toolkit/glue_fix";
 
 /**
  * A PersonaPlus Passive Objective™

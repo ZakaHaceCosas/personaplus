@@ -20,7 +20,7 @@ import { UniversalItemStyle } from "@/constants/ui/pressables";
 import { HexColorString, PrimaryColorsType } from "@/types/color";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import { logToConsole } from "@/toolkit/console";
-import GapView from "../ui/gap_view";
+import GapView from "@/components/ui/gap_view";
 
 // TypeScript, supongo
 interface BetterButtonIcon {

@@ -9,23 +9,23 @@ import GapView from "@/components/ui/gap_view";
 import { Routes } from "@/constants/routes";
 import StoredItemNames from "@/constants/stored_item_names";
 import { getLogsFromStorage, logToConsole } from "@/toolkit/console";
-import { Logs } from "@/types/logs";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { router } from "expo-router";
 import React, { ReactElement } from "react";
 import { useEffect, useState } from "react";
 import TopBar from "@/components/navigation/top_bar";
 import Console from "@/components/ui/console";
+import { Log } from "@/types/logs";
 
 export default function Logger(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
-    const [logs, setLogs] = useState<Logs>([]);
+    const [logs, setLogs] = useState<Log[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     useEffect((): void => {
         try {
             // logs
-            const bareLogs: Logs = getLogsFromStorage();
+            const bareLogs: Log[] = getLogsFromStorage();
             if (!bareLogs) {
                 throw new Error("HOW CAN LOGS BE NULL?");
             }

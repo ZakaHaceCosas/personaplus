@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import * as string_utils from "../node_modules/@zakahacecosas/string-utils/mod.js";
+import * as string_utils from "@zakahacecosas/string-utils";
 
 /**
  * Use this to extend type interfaces for URL params when passing data from page to page.

@@ -12,23 +12,23 @@
  */
 
 import SyncStorage from "expo-sqlite/kv-store";
-import { Log, Logs, LogTraceback } from "@/types/logs";
+import { Log, LogTraceback } from "@/types/logs";
 import StoredItemNames from "@/constants/stored_item_names";
-import { ShowToast } from "./android";
+import { ShowToast } from "@/toolkit/android";
 
 /**
  * Returns logs saved on the SyncStorage.
  *
- * @returns {Logs} A Log array (`Logs`)
+ * @returns {Log[]} A `Log` array.
  */
-export function getLogsFromStorage(): Logs {
+export function getLogsFromStorage(): Log[] {
     try {
         const logsString: string | null = SyncStorage.getItemSync(
             StoredItemNames.consoleLogs,
         );
         if (!logsString) return [];
         try {
-            const parsedLogs: Logs = JSON.parse(logsString);
+            const parsedLogs: Log[] = JSON.parse(logsString);
             if (Array.isArray(parsedLogs)) {
                 return parsedLogs;
             } else {
@@ -68,8 +68,8 @@ export function getLogsFromStorage(): Logs {
  */
 function addLogToGlobal(log: Log): 0 | 1 {
     try {
-        const currentLogs: Logs = getLogsFromStorage();
-        const updatedLogs: Logs = [...currentLogs, log];
+        const currentLogs: Log[] = getLogsFromStorage();
+        const updatedLogs: Log[] = [...currentLogs, log];
         SyncStorage.setItemSync(
             StoredItemNames.consoleLogs,
             JSON.stringify(updatedLogs),
@@ -91,7 +91,7 @@ function addLogToGlobal(log: Log): 0 | 1 {
  * @param {string} message The message to be logged
  * @param {("log" | "warn" | "error" | "success")} type The kind of message you're logging. Either a standard log, warning, error message, or success message.
  * @param {?LogTraceback} traceback A traceback. Specify the file location, the function name, and whether it is a main function or a handler function inside of it.
- * @param {boolean} displayToEndUser Whether to show the end user the message in an Android toast message. **Note: Logs with `type` "error" will be shown to the end user by default!** This is just if you want to explicitly show anything that isn't an error.
+ * @param {?boolean} displayToEndUser Whether to show the end user the message in an Android toast message.
  * @returns Nothing, it just works.
  */
 export function logToConsole(
