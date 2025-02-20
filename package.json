@@ -41,7 +41,7 @@
     "@react-native-picker/picker": "2.9.0",
     "@react-navigation/native": "^7.0.0",
     "@zakahacecosas/string-utils": "npm:@jsr/zakahacecosas__string-utils@^1.9.0",
-    "expo": "~52.0.35",
+    "expo": "~52.0.36",
     "expo-build-properties": "~0.13.2",
     "expo-constants": "~17.0.5",
     "expo-dev-client": "~5.0.12",
@@ -51,7 +51,7 @@
     "expo-linear-gradient": "~14.0.2",
     "expo-linking": "~7.0.5",
     "expo-localization": "~16.0.1",
-    "expo-location": "~18.0.6",
+    "expo-location": "~18.0.7",
     "expo-notifications": "~0.29.13",
     "expo-router": "~4.0.17",
     "expo-splash-screen": "~0.29.22",
@@ -67,10 +67,10 @@
     "react-native-safe-area-context": "4.12.0",
     "react-native-screens": "~4.4.0",
     "react-native-svg": "15.8.0",
-    "react-native-timer-picker": "^2.0.2",
+    "react-native-timer-picker": "^2.1.0",
     "react-native-web": "~0.19.13",
     "rn-countdown-timer": "^4.0.4",
-    "semver": "^7.6.3"
+    "semver": "^7.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
