@@ -51,7 +51,7 @@ const TODAY_CODE_ARRAY: (keyof WeekTuple)[] = [
     "SU",
 ];
 
-const ADJUSTED_TODAY_INDEX: keyof WeekTuple = TODAY_CODE_ARRAY[ADJUSTED_TODAY];
+const ADJUSTED_TODAY_INDEX: keyof WeekTuple = TODAY_CODE_ARRAY[ADJUSTED_TODAY]!;
 /**
  * Turns either a JS `Date()` or a `TodaysDateObject` into a `TodaysDate` string.
  *
@@ -99,6 +99,18 @@ function GetCurrentDateCorrectly(): CorrectCurrentDate {
  */
 function JavaScriptifyTodaysDate(date: TodaysDate): Date {
     const [day, month, year] = date.split("/").map(Number);
+    if (!day)
+        throw new Error(
+            `Attempted to JavaScriptify a day-less TodaysDate: ${date}`,
+        );
+    if (!month)
+        throw new Error(
+            `Attempted to JavaScriptify a month-less TodaysDate: ${date}`,
+        );
+    if (!year)
+        throw new Error(
+            `Attempted to JavaScriptify a year-less TodaysDate: ${date}`,
+        );
     return new Date(year, month - 1, day);
 }
 
@@ -196,6 +208,8 @@ function formatTimeString({ hours, minutes, seconds }: TimeObject): string {
  */
 function parseTimeString(timeString: string): TimeObject {
     const parts: number[] = timeString.split(":").map(Number);
+    if (!parts[0] || !parts[1] || !parts[2])
+        throw new Error(`Invalid time string: ${timeString}`);
     const time: TimeObject = {};
 
     if (parts.length === 3) {

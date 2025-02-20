@@ -55,6 +55,23 @@ export default function Results(): ReactElement {
         fetchData();
     }, []);
 
+    if (
+        !originalParams.burntCalories ||
+        !originalParams.elapsedTime ||
+        !originalParams.identifier
+    ) {
+        logToConsole(
+            `Missing required parameters. Params: BURNT CALORIES ${originalParams.burntCalories}, ELAPSED TIME ${originalParams.elapsedTime}, ID ${originalParams.identifier}`,
+            "error",
+            {
+                location: "@/app/(tabs)/objectives/Results.tsx",
+                function: "useGlobalSearchParams()",
+                isHandler: false,
+            },
+        );
+        throw new Error("Missing required parameters");
+    }
+
     const params: SessionParams = {
         burntCalories: parseNumber(originalParams.burntCalories),
         elapsedTime: parseNumber(originalParams.elapsedTime),

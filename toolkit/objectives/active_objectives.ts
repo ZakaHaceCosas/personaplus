@@ -557,6 +557,7 @@ async function FailObjectivesNotDoneYesterday(): Promise<void> {
                 if (
                     daysIndex < 0 ||
                     daysIndex >= TODAY_CODE_ARRAY.length ||
+                    !TODAY_CODE_ARRAY[daysIndex] ||
                     !objective.info.days[TODAY_CODE_ARRAY[daysIndex]]
                 )
                     continue;

@@ -255,7 +255,9 @@ export default function Sessions(): ReactElement {
                     }
                     buttonText={null}
                     style={isTimerRunning ? "ACE" : "HMM"}
-                    action={() => setTimerStatus((prev) => !prev)}
+                    action={(): void =>
+                        setTimerStatus((prev: boolean): boolean => !prev)
+                    }
                     layout="box"
                     icon={{
                         name: isTimerRunning ? "pause" : "play-arrow",
@@ -270,7 +272,7 @@ export default function Sessions(): ReactElement {
                     buttonHint={t("pages.sessions.helpHint")}
                     style="HMM"
                     buttonText={t("globals.interaction.help")}
-                    action={() => toggleHelpMenu(true)}
+                    action={(): void => toggleHelpMenu(true)}
                     layout="normal"
                 />
                 <GapView width={10} />
@@ -278,7 +280,7 @@ export default function Sessions(): ReactElement {
                     buttonHint={t("pages.sessions.giveUpHint")}
                     style="WOR"
                     buttonText={t("globals.interaction.giveUp")}
-                    action={() => GiveUp()}
+                    action={(): void => GiveUp()}
                     layout="normal"
                 />
             </IslandDivision>

@@ -644,7 +644,7 @@ export default function CreateActiveObjectivePage(): ReactElement {
                                     speedOptions[
                                         objectiveToCreate.specificData
                                             .estimateSpeed
-                                    ][0]
+                                    ]![0]
                                 }
                             </BetterTextNormalText>
                             <BetterTextSmallText>
@@ -652,7 +652,7 @@ export default function CreateActiveObjectivePage(): ReactElement {
                                     speedOptions[
                                         objectiveToCreate.specificData
                                             .estimateSpeed
-                                    ][1]
+                                    ]![1]
                                 }
                             </BetterTextSmallText>
                         </View>
