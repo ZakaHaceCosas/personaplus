@@ -9,6 +9,7 @@ import { View, StyleSheet } from "react-native";
 import GapView from "@/components/ui/gap_view";
 import { PassiveObjective } from "@/types/passive_objectives";
 import { MarkPassiveObjectiveAsDoneToday } from "@/toolkit/objectives/passive_objectives";
+import { IsActiveObjective } from "@/types/common_objectives";
 
 const styles = StyleSheet.create({
     buttonWrapper: {
@@ -35,20 +36,6 @@ export function DisplayObjectives({
 }): ReactElement {
     const { t } = useTranslation();
 
-    /** Since only `ActiveObjective`s have the `exercise` key, this type guard checks for it, so TS knows what are you working with, instead of throwing type errors all the time. */
-    const isActive: (
-        obj: ActiveObjective | PassiveObjective,
-    ) => obj is ActiveObjective = (
-        obj: ActiveObjective | PassiveObjective,
-    ): obj is ActiveObjective => {
-        if (
-            (obj as ActiveObjective).exercise &&
-            (obj as ActiveObjective).exercise !== null
-        )
-            return true;
-        return false;
-    };
-
     return (
         <>
             {objectivesToRender.map(
@@ -56,33 +43,33 @@ export function DisplayObjectives({
                     <Division
                         key={obj.identifier}
                         header={
-                            isActive(obj)
+                            IsActiveObjective(obj)
                                 ? t(
                                       `globals.supportedActiveObjectives.${obj.exercise}.name`,
                                   )
                                 : obj.goal
                         }
                         preHeader={t(
-                            `objectives.${isActive(obj) ? "active" : "passive"}.allCapsSingular`,
+                            `objectives.${IsActiveObjective(obj) ? "active" : "passive"}.allCapsSingular`,
                         )}
                         direction="vertical"
                     >
-                        {isActive(obj) && (
+                        {IsActiveObjective(obj) && (
                             <ObjectiveDescriptiveIcons obj={obj} />
                         )}
                         {handler === "launch" ? (
                             <BetterButton
                                 buttonText={t(
-                                    isActive(obj)
+                                    IsActiveObjective(obj)
                                         ? "globals.interaction.goAheadGood"
                                         : "objectives.passive.log.text",
                                 )}
                                 buttonHint={t(
-                                    `objectives.${isActive(obj) ? "active.start.hint" : "passive.log.hint"}`,
+                                    `objectives.${IsActiveObjective(obj) ? "active.start.hint" : "passive.log.hint"}`,
                                 )}
                                 style="ACE"
                                 action={async (): Promise<void> =>
-                                    isActive(obj)
+                                    IsActiveObjective(obj)
                                         ? await LaunchActiveObjective(
                                               obj.identifier,
                                           )
@@ -109,7 +96,7 @@ export function DisplayObjectives({
                                         )
                                     }
                                 />
-                                {isActive(obj) && (
+                                {IsActiveObjective(obj) && (
                                     <>
                                         <GapView width={10} />
                                         <BetterButton

@@ -1,19 +1,30 @@
 import StoredItemNames from "@/constants/stored_item_names";
 import {
     ActiveObjective,
+    ActiveObjectiveDailyLog,
     ActiveObjectiveWithoutId,
+    WeekTuple,
 } from "@/types/active_objectives";
 import {
     PassiveObjective,
+    PassiveObjectiveDailyLog,
     PassiveObjectiveWithoutId,
 } from "@/types/passive_objectives";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { logToConsole } from "../console";
 import { TFunction } from "i18next";
 import { ShowToast } from "../android";
-import { GenericDailyLog } from "@/types/common_objectives";
-import { JavaScriptifyTodaysDate } from "../today";
-import { TodaysDate } from "@/types/today";
+import { GenericDailyLog, IsActiveObjective } from "@/types/common_objectives";
+import {
+    AlterDate,
+    GetCurrentDateCorrectly,
+    JavaScriptifyTodaysDate,
+    StringifyDate,
+    TODAY_CODE_ARRAY,
+    TurnJavaScriptDateIntoCurrentDate,
+} from "../today";
+import { CorrectCurrentDate, TodaysDate } from "@/types/today";
+import { StrUtils } from "../glue_fix";
 
 /**
  * Returns all objectives from AsyncStorage as an `ActiveObjective[]` or a `PassiveObjective[]` (depending on chosen category), or `null` if there aren't any objectives.
@@ -285,11 +296,47 @@ type UncheckedDailyLog = GenericDailyLog<any>;
  * Handles saving the daily log, sorting stuff by date.
  *
  * @async
+ * @param {"active" | "passive"} category Category to get from.
+ * @returns {Promise<void>}
+ */
+async function GetGenericObjectiveDailyLog(
+    category: "active",
+): Promise<ActiveObjectiveDailyLog>;
+async function GetGenericObjectiveDailyLog(
+    category: "passive",
+): Promise<PassiveObjectiveDailyLog>;
+async function GetGenericObjectiveDailyLog(
+    category: "active" | "passive",
+): Promise<ActiveObjectiveDailyLog | PassiveObjectiveDailyLog> {
+    try {
+        const response: string | null = await AsyncStorage.getItem(
+            category === "active"
+                ? StoredItemNames.dailyLog
+                : StoredItemNames.passiveDailyLog,
+        );
+        if (!StrUtils.validate(response)) {
+            await AsyncStorage.setItem(
+                StoredItemNames.dailyLog,
+                JSON.stringify({}),
+            );
+            return {};
+        }
+        return JSON.parse(response);
+    } catch (e) {
+        logToConsole(`Error getting ${category} daily log: ${e}`, "error");
+        throw new Error(`Error getting ${category} daily log: ${e}`);
+    }
+}
+
+/**
+ * Handles saving the daily log, sorting stuff by date.
+ *
+ * @async
  * @param {GenericDailyLog<any>} log Any log.
  * @param {"active" | "passive"} category Category to save to.
  * @returns {Promise<void>}
  */
-async function HandleSavingGenericObjectiveDailyLog(
+async function SaveGenericObjectiveDailyLog(
     log: UncheckedDailyLog,
     category: "active" | "passive",
 ): Promise<void> {
@@ -327,10 +374,115 @@ async function HandleSavingGenericObjectiveDailyLog(
     }
 }
 
+/**
+ * Fails objectives not done yesterday.
+ *
+ * @async
+ * @param {"active" | "passive"} category Category to fail from.
+ * @returns {Promise<void>}
+ */
+async function FailGenericObjectivesNotDoneYesterday(
+    category: "passive",
+): Promise<void>;
+async function FailGenericObjectivesNotDoneYesterday(
+    category: "active",
+): Promise<void>;
+async function FailGenericObjectivesNotDoneYesterday(
+    category: "active" | "passive",
+): Promise<void> {
+    try {
+        const objectives: (PassiveObjective[] | ActiveObjective[]) | null =
+            category === "active"
+                ? await GetAllObjectives("active")
+                : await GetAllObjectives("passive");
+        const dailyLog: PassiveObjectiveDailyLog | ActiveObjectiveDailyLog =
+            category === "active"
+                ? await GetGenericObjectiveDailyLog("active")
+                : await GetGenericObjectiveDailyLog("passive");
+        if (!objectives) return;
+        const currentDate: CorrectCurrentDate = GetCurrentDateCorrectly();
+        let targetDateObj: Date = new Date(
+            JavaScriptifyTodaysDate(currentDate.string),
+        );
+
+        // find the earliest not logged date
+        let earliestNotLoggedDate: TodaysDate | null = null;
+        for (let i: number = 0; i < 365; i++) {
+            const dateToCheck: TodaysDate = StringifyDate(
+                AlterDate(
+                    TurnJavaScriptDateIntoCurrentDate(targetDateObj).object,
+                    -i,
+                ),
+            );
+            if (!dailyLog[dateToCheck]) {
+                earliestNotLoggedDate = dateToCheck;
+            } else {
+                break;
+            }
+        }
+
+        if (!earliestNotLoggedDate) return;
+
+        let startDate: Date = JavaScriptifyTodaysDate(earliestNotLoggedDate);
+        const endDate: Date = JavaScriptifyTodaysDate(currentDate.string);
+        // loop through all not logged dates
+        while (startDate <= endDate) {
+            const dateString: TodaysDate = StringifyDate(startDate);
+
+            for (const obj of objectives) {
+                const daysIndex: number = Math.floor(
+                    (startDate.getTime() -
+                        JavaScriptifyTodaysDate(obj.createdAt).getTime()) /
+                        (1000 * 60 * 60 * 24),
+                );
+
+                const TODAY_INDEX: keyof WeekTuple | undefined =
+                    TODAY_CODE_ARRAY[daysIndex];
+
+                if (
+                    daysIndex < 0 ||
+                    daysIndex >= TODAY_CODE_ARRAY.length ||
+                    !TODAY_INDEX ||
+                    (IsActiveObjective(obj) && !obj.info.days[TODAY_INDEX])
+                )
+                    continue;
+
+                if (!dailyLog[dateString]) {
+                    dailyLog[dateString] = {};
+                }
+
+                if (dailyLog[dateString][obj.identifier]) continue;
+
+                dailyLog[dateString][obj.identifier] = IsActiveObjective(obj)
+                    ? {
+                          wasDone: false,
+                          objective: obj,
+                          performance: 0,
+                      }
+                    : {
+                          wasDone: false,
+                          objective: obj,
+                      };
+            }
+
+            // Increment startDate by one day
+            startDate.setDate(startDate.getDate() + 1);
+        }
+
+        await SaveGenericObjectiveDailyLog(dailyLog, category);
+
+        return;
+    } catch (e) {
+        logToConsole(`Error failing objectives: ${e}`, "error");
+    }
+}
+
 export {
     GetAllObjectives,
     GetObjective,
     DeleteObjective,
     CreateObjective,
-    HandleSavingGenericObjectiveDailyLog,
+    GetGenericObjectiveDailyLog,
+    SaveGenericObjectiveDailyLog,
+    FailGenericObjectivesNotDoneYesterday,
 };

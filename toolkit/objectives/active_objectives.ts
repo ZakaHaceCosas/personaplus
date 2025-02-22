@@ -20,16 +20,8 @@ import {
 } from "@/types/active_objectives";
 import { logToConsole } from "@/toolkit/console";
 import AsyncStorage from "expo-sqlite/kv-store";
-import {
-    ADJUSTED_TODAY_INDEX,
-    AlterDate,
-    GetCurrentDateCorrectly,
-    JavaScriptifyTodaysDate,
-    StringifyDate,
-    TODAY_CODE_ARRAY,
-    TurnJavaScriptDateIntoCurrentDate,
-} from "@/toolkit/today";
-import type { CorrectCurrentDate, TodaysDate } from "@/types/today";
+import { ADJUSTED_TODAY_INDEX, GetCurrentDateCorrectly } from "@/toolkit/today";
+import type { TodaysDate } from "@/types/today";
 import StoredItemNames from "@/constants/stored_item_names";
 import { Routes } from "@/constants/routes";
 import { router } from "expo-router";
@@ -42,9 +34,11 @@ import { TFunction } from "i18next";
 import {
     CreateObjective,
     DeleteObjective,
+    FailGenericObjectivesNotDoneYesterday,
     GetAllObjectives,
+    GetGenericObjectiveDailyLog,
     GetObjective,
-    HandleSavingGenericObjectiveDailyLog,
+    SaveGenericObjectiveDailyLog,
 } from "./common";
 
 /**
@@ -63,26 +57,7 @@ async function GetAllActiveObjectives(): Promise<ActiveObjective[] | null> {
  * @returns {ActiveObjectiveDailyLog} The entire daily log, or an empty object if it doesn't exist.
  */
 async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog> {
-    try {
-        const response: string | null = await AsyncStorage.getItem(
-            StoredItemNames.dailyLog,
-        );
-        if (!response || response === "") {
-            const newDailyLog: ActiveObjectiveDailyLog = {};
-            await AsyncStorage.setItem(
-                StoredItemNames.dailyLog,
-                JSON.stringify(newDailyLog),
-            );
-            return newDailyLog;
-        }
-        const dailyLog: ActiveObjectiveDailyLog = JSON.parse(response);
-        if (Object.keys(dailyLog).length === 0) {
-            return {};
-        }
-        return dailyLog;
-    } catch (e) {
-        throw new Error(`Error accessing active objective daily log! ${e}`);
-    }
+    return await GetGenericObjectiveDailyLog("active");
 }
 
 /**
@@ -119,7 +94,7 @@ async function SaveActiveObjectiveToDailyLog(
         };
 
         // Updates data and puts it back to AsyncStorage
-        await HandleSavingGenericObjectiveDailyLog(dailyData, "active");
+        await SaveGenericObjectiveDailyLog(dailyData, "active");
         logToConsole(
             `Success! Session ${id} data saved for ${today}.`,
             "success",
@@ -508,81 +483,7 @@ function CalculateSessionPerformance(
  * @returns {Promise<void>}
  */
 async function FailObjectivesNotDoneYesterday(): Promise<void> {
-    try {
-        const allObjectives: ActiveObjective[] | null =
-            await GetAllObjectives("active");
-        const dailyLog: ActiveObjectiveDailyLog =
-            await GetActiveObjectiveDailyLog();
-
-        if (!allObjectives) return;
-
-        const currentDate: CorrectCurrentDate = GetCurrentDateCorrectly();
-        let targetDateObj: Date = new Date(
-            JavaScriptifyTodaysDate(currentDate.string),
-        );
-
-        // find the earliest not logged date
-        let earliestNotLoggedDate: TodaysDate | null = null;
-        for (let i: number = 0; i < 365; i++) {
-            const dateToCheck: TodaysDate = StringifyDate(
-                AlterDate(
-                    TurnJavaScriptDateIntoCurrentDate(targetDateObj).object,
-                    -i,
-                ),
-            );
-            if (!dailyLog[dateToCheck]) {
-                earliestNotLoggedDate = dateToCheck;
-            } else {
-                break;
-            }
-        }
-
-        if (!earliestNotLoggedDate) return;
-
-        let dateObj: Date = JavaScriptifyTodaysDate(earliestNotLoggedDate);
-        const endDate: Date = JavaScriptifyTodaysDate(currentDate.string);
-        // loop through all not logged dates
-        while (dateObj <= endDate) {
-            const dateString: TodaysDate = StringifyDate(dateObj);
-
-            for (const objective of allObjectives) {
-                const daysIndex: number = Math.floor(
-                    (dateObj.getTime() -
-                        JavaScriptifyTodaysDate(
-                            objective.createdAt,
-                        ).getTime()) /
-                        (1000 * 60 * 60 * 24),
-                );
-
-                if (
-                    daysIndex < 0 ||
-                    daysIndex >= TODAY_CODE_ARRAY.length ||
-                    !TODAY_CODE_ARRAY[daysIndex] ||
-                    !objective.info.days[TODAY_CODE_ARRAY[daysIndex]]
-                )
-                    continue;
-
-                if (!dailyLog[dateString]) {
-                    dailyLog[dateString] = {};
-                }
-
-                if (dailyLog[dateString][objective.identifier]) continue;
-
-                dailyLog[dateString][objective.identifier] = {
-                    wasDone: false,
-                    objective: objective,
-                    performance: 0,
-                };
-            }
-
-            // Increment dateObj by one day
-            dateObj.setDate(dateObj.getDate() + 1);
-        }
-
-        await HandleSavingGenericObjectiveDailyLog(dailyLog, "active");
-    } catch (e) {
-        logToConsole(`Error failing objectives: ${e}`, "error");
-    }
+    await FailGenericObjectivesNotDoneYesterday("active");
 }
 
 export {

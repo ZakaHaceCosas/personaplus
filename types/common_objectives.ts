@@ -12,6 +12,8 @@
  */
 
 import { StrUtils } from "../toolkit/glue_fix";
+import { ActiveObjective } from "./active_objectives";
+import { PassiveObjective } from "./passive_objectives";
 import { TodaysDate, TodaysDateRegularExpression } from "./today";
 
 export interface GenericObjective {
@@ -78,3 +80,15 @@ export type GenericDailyLog<T> = {
         [identifier: number]: T;
     };
 };
+
+/** Since only `ActiveObjective`s have the `exercise` key, this type guard checks for it, so TS knows what are you working with, instead of throwing type errors all the time. */
+export function IsActiveObjective(
+    obj: ActiveObjective | PassiveObjective,
+): obj is ActiveObjective {
+    if (
+        (obj as ActiveObjective).exercise &&
+        (obj as ActiveObjective).exercise !== null
+    )
+        return true;
+    return false;
+}
