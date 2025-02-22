@@ -15,7 +15,7 @@ import { GetActiveObjective } from "@/toolkit/objectives/active_objectives";
 import Colors from "@/constants/colors";
 import { TopView } from "@/components/ui/pages/sessions";
 
-// settings for this thingy
+/** Settings for this thingy */
 const SETTINGS = {
     /** Interval (in meters) for the location to update. */
     DIST_INTERVAL_METERS: 0.45,
