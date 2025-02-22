@@ -84,7 +84,7 @@ function ObjectiveDescriptiveIcons({
                         name="speed"
                         size={FontSizes.REGULAR}
                         color={Colors.LABELS.SDD}
-                        text={speedOptions[obj.specificData.estimateSpeed][1]}
+                        text={speedOptions[obj.specificData.estimateSpeed]![1]}
                     />
                 </>
             );
