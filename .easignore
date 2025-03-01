@@ -56,18 +56,6 @@ gradlew.bat
 # properties
 local.properties
 
-# work in progress
-**/*.wip.*
-*.wip.*
-
-# local-only testing
-**/*.testing.*
-*.testing.*
-
-# deprecated stuff
-**/*.deprecated.*
-*.deprecated.*
-
 # EAS IGNORE
 # NOTE: please keep this at the bottom of the file. the rest (top) is copy pasted from .gitignore
 # specific-files to be ignored by EAS Build

@@ -208,5 +208,8 @@
         "webpsupport",
         "Zaka",
         "zakahacecosas"
-    ]
+    ],
+    "[ignore]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    }
 }
