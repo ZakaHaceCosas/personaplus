@@ -54,17 +54,3 @@ gradlew.bat
 
 # properties
 local.properties
-
-# work in progress
-**/*.wip.*
-*.wip.*
-
-# local-only testing
-**/*.testing.*
-*.testing.*
-
-# deprecated stuff
-**/*.deprecated.*
-*.deprecated.*
-# ignore changelog
-!CHANGELOG.deprecated.md
