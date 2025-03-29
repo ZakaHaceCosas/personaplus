@@ -18,6 +18,7 @@ import {
     GetAllObjectives,
     GetGenericObjectiveDailyLog,
     GetObjective,
+    SaveGenericObjectiveDailyLog,
 } from "@/toolkit/objectives/common";
 import {
     PassiveObjective,
@@ -25,6 +26,8 @@ import {
     PassiveObjectiveWithoutId,
 } from "@/types/passive_objectives";
 import { logToConsole } from "@/toolkit/console";
+import { TodaysDate } from "@/types/today";
+import { GetCurrentDateCorrectly } from "../today";
 
 /**
  * Creates a passive objective and saves it. You need to provide all the data for it (except the ID) as an `PassiveObjectiveWithoutId` object.
@@ -85,13 +88,57 @@ async function DeletePassiveObjective(identifier: number): Promise<void> {
     await DeleteObjective(identifier, "passive");
 }
 
+/**
+ * Saves a passive objective to a daily registry.
+ *
+ * @async
+ * @param {number} id ID of the objective
+ * @param {boolean} wasDone Whether the objective was done or not.
+ * @returns {Promise<void>}
+ */
+async function SavePassiveObjectiveToDailyLog(
+    id: number,
+    wasDone: boolean,
+): Promise<void> {
+    try {
+        // Fetch old data
+        const dailyData: PassiveObjectiveDailyLog =
+            await GetPassiveObjectiveDailyLog();
+        const today: TodaysDate = GetCurrentDateCorrectly().string;
+        const objective: PassiveObjective | null = await GetPassiveObjective(id)
+
+        if (!objective) throw new Error(`${id} is a wrong identifier.`)
+
+        // If there's no old data for today, creates an {} for today
+        if (!dailyData[today]) {
+            dailyData[today] = {};
+        }
+
+        // Saves the objective data
+        dailyData[today][id] = {
+            wasDone: wasDone,
+            objective: objective,
+        };
+
+        // Updates data and puts it back to AsyncStorage
+        await SaveGenericObjectiveDailyLog(dailyData, "passive");
+        logToConsole(
+            `Marked passive obj ${id} as done for ${today}.`,
+            "success",
+        );
+    } catch (e) {
+        const message: string = id
+            ? `Error saving user's goal for objective ${id}: ${e}`
+            : `Error saving user's goal (no objective ID): ${e}`;
+        logToConsole(message, "error");
+        throw new Error(message);
+    }
+}
+
 async function MarkPassiveObjectiveAsDoneToday(
     identifier: number,
 ): Promise<void> {
-    logToConsole(
-        `Marked passive obj ${identifier} as done (placeholder, this is a TODO)`,
-        "log",
-    );
+    await SavePassiveObjectiveToDailyLog(identifier, true)
 }
 
 export {
