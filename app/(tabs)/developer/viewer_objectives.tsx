@@ -13,7 +13,7 @@ import { ActiveObjective, WeekTuple } from "@/types/active_objectives";
 import { PassiveObjective } from "@/types/passive_objectives";
 import React, { ReactElement, useEffect, useState } from "react";
 
-export default function ViewerActiveObjectives(): ReactElement {
+export default function ViewerObjectives(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [activeObjectives, setActiveObjectives] = useState<ActiveObjective[] | null>(
