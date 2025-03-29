@@ -67,7 +67,7 @@ export default function DevInterface(): ReactElement {
                 buttonHint="Opens up a dedicated page for viewing all your active and passive objectives."
                 style="ACE"
                 action={(): void =>
-                    router.push(Routes.DEV_INTERFACE.VIEWER_ACTIVE_OBJECTIVES)
+                    router.push(Routes.DEV_INTERFACE.VIEWER_OBJECTIVES)
                 }
             />
             <GapView height={20} />
