@@ -72,7 +72,6 @@ async function GetActiveObjectiveDailyLog(): Promise<ActiveObjectiveDailyLog> {
 async function SaveActiveObjectiveToDailyLog(
     id: number,
     wasDone: boolean,
-    objective: ActiveObjective,
     performance?: CoreLibraryResponse,
 ): Promise<void> {
     try {
@@ -80,6 +79,9 @@ async function SaveActiveObjectiveToDailyLog(
         const dailyData: ActiveObjectiveDailyLog =
             await GetActiveObjectiveDailyLog();
         const today: TodaysDate = GetCurrentDateCorrectly().string;
+        const objective: ActiveObjective | null = await GetActiveObjective(id)
+
+        if (!objective) throw new Error(`${id} is a wrong identifier.`)
 
         // If there's no old data for today, creates an {} for today
         if (!dailyData[today]) {
