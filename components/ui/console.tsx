@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
         borderLeftColor: Colors.LABELS.TABLE_HEADER,
     },
     success: {
-        color: Colors.PRIMARIES.GOD.GOD,
-        borderLeftColor: Colors.PRIMARIES.GOD.GOD,
+        color: Colors.PRIMARIES.ACE.ACE,
+        borderLeftColor: Colors.PRIMARIES.ACE.ACE,
     },
     warn: {
         color: Colors.PRIMARIES.HMM.HMM,

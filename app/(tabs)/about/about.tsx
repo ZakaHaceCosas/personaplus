@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     },
     versionBadge: {
         padding: 6,
-        backgroundColor: Colors.PRIMARIES.GOD.GOD,
+        backgroundColor: Colors.PRIMARIES.ACE.ACE,
         borderRadius: 6,
     },
     buttonContainer: {
@@ -89,14 +89,14 @@ export default function About(): ReactElement {
                 <BetterButton
                     buttonHint={t("pages.about.grid.license.hint")}
                     buttonText={t("pages.about.grid.license.text")}
-                    style="GOD"
+                    style="ACE"
                     action={(): void => router.push(Routes.ABOUT.LICENSE)}
                 />
                 <GapView width={10} />
                 <BetterButton
                     buttonHint={t("pages.about.grid.credits.hint")}
                     buttonText={t("pages.about.grid.credits.text")}
-                    style="GOD"
+                    style="ACE"
                     action={(): void => router.push(Routes.ABOUT.CREDITS)}
                 />
             </View>

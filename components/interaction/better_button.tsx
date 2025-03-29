@@ -117,11 +117,6 @@ export default function BetterButton({
         case "ACE":
             borderColor = Colors.PRIMARIES.ACE.ACE_STROKE;
             backgroundColor = Colors.PRIMARIES.ACE.ACE;
-            textColor = Colors.BASIC.WHITE;
-            break;
-        case "GOD":
-            borderColor = Colors.PRIMARIES.GOD.GOD_STROKE;
-            backgroundColor = Colors.PRIMARIES.GOD.GOD;
             textColor = Colors.BASIC.BLACK;
             break;
         case "WOR":
@@ -135,7 +130,6 @@ export default function BetterButton({
             textColor = Colors.BASIC.BLACK;
             break;
         case "DEFAULT":
-        default:
             borderColor = Colors.MAIN.DEFAULT_ITEM.STROKE;
             backgroundColor = Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
             textColor = Colors.BASIC.WHITE;
@@ -148,7 +142,6 @@ export default function BetterButton({
             buttonHeight = 50;
             flexValue = 0;
             break;
-        default:
         case "normal":
             buttonWidth = "100%";
             buttonHeight = UniversalItemStyle.height;
@@ -161,7 +154,7 @@ export default function BetterButton({
 
     return (
         <Pressable
-            onPress={async () => {
+            onPress={async (): Promise<void> => {
                 try {
                     // always await, so we correctly handle both sync and async stuff
                     await Promise.resolve(action());
@@ -179,10 +172,10 @@ export default function BetterButton({
                     );
                 }
             }}
-            onPressIn={() => {
-                setOpacityValue(0.7);
+            onPressIn={(): void => {
+                setOpacityValue(0.5);
             }}
-            onPressOut={() => {
+            onPressOut={(): void => {
                 setOpacityValue(1);
             }}
             style={[

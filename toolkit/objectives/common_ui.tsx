@@ -80,6 +80,27 @@ export function DisplayObjectives({
                             />
                         ) : (
                             <View style={styles.divButtons}>
+                                {IsActiveObjective(obj) && (
+                                    <>
+                                        <BetterButton
+                                            style="DEFAULT"
+                                            buttonText={t(
+                                                "pages.dashboard.editObjective.text",
+                                            )}
+                                            buttonHint={t(
+                                                "pages.dashboard.editObjective.hint",
+                                            )}
+                                            action={async (): Promise<void> =>
+                                                await handler(
+                                                    obj.identifier,
+                                                    "edit",
+                                                    "active",
+                                                )
+                                            }
+                                        />
+                                        <GapView width={10} />
+                                    </>
+                                )}
                                 <BetterButton
                                     style="WOR"
                                     buttonText={t(
@@ -96,27 +117,6 @@ export function DisplayObjectives({
                                         )
                                     }
                                 />
-                                {IsActiveObjective(obj) && (
-                                    <>
-                                        <GapView width={10} />
-                                        <BetterButton
-                                            style="ACE"
-                                            buttonText={t(
-                                                "pages.dashboard.editObjective.text",
-                                            )}
-                                            buttonHint={t(
-                                                "pages.dashboard.editObjective.hint",
-                                            )}
-                                            action={async (): Promise<void> =>
-                                                await handler(
-                                                    obj.identifier,
-                                                    "edit",
-                                                    "active",
-                                                )
-                                            }
-                                        />
-                                    </>
-                                )}
                             </View>
                         )}
                     </Division>

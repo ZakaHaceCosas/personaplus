@@ -68,18 +68,6 @@ interface LabelColors {
 }
 
 /**
- * GOD type core colors.
- *
- * @interface GodColors
- */
-interface GodColors {
-    /** Main color */
-    GOD: HexColorString;
-    /** Stroke color for GOD */
-    GOD_STROKE: HexColorString;
-}
-
-/**
  * ACE type core colors.
  *
  * @interface AceColors
@@ -90,7 +78,7 @@ interface AceColors {
     /** Stroke color for ACE */
     ACE_STROKE: HexColorString;
     /** Special color used for sliders */
-    ACE_SCROLL: HexColorString;
+    // ACE_SCROLL: HexColorString;
 }
 
 /**
@@ -123,9 +111,7 @@ interface HmmColors {
  * @interface PrimaryColors
  */
 interface PrimaryColors {
-    /** Accent color for branding, also used for positive elements and as an accent in some places */
-    GOD: GodColors;
-    /** Accent color of the app most of the time, also used in branding */
+    /** Accent color of the app and its branding. */
     ACE: AceColors;
     /** Color for bad / dangerous things */
     WOR: WorColors;
@@ -167,7 +153,7 @@ export interface ColorsObject {
  *
  * @export
  */
-export type PrimaryColorsType = "DEFAULT" | "ACE" | "GOD" | "WOR" | "HMM";
+export type PrimaryColorsType = "DEFAULT" | "ACE" | "WOR" | "HMM";
 
 /**
  * All primary colors (their code-name) as a type. Omits `"DEFAULT"`.

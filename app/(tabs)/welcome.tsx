@@ -410,7 +410,7 @@ export default function WelcomePage(): ReactElement {
      */
     function NavigationButtons(): ReactElement {
         let buttonText: string;
-        let style: "GOD" | "HMM";
+        let style: "ACE" | "HMM";
         let action: () => void;
 
         switch (currentTab) {
@@ -418,36 +418,36 @@ export default function WelcomePage(): ReactElement {
                 buttonText = isStepOneValid
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
-                style = isStepOneValid ? "GOD" : "HMM";
+                style = isStepOneValid ? "ACE" : "HMM";
                 action = isStepOneValid ? goNext : () => {};
                 break;
             case 2:
                 buttonText = isStepTwoValid
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
-                style = isStepTwoValid ? "GOD" : "HMM";
-                action = isStepTwoValid ? goNext : () => {};
+                style = isStepTwoValid ? "ACE" : "HMM";
+                action = isStepTwoValid ? goNext : (): void => {};
                 break;
             case 3:
                 buttonText = isStepThreeValid
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
-                style = isStepThreeValid ? "GOD" : "HMM";
-                action = isStepThreeValid ? goNext : () => {};
+                style = isStepThreeValid ? "ACE" : "HMM";
+                action = isStepThreeValid ? goNext : (): void => {};
                 break;
             case 4:
                 buttonText = isStepFourValid
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
-                style = isStepFourValid ? "GOD" : "HMM";
-                action = isStepFourValid ? goNext : () => {};
+                style = isStepFourValid ? "ACE" : "HMM";
+                action = isStepFourValid ? goNext : (): void => {};
                 break;
             case 5:
                 buttonText = isStepFiveValid
                     ? t("globals.interaction.goAheadGood")
                     : t("globals.interaction.somethingIsWrong");
-                style = isStepFiveValid ? "GOD" : "HMM";
-                action = isStepFiveValid ? goNext : () => {};
+                style = isStepFiveValid ? "ACE" : "HMM";
+                action = isStepFiveValid ? goNext : (): void => {};
                 break;
             default:
                 logToConsole(
@@ -456,7 +456,7 @@ export default function WelcomePage(): ReactElement {
                 );
                 buttonText = "Error";
                 style = "HMM";
-                action = () => {};
+                action = (): void => {};
         }
 
         return (
@@ -496,7 +496,7 @@ export default function WelcomePage(): ReactElement {
                         {
                             backgroundColor:
                                 currentTab >= 1
-                                    ? Colors.PRIMARIES.GOD.GOD
+                                    ? Colors.PRIMARIES.ACE.ACE
                                     : Colors.MAIN.DIVISION_BORDER,
                         },
                     ]}
@@ -508,7 +508,7 @@ export default function WelcomePage(): ReactElement {
                         {
                             backgroundColor:
                                 currentTab >= 2
-                                    ? Colors.PRIMARIES.GOD.GOD
+                                    ? Colors.PRIMARIES.ACE.ACE
                                     : Colors.MAIN.DIVISION_BORDER,
                         },
                     ]}
@@ -520,7 +520,7 @@ export default function WelcomePage(): ReactElement {
                         {
                             backgroundColor:
                                 currentTab >= 3
-                                    ? Colors.PRIMARIES.GOD.GOD
+                                    ? Colors.PRIMARIES.ACE.ACE
                                     : Colors.MAIN.DIVISION_BORDER,
                         },
                     ]}
@@ -532,7 +532,7 @@ export default function WelcomePage(): ReactElement {
                         {
                             backgroundColor:
                                 currentTab >= 4
-                                    ? Colors.PRIMARIES.GOD.GOD
+                                    ? Colors.PRIMARIES.ACE.ACE
                                     : Colors.MAIN.DIVISION_BORDER,
                         },
                     ]}
@@ -544,7 +544,7 @@ export default function WelcomePage(): ReactElement {
                         {
                             backgroundColor:
                                 currentTab >= 5
-                                    ? Colors.PRIMARIES.GOD.GOD
+                                    ? Colors.PRIMARIES.ACE.ACE
                                     : Colors.MAIN.DIVISION_BORDER,
                         },
                     ]}
@@ -577,8 +577,8 @@ export default function WelcomePage(): ReactElement {
             fontFamily: "BeVietnamPro-Regular",
         },
         confirmButton: {
-            backgroundColor: Colors.PRIMARIES.GOD.GOD,
-            borderColor: Colors.PRIMARIES.GOD.GOD_STROKE,
+            backgroundColor: Colors.PRIMARIES.ACE.ACE,
+            borderColor: Colors.PRIMARIES.ACE.ACE_STROKE,
             color: Colors.BASIC.BLACK,
             borderWidth: UniversalItemStyle.borderWidth,
             borderRadius: UniversalItemStyle.borderRadius,
@@ -626,7 +626,7 @@ export default function WelcomePage(): ReactElement {
                                 fontFamily="JetBrainsMono"
                                 fontSize={40}
                                 fontWeight="Bold"
-                                textColor={Colors.PRIMARIES.GOD.GOD}
+                                textColor={Colors.PRIMARIES.ACE.ACE}
                             >
                                 PersonaPlus
                             </BetterText>
@@ -638,7 +638,7 @@ export default function WelcomePage(): ReactElement {
                         <BetterButton
                             buttonText={t("globals.interaction.goAheadGood")}
                             buttonHint="Begins the on-boarding process"
-                            style="GOD"
+                            style="ACE"
                             action={goNext}
                         />
                     </View>
@@ -770,7 +770,6 @@ export default function WelcomePage(): ReactElement {
                             onValueChange={(value) =>
                                 handleChange("gender", value)
                             }
-                            style="GOD"
                         />
                         <GapView height={10} />
                         <BetterText
@@ -801,7 +800,6 @@ export default function WelcomePage(): ReactElement {
                             onValueChange={(value) =>
                                 handleChange("focus", value)
                             }
-                            style="GOD"
                         />
                     </>
                 )}
@@ -874,7 +872,7 @@ export default function WelcomePage(): ReactElement {
                             includeBackButton={false}
                         />
                         <BetterButton
-                            style="GOD"
+                            style="ACE"
                             buttonText={t(
                                 "pages.welcome.questions.theThinkHour.summon",
                             )}

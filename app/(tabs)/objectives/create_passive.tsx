@@ -110,7 +110,7 @@ export default function CreatePassiveObjectivePage(): ReactElement {
             />
             <GapView height={10} />
             <BetterButton
-                style={canCreateGoal ? "GOD" : "DEFAULT"}
+                style={canCreateGoal ? "ACE" : "DEFAULT"}
                 buttonText={
                     canCreateGoal
                         ? t("globals.interaction.goAheadGood")

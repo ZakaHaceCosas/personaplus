@@ -132,7 +132,7 @@ export default function Dashboard(): ReactElement {
                 )}
                 <View style={styles.buttonWrapper}>
                     <BetterButton
-                        style="GOD"
+                        style="ACE"
                         action={(): void =>
                             router.push(Routes.OBJECTIVES.CREATE_ACTIVE)
                         }
@@ -187,7 +187,7 @@ export default function Dashboard(): ReactElement {
                 )}
                 <View style={styles.buttonWrapper}>
                     <BetterButton
-                        style="GOD"
+                        style="ACE"
                         action={(): void =>
                             router.push(Routes.OBJECTIVES.CREATE_PASSIVE)
                         }
