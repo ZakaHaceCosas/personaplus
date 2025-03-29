@@ -682,7 +682,7 @@ export default function CreateActiveObjectivePage(): ReactElement {
                 objectiveToCreate.exercise === "Push Ups") &&
                 spawnToggle("amountOfHands")}
             <BetterButton
-                style={canCreateObjective ? "GOD" : "DEFAULT"}
+                style={canCreateObjective ? "ACE" : "DEFAULT"}
                 buttonText={
                     canCreateObjective
                         ? t("globals.interaction.goAheadGood")

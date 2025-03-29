@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     selectedOption: {
-        backgroundColor: Colors.PRIMARIES.GOD.GOD,
-        borderColor: Colors.PRIMARIES.GOD.GOD_STROKE,
+        backgroundColor: Colors.PRIMARIES.ACE.ACE,
+        borderColor: Colors.PRIMARIES.ACE.ACE_STROKE,
     },
 });
 

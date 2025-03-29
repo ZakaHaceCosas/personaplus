@@ -164,7 +164,7 @@ export default function HomeScreen(): ReactElement {
                     ) : identifiers === null ? (
                         <Division header={t("objectives.common.noObjectives")}>
                             <BetterButton
-                                style="GOD"
+                                style="ACE"
                                 action={(): void =>
                                     router.push(Routes.OBJECTIVES.CREATE_ACTIVE)
                                 }
@@ -190,8 +190,8 @@ export default function HomeScreen(): ReactElement {
             <Section width="total" kind="PassiveObjectives">
                 <>
                     {!renderedPassiveObjectives ||
-                    renderedPassiveObjectives.length === 0 ? (
-                        <Division header={t("objectives.noObjectives")} />
+                        renderedPassiveObjectives.length === 0 ? (
+                        <Division header={t("objectives.common.noObjectives")} />
                     ) : (
                         <DisplayObjectives
                             objectivesToRender={renderedPassiveObjectives}

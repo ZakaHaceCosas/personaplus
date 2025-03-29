@@ -63,12 +63,6 @@ interface SwapProps {
      * @type {(value: string | null) => void}
      */
     onValueChange: (value: string | null) => void;
-    /**
-     * Style.
-     *
-     * @type {?("ACE" | "GOD")}
-     */
-    style?: "ACE" | "GOD";
 }
 
 const styles = StyleSheet.create({
@@ -103,7 +97,6 @@ const styles = StyleSheet.create({
  * @param {string} p.value
  * @param {("horizontal" | "vertical")} p.order
  * @param {(value: string) => void} p.onValueChange
- * @param {("ACE" | "GOD")} [p.style="ACE"]
  * @returns {ReactElement}
  */
 export default function Swap({
@@ -111,22 +104,23 @@ export default function Swap({
     value,
     order,
     onValueChange,
-    style = "ACE",
 }: SwapProps): ReactElement {
     const defaultOption: SwapOption | undefined = options.find(
-        (option): boolean => option.default,
+        (option: SwapOption): boolean => option.default,
     );
 
     const [selectedOption, setSelectedOption] = useState<SwapOption | null>(
         value
-            ? options.find((option) => option.value === value) || null
+            ? options.find(
+                (option: SwapOption): boolean => option.value === value,
+            ) || null
             : defaultOption || null,
     );
 
     useEffect((): void => {
         if (value && selectedOption?.value !== value) {
-            const newSelectedOption = options.find(
-                (option) => option.value === value,
+            const newSelectedOption: SwapOption | undefined = options.find(
+                (option: SwapOption): boolean => option.value === value,
             );
             if (newSelectedOption) {
                 setSelectedOption(newSelectedOption);
@@ -150,7 +144,7 @@ export default function Swap({
 
     return (
         <View style={[styles.container, { flexDirection: orderString }]}>
-            {options.map((option: SwapOption) => (
+            {options.map((option: SwapOption): ReactElement => (
                 <Pressable
                     key={option.value}
                     style={[
@@ -165,15 +159,11 @@ export default function Swap({
                                     : "flex-start",
                             backgroundColor:
                                 selectedOption?.value === option.value
-                                    ? style === "ACE"
-                                        ? Colors.PRIMARIES.ACE.ACE
-                                        : Colors.PRIMARIES.GOD.GOD
+                                    ? Colors.PRIMARIES.ACE.ACE
                                     : Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
                             borderColor:
                                 selectedOption?.value === option.value
-                                    ? style === "ACE"
-                                        ? Colors.PRIMARIES.ACE.ACE_STROKE
-                                        : Colors.PRIMARIES.GOD.GOD_STROKE
+                                    ? Colors.PRIMARIES.ACE.ACE_STROKE
                                     : Colors.MAIN.DEFAULT_ITEM.STROKE,
                         },
                     ]}
@@ -184,12 +174,9 @@ export default function Swap({
                         textAlign={order === "horizontal" ? "center" : "left"}
                         fontSize={FontSizes.ALMOST_REGULAR}
                         fontWeight="SemiBold"
-                        textColor={
-                            style === "ACE"
-                                ? Colors.BASIC.WHITE
-                                : selectedOption?.value === option.value
-                                  ? Colors.BASIC.BLACK
-                                  : Colors.BASIC.WHITE
+                        textColor={selectedOption?.value === option.value
+                            ? Colors.BASIC.BLACK
+                            : Colors.BASIC.WHITE
                         }
                     >
                         {option.label}

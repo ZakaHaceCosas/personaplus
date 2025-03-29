@@ -234,7 +234,7 @@ export default function PersonaPlusRunningTracker(): ReactElement {
                             ? "Stops tracking movement"
                             : "Start tracking movement"
                     }
-                    style={isTracking ? "ACE" : "GOD"}
+                    style={isTracking ? "ACE" : "DEFAULT"}
                 />
                 <BetterButton
                     buttonText="Reset distance"

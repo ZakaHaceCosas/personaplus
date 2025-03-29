@@ -71,7 +71,7 @@ function BMIView({
 
         if (context === "healthy weight") {
             return index < totalFragments / 2
-                ? Colors.PRIMARIES.GOD.GOD
+                ? Colors.PRIMARIES.ACE.ACE
                 : Colors.MAIN.DEFAULT_ITEM.BACKGROUND;
         }
 

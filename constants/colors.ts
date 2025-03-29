@@ -65,19 +65,18 @@ const Colors: ColorsObject = {
     },
     /** Primary colors */
     PRIMARIES: {
-        GOD: {
-            /** Main color */
-            GOD: "#32FF80",
-            /** Stroke color for GOD */
-            GOD_STROKE: "#198040",
-        },
         ACE: {
+            // I'm testing full blue & full green. GREEN:
             /** Main color */
-            ACE: "#3280FF",
+            ACE: "#32FF80",
             /** Stroke color for ACE */
-            ACE_STROKE: "#194080",
+            ACE_STROKE: "#198040",
+            /** Main color */
+            // ACE: "#3280FF",
+            /** Stroke color for ACE */
+            // ACE_STROKE: "#194080",
             /** Special color used for sliders */
-            ACE_SCROLL: "#2A61BB",
+            // ACE_SCROLL: "#2A61BB",
         },
         WOR: {
             /** Main color */

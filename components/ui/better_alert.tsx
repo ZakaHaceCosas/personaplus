@@ -88,11 +88,6 @@ export default function BetterAlert({
             backgroundColor = Colors.PRIMARIES.ACE.ACE;
             textColor = Colors.BASIC.WHITE;
             break;
-        case "GOD":
-            borderColor = Colors.PRIMARIES.GOD.GOD_STROKE;
-            backgroundColor = Colors.PRIMARIES.GOD.GOD;
-            textColor = Colors.BASIC.BLACK;
-            break;
         case "WOR":
             borderColor = Colors.PRIMARIES.WOR.WOR_STROKE;
             backgroundColor = Colors.PRIMARIES.WOR.WOR;

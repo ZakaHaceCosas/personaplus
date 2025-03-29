@@ -77,8 +77,7 @@ async function MarkPassiveObjectiveAsDoneToday(
     identifier: number,
 ): Promise<void> {
     logToConsole(
-        "Marked passive obj as done (placeholder lol, this is a TODO) " +
-            identifier,
+        `Marked passive obj ${identifier} as done (placeholder, this is a TODO)`,
         "log",
     );
 }

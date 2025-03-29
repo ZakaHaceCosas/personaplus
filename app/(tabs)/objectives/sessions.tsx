@@ -125,7 +125,7 @@ export default function Sessions(): ReactElement {
 
     // the color of the timer
     const timerColor: HexColorString = isTimerRunning
-        ? Colors.PRIMARIES.GOD.GOD
+        ? Colors.PRIMARIES.ACE.ACE
         : Colors.PRIMARIES.HMM.HMM;
 
     // give up function
