@@ -23,7 +23,7 @@ import {
     cancelScheduledNotifications,
     scheduleRandomNotifications,
 } from "@/hooks/use_notification";
-import { GetObjective } from "@/toolkit/objectives/common";
+import { GetObjective, PendingReturn } from "@/toolkit/objectives/common";
 import { DisplayObjectives } from "@/toolkit/objectives/common_ui";
 import GapView from "@/components/ui/gap_view";
 import { GetAllPassiveObjectives } from "@/toolkit/objectives/passive_objectives";
@@ -47,8 +47,8 @@ export default function HomeScreen(): ReactElement {
     const [passiveObjectives, setPassiveObjectives] = useState<
         PassiveObjective[]
     >([]);
-    const [identifiers, setIdentifiers] = useState<number[] | false | 0 | null>(
-        null,
+    const [identifiers, setIdentifiers] = useState<PendingReturn>(
+        "noneExists",
     );
     const [identifiersLoaded, setIdentifiersLoaded] = useState<boolean>(false);
     const [notificationsHandled, setNotificationsHandled] =
@@ -74,8 +74,7 @@ export default function HomeScreen(): ReactElement {
                 setUserData(userData);
 
                 // fetch IDs
-                const pending: number[] | 0 | false | null =
-                    await GetAllPendingObjectives();
+                const pending: PendingReturn = await GetAllPendingObjectives();
                 setIdentifiers(pending);
 
                 // handle passive objectives (first because active objectives have early returns)
@@ -157,11 +156,11 @@ export default function HomeScreen(): ReactElement {
             />
             <Section width="total" kind="ActiveObjectives">
                 <>
-                    {identifiers === 0 ? (
+                    {identifiers === "allDone" ? (
                         <Division
                             header={t("objectives.active.noObjectives.allDone")}
                         />
-                    ) : identifiers === null ? (
+                    ) : identifiers === "noneExists" ? (
                         <Division header={t("objectives.common.noObjectives")}>
                             <BetterButton
                                 style="ACE"
@@ -172,7 +171,7 @@ export default function HomeScreen(): ReactElement {
                                 buttonHint={t("objectives.active.create.hint")}
                             />
                         </Division>
-                    ) : identifiers === false ? (
+                    ) : identifiers === "noneDueToday" ? (
                         <Division
                             header={t(
                                 "objectives.active.noObjectives.todayFree",

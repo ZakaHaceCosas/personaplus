@@ -14,13 +14,12 @@
 import {
     ActiveObjective,
     ActiveObjectiveDailyLog,
-    ActiveObjectiveDailyLogEntry,
     ActiveObjectiveWithoutId,
     SupportedActiveObjectives,
 } from "@/types/active_objectives";
 import { logToConsole } from "@/toolkit/console";
 import AsyncStorage from "expo-sqlite/kv-store";
-import { ADJUSTED_TODAY_INDEX, GetCurrentDateCorrectly } from "@/toolkit/today";
+import { GetCurrentDateCorrectly } from "@/toolkit/today";
 import type { TodaysDate } from "@/types/today";
 import StoredItemNames from "@/constants/stored_item_names";
 import { Routes } from "@/constants/routes";
@@ -38,7 +37,9 @@ import {
     GetAllObjectives,
     GetGenericObjectiveDailyLog,
     GetObjective,
+    GetPendingGenericObjectives,
     SaveGenericObjectiveDailyLog,
+    type PendingReturn,
 } from "./common";
 
 /**
@@ -111,116 +112,13 @@ async function SaveActiveObjectiveToDailyLog(
 }
 
 /**
- * Checks if an objective was already done today or needs to be done.
- *
- * @async
- * @param {ActiveObjective} objective The objective.
- * @returns {Promise<boolean>} Returns **true** if the objective IS NOT done and NEEDS TO BE DONE. Returns **false** if otherwise (DOES NOT NEED to be done today).
- */
-async function IsActiveObjectivePending(
-    objective: ActiveObjective,
-): Promise<boolean> {
-    try {
-        const { identifier } = objective;
-
-        const dailyLog: ActiveObjectiveDailyLog =
-            await GetActiveObjectiveDailyLog();
-
-        if (objective.info.days[ADJUSTED_TODAY_INDEX] === false) return false; // not due today
-
-        if (Object.keys(dailyLog).length === 0) {
-            return false; // log does not exist, so the objective isn't done today.
-        }
-
-        const date: TodaysDate = GetCurrentDateCorrectly().string;
-
-        // Validate if dailyLog and the specific identifier exist
-        if (dailyLog[date] && dailyLog[date][identifier]) {
-            const entry: ActiveObjectiveDailyLogEntry =
-                dailyLog[date][identifier];
-            if (typeof entry.wasDone === "boolean") {
-                return entry.wasDone;
-            } else {
-                logToConsole(
-                    `Error: Invalid 'wasDone' value for objective ${identifier} on date ${date}`,
-                    "error",
-                );
-                throw new Error(
-                    `Invalid 'wasDone' value for objective ${identifier} on date ${date}`,
-                );
-            }
-        } else {
-            return false; // no interaction with the objective means no data logged.
-        }
-    } catch (e) {
-        throw new Error(
-            `Error checking if the ${objective.identifier} active objective is due today: ${e}`,
-        );
-    }
-}
-
-/**
  * Tells you if the user has any active objective due today or not. If he does, returns all of them, as an `number[]` being each number the ID of each active objective.
  *
  * @async
- * @returns {Promise<number[] | 0 | false | null>} Read carefully: `null` if there are no objectives at all, `false` if there are, but none is due today, and `0` if there are for today user took care of all of them), and a `number[]` if there's any active objective due today, being each number an active objective identifier.
+ * @returns {Promise<PendingReturn>} Either an array with pending objective identifiers _only_ or a text-based code indicating context.
  */
-async function GetAllPendingObjectives(): Promise<number[] | 0 | false | null> {
-    try {
-        const objectives: ActiveObjective[] | null =
-            await GetAllObjectives("active");
-        if (objectives === null || Object.keys(objectives).length === 0) {
-            return null; // no objectives at all
-        }
-
-        // there are only two hard things in computer science, cache invalidation and naming things
-        type safeThing = {
-            identifier: number;
-            status: boolean;
-        };
-        type thing = safeThing | null;
-        type whatever = thing[];
-        // okay i think i finally know what's going on in here, for each
-        const dueTodayObjectives: whatever = await Promise.all(
-            Object.values(objectives).map(async function (
-                obj: ActiveObjective,
-            ): Promise<thing> {
-                if (obj.info.days[ADJUSTED_TODAY_INDEX]) {
-                    const status: boolean = await IsActiveObjectivePending(obj);
-                    return { identifier: obj.identifier, status };
-                }
-                return null; // not due today
-            }),
-        );
-
-        // filter out null entries and separate the dueToday objectives based on their status
-        const activeObjectivesDueToday = dueTodayObjectives.filter(
-            (obj: thing): boolean => obj !== null,
-        ) as safeThing[];
-
-        if (activeObjectivesDueToday.length === 0) {
-            return false; // there are objectives, but none are due today
-        }
-
-        // okay i don't get whats going on in here
-        // hope this works
-        // check if all objectives due today are done
-        const allDone: boolean = activeObjectivesDueToday.every(
-            (obj: safeThing): boolean => obj.status,
-        );
-
-        if (allDone) return 0; // all objectives for today are done
-
-        // get the identifiers of objectives that are not done yet
-        const pendingObjectives: number[] = activeObjectivesDueToday
-            // no i did not write this
-            .filter((obj: safeThing): boolean => obj.status === false)
-            .map((obj: safeThing): number => obj.identifier);
-
-        return pendingObjectives.length > 0 ? pendingObjectives : 0; // return pending objectives or 0 if none
-    } catch (e) {
-        throw new Error(`Failed to get all pending objectives: ${e}`);
-    }
+async function GetAllPendingObjectives(): Promise<PendingReturn> {
+    return await GetPendingGenericObjectives("active")
 }
 
 /**
@@ -491,7 +389,6 @@ async function FailObjectivesNotDoneYesterday(): Promise<void> {
 export {
     CalculateSessionFragmentsDuration,
     CalculateSessionPerformance,
-    IsActiveObjectivePending,
     CreateActiveObjective,
     DeleteActiveObjective,
     EditActiveObjective,
