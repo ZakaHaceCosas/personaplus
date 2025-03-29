@@ -16,12 +16,12 @@ import React, { ReactElement, useEffect, useState } from "react";
 export default function ViewerActiveObjectives(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [activeObjectives, setActiveObjectives] = useState<ActiveObjective[]>(
-        [],
+    const [activeObjectives, setActiveObjectives] = useState<ActiveObjective[] | null>(
+        null
     );
     const [passiveObjectives, setPassiveObjectives] = useState<
-        PassiveObjective[]
-    >([]);
+        PassiveObjective[] | null
+    >(null);
 
     function representDataAsBetterTable(
         data: ActiveObjective["info"] | ActiveObjective["specificData"],
@@ -43,20 +43,8 @@ export default function ViewerActiveObjectives(): ReactElement {
     useEffect((): void => {
         async function handler(): Promise<void> {
             try {
-                // objectives
-                const objectives: ActiveObjective[] | null =
-                    await GetAllObjectives("active");
-
-                if (objectives) {
-                    setActiveObjectives(objectives);
-                }
-
-                const passiveObjectives: PassiveObjective[] | null =
-                    await GetAllObjectives("passive");
-
-                if (passiveObjectives) {
-                    setPassiveObjectives(passiveObjectives);
-                }
+                setActiveObjectives(await GetAllObjectives("active"));
+                setPassiveObjectives(await GetAllObjectives("passive"));
             } catch (e) {
                 const err = `Error fetching data at DevInterface: ${e}`;
                 logToConsole(err, "error");
@@ -78,7 +66,7 @@ export default function ViewerActiveObjectives(): ReactElement {
                 header="Objectives"
                 subHeader="View all your active & passive objectives and their internal data."
             />
-            {passiveObjectives.length > 0 ? (
+            {passiveObjectives && passiveObjectives.length > 0 ? (
                 <>
                     <BetterTextSmallText>
                         All your passive objectives. The ID is just used by the
@@ -104,7 +92,7 @@ export default function ViewerActiveObjectives(): ReactElement {
             ) : (
                 <BetterTextSmallText>No objectives!</BetterTextSmallText>
             )}
-            {activeObjectives.length > 0 ? (
+            {activeObjectives && activeObjectives.length > 0 ? (
                 <>
                     <BetterTextSmallText>
                         All your active objectives. The ID is just used by the
@@ -131,7 +119,7 @@ export default function ViewerActiveObjectives(): ReactElement {
                 <BetterTextSmallText>No objectives!</BetterTextSmallText>
             )}
             <GapView height={10} />
-            {activeObjectives.map(
+            {activeObjectives && activeObjectives.map(
                 (obj: ActiveObjective, index: number): ReactElement => (
                     <>
                         <BetterTextSmallHeader>

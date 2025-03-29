@@ -11,6 +11,10 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 
 - Until now, the app mixed blue & green as two "accent colors". We've settled on one for both the app's accent and branding.
 
+### Fixed
+
+- Fixed up some translations.
+
 ## [0.0.6-preapp.29] - 26-01-2024
 
 ### Added

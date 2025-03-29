@@ -52,7 +52,7 @@ async function GetAllActiveObjectives(): Promise<ActiveObjective[] | null> {
 }
 
 /**
- * Returns the ActiveObjectiveDailyLog.
+ * Returns the user's `ActiveObjectiveDailyLog`.
  *
  * @returns {ActiveObjectiveDailyLog} The entire daily log, or an empty object if it doesn't exist.
  */

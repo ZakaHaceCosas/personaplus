@@ -25,7 +25,7 @@
             "areYouSure": "Are you sure?",
             "goAheadBad": "Okay.",
             "goAhead": "Go ahead",
-            "goAheadGood": "Lets go!",
+            "goAheadGood": "Let's go!",
             "nevermind": "Nevermind",
             "continue": "Continue",
             "somethingIsWrong": "Something's wrong",
@@ -156,7 +156,10 @@
             "Give your day a purpose: create an objective."
         ],
         "createPassiveObjective": [
-            "Building routines is building discipline."
+            "Building routines is building discipline.",
+            "It's proven: just by feeling the \"challenge\" of not loosing your streak, you're more likely to accomplish this.",
+            "Don't forget this or your loose your streak.",
+            "Write something you'd like to have a 365 days streak on."
         ],
         "sessionCompleted": [
             "You finished! How great you are.",
@@ -203,7 +206,7 @@
         },
         "dashboard": {
             "header": "Dashboard",
-            "subheader": "Lets setup your path to success",
+            "subheader": "Let's setup your path to success",
             "deleteObjective": {
                 "text": "Delete",
                 "hint": "Permanently deletes this objective."
@@ -266,7 +269,7 @@
             }
         },
         "createActiveObjective": {
-            "header": "Lets do it!",
+            "header": "Let's do it!",
             "questions": {
                 "exercise": {
                     "question": "What will you do?",
@@ -305,7 +308,13 @@
                 }
             },
             "required": "Required: Duration, Exercise, and at least one day of the week. Some specific exercises will have extra requirements: for example, \"Lifting\" requires you to specify how much weight you will be lifting.",
-            "doneFeedback": "{{obj}}, lets go!",
+            "doneFeedback": "{{obj}}, let's go!",
+            "createButtonHint": "Creates the objective. If there are empty or invalid fields, the button won't do anything."
+        },
+        "createPassiveObjective": {
+            "header": "Let's build a routine!",
+            "subHeader": "What's your goal? Write anything you'd like to do daily.",
+            "doneFeedback": "\"{{obj}}\", let's go!",
             "createButtonHint": "Creates the objective. If there are empty or invalid fields, the button won't do anything."
         },
         "welcome": {

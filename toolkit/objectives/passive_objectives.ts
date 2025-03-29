@@ -16,10 +16,12 @@ import {
     CreateObjective,
     DeleteObjective,
     GetAllObjectives,
+    GetGenericObjectiveDailyLog,
     GetObjective,
 } from "@/toolkit/objectives/common";
 import {
     PassiveObjective,
+    PassiveObjectiveDailyLog,
     PassiveObjectiveWithoutId,
 } from "@/types/passive_objectives";
 import { logToConsole } from "@/toolkit/console";
@@ -48,6 +50,16 @@ async function CreatePassiveObjective(
 async function GetAllPassiveObjectives(): Promise<PassiveObjective[] | null> {
     return await GetAllObjectives("passive");
 }
+
+/**
+ * Returns the user's `PassiveObjectiveDailyLog`.
+ *
+ * @returns {PassiveObjectiveDailyLog} The entire daily log, or an empty object if it doesn't exist.
+ */
+async function GetPassiveObjectiveDailyLog(): Promise<PassiveObjectiveDailyLog> {
+    return await GetGenericObjectiveDailyLog("passive");
+}
+
 
 /**
  * Retrieves a single objective from AsyncStorage by its identifier.
@@ -87,5 +99,6 @@ export {
     DeletePassiveObjective,
     GetPassiveObjective,
     GetAllPassiveObjectives,
+    GetPassiveObjectiveDailyLog,
     MarkPassiveObjectiveAsDoneToday,
 };

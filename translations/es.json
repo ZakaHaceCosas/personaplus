@@ -149,6 +149,12 @@
             "Recuerda: los campeones se hacen, no nacen.",
             "Dale un propósito a tu día: crea un objetivo."
         ],
+        "createPassiveObjective": [
+            "Construir rutinas es construir disciplina.",
+            "Está probado: solo por sentir el \"desafío\" de no perder tu racha, es más probable que cumplas con esto.",
+            "No olvides esto o perderás tu racha.",
+            "Pon algo bajo lo que te gustaría verte con una racha de 365 días."
+        ],
         "sessionCompleted": [
             "¡Acabaste! Que grande eres.",
             "¿A que mola?",
@@ -297,6 +303,12 @@
             },
             "required": "Necesario: Duración, Ejercicio, y al menos un día de la semana. Algunos ejercicios específicos tendrán requisitos extra: por ejemplo \"Levantamiento de peso\" requiere que especifiques cuanto peso vas a levantar.",
             "doneFeedback": "{{obj}}, ¡allá vamos!",
+            "createButtonHint": "Crea el objetivo. Si faltan campos por rellenar o son inválidos, el botón no hará nada."
+        },
+        "createPassiveObjective": {
+            "header": "¡Construyamos una rutina!",
+            "subHeader": "¿Cuál es tu meta? Escribe cualquier cosa que te gustaría hacer a diario.",
+            "doneFeedback": "\"{{obj}}\", ¡allá vamos!",
             "createButtonHint": "Crea el objetivo. Si faltan campos por rellenar o son inválidos, el botón no hará nada."
         },
         "welcome": {
