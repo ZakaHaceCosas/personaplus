@@ -144,46 +144,13 @@ export default function Dashboard(): ReactElement {
             <GapView height={20} />
             <Section kind="PassiveObjectives">
                 {passiveObjectives === null ||
-                passiveObjectives.length === 0 ? (
+                    passiveObjectives.length === 0 ? (
                     <Division header={t("objectives.common.noObjectives")} />
                 ) : (
                     <DisplayObjectives
                         objectivesToRender={passiveObjectives}
                         handler={handleObjective}
                     />
-                    /* passiveObjectives.map(
-                        (obj: PassiveObjective): ReactElement => {
-                            return (
-                                <Division
-                                    key={obj.identifier}
-                                    header={obj.goal}
-                                    preHeader={t(
-                                        "objectives.passive.allCapsSingular",
-                                    )}
-                                    direction="vertical"
-                                >
-                                    <View style={styles.divButtons}>
-                                        <BetterButton
-                                            style="WOR"
-                                            buttonText={t(
-                                                "pages.dashboard.deleteObjective.text",
-                                            )}
-                                            buttonHint={t(
-                                                "pages.dashboard.deleteObjective.hint",
-                                            )}
-                                            action={async (): Promise<void> =>
-                                                await handleObjective(
-                                                    obj.identifier,
-                                                    "delete",
-                                                    "passive",
-                                                )
-                                            }
-                                        />
-                                    </View>
-                                </Division>
-                            );
-                        },
-                    ) */
                 )}
                 <View style={styles.buttonWrapper}>
                     <BetterButton

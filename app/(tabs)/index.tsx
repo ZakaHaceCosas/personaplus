@@ -41,12 +41,12 @@ export default function HomeScreen(): ReactElement {
     const { t } = useTranslation();
     const [userData, setUserData] = useState<FullProfile>();
     const [loading, setLoading] = useState<boolean>(true);
-    const [renderedObjectives, setRenderedObjectives] = useState<
+    const [activeObjectives, setActiveObjectives] = useState<
         ActiveObjective[] | null
     >(null);
-    const [renderedPassiveObjectives, setPassiveRenderedObjectives] = useState<
-        PassiveObjective[] | null
-    >(null);
+    const [passiveObjectives, setPassiveObjectives] = useState<
+        PassiveObjective[]
+    >([]);
     const [identifiers, setIdentifiers] = useState<number[] | false | 0 | null>(
         null,
     );
@@ -78,9 +78,14 @@ export default function HomeScreen(): ReactElement {
                     await GetAllPendingObjectives();
                 setIdentifiers(pending);
 
+                // handle passive objectives (first because active objectives have early returns)
+                setPassiveObjectives(
+                    (await GetAllPassiveObjectives()) ?? [],
+                );
+
                 // handle active objectives
                 if (!Array.isArray(pending)) {
-                    setRenderedObjectives([]);
+                    setActiveObjectives([]);
                     return;
                 }
                 const objectives: (ActiveObjective | null)[] =
@@ -94,12 +99,7 @@ export default function HomeScreen(): ReactElement {
                     (obj: ActiveObjective | null): obj is ActiveObjective =>
                         obj !== null,
                 );
-                setRenderedObjectives(filteredObjectives);
-
-                // handle passive objectives
-                setPassiveRenderedObjectives(
-                    (await GetAllPassiveObjectives()) ?? [],
-                );
+                setActiveObjectives(filteredObjectives);
             } catch (e) {
                 logToConsole(`Error fetching data: ${e}`, "error");
                 router.replace(Routes.MAIN.WELCOME_SCREEN);
@@ -142,7 +142,7 @@ export default function HomeScreen(): ReactElement {
     }, [userData, identifiers, identifiersLoaded, notificationsHandled, t]);
 
     // render stuff
-    if (loading || !userData || !renderedObjectives) {
+    if (loading || !userData || !activeObjectives || !passiveObjectives) {
         return <Loading />;
     }
 
@@ -180,7 +180,7 @@ export default function HomeScreen(): ReactElement {
                         />
                     ) : (
                         <DisplayObjectives
-                            objectivesToRender={renderedObjectives}
+                            objectivesToRender={activeObjectives}
                             handler="launch"
                         />
                     )}
@@ -189,12 +189,21 @@ export default function HomeScreen(): ReactElement {
             <GapView height={20} />
             <Section width="total" kind="PassiveObjectives">
                 <>
-                    {!renderedPassiveObjectives ||
-                        renderedPassiveObjectives.length === 0 ? (
-                        <Division header={t("objectives.common.noObjectives")} />
+                    {passiveObjectives === null ||
+                        passiveObjectives.length === 0 ? (
+                        <Division header={t("objectives.common.noObjectives")}>
+                            <BetterButton
+                                style="ACE"
+                                action={(): void =>
+                                    router.push(Routes.OBJECTIVES.CREATE_PASSIVE)
+                                }
+                                buttonText={t("objectives.passive.create.text")}
+                                buttonHint={t("objectives.passive.create.hint")}
+                            />
+                        </Division>
                     ) : (
                         <DisplayObjectives
-                            objectivesToRender={renderedPassiveObjectives}
+                            objectivesToRender={passiveObjectives}
                             handler="launch"
                         />
                     )}

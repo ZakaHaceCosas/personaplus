@@ -157,13 +157,13 @@ async function DeleteObjective(
         const updatedObjectives: PassiveObjective[] | ActiveObjective[] =
             category === "active"
                 ? (objectives as ActiveObjective[]).filter(
-                      (obj: ActiveObjective): boolean =>
-                          obj.identifier !== identifier,
-                  )
+                    (obj: ActiveObjective): boolean =>
+                        obj.identifier !== identifier,
+                )
                 : (objectives as PassiveObjective[]).filter(
-                      (obj: PassiveObjective): boolean =>
-                          obj.identifier !== identifier,
-                  );
+                    (obj: PassiveObjective): boolean =>
+                        obj.identifier !== identifier,
+                );
 
         await AsyncStorage.setItem(
             category === "active"
@@ -266,14 +266,16 @@ async function CreateObjective(
             });
         } else {
             const passiveTarget = target as PassiveObjectiveWithoutId;
-            message = `Created ${passiveTarget.goal} successfully (TODO: translate)`;
+            message = t("pages.createPassiveObjective.doneFeedback", {
+                obj: passiveTarget.goal,
+            });
         }
 
         ShowToast(message);
         logToConsole(
             `Created objective with ID ${newObjective.identifier} successfully! Full JSON of the created objective:\n${JSON.stringify(
                 newObjective,
-            )}"`,
+            )}`,
             "success",
             undefined,
             false,
@@ -433,7 +435,7 @@ async function FailGenericObjectivesNotDoneYesterday(
                 const daysIndex: number = Math.floor(
                     (startDate.getTime() -
                         JavaScriptifyTodaysDate(obj.createdAt).getTime()) /
-                        (1000 * 60 * 60 * 24),
+                    (1000 * 60 * 60 * 24),
                 );
 
                 const TODAY_INDEX: keyof WeekTuple | undefined =
@@ -455,14 +457,14 @@ async function FailGenericObjectivesNotDoneYesterday(
 
                 dailyLog[dateString][obj.identifier] = IsActiveObjective(obj)
                     ? {
-                          wasDone: false,
-                          objective: obj,
-                          performance: 0,
-                      }
+                        wasDone: false,
+                        objective: obj,
+                        performance: 0,
+                    }
                     : {
-                          wasDone: false,
-                          objective: obj,
-                      };
+                        wasDone: false,
+                        objective: obj,
+                    };
             }
 
             // Increment startDate by one day

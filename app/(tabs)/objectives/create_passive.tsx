@@ -51,8 +51,8 @@ export default function CreatePassiveObjectivePage(): ReactElement {
         setCanCreateGoal(
             goalToCreate.trim().length === 0
                 ? false
-                : goalToCreate.trim().length > 3 &&
-                      goalToCreate.trim().length < 120,
+                : goalToCreate.trim().length >= 3 &&
+                goalToCreate.trim().length < 120,
         );
     }, [goalToCreate]);
 
@@ -90,7 +90,7 @@ export default function CreatePassiveObjectivePage(): ReactElement {
                 subHeader={randomMessage}
             />
             <BetterInputField
-                label="What's your goal? Write anything you'd like to do daily."
+                label={t("pages.createPassiveObjective.subHeader")}
                 placeholder="e.g. 'Don't smoke'"
                 value={goalToCreate}
                 name="goalToCreateInput"
