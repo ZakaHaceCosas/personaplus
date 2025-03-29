@@ -16,6 +16,7 @@ import { TFunction } from "i18next";
 import { ShowToast } from "../android";
 import { GenericDailyLog, IsActiveObjective } from "@/types/common_objectives";
 import {
+    ADJUSTED_TODAY_INDEX,
     AlterDate,
     GetCurrentDateCorrectly,
     JavaScriptifyTodaysDate,
@@ -479,12 +480,151 @@ async function FailGenericObjectivesNotDoneYesterday(
     }
 }
 
+
+/**
+ * Checks if an objective was already done today or needs to be done.
+ *
+ * @async
+ * @param {ActiveObjective | PassiveObjective} objective The objective.
+ * @returns {Promise<boolean>} Returns **true** if the objective IS NOT done and NEEDS TO BE DONE. Returns **false** if otherwise (DOES NOT NEED to be done today).
+ */
+async function IsGenericObjectivePending(
+    objective: ActiveObjective | PassiveObjective,
+): Promise<boolean> {
+    try {
+        const { identifier } = objective;
+
+        const dailyLog: ActiveObjectiveDailyLog | PassiveObjectiveDailyLog = IsActiveObjective(objective) ?
+            await GetGenericObjectiveDailyLog("active") :
+            await GetGenericObjectiveDailyLog("passive");
+
+        if (IsActiveObjective(objective) && !objective.info.days[ADJUSTED_TODAY_INDEX]) return false; // not due today
+
+        if (Object.keys(dailyLog).length === 0) {
+            return false; // log does not exist, so the objective isn't done today.
+        }
+
+        const date: TodaysDate = GetCurrentDateCorrectly().string;
+
+        // Validate if dailyLog and the specific identifier exist
+        if (dailyLog[date] && dailyLog[date][identifier]) {
+            const entry: { wasDone: boolean } =
+                dailyLog[date][identifier];
+            if (typeof entry.wasDone === "boolean") {
+                return entry.wasDone;
+            } else {
+                logToConsole(
+                    `Error: Invalid 'wasDone' value for objective ${identifier} on date ${date}`,
+                    "error",
+                );
+                throw new Error(
+                    `Invalid 'wasDone' value for objective ${identifier} on date ${date}`,
+                );
+            }
+        } else {
+            return false; // no interaction with the objective means no data logged.
+        }
+    } catch (e) {
+        throw new Error(
+            `Error checking if the ${objective.identifier} objective is due today: ${e}`,
+        );
+    }
+}
+
+
+type PendingReturn =
+    | number[]
+    | "allDone"
+    | "noneDueToday"
+    | "noneExists"
+
+/**
+ * Tells you if the user has any pending objective or not. If he does, returns all of them, as an `number[]` being each number the ID of each active objective.
+ *
+ * @async
+ * @param {"active" | "passive"} category Category to read from.
+ * @returns {Promise<PendingReturn>} Either an array with pending objective identifiers _only_ or a text-based code indicating context.
+ */
+async function GetPendingGenericObjectives(category: "active" | "passive"): Promise<PendingReturn> {
+    try {
+        const nullishObjectives: ActiveObjective[] | PassiveObjective[] | null =
+            category === "active"
+                ? await GetAllObjectives("active")
+                : await GetAllObjectives("passive");
+        const objectives: ActiveObjective[] | PassiveObjective[] =
+            !nullishObjectives || nullishObjectives.length === 0
+                ? category === "active"
+                    ? ([] as ActiveObjective[])
+                    : ([] as PassiveObjective[])
+                : nullishObjectives;
+
+        if (!objectives || Object.keys(objectives).length === 0) {
+            return "noneExists"; // no objectives at all
+        }
+
+        // TODO: make this PassiveObjective-compatible
+        // there are only two hard things in computer science, cache invalidation and naming things
+        type safeThing = {
+            identifier: number;
+            status: boolean;
+        };
+        type thing = safeThing | null;
+        type whatever = thing[];
+        // okay i think i finally know what's going on in here, for each
+        const dueTodayObjectives: whatever = await Promise.all(
+            Object.values(objectives).map(async function (
+                obj: ActiveObjective,
+            ): Promise<thing> {
+                if (obj.info.days[ADJUSTED_TODAY_INDEX]) {
+                    const status: boolean = await IsGenericObjectivePending(obj);
+                    return { identifier: obj.identifier, status };
+                }
+                return null; // not due today
+            }),
+        );
+
+        // filter out null entries and separate the dueToday objectives based on their status
+        const activeObjectivesDueToday = dueTodayObjectives.filter(
+            (obj: thing): boolean => obj !== null,
+        ) as safeThing[];
+
+        if (activeObjectivesDueToday.length === 0) {
+            return "noneDueToday"; // there are objectives, but none are due today
+        }
+
+        // okay i don't get whats going on in here
+        // hope this works
+        // check if all objectives due today are done
+        const allDone: boolean = activeObjectivesDueToday.every(
+            (obj: safeThing): boolean => obj.status,
+        );
+
+        if (allDone) return "allDone"; // all objectives for today are done
+
+        // get the identifiers of objectives that are not done yet
+        const pendingObjectives: number[] = activeObjectivesDueToday
+            // no i did not write this
+            .filter((obj: safeThing): boolean => obj.status === false)
+            .map((obj: safeThing): number => obj.identifier);
+
+        return pendingObjectives.length > 0 ? pendingObjectives : "allDone"; // return pending objectives or 0 if none
+    } catch (e) {
+        throw new Error(`Failed to get all pending objectives: ${e}`);
+    }
+}
+
+
 export {
-    GetAllObjectives,
     GetObjective,
     DeleteObjective,
     CreateObjective,
+    GetAllObjectives,
+    GetPendingGenericObjectives,
     GetGenericObjectiveDailyLog,
     SaveGenericObjectiveDailyLog,
     FailGenericObjectivesNotDoneYesterday,
+};
+
+export {
+    PendingReturn
 };
