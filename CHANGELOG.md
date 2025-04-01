@@ -9,7 +9,7 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 
 ### Changed
 
-- Until now, the app mixed blue & green as two "accent colors". We've settled on one for both the app's accent and branding.
+- We've settled on **green** for both the app's accent and branding. Until this update, the app mixed blue & green as two "accent colors", making the UI a bit _too_ colorful.
 
 ### Fixed
 

@@ -10,6 +10,7 @@ import GapView from "@/components/ui/gap_view";
 import { PassiveObjective } from "@/types/passive_objectives";
 import { MarkPassiveObjectiveAsDoneToday } from "@/toolkit/objectives/passive_objectives";
 import { IsActiveObjective } from "@/types/common_objectives";
+import { PendingReturn } from "./common";
 
 const styles = StyleSheet.create({
     buttonWrapper: {
@@ -21,18 +22,18 @@ const styles = StyleSheet.create({
     },
 });
 
-export function DisplayObjectives({
+export function DisplayObjectivesThemselves({
     objectivesToRender,
     handler,
 }: {
     objectivesToRender: ActiveObjective[] | PassiveObjective[];
     handler:
-        | "launch"
-        | ((
-              identifier: number,
-              action: "delete" | "edit",
-              category: "active" | "passive",
-          ) => Promise<void>);
+    | "launch"
+    | ((
+        identifier: number,
+        action: "delete" | "edit",
+        category: "active" | "passive",
+    ) => Promise<void>);
 }): ReactElement {
     const { t } = useTranslation();
 
@@ -45,8 +46,8 @@ export function DisplayObjectives({
                         header={
                             IsActiveObjective(obj)
                                 ? t(
-                                      `globals.supportedActiveObjectives.${obj.exercise}.name`,
-                                  )
+                                    `globals.supportedActiveObjectives.${obj.exercise}.name`,
+                                )
                                 : obj.goal
                         }
                         preHeader={t(
@@ -71,11 +72,11 @@ export function DisplayObjectives({
                                 action={async (): Promise<void> =>
                                     IsActiveObjective(obj)
                                         ? await LaunchActiveObjective(
-                                              obj.identifier,
-                                          )
+                                            obj.identifier,
+                                        )
                                         : await MarkPassiveObjectiveAsDoneToday(
-                                              obj.identifier,
-                                          )
+                                            obj.identifier,
+                                        )
                                 }
                             />
                         ) : (
@@ -124,4 +125,39 @@ export function DisplayObjectives({
             )}
         </>
     );
+}
+
+// extracted this one because it's used twice from the same DisplayObjectives function
+// so no need to duplicate code
+function NoObjectivesExist(): ReactElement {
+    const { t } = useTranslation();
+
+    return (
+        <Division header={t("objectives.common.noObjectives.noneExists")} />
+    )
+}
+
+export function DisplayObjectives({
+    identifiers,
+    objectives
+}: {
+    identifiers: PendingReturn,
+    objectives: ActiveObjective[] | PassiveObjective[]
+}): ReactElement {
+    const { t } = useTranslation();
+
+    if (!objectives) return <NoObjectivesExist />
+    if (identifiers === "noneExists") return <NoObjectivesExist />
+    if (identifiers === "allDone") return <Division
+        header={t("objectives.common.noObjectives.allDone")}
+    />
+    if (identifiers === "noneDueToday") return <Division
+        header={t(
+            "objectives.common.noObjectives.todayFree",
+        )}
+    />
+    return <DisplayObjectivesThemselves
+        objectivesToRender={objectives}
+        handler="launch"
+    />
 }

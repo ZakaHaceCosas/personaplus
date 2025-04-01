@@ -1,15 +1,13 @@
 import React, { ReactElement } from "react";
-import BetterButton from "@/components/interaction/better_button";
 import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
-import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
 import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
 import { logToConsole } from "@/toolkit/console";
 import {
     FailObjectivesNotDoneYesterday,
-    GetAllPendingObjectives,
+    GetPendingActiveObjectives,
 } from "@/toolkit/objectives/active_objectives";
 import { ActiveObjective } from "@/types/active_objectives";
 import { FullProfile } from "@/types/user";
@@ -26,7 +24,7 @@ import {
 import { GetObjective, PendingReturn } from "@/toolkit/objectives/common";
 import { DisplayObjectives } from "@/toolkit/objectives/common_ui";
 import GapView from "@/components/ui/gap_view";
-import { GetAllPassiveObjectives } from "@/toolkit/objectives/passive_objectives";
+import { GetAllPassiveObjectives, GetPendingPassiveObjectives } from "@/toolkit/objectives/passive_objectives";
 import { PassiveObjective } from "@/types/passive_objectives";
 
 setNotificationHandler({
@@ -47,7 +45,10 @@ export default function HomeScreen(): ReactElement {
     const [passiveObjectives, setPassiveObjectives] = useState<
         PassiveObjective[]
     >([]);
-    const [identifiers, setIdentifiers] = useState<PendingReturn>(
+    const [activeObjectiveIdentifiers, setActiveObjectiveIdentifiers] = useState<PendingReturn>(
+        "noneExists",
+    );
+    const [passiveObjectiveIdentifiers, setPassiveObjectiveIdentifiers] = useState<PendingReturn>(
         "noneExists",
     );
     const [identifiersLoaded, setIdentifiersLoaded] = useState<boolean>(false);
@@ -74,8 +75,10 @@ export default function HomeScreen(): ReactElement {
                 setUserData(userData);
 
                 // fetch IDs
-                const pending: PendingReturn = await GetAllPendingObjectives();
-                setIdentifiers(pending);
+                const pendingActive: PendingReturn = await GetPendingActiveObjectives();
+                setActiveObjectiveIdentifiers(pendingActive);
+                const pendingPassive: PendingReturn = await GetPendingPassiveObjectives();
+                setPassiveObjectiveIdentifiers(pendingPassive);
 
                 // handle passive objectives (first because active objectives have early returns)
                 setPassiveObjectives(
@@ -83,13 +86,13 @@ export default function HomeScreen(): ReactElement {
                 );
 
                 // handle active objectives
-                if (!Array.isArray(pending)) {
+                if (!Array.isArray(pendingActive)) {
                     setActiveObjectives([]);
                     return;
                 }
                 const objectives: (ActiveObjective | null)[] =
                     await Promise.all(
-                        pending.map(
+                        pendingActive.map(
                             (id: number): Promise<ActiveObjective | null> =>
                                 GetObjective(id, "active"),
                         ),
@@ -125,8 +128,8 @@ export default function HomeScreen(): ReactElement {
                     userData &&
                     userData.wantsNotifications !== false &&
                     !isRegistered &&
-                    Array.isArray(identifiers) &&
-                    identifiers.length > 0
+                    Array.isArray(activeObjectiveIdentifiers) &&
+                    activeObjectiveIdentifiers.length > 0
                 ) {
                     await scheduleRandomNotifications(t);
                 }
@@ -138,7 +141,7 @@ export default function HomeScreen(): ReactElement {
         }
 
         handle();
-    }, [userData, identifiers, identifiersLoaded, notificationsHandled, t]);
+    }, [userData, activeObjectiveIdentifiers, identifiersLoaded, notificationsHandled, t]);
 
     // render stuff
     if (loading || !userData || !activeObjectives || !passiveObjectives) {
@@ -155,58 +158,17 @@ export default function HomeScreen(): ReactElement {
                 subHeader={t("pages.home.subheader")}
             />
             <Section width="total" kind="ActiveObjectives">
-                <>
-                    {identifiers === "allDone" ? (
-                        <Division
-                            header={t("objectives.active.noObjectives.allDone")}
-                        />
-                    ) : identifiers === "noneExists" ? (
-                        <Division header={t("objectives.common.noObjectives")}>
-                            <BetterButton
-                                style="ACE"
-                                action={(): void =>
-                                    router.push(Routes.OBJECTIVES.CREATE_ACTIVE)
-                                }
-                                buttonText={t("objectives.active.create.text")}
-                                buttonHint={t("objectives.active.create.hint")}
-                            />
-                        </Division>
-                    ) : identifiers === "noneDueToday" ? (
-                        <Division
-                            header={t(
-                                "objectives.active.noObjectives.todayFree",
-                            )}
-                        />
-                    ) : (
-                        <DisplayObjectives
-                            objectivesToRender={activeObjectives}
-                            handler="launch"
-                        />
-                    )}
-                </>
+                <DisplayObjectives
+                    objectives={activeObjectives}
+                    identifiers={activeObjectiveIdentifiers}
+                />
             </Section>
             <GapView height={20} />
             <Section width="total" kind="PassiveObjectives">
-                <>
-                    {passiveObjectives === null ||
-                        passiveObjectives.length === 0 ? (
-                        <Division header={t("objectives.common.noObjectives")}>
-                            <BetterButton
-                                style="ACE"
-                                action={(): void =>
-                                    router.push(Routes.OBJECTIVES.CREATE_PASSIVE)
-                                }
-                                buttonText={t("objectives.passive.create.text")}
-                                buttonHint={t("objectives.passive.create.hint")}
-                            />
-                        </Division>
-                    ) : (
-                        <DisplayObjectives
-                            objectivesToRender={passiveObjectives}
-                            handler="launch"
-                        />
-                    )}
-                </>
+                <DisplayObjectives
+                    objectives={passiveObjectives}
+                    identifiers={passiveObjectiveIdentifiers}
+                />
             </Section>
             <PageEnd includeText={true} />
         </>
