@@ -103,9 +103,7 @@ async function SaveActiveObjectiveToDailyLog(
             "success",
         );
     } catch (e) {
-        const message: string = id
-            ? `Error saving user's performance for objective ${id}: ${e}`
-            : `Error saving user's performance (no objective ID): ${e}`;
+        const message: string = `Error saving user's performance for objective ${id}: ${e}`;
         logToConsole(message, "error");
         throw new Error(message);
     }
@@ -117,7 +115,7 @@ async function SaveActiveObjectiveToDailyLog(
  * @async
  * @returns {Promise<PendingReturn>} Either an array with pending objective identifiers _only_ or a text-based code indicating context.
  */
-async function GetAllPendingObjectives(): Promise<PendingReturn> {
+async function GetPendingActiveObjectives(): Promise<PendingReturn> {
     return await GetPendingGenericObjectives("active")
 }
 
@@ -396,7 +394,7 @@ export {
     GetActiveObjective,
     GetActiveObjectiveDailyLog,
     GetAllActiveObjectives,
-    GetAllPendingObjectives,
+    GetPendingActiveObjectives,
     LaunchActiveObjective,
     SaveActiveObjectiveToDailyLog,
 };

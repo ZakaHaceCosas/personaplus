@@ -480,7 +480,6 @@ async function FailGenericObjectivesNotDoneYesterday(
     }
 }
 
-
 /**
  * Checks if an objective was already done today or needs to be done.
  *
@@ -498,11 +497,11 @@ async function IsGenericObjectivePending(
             await GetGenericObjectiveDailyLog("active") :
             await GetGenericObjectiveDailyLog("passive");
 
-        if (IsActiveObjective(objective) && !objective.info.days[ADJUSTED_TODAY_INDEX]) return false; // not due today
+        // the opposite ("&& !obj.days") seemed more logical to me (return NOT due today IF NOT added for today), however that does the opposite and this somehow does it right...
+        // sometimes i wonder if it's me or JS who has a problem
+        if (IsActiveObjective(objective) && objective.info.days[ADJUSTED_TODAY_INDEX]) return false; // not due today
 
-        if (Object.keys(dailyLog).length === 0) {
-            return false; // log does not exist, so the objective isn't done today.
-        }
+        if (Object.keys(dailyLog).length === 0) return true; // log does not exist, so the objective is due today.
 
         const date: TodaysDate = GetCurrentDateCorrectly().string;
 
@@ -510,20 +509,14 @@ async function IsGenericObjectivePending(
         if (dailyLog[date] && dailyLog[date][identifier]) {
             const entry: { wasDone: boolean } =
                 dailyLog[date][identifier];
-            if (typeof entry.wasDone === "boolean") {
-                return entry.wasDone;
-            } else {
-                logToConsole(
-                    `Error: Invalid 'wasDone' value for objective ${identifier} on date ${date}`,
-                    "error",
-                );
+            if (typeof entry.wasDone !== "boolean") {
                 throw new Error(
                     `Invalid 'wasDone' value for objective ${identifier} on date ${date}`,
                 );
             }
-        } else {
-            return false; // no interaction with the objective means no data logged.
+            return !entry.wasDone; // if it IS done, it IS NOT due today
         }
+        return true; // no interaction with the objective means no data logged.
     } catch (e) {
         throw new Error(
             `Error checking if the ${objective.identifier} objective is due today: ${e}`,
@@ -531,7 +524,7 @@ async function IsGenericObjectivePending(
     }
 }
 
-
+/** Either an array of the IDs of pending objectives, or a self-descriptive status code. IDs should not be mixed up - either an active objective ID array or a passive objective one. */
 type PendingReturn =
     | number[]
     | "allDone"
@@ -563,6 +556,7 @@ async function GetPendingGenericObjectives(category: "active" | "passive"): Prom
         }
 
         // TODO: make this PassiveObjective-compatible
+        // NOTE: half done
         // there are only two hard things in computer science, cache invalidation and naming things
         type safeThing = {
             identifier: number;
@@ -573,13 +567,10 @@ async function GetPendingGenericObjectives(category: "active" | "passive"): Prom
         // okay i think i finally know what's going on in here, for each
         const dueTodayObjectives: whatever = await Promise.all(
             Object.values(objectives).map(async function (
-                obj: ActiveObjective,
+                obj: ActiveObjective | PassiveObjective,
             ): Promise<thing> {
-                if (obj.info.days[ADJUSTED_TODAY_INDEX]) {
-                    const status: boolean = await IsGenericObjectivePending(obj);
-                    return { identifier: obj.identifier, status };
-                }
-                return null; // not due today
+                const status: boolean = await IsGenericObjectivePending(obj);
+                return { identifier: obj.identifier, status };
             }),
         );
 
@@ -613,7 +604,7 @@ async function GetPendingGenericObjectives(category: "active" | "passive"): Prom
     }
 }
 
-
+// function exports
 export {
     GetObjective,
     DeleteObjective,
@@ -625,6 +616,7 @@ export {
     FailGenericObjectivesNotDoneYesterday,
 };
 
+// type exports
 export {
     PendingReturn
 };

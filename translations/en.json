@@ -558,7 +558,11 @@
     },
     "objectives": {
         "common": {
-            "noObjectives": "You don't have any objective. Create one now!",
+            "noObjectives": {
+                "noneExists": "You don't have any objective. Create one now!",
+                "allDone": "Looks like you've done everything!",
+                "todayFree": "No objectives for today. Enjoy your break!"
+            },
             "feedback": {
                 "created": "Objective successfully created!",
                 "deleted": "Objective {{id}} successfully removed!"
@@ -566,10 +570,6 @@
         },
         "active": {
             "allCapsSingular": "ACTIVE OBJECTIVE",
-            "noObjectives": {
-                "allDone": "Looks like you've done everything!",
-                "todayFree": "No objectives for today. Enjoy your break!"
-            },
             "create": {
                 "text": "Create active objective",
                 "hint": "Opens a page from which you can create an active objective."

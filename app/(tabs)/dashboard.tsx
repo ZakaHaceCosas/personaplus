@@ -23,7 +23,7 @@ import {
     GetObjective,
 } from "@/toolkit/objectives/common";
 import { PassiveObjective } from "@/types/passive_objectives";
-import { DisplayObjectives } from "@/toolkit/objectives/common_ui";
+import { DisplayObjectivesThemselves } from "@/toolkit/objectives/common_ui";
 
 const styles = StyleSheet.create({
     buttonWrapper: {
@@ -123,9 +123,9 @@ export default function Dashboard(): ReactElement {
             />
             <Section kind="ActiveObjectives">
                 {activeObjectives === null || activeObjectives.length === 0 ? (
-                    <Division header={t("objectives.common.noObjectives")} />
+                    <Division header={t("objectives.common.noObjectives.noneExists")} />
                 ) : (
-                    <DisplayObjectives
+                    <DisplayObjectivesThemselves
                         objectivesToRender={activeObjectives}
                         handler={handleObjective}
                     />
@@ -145,9 +145,9 @@ export default function Dashboard(): ReactElement {
             <Section kind="PassiveObjectives">
                 {passiveObjectives === null ||
                     passiveObjectives.length === 0 ? (
-                    <Division header={t("objectives.common.noObjectives")} />
+                    <Division header={t("objectives.common.noObjectives.noneExists")} />
                 ) : (
-                    <DisplayObjectives
+                    <DisplayObjectivesThemselves
                         objectivesToRender={passiveObjectives}
                         handler={handleObjective}
                     />

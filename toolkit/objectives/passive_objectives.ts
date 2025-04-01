@@ -18,6 +18,8 @@ import {
     GetAllObjectives,
     GetGenericObjectiveDailyLog,
     GetObjective,
+    GetPendingGenericObjectives,
+    PendingReturn,
     SaveGenericObjectiveDailyLog,
 } from "@/toolkit/objectives/common";
 import {
@@ -127,12 +129,20 @@ async function SavePassiveObjectiveToDailyLog(
             "success",
         );
     } catch (e) {
-        const message: string = id
-            ? `Error saving user's goal for objective ${id}: ${e}`
-            : `Error saving user's goal (no objective ID): ${e}`;
+        const message: string = `Error saving user's goal for objective ${id}: ${e}`;
         logToConsole(message, "error");
         throw new Error(message);
     }
+}
+
+/**
+ * Tells you if the user has any passive objective due today or not. If he does, returns all of them, as an `number[]` being each number the ID of each active objective.
+ *
+ * @async
+ * @returns {Promise<PendingReturn>} Either an array with pending objective identifiers _only_ or a text-based code indicating context.
+ */
+async function GetPendingPassiveObjectives(): Promise<PendingReturn> {
+    return await GetPendingGenericObjectives("passive")
 }
 
 async function MarkPassiveObjectiveAsDoneToday(
@@ -146,6 +156,7 @@ export {
     DeletePassiveObjective,
     GetPassiveObjective,
     GetAllPassiveObjectives,
+    GetPendingPassiveObjectives,
     GetPassiveObjectiveDailyLog,
     MarkPassiveObjectiveAsDoneToday,
 };

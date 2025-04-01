@@ -23,7 +23,7 @@ import {
     cancelScheduledNotifications,
 } from "@/hooks/use_notification";
 import { logToConsole } from "@/toolkit/console";
-import { GetAllPendingObjectives } from "@/toolkit/objectives/active_objectives";
+import { GetPendingActiveObjectives } from "@/toolkit/objectives/active_objectives";
 import { GenerateRandomMessage } from "@/toolkit/strings";
 
 export default function Results(): ReactElement {
@@ -85,9 +85,7 @@ export default function Results(): ReactElement {
             try {
                 const isRegistered: boolean =
                     await areNotificationsScheduledForToday();
-                if (userData.wantsNotifications === false && isRegistered) {
-                    await cancelScheduledNotifications(t, false);
-                } else if (!Array.isArray(await GetAllPendingObjectives())) {
+                if ((userData.wantsNotifications === false && isRegistered) || !Array.isArray(await GetPendingActiveObjectives())) {
                     await cancelScheduledNotifications(t, false);
                 }
             } catch (e) {
