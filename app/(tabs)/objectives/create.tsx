@@ -445,10 +445,9 @@ export default function CreateActiveObjectivePage(): ReactElement {
             }
             if (response !== 0) {
                 logToConsole(
-                    `Got 1 as the ${
-                        edit.enable
-                            ? "EditActiveObjective()"
-                            : "CreateActiveObjective()"
+                    `Got 1 as the ${edit.enable
+                        ? "EditActiveObjective()"
+                        : "CreateActiveObjective()"
                     } response`,
                     "error",
                 );
@@ -456,10 +455,9 @@ export default function CreateActiveObjectivePage(): ReactElement {
             router.replace(Routes.MAIN.HOME);
         } catch (e) {
             logToConsole(
-                `Error with ${
-                    edit.enable
-                        ? "EditActiveObjective()"
-                        : "CreateActiveObjective()"
+                `Error with ${edit.enable
+                    ? "EditActiveObjective()"
+                    : "CreateActiveObjective()"
                 }:\n${e}`,
                 "error",
             );
@@ -554,13 +552,13 @@ export default function CreateActiveObjectivePage(): ReactElement {
                                         {
                                             borderColor: day
                                                 ? Colors.PRIMARIES.ACE
-                                                      .ACE_STROKE
+                                                    .ACE_STROKE
                                                 : Colors.MAIN.DEFAULT_ITEM
-                                                      .STROKE,
+                                                    .STROKE,
                                             backgroundColor: day
                                                 ? Colors.PRIMARIES.ACE.ACE
                                                 : Colors.MAIN.DEFAULT_ITEM
-                                                      .BACKGROUND,
+                                                    .BACKGROUND,
                                         },
                                     ]}
                                 >
@@ -587,7 +585,7 @@ export default function CreateActiveObjectivePage(): ReactElement {
                                         style={styles.dayActualContainer}
                                     >
                                         <BetterText
-                                            textColor={Colors.BASIC.WHITE}
+                                            textColor={day ? Colors.BASIC.BLACK : Colors.BASIC.WHITE}
                                             fontSize={FontSizes.REGULAR}
                                             fontWeight="Medium"
                                         >
@@ -642,16 +640,16 @@ export default function CreateActiveObjectivePage(): ReactElement {
                             <BetterTextNormalText>
                                 {
                                     speedOptions[
-                                        objectiveToCreate.specificData
-                                            .estimateSpeed
+                                    objectiveToCreate.specificData
+                                        .estimateSpeed
                                     ]![0]
                                 }
                             </BetterTextNormalText>
                             <BetterTextSmallText>
                                 {
                                     speedOptions[
-                                        objectiveToCreate.specificData
-                                            .estimateSpeed
+                                    objectiveToCreate.specificData
+                                        .estimateSpeed
                                     ]![1]
                                 }
                             </BetterTextSmallText>
