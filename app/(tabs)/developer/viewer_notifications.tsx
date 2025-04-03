@@ -6,7 +6,6 @@ import {
     BetterTextSmallText,
 } from "@/components/text/better_text_presets";
 import GapView from "@/components/ui/gap_view";
-import { logToConsole } from "@/toolkit/console";
 import {
     getAllScheduledNotificationsAsync,
     NotificationRequest,
@@ -26,9 +25,7 @@ export default function ViewerNotifications(): ReactElement {
                     await getAllScheduledNotificationsAsync();
                 setNotifications(allNotifications);
             } catch (e) {
-                const err = `Error fetching data at DevInterface: ${e}`;
-                logToConsole(err, "error");
-                setError(err);
+                setError(`Error fetching data at DevInterface: ${e}`);
             } finally {
                 setLoading(false);
             }
@@ -47,8 +44,8 @@ export default function ViewerNotifications(): ReactElement {
             {loading ? (
                 <Loading />
             ) : notifications &&
-              Array.isArray(notifications) &&
-              notifications.length > 0 ? (
+                Array.isArray(notifications) &&
+                notifications.length > 0 ? (
                 <>
                     {error ? (
                         <BetterTextSmallText>{error}</BetterTextSmallText>

@@ -4,7 +4,6 @@ import { StyleSheet, View } from "react-native";
 import { BetterTextNormalText } from "@/components/text/better_text_presets";
 import GapView from "@/components/ui/gap_view";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import { logToConsole } from "@/toolkit/console";
 import BetterButton from "@/components/interaction/better_button";
 import TopBar from "@/components/navigation/top_bar";
 import SessionTimer from "@/components/ui/pages/timer";
@@ -73,9 +72,9 @@ function CalculateDistanceBetweenInterval(
     const a: number =
         Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
         Math.cos(lat1Radians) *
-            Math.cos(lat2Radians) *
-            Math.sin(deltaLon / 2) *
-            Math.sin(deltaLon / 2);
+        Math.cos(lat2Radians) *
+        Math.sin(deltaLon / 2) *
+        Math.sin(deltaLon / 2);
     const c: number = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return earthRadius * c;
 }
@@ -117,7 +116,7 @@ export default function PersonaPlusRunningTracker(): ReactElement {
             const { status } =
                 await Location.requestForegroundPermissionsAsync();
             if (status !== "granted") {
-                logToConsole("Location permission not granted", "error", {
+                console.error("Location permission not granted", {
                     location: "@/objectives/exp_tracker.tsx",
                     function: "startTracking",
                     isHandler: false,
@@ -219,8 +218,8 @@ export default function PersonaPlusRunningTracker(): ReactElement {
                 objective={objective}
                 running={isTracking}
                 timerColor={Colors.PRIMARIES.ACE.ACE}
-                restingStateHandler={(): void => {}}
-                onComplete={(): void => {}}
+                restingStateHandler={(): void => { }}
+                onComplete={(): void => { }}
             />
             <GapView height={10} />
             <View style={styles.buttonContainer}>

@@ -1,50 +1,17 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement } from "react";
 import BetterButton from "@/components/interaction/better_button";
 import PageEnd from "@/components/static/page_end";
 import {
-    BetterTextSmallText,
     BetterTextSubHeader,
 } from "@/components/text/better_text_presets";
 import BetterAlert from "@/components/ui/better_alert";
 import GapView from "@/components/ui/gap_view";
 import { Routes } from "@/constants/routes";
-import StoredItemNames from "@/constants/stored_item_names";
-import { getLogsFromStorage, logToConsole } from "@/toolkit/console";
-import AsyncStorage from "expo-sqlite/kv-store";
 import * as Device from "expo-device";
 import { router } from "expo-router";
 import TopBar from "@/components/navigation/top_bar";
-import { ShowToast } from "@/toolkit/android";
-import { Log } from "@/types/logs";
-import Loading from "@/components/static/loading";
 
 export default function DevInterface(): ReactElement {
-    const [loading, setLoading] = useState<boolean>(true);
-    const [logs, setLogs] = useState<Log[]>([]);
-
-    useEffect((): void => {
-        try {
-            // logs
-            setLogs(getLogsFromStorage());
-        } catch (e) {
-            const err = `Error fetching logs at DevInterface: ${e}`;
-            logToConsole(err, "error");
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    if (loading) return <Loading />;
-
-    async function clearLogs(): Promise<void> {
-        try {
-            await AsyncStorage.setItem(StoredItemNames.consoleLogs, "");
-            ShowToast("Clear!");
-        } catch (e) {
-            logToConsole(`Failed to clear logs: ${e}`, "error");
-        }
-    }
-
     return (
         <>
             <TopBar
@@ -102,39 +69,6 @@ export default function DevInterface(): ReactElement {
                 action={(): void =>
                     router.push(Routes.DEV_INTERFACE.VIEWER_DAILY_LOG)
                 }
-            />
-            <GapView height={20} />
-            <BetterTextSubHeader>Console logs</BetterTextSubHeader>
-            <GapView height={10} />
-            <BetterButton
-                buttonText="See all logs"
-                buttonHint="Opens up a dedicated page for viewing all console logs."
-                style="ACE"
-                action={(): void =>
-                    router.push(Routes.DEV_INTERFACE.VIEWER_LOGS)
-                }
-            />
-            <GapView height={10} />
-            <BetterButton
-                buttonText="See error logs only"
-                buttonHint="Opens up a dedicated page for viewing warning and error console logs."
-                style="DEFAULT"
-                action={(): void =>
-                    router.push(Routes.DEV_INTERFACE.VIEWER_ERROR_LOGS)
-                }
-            />
-            <GapView height={10} />
-            <BetterTextSmallText>
-                If log viewers take too much to load or you simply want to
-                reduce storage usage, you can directly flush them from here.
-                Current amount of logs: {logs.length}.
-            </BetterTextSmallText>
-            <GapView height={10} />
-            <BetterButton
-                buttonText="Clear logs"
-                buttonHint="Removes all saved console logs from storage."
-                style="HMM"
-                action={clearLogs}
             />
             <PageEnd includeText={true} size="tiny" />
         </>

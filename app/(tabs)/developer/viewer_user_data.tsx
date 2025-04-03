@@ -4,7 +4,6 @@ import PageEnd from "@/components/static/page_end";
 import { BetterTextSmallText } from "@/components/text/better_text_presets";
 import BetterTable, { BetterTableItem } from "@/components/ui/better_table";
 import GapView from "@/components/ui/gap_view";
-import { logToConsole } from "@/toolkit/console";
 import { OrchestrateUserData } from "@/toolkit/user";
 import { FullProfile } from "@/types/user";
 import React, { ReactElement, useEffect, useState } from "react";
@@ -30,9 +29,7 @@ export default function ViewerUserData(): ReactElement {
                 );
                 setUserData(mappedArray);
             } catch (e) {
-                const err = `Error fetching data at DevInterface: ${e}`;
-                logToConsole(err, "error");
-                setError(err);
+                setError(`Error fetching data at DevInterface: ${e}`);
             } finally {
                 setLoading(false);
             }

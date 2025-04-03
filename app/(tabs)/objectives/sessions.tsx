@@ -24,7 +24,6 @@ import {
     useGlobalSearchParams,
 } from "expo-router";
 import GapView from "@/components/ui/gap_view";
-import { logToConsole } from "@/toolkit/console";
 import { useTranslation } from "react-i18next";
 import BetterButton from "@/components/interaction/better_button";
 import Colors from "@/constants/colors";
@@ -113,7 +112,7 @@ export default function Sessions(): ReactElement {
                 setObjective(obj);
                 setLoading(false);
             } catch (e) {
-                logToConsole(
+                console.error(
                     `Error fetching objective for session! ${e}`,
                     "error",
                 );
@@ -215,7 +214,7 @@ export default function Sessions(): ReactElement {
                     params: params,
                 });
             } catch (e) {
-                logToConsole(
+                console.error(
                     `Error finishing session for ${objective ? objective.identifier : "(UNKNOWN)"
                     }: ${e}`,
                     "error",

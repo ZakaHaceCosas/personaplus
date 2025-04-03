@@ -22,7 +22,6 @@ import {
     areNotificationsScheduledForToday,
     cancelScheduledNotifications,
 } from "@/hooks/use_notification";
-import { logToConsole } from "@/toolkit/console";
 import { GetPendingActiveObjectives } from "@/toolkit/objectives/active_objectives";
 import { GenerateRandomMessage } from "@/toolkit/strings";
 
@@ -60,9 +59,8 @@ export default function Results(): ReactElement {
         !originalParams.elapsedTime ||
         !originalParams.identifier
     ) {
-        logToConsole(
+        console.error(
             `Missing required parameters. Params: BURNT CALORIES ${originalParams.burntCalories}, ELAPSED TIME ${originalParams.elapsedTime}, ID ${originalParams.identifier}`,
-            "error",
             {
                 location: "@/app/(tabs)/objectives/Results.tsx",
                 function: "useGlobalSearchParams()",
@@ -89,7 +87,7 @@ export default function Results(): ReactElement {
                     await cancelScheduledNotifications(t, false);
                 }
             } catch (e) {
-                logToConsole(`Error handling notifications: ${e}`, "error");
+                console.error(`Error handling notifications: ${e}`);
             } finally {
                 setNotificationsHandled(true);
             }

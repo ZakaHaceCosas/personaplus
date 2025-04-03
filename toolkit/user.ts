@@ -12,7 +12,6 @@
  */
 
 import AsyncStorage from "expo-sqlite/kv-store";
-import { logToConsole } from "@/toolkit/console";
 import { Alert } from "react-native";
 import {
     BasicUserData,
@@ -24,6 +23,7 @@ import { router } from "expo-router";
 import StoredItemNames from "@/constants/stored_item_names";
 import { Routes } from "@/constants/routes";
 import { TFunction } from "i18next";
+import { ShowToast } from "./android";
 
 /**
  * Limits to what we consider "real" user data.
@@ -249,11 +249,8 @@ export async function OrchestrateUserData(
 
         return fullData;
     } catch (e) {
-        logToConsole(
+        console.error(
             `Error orchestrating user data! ${e}`,
-            "error",
-            undefined,
-            false,
         );
         return ErrorUserData;
     }
@@ -291,22 +288,17 @@ export async function updateBrm5(
             router.replace(Routes.MAIN.WELCOME_SCREEN);
             return 0;
         } catch (e) {
-            logToConsole(
+            ShowToast(
                 "Unknown error removing user data!",
-                "error",
-                undefined,
-                true,
             ); // to the user, we show a normal message
-            logToConsole(
+            console.error(
                 `Error releasing op. Resurgence AKA removing user data: ${e}`,
-                "error",
                 {
                     function: "updateBrm5()",
                     location: "@/toolkit/User.ts",
                     isHandler: true,
                     handlerName: "releaseOperationResurgence()",
                 },
-                false,
             ); // to the developer, the full error info and the real name of the function
             throw e;
         }
@@ -329,14 +321,13 @@ export async function updateBrm5(
                     isPreferred: true,
                     text: t("globals.interaction.nevermind"),
                     style: "cancel",
-                    onPress: () => {},
+                    onPress: () => { },
                 },
             ],
         );
     } else {
-        logToConsole(
+        console.warn(
             "WATCHOUT! BAD PRACTICE SUMMONED!! (someone called `updateBrm5` with param `careAboutTheUser` set to `false`)",
-            "warn",
         );
         await releaseOperationResurgence();
     }
@@ -386,15 +377,15 @@ export const IndividualUserDataValidators = {
                 ? t(`${validatorPrefix}.username.required`)
                 : username.length < VALID_USER_CAPS.USERNAME.MIN ||
                     username.length >= VALID_USER_CAPS.USERNAME.MAX
-                  ? t(`${validatorPrefix}.username.length`, {
+                    ? t(`${validatorPrefix}.username.length`, {
                         minCap: VALID_USER_CAPS.USERNAME.MIN,
                         maxCap: VALID_USER_CAPS.USERNAME.MAX,
                     })
-                  : VALID_USER_CAPS.USERNAME.INVALID.includes(
-                          username.toLowerCase(),
-                      )
-                    ? t(`${validatorPrefix}.username.forbidden`)
-                    : "";
+                    : VALID_USER_CAPS.USERNAME.INVALID.includes(
+                        username.toLowerCase(),
+                    )
+                        ? t(`${validatorPrefix}.username.forbidden`)
+                        : "";
         },
     },
     age: {
@@ -409,10 +400,10 @@ export const IndividualUserDataValidators = {
             return age === ""
                 ? ""
                 : !(age >= MIN)
-                  ? t(`${validatorPrefix}.age.min`, { minCap: MIN })
-                  : !(age <= MAX)
-                    ? t(`${validatorPrefix}.age.max`, { maxCap: MAX })
-                    : "";
+                    ? t(`${validatorPrefix}.age.min`, { minCap: MIN })
+                    : !(age <= MAX)
+                        ? t(`${validatorPrefix}.age.max`, { maxCap: MAX })
+                        : "";
         },
     },
     weight: {
@@ -429,10 +420,10 @@ export const IndividualUserDataValidators = {
             return weight === ""
                 ? ""
                 : !(weight >= MIN)
-                  ? t(`${validatorPrefix}.weight.min`, { minCap: MIN })
-                  : !(weight <= MAX)
-                    ? t(`${validatorPrefix}.weight.max`, { maxCap: MAX })
-                    : "";
+                    ? t(`${validatorPrefix}.weight.min`, { minCap: MIN })
+                    : !(weight <= MAX)
+                        ? t(`${validatorPrefix}.weight.max`, { maxCap: MAX })
+                        : "";
         },
     },
     height: {
@@ -449,10 +440,10 @@ export const IndividualUserDataValidators = {
             return height === ""
                 ? ""
                 : !(height >= MIN)
-                  ? t(`${validatorPrefix}.height.min`, { minCap: MIN })
-                  : !(height <= MAX)
-                    ? t(`${validatorPrefix}.height.max`, { maxCap: MAX })
-                    : "";
+                    ? t(`${validatorPrefix}.height.min`, { minCap: MIN })
+                    : !(height <= MAX)
+                        ? t(`${validatorPrefix}.height.max`, { maxCap: MAX })
+                        : "";
         },
     },
 };

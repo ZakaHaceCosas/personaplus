@@ -11,7 +11,6 @@ import {
     PassiveObjectiveWithoutId,
 } from "@/types/passive_objectives";
 import AsyncStorage from "expo-sqlite/kv-store";
-import { logToConsole } from "../console";
 import { TFunction } from "i18next";
 import { ShowToast } from "../android";
 import { GenericDailyLog, IsActiveObjective } from "@/types/common_objectives";
@@ -51,10 +50,8 @@ async function GetAllObjectives(
         );
 
         if (!storedObjectives || storedObjectives.trim() === "") {
-            logToConsole(
+            console.warn(
                 `Warning! There are no ${category} objectives`,
-                "warn",
-                undefined,
             );
             return null;
         }
@@ -63,10 +60,8 @@ async function GetAllObjectives(
         const objectives = JSON.parse(storedObjectives);
 
         if (!Array.isArray(objectives)) {
-            logToConsole(
+            console.warn(
                 "Warning! Objectives are not an array",
-                "warn",
-                undefined,
             );
             return null;
         }
@@ -77,7 +72,7 @@ async function GetAllObjectives(
 
         return objectives;
     } catch (e) {
-        logToConsole(`Failed to get objectives: ${e}`, "error", {
+        console.error(`Failed to get objectives: ${e}`, {
             location: "@/toolkit/objectives/common.ts",
             isHandler: false,
             function: "GetAllObjectives()",
@@ -114,7 +109,7 @@ async function GetObjective(
                 : await GetAllObjectives("passive");
 
         if (!objectives) {
-            logToConsole("No objectives exist!", "error");
+            console.error("No objectives exist!");
             return null;
         }
 
@@ -173,9 +168,8 @@ async function DeleteObjective(
             JSON.stringify(updatedObjectives),
         );
     } catch (e) {
-        logToConsole(
+        throw new Error(
             `Error deleting ${category} objective ${identifier}: ${e}`,
-            "error",
         );
     }
 }
@@ -189,20 +183,10 @@ async function DeleteObjective(
  * @returns {Promise<void>}
  */
 async function CreateObjective(
-    target: ActiveObjectiveWithoutId,
-    category: "active",
-    t: TFunction,
-): Promise<0 | 1>;
-async function CreateObjective(
-    target: PassiveObjectiveWithoutId,
-    category: "passive",
-    t: TFunction,
-): Promise<0 | 1>;
-async function CreateObjective(
     target: ActiveObjectiveWithoutId | PassiveObjectiveWithoutId,
     category: "active" | "passive",
     t: TFunction,
-): Promise<0 | 1> {
+): Promise<void> {
     try {
         const nullishObjectives: ActiveObjective[] | PassiveObjective[] | null =
             category === "active"
@@ -273,23 +257,18 @@ async function CreateObjective(
         }
 
         ShowToast(message);
-        logToConsole(
+        console.log(
             `Created objective with ID ${newObjective.identifier} successfully! Full JSON of the created objective:\n${JSON.stringify(
                 newObjective,
             )}`,
-            "success",
-            undefined,
-            false,
         );
-        return 0;
+        return;
     } catch (e) {
-        logToConsole(
-            `Something went wrong creating an objective. JSON:\n${JSON.stringify(
+        throw new Error(
+            `Something went wrong creating an objective.\nJSON:\n${JSON.stringify(
                 target,
             )}\n\nError: ${e}`,
-            "error",
         );
-        return 1;
     }
 }
 
@@ -326,7 +305,6 @@ async function GetGenericObjectiveDailyLog(
         }
         return JSON.parse(response);
     } catch (e) {
-        logToConsole(`Error getting ${category} daily log: ${e}`, "error");
         throw new Error(`Error getting ${category} daily log: ${e}`);
     }
 }
@@ -373,7 +351,7 @@ async function SaveGenericObjectiveDailyLog(
             JSON.stringify(sortedLog),
         );
     } catch (e) {
-        logToConsole(`Error saving to ${category} daily log: ${e}`, "error");
+        throw new Error(`Error saving to ${category} daily log: ${e}`);
     }
 }
 
@@ -470,7 +448,7 @@ async function FailGenericObjectivesNotDoneYesterday(
 
         return;
     } catch (e) {
-        logToConsole(`Error failing objectives: ${e}`, "error");
+        throw new Error(`Error failing objectives: ${e}`);
     }
 }
 

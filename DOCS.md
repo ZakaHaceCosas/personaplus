@@ -292,7 +292,7 @@ function Greet(who: string): void {}
  * @param {string} who Who to greet
  */
 function Greet(who: string): void {
-    logToConsole(`Hi, ${who}!`, "log");
+    console.log(`Hi, ${who}!`);
 }
 ```
 

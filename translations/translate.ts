@@ -18,7 +18,6 @@ import { getLocales, Locale } from "expo-localization";
 import enTranslations from "@/translations/en.json";
 import esTranslations from "@/translations/es.json";
 import { FullProfile } from "@/types/user";
-import { logToConsole } from "@/toolkit/console";
 import StoredItemNames from "@/constants/stored_item_names";
 import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
 
@@ -49,9 +48,8 @@ export async function getDefaultLocale(): Promise<"es" | "en"> {
 
         return savedLanguage;
     } catch (e) {
-        logToConsole(
+        console.warn(
             `Error handling getDefaultLocale(): ${e}. This is a warning and not an error because it doesn't have severe side effects. Fallback to English.`,
-            "warn",
             {
                 location: "@/translations/translate.ts",
                 isHandler: false,
@@ -83,7 +81,7 @@ async function initializeI18n(): Promise<void> {
             compatibilityJSON: "v3",
         });
     } catch (e) {
-        logToConsole(`Error with i18n init: ${e}`, "error", {
+        console.error(`Error with i18n init: ${e}`, {
             location: "@/translations/translate.ts",
             isHandler: false,
             function: "initializeI18n()",
@@ -97,12 +95,12 @@ initializeI18n();
  * Function to change the language and save it to the AsyncStorage. **Async function.**
  *
  * @async
+ * @param {FullProfile} userData User's data.
  * @param {("es" | "en")} language The language you want to set.
  * @returns {Promise<0 | 1>} 0 if success, 1 if failure.
  */
-async function changeLanguage(language: "es" | "en"): Promise<0 | 1> {
+async function changeLanguage(userData: FullProfile, language: "es" | "en"): Promise<void> {
     try {
-        const userData: FullProfile = await OrchestrateUserData();
         const newUserData: FullProfile = {
             ...userData,
             language,
@@ -112,19 +110,15 @@ async function changeLanguage(language: "es" | "en"): Promise<0 | 1> {
             JSON.stringify(newUserData),
         );
         i18n.changeLanguage(language);
-        return 0;
+        return;
     } catch (e) {
-        logToConsole(
-            `Error changing language: ${e}`,
-            "error",
-            {
+        throw new Error(
+            `Error changing language: ${e}\n${{
                 function: "changeLanguage",
                 isHandler: false,
                 location: "@/translations/translate.ts",
-            },
-            false,
+            }}`,
         );
-        return 1;
     }
 }
 

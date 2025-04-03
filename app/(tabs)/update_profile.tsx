@@ -23,7 +23,6 @@ import { router } from "expo-router";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";
-import { logToConsole } from "@/toolkit/console";
 import {
     IndividualUserDataValidators,
     OrchestrateUserData,
@@ -72,7 +71,7 @@ export default function UpdateProfile() {
                 setWorkingData(data);
                 setLoading(false);
             } catch (e) {
-                logToConsole(`Error handling user data: ${e}`, "error");
+                console.error(`Error handling user data: ${e}`);
             }
         }
         handle();
@@ -102,12 +101,11 @@ export default function UpdateProfile() {
                 );
                 SafelyGoBack(Routes.MAIN.PROFILE);
             } catch (e) {
-                logToConsole(`Error creating profile: ${e}`, "error");
+                console.error(`Error creating profile: ${e}`);
             }
         } else {
-            logToConsole(
+            console.error(
                 "Error saving user data, some data is missing!",
-                "error",
             ); // bro forgot to add data
         }
     }
@@ -204,13 +202,13 @@ export default function UpdateProfile() {
                     workingData!.username.toLowerCase().includes("psoe")) && (
                     <BetterTextSmallerText>
                         {workingData!.username.toLowerCase() === "error" ||
-                        workingData!.username.toLowerCase() === "error."
+                            workingData!.username.toLowerCase() === "error."
                             ? t(
-                                  "userData.formValidation.username.forbiddenError",
-                              )
+                                "userData.formValidation.username.forbiddenError",
+                            )
                             : t(
-                                  "userData.formValidation.username.forbiddenPsoe",
-                              )}
+                                "userData.formValidation.username.forbiddenPsoe",
+                            )}
                     </BetterTextSmallerText>
                 )
             }

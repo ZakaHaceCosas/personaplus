@@ -20,7 +20,6 @@ import React, {
 } from "react";
 import GapView from "@/components/ui/gap_view";
 import { useTranslation } from "react-i18next";
-import { logToConsole } from "@/toolkit/console";
 import BetterButton from "@/components/interaction/better_button";
 import PageEnd from "@/components/static/page_end";
 import { router } from "expo-router";
@@ -59,7 +58,8 @@ export default function CreatePassiveObjectivePage(): ReactElement {
     async function handleCreation(): Promise<void> {
         try {
             if (!canCreateGoal) return;
-            const response: 0 | 1 = await CreatePassiveObjective(
+
+            await CreatePassiveObjective(
                 {
                     goal: goalToCreate,
                     createdAt: GetCurrentDateCorrectly().string,
@@ -67,16 +67,9 @@ export default function CreatePassiveObjectivePage(): ReactElement {
                 t,
             );
 
-            if (response !== 0) {
-                logToConsole(
-                    "Got 1 as the CreatePassiveObjective() response",
-                    "error",
-                );
-            }
-
             router.replace(Routes.MAIN.HOME);
         } catch (e) {
-            logToConsole(`Error with CreatePassiveObjective()\n${e}`, "error");
+            console.error(`Error with CreatePassiveObjective()\n${e}`);
         }
         return;
     }

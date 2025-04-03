@@ -1,5 +1,4 @@
 import { router } from "expo-router";
-import { logToConsole } from "@/toolkit/console";
 import { Routes } from "@/constants/routes";
 import { URLValues } from "@/constants/urls";
 import { Linking } from "react-native";
@@ -15,7 +14,7 @@ export function SafelyGoBack(target?: string): void {
             return;
         }
     } catch (e) {
-        logToConsole(`Error (safely) going back! ${e}`, "error");
+        console.error(`Error (safely) going back! ${e}`,);
         return;
     }
 }
@@ -28,21 +27,9 @@ export async function SafelyOpenUrl(url: URLValues | string): Promise<void> {
         if (await Linking.canOpenURL(url)) {
             await Linking.openURL(url);
         } else {
-            logToConsole(
-                `Huh? Can't open the ${url} URL. What's up?`,
-                "error",
-                undefined,
-                true,
-            );
-            throw new Error(`Can't open the ${url} URL.`);
+            throw new Error(`Huh? Can't open the ${url} URL. What's up?`);
         }
     } catch (e) {
-        logToConsole(
-            `Bruh. An error occurred trying to open an URL: ${e}`,
-            "error",
-            undefined,
-            true,
-        );
-        throw e;
+        throw new Error(`Bruh. An error occurred trying to open an URL: ${e}`);
     }
 }

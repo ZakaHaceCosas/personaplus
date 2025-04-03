@@ -11,7 +11,6 @@
  * <=============================================================================>
  */
 
-import { logToConsole } from "@/toolkit/console";
 import { TFunction } from "i18next";
 
 /**
@@ -77,7 +76,6 @@ function GenerateRandomMessage(
 
     // Handle case where no messages are found
     if (!Array.isArray(allMessages) || allMessages.length === 0) {
-        logToConsole(`No messages found for target: ${target}`, "warn");
         throw new Error(`No messages found for target: ${target}`);
     }
 

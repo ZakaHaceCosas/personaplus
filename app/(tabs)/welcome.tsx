@@ -25,7 +25,6 @@ import Swap, { SwapOption } from "@/components/interaction/swap";
 import GapView from "@/components/ui/gap_view";
 import BetterText from "@/components/text/better_text";
 import AsyncStorage from "expo-sqlite/kv-store";
-import { logToConsole } from "@/toolkit/console";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";
 import { FullProfile, FullProfileForCreation } from "@/types/user";
@@ -208,9 +207,8 @@ export default function WelcomePage(): ReactElement {
             }));
             return;
         } catch (e) {
-            logToConsole(
+            console.error(
                 `Error handling data changes happened at Welcome screen: ${e}`,
-                "error",
             );
         }
     }
@@ -252,7 +250,7 @@ export default function WelcomePage(): ReactElement {
 
                 const stringData: string = JSON.stringify(userData);
 
-                logToConsole(`Trying to register: ${stringData}`, "log");
+                console.log(`Trying to register: ${stringData}`);
 
                 await AsyncStorage.setItem(
                     StoredItemNames.userData,
@@ -271,28 +269,24 @@ export default function WelcomePage(): ReactElement {
                     "[]",
                 );
                 router.replace(Routes.MAIN.HOME);
-                logToConsole(
+                console.log(
                     `${userData.username} was successfully registered with no errors. Give yourself a plus!`,
                     "success",
                 );
                 return 0;
             } catch (e) {
-                logToConsole(
+                console.error(
                     `Error creating profile! Data: ${JSON.stringify(
                         formData,
                     )}\nError: ${e}.`,
-                    "error",
                 );
                 return 1;
             }
         } else {
-            logToConsole(
+            console.error(
                 `Error saving user data, some data is missing or not valid! JSON is:\n${JSON.stringify(
                     formData,
                 )}`,
-                "warn",
-                undefined,
-                true,
             );
             return 1;
         }
@@ -392,14 +386,14 @@ export default function WelcomePage(): ReactElement {
             validateStepTwo(formData.focus !== null);
             validateStepThree(
                 formData.sleepHours !== null &&
-                    formData.sleepHours > 0 &&
-                    formData.sleepHours < 12 &&
-                    formData.activeness !== null,
+                formData.sleepHours > 0 &&
+                formData.sleepHours < 12 &&
+                formData.activeness !== null,
             );
             validateStepFour(formData.healthConditions !== null);
             validateStepFive(formData.theThinkHour !== "");
         } catch (e) {
-            logToConsole(`Error validating user data: ${e}`, "error");
+            console.error(`Error validating user data: ${e}`);
         }
     }, [formData]);
 
@@ -419,44 +413,44 @@ export default function WelcomePage(): ReactElement {
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
                 style = isStepOneValid ? "ACE" : "HMM";
-                action = isStepOneValid ? goNext : () => {};
+                action = isStepOneValid ? goNext : () => { };
                 break;
             case 2:
                 buttonText = isStepTwoValid
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
                 style = isStepTwoValid ? "ACE" : "HMM";
-                action = isStepTwoValid ? goNext : (): void => {};
+                action = isStepTwoValid ? goNext : (): void => { };
                 break;
             case 3:
                 buttonText = isStepThreeValid
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
                 style = isStepThreeValid ? "ACE" : "HMM";
-                action = isStepThreeValid ? goNext : (): void => {};
+                action = isStepThreeValid ? goNext : (): void => { };
                 break;
             case 4:
                 buttonText = isStepFourValid
                     ? t("globals.interaction.continue")
                     : t("globals.interaction.somethingIsWrong");
                 style = isStepFourValid ? "ACE" : "HMM";
-                action = isStepFourValid ? goNext : (): void => {};
+                action = isStepFourValid ? goNext : (): void => { };
                 break;
             case 5:
                 buttonText = isStepFiveValid
                     ? t("globals.interaction.goAheadGood")
                     : t("globals.interaction.somethingIsWrong");
                 style = isStepFiveValid ? "ACE" : "HMM";
-                action = isStepFiveValid ? goNext : (): void => {};
+                action = isStepFiveValid ? goNext : (): void => { };
                 break;
             default:
-                logToConsole(
+                console.error(
                     `Someone forgot to assign a case for tab ${currentTab}.`,
                     "warn",
                 );
                 buttonText = "Error";
                 style = "HMM";
-                action = (): void => {};
+                action = (): void => { };
         }
 
         return (
@@ -686,13 +680,13 @@ export default function WelcomePage(): ReactElement {
                                 <BetterTextSmallerText>
                                     {formData.username.toLowerCase() ===
                                         "error" ||
-                                    formData.username.toLowerCase() === "error."
+                                        formData.username.toLowerCase() === "error."
                                         ? t(
-                                              "userData.formValidation.username.forbiddenError",
-                                          )
+                                            "userData.formValidation.username.forbiddenError",
+                                        )
                                         : t(
-                                              "userData.formValidation.username.forbiddenPsoe",
-                                          )}
+                                            "userData.formValidation.username.forbiddenPsoe",
+                                        )}
                                 </BetterTextSmallerText>
                             )
                         }
@@ -841,10 +835,10 @@ export default function WelcomePage(): ReactElement {
                                         values.length === 0
                                             ? "none"
                                             : values.map(
-                                                  (
-                                                      value: MultiSelectOption,
-                                                  ): string => value.value,
-                                              ),
+                                                (
+                                                    value: MultiSelectOption,
+                                                ): string => value.value,
+                                            ),
                                 });
                             }}
                         />
@@ -852,12 +846,12 @@ export default function WelcomePage(): ReactElement {
                         {(formData.healthConditions === "none" ||
                             !formData.healthConditions ||
                             formData.healthConditions.length === 0) && (
-                            <BetterTextSmallerText>
-                                {t(
-                                    "pages.welcome.questions.medicalConditions.none",
-                                )}
-                            </BetterTextSmallerText>
-                        )}
+                                <BetterTextSmallerText>
+                                    {t(
+                                        "pages.welcome.questions.medicalConditions.none",
+                                    )}
+                                </BetterTextSmallerText>
+                            )}
                     </>
                 )}
                 {currentTab === 5 && (

@@ -35,7 +35,6 @@ import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
 import Select, { SelectOption } from "@/components/interaction/select";
-import { logToConsole } from "@/toolkit/console";
 import BetterButton from "@/components/interaction/better_button";
 import { GetCommonScreenSize } from "@/constants/screen";
 import PageEnd from "@/components/static/page_end";
@@ -432,34 +431,23 @@ export default function CreateActiveObjectivePage(): ReactElement {
     async function handleCreation(): Promise<void> {
         try {
             if (!canCreateObjective) return;
-            let response: 0 | 1;
 
             if (edit.enable && edit.id !== undefined) {
-                response = await EditActiveObjective(
+                await EditActiveObjective(
                     objectiveToCreate,
                     edit.id,
                     t,
                 );
             } else {
-                response = await CreateActiveObjective(objectiveToCreate, t);
-            }
-            if (response !== 0) {
-                logToConsole(
-                    `Got 1 as the ${edit.enable
-                        ? "EditActiveObjective()"
-                        : "CreateActiveObjective()"
-                    } response`,
-                    "error",
-                );
+                await CreateActiveObjective(objectiveToCreate, t);
             }
             router.replace(Routes.MAIN.HOME);
         } catch (e) {
-            logToConsole(
+            throw new Error(
                 `Error with ${edit.enable
                     ? "EditActiveObjective()"
                     : "CreateActiveObjective()"
                 }:\n${e}`,
-                "error",
             );
         }
         return;
@@ -501,18 +489,14 @@ export default function CreateActiveObjectivePage(): ReactElement {
                             },
                         );
                     } else if (value === "") {
-                        logToConsole(
+                        console.warn(
                             t(
                                 "errors.pages.createActiveObjective.chooseAnOptionIsNotValid",
                             ),
-                            "warn",
-                            undefined,
-                            true,
                         );
                     } else {
-                        logToConsole(
+                        console.error(
                             `Invalid exercise value: ${value}`,
-                            "error",
                         );
                     }
                 }}

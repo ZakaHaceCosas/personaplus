@@ -4,7 +4,6 @@ import type { FullProfile } from "@/types/user";
 import BetterButton from "@/components/interaction/better_button";
 import { ErrorUserData, OrchestrateUserData } from "@/toolkit/user";
 import { router } from "expo-router";
-import { logToConsole } from "@/toolkit/console";
 import { Routes } from "@/constants/routes";
 import { useEffect, useState } from "react";
 import Section from "@/components/ui/sections/section";
@@ -47,7 +46,7 @@ export default function HomeScreen(): ReactElement {
                 }
                 setUserData(profile);
             } catch (e) {
-                logToConsole(`Error orchestrating user data: ${e}`, "error");
+                console.error(`Error orchestrating user data: ${e}`);
             } finally {
                 setLoading(false);
             }
@@ -86,11 +85,11 @@ export default function HomeScreen(): ReactElement {
                     semver.valid(release.tag_name),
                 ) // validate tags
                 .sort((a: Release, b: Release): 0 | 1 | -1 =>
-                    semver.rcompare(a.tag_name, b.tag_name),
+                    semver.compare(b.tag_name, a.tag_name),
                 )[0];
 
             const latestVersion: string = latestRelease.tag_name; // gets the tagname
-            logToConsole(`Latest version: ${latestVersion}`, "log");
+            console.debug(`Latest version: ${latestVersion}`);
 
             if (semver.gt(latestVersion, currentVersion)) {
                 // if it's not the same as your current version, you're not up to date!
@@ -126,7 +125,7 @@ export default function HomeScreen(): ReactElement {
                         {
                             text: t("globals.nevermind"),
                             style: "destructive",
-                            onPress: (): void => {}, // closes
+                            onPress: (): void => { }, // closes
                         },
                     ],
                 );
@@ -136,7 +135,7 @@ export default function HomeScreen(): ReactElement {
                 );
             }
         } catch (e) {
-            logToConsole(`Error checking for updates:${e}`, "error");
+            console.error(`Error checking for updates: ${e}`);
             ShowToast(t("pages.profile.divisions.update.updateFlow.cantCheck"));
         }
     }

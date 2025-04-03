@@ -10,7 +10,6 @@ import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
 import CoreLibrary from "@/core/core";
 import { OrchestrateUserData } from "@/toolkit/user";
-import { logToConsole } from "@/toolkit/console";
 import { useEffect, useState } from "react";
 import TopBar from "@/components/navigation/top_bar";
 import { useTranslation } from "react-i18next";
@@ -34,11 +33,11 @@ function BMIView({
     context,
 }: {
     context:
-        | "severely underweight"
-        | "underweight"
-        | "healthy weight"
-        | "overweight"
-        | "obesity";
+    | "severely underweight"
+    | "underweight"
+    | "healthy weight"
+    | "overweight"
+    | "obesity";
 }): ReactElement {
     const styles = StyleSheet.create({
         wrapper: {
@@ -155,7 +154,7 @@ export default function Report(): ReactElement {
                 await GetActiveObjectiveDailyLog();
             setDailyLog(dailyLog);
         } catch (e) {
-            logToConsole(`Error handling your report! ${e}`, "error", {
+            console.error(`Error handling your report! ${e}`, {
                 location: "@/app/(tabs)/Report.tsx",
                 function: "fetchUserData()",
                 isHandler: true,
@@ -245,30 +244,29 @@ export default function Report(): ReactElement {
                                                 <BetterTextNormalText>
                                                     {entry.objective
                                                         ? t(
-                                                              `globals.supportedActiveObjectives.${
-                                                                  entry
-                                                                      .objective
-                                                                      .exercise
-                                                              }.name`,
-                                                          )
+                                                            `globals.supportedActiveObjectives.${entry
+                                                                .objective
+                                                                .exercise
+                                                            }.name`,
+                                                        )
                                                         : id}
                                                 </BetterTextNormalText>
                                                 <BetterTextSmallText>
                                                     {entry.wasDone
                                                         ? t(
-                                                              "globals.interaction.done",
-                                                          )
+                                                            "globals.interaction.done",
+                                                        )
                                                         : t(
-                                                              "globals.interaction.missed",
-                                                          )}
+                                                            "globals.interaction.missed",
+                                                        )}
                                                 </BetterTextSmallText>
                                                 <BetterTextSmallText>
                                                     Performance:{" "}
                                                     {entry.performance === 0
                                                         ? "N/A"
                                                         : `${entry.performance.result.toFixed(
-                                                              2,
-                                                          )}cal`}
+                                                            2,
+                                                        )}cal`}
                                                 </BetterTextSmallText>
                                             </React.Fragment>
                                         ),

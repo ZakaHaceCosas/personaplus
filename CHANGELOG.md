@@ -15,6 +15,10 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 
 - Fixed up some translations.
 
+### Removed
+
+- The ability to view developer logs from inside the app. They were _a bit_ useful, but not that much, and gave issues because of simultaneous DB writing, as well as creating overcomplicated code and taking up a lot of space - specially for unaware users.
+
 ## [0.0.6-preapp.29] - 26-01-2024
 
 ### Added
