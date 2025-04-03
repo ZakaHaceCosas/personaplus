@@ -4,7 +4,6 @@ import PageEnd from "@/components/static/page_end";
 import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
 import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
-import { logToConsole } from "@/toolkit/console";
 import {
     FailObjectivesNotDoneYesterday,
     GetPendingActiveObjectives,
@@ -103,7 +102,7 @@ export default function HomeScreen(): ReactElement {
                 );
                 setActiveObjectives(filteredObjectives);
             } catch (e) {
-                logToConsole(`Error fetching data: ${e}`, "error");
+                console.error(`Error fetching data: ${e}`);
                 router.replace(Routes.MAIN.WELCOME_SCREEN);
             } finally {
                 setIdentifiersLoaded(true);
@@ -134,7 +133,7 @@ export default function HomeScreen(): ReactElement {
                     await scheduleRandomNotifications(t);
                 }
             } catch (e) {
-                logToConsole(`Error handling notifications: ${e}`, "error");
+                console.error(`Error handling notifications: ${e}`);
             } finally {
                 setNotificationsHandled(true);
             }

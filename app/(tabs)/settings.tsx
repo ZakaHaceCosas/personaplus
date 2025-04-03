@@ -1,7 +1,6 @@
 import BetterButton from "@/components/interaction/better_button";
 import Loading from "@/components/static/loading";
 import Division from "@/components/ui/sections/division";
-import { logToConsole } from "@/toolkit/console";
 import React, { useEffect, useState } from "react";
 import StoredItemNames from "@/constants/stored_item_names";
 import AsyncStorage from "expo-sqlite/kv-store";
@@ -33,7 +32,7 @@ export default function Settings() {
                 }
                 setUserData(profile);
             } catch (e) {
-                logToConsole(`Error orchestrating user data: ${e}`, "error");
+                console.error(`Error orchestrating user data: ${e}`);
             } finally {
                 setLoading(false);
             }
@@ -56,7 +55,7 @@ export default function Settings() {
                     : "Done! Restart the app to apply your changes.",
             );
         } catch (e) {
-            logToConsole(`Error changing language: ${e}`, "error");
+            console.error(`Error changing language: ${e}`);
         }
     }
 
@@ -83,7 +82,7 @@ export default function Settings() {
             router.replace(Routes.MAIN.PROFILE);
             router.replace(Routes.MAIN.SETTINGS.SETTINGS_PAGE);
         } catch (e) {
-            logToConsole(`Error toggling notifications: ${e}`, "error");
+            console.error(`Error toggling notifications: ${e}`);
         }
     }
 

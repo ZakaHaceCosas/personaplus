@@ -19,7 +19,6 @@ import FontSizes from "@/constants/font_sizes";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
 import { HexColorString, PrimaryColorsType } from "@/types/color";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import { logToConsole } from "@/toolkit/console";
 import GapView from "@/components/ui/gap_view";
 
 // TypeScript, supongo
@@ -159,9 +158,8 @@ export default function BetterButton({
                     // always await, so we correctly handle both sync and async stuff
                     await Promise.resolve(action());
                 } catch (e) {
-                    logToConsole(
+                    console.error(
                         `Error handling a button press: ${e}.`,
-                        "error",
                         {
                             location:
                                 "Unknown. This happened on the 'onPress' prop of a <BetterButton /> you have somewhere. Use context to find out where it happened.",

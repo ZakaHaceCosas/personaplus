@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { ColorSchemeName, useColorScheme } from "react-native";
 import AsyncStorage from "expo-sqlite/kv-store";
-import { logToConsole } from "@/toolkit/console";
 import StoredItemNames from "@/constants/stored_item_names";
 
 export function useTheme(): "light" | "dark" {
@@ -20,7 +19,7 @@ export function useTheme(): "light" | "dark" {
                         : (systemTheme ?? "dark"),
                 );
             } catch (e) {
-                logToConsole(`Error fetching theme: ${e}`, "error");
+                console.error(`Error fetching theme: ${e}`);
                 setTheme(systemTheme ?? "dark");
             }
         }

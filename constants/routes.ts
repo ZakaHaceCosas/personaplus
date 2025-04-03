@@ -15,8 +15,6 @@ export const Routes = {
     },
     DEV_INTERFACE: {
         HOME: "/developer/dev_interface",
-        VIEWER_LOGS: "/developer/log_view",
-        VIEWER_ERROR_LOGS: "/developer/log_view_error",
         VIEWER_USER_DATA: "/developer/viewer_user_data",
         VIEWER_OBJECTIVES: "/developer/viewer_objectives",
         VIEWER_NOTIFICATIONS: "/developer/viewer_notifications",

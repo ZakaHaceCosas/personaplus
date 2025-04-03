@@ -1,7 +1,6 @@
 import StoredItemNames from "@/constants/stored_item_names";
 import { Experiment, Experiments } from "@/types/user";
 import { AsyncStorage } from "expo-sqlite/kv-store";
-import { logToConsole } from "@/toolkit/console";
 import { DEFAULT_EXPERIMENTS } from "@/constants/experiments";
 
 /**
@@ -16,9 +15,8 @@ async function GetExperiments(): Promise<Experiments> {
             StoredItemNames.experiments,
         );
         if (!stuff || stuff === null || stuff === "") {
-            logToConsole(
+            console.warn(
                 "Turns out experiments don't exist? Something has probably gone wrong during the onboarding process. Whatever, no error thrown, we'll set everything to disabled and carry on.",
-                "warn",
             );
             await AsyncStorage.setItem(
                 StoredItemNames.experiments,
@@ -33,7 +31,7 @@ async function GetExperiments(): Promise<Experiments> {
             for (const key in DEFAULT_EXPERIMENTS) {
                 if (!(key in experiments)) {
                     // if smth is missing, reset to default because we don't want to break anything (as we can just remove experiments from one update to another)
-                    logToConsole(
+                    console.warn(
                         `Missing experiment key "${key}". Resetting to default.`,
                         "warn",
                     );
@@ -46,7 +44,7 @@ async function GetExperiments(): Promise<Experiments> {
             }
         } catch (e) {
             // if anything goes wrong, just return the default experiments
-            logToConsole(
+            console.warn(
                 `Error parsing stored experiments, resetting to default. ${e}`,
                 "warn",
             );
@@ -58,11 +56,7 @@ async function GetExperiments(): Promise<Experiments> {
         }
         return experiments;
     } catch (e) {
-        logToConsole(
-            `Unexpected error while fetching experiments: ${e}`,
-            "warn",
-        );
-        throw e;
+        throw new Error(`Unexpected error while fetching experiments: ${e}`);
     }
 }
 

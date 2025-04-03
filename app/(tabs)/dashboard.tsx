@@ -5,7 +5,6 @@ import PageEnd from "@/components/static/page_end";
 import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
-import { logToConsole } from "@/toolkit/console";
 import {
     ActiveObjective,
     EditObjectiveParams,
@@ -52,7 +51,7 @@ export default function Dashboard(): ReactElement {
                 setActiveObjectives(await GetAllObjectives("active"));
                 setPassiveObjectives(await GetAllObjectives("passive"));
             } catch (e) {
-                logToConsole(`Error fetching Active Objectives: ${e}`, "error");
+                console.error(`Error fetching Active Objectives: ${e}`);
             } finally {
                 setLoading(false);
             }
@@ -105,10 +104,7 @@ export default function Dashboard(): ReactElement {
                 });
             }
         } catch (e) {
-            logToConsole(
-                `Error deleting objective ${identifier}: ${e}`,
-                "error",
-            );
+            console.error(`Error deleting objective ${identifier}: ${e}`);
         }
     }
 

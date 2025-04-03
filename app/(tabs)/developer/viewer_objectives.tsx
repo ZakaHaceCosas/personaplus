@@ -7,7 +7,6 @@ import {
 } from "@/components/text/better_text_presets";
 import BetterTable, { BetterTableItem } from "@/components/ui/better_table";
 import GapView from "@/components/ui/gap_view";
-import { logToConsole } from "@/toolkit/console";
 import { GetAllObjectives } from "@/toolkit/objectives/common";
 import { ActiveObjective, WeekTuple } from "@/types/active_objectives";
 import { PassiveObjective } from "@/types/passive_objectives";
@@ -47,7 +46,6 @@ export default function ViewerObjectives(): ReactElement {
                 setPassiveObjectives(await GetAllObjectives("passive"));
             } catch (e) {
                 const err = `Error fetching data at DevInterface: ${e}`;
-                logToConsole(err, "error");
                 setError(err);
             } finally {
                 setLoading(false);

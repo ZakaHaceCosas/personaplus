@@ -16,7 +16,6 @@ import {
     scheduleNotificationAsync,
     setNotificationChannelAsync,
 } from "expo-notifications";
-import { logToConsole } from "@/toolkit/console";
 import Constants from "expo-constants";
 import { TFunction } from "i18next";
 import { ShowToast } from "@/toolkit/android";
@@ -50,7 +49,7 @@ async function registerForPushNotificationsAsync(
             finalStatus = status;
         }
         if (finalStatus !== "granted") {
-            logToConsole(
+            console.error(
                 "Failed to get push token for push notification!",
                 "error",
             );
@@ -65,7 +64,7 @@ async function registerForPushNotificationsAsync(
                 Constants?.expoConfig?.extra?.eas?.projectId ??
                 Constants?.easConfig?.projectId;
             if (!projectId) {
-                logToConsole("Project ID not found", "error");
+                console.error("Project ID not found");
                 return;
             }
             token = (
@@ -74,9 +73,8 @@ async function registerForPushNotificationsAsync(
                 })
             ).data;
             if (!token) {
-                logToConsole(
+                console.error(
                     "No ExpoPushToken! Cannot register notifications",
-                    "error",
                 );
                 return;
             }
@@ -89,9 +87,7 @@ async function registerForPushNotificationsAsync(
             throw new Error(`Error getting Expo Push token: ${e}`);
         }
     } catch (e) {
-        const err = `Error registering for push notifications: ${e}`;
-        logToConsole(err, "error");
-        throw new Error(err);
+        throw new Error(`Error registering for push notifications: ${e}`);
     }
 }
 
@@ -115,7 +111,7 @@ export async function handleNotificationsAsync(
             );
         }
     } catch (e) {
-        logToConsole(`Error with notification handler: ${e}`, "error", {
+        console.error(`Error with notification handler: ${e}`, {
             function: `handleNotificationsAsync(${channel})`,
             location: "@/hooks/use_notification()",
             isHandler: false,
@@ -171,16 +167,15 @@ export async function scheduleRandomNotifications(
             scheduledNotifications.push({ identifier });
 
             for (const notification of scheduledNotifications) {
-                logToConsole(
+                console.debug(
                     `Notification scheduled: ${notification.identifier}`,
-                    "log",
                 );
             }
-            logToConsole("Scheduled Notifications ENABLED", "log");
+            console.debug("Scheduled Notifications ENABLED");
         }
         return true;
     } catch (e) {
-        logToConsole(`ERROR REGISTERING NOTIFICATIONS: ${e}`, "error");
+        console.error(`ERROR REGISTERING NOTIFICATIONS: ${e}`);
         return false;
     }
 }
@@ -201,7 +196,7 @@ export async function cancelScheduledNotifications(
         const identifiers: NotificationRequest[] =
             await getAllScheduledNotificationsAsync();
         if (identifiers.length === 0) {
-            logToConsole("No notifications to disable", "log");
+            console.debug("No notifications to disable");
             return true;
         }
         if (shouldTell) {
@@ -210,13 +205,12 @@ export async function cancelScheduledNotifications(
             );
         }
         for (const identifier of identifiers) {
-            logToConsole(
+            console.debug(
                 `Cancelling notification ${identifier.identifier}`,
-                "log",
             );
             await cancelScheduledNotificationAsync(identifier.identifier);
         }
-        logToConsole("Scheduled Notifications DISABLED", "log");
+        console.debug("Scheduled Notifications DISABLED");
         if (shouldTell) {
             ShowToast(
                 t("pages.settings.preferences.notifications.flow.disabled"),
@@ -224,7 +218,7 @@ export async function cancelScheduledNotifications(
         }
         return true;
     } catch (e) {
-        logToConsole(`ERROR UNREGISTERING NOTIFICATIONS: ${e}`, "error");
+        console.error(`ERROR UNREGISTERING NOTIFICATIONS: ${e}`);
         return false;
     }
 }
@@ -242,16 +236,13 @@ export async function areNotificationsScheduledForToday(): Promise<boolean> {
             await getAllScheduledNotificationsAsync(); // get notifications
 
         if (notifications.length > 5) {
-            logToConsole(
+            console.warn(
                 `There are ${notifications.length} registered notifications. Isn't that too much?`,
-                "warn",
             );
         }
 
         return notifications.length > 0;
     } catch (e) {
-        const err = `Error checking for scheduled notifications: ${e}`;
-        logToConsole(err, "error");
-        throw new Error(err);
+        throw new Error(`Error checking for scheduled notifications: ${e}`);
     }
 }
