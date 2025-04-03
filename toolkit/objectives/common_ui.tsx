@@ -95,7 +95,9 @@ export function DisplayObjectivesThemselves({
                                                 await handler(
                                                     obj.identifier,
                                                     "edit",
-                                                    "active",
+                                                    IsActiveObjective(obj)
+                                                        ? "active"
+                                                        : "passive",
                                                 )
                                             }
                                         />
@@ -114,7 +116,9 @@ export function DisplayObjectivesThemselves({
                                         await handler(
                                             obj.identifier,
                                             "delete",
-                                            "active",
+                                            IsActiveObjective(obj)
+                                                ? "active"
+                                                : "passive",
                                         )
                                     }
                                 />

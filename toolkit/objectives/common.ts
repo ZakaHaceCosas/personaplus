@@ -385,12 +385,6 @@ async function SaveGenericObjectiveDailyLog(
  * @returns {Promise<void>}
  */
 async function FailGenericObjectivesNotDoneYesterday(
-    category: "passive",
-): Promise<void>;
-async function FailGenericObjectivesNotDoneYesterday(
-    category: "active",
-): Promise<void>;
-async function FailGenericObjectivesNotDoneYesterday(
     category: "active" | "passive",
 ): Promise<void> {
     try {
@@ -496,6 +490,9 @@ async function IsGenericObjectivePending(
         const dailyLog: ActiveObjectiveDailyLog | PassiveObjectiveDailyLog = IsActiveObjective(objective) ?
             await GetGenericObjectiveDailyLog("active") :
             await GetGenericObjectiveDailyLog("passive");
+
+        console.debug("CHECKING", objective)
+        console.debug(dailyLog)
 
         // the opposite ("&& !obj.days") seemed more logical to me (return NOT due today IF NOT added for today), however that does the opposite and this somehow does it right...
         // sometimes i wonder if it's me or JS who has a problem
