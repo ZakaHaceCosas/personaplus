@@ -20,7 +20,6 @@ const StoredItemNames = {
     passiveObjectives: "passiveObjectives",
     dailyLog: "activeObjectiveDailyLog",
     passiveDailyLog: "passiveObjectiveDailyLog",
-    consoleLogs: "globalLogs",
     colorTheme: "colorTheme",
     experiments: "experimentalFeatures",
 };

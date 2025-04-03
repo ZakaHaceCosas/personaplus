@@ -95,20 +95,6 @@ PersonaPlus has 4 main AsyncStorage items as of now (expected to grow over time)
 }
 ```
 
-- `globalLogs`: an **ARRAY** full of **OBJECTS**, being each one a log.
-
-```json
-[
-    {
-        "message":"WATCHOUT! BAD PRACTICE SUMMONED!! (someone called `updateBrm5` with param `careAboutTheUser` set to `false`)",
-        "type":"warn",
-        "timestamp":1726396238551,
-        "traceback": {...} // (the traceback is an optional OBJECT, you can set them as `undefined` if you want. not recommended, though.)
-    },
-    ...
-]
-```
-
 ## 2. Understanding PersonaPlus as a project
 
 You also should have an overall idea of how the app is really meant to work, so you have a better guide of how to help the project achieve it's goal of being the best healthcare app.
