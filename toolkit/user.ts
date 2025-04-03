@@ -258,7 +258,7 @@ export async function OrchestrateUserData(
 
 // don't mind the name this function was given. do not change it :)
 /**
- * **Removes all of the users data.** Doesn't remove some key pieces of data that are important (those can be deleted using separate functions), e.g. developer logs.
+ * **Removes all of the users data.**
  *
  * @async
  * @export
@@ -282,6 +282,7 @@ export async function updateBrm5(
                 StoredItemNames.activeObjectives,
                 StoredItemNames.passiveObjectives,
                 StoredItemNames.dailyLog,
+                StoredItemNames.passiveDailyLog,
                 StoredItemNames.colorTheme,
                 StoredItemNames.experiments,
             ]);

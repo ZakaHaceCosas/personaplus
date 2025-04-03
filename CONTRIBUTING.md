@@ -22,7 +22,7 @@ If you find an error, please [open up an issue](https://github.com/ZakaHaceCosas
 
 - A clear description of the error.
 - Steps to reproduce (find) the error.
-- If possible, screenshots or debug logs (found at Dev Interface) of the error.
+- If possible, screenshots of the error, and debug logs if running from Expo Go.
 - Environment info (app version, phone and OS details, ...).
 
 > [!WARNING]

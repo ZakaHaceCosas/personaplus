@@ -45,7 +45,7 @@ body:
     - type: textarea
       id: logs
       attributes:
-          label: Console logs
-          description: If you can, paste here any console log.
-          placeholder: "You can find them at Profile -> Settings -> Dev Interface -> \"See error logs\"."
+          label: (Optional) Console logs
+          description: If you ran the app from the Expo Go environment, paste here any console log.
+          placeholder: Look at your PC's console when taking the bugged action.
           render: shell
