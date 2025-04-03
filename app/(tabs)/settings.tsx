@@ -15,6 +15,7 @@ import PageEnd from "@/components/static/page_end";
 import TopBar from "@/components/navigation/top_bar";
 import { cancelScheduledNotifications } from "@/hooks/use_notification";
 import { ShowToast } from "@/toolkit/android";
+import { ChangeLanguage } from "@/translations/translate";
 
 export default function Settings() {
     const [userData, setUserData] = useState<FullProfile>(ErrorUserData);
@@ -40,24 +41,6 @@ export default function Settings() {
 
         handler();
     }, []);
-
-    async function changeLanguage(): Promise<void> {
-        try {
-            if (!userData) throw new Error("Why is userData (still) null?");
-            userData.language = userData.language === "es" ? "en" : "es";
-            await AsyncStorage.setItem(
-                StoredItemNames.userData,
-                JSON.stringify(userData),
-            );
-            ShowToast(
-                userData.language === "es"
-                    ? "¡Hecho! Reinicia la app para aplicar tus cambios."
-                    : "Done! Restart the app to apply your changes.",
-            );
-        } catch (e) {
-            console.error(`Error changing language: ${e}`);
-        }
-    }
 
     async function changeNotifications(): Promise<void> {
         try {
@@ -114,7 +97,11 @@ export default function Settings() {
                             "pages.settings.preferences.language.action.hint",
                         )}
                         style="DEFAULT"
-                        action={changeLanguage}
+                        action={async (): Promise<void> => await ChangeLanguage(
+                            userData,
+                            userData.language = userData.language === "es"
+                                ? "en"
+                                : "es")}
                     />
                 </Division>
                 <Division

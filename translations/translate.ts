@@ -20,6 +20,7 @@ import esTranslations from "@/translations/es.json";
 import { FullProfile } from "@/types/user";
 import StoredItemNames from "@/constants/stored_item_names";
 import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
+import { ShowToast } from "@/toolkit/android";
 
 // Defines available translates
 const resources = {
@@ -40,11 +41,11 @@ export async function getDefaultLocale(): Promise<"es" | "en"> {
         const savedData: FullProfile = await OrchestrateUserData();
 
         if (ValidateUserData(savedData, "Full") === false) {
-            const locale: string | null = locales[0].languageCode;
-            return locale === "en" || locale === "es" ? locale : "en";
+            const locale: string | null | undefined = locales[0]?.languageCode;
+            return locale === "es" ? "es" : "en";
         }
 
-        const savedLanguage: "es" | "en" = savedData.language;
+        const savedLanguage: "es" | "en" = savedData.language ?? "en";
 
         return savedLanguage;
     } catch (e) {
@@ -99,8 +100,9 @@ initializeI18n();
  * @param {("es" | "en")} language The language you want to set.
  * @returns {Promise<0 | 1>} 0 if success, 1 if failure.
  */
-async function changeLanguage(userData: FullProfile, language: "es" | "en"): Promise<void> {
+async function ChangeLanguage(userData: FullProfile, language: "es" | "en"): Promise<void> {
     try {
+        if (!userData) throw new Error("Why is userData (still) null?");
         const newUserData: FullProfile = {
             ...userData,
             language,
@@ -109,7 +111,12 @@ async function changeLanguage(userData: FullProfile, language: "es" | "en"): Pro
             StoredItemNames.userData,
             JSON.stringify(newUserData),
         );
-        i18n.changeLanguage(language);
+        await i18n.changeLanguage(language);
+        ShowToast(
+            userData.language === "es"
+                ? "¡Hecho! Reinicia la app para aplicar tus cambios."
+                : "Done! Restart the app to apply your changes.",
+        );
         return;
     } catch (e) {
         throw new Error(
@@ -123,4 +130,4 @@ async function changeLanguage(userData: FullProfile, language: "es" | "en"): Pro
 }
 
 export default i18n;
-export { changeLanguage };
+export { ChangeLanguage };
