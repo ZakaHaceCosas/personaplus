@@ -42,7 +42,6 @@ async function CreatePassiveObjective(
     target: PassiveObjectiveWithoutId,
     t: TFunction,
 ): Promise<void> {
-    console.debug("MAKING", target)
     return await CreateObjective(target, "passive", t);
 }
 
@@ -145,7 +144,6 @@ async function GetPendingPassiveObjectives(): Promise<PendingReturn> {
 async function MarkPassiveObjectiveAsDoneToday(
     identifier: number,
 ): Promise<void> {
-    console.debug("CALLED MarkAsDoneToday FOR", identifier)
     await SavePassiveObjectiveToDailyLog(identifier, true)
 }
 
