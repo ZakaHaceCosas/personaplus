@@ -469,9 +469,6 @@ async function IsGenericObjectivePending(
             await GetGenericObjectiveDailyLog("active") :
             await GetGenericObjectiveDailyLog("passive");
 
-        console.debug("CHECKING", objective)
-        console.debug(dailyLog)
-
         // the opposite ("&& !obj.days") seemed more logical to me (return NOT due today IF NOT added for today), however that does the opposite and this somehow does it right...
         // sometimes i wonder if it's me or JS who has a problem
         if (IsActiveObjective(objective) && objective.info.days[ADJUSTED_TODAY_INDEX]) return false; // not due today
@@ -530,50 +527,46 @@ async function GetPendingGenericObjectives(category: "active" | "passive"): Prom
             return "noneExists"; // no objectives at all
         }
 
-        // TODO: make this PassiveObjective-compatible
-        // NOTE: half done
         // there are only two hard things in computer science, cache invalidation and naming things
-        type safeThing = {
+        type thing = {
             identifier: number;
             status: boolean;
         };
-        type thing = safeThing | null;
-        type whatever = thing[];
-        // okay i think i finally know what's going on in here, for each
-        const dueTodayObjectives: whatever = await Promise.all(
-            Object.values(objectives).map(async function (
-                obj: ActiveObjective | PassiveObjective,
-            ): Promise<thing> {
-                const status: boolean = await IsGenericObjectivePending(obj);
-                return { identifier: obj.identifier, status };
-            }),
-        );
 
-        // filter out null entries and separate the dueToday objectives based on their status
-        const activeObjectivesDueToday = dueTodayObjectives.filter(
-            (obj: thing): boolean => obj !== null,
-        ) as safeThing[];
+        // okay i think i finally know what's going on in here:
 
-        if (activeObjectivesDueToday.length === 0) {
-            return "noneDueToday"; // there are objectives, but none are due today
+        // this function runs for each objective, checks if it's pending,
+        // and returns its status (pending or not) and ID
+        async function callbackfn(obj: ActiveObjective | PassiveObjective): Promise<thing | null> {
+            const status: boolean = await IsGenericObjectivePending(obj);
+            return { identifier: obj.identifier, status };
         }
 
-        // okay i don't get whats going on in here
-        // hope this works
-        // check if all objectives due today are done
-        const allDone: boolean = activeObjectivesDueToday.every(
-            (obj: safeThing): boolean => obj.status,
-        );
+        // we get the values of the objectives and run the callbackfn for all of them
+        const dueTodayObjectives: thing[] = (await Promise.all(
+            objectives.map(callbackfn),
+        ))
+            // we filter out null entries
+            .filter((obj: thing | null): obj is thing => obj !== null);
 
-        if (allDone) return "allDone"; // all objectives for today are done
+        if (dueTodayObjectives.length === 0) {
+            // there are objectives, but none are due today
+            return "noneDueToday";
+        }
+
+        // if all objectives have FALSE status (NOT DUE TODAY) (thus !obj.status)
+        // return "allDone"
+        if (dueTodayObjectives.every(
+            (obj: thing): boolean => !obj.status,
+        )) return "allDone"; // all objectives for today are done
 
         // get the identifiers of objectives that are not done yet
-        const pendingObjectives: number[] = activeObjectivesDueToday
-            // no i did not write this
-            .filter((obj: safeThing): boolean => obj.status === false)
-            .map((obj: safeThing): number => obj.identifier);
+        const pendingObjectives: number[] = dueTodayObjectives
+            .map((obj: thing): number => obj.identifier);
 
-        return pendingObjectives.length > 0 ? pendingObjectives : "allDone"; // return pending objectives or 0 if none
+        // return pending objectives
+        // because of the earlier .every(), we know there's at least one
+        return pendingObjectives;
     } catch (e) {
         throw new Error(`Failed to get all pending objectives: ${e}`);
     }
