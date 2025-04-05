@@ -22,13 +22,13 @@ import {
     PendingReturn,
     SaveGenericObjectiveDailyLog,
 } from "@/toolkit/objectives/common";
-import {
+import type {
     PassiveObjective,
     PassiveObjectiveDailyLog,
     PassiveObjectiveWithoutId,
 } from "@/types/passive_objectives";
-import { TodaysDate } from "@/types/today";
-import { GetCurrentDateCorrectly } from "../today";
+import { TodaysDate, ValidateTodaysDateString } from "@/types/today";
+import { GetCurrentDateCorrectly, JavaScriptifyTodaysDate } from "../today";
 
 /**
  * Creates a passive objective and saves it. You need to provide all the data for it (except the ID) as an `PassiveObjectiveWithoutId` object.
@@ -139,10 +139,80 @@ async function GetPendingPassiveObjectives(): Promise<PendingReturn> {
     return await GetPendingGenericObjectives("passive");
 }
 
+
+/**
+ * Marks a passive objective as done for today.
+ *
+ * @async
+ * @param {number} identifier Identifier of the objective.
+ * @returns {Promise<void>}
+ */
 async function MarkPassiveObjectiveAsDoneToday(
     identifier: number,
 ): Promise<void> {
     await SavePassiveObjectiveToDailyLog(identifier, true);
+}
+
+/**
+ * Gets the user's streak on a passive objective.
+ *
+ * @async
+ * @param {number} identifier Identifier of the objective.
+ * @returns {Promise<number>} The number of days in a row the user's been complying with this passive objective.
+ */
+async function GetPassiveObjectiveStreak(identifier: number): Promise<number> {
+    const log: PassiveObjectiveDailyLog = await GetPassiveObjectiveDailyLog();
+    // no log no streak
+    if (!log) return 0;
+
+    const currentDate: TodaysDate = GetCurrentDateCorrectly().string
+    const lastDate: Date = JavaScriptifyTodaysDate(currentDate);
+
+    type entry = [string, { [identifier: number]: { wasDone: boolean } }]
+
+    // filter logs to only have the ones for the specified identifier
+    const userLogs: { date: TodaysDate, wasDone: boolean }[] = Object
+        .entries(log)
+        .filter(([_, entry]: entry): boolean | undefined => entry && entry[identifier] && entry[identifier].wasDone)
+        .filter(([date, entry]: entry): boolean => ValidateTodaysDateString(date) && entry[identifier] !== undefined)
+        .map(([date, entry]: entry): { date: TodaysDate, wasDone: boolean } => ({
+            date: date as TodaysDate,
+            wasDone: entry[identifier]!.wasDone
+        }));
+
+    // sort logs by date
+    userLogs.sort((a: { date: TodaysDate }, b: { date: TodaysDate }): number => JavaScriptifyTodaysDate(b.date).getTime() - JavaScriptifyTodaysDate(a.date).getTime());
+
+    let streak: number = 0;
+
+    // if there's only one entry, today, and true, return 1 day instead of zero
+    if (userLogs.length === 1 && userLogs[0] && userLogs[0].date === currentDate && userLogs[0].wasDone) {
+        return 1;
+    }
+
+    // loop thru all entries
+    for (let i: number = 0; i < userLogs.length; i++) {
+        const currentLog: { date: TodaysDate, wasDone: boolean } | undefined = userLogs[i];
+        if (!currentLog) break;
+        const logDate: Date = JavaScriptifyTodaysDate(currentLog.date);
+
+        // check if the log is from yesterday
+        // .abs to avoid negative diffs in case the order's messed up somehow
+        // .floor to obviously get 1 or 2 days streak and not 1.42
+        const diffDays: number = Math.abs(Math.floor((lastDate.getTime() - logDate.getTime()) / (1000 * 3600 * 24)));
+
+        if (diffDays === 1 && currentLog.wasDone) {
+            streak++;
+            lastDate.setTime(logDate.getTime());  // update last verified day
+        } else if (diffDays === 0) {
+            break;  // we reached today, we're done
+        } else {
+            streak = 0;
+            break;  // if they failed, reset streak
+        }
+    }
+
+    return streak;
 }
 
 export {
@@ -150,6 +220,7 @@ export {
     DeletePassiveObjective,
     GetPassiveObjective,
     GetAllPassiveObjectives,
+    GetPassiveObjectiveStreak,
     GetPendingPassiveObjectives,
     GetPassiveObjectiveDailyLog,
     MarkPassiveObjectiveAsDoneToday,

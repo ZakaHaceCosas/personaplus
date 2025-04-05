@@ -32,7 +32,6 @@ import { TFunction } from "i18next";
 import {
     CreateObjective,
     DeleteObjective,
-    FailGenericObjectivesNotDoneYesterday,
     GetAllObjectives,
     GetGenericObjectiveDailyLog,
     GetObjective,
@@ -361,23 +360,12 @@ function CalculateSessionPerformance(
     }
 }
 
-/**
- * Gets all objectives, finds the ones that you had to do yesterday (and previous days), and if they weren't done, it adds them as not done to the daily log.
- *
- * @async
- * @returns {Promise<void>}
- */
-async function FailObjectivesNotDoneYesterday(): Promise<void> {
-    await FailGenericObjectivesNotDoneYesterday("active");
-}
-
 export {
     CalculateSessionFragmentsDuration,
     CalculateSessionPerformance,
     CreateActiveObjective,
     DeleteActiveObjective,
     EditActiveObjective,
-    FailObjectivesNotDoneYesterday,
     GetActiveObjective,
     GetActiveObjectiveDailyLog,
     GetAllActiveObjectives,

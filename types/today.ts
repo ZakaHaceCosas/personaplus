@@ -1,3 +1,5 @@
+import { StrUtils } from "@/toolkit/glue_fix";
+
 /**
  * Correct current date as both an object and a string.
  *
@@ -31,9 +33,20 @@ export type TodaysDate = `${string}/${string}/${string}`;
  *
  * @type {RegExp}
  */
-export const TodaysDateRegularExpression: RegExp = new RegExp(
+const TodaysDateRegularExpression: RegExp = new RegExp(
     "^([0-2][0-9]|3[01])\/(0[1-9]|1[0-2])\/\\d{4}$",
 );
+
+/**
+ * Checks if a given string complies with the TodaysDate format.
+ *
+ * @export
+ * @param {*} toValidate What to check.
+ * @returns {toValidate is TodaysDate} True if it matches the format, false if otherwise.
+ */
+export function ValidateTodaysDateString(toValidate: any): toValidate is TodaysDate {
+    return StrUtils.validate(toValidate) && TodaysDateRegularExpression.test(toValidate)
+}
 
 /**
  * An object with today's date.
