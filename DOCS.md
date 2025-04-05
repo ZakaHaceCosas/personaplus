@@ -51,47 +51,53 @@ Thanks to _Better Comments_, one of our recommended extensions for this workspac
 
 ### Understanding data saving
 
-We use AsyncStorage to store all of the user data - that's clear. But even I, the creator, have had some issues understanding how data is saved, leading to problems.
-
-PersonaPlus has 4 main AsyncStorage items as of now (expected to grow over time):
+We use Expo's `expo-sqlite/kv-store` to store all of the user data. PersonaPlus has the following main AsyncStorage items as of now (names are the ones from `StoredItemNames`; a constant that exports all names of KV Store entries to avoid messing them up):
 
 - `userData`: an **OBJECT** with all of the user data.
 
-```json
+```jsonc
+// example
 {
     "username": "Zaka",
     "age": 34,
-    ...
+    // ...
 }
 ```
 
-- `activeObjectives`: an **ARRAY** of **OBJECTS**, being each object an Active Objective.
+- `activeObjectives` and `passiveObjectives`: each one is an **ARRAY** of **OBJECTS**, being each object an Active Objective or a Passive Objective.
 
-```json
+```jsonc
+// example (Active Objectives)
 [
     {
-        "exercise":"Running",
-        "info": {...},
-        "specificData":{...},
-        "identifier":8131221499
+        "exercise": "Running",
+        "info": { /* ... */ },
+        "specificData": { /* ... */ },
+        "identifier": 8131221499
     },
-    ...
+    // ...
 ]
 ```
 
-- `activeObjectiveDailyLog`: an **OBJECT** full of **OBJECTS**, each one also having **OBJECTS**. It's an object packaging DAYS, each day packaging ENTRIES. Better understood with the example:
+- `dailyLog` and `passiveDailyLog`: each one is an **OBJECT** full of **OBJECTS**, each one also having **OBJECTS**. It's an object packaging DAYS, each day packaging ENTRIES. It's better understood with the example:
 
-```json
-{ // an object
-    "15/09/2024": { // full of objects (days)
-        "8131221499": { // each one having more objects (entries)
+```jsonc
+// example
+
+// an object
+{
+    // full of objects (days)
+    "15/09/2024": {
+        // each one having more objects (entries)
+        "8131221499": {
             // being here the actual data of each entry
-            "wasDone":true,
-            "performance":0 // (or the performance data, if any)
+            "wasDone": true,
+            "objective": { /* ... */ },
+            "performance": 0 // only present in the Active Objective daily log
         },
-        ...
+        // ...
     },
-    ...
+    // ...
 }
 ```
 
@@ -101,11 +107,11 @@ You also should have an overall idea of how the app is really meant to work, so 
 
 ### The foundation - What does this exactly do?
 
-Just as with code, sometimes it's a bit hard to get the purpose of a project. PersonaPlus currently has a [public version](https://github.com/ZakaHaceCosas/personaplus/releases/tag/0.0.1-R5-b24) with a few features here and there, but not a clear "purpose".
+Just as with code, sometimes it's a bit hard to get the purpose of a project. PersonaPlus currently has a [public version](https://github.com/ZakaHaceCosas/personaplus/releases/latest) with a few features here and there, but not a clear "purpose".
 
 What I really want this app to be is an all in one replacement to three items: exercising, diet, and wellbeing apps. A single app that supports all needed features for taking care of yourself.
 
-### Objectives, Active and Passive
+### Active and Passive Objectives
 
 The app is intended to have two kinds of "objectives", Active Objectives and Passive Objectives.
 
@@ -207,6 +213,8 @@ export default function MainComponent() {
 }
 ```
 
+----
+
 Favor full words in variable names, except when the word becomes excessively long. If a shorter, equally clear word exists, use that. When necessary, use more than one word, but aim for brevity without losing clarity.
 
 **❌ Do not:**
@@ -225,6 +233,8 @@ async function myAsyncFunction();
 let thisIsATest = true;
 ```
 
+----
+
 Make function names descriptive.
 
 **❌ Do not:**
@@ -238,6 +248,8 @@ function ToDailyLog();
 ```ts
 function SaveActiveObjectiveToDailyLog();
 ```
+
+----
 
 While PascalCase or camelCase look pretty, avoid them for naming files. Use snake_case or kebab-case (we prefer snake) for file names, as some filesystems aren't case sensitive but others are and it ends up breaking this.
 
@@ -282,6 +294,8 @@ function Greet(who: string): void {
 }
 ```
 
+----
+
 Annulate cases instead of nesting `if else` statements.
 
 **❌ Do not:**
@@ -306,6 +320,8 @@ if (password != user.password) throw "Wrong pass!";
 doAdminStuff();
 ```
 
+----
+
 Where possible (and if it makes sense), use ternary operators instead of `if else` statements.
 
 **❌ Do not:**
@@ -326,9 +342,75 @@ if (usesPersonaPlus) {
 const isCool = usesPersonaPlus ? "yes" : "no :(";
 ```
 
+### Other tips
+
 Type everything exhaustively. Even basic types like `string` and `number` are _recommended_ - of course you don't need to waste your time with this, but preventing the TypeScript LSP from inferring so many times can slightly reduce editor launch time, so every type is acknowledge.
 
-Also, use JSDoc as extensively as possible. If using a JSDoc generator extension (which we recommend), remove the `@typedef` prop if generated; it breaks stuff on VSCode.
+```ts
+const text: string = "some text";
+        /*  ^^^^^^ even basic types are encouraged to be explicit */
+```
+
+Use JSDoc as extensively as possible. If using a JSDoc generator extension (which we recommend), remove the `@typedef` prop if generated; it breaks stuff on VSCode.
+
+**❌ Do not:**
+
+```ts
+export function Greet(who: string) {
+    console.log(`Hi, ${who}!`);
+}
+```
+
+**❌ Do not:**
+
+```ts
+/**
+ * A human interface.
+ *
+ * @typedef <- do not add this!
+ * @interface Human
+ */
+interface Human {
+    name: string,
+    age: number
+}
+```
+
+**✅ Do:**
+
+```ts
+/**
+ * Greets someone
+ *
+ * @param {string} who Who to greet
+ * @returns {void} Greets them
+ */
+export function Greet(who: string): void {
+    console.log(`Hi, ${who}!`);
+}
+```
+
+```ts
+/**
+ * A human interface.
+ *
+ * @interface Human
+ */
+interface Human {
+    /**
+     * Their name
+     * @type {string}
+     */
+    name: string,
+    /**
+     * Their age
+     * @type {number}
+     */
+    age: number
+}
+```
+
+----
 
 ## 4. Contributing your cool code in a cool way
 
