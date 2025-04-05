@@ -14,7 +14,7 @@
 import { StrUtils } from "../toolkit/glue_fix";
 import { ActiveObjective } from "./active_objectives";
 import { PassiveObjective } from "./passive_objectives";
-import { TodaysDate, TodaysDateRegularExpression } from "./today";
+import { TodaysDate, ValidateTodaysDateString } from "./today";
 
 export interface GenericObjective {
     /**
@@ -56,7 +56,7 @@ export function ValidateGenericObjective(
         !obj.createdAt ||
         typeof obj.createdAt !== "string" ||
         !StrUtils.validate(obj.createdAt) ||
-        !TodaysDateRegularExpression.test(obj.createdAt)
+        !ValidateTodaysDateString(obj.createdAt)
     ) {
         return false;
     } // if no createdAt, invalid.

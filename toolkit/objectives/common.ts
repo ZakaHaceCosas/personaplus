@@ -1,3 +1,16 @@
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/toolkit/objectives/common.ts
+ * Basically: Common features to active and passive objectives.
+ *
+ * <=============================================================================>
+ */
+
 import StoredItemNames from "@/constants/stored_item_names";
 import {
     ActiveObjective,
@@ -23,7 +36,7 @@ import {
     TODAY_CODE_ARRAY,
     TurnJavaScriptDateIntoCurrentDate,
 } from "../today";
-import { CorrectCurrentDate, TodaysDate } from "@/types/today";
+import { CorrectCurrentDate, TodaysDate, ValidateTodaysDateString } from "@/types/today";
 import { StrUtils } from "../glue_fix";
 
 /**
@@ -149,13 +162,13 @@ async function DeleteObjective(
         const updatedObjectives: PassiveObjective[] | ActiveObjective[] =
             category === "active"
                 ? (objectives as ActiveObjective[]).filter(
-                      (obj: ActiveObjective): boolean =>
-                          obj.identifier !== identifier,
-                  )
+                    (obj: ActiveObjective): boolean =>
+                        obj.identifier !== identifier,
+                )
                 : (objectives as PassiveObjective[]).filter(
-                      (obj: PassiveObjective): boolean =>
-                          obj.identifier !== identifier,
-                  );
+                    (obj: PassiveObjective): boolean =>
+                        obj.identifier !== identifier,
+                );
 
         await AsyncStorage.setItem(
             category === "active"
@@ -306,10 +319,36 @@ async function GetGenericObjectiveDailyLog(
 }
 
 /**
+ * Given a daily log, dedupes it and sorts it by date, returning a new and clean log.
+ *
+ * @param {UncheckedDailyLog} log
+ * @returns {UncheckedDailyLog}
+ */
+function CleanupGenericDailyLog(log: any): UncheckedDailyLog {
+    type entry = [string, { [identifier: number]: UncheckedDailyLog }]
+
+    const uniqueEntries = new Map<string, any>();
+    for (const [date, value] of Object.entries(log)) {
+        uniqueEntries.set(date, value);
+    }
+
+    return Object.fromEntries(
+        Object.entries(uniqueEntries).sort(([dateA]: entry, [dateB]: entry): number => {
+            if (!ValidateTodaysDateString(dateA) ||
+                !ValidateTodaysDateString(dateB)) throw new Error(`Invalid dates, don't match TodaysDate type! dateA: ${dateA}, dateB: ${dateB}`);
+            return (
+                JavaScriptifyTodaysDate(dateB).getTime() -
+                JavaScriptifyTodaysDate(dateA).getTime()
+            );
+        }),
+    );
+}
+
+/**
  * Handles saving the daily log, sorting stuff by date.
  *
  * @async
- * @param {GenericDailyLog<any>} log Any log.
+ * @param {UncheckedDailyLog} log Any log.
  * @param {"active" | "passive"} category Category to save to.
  * @returns {Promise<void>}
  */
@@ -318,33 +357,11 @@ async function SaveGenericObjectiveDailyLog(
     category: "active" | "passive",
 ): Promise<void> {
     try {
-        function removeDuplicates(obj: UncheckedDailyLog): UncheckedDailyLog {
-            const uniqueEntries = new Map<string, any>();
-            for (const [date, value] of Object.entries(obj)) {
-                uniqueEntries.set(date, value);
-            }
-            return Object.fromEntries(uniqueEntries);
-        }
-
-        function sortObjectByDate(obj: UncheckedDailyLog): UncheckedDailyLog {
-            return Object.fromEntries(
-                Object.entries(obj).sort(([dateA], [dateB]) => {
-                    return (
-                        JavaScriptifyTodaysDate(dateA as TodaysDate).getTime() -
-                        JavaScriptifyTodaysDate(dateB as TodaysDate).getTime()
-                    );
-                }),
-            );
-        }
-
-        const dedupedLog: UncheckedDailyLog = removeDuplicates(log);
-        const sortedLog: UncheckedDailyLog = sortObjectByDate(dedupedLog);
-
         await AsyncStorage.setItem(
             category === "active"
                 ? StoredItemNames.dailyLog
                 : StoredItemNames.passiveDailyLog,
-            JSON.stringify(sortedLog),
+            JSON.stringify(CleanupGenericDailyLog(log)),
         );
     } catch (e) {
         throw new Error(`Error saving to ${category} daily log: ${e}`);
@@ -352,7 +369,7 @@ async function SaveGenericObjectiveDailyLog(
 }
 
 /**
- * Fails objectives not done yesterday.
+ * Fails objectives not done yesterday. Gets all objectives, finds the ones that you had to do yesterday (and previous days), and if they weren't done, it adds them as not done to the daily log.
  *
  * @async
  * @param {"active" | "passive"} category Category to fail from.
@@ -404,7 +421,7 @@ async function FailGenericObjectivesNotDoneYesterday(
                 const daysIndex: number = Math.floor(
                     (startDate.getTime() -
                         JavaScriptifyTodaysDate(obj.createdAt).getTime()) /
-                        (1000 * 60 * 60 * 24),
+                    (1000 * 60 * 60 * 24),
                 );
 
                 const TODAY_INDEX: keyof WeekTuple | undefined =
@@ -426,14 +443,14 @@ async function FailGenericObjectivesNotDoneYesterday(
 
                 dailyLog[dateString][obj.identifier] = IsActiveObjective(obj)
                     ? {
-                          wasDone: false,
-                          objective: obj,
-                          performance: 0,
-                      }
+                        wasDone: false,
+                        objective: obj,
+                        performance: 0,
+                    }
                     : {
-                          wasDone: false,
-                          objective: obj,
-                      };
+                        wasDone: false,
+                        objective: obj,
+                    };
             }
 
             // Increment startDate by one day
@@ -578,6 +595,7 @@ export {
     DeleteObjective,
     CreateObjective,
     GetAllObjectives,
+    CleanupGenericDailyLog,
     GetPendingGenericObjectives,
     GetGenericObjectiveDailyLog,
     SaveGenericObjectiveDailyLog,

@@ -5,7 +5,6 @@ import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
 import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
 import {
-    FailObjectivesNotDoneYesterday,
     GetPendingActiveObjectives,
 } from "@/toolkit/objectives/active_objectives";
 import { ActiveObjective } from "@/types/active_objectives";
@@ -20,7 +19,7 @@ import {
     cancelScheduledNotifications,
     scheduleRandomNotifications,
 } from "@/hooks/use_notification";
-import { GetObjective, PendingReturn } from "@/toolkit/objectives/common";
+import { FailGenericObjectivesNotDoneYesterday, GetObjective, PendingReturn } from "@/toolkit/objectives/common";
 import { DisplayObjectives } from "@/toolkit/objectives/common_ui";
 import GapView from "@/components/ui/gap_view";
 import {
@@ -58,7 +57,8 @@ export default function HomeScreen(): ReactElement {
     useEffect((): void => {
         async function handler(): Promise<void> {
             // handle stuff not done yesterday
-            await FailObjectivesNotDoneYesterday();
+            await FailGenericObjectivesNotDoneYesterday("active");
+            await FailGenericObjectivesNotDoneYesterday("passive");
         }
         handler();
     }, []);

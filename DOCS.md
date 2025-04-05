@@ -434,12 +434,12 @@ Okay, so you did write some cool code, right? That's awesome! Now, here are a fe
 > - `(dev)` for dev related changes
 > - `(chore)` for chores (small tasks or maintenance work)
 > - `(ui)` for visual changes
->
-> Here are some sample valid (and good) commits:
->
-> - `(page:WelcomeScreen)(ui): Remove unneeded spacing below headers`
-> - `(chore): Rename variables in User toolkit for consistency`
-> - `(ui): Update regular font size`
-> - `(fix): Fix a typo ("are n't" -> "aren't")`
+
+Here are some sample valid (and good) commits:
+
+- `(page:WelcomeScreen)(ui): Remove unneeded spacing below headers`
+- `(chore): Rename variables in User toolkit for consistency`
+- `(ui): Update regular font size`
+- `(fix): Fix a typo ("are n't" -> "aren't")`
 
 And that's it for now. Keep in mind these docs are subject to future expansions.

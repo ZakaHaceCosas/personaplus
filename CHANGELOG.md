@@ -7,6 +7,10 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 
 ## [0.0.6-preapp.30] - Unreleased
 
+### Added
+
+- Passive Objectives! Type anything you'd like to do daily and you'll be able to log your daily progress, seeing a nice streak number next to your goal.
+
 ### Changed
 
 - We've settled on **green** for both the app's accent and branding. Until this update, the app mixed blue & green as two "accent colors", making the UI a bit _too_ colorful.
