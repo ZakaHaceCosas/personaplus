@@ -14,7 +14,7 @@ export function SafelyGoBack(target?: string): void {
             return;
         }
     } catch (e) {
-        console.error(`Error (safely) going back! ${e}`,);
+        console.error(`Error (safely) going back! ${e}`);
         return;
     }
 }

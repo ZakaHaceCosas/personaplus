@@ -249,9 +249,7 @@ export async function OrchestrateUserData(
 
         return fullData;
     } catch (e) {
-        console.error(
-            `Error orchestrating user data! ${e}`,
-        );
+        console.error(`Error orchestrating user data! ${e}`);
         return ErrorUserData;
     }
 }
@@ -289,9 +287,7 @@ export async function updateBrm5(
             router.replace(Routes.MAIN.WELCOME_SCREEN);
             return 0;
         } catch (e) {
-            ShowToast(
-                "Unknown error removing user data!",
-            ); // to the user, we show a normal message
+            ShowToast("Unknown error removing user data!"); // to the user, we show a normal message
             console.error(
                 `Error releasing op. Resurgence AKA removing user data: ${e}`,
                 {
@@ -322,7 +318,7 @@ export async function updateBrm5(
                     isPreferred: true,
                     text: t("globals.interaction.nevermind"),
                     style: "cancel",
-                    onPress: () => { },
+                    onPress: () => {},
                 },
             ],
         );
@@ -378,15 +374,15 @@ export const IndividualUserDataValidators = {
                 ? t(`${validatorPrefix}.username.required`)
                 : username.length < VALID_USER_CAPS.USERNAME.MIN ||
                     username.length >= VALID_USER_CAPS.USERNAME.MAX
-                    ? t(`${validatorPrefix}.username.length`, {
+                  ? t(`${validatorPrefix}.username.length`, {
                         minCap: VALID_USER_CAPS.USERNAME.MIN,
                         maxCap: VALID_USER_CAPS.USERNAME.MAX,
                     })
-                    : VALID_USER_CAPS.USERNAME.INVALID.includes(
-                        username.toLowerCase(),
-                    )
-                        ? t(`${validatorPrefix}.username.forbidden`)
-                        : "";
+                  : VALID_USER_CAPS.USERNAME.INVALID.includes(
+                          username.toLowerCase(),
+                      )
+                    ? t(`${validatorPrefix}.username.forbidden`)
+                    : "";
         },
     },
     age: {
@@ -401,10 +397,10 @@ export const IndividualUserDataValidators = {
             return age === ""
                 ? ""
                 : !(age >= MIN)
-                    ? t(`${validatorPrefix}.age.min`, { minCap: MIN })
-                    : !(age <= MAX)
-                        ? t(`${validatorPrefix}.age.max`, { maxCap: MAX })
-                        : "";
+                  ? t(`${validatorPrefix}.age.min`, { minCap: MIN })
+                  : !(age <= MAX)
+                    ? t(`${validatorPrefix}.age.max`, { maxCap: MAX })
+                    : "";
         },
     },
     weight: {
@@ -421,10 +417,10 @@ export const IndividualUserDataValidators = {
             return weight === ""
                 ? ""
                 : !(weight >= MIN)
-                    ? t(`${validatorPrefix}.weight.min`, { minCap: MIN })
-                    : !(weight <= MAX)
-                        ? t(`${validatorPrefix}.weight.max`, { maxCap: MAX })
-                        : "";
+                  ? t(`${validatorPrefix}.weight.min`, { minCap: MIN })
+                  : !(weight <= MAX)
+                    ? t(`${validatorPrefix}.weight.max`, { maxCap: MAX })
+                    : "";
         },
     },
     height: {
@@ -441,10 +437,10 @@ export const IndividualUserDataValidators = {
             return height === ""
                 ? ""
                 : !(height >= MIN)
-                    ? t(`${validatorPrefix}.height.min`, { minCap: MIN })
-                    : !(height <= MAX)
-                        ? t(`${validatorPrefix}.height.max`, { maxCap: MAX })
-                        : "";
+                  ? t(`${validatorPrefix}.height.min`, { minCap: MIN })
+                  : !(height <= MAX)
+                    ? t(`${validatorPrefix}.height.max`, { maxCap: MAX })
+                    : "";
         },
     },
 };

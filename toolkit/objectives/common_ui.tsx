@@ -28,12 +28,12 @@ export function DisplayObjectivesThemselves({
 }: {
     objectivesToRender: ActiveObjective[] | PassiveObjective[];
     handler:
-    | "launch"
-    | ((
-        identifier: number,
-        action: "delete" | "edit",
-        category: "active" | "passive",
-    ) => Promise<void>);
+        | "launch"
+        | ((
+              identifier: number,
+              action: "delete" | "edit",
+              category: "active" | "passive",
+          ) => Promise<void>);
 }): ReactElement {
     const { t } = useTranslation();
 
@@ -46,8 +46,8 @@ export function DisplayObjectivesThemselves({
                         header={
                             IsActiveObjective(obj)
                                 ? t(
-                                    `globals.supportedActiveObjectives.${obj.exercise}.name`,
-                                )
+                                      `globals.supportedActiveObjectives.${obj.exercise}.name`,
+                                  )
                                 : obj.goal
                         }
                         preHeader={t(
@@ -72,11 +72,11 @@ export function DisplayObjectivesThemselves({
                                 action={async (): Promise<void> =>
                                     IsActiveObjective(obj)
                                         ? await LaunchActiveObjective(
-                                            obj.identifier,
-                                        )
+                                              obj.identifier,
+                                          )
                                         : await MarkPassiveObjectiveAsDoneToday(
-                                            obj.identifier,
-                                        )
+                                              obj.identifier,
+                                          )
                                 }
                             />
                         ) : (
@@ -136,32 +136,32 @@ export function DisplayObjectivesThemselves({
 function NoObjectivesExist(): ReactElement {
     const { t } = useTranslation();
 
-    return (
-        <Division header={t("objectives.common.noObjectives.noneExists")} />
-    )
+    return <Division header={t("objectives.common.noObjectives.noneExists")} />;
 }
 
 export function DisplayObjectives({
     identifiers,
-    objectives
+    objectives,
 }: {
-    identifiers: PendingReturn,
-    objectives: ActiveObjective[] | PassiveObjective[]
+    identifiers: PendingReturn;
+    objectives: ActiveObjective[] | PassiveObjective[];
 }): ReactElement {
     const { t } = useTranslation();
 
-    if (!objectives) return <NoObjectivesExist />
-    if (identifiers === "noneExists") return <NoObjectivesExist />
-    if (identifiers === "allDone") return <Division
-        header={t("objectives.common.noObjectives.allDone")}
-    />
-    if (identifiers === "noneDueToday") return <Division
-        header={t(
-            "objectives.common.noObjectives.todayFree",
-        )}
-    />
-    return <DisplayObjectivesThemselves
-        objectivesToRender={objectives}
-        handler="launch"
-    />
+    if (!objectives) return <NoObjectivesExist />;
+    if (identifiers === "noneExists") return <NoObjectivesExist />;
+    if (identifiers === "allDone")
+        return (
+            <Division header={t("objectives.common.noObjectives.allDone")} />
+        );
+    if (identifiers === "noneDueToday")
+        return (
+            <Division header={t("objectives.common.noObjectives.todayFree")} />
+        );
+    return (
+        <DisplayObjectivesThemselves
+            objectivesToRender={objectives}
+            handler="launch"
+        />
+    );
 }

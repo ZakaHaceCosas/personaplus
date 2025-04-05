@@ -119,7 +119,9 @@ export default function Dashboard(): ReactElement {
             />
             <Section kind="ActiveObjectives">
                 {activeObjectives === null || activeObjectives.length === 0 ? (
-                    <Division header={t("objectives.common.noObjectives.noneExists")} />
+                    <Division
+                        header={t("objectives.common.noObjectives.noneExists")}
+                    />
                 ) : (
                     <DisplayObjectivesThemselves
                         objectivesToRender={activeObjectives}
@@ -140,8 +142,10 @@ export default function Dashboard(): ReactElement {
             <GapView height={20} />
             <Section kind="PassiveObjectives">
                 {passiveObjectives === null ||
-                    passiveObjectives.length === 0 ? (
-                    <Division header={t("objectives.common.noObjectives.noneExists")} />
+                passiveObjectives.length === 0 ? (
+                    <Division
+                        header={t("objectives.common.noObjectives.noneExists")}
+                    />
                 ) : (
                     <DisplayObjectivesThemselves
                         objectivesToRender={passiveObjectives}

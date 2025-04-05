@@ -81,9 +81,9 @@ export default function Sessions(): ReactElement {
         const { durationMinutes } = objective.info;
         const result: string = !isUserResting
             ? t(
-                `globals.supportedActiveObjectives.${objective.exercise}.doing`,
-                { duration: StringifyMinutes(durationMinutes) },
-            )
+                  `globals.supportedActiveObjectives.${objective.exercise}.doing`,
+                  { duration: StringifyMinutes(durationMinutes) },
+              )
             : t("pages.sessions.resting");
 
         setObjectiveVerbalName(result);
@@ -136,7 +136,7 @@ export default function Sessions(): ReactElement {
                 {
                     text: t("globals.interaction.nevermind"),
                     style: "cancel",
-                    onPress: (): void => { },
+                    onPress: (): void => {},
                 },
                 {
                     text: t("globals.interaction.giveUp"),
@@ -215,7 +215,8 @@ export default function Sessions(): ReactElement {
                 });
             } catch (e) {
                 console.error(
-                    `Error finishing session for ${objective ? objective.identifier : "(UNKNOWN)"
+                    `Error finishing session for ${
+                        objective ? objective.identifier : "(UNKNOWN)"
                     }: ${e}`,
                     "error",
                 );

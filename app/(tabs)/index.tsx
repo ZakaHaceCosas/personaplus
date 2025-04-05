@@ -23,7 +23,10 @@ import {
 import { GetObjective, PendingReturn } from "@/toolkit/objectives/common";
 import { DisplayObjectives } from "@/toolkit/objectives/common_ui";
 import GapView from "@/components/ui/gap_view";
-import { GetAllPassiveObjectives, GetPendingPassiveObjectives } from "@/toolkit/objectives/passive_objectives";
+import {
+    GetAllPassiveObjectives,
+    GetPendingPassiveObjectives,
+} from "@/toolkit/objectives/passive_objectives";
 import { PassiveObjective } from "@/types/passive_objectives";
 
 setNotificationHandler({
@@ -44,12 +47,10 @@ export default function HomeScreen(): ReactElement {
     const [passiveObjectives, setPassiveObjectives] = useState<
         PassiveObjective[]
     >([]);
-    const [activeObjectiveIdentifiers, setActiveObjectiveIdentifiers] = useState<PendingReturn>(
-        "noneExists",
-    );
-    const [passiveObjectiveIdentifiers, setPassiveObjectiveIdentifiers] = useState<PendingReturn>(
-        "noneExists",
-    );
+    const [activeObjectiveIdentifiers, setActiveObjectiveIdentifiers] =
+        useState<PendingReturn>("noneExists");
+    const [passiveObjectiveIdentifiers, setPassiveObjectiveIdentifiers] =
+        useState<PendingReturn>("noneExists");
     const [identifiersLoaded, setIdentifiersLoaded] = useState<boolean>(false);
     const [notificationsHandled, setNotificationsHandled] =
         useState<boolean>(false);
@@ -74,15 +75,15 @@ export default function HomeScreen(): ReactElement {
                 setUserData(userData);
 
                 // fetch IDs
-                const pendingActive: PendingReturn = await GetPendingActiveObjectives();
+                const pendingActive: PendingReturn =
+                    await GetPendingActiveObjectives();
                 setActiveObjectiveIdentifiers(pendingActive);
-                const pendingPassive: PendingReturn = await GetPendingPassiveObjectives();
+                const pendingPassive: PendingReturn =
+                    await GetPendingPassiveObjectives();
                 setPassiveObjectiveIdentifiers(pendingPassive);
 
                 // handle passive objectives (first because active objectives have early returns)
-                setPassiveObjectives(
-                    (await GetAllPassiveObjectives()) ?? [],
-                );
+                setPassiveObjectives((await GetAllPassiveObjectives()) ?? []);
 
                 // handle active objectives
                 if (!Array.isArray(pendingActive)) {
@@ -140,7 +141,13 @@ export default function HomeScreen(): ReactElement {
         }
 
         handle();
-    }, [userData, activeObjectiveIdentifiers, identifiersLoaded, notificationsHandled, t]);
+    }, [
+        userData,
+        activeObjectiveIdentifiers,
+        identifiersLoaded,
+        notificationsHandled,
+        t,
+    ]);
 
     // render stuff
     if (loading || !userData || !activeObjectives || !passiveObjectives) {

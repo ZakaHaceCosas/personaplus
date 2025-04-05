@@ -100,7 +100,10 @@ initializeI18n();
  * @param {("es" | "en")} language The language you want to set.
  * @returns {Promise<0 | 1>} 0 if success, 1 if failure.
  */
-async function ChangeLanguage(userData: FullProfile, language: "es" | "en"): Promise<void> {
+async function ChangeLanguage(
+    userData: FullProfile,
+    language: "es" | "en",
+): Promise<void> {
     try {
         if (!userData) throw new Error("Why is userData (still) null?");
         const newUserData: FullProfile = {

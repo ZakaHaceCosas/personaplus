@@ -51,7 +51,7 @@ export default function CreatePassiveObjectivePage(): ReactElement {
             goalToCreate.trim().length === 0
                 ? false
                 : goalToCreate.trim().length >= 3 &&
-                goalToCreate.trim().length < 120,
+                      goalToCreate.trim().length < 120,
         );
     }, [goalToCreate]);
 

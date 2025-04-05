@@ -83,7 +83,10 @@ export default function Results(): ReactElement {
             try {
                 const isRegistered: boolean =
                     await areNotificationsScheduledForToday();
-                if ((userData.wantsNotifications === false && isRegistered) || !Array.isArray(await GetPendingActiveObjectives())) {
+                if (
+                    (userData.wantsNotifications === false && isRegistered) ||
+                    !Array.isArray(await GetPendingActiveObjectives())
+                ) {
                     await cancelScheduledNotifications(t, false);
                 }
             } catch (e) {

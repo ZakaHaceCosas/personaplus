@@ -158,16 +158,13 @@ export default function BetterButton({
                     // always await, so we correctly handle both sync and async stuff
                     await Promise.resolve(action());
                 } catch (e) {
-                    console.error(
-                        `Error handling a button press: ${e}.`,
-                        {
-                            location:
-                                "Unknown. This happened on the 'onPress' prop of a <BetterButton /> you have somewhere. Use context to find out where it happened.",
-                            function:
-                                "Whatever you passed to some <BetterButton />",
-                            isHandler: true,
-                        },
-                    );
+                    console.error(`Error handling a button press: ${e}.`, {
+                        location:
+                            "Unknown. This happened on the 'onPress' prop of a <BetterButton /> you have somewhere. Use context to find out where it happened.",
+                        function:
+                            "Whatever you passed to some <BetterButton />",
+                        isHandler: true,
+                    });
                 }
             }}
             onPressIn={(): void => {

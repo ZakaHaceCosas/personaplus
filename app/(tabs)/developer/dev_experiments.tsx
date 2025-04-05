@@ -109,7 +109,7 @@ export default function EpicExperiments(): ReactElement {
                     },
                     {
                         text: t("globals.interaction.nevermind"),
-                        onPress: (): void => { },
+                        onPress: (): void => {},
                     },
                 ],
             );

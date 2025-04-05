@@ -15,9 +15,9 @@ import React, { ReactElement, useEffect, useState } from "react";
 export default function ViewerObjectives(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [activeObjectives, setActiveObjectives] = useState<ActiveObjective[] | null>(
-        null
-    );
+    const [activeObjectives, setActiveObjectives] = useState<
+        ActiveObjective[] | null
+    >(null);
     const [passiveObjectives, setPassiveObjectives] = useState<
         PassiveObjective[] | null
     >(null);
@@ -117,45 +117,52 @@ export default function ViewerObjectives(): ReactElement {
                 <BetterTextSmallText>No objectives!</BetterTextSmallText>
             )}
             <GapView height={10} />
-            {activeObjectives && activeObjectives.map(
-                (obj: ActiveObjective, index: number): ReactElement => (
-                    <>
-                        <BetterTextSmallHeader>
-                            {obj.identifier} - {obj.exercise}
-                        </BetterTextSmallHeader>
-                        <GapView height={5} />
-                        <BetterTable
-                            key={`TABLE_${index}`}
-                            headers={["Key", "Value"]}
-                            items={Object.entries(obj).map(
-                                ([key, value]: [string, unknown]): {
-                                    name: string;
-                                    value: string;
-                                } => ({
-                                    name: key,
-                                    value: String(value),
-                                }),
-                            )}
-                        />
-                        <GapView height={5} />
-                        <BetterTextSmallText>Generic info</BetterTextSmallText>
-                        <GapView height={5} />
-                        <BetterTable
-                            key={`TABLE_${index}_INFO`}
-                            headers={["Key", "Value"]}
-                            items={representDataAsBetterTable(obj.info)}
-                        />
-                        <GapView height={5} />
-                        <BetterTextSmallText>Specific data</BetterTextSmallText>
-                        <GapView height={5} />
-                        <BetterTable
-                            key={`TABLE_${index}_SPECIFIC_DATA`}
-                            headers={["Key", "Value"]}
-                            items={representDataAsBetterTable(obj.specificData)}
-                        />
-                    </>
-                ),
-            )}
+            {activeObjectives &&
+                activeObjectives.map(
+                    (obj: ActiveObjective, index: number): ReactElement => (
+                        <>
+                            <BetterTextSmallHeader>
+                                {obj.identifier} - {obj.exercise}
+                            </BetterTextSmallHeader>
+                            <GapView height={5} />
+                            <BetterTable
+                                key={`TABLE_${index}`}
+                                headers={["Key", "Value"]}
+                                items={Object.entries(obj).map(
+                                    ([key, value]: [string, unknown]): {
+                                        name: string;
+                                        value: string;
+                                    } => ({
+                                        name: key,
+                                        value: String(value),
+                                    }),
+                                )}
+                            />
+                            <GapView height={5} />
+                            <BetterTextSmallText>
+                                Generic info
+                            </BetterTextSmallText>
+                            <GapView height={5} />
+                            <BetterTable
+                                key={`TABLE_${index}_INFO`}
+                                headers={["Key", "Value"]}
+                                items={representDataAsBetterTable(obj.info)}
+                            />
+                            <GapView height={5} />
+                            <BetterTextSmallText>
+                                Specific data
+                            </BetterTextSmallText>
+                            <GapView height={5} />
+                            <BetterTable
+                                key={`TABLE_${index}_SPECIFIC_DATA`}
+                                headers={["Key", "Value"]}
+                                items={representDataAsBetterTable(
+                                    obj.specificData,
+                                )}
+                            />
+                        </>
+                    ),
+                )}
             <PageEnd includeText={false} size="tiny" />
         </>
     );

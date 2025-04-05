@@ -72,9 +72,9 @@ function CalculateDistanceBetweenInterval(
     const a: number =
         Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
         Math.cos(lat1Radians) *
-        Math.cos(lat2Radians) *
-        Math.sin(deltaLon / 2) *
-        Math.sin(deltaLon / 2);
+            Math.cos(lat2Radians) *
+            Math.sin(deltaLon / 2) *
+            Math.sin(deltaLon / 2);
     const c: number = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return earthRadius * c;
 }
@@ -218,8 +218,8 @@ export default function PersonaPlusRunningTracker(): ReactElement {
                 objective={objective}
                 running={isTracking}
                 timerColor={Colors.PRIMARIES.ACE.ACE}
-                restingStateHandler={(): void => { }}
-                onComplete={(): void => { }}
+                restingStateHandler={(): void => {}}
+                onComplete={(): void => {}}
             />
             <GapView height={10} />
             <View style={styles.buttonContainer}>
