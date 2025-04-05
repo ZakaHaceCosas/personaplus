@@ -64,7 +64,6 @@ async function GetPassiveObjectiveDailyLog(): Promise<PassiveObjectiveDailyLog> 
     return await GetGenericObjectiveDailyLog("passive");
 }
 
-
 /**
  * Retrieves a single objective from AsyncStorage by its identifier.
  *
@@ -106,9 +105,10 @@ async function SavePassiveObjectiveToDailyLog(
         const dailyData: PassiveObjectiveDailyLog =
             await GetPassiveObjectiveDailyLog();
         const today: TodaysDate = GetCurrentDateCorrectly().string;
-        const objective: PassiveObjective | null = await GetPassiveObjective(id)
+        const objective: PassiveObjective | null =
+            await GetPassiveObjective(id);
 
-        if (!objective) throw new Error(`${id} is a wrong identifier.`)
+        if (!objective) throw new Error(`${id} is a wrong identifier.`);
 
         // If there's no old data for today, creates an {} for today
         if (!dailyData[today]) {
@@ -123,9 +123,7 @@ async function SavePassiveObjectiveToDailyLog(
 
         // Updates data and puts it back to AsyncStorage
         await SaveGenericObjectiveDailyLog(dailyData, "passive");
-        console.log(
-            `Marked passive obj ${id} as done for ${today}.`,
-        );
+        console.log(`Marked passive obj ${id} as done for ${today}.`);
     } catch (e) {
         throw new Error(`Error saving user's goal for objective ${id}: ${e}`);
     }
@@ -138,13 +136,13 @@ async function SavePassiveObjectiveToDailyLog(
  * @returns {Promise<PendingReturn>} Either an array with pending objective identifiers _only_ or a text-based code indicating context.
  */
 async function GetPendingPassiveObjectives(): Promise<PendingReturn> {
-    return await GetPendingGenericObjectives("passive")
+    return await GetPendingGenericObjectives("passive");
 }
 
 async function MarkPassiveObjectiveAsDoneToday(
     identifier: number,
 ): Promise<void> {
-    await SavePassiveObjectiveToDailyLog(identifier, true)
+    await SavePassiveObjectiveToDailyLog(identifier, true);
 }
 
 export {

@@ -104,9 +104,7 @@ export default function UpdateProfile() {
                 console.error(`Error creating profile: ${e}`);
             }
         } else {
-            console.error(
-                "Error saving user data, some data is missing!",
-            ); // bro forgot to add data
+            console.error("Error saving user data, some data is missing!"); // bro forgot to add data
         }
     }
 
@@ -202,13 +200,13 @@ export default function UpdateProfile() {
                     workingData!.username.toLowerCase().includes("psoe")) && (
                     <BetterTextSmallerText>
                         {workingData!.username.toLowerCase() === "error" ||
-                            workingData!.username.toLowerCase() === "error."
+                        workingData!.username.toLowerCase() === "error."
                             ? t(
-                                "userData.formValidation.username.forbiddenError",
-                            )
+                                  "userData.formValidation.username.forbiddenError",
+                              )
                             : t(
-                                "userData.formValidation.username.forbiddenPsoe",
-                            )}
+                                  "userData.formValidation.username.forbiddenPsoe",
+                              )}
                     </BetterTextSmallerText>
                 )
             }

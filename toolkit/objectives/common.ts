@@ -50,9 +50,7 @@ async function GetAllObjectives(
         );
 
         if (!storedObjectives || storedObjectives.trim() === "") {
-            console.warn(
-                `Warning! There are no ${category} objectives`,
-            );
+            console.warn(`Warning! There are no ${category} objectives`);
             return null;
         }
 
@@ -60,9 +58,7 @@ async function GetAllObjectives(
         const objectives = JSON.parse(storedObjectives);
 
         if (!Array.isArray(objectives)) {
-            console.warn(
-                "Warning! Objectives are not an array",
-            );
+            console.warn("Warning! Objectives are not an array");
             return null;
         }
 
@@ -153,13 +149,13 @@ async function DeleteObjective(
         const updatedObjectives: PassiveObjective[] | ActiveObjective[] =
             category === "active"
                 ? (objectives as ActiveObjective[]).filter(
-                    (obj: ActiveObjective): boolean =>
-                        obj.identifier !== identifier,
-                )
+                      (obj: ActiveObjective): boolean =>
+                          obj.identifier !== identifier,
+                  )
                 : (objectives as PassiveObjective[]).filter(
-                    (obj: PassiveObjective): boolean =>
-                        obj.identifier !== identifier,
-                );
+                      (obj: PassiveObjective): boolean =>
+                          obj.identifier !== identifier,
+                  );
 
         await AsyncStorage.setItem(
             category === "active"
@@ -408,7 +404,7 @@ async function FailGenericObjectivesNotDoneYesterday(
                 const daysIndex: number = Math.floor(
                     (startDate.getTime() -
                         JavaScriptifyTodaysDate(obj.createdAt).getTime()) /
-                    (1000 * 60 * 60 * 24),
+                        (1000 * 60 * 60 * 24),
                 );
 
                 const TODAY_INDEX: keyof WeekTuple | undefined =
@@ -430,14 +426,14 @@ async function FailGenericObjectivesNotDoneYesterday(
 
                 dailyLog[dateString][obj.identifier] = IsActiveObjective(obj)
                     ? {
-                        wasDone: false,
-                        objective: obj,
-                        performance: 0,
-                    }
+                          wasDone: false,
+                          objective: obj,
+                          performance: 0,
+                      }
                     : {
-                        wasDone: false,
-                        objective: obj,
-                    };
+                          wasDone: false,
+                          objective: obj,
+                      };
             }
 
             // Increment startDate by one day
@@ -465,13 +461,18 @@ async function IsGenericObjectivePending(
     try {
         const { identifier } = objective;
 
-        const dailyLog: ActiveObjectiveDailyLog | PassiveObjectiveDailyLog = IsActiveObjective(objective) ?
-            await GetGenericObjectiveDailyLog("active") :
-            await GetGenericObjectiveDailyLog("passive");
+        const dailyLog: ActiveObjectiveDailyLog | PassiveObjectiveDailyLog =
+            IsActiveObjective(objective)
+                ? await GetGenericObjectiveDailyLog("active")
+                : await GetGenericObjectiveDailyLog("passive");
 
         // the opposite ("&& !obj.days") seemed more logical to me (return NOT due today IF NOT added for today), however that does the opposite and this somehow does it right...
         // sometimes i wonder if it's me or JS who has a problem
-        if (IsActiveObjective(objective) && objective.info.days[ADJUSTED_TODAY_INDEX]) return false; // not due today
+        if (
+            IsActiveObjective(objective) &&
+            objective.info.days[ADJUSTED_TODAY_INDEX]
+        )
+            return false; // not due today
 
         if (Object.keys(dailyLog).length === 0) return true; // log does not exist, so the objective is due today.
 
@@ -479,8 +480,7 @@ async function IsGenericObjectivePending(
 
         // Validate if dailyLog and the specific identifier exist
         if (dailyLog[date] && dailyLog[date][identifier]) {
-            const entry: { wasDone: boolean } =
-                dailyLog[date][identifier];
+            const entry: { wasDone: boolean } = dailyLog[date][identifier];
             if (typeof entry.wasDone !== "boolean") {
                 throw new Error(
                     `Invalid 'wasDone' value for objective ${identifier} on date ${date}`,
@@ -497,11 +497,7 @@ async function IsGenericObjectivePending(
 }
 
 /** Either an array of the IDs of pending objectives, or a self-descriptive status code. IDs should not be mixed up - either an active objective ID array or a passive objective one. */
-type PendingReturn =
-    | number[]
-    | "allDone"
-    | "noneDueToday"
-    | "noneExists"
+type PendingReturn = number[] | "allDone" | "noneDueToday" | "noneExists";
 
 /**
  * Tells you if the user has any pending objective or not. If he does, returns all of them, as an `number[]` being each number the ID of each active objective.
@@ -510,7 +506,9 @@ type PendingReturn =
  * @param {"active" | "passive"} category Category to read from.
  * @returns {Promise<PendingReturn>} Either an array with pending objective identifiers _only_ or a text-based code indicating context.
  */
-async function GetPendingGenericObjectives(category: "active" | "passive"): Promise<PendingReturn> {
+async function GetPendingGenericObjectives(
+    category: "active" | "passive",
+): Promise<PendingReturn> {
     try {
         const nullishObjectives: ActiveObjective[] | PassiveObjective[] | null =
             category === "active"
@@ -537,15 +535,17 @@ async function GetPendingGenericObjectives(category: "active" | "passive"): Prom
 
         // this function runs for each objective, checks if it's pending,
         // and returns its status (pending or not) and ID
-        async function callbackfn(obj: ActiveObjective | PassiveObjective): Promise<thing | null> {
+        async function callbackfn(
+            obj: ActiveObjective | PassiveObjective,
+        ): Promise<thing | null> {
             const status: boolean = await IsGenericObjectivePending(obj);
             return { identifier: obj.identifier, status };
         }
 
         // we get the values of the objectives and run the callbackfn for all of them
-        const dueTodayObjectives: thing[] = (await Promise.all(
-            objectives.map(callbackfn),
-        ))
+        const dueTodayObjectives: thing[] = (
+            await Promise.all(objectives.map(callbackfn))
+        )
             // we filter out null entries
             .filter((obj: thing | null): obj is thing => obj !== null);
 
@@ -556,13 +556,13 @@ async function GetPendingGenericObjectives(category: "active" | "passive"): Prom
 
         // if all objectives have FALSE status (NOT DUE TODAY) (thus !obj.status)
         // return "allDone"
-        if (dueTodayObjectives.every(
-            (obj: thing): boolean => !obj.status,
-        )) return "allDone"; // all objectives for today are done
+        if (dueTodayObjectives.every((obj: thing): boolean => !obj.status))
+            return "allDone"; // all objectives for today are done
 
         // get the identifiers of objectives that are not done yet
-        const pendingObjectives: number[] = dueTodayObjectives
-            .map((obj: thing): number => obj.identifier);
+        const pendingObjectives: number[] = dueTodayObjectives.map(
+            (obj: thing): number => obj.identifier,
+        );
 
         // return pending objectives
         // because of the earlier .every(), we know there's at least one
@@ -585,6 +585,4 @@ export {
 };
 
 // type exports
-export {
-    PendingReturn
-};
+export { PendingReturn };

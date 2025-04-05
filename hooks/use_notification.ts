@@ -205,9 +205,7 @@ export async function cancelScheduledNotifications(
             );
         }
         for (const identifier of identifiers) {
-            console.debug(
-                `Cancelling notification ${identifier.identifier}`,
-            );
+            console.debug(`Cancelling notification ${identifier.identifier}`);
             await cancelScheduledNotificationAsync(identifier.identifier);
         }
         console.debug("Scheduled Notifications DISABLED");

@@ -11,23 +11,23 @@ import { ReactElement, useState } from "react";
 
 export default function ViewerDailyLog(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
-    const [activeDailyLog, setActiveDailyLog] = useState<ActiveObjectiveDailyLog | null>(
-        null,
-    );
-    const [passiveDailyLog, setPassiveDailyLog] = useState<PassiveObjectiveDailyLog | null>(
-        null,
-    );
+    const [activeDailyLog, setActiveDailyLog] =
+        useState<ActiveObjectiveDailyLog | null>(null);
+    const [passiveDailyLog, setPassiveDailyLog] =
+        useState<PassiveObjectiveDailyLog | null>(null);
 
     useEffect((): void => {
         async function handler(): Promise<void> {
             try {
-                const active: ActiveObjectiveDailyLog = await GetActiveObjectiveDailyLog();
-                const passive: PassiveObjectiveDailyLog = await GetPassiveObjectiveDailyLog()
+                const active: ActiveObjectiveDailyLog =
+                    await GetActiveObjectiveDailyLog();
+                const passive: PassiveObjectiveDailyLog =
+                    await GetPassiveObjectiveDailyLog();
                 setActiveDailyLog(
-                    Object.keys(active).length === 0 ? null : active
+                    Object.keys(active).length === 0 ? null : active,
                 );
                 setPassiveDailyLog(
-                    Object.keys(passive).length === 0 ? null : passive
+                    Object.keys(passive).length === 0 ? null : passive,
                 );
             } finally {
                 setLoading(false);
@@ -46,14 +46,18 @@ export default function ViewerDailyLog(): ReactElement {
                 subHeader="View all your progress."
             />
             {!activeDailyLog ? (
-                <BetterTextSmallText>No active daily log yet!</BetterTextSmallText>
+                <BetterTextSmallText>
+                    No active daily log yet!
+                </BetterTextSmallText>
             ) : (
                 <BetterTextSmallText>
                     {JSON.stringify(activeDailyLog, undefined, 2)}
                 </BetterTextSmallText>
             )}
             {!passiveDailyLog ? (
-                <BetterTextSmallText>No passive daily log yet!</BetterTextSmallText>
+                <BetterTextSmallText>
+                    No passive daily log yet!
+                </BetterTextSmallText>
             ) : (
                 <BetterTextSmallText>
                     {JSON.stringify(passiveDailyLog, undefined, 2)}

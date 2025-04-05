@@ -1,9 +1,7 @@
 import React, { ReactElement } from "react";
 import BetterButton from "@/components/interaction/better_button";
 import PageEnd from "@/components/static/page_end";
-import {
-    BetterTextSubHeader,
-} from "@/components/text/better_text_presets";
+import { BetterTextSubHeader } from "@/components/text/better_text_presets";
 import BetterAlert from "@/components/ui/better_alert";
 import GapView from "@/components/ui/gap_view";
 import { Routes } from "@/constants/routes";

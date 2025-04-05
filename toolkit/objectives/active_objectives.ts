@@ -79,9 +79,9 @@ async function SaveActiveObjectiveToDailyLog(
         const dailyData: ActiveObjectiveDailyLog =
             await GetActiveObjectiveDailyLog();
         const today: TodaysDate = GetCurrentDateCorrectly().string;
-        const objective: ActiveObjective | null = await GetActiveObjective(id)
+        const objective: ActiveObjective | null = await GetActiveObjective(id);
 
-        if (!objective) throw new Error(`${id} is a wrong identifier.`)
+        if (!objective) throw new Error(`${id} is a wrong identifier.`);
 
         // If there's no old data for today, creates an {} for today
         if (!dailyData[today]) {
@@ -102,7 +102,9 @@ async function SaveActiveObjectiveToDailyLog(
             "success",
         );
     } catch (e) {
-        throw new Error(`Error saving user's performance for objective ${id}: ${e}`);
+        throw new Error(
+            `Error saving user's performance for objective ${id}: ${e}`,
+        );
     }
 }
 
@@ -113,7 +115,7 @@ async function SaveActiveObjectiveToDailyLog(
  * @returns {Promise<PendingReturn>} Either an array with pending objective identifiers _only_ or a text-based code indicating context.
  */
 async function GetPendingActiveObjectives(): Promise<PendingReturn> {
-    return await GetPendingGenericObjectives("active")
+    return await GetPendingGenericObjectives("active");
 }
 
 /**
@@ -210,9 +212,7 @@ async function EditActiveObjective(
         }
     } catch (e) {
         ShowToast("Error :c");
-        throw new Error(
-            `Something went wrong editing ${id}.\n\nError: ${e}`,
-        );
+        throw new Error(`Something went wrong editing ${id}.\n\nError: ${e}`);
     }
 }
 
@@ -233,7 +233,6 @@ function CalculateSessionFragmentsDuration(
     if (!rests || !duration) {
         throw new Error(
             "Some parameters are missing, can't calculate fragment duration. Objective is not getting fetched correctly? Check your code",
-
         );
     }
     if (rests < 0) {
@@ -350,13 +349,15 @@ function CalculateSessionPerformance(
                 );
         }
     } catch (e) {
-        throw new Error(`Error handling post-session calculations: ${e}\n${{
-            location:
-                "USE: @/app/(tabs)/objectives/Sessions.tsx; FUNC: @/toolkit/objectives/ActiveObjectives.ts",
-            function: "FinishSession()",
-            isHandler: true,
-            handlerName: "Toolkified CalculateSessionPerformance()",
-        }}`);
+        throw new Error(
+            `Error handling post-session calculations: ${e}\n${{
+                location:
+                    "USE: @/app/(tabs)/objectives/Sessions.tsx; FUNC: @/toolkit/objectives/ActiveObjectives.ts",
+                function: "FinishSession()",
+                isHandler: true,
+                handlerName: "Toolkified CalculateSessionPerformance()",
+            }}`,
+        );
     }
 }
 

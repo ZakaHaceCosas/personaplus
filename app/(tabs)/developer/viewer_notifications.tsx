@@ -44,8 +44,8 @@ export default function ViewerNotifications(): ReactElement {
             {loading ? (
                 <Loading />
             ) : notifications &&
-                Array.isArray(notifications) &&
-                notifications.length > 0 ? (
+              Array.isArray(notifications) &&
+              notifications.length > 0 ? (
                 <>
                     {error ? (
                         <BetterTextSmallText>{error}</BetterTextSmallText>

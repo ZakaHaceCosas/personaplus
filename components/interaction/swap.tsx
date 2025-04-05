@@ -112,8 +112,8 @@ export default function Swap({
     const [selectedOption, setSelectedOption] = useState<SwapOption | null>(
         value
             ? options.find(
-                (option: SwapOption): boolean => option.value === value,
-            ) || null
+                  (option: SwapOption): boolean => option.value === value,
+              ) || null
             : defaultOption || null,
     );
 
@@ -144,45 +144,50 @@ export default function Swap({
 
     return (
         <View style={[styles.container, { flexDirection: orderString }]}>
-            {options.map((option: SwapOption): ReactElement => (
-                <Pressable
-                    key={option.value}
-                    style={[
-                        styles.swapOption,
-                        {
-                            height: order === "vertical" ? 65 : 55,
-                            paddingRight: order === "vertical" ? 10 : 0,
-                            paddingLeft: order === "vertical" ? 10 : 0,
-                            alignItems:
-                                order === "horizontal"
-                                    ? "center"
-                                    : "flex-start",
-                            backgroundColor:
-                                selectedOption?.value === option.value
-                                    ? Colors.PRIMARIES.ACE.ACE
-                                    : Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
-                            borderColor:
-                                selectedOption?.value === option.value
-                                    ? Colors.PRIMARIES.ACE.ACE_STROKE
-                                    : Colors.MAIN.DEFAULT_ITEM.STROKE,
-                        },
-                    ]}
-                    accessibilityLabel={option.label}
-                    onPress={(): void => handleOptionPress(option)}
-                >
-                    <BetterText
-                        textAlign={order === "horizontal" ? "center" : "left"}
-                        fontSize={FontSizes.ALMOST_REGULAR}
-                        fontWeight="SemiBold"
-                        textColor={selectedOption?.value === option.value
-                            ? Colors.BASIC.BLACK
-                            : Colors.BASIC.WHITE
-                        }
+            {options.map(
+                (option: SwapOption): ReactElement => (
+                    <Pressable
+                        key={option.value}
+                        style={[
+                            styles.swapOption,
+                            {
+                                height: order === "vertical" ? 65 : 55,
+                                paddingRight: order === "vertical" ? 10 : 0,
+                                paddingLeft: order === "vertical" ? 10 : 0,
+                                alignItems:
+                                    order === "horizontal"
+                                        ? "center"
+                                        : "flex-start",
+                                backgroundColor:
+                                    selectedOption?.value === option.value
+                                        ? Colors.PRIMARIES.ACE.ACE
+                                        : Colors.MAIN.DEFAULT_ITEM.BACKGROUND,
+                                borderColor:
+                                    selectedOption?.value === option.value
+                                        ? Colors.PRIMARIES.ACE.ACE_STROKE
+                                        : Colors.MAIN.DEFAULT_ITEM.STROKE,
+                            },
+                        ]}
+                        accessibilityLabel={option.label}
+                        onPress={(): void => handleOptionPress(option)}
                     >
-                        {option.label}
-                    </BetterText>
-                </Pressable>
-            ))}
+                        <BetterText
+                            textAlign={
+                                order === "horizontal" ? "center" : "left"
+                            }
+                            fontSize={FontSizes.ALMOST_REGULAR}
+                            fontWeight="SemiBold"
+                            textColor={
+                                selectedOption?.value === option.value
+                                    ? Colors.BASIC.BLACK
+                                    : Colors.BASIC.WHITE
+                            }
+                        >
+                            {option.label}
+                        </BetterText>
+                    </Pressable>
+                ),
+            )}
         </View>
     );
 }

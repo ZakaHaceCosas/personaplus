@@ -97,11 +97,13 @@ export default function Settings() {
                             "pages.settings.preferences.language.action.hint",
                         )}
                         style="DEFAULT"
-                        action={async (): Promise<void> => await ChangeLanguage(
-                            userData,
-                            userData.language = userData.language === "es"
-                                ? "en"
-                                : "es")}
+                        action={async (): Promise<void> =>
+                            await ChangeLanguage(
+                                userData,
+                                (userData.language =
+                                    userData.language === "es" ? "en" : "es"),
+                            )
+                        }
                     />
                 </Division>
                 <Division
