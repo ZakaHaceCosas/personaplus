@@ -19,7 +19,7 @@ import {
     cancelScheduledNotifications,
     scheduleRandomNotifications,
 } from "@/hooks/use_notification";
-import { FailGenericObjectivesNotDoneYesterday, GetObjective, PendingReturn } from "@/toolkit/objectives/common";
+import { FailGenericObjectivesNotDoneYesterday, GenericDisplayHandler, GetObjective, PendingReturn } from "@/toolkit/objectives/common";
 import { DisplayObjectives } from "@/toolkit/objectives/common_ui";
 import GapView from "@/components/ui/gap_view";
 import {
@@ -41,8 +41,8 @@ export default function HomeScreen(): ReactElement {
     const [userData, setUserData] = useState<FullProfile>();
     const [loading, setLoading] = useState<boolean>(true);
     const [activeObjectives, setActiveObjectives] = useState<
-        ActiveObjective[] | null
-    >(null);
+        ActiveObjective[]
+    >([]);
     const [passiveObjectives, setPassiveObjectives] = useState<
         PassiveObjective[]
     >([]);
@@ -149,6 +149,19 @@ export default function HomeScreen(): ReactElement {
         t,
     ]);
 
+    async function handler(id: number, act: "deleting" | "editing" | "launching", cat: "active" | "passive"): Promise<void> {
+        if (act === "launching") {
+            console.error("who passed 'launching' to the GenericDisplayHandler?")
+            return
+        }
+        await GenericDisplayHandler(id, act, cat, {
+            setActiveCallback: setActiveObjectives,
+            activeToSet: activeObjectives,
+            setPassiveCallback: setPassiveObjectives,
+            passiveToSet: passiveObjectives,
+        }, t)
+    }
+
     // render stuff
     if (loading || !userData || !activeObjectives || !passiveObjectives) {
         return <Loading />;
@@ -165,14 +178,22 @@ export default function HomeScreen(): ReactElement {
             />
             <Section width="total" kind="ActiveObjectives">
                 <DisplayObjectives
-                    objectives={activeObjectives}
+                    handler={{
+                        act: "launching",
+                        callback: handler
+                    }}
+                    category="active"
                     identifiers={activeObjectiveIdentifiers}
                 />
             </Section>
             <GapView height={20} />
             <Section width="total" kind="PassiveObjectives">
                 <DisplayObjectives
-                    objectives={passiveObjectives}
+                    handler={{
+                        act: "launching",
+                        callback: handler
+                    }}
+                    category="passive"
                     identifiers={passiveObjectiveIdentifiers}
                 />
             </Section>

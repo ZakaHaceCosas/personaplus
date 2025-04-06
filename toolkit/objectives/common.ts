@@ -16,6 +16,7 @@ import {
     ActiveObjective,
     ActiveObjectiveDailyLog,
     ActiveObjectiveWithoutId,
+    EditObjectiveParams,
     WeekTuple,
 } from "@/types/active_objectives";
 import {
@@ -38,6 +39,8 @@ import {
 } from "../today";
 import { CorrectCurrentDate, TodaysDate, ValidateTodaysDateString } from "@/types/today";
 import { StrUtils } from "../glue_fix";
+import { Routes } from "@/constants/routes";
+import { router } from "expo-router";
 
 /**
  * Returns all objectives from AsyncStorage as an `ActiveObjective[]` or a `PassiveObjective[]` (depending on chosen category), or `null` if there aren't any objectives.
@@ -332,16 +335,14 @@ function CleanupGenericDailyLog(log: any): UncheckedDailyLog {
         uniqueEntries.set(date, value);
     }
 
-    return Object.fromEntries(
-        Object.entries(uniqueEntries).sort(([dateA]: entry, [dateB]: entry): number => {
-            if (!ValidateTodaysDateString(dateA) ||
-                !ValidateTodaysDateString(dateB)) throw new Error(`Invalid dates, don't match TodaysDate type! dateA: ${dateA}, dateB: ${dateB}`);
-            return (
-                JavaScriptifyTodaysDate(dateB).getTime() -
-                JavaScriptifyTodaysDate(dateA).getTime()
-            );
-        }),
-    );
+    return Object.fromEntries(Object.entries(Object.fromEntries(uniqueEntries.entries())).sort(([dateA]: entry, [dateB]: entry): number => {
+        if (!ValidateTodaysDateString(dateA) ||
+            !ValidateTodaysDateString(dateB)) throw new Error(`Invalid dates, don't match TodaysDate type! dateA: ${dateA}, dateB: ${dateB}`);
+        return (
+            JavaScriptifyTodaysDate(dateB).getTime() -
+            JavaScriptifyTodaysDate(dateA).getTime()
+        );
+    }));
 }
 
 /**
@@ -357,11 +358,15 @@ async function SaveGenericObjectiveDailyLog(
     category: "active" | "passive",
 ): Promise<void> {
     try {
+        console.log(log);
+        console.log("AND");
+        console.log(CleanupGenericDailyLog(log))
+        const value: string = JSON.stringify(CleanupGenericDailyLog(log))
         await AsyncStorage.setItem(
             category === "active"
                 ? StoredItemNames.dailyLog
                 : StoredItemNames.passiveDailyLog,
-            JSON.stringify(CleanupGenericDailyLog(log)),
+            value,
         );
     } catch (e) {
         throw new Error(`Error saving to ${category} daily log: ${e}`);
@@ -589,13 +594,90 @@ async function GetPendingGenericObjectives(
     }
 }
 
+
+/**
+ * A generic handler for `<DisplayObjectives />`. You should wrap it into a no-argument function that runs it with the required params and then pass it over to the display component.
+ *
+ * @async
+ * @param {number} identifier Identifier of the given objective.
+ * @param {("deleting" | "editing")} action Possible actions for the handler.
+ * @param {("active" | "passive")} category Category of the given objective.
+ * @param {{
+ *         setActiveCallback: (arg: ActiveObjective[] | null) => void,
+ *         activeToSet: ActiveObjective[] | null,
+ *         setPassiveCallback: (arg: PassiveObjective[] | null) => void,
+ *         passiveToSet: PassiveObjective[] | null,
+ *     }} statefulParams Stateful values and setters.
+ * @param {TFunction} t TFunctions
+ * @returns {Promise<void>} No return value
+ */
+async function GenericDisplayHandler(
+    identifier: number,
+    action: "deleting" | "editing",
+    category: "active" | "passive",
+    statefulParams: {
+        setActiveCallback: (arg: ActiveObjective[]) => void,
+        activeToSet: ActiveObjective[] | null,
+        setPassiveCallback: (arg: PassiveObjective[]) => void,
+        passiveToSet: PassiveObjective[] | null,
+    },
+    t: TFunction
+): Promise<void> {
+    const { setActiveCallback, activeToSet, setPassiveCallback, passiveToSet } = statefulParams
+
+    try {
+        if (action === "deleting") {
+            await DeleteObjective(identifier, category);
+            // update & redraw without re-fetching everything upon update.
+            if (category === "active") {
+                setActiveCallback(
+                    activeToSet?.filter(
+                        (obj: ActiveObjective): boolean => obj.identifier !== identifier,
+                    ) || [],
+                );
+            } else {
+                setPassiveCallback(
+                    passiveToSet?.filter(
+                        (obj: PassiveObjective): boolean => obj.identifier !== identifier,
+                    ) || [],
+                );
+            }
+            return;
+        } else if (action === "editing") {
+            // TODO - support editing passive objectives
+            const obj: ActiveObjective | null = await GetObjective(
+                identifier,
+                "active",
+            );
+            if (!obj) {
+                ShowToast(
+                    t("errors.objectiveNotExists", { id: identifier }),
+                );
+                return;
+            }
+            const params: EditObjectiveParams = {
+                edit: "true",
+                objective: JSON.stringify(obj),
+            };
+            router.push({
+                pathname: Routes.OBJECTIVES.CREATE_ACTIVE,
+                params,
+            });
+        }
+    } catch (e) {
+        console.error(`Error ${action} objective ${identifier}: ${e}`);
+    }
+}
+
 // function exports
 export {
     GetObjective,
     DeleteObjective,
     CreateObjective,
     GetAllObjectives,
+    GenericDisplayHandler,
     CleanupGenericDailyLog,
+    IsGenericObjectivePending,
     GetPendingGenericObjectives,
     GetGenericObjectiveDailyLog,
     SaveGenericObjectiveDailyLog,

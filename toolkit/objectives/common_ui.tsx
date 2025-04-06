@@ -4,13 +4,13 @@ import { ReactElement, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ObjectiveDescriptiveIcons } from "@/toolkit/objectives/active_objectives_ui";
 import BetterButton from "@/components/interaction/better_button";
-import { LaunchActiveObjective } from "@/toolkit/objectives/active_objectives";
+import { GetActiveObjective, LaunchActiveObjective } from "@/toolkit/objectives/active_objectives";
 import { View, StyleSheet } from "react-native";
 import GapView from "@/components/ui/gap_view";
 import { PassiveObjective } from "@/types/passive_objectives";
-import { GetPassiveObjectiveStreak, MarkPassiveObjectiveAsDoneToday } from "@/toolkit/objectives/passive_objectives";
+import { GetPassiveObjective, GetPassiveObjectiveStreak, MarkPassiveObjectiveAsDoneToday } from "@/toolkit/objectives/passive_objectives";
 import { IsActiveObjective } from "@/types/common_objectives";
-import { PendingReturn } from "./common";
+import { IsGenericObjectivePending, PendingReturn } from "./common";
 
 const styles = StyleSheet.create({
     buttonWrapper: {
@@ -22,13 +22,14 @@ const styles = StyleSheet.create({
     },
 });
 
-type HandlerType =
-    | "launch"
-    | ((
+type HandlerType = {
+    act: "managing" | "launching"
+    callback: (
         identifier: number,
-        action: "delete" | "edit",
+        action: "deleting" | "editing" | "launching",
         category: "active" | "passive",
-    ) => Promise<void>)
+    ) => Promise<void>
+}
 
 function DisplaySingleObjective({
     obj,
@@ -68,7 +69,7 @@ function DisplaySingleObjective({
             {IsActiveObjective(obj) && (
                 <ObjectiveDescriptiveIcons obj={obj} />
             )}
-            {handler === "launch" ? (
+            {handler.act === "launching" ? (
                 <BetterButton
                     buttonText={t(
                         IsActiveObjective(obj)
@@ -102,9 +103,9 @@ function DisplaySingleObjective({
                                     "pages.dashboard.editObjective.hint",
                                 )}
                                 action={async (): Promise<void> =>
-                                    await handler(
+                                    await handler.callback(
                                         obj.identifier,
-                                        "edit",
+                                        "editing",
                                         IsActiveObjective(obj)
                                             ? "active"
                                             : "passive",
@@ -123,9 +124,9 @@ function DisplaySingleObjective({
                             "pages.dashboard.deleteObjective.hint",
                         )}
                         action={async (): Promise<void> =>
-                            await handler(
+                            await handler.callback(
                                 obj.identifier,
-                                "delete",
+                                "deleting",
                                 IsActiveObjective(obj)
                                     ? "active"
                                     : "passive",
@@ -143,8 +144,7 @@ export function DisplayObjectivesThemselves({
     handler,
 }: {
     objectivesToRender: ActiveObjective[] | PassiveObjective[];
-    handler:
-    HandlerType;
+    handler: HandlerType;
 }): ReactElement {
     return (
         <>
@@ -170,16 +170,65 @@ function NoObjectivesExist(): ReactElement {
 }
 
 export function DisplayObjectives({
+    handler,
+    category,
     identifiers,
-    objectives,
 }: {
+    handler: HandlerType;
+    category: "active" | "passive";
     identifiers: PendingReturn;
-    objectives: ActiveObjective[] | PassiveObjective[];
 }): ReactElement {
+    console.debug("RENDERING", identifiers, "WITH CAT", category, "AND HANDLER", handler.act, handler.callback)
     const { t } = useTranslation();
 
-    if (!objectives) return <NoObjectivesExist />;
-    if (identifiers === "noneExists") return <NoObjectivesExist />;
+    const [objectivesToRender, setObjectivesToRender] = useState<ActiveObjective[] | PassiveObjective[]>([])
+
+    useEffect((): void => {
+        async function handle(): Promise<void> {
+            if (!Array.isArray(identifiers)) return;
+
+            const arr: (ActiveObjective | PassiveObjective | null)[] = await Promise.all(
+                identifiers.map((i: number): Promise<ActiveObjective | null> | Promise<PassiveObjective | null> =>
+                    category === "active" ? GetActiveObjective(i) : GetPassiveObjective(i)
+                )
+            );
+
+            console.debug("PROMISED ARR", arr)
+
+            const filteredArr: (ActiveObjective | PassiveObjective)[] = arr
+                // filter out nulls
+                .filter((i: ActiveObjective | PassiveObjective | null): i is ActiveObjective | PassiveObjective => i !== null)
+                // filter so it's EITHER active OR passive stuff
+                .filter((o: ActiveObjective | PassiveObjective): boolean => category === "active" ? IsActiveObjective(o) : !IsActiveObjective(o))
+
+            console.debug("FILTERED ARR", filteredArr)
+
+            // assure the type is consistent
+            // without this TS thought we had an (ActiveObj | PassiveObj)[] which is not true
+            if (category === "active") {
+                if (handler.act === "managing") {
+                    setObjectivesToRender(filteredArr as ActiveObjective[]);
+                    return;
+                } else if (handler.act === "launching") {
+                    setObjectivesToRender(filteredArr
+                        .filter(async (o: ActiveObjective | PassiveObjective): Promise<boolean> => (await IsGenericObjectivePending(o))) as ActiveObjective[]);
+                    return;
+                }
+            } else {
+                if (handler.act === "managing") {
+                    setObjectivesToRender(filteredArr as PassiveObjective[]);
+                    return;
+                } else if (handler.act === "launching") {
+                    setObjectivesToRender(filteredArr
+                        .filter(async (o: ActiveObjective | PassiveObjective): Promise<boolean> => (await IsGenericObjectivePending(o))) as PassiveObjective[]);
+                    return;
+                }
+            }
+        }
+        handle();
+    }, [identifiers, category, handler.act]);
+
+    if (!objectivesToRender || identifiers === "noneExists") return <NoObjectivesExist />;
     if (identifiers === "allDone")
         return (
             <Division header={t("objectives.common.noObjectives.allDone")} />
@@ -188,10 +237,11 @@ export function DisplayObjectives({
         return (
             <Division header={t("objectives.common.noObjectives.todayFree")} />
         );
+
     return (
         <DisplayObjectivesThemselves
-            objectivesToRender={objectives}
-            handler="launch"
+            objectivesToRender={objectivesToRender}
+            handler={handler}
         />
     );
 }
