@@ -7,7 +7,6 @@ import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
 import {
     ActiveObjective,
-    EditObjectiveParams,
 } from "@/types/active_objectives";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -15,11 +14,9 @@ import { useTranslation } from "react-i18next";
 import { StyleSheet, View } from "react-native";
 import TopBar from "@/components/navigation/top_bar";
 import GapView from "@/components/ui/gap_view";
-import { ShowToast } from "@/toolkit/android";
 import {
-    DeleteObjective,
+    GenericDisplayHandler,
     GetAllObjectives,
-    GetObjective,
 } from "@/toolkit/objectives/common";
 import { PassiveObjective } from "@/types/passive_objectives";
 import { DisplayObjectivesThemselves } from "@/toolkit/objectives/common_ui";
@@ -38,18 +35,18 @@ export default function Dashboard(): ReactElement {
     const { t } = useTranslation();
 
     const [activeObjectives, setActiveObjectives] = useState<
-        ActiveObjective[] | null
-    >(null);
+        ActiveObjective[]
+    >([]);
     const [passiveObjectives, setPassiveObjectives] = useState<
-        PassiveObjective[] | null
-    >(null);
+        PassiveObjective[]
+    >([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect((): void => {
         async function handler(): Promise<void> {
             try {
-                setActiveObjectives(await GetAllObjectives("active"));
-                setPassiveObjectives(await GetAllObjectives("passive"));
+                setActiveObjectives(await GetAllObjectives("active") ?? []);
+                setPassiveObjectives(await GetAllObjectives("passive") ?? []);
             } catch (e) {
                 console.error(`Error fetching Active Objectives: ${e}`);
             } finally {
@@ -60,52 +57,17 @@ export default function Dashboard(): ReactElement {
         handler();
     }, []);
 
-    async function handleObjective(
-        identifier: number,
-        action: "delete" | "edit",
-        category: "active" | "passive",
-    ): Promise<void> {
-        try {
-            if (action === "delete") {
-                await DeleteObjective(identifier, category);
-                // update & redraw without re-fetching everything upon update.
-                setActiveObjectives(
-                    activeObjectives?.filter(
-                        (obj: ActiveObjective): boolean =>
-                            obj.identifier !== identifier,
-                    ) || null,
-                );
-                setPassiveObjectives(
-                    passiveObjectives?.filter(
-                        (obj: PassiveObjective): boolean =>
-                            obj.identifier !== identifier,
-                    ) || null,
-                );
-                return;
-            } else if (action === "edit") {
-                // TODO - support editing passive objectives
-                const obj: ActiveObjective | null = await GetObjective(
-                    identifier,
-                    "active",
-                );
-                if (!obj) {
-                    ShowToast(
-                        t("errors.objectiveNotExists", { id: identifier }),
-                    );
-                    return;
-                }
-                const params: EditObjectiveParams = {
-                    edit: "true",
-                    objective: JSON.stringify(obj),
-                };
-                router.push({
-                    pathname: Routes.OBJECTIVES.CREATE_ACTIVE,
-                    params,
-                });
-            }
-        } catch (e) {
-            console.error(`Error deleting objective ${identifier}: ${e}`);
+    async function handler(id: number, act: "deleting" | "editing" | "launching", cat: "active" | "passive"): Promise<void> {
+        if (act === "launching") {
+            console.error("who passed 'launching' to the GenericDisplayHandler?")
+            return
         }
+        await GenericDisplayHandler(id, act, cat, {
+            setActiveCallback: setActiveObjectives,
+            activeToSet: activeObjectives,
+            setPassiveCallback: setPassiveObjectives,
+            passiveToSet: passiveObjectives,
+        }, t)
     }
 
     if (loading) return <Loading />;
@@ -118,14 +80,17 @@ export default function Dashboard(): ReactElement {
                 subHeader={t("pages.dashboard.subheader")}
             />
             <Section kind="ActiveObjectives">
-                {activeObjectives === null || activeObjectives.length === 0 ? (
+                {activeObjectives.length === 0 ? (
                     <Division
                         header={t("objectives.common.noObjectives.noneExists")}
                     />
                 ) : (
                     <DisplayObjectivesThemselves
                         objectivesToRender={activeObjectives}
-                        handler={handleObjective}
+                        handler={{
+                            act: "managing",
+                            callback: handler
+                        }}
                     />
                 )}
                 <View style={styles.buttonWrapper}>
@@ -141,15 +106,17 @@ export default function Dashboard(): ReactElement {
             </Section>
             <GapView height={20} />
             <Section kind="PassiveObjectives">
-                {passiveObjectives === null ||
-                passiveObjectives.length === 0 ? (
+                {passiveObjectives.length === 0 ? (
                     <Division
                         header={t("objectives.common.noObjectives.noneExists")}
                     />
                 ) : (
                     <DisplayObjectivesThemselves
                         objectivesToRender={passiveObjectives}
-                        handler={handleObjective}
+                        handler={{
+                            act: "managing",
+                            callback: handler
+                        }}
                     />
                 )}
                 <View style={styles.buttonWrapper}>
