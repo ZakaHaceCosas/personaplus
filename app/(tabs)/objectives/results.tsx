@@ -1,7 +1,7 @@
 // Results.tsx
 // Results page for when a session is done.
 
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import {
     router,
     UnknownOutputParams,
@@ -35,6 +35,11 @@ export default function Results(): ReactElement {
     const [notificationsHandled, setNotificationsHandled] =
         useState<boolean>(false);
     const { t } = useTranslation();
+
+    const randomMessage: string = useMemo(
+        (): string => GenerateRandomMessage("sessionCompleted", t),
+        [t],
+    );
 
     useEffect((): void => {
         async function fetchData(): Promise<void> {
@@ -104,7 +109,7 @@ export default function Results(): ReactElement {
             <TopBar
                 includeBackButton={false}
                 header={t("pages.results.header")}
-                subHeader={GenerateRandomMessage("sessionCompleted", t)}
+                subHeader={randomMessage}
             />
             <Section kind="HowYouAreDoing">
                 <Division

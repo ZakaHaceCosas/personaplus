@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import {
     BetterTextNormalText,
@@ -40,6 +40,7 @@ import { GetCommonScreenSize } from "@/constants/screen";
 import PageEnd from "@/components/static/page_end";
 import {
     CreateActiveObjective,
+    DEFAULT_ACTIVE_OBJECTIVE,
     EditActiveObjective,
 } from "@/toolkit/objectives/active_objectives";
 import {
@@ -52,7 +53,6 @@ import { Experiments } from "@/types/user";
 import { GetExperiments } from "@/toolkit/experiments";
 import TopBar from "@/components/navigation/top_bar";
 import { ShowToast } from "@/toolkit/android";
-import { GetCurrentDateCorrectly } from "@/toolkit/today";
 import { GenerateRandomMessage } from "@/toolkit/strings";
 
 const styles = StyleSheet.create({
@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
 // We create the function
 export default function CreateActiveObjectivePage(): ReactElement {
     const { t } = useTranslation();
-    const params: UnknownOutputParams = useGlobalSearchParams();
 
     // objective and stuff
     const exerciseOptions: SelectOption[] = SupportedActiveObjectivesList.map(
@@ -106,32 +105,14 @@ export default function CreateActiveObjectivePage(): ReactElement {
         }),
     );
     const [objectiveToCreate, updateObjectiveToCreate] =
-        useState<ActiveObjectiveWithoutId>({
-            exercise: "",
-            createdAt: GetCurrentDateCorrectly().string,
-            info: {
-                days: {
-                    MO: false,
-                    TU: false,
-                    WE: false,
-                    TH: false,
-                    FR: false,
-                    SA: false,
-                    SU: false,
-                },
-                durationMinutes: 0,
-                rests: 0,
-                restDurationMinutes: 0,
-            },
-            specificData: {
-                dumbbellWeight: 0,
-                reps: 0,
-                amountOfHands: 2,
-                amountOfPushUps: 0,
-                estimateSpeed: 0,
-            },
-        });
+        useState<ActiveObjectiveWithoutId>(DEFAULT_ACTIVE_OBJECTIVE);
 
+    // validation
+    const [canCreateObjective, setCanCreateObjective] =
+        useState<boolean>(false);
+
+    // edit handler
+    const params: UnknownOutputParams = useGlobalSearchParams();
     interface EditData {
         enable: boolean;
         id: number | undefined;
@@ -167,15 +148,11 @@ export default function CreateActiveObjectivePage(): ReactElement {
         }
     }, [params, t]);
 
-    // validation
-    const [canCreateObjective, setCanCreateObjective] =
-        useState<boolean>(false);
-
     // random message
-    const [randomMessage, setRandomMessage] = useState<string>("");
-    useEffect((): void => {
-        setRandomMessage(GenerateRandomMessage("createActiveObjective", t));
-    }, [t]);
+    const randomMessage: string = useMemo(
+        (): string => GenerateRandomMessage("createActiveObjective", t),
+        [t],
+    );
 
     // some types to avoid duplication
     type InfoValue = "durationMinutes" | "rests" | "restDurationMinutes";
@@ -671,10 +648,7 @@ export default function CreateActiveObjectivePage(): ReactElement {
                 }
                 buttonHint={t("pages.createActiveObjective.createButtonHint")}
                 action={async (): Promise<void> => {
-                    if (canCreateObjective) {
-                        await handleCreation();
-                    }
-                    return;
+                    await handleCreation();
                 }}
             />
             <PageEnd includeText={false} size="tiny" />

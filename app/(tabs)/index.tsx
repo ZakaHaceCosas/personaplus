@@ -4,9 +4,7 @@ import PageEnd from "@/components/static/page_end";
 import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
 import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
-import {
-    GetPendingActiveObjectives,
-} from "@/toolkit/objectives/active_objectives";
+import { GetPendingActiveObjectives } from "@/toolkit/objectives/active_objectives";
 import { ActiveObjective } from "@/types/active_objectives";
 import { FullProfile } from "@/types/user";
 import { router } from "expo-router";
@@ -19,7 +17,12 @@ import {
     cancelScheduledNotifications,
     scheduleRandomNotifications,
 } from "@/hooks/use_notification";
-import { FailGenericObjectivesNotDoneYesterday, GenericDisplayHandler, GetObjective, PendingReturn } from "@/toolkit/objectives/common";
+import {
+    FailGenericObjectivesNotDoneYesterday,
+    GenericDisplayHandler,
+    GetObjective,
+    PendingReturn,
+} from "@/toolkit/objectives/common";
 import { DisplayObjectives } from "@/toolkit/objectives/common_ui";
 import GapView from "@/components/ui/gap_view";
 import {
@@ -40,9 +43,9 @@ export default function HomeScreen(): ReactElement {
     const { t } = useTranslation();
     const [userData, setUserData] = useState<FullProfile>();
     const [loading, setLoading] = useState<boolean>(true);
-    const [activeObjectives, setActiveObjectives] = useState<
-        ActiveObjective[]
-    >([]);
+    const [activeObjectives, setActiveObjectives] = useState<ActiveObjective[]>(
+        [],
+    );
     const [passiveObjectives, setPassiveObjectives] = useState<
         PassiveObjective[]
     >([]);
@@ -149,17 +152,29 @@ export default function HomeScreen(): ReactElement {
         t,
     ]);
 
-    async function handler(id: number, act: "deleting" | "editing" | "launching", cat: "active" | "passive"): Promise<void> {
+    async function handler(
+        id: number,
+        act: "deleting" | "editing" | "launching",
+        cat: "active" | "passive",
+    ): Promise<void> {
         if (act === "launching") {
-            console.error("who passed 'launching' to the GenericDisplayHandler?")
-            return
+            console.error(
+                "who passed 'launching' to the GenericDisplayHandler?",
+            );
+            return;
         }
-        await GenericDisplayHandler(id, act, cat, {
-            setActiveCallback: setActiveObjectives,
-            activeToSet: activeObjectives,
-            setPassiveCallback: setPassiveObjectives,
-            passiveToSet: passiveObjectives,
-        }, t)
+        await GenericDisplayHandler(
+            id,
+            act,
+            cat,
+            {
+                setActiveCallback: setActiveObjectives,
+                activeToSet: activeObjectives,
+                setPassiveCallback: setPassiveObjectives,
+                passiveToSet: passiveObjectives,
+            },
+            t,
+        );
     }
 
     // render stuff
@@ -180,7 +195,7 @@ export default function HomeScreen(): ReactElement {
                 <DisplayObjectives
                     handler={{
                         act: "launching",
-                        callback: handler
+                        callback: handler,
                     }}
                     category="active"
                     identifiers={activeObjectiveIdentifiers}
@@ -191,7 +206,7 @@ export default function HomeScreen(): ReactElement {
                 <DisplayObjectives
                     handler={{
                         act: "launching",
-                        callback: handler
+                        callback: handler,
                     }}
                     category="passive"
                     identifiers={passiveObjectiveIdentifiers}

@@ -13,6 +13,7 @@
 
 import React, {
     MutableRefObject,
+    ReactElement,
     ReactNode,
     useEffect,
     useRef,
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default function UpdateProfile() {
+export default function UpdateProfile(): ReactElement {
     const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean>(true);
     const [workingData, setWorkingData] = useState<BasicUserData>(); // Store previous data
@@ -69,9 +70,10 @@ export default function UpdateProfile() {
                     throw new Error("no work data");
                 }
                 setWorkingData(data);
-                setLoading(false);
             } catch (e) {
                 console.error(`Error handling user data: ${e}`);
+            } finally {
+                setLoading(false);
             }
         }
         handle();

@@ -44,8 +44,13 @@ const TodaysDateRegularExpression: RegExp = new RegExp(
  * @param {*} toValidate What to check.
  * @returns {toValidate is TodaysDate} True if it matches the format, false if otherwise.
  */
-export function ValidateTodaysDateString(toValidate: any): toValidate is TodaysDate {
-    return StrUtils.validate(toValidate) && TodaysDateRegularExpression.test(toValidate)
+export function ValidateTodaysDateString(
+    toValidate: any,
+): toValidate is TodaysDate {
+    return (
+        StrUtils.validate(toValidate) &&
+        TodaysDateRegularExpression.test(toValidate)
+    );
 }
 
 /**

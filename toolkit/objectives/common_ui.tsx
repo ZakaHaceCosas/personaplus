@@ -4,11 +4,18 @@ import { ReactElement, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ObjectiveDescriptiveIcons } from "@/toolkit/objectives/active_objectives_ui";
 import BetterButton from "@/components/interaction/better_button";
-import { GetActiveObjective, LaunchActiveObjective } from "@/toolkit/objectives/active_objectives";
+import {
+    GetActiveObjective,
+    LaunchActiveObjective,
+} from "@/toolkit/objectives/active_objectives";
 import { View, StyleSheet } from "react-native";
 import GapView from "@/components/ui/gap_view";
 import { PassiveObjective } from "@/types/passive_objectives";
-import { GetPassiveObjective, GetPassiveObjectiveStreak, MarkPassiveObjectiveAsDoneToday } from "@/toolkit/objectives/passive_objectives";
+import {
+    GetPassiveObjective,
+    GetPassiveObjectiveStreak,
+    MarkPassiveObjectiveAsDoneToday,
+} from "@/toolkit/objectives/passive_objectives";
 import { IsActiveObjective } from "@/types/common_objectives";
 import { IsGenericObjectivePending, PendingReturn } from "./common";
 
@@ -23,20 +30,20 @@ const styles = StyleSheet.create({
 });
 
 type HandlerType = {
-    act: "managing" | "launching"
+    act: "managing" | "launching";
     callback: (
         identifier: number,
         action: "deleting" | "editing" | "launching",
         category: "active" | "passive",
-    ) => Promise<void>
-}
+    ) => Promise<void>;
+};
 
 function DisplaySingleObjective({
     obj,
-    handler
+    handler,
 }: {
-    obj: ActiveObjective | PassiveObjective,
-    handler: HandlerType
+    obj: ActiveObjective | PassiveObjective;
+    handler: HandlerType;
 }): ReactElement {
     const { t } = useTranslation();
     const [streak, setStreak] = useState<number | null>(null);
@@ -44,9 +51,11 @@ function DisplaySingleObjective({
     useEffect((): void => {
         if (!IsActiveObjective(obj)) {
             async function fetchStreak(): Promise<void> {
-                const result: number = await GetPassiveObjectiveStreak(obj.identifier);
+                const result: number = await GetPassiveObjectiveStreak(
+                    obj.identifier,
+                );
                 setStreak(result);
-            };
+            }
             fetchStreak();
         }
     }, [obj]);
@@ -57,8 +66,8 @@ function DisplaySingleObjective({
             header={
                 IsActiveObjective(obj)
                     ? t(
-                        `globals.supportedActiveObjectives.${obj.exercise}.name`,
-                    )
+                          `globals.supportedActiveObjectives.${obj.exercise}.name`,
+                      )
                     : `${obj.goal} · ${streak && streak}`
             }
             preHeader={t(
@@ -66,9 +75,7 @@ function DisplaySingleObjective({
             )}
             direction="vertical"
         >
-            {IsActiveObjective(obj) && (
-                <ObjectiveDescriptiveIcons obj={obj} />
-            )}
+            {IsActiveObjective(obj) && <ObjectiveDescriptiveIcons obj={obj} />}
             {handler.act === "launching" ? (
                 <BetterButton
                     buttonText={t(
@@ -82,12 +89,10 @@ function DisplaySingleObjective({
                     style="ACE"
                     action={async (): Promise<void> =>
                         IsActiveObjective(obj)
-                            ? await LaunchActiveObjective(
-                                obj.identifier,
-                            )
+                            ? await LaunchActiveObjective(obj.identifier)
                             : await MarkPassiveObjectiveAsDoneToday(
-                                obj.identifier,
-                            )
+                                  obj.identifier,
+                              )
                     }
                 />
             ) : (
@@ -117,26 +122,20 @@ function DisplaySingleObjective({
                     )}
                     <BetterButton
                         style="WOR"
-                        buttonText={t(
-                            "pages.dashboard.deleteObjective.text",
-                        )}
-                        buttonHint={t(
-                            "pages.dashboard.deleteObjective.hint",
-                        )}
+                        buttonText={t("pages.dashboard.deleteObjective.text")}
+                        buttonHint={t("pages.dashboard.deleteObjective.hint")}
                         action={async (): Promise<void> =>
                             await handler.callback(
                                 obj.identifier,
                                 "deleting",
-                                IsActiveObjective(obj)
-                                    ? "active"
-                                    : "passive",
+                                IsActiveObjective(obj) ? "active" : "passive",
                             )
                         }
                     />
                 </View>
             )}
         </Division>
-    )
+    );
 }
 
 export function DisplayObjectivesThemselves({
@@ -178,30 +177,43 @@ export function DisplayObjectives({
     category: "active" | "passive";
     identifiers: PendingReturn;
 }): ReactElement {
-    console.debug("RENDERING", identifiers, "WITH CAT", category, "AND HANDLER", handler.act, handler.callback)
     const { t } = useTranslation();
 
-    const [objectivesToRender, setObjectivesToRender] = useState<ActiveObjective[] | PassiveObjective[]>([])
+    const [objectivesToRender, setObjectivesToRender] = useState<
+        ActiveObjective[] | PassiveObjective[]
+    >([]);
 
     useEffect((): void => {
         async function handle(): Promise<void> {
             if (!Array.isArray(identifiers)) return;
 
-            const arr: (ActiveObjective | PassiveObjective | null)[] = await Promise.all(
-                identifiers.map((i: number): Promise<ActiveObjective | null> | Promise<PassiveObjective | null> =>
-                    category === "active" ? GetActiveObjective(i) : GetPassiveObjective(i)
-                )
-            );
-
-            console.debug("PROMISED ARR", arr)
+            const arr: (ActiveObjective | PassiveObjective | null)[] =
+                await Promise.all(
+                    identifiers.map(
+                        (
+                            i: number,
+                        ):
+                            | Promise<ActiveObjective | null>
+                            | Promise<PassiveObjective | null> =>
+                            category === "active"
+                                ? GetActiveObjective(i)
+                                : GetPassiveObjective(i),
+                    ),
+                );
 
             const filteredArr: (ActiveObjective | PassiveObjective)[] = arr
                 // filter out nulls
-                .filter((i: ActiveObjective | PassiveObjective | null): i is ActiveObjective | PassiveObjective => i !== null)
+                .filter(
+                    (
+                        i: ActiveObjective | PassiveObjective | null,
+                    ): i is ActiveObjective | PassiveObjective => i !== null,
+                )
                 // filter so it's EITHER active OR passive stuff
-                .filter((o: ActiveObjective | PassiveObjective): boolean => category === "active" ? IsActiveObjective(o) : !IsActiveObjective(o))
-
-            console.debug("FILTERED ARR", filteredArr)
+                .filter((o: ActiveObjective | PassiveObjective): boolean =>
+                    category === "active"
+                        ? IsActiveObjective(o)
+                        : !IsActiveObjective(o),
+                );
 
             // assure the type is consistent
             // without this TS thought we had an (ActiveObj | PassiveObj)[] which is not true
@@ -210,8 +222,14 @@ export function DisplayObjectives({
                     setObjectivesToRender(filteredArr as ActiveObjective[]);
                     return;
                 } else if (handler.act === "launching") {
-                    setObjectivesToRender(filteredArr
-                        .filter(async (o: ActiveObjective | PassiveObjective): Promise<boolean> => (await IsGenericObjectivePending(o))) as ActiveObjective[]);
+                    setObjectivesToRender(
+                        filteredArr.filter(
+                            async (
+                                o: ActiveObjective | PassiveObjective,
+                            ): Promise<boolean> =>
+                                await IsGenericObjectivePending(o),
+                        ) as ActiveObjective[],
+                    );
                     return;
                 }
             } else {
@@ -219,8 +237,14 @@ export function DisplayObjectives({
                     setObjectivesToRender(filteredArr as PassiveObjective[]);
                     return;
                 } else if (handler.act === "launching") {
-                    setObjectivesToRender(filteredArr
-                        .filter(async (o: ActiveObjective | PassiveObjective): Promise<boolean> => (await IsGenericObjectivePending(o))) as PassiveObjective[]);
+                    setObjectivesToRender(
+                        filteredArr.filter(
+                            async (
+                                o: ActiveObjective | PassiveObjective,
+                            ): Promise<boolean> =>
+                                await IsGenericObjectivePending(o),
+                        ) as PassiveObjective[],
+                    );
                     return;
                 }
             }
@@ -228,7 +252,8 @@ export function DisplayObjectives({
         handle();
     }, [identifiers, category, handler.act]);
 
-    if (!objectivesToRender || identifiers === "noneExists") return <NoObjectivesExist />;
+    if (!objectivesToRender || identifiers === "noneExists")
+        return <NoObjectivesExist />;
     if (identifiers === "allDone")
         return (
             <Division header={t("objectives.common.noObjectives.allDone")} />

@@ -107,18 +107,16 @@ export default function BetterInputField({
      * @param {number} index The **target** index - if your input has a `refIndex` of **2**, the *target* (this value) would be **3**. For `refIndex` see `spawnInputField()`.
      */
     function focusNextField(index: number): void {
-        const inputRef: TextInput = refParams.inputRefs.current[index];
-        if (inputRef) {
-            inputRef.focus();
-        } else {
-            // at this point the returnKeyType should be "done", so the user won't be surprised to see the keyboard gone after this.
-            return;
-        }
+        const inputRef: TextInput | undefined =
+            refParams.inputRefs.current[index];
+        if (!inputRef) return; // if no inputRef exists, we're at the point the returnKeyType should be "done", so the user won't be surprised to see the keyboard gone after this.
+        inputRef.focus();
     }
 
     const nextFieldIndex: number = refIndex + 1;
     const returnKeyType: "done" | "next" =
         nextFieldIndex === refParams.totalRefs ? "done" : "next";
+
     return (
         <>
             <BetterTextSmallText>{label}</BetterTextSmallText>

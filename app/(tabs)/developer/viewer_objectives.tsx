@@ -34,7 +34,9 @@ export default function ViewerObjectives(): ReactElement {
                 value:
                     typeof value === "object"
                         ? JSON.stringify(value)
-                        : String(value),
+                        : Array.isArray(value)
+                          ? value.toString()
+                          : String(value),
             }),
         );
     }

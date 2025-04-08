@@ -15,6 +15,7 @@ import React, {
     MutableRefObject,
     ReactElement,
     useEffect,
+    useMemo,
     useRef,
     useState,
 } from "react";
@@ -41,10 +42,10 @@ export default function CreatePassiveObjectivePage(): ReactElement {
     const [canCreateGoal, setCanCreateGoal] = useState<boolean>(false);
 
     // random message
-    const [randomMessage, setRandomMessage] = useState<string>("");
-    useEffect((): void => {
-        setRandomMessage(GenerateRandomMessage("createPassiveObjective", t));
-    }, [t]);
+    const randomMessage: string = useMemo(
+        (): string => GenerateRandomMessage("createPassiveObjective", t),
+        [t],
+    );
 
     useEffect((): void => {
         setCanCreateGoal(
@@ -111,10 +112,7 @@ export default function CreatePassiveObjectivePage(): ReactElement {
                 }
                 buttonHint={t("pages.createPassiveObjective.createButtonHint")}
                 action={async (): Promise<void> => {
-                    if (canCreateGoal) {
-                        await handleCreation();
-                    }
-                    return;
+                    await handleCreation();
                 }}
             />
             <PageEnd includeText={false} size="tiny" />

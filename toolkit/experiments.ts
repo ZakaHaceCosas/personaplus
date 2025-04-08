@@ -72,18 +72,14 @@ async function ToggleExperiment(
     experiment: Experiment,
     toggle: boolean,
 ): Promise<void> {
-    try {
-        const experiments = await GetExperiments();
-        if (experiments[experiment] === toggle) return; // avoid unneeded AsyncStorage request to rewrite the same stuff
-        experiments[experiment] = toggle;
-        await AsyncStorage.setItem(
-            StoredItemNames.experiments,
-            JSON.stringify(experiments),
-        );
-        return;
-    } catch (e) {
-        throw e;
-    }
+    const experiments: Experiments = await GetExperiments();
+    if (experiments[experiment] === toggle) return; // avoid unneeded AsyncStorage request to rewrite the same stuff
+    experiments[experiment] = toggle;
+    await AsyncStorage.setItem(
+        StoredItemNames.experiments,
+        JSON.stringify(experiments),
+    );
+    return;
 }
 
 export { GetExperiments, ToggleExperiment };

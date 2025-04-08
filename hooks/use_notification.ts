@@ -103,13 +103,11 @@ export async function handleNotificationsAsync(
         const token: ExpoPushToken | undefined =
             await registerForPushNotificationsAsync(channel);
 
-        if (token && token.data) {
-            return token.data;
-        } else {
+        if (!token || !token.data)
             throw new Error(
                 "Registering didn't throw an error, but ExpoPushToken.data (the token) is null. I don't know what's up.",
             );
-        }
+        return token.data;
     } catch (e) {
         console.error(`Error with notification handler: ${e}`, {
             function: `handleNotificationsAsync(${channel})`,
@@ -165,13 +163,6 @@ export async function scheduleRandomNotifications(
 
             // Store the notification identifier
             scheduledNotifications.push({ identifier });
-
-            for (const notification of scheduledNotifications) {
-                console.debug(
-                    `Notification scheduled: ${notification.identifier}`,
-                );
-            }
-            console.debug("Scheduled Notifications ENABLED");
         }
         return true;
     } catch (e) {
@@ -186,7 +177,7 @@ export async function scheduleRandomNotifications(
  * @async
  * @param {TFunction} t Pass the translate function here, please.
  * @param {boolean} shouldTell If true, the user is told about the change.
- * @returns {boolean} True if everything went alright, false if otherwise. Should log the try-catch error to termLog.
+ * @returns {boolean} True if everything went alright, false if otherwise.
  */
 export async function cancelScheduledNotifications(
     t: TFunction,
@@ -199,21 +190,16 @@ export async function cancelScheduledNotifications(
             console.debug("No notifications to disable");
             return true;
         }
-        if (shouldTell) {
+        if (shouldTell)
             ShowToast(
                 t("pages.settings.preferences.notifications.flow.disabling"),
             );
-        }
         for (const identifier of identifiers) {
-            console.debug(`Cancelling notification ${identifier.identifier}`);
             await cancelScheduledNotificationAsync(identifier.identifier);
         }
         console.debug("Scheduled Notifications DISABLED");
-        if (shouldTell) {
-            ShowToast(
-                t("pages.settings.preferences.notifications.flow.disabled"),
-            );
-        }
+        if (!shouldTell) return true;
+        ShowToast(t("pages.settings.preferences.notifications.flow.disabled"));
         return true;
     } catch (e) {
         console.error(`ERROR UNREGISTERING NOTIFICATIONS: ${e}`);
@@ -232,12 +218,6 @@ export async function areNotificationsScheduledForToday(): Promise<boolean> {
     try {
         const notifications: NotificationRequest[] =
             await getAllScheduledNotificationsAsync(); // get notifications
-
-        if (notifications.length > 5) {
-            console.warn(
-                `There are ${notifications.length} registered notifications. Isn't that too much?`,
-            );
-        }
 
         return notifications.length > 0;
     } catch (e) {
