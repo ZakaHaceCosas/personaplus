@@ -5,9 +5,7 @@ import PageEnd from "@/components/static/page_end";
 import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
-import {
-    ActiveObjective,
-} from "@/types/active_objectives";
+import { ActiveObjective } from "@/types/active_objectives";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -34,9 +32,9 @@ const styles = StyleSheet.create({
 export default function Dashboard(): ReactElement {
     const { t } = useTranslation();
 
-    const [activeObjectives, setActiveObjectives] = useState<
-        ActiveObjective[]
-    >([]);
+    const [activeObjectives, setActiveObjectives] = useState<ActiveObjective[]>(
+        [],
+    );
     const [passiveObjectives, setPassiveObjectives] = useState<
         PassiveObjective[]
     >([]);
@@ -45,8 +43,8 @@ export default function Dashboard(): ReactElement {
     useEffect((): void => {
         async function handler(): Promise<void> {
             try {
-                setActiveObjectives(await GetAllObjectives("active") ?? []);
-                setPassiveObjectives(await GetAllObjectives("passive") ?? []);
+                setActiveObjectives((await GetAllObjectives("active")) ?? []);
+                setPassiveObjectives((await GetAllObjectives("passive")) ?? []);
             } catch (e) {
                 console.error(`Error fetching Active Objectives: ${e}`);
             } finally {
@@ -57,17 +55,29 @@ export default function Dashboard(): ReactElement {
         handler();
     }, []);
 
-    async function handler(id: number, act: "deleting" | "editing" | "launching", cat: "active" | "passive"): Promise<void> {
+    async function handler(
+        id: number,
+        act: "deleting" | "editing" | "launching",
+        cat: "active" | "passive",
+    ): Promise<void> {
         if (act === "launching") {
-            console.error("who passed 'launching' to the GenericDisplayHandler?")
-            return
+            console.error(
+                "who passed 'launching' to the GenericDisplayHandler?",
+            );
+            return;
         }
-        await GenericDisplayHandler(id, act, cat, {
-            setActiveCallback: setActiveObjectives,
-            activeToSet: activeObjectives,
-            setPassiveCallback: setPassiveObjectives,
-            passiveToSet: passiveObjectives,
-        }, t)
+        await GenericDisplayHandler(
+            id,
+            act,
+            cat,
+            {
+                setActiveCallback: setActiveObjectives,
+                activeToSet: activeObjectives,
+                setPassiveCallback: setPassiveObjectives,
+                passiveToSet: passiveObjectives,
+            },
+            t,
+        );
     }
 
     if (loading) return <Loading />;
@@ -89,7 +99,7 @@ export default function Dashboard(): ReactElement {
                         objectivesToRender={activeObjectives}
                         handler={{
                             act: "managing",
-                            callback: handler
+                            callback: handler,
                         }}
                     />
                 )}
@@ -115,7 +125,7 @@ export default function Dashboard(): ReactElement {
                         objectivesToRender={passiveObjectives}
                         handler={{
                             act: "managing",
-                            callback: handler
+                            callback: handler,
                         }}
                     />
                 )}

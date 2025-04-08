@@ -171,9 +171,7 @@ async function EditActiveObjective(
         };
 
         let objs: ActiveObjective[] | null = await GetAllObjectives("active");
-        if (!objs || objs.length === 0) {
-            objs = [];
-        }
+        if (!objs || objs.length === 0) objs = [];
 
         const index: number = objs.findIndex(
             (o: ActiveObjective): boolean => o.identifier === id,
@@ -202,7 +200,7 @@ async function EditActiveObjective(
                 }),
             );
             console.log(
-                `Created ${newObjective.identifier} objective with ID ${newObjective.exercise} successfully! Full JSON of the created objective:\n${JSON.stringify(
+                `Edited ${newObjective.identifier} objective with ID ${newObjective.exercise} successfully!\nFull JSON of the new objective:\n${JSON.stringify(
                     newObjective,
                 )}"`,
             );
@@ -360,6 +358,33 @@ function CalculateSessionPerformance(
     }
 }
 
+const DEFAULT_ACTIVE_OBJECTIVE: ActiveObjectiveWithoutId = {
+    exercise: "",
+    createdAt: GetCurrentDateCorrectly().string,
+    info: {
+        days: {
+            MO: false,
+            TU: false,
+            WE: false,
+            TH: false,
+            FR: false,
+            SA: false,
+            SU: false,
+        },
+        durationMinutes: 0,
+        rests: 0,
+        restDurationMinutes: 0,
+    },
+    specificData: {
+        dumbbellWeight: 0,
+        reps: 0,
+        amountOfHands: 2,
+        amountOfPushUps: 0,
+        estimateSpeed: 0,
+    },
+};
+
+// function exports
 export {
     CalculateSessionFragmentsDuration,
     CalculateSessionPerformance,
@@ -373,3 +398,6 @@ export {
     LaunchActiveObjective,
     SaveActiveObjectiveToDailyLog,
 };
+
+// const exports
+export { DEFAULT_ACTIVE_OBJECTIVE };

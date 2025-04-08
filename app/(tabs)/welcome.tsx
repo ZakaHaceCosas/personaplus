@@ -217,12 +217,13 @@ export default function WelcomePage(): ReactElement {
      * Submit's `formData` and tries to register the user. Don't get confused, "registration" is locally, no account system, no cloud, whatsoever. At least at this stage of development. **Async function.**
      *
      * @async
-     * @returns {Promise<0 | 1>} 0 if success, 1 if failure.
+     * @returns {Promise<void>}
      */
-    async function submitUser(): Promise<0 | 1> {
+    async function submitUser(): Promise<void> {
         if (
             !Object.values(formData).some(
-                (value) => value === null || value === 0 || value === "",
+                (value): boolean =>
+                    value === null || value === 0 || value === "",
             ) &&
             isStepOneValid &&
             isStepTwoValid &&
@@ -250,8 +251,6 @@ export default function WelcomePage(): ReactElement {
 
                 const stringData: string = JSON.stringify(userData);
 
-                console.log(`Trying to register: ${stringData}`);
-
                 await AsyncStorage.setItem(
                     StoredItemNames.userData,
                     stringData,
@@ -270,17 +269,17 @@ export default function WelcomePage(): ReactElement {
                 );
                 router.replace(Routes.MAIN.HOME);
                 console.log(
-                    `${userData.username} was successfully registered with no errors. Give yourself a plus!`,
+                    `${userData.username} was successfully registered with no errors. Give yourself a plus!\n${validData}`,
                     "success",
                 );
-                return 0;
+                return;
             } catch (e) {
                 console.error(
                     `Error creating profile! Data: ${JSON.stringify(
                         formData,
                     )}\nError: ${e}.`,
                 );
-                return 1;
+                return;
             }
         } else {
             console.error(
@@ -288,7 +287,7 @@ export default function WelcomePage(): ReactElement {
                     formData,
                 )}`,
             );
-            return 1;
+            return;
         }
     }
 
@@ -348,7 +347,7 @@ export default function WelcomePage(): ReactElement {
     function spawnInputSelect(
         associatedValue: "activeness" | "sleepHours",
     ): ReactNode {
-        const options =
+        const options: SelectOption[] =
             associatedValue === "activeness"
                 ? activenessSelectOptions
                 : sleepTimeSelectOptions;
@@ -364,7 +363,7 @@ export default function WelcomePage(): ReactElement {
                 <Select
                     mode="dropdown"
                     dialogPrompt={t("globals.interaction.chooseAnOption")}
-                    changeAction={(value) =>
+                    changeAction={(value: string | number): void =>
                         handleChange(
                             associatedValue,
                             value !== null && value !== undefined
@@ -547,7 +546,7 @@ export default function WelcomePage(): ReactElement {
         );
     }
 
-    function BottomView() {
+    function BottomView(): ReactElement {
         if (currentTab === 0) return <></>;
 
         return (
