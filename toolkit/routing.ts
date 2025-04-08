@@ -24,12 +24,8 @@ export async function SafelyOpenUrl(url: URLValues | string): Promise<void> {
     // note: in R5 i remember Álvaro using useCallback for this
     // i'll see if i add that later on
     try {
-        if (await Linking.canOpenURL(url)) {
-            await Linking.openURL(url);
-        } else {
-            throw new Error(`Huh? Can't open the ${url} URL. What's up?`);
-        }
+        await Linking.openURL(url);
     } catch (e) {
-        throw new Error(`Bruh. An error occurred trying to open an URL: ${e}`);
+        throw new Error(`Can't open ${url}: ${e}`);
     }
 }

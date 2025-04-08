@@ -80,13 +80,15 @@ export default function HomeScreen(): ReactElement {
             const releases: Release[] = await response.json(); // gets releases
 
             // sorts releases by date and gets the most recent
-            const latestRelease: Release = releases
+            const latestRelease: Release | undefined = releases
                 .filter((release: Release): string | null =>
                     semver.valid(release.tag_name),
                 ) // validate tags
                 .sort((a: Release, b: Release): 0 | 1 | -1 =>
                     semver.compare(b.tag_name, a.tag_name),
                 )[0];
+
+            if (!latestRelease) throw new Error("No latest release.");
 
             const latestVersion: string = latestRelease.tag_name; // gets the tagname
             console.debug(`Latest version: ${latestVersion}`);
