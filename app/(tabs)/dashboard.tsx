@@ -66,18 +66,12 @@ export default function Dashboard(): ReactElement {
             );
             return;
         }
-        await GenericDisplayHandler(
-            id,
-            act,
-            cat,
-            {
-                setActiveCallback: setActiveObjectives,
-                activeToSet: activeObjectives,
-                setPassiveCallback: setPassiveObjectives,
-                passiveToSet: passiveObjectives,
-            },
-            t,
-        );
+        await GenericDisplayHandler(id, act, cat, t, {
+            setActiveCallback: setActiveObjectives,
+            activeToSet: activeObjectives,
+            setPassiveCallback: setPassiveObjectives,
+            passiveToSet: passiveObjectives,
+        });
     }
 
     if (loading) return <Loading />;

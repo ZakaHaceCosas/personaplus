@@ -5,7 +5,6 @@ import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
 import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
 import { GetPendingActiveObjectives } from "@/toolkit/objectives/active_objectives";
-import { ActiveObjective } from "@/types/active_objectives";
 import { FullProfile } from "@/types/user";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -20,16 +19,11 @@ import {
 import {
     FailGenericObjectivesNotDoneYesterday,
     GenericDisplayHandler,
-    GetObjective,
     PendingReturn,
 } from "@/toolkit/objectives/common";
 import { DisplayObjectives } from "@/toolkit/objectives/common_ui";
 import GapView from "@/components/ui/gap_view";
-import {
-    GetAllPassiveObjectives,
-    GetPendingPassiveObjectives,
-} from "@/toolkit/objectives/passive_objectives";
-import { PassiveObjective } from "@/types/passive_objectives";
+import { GetPendingPassiveObjectives } from "@/toolkit/objectives/passive_objectives";
 
 setNotificationHandler({
     handleNotification: async () => ({
@@ -43,12 +37,6 @@ export default function HomeScreen(): ReactElement {
     const { t } = useTranslation();
     const [userData, setUserData] = useState<FullProfile>();
     const [loading, setLoading] = useState<boolean>(true);
-    const [activeObjectives, setActiveObjectives] = useState<ActiveObjective[]>(
-        [],
-    );
-    const [passiveObjectives, setPassiveObjectives] = useState<
-        PassiveObjective[]
-    >([]);
     const [activeObjectiveIdentifiers, setActiveObjectiveIdentifiers] =
         useState<PendingReturn>("noneExists");
     const [passiveObjectiveIdentifiers, setPassiveObjectiveIdentifiers] =
@@ -84,27 +72,6 @@ export default function HomeScreen(): ReactElement {
                 const pendingPassive: PendingReturn =
                     await GetPendingPassiveObjectives();
                 setPassiveObjectiveIdentifiers(pendingPassive);
-
-                // handle passive objectives (first because active objectives have early returns)
-                setPassiveObjectives((await GetAllPassiveObjectives()) ?? []);
-
-                // handle active objectives
-                if (!Array.isArray(pendingActive)) {
-                    setActiveObjectives([]);
-                    return;
-                }
-                const objectives: (ActiveObjective | null)[] =
-                    await Promise.all(
-                        pendingActive.map(
-                            (id: number): Promise<ActiveObjective | null> =>
-                                GetObjective(id, "active"),
-                        ),
-                    );
-                const filteredObjectives: ActiveObjective[] = objectives.filter(
-                    (obj: ActiveObjective | null): obj is ActiveObjective =>
-                        obj !== null,
-                );
-                setActiveObjectives(filteredObjectives);
             } catch (e) {
                 console.error(`Error fetching data: ${e}`);
                 router.replace(Routes.MAIN.WELCOME_SCREEN);
@@ -163,22 +130,11 @@ export default function HomeScreen(): ReactElement {
             );
             return;
         }
-        await GenericDisplayHandler(
-            id,
-            act,
-            cat,
-            {
-                setActiveCallback: setActiveObjectives,
-                activeToSet: activeObjectives,
-                setPassiveCallback: setPassiveObjectives,
-                passiveToSet: passiveObjectives,
-            },
-            t,
-        );
+        await GenericDisplayHandler(id, act, cat, t);
     }
 
     // render stuff
-    if (loading || !userData || !activeObjectives || !passiveObjectives) {
+    if (loading || !userData || !identifiersLoaded) {
         return <Loading />;
     }
 

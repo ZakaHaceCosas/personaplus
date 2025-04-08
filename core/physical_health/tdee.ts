@@ -2,7 +2,7 @@
 CALCULATE TOTAL DAILY ENERGY EXPENDITURE
 */
 
-import CoreLibrary from "@/core/core";
+import calculateBasalMetabolicRate from "@/core/physical_health/bmr";
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
 import CreateComponentDataUtilities from "@/core/tools/core_library_data_builder";
 import { CoreLibraryType_Activeness } from "@/core/types/misc_types";
@@ -33,14 +33,13 @@ export default function calculateTotalDailyEnergyExpenditure(
     height: number,
     activeness: CoreLibraryType_Activeness,
 ): CoreLibraryResponse {
-    const bmrSource: CoreLibraryResponse =
-        CoreLibrary.physicalHealth.BasalMetabolicRate.calculate(
-            age,
-            gender,
-            weight,
-            height,
-            activeness,
-        );
+    const bmrSource: CoreLibraryResponse = calculateBasalMetabolicRate(
+        age,
+        gender,
+        weight,
+        height,
+        activeness,
+    );
 
     const bmr: number = bmrSource.result;
 

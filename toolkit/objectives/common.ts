@@ -485,11 +485,15 @@ async function IsGenericObjectivePending(
                 ? await GetGenericObjectiveDailyLog("active")
                 : await GetGenericObjectiveDailyLog("passive");
 
-        // the opposite ("&& !obj.days") seemed more logical to me (return NOT due today IF NOT added for today), however that does the opposite and this somehow does it right...
-        // sometimes i wonder if it's me or JS who has a problem
+        // NOTE - if something's wrong with pending objectives, try removing the "!"
+        // from the .days thing. if that makes it work, this officially needs to be
+        // remade from scratch, as I've added, then removed, then added it again for
+        // fixing bugs
+
+        // remove this note if no issues happen over the next 15 days or so, i guess
         if (
             IsActiveObjective(objective) &&
-            objective.info.days[ADJUSTED_TODAY_INDEX]
+            !objective.info.days[ADJUSTED_TODAY_INDEX]
         )
             return false; // not due today
 
@@ -539,8 +543,7 @@ async function GetPendingGenericObjectives(
                     : ([] as PassiveObjective[])
                 : nullishObjectives;
 
-        if (!objectives || Object.keys(objectives).length === 0)
-            return "noneExists"; // no objectives at all
+        if (!objectives || objectives.length === 0) return "noneExists"; // no objectives at all
 
         // there are only two hard things in computer science, cache invalidation and naming things
         type thing = {
@@ -606,16 +609,23 @@ async function GenericDisplayHandler(
     identifier: number,
     action: "deleting" | "editing",
     category: "active" | "passive",
-    statefulParams: {
+    t: TFunction,
+    statefulParams?: {
         setActiveCallback: (arg: ActiveObjective[]) => void;
         activeToSet: ActiveObjective[] | null;
         setPassiveCallback: (arg: PassiveObjective[]) => void;
         passiveToSet: PassiveObjective[] | null;
     },
-    t: TFunction,
 ): Promise<void> {
+    const params = statefulParams ?? {
+        setActiveCallback: () => {},
+        activeToSet: [],
+        setPassiveCallback: () => {},
+        passiveToSet: [],
+    };
+
     const { setActiveCallback, activeToSet, setPassiveCallback, passiveToSet } =
-        statefulParams;
+        params;
 
     try {
         if (action === "deleting") {
