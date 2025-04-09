@@ -17,8 +17,8 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 
 ### Fixed
 
-- Fixed the app  being unable to launch external URLs.
-- Fixed up some translations.
+- Fixed the app being unable to launch external URLs.
+- Fixed several translations.
 
 ### Removed
 

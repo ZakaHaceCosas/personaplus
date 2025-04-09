@@ -11,7 +11,7 @@
  * <=============================================================================>
  */
 
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ActiveObjective } from "@/types/active_objectives";
 import Colors from "@/constants/colors";
@@ -28,6 +28,8 @@ import {
 } from "@/components/text/better_text_presets";
 import IslandDivision from "../sections/island_division";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
+import { OrchestrateUserData } from "@/toolkit/user";
+import { FullProfile } from "@/types/user";
 
 const styles = StyleSheet.create({
     helpContainer: {
@@ -140,6 +142,17 @@ function InfoIcons({
     objective: ActiveObjective;
 }): ReactElement {
     const { t } = useTranslation();
+    const [user, setUser] = useState<FullProfile | null>(null);
+
+    useEffect((): void => {
+        async function handle(): Promise<void> {
+            const userData: FullProfile = await OrchestrateUserData();
+            setUser(userData);
+        }
+        handle();
+    }, []);
+
+    if (!user) throw new Error("No user data.");
 
     /**
      * @deprecated Only use until the tracker experiment fully rolls out.
@@ -164,7 +177,7 @@ function InfoIcons({
             rests: objective.info.rests,
         }),
         objective.info.rests,
-        "en", // TODO - should use userData, though it's not really needed (rest/rests & descanso/descansos work both with english ruling)
+        user.language,
     );
 
     const handsString: string = PluralOrNot(
@@ -172,7 +185,15 @@ function InfoIcons({
             hands: objective.specificData.amountOfHands,
         }),
         objective.specificData.amountOfHands,
-        "en", // TODO - also this
+        user.language,
+    );
+
+    const pushUpsString: string = PluralOrNot(
+        t("pages.sessions.pushUps", {
+            pushUps: objective.specificData.amountOfPushUps,
+        }),
+        objective.specificData.amountOfPushUps,
+        user.language,
     );
 
     return (
@@ -205,7 +226,7 @@ function InfoIcons({
                                 ? `~${
                                       speedOptions[
                                           objective.specificData.estimateSpeed
-                                      ][1]
+                                      ]![1]
                                   }`
                                 : "N/A"
                         }
@@ -216,11 +237,7 @@ function InfoIcons({
                         name="keyboard-double-arrow-down"
                         size={15}
                         color={Colors.BASIC.WHITE}
-                        text={
-                            objective?.specificData?.amountOfHands !== undefined
-                                ? handsString
-                                : "N/A"
-                        }
+                        text={handsString ?? "N/A"}
                     />
                 )}
                 {objective.exercise === "Push Ups" && (
@@ -229,33 +246,14 @@ function InfoIcons({
                             name="repeat"
                             size={15}
                             color={Colors.BASIC.WHITE}
-                            text={
-                                objective?.specificData?.amountOfPushUps !==
-                                undefined
-                                    ? PluralOrNot(
-                                          t("pages.sessions.pushUps", {
-                                              pushUps:
-                                                  objective.specificData
-                                                      .amountOfPushUps,
-                                          }),
-                                          objective.specificData
-                                              .amountOfPushUps,
-                                          "en",
-                                      )
-                                    : "N/A"
-                            }
+                            text={pushUpsString ?? "N/A"}
                         />
                         <GapView width={10} />
                         <IconView
                             name="front-hand"
                             size={15}
                             color={Colors.BASIC.WHITE}
-                            text={
-                                objective?.specificData?.amountOfHands !==
-                                undefined
-                                    ? handsString
-                                    : "N/A"
-                            }
+                            text={handsString ?? "N/A"}
                         />
                     </>
                 )}
