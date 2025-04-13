@@ -14,7 +14,7 @@ import { PassiveObjective } from "@/types/passive_objectives";
 import {
     GetPassiveObjective,
     GetPassiveObjectiveStreak,
-    MarkPassiveObjectiveAsDoneToday,
+    SavePassiveObjectiveToDailyLog,
 } from "@/toolkit/objectives/passive_objectives";
 import { IsActiveObjective } from "@/types/common_objectives";
 import { IsGenericObjectivePending, PendingReturn } from "./common";
@@ -41,12 +41,22 @@ type HandlerType = {
 function DisplaySingleObjective({
     obj,
     handler,
+    rerender,
 }: {
     obj: ActiveObjective | PassiveObjective;
     handler: HandlerType;
+    rerender: (x: number) => void;
 }): ReactElement {
     const { t } = useTranslation();
     const [streak, setStreak] = useState<number | null>(null);
+
+    async function launchHandler(
+        obj: ActiveObjective | PassiveObjective,
+    ): Promise<void> {
+        if (IsActiveObjective(obj)) await LaunchActiveObjective(obj.identifier);
+        else await SavePassiveObjectiveToDailyLog(obj.identifier, true);
+        rerender(obj.identifier);
+    }
 
     useEffect((): void => {
         if (!IsActiveObjective(obj)) {
@@ -87,13 +97,7 @@ function DisplaySingleObjective({
                         `objectives.${IsActiveObjective(obj) ? "active.start.hint" : "passive.log.hint"}`,
                     )}
                     style="ACE"
-                    action={async (): Promise<void> =>
-                        IsActiveObjective(obj)
-                            ? await LaunchActiveObjective(obj.identifier)
-                            : await MarkPassiveObjectiveAsDoneToday(
-                                  obj.identifier,
-                              )
-                    }
+                    action={async (): Promise<void> => await launchHandler(obj)}
                 />
             ) : (
                 <View style={styles.divButtons}>
@@ -141,9 +145,11 @@ function DisplaySingleObjective({
 export function DisplayObjectivesThemselves({
     objectivesToRender,
     handler,
+    rerender,
 }: {
     objectivesToRender: ActiveObjective[] | PassiveObjective[];
     handler: HandlerType;
+    rerender: (x: number) => void;
 }): ReactElement {
     return (
         <>
@@ -153,6 +159,7 @@ export function DisplayObjectivesThemselves({
                         obj={obj}
                         handler={handler}
                         key={`${obj.identifier}__SINGLE_OBJ_RENDER`}
+                        rerender={rerender}
                     />
                 ),
             )}
@@ -182,6 +189,7 @@ export function DisplayObjectives({
     const [objectivesToRender, setObjectivesToRender] = useState<
         ActiveObjective[] | PassiveObjective[]
     >([]);
+    const [render, rerender] = useState<number>(0);
 
     useEffect((): void => {
         async function handle(): Promise<void> {
@@ -250,7 +258,7 @@ export function DisplayObjectives({
             }
         }
         handle();
-    }, [identifiers, category, handler.act]);
+    }, [identifiers, category, render, handler.act]);
 
     if (!objectivesToRender || identifiers === "noneExists")
         return <NoObjectivesExist />;
@@ -267,6 +275,7 @@ export function DisplayObjectives({
         <DisplayObjectivesThemselves
             objectivesToRender={objectivesToRender}
             handler={handler}
+            rerender={rerender}
         />
     );
 }

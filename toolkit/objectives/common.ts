@@ -501,15 +501,11 @@ async function IsGenericObjectivePending(
 
         const date: TodaysDate = GetCurrentDateCorrectly().string;
 
-        // Validate if dailyLog and the specific identifier exist
-        if (dailyLog[date] && dailyLog[date][identifier]) {
-            const entry: { wasDone: boolean } = dailyLog[date][identifier];
-            if (typeof entry.wasDone !== "boolean")
-                throw new Error(
-                    `Invalid 'wasDone' value for objective ${identifier} on date ${date}`,
-                );
-            return !entry.wasDone; // if it IS done, it IS NOT due today
-        }
+        const entry: { wasDone: boolean } | undefined =
+            dailyLog[date]![identifier];
+
+        if (entry) return !entry.wasDone; // if it IS done, it IS NOT due today
+
         return true; // no interaction with the objective means no data logged.
     } catch (e) {
         throw new Error(
