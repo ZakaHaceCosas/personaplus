@@ -138,19 +138,6 @@ async function GetPendingPassiveObjectives(): Promise<PendingReturn> {
 }
 
 /**
- * Marks a passive objective as done for today.
- *
- * @async
- * @param {number} identifier Identifier of the objective.
- * @returns {Promise<void>}
- */
-async function MarkPassiveObjectiveAsDoneToday(
-    identifier: number,
-): Promise<void> {
-    await SavePassiveObjectiveToDailyLog(identifier, true);
-}
-
-/**
  * Gets the user's streak on a passive objective.
  *
  * @async
@@ -243,5 +230,5 @@ export {
     GetPassiveObjectiveStreak,
     GetPendingPassiveObjectives,
     GetPassiveObjectiveDailyLog,
-    MarkPassiveObjectiveAsDoneToday,
+    SavePassiveObjectiveToDailyLog,
 };

@@ -11,7 +11,10 @@
  * <=============================================================================>
  */
 
-import type { INormalizeOptions, UnknownString } from "../node_modules/@zakahacecosas/string-utils/mod";
+import type {
+    INormalizeOptions,
+    UnknownString,
+} from "../node_modules/@zakahacecosas/string-utils/mod";
 
 /**
  * Use this to extend type interfaces for URL params when passing data from page to page.
@@ -31,21 +34,20 @@ export type ExpoRouterParams = Record<
  * This export is a glue fix. The package is from JSR and not npm, and this error:
  * ```txt
  * Android Bundling failed 17621ms node_modules/expo-router/entry.js (1559 modules)
-* The package at "node_modules/@zakahacecosas/string-utils/mod.ts" attempted to import the Node standard library module "node:process".
-* It failed because the native React runtime does not include the Node standard library.
+ * The package at "node_modules/@zakahacecosas/string-utils/mod.ts" attempted to import the Node standard library module "node:process".
+ * It failed because the native React runtime does not include the Node standard library.
  * ```
  * forces me to copy paste the code I need from it and paste it here.
  */
 export const StrUtils = {
     stripCliColors(str: string): string {
-        return str
-            // deno-lint-ignore no-control-regex
-            .replace(/\x1b\[[0-9;?]*[ -/]*[@-~]/g, "");
+        return (
+            str
+                // deno-lint-ignore no-control-regex
+                .replace(/\x1b\[[0-9;?]*[ -/]*[@-~]/g, "")
+        );
     },
-    normalize(
-        str: string,
-        options?: INormalizeOptions,
-    ): string {
+    normalize(str: string, options?: INormalizeOptions): string {
         const { preserveCase, strict, stripCliColors } = options ?? {
             preserveCase: false,
             strict: false,
@@ -58,14 +60,18 @@ export const StrUtils = {
             .trim()
             .replace(strict ? /[\s\W_]/g : "", "");
 
-        const strippedStr = stripCliColors ? this.stripCliColors(normalizedStr) : normalizedStr;
+        const strippedStr = stripCliColors
+            ? this.stripCliColors(normalizedStr)
+            : normalizedStr;
         const finalStr = preserveCase ? strippedStr : strippedStr.toLowerCase();
 
         return finalStr;
     },
     validate(str: UnknownString): str is string {
         if (
-            str === undefined || str === null || typeof str !== "string" ||
+            str === undefined ||
+            str === null ||
+            typeof str !== "string" ||
             this.normalize(str) === ""
         ) {
             return false;
