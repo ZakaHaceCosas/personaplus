@@ -88,7 +88,7 @@ export default function Dashboard(): ReactElement {
                                     )}
                                     style="ACE"
                                     action={(): void => {
-                                        router.navigate({
+                                        router.push({
                                             pathname:
                                                 Routes.OBJECTIVES.CREATE_ACTIVE,
                                             params: {
@@ -167,7 +167,7 @@ export default function Dashboard(): ReactElement {
                                     )}
                                     style="ACE"
                                     action={(): void => {
-                                        router.navigate({
+                                        router.push({
                                             pathname:
                                                 Routes.OBJECTIVES
                                                     .CREATE_PASSIVE,

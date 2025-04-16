@@ -75,7 +75,7 @@ export default function CreatePassiveObjectivePage(): ReactElement {
         );
         if (edit === "invalidData") {
             ShowToast(t("errors.activeObjectives.invalidData"));
-            router.navigate(Routes.MAIN.HOME);
+            router.replace(Routes.MAIN.HOME);
             return;
         }
         if (edit === "noEdit") return;
@@ -106,7 +106,7 @@ export default function CreatePassiveObjectivePage(): ReactElement {
             goalToCreate.trim().length === 0
                 ? false
                 : goalToCreate.trim().length >= 3 &&
-                      goalToCreate.trim().length < 120,
+                goalToCreate.trim().length < 120,
         );
     }, [goalToCreate]);
 
@@ -135,10 +135,9 @@ export default function CreatePassiveObjectivePage(): ReactElement {
             router.replace(Routes.MAIN.HOME);
         } catch (e) {
             throw new Error(
-                `Error with ${
-                    edit.enable
-                        ? "EditPassiveObjective()"
-                        : "CreatePassiveObjective()"
+                `Error with ${edit.enable
+                    ? "EditPassiveObjective()"
+                    : "CreatePassiveObjective()"
                 }:\n${e}`,
             );
         }
