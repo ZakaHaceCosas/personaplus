@@ -11,11 +11,10 @@
  * <=============================================================================>
  */
 
-import {
+import type {
     ActiveObjective,
     ActiveObjectiveDailyLog,
     ActiveObjectiveWithoutId,
-    SupportedActiveObjectives,
 } from "@/types/active_objectives";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { GetCurrentDateCorrectly } from "@/toolkit/today";
@@ -23,12 +22,11 @@ import type { TodaysDate } from "@/types/today";
 import StoredItemNames from "@/constants/stored_item_names";
 import { Routes } from "@/constants/routes";
 import { router } from "expo-router";
-import { GetExperiments } from "@/toolkit/experiments";
 import CoreLibrary from "@/core/core";
-import { CoreLibraryResponse } from "@/core/types/core_library_response";
-import { BasicUserHealthData } from "@/types/user";
+import type { CoreLibraryResponse } from "@/core/types/core_library_response";
+import type { BasicUserHealthData } from "@/types/user";
 import { ShowToast } from "../android";
-import { TFunction } from "i18next";
+import type { TFunction } from "i18next";
 import {
     CreateObjective,
     DeleteObjective,
@@ -200,7 +198,7 @@ async function EditActiveObjective(
                 }),
             );
             console.log(
-                `Edited ${newObjective.identifier} objective with ID ${newObjective.exercise} successfully!\nFull JSON of the new objective:\n${JSON.stringify(
+                `Edited ${newObjective.exercise} objective with ID ${newObjective.identifier} successfully!\nFull JSON of the new objective:\n${JSON.stringify(
                     newObjective,
                 )}"`,
             );
@@ -209,33 +207,10 @@ async function EditActiveObjective(
         }
     } catch (e) {
         ShowToast("Error :c");
-        throw new Error(`Something went wrong editing ${id}.\n\nError: ${e}`);
-    }
-}
-
-/**
- * Calculates the duration of each fragment of a session. Let me explain: Sessions support rests, which - as the name implies - are pauses of a fixed duration between a session, for the user to rest.
- *
- * While the duration of a rest is specified by the user, it's position is not, instead PersonaPlus will (thanks to this function) distribute evenly each rest between all the duration of the session. This implies splitting the session's duration into **fragments**, separated by rests.
- *
- * @param {number | null} duration The duration (in seconds) of the whole session.
- * @param {number | null} rests The amount of rests of the session.
- * @returns {number} A number, the amount of seconds each fragment shall last. If any of the params is null / invalid, throws an error.
- */
-function CalculateSessionFragmentsDuration(
-    duration: number,
-    rests: number,
-): number {
-    if (rests === 0) return 0;
-    if (!rests || !duration) {
         throw new Error(
-            "Some parameters are missing, can't calculate fragment duration. Objective is not getting fetched correctly? Check your code",
+            `Something went wrong editing active objective ${id}.\n\nError: ${e}`,
         );
     }
-    if (rests < 0) {
-        throw new Error("Negative rests? Seriously? Check your code"); // heh~
-    }
-    return duration / (rests + 1);
 }
 
 /**
@@ -258,10 +233,7 @@ async function DeleteActiveObjective(identifier: number): Promise<void> {
  */
 async function LaunchActiveObjective(identifier: number): Promise<void> {
     try {
-        const [obj, experiments] = await Promise.all([
-            GetObjective(identifier, "active"),
-            GetExperiments(),
-        ]);
+        const obj = await GetObjective(identifier, "active");
 
         if (!obj) {
             console.error(
@@ -270,28 +242,11 @@ async function LaunchActiveObjective(identifier: number): Promise<void> {
             return;
         }
 
-        const track: boolean = experiments.exp_tracker;
-
-        if (obj.exercise === "Running" && track) {
-            router.replace({
-                pathname: Routes.EXPERIMENTS.TRACKER,
-                params: { id: identifier },
-            });
-            return;
-        }
-
         router.replace({
             pathname: Routes.OBJECTIVES.SESSION,
             params: { id: identifier },
         });
 
-        // TODO - at some point, merge the tracker with the standard session experience
-        /*
-         router.replace({
-            pathname: Routes.OBJECTIVES.SESSION,
-            params: { id: identifier, tracker: track ? "yeah" : "nah" },
-        });
-        */
         return;
     } catch (e) {
         throw new Error(`Error launching objective ${identifier}: ${e}`);
@@ -312,39 +267,31 @@ function CalculateSessionPerformance(
     elapsedTime: number,
 ): CoreLibraryResponse {
     try {
-        const exercise: SupportedActiveObjectives = objective.exercise;
-
-        switch (exercise) {
-            case "Walking":
-            case "Running":
-                return CoreLibrary.performance.RunningPerformance.calculate(
-                    userData.weight,
-                    objective.specificData.estimateSpeed,
-                    elapsedTime,
-                );
-            case "Lifting":
-                return CoreLibrary.performance.LiftingPerformance.calculate(
-                    userData.age,
-                    userData.gender,
-                    userData.weight,
-                    objective.specificData.dumbbellWeight,
-                    objective.specificData.amountOfHands,
-                    elapsedTime,
-                    objective.specificData.reps,
-                );
-            case "Push Ups":
-                return CoreLibrary.performance.PushingUpPerformance.calculate(
-                    userData.gender,
-                    userData.weight,
-                    elapsedTime,
-                    objective.specificData.amountOfPushUps,
-                    objective.specificData.amountOfHands,
-                );
-            default:
-                throw new Error(
-                    `Unknown or invalid exercise type: ${exercise}`,
-                );
-        }
+        if (objective.exercise === "Running")
+            return CoreLibrary.performance.RunningPerformance.calculate(
+                userData.weight,
+                objective.specificData.estimateSpeed,
+                elapsedTime,
+            );
+        if (objective.exercise === "Lifting")
+            return CoreLibrary.performance.LiftingPerformance.calculate(
+                userData.age,
+                userData.gender,
+                userData.weight,
+                objective.specificData.dumbbellWeight,
+                objective.specificData.amountOfHands,
+                elapsedTime,
+                objective.specificData.reps,
+            );
+        if (objective.exercise === "Push Ups")
+            return CoreLibrary.performance.PushingUpPerformance.calculate(
+                userData.gender,
+                userData.weight,
+                elapsedTime,
+                objective.specificData.amountOfPushUps,
+                objective.specificData.amountOfHands,
+            );
+        throw "Invalid exercise type"; // we should never get here, however TS wants me to add this
     } catch (e) {
         throw new Error(
             `Error handling post-session calculations: ${e}\n${{
@@ -371,9 +318,6 @@ const DEFAULT_ACTIVE_OBJECTIVE: ActiveObjectiveWithoutId = {
             SA: false,
             SU: false,
         },
-        durationMinutes: 0,
-        rests: 0,
-        restDurationMinutes: 0,
     },
     specificData: {
         dumbbellWeight: 0,
@@ -386,7 +330,6 @@ const DEFAULT_ACTIVE_OBJECTIVE: ActiveObjectiveWithoutId = {
 
 // function exports
 export {
-    CalculateSessionFragmentsDuration,
     CalculateSessionPerformance,
     CreateActiveObjective,
     DeleteActiveObjective,

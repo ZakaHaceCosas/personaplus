@@ -51,7 +51,7 @@ export function ValidatePassiveObjective(
             typeof obj.goal !== "string" ||
             !StrUtils.validate(obj.goal) ||
             obj.goal.length < 3 ||
-            obj.goal.length < 120
+            obj.goal.length > 120
         )
             return false; // if no goal, or invalid value, invalid.
 

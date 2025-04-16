@@ -24,7 +24,7 @@ import GapView from "@/components/ui/gap_view";
 // TypeScript, supongo
 interface BetterButtonIcon {
     /** Name of the icon. */
-    name: "pause" | "play-arrow";
+    name: "pause" | "play-arrow" | "exit-to-app";
     /** Size in px. */
     size: number;
     /** Icon color. */

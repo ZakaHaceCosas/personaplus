@@ -81,6 +81,7 @@
             "home": "Inicio",
             "dashboard": "Panel",
             "report": "Reporte",
+            "toolkit": "Utilidades",
             "profile": "Perfil"
         },
         "settings": "Ajustes",
@@ -97,22 +98,17 @@
         "supportedActiveObjectives": {
             "Push Ups": {
                 "name": "Flexiones",
-                "doing": "Hacer flexiones por {{duration}}",
+                "doing": "Haciendo flexiones",
                 "help": "Para hacer flexiones normales, comienza en posición de plancha con las manos ligeramente más anchas que los hombros. Baja tu cuerpo doblando los codos hasta que tu pecho casi toque el suelo, luego empuja hacia arriba hasta la posición inicial. Mantén tu core activo para mayor estabilidad. Empieza con un número cómodo de repeticiones y aumenta gradualmente a medida que ganas fuerza.\n\nPara hacer flexiones con una sola mano, comienza en posición de plancha con una mano centrada debajo del hombro y la otra detrás de la espalda. Baja tu cuerpo doblando el codo hasta que tu pecho casi toque el suelo, luego empuja hacia arriba. Mantén tu core firme y el equilibrio durante todo el movimiento. Empieza con unas pocas repeticiones en cada lado y progresa conforme mejora tu fuerza."
             },
             "Lifting": {
                 "name": "Pesas",
-                "doing": "Levantar pesas por {{duration}}",
+                "doing": "Levantando pesas",
                 "help": "Distribuye equitativamente el peso entre ambas manos. Por ejemplo, si tu objetivo es levantar 6 kg, pon 3 kg en cada peso (ya que levantarás dos pesos, uno para cada mano).\n\nSin soltarlo, extiende tu brazo verticalmente y comienza a moverlo hacia arriba y hacia abajo, haciendo que tu codo vaya desde un ángulo de 90º a 45º y luego de nuevo a 90º (esto cuenta como una repetición).\n\nContinúa hasta completar todas las repeticiones especificadas (o hasta que se acabe el tiempo)."
-            },
-            "Walking": {
-                "name": "Caminata",
-                "doing": "Caminar por {{duration}}",
-                "help": "Usa zapatos cómodos y ropa adecuada para el clima. Comienza caminando a un ritmo natural, permitiendo que tus brazos se balanceen naturalmente a los lados. Concéntrate en mantener una buena postura, con la espalda recta y la cabeza erguida. Puedes variar tu velocidad, incorporando intervalos de caminata rápida para aumentar tu frecuencia cardíaca. Caminar se puede hacer casi en cualquier lugar, así que elige una ruta que disfrutes. Apunta a caminar al menos 30 minutos por sesión, y aumenta gradualmente la duración e intensidad a medida que aumenta tu resistencia."
             },
             "Running": {
                 "name": "Running",
-                "doing": "Correr por {{duration}}",
+                "doing": "Corriendo",
                 "help": "Para empezar a correr, asegúrate de llevar calzado y ropa cómodos para correr. Empieza con un calentamiento caminando rápidamente durante 5-10 minutos para preparar tus músculos. Comienza a correr a un ritmo cómodo y mantén un patrón constante de respiración. Concéntrate en mantener una buena postura y mantenerse relajado. Si eres principiante, alterna entre correr y caminar en intervalos. Aumenta gradualmente el tiempo que corres a medida que mejora tu resistencia. Enfría caminando unos minutos y luego estirando."
             }
         }
@@ -470,6 +466,21 @@
                 "subheader": "We log your results each time you do a session. Here we store all the metadata of each session. As soon as you do something, you'll see results here."
             }
         },
+        "toolkit": {
+            "header": "Utilidades",
+            "subHeader": "Utilidades varias para diferentes tareas. Te serán útiles en algún momento.",
+            "stopwatchTool": {
+                "name": "Crono para corredores",
+                "desc": "Cronométrate a tí (o a un amigo) con esto. Solo introduce la distancia, mide el tiempo, y calcularemos por tí una velocidad de la que podrás presumir.",
+                "dist": "Introduce la distancia",
+                "distPlaceholder": "En metros, obvio. Acepta decimales."
+            },
+            "focusTool": {
+                "name": "Prueba de concentración",
+                "desc": "¿Alguna vez has visto esos reels de Instagram que te dicen que te quedes para entrenar tu tiempo de concentración? De hecho, funcionan — así que toma un temporizador: ponlo en marcha y ¡NO TE VAYAS!",
+                "warning": "¡no te vayas! puedes, obviamente, salir de la app (no lo sabremos, *guiño*) - pero si realmente te importa entrenar tu concentración, te quedarás hasta el final, ¿no?"
+            }
+        },
         "sessions": {
             "live": "¡En una sesión!",
             "currentObjective": "OBJETIVO ACTUAL",
@@ -520,9 +531,9 @@
         "credits": {
             "header": "Créditos",
             "subheader": "¡Gente y código increíbles que han ayudado a PersonaPlus!",
-            "contributors": "Contribuidores que han ayudado mucho con la app:",
-            "contributorsNote": "Puedes ver la lista completa en GitHub, aquí sólo se muestran los más importantes.",
-            "libraries": "Librerías épicas que potencian la app:",
+            "contributors": "Contribuidores épicos:",
+            "contributorsNote": "Puedes ver la lista de contribuidores completa en GitHub, aquí se muestran los más importantes.",
+            "libraries": "Librerías épicas que\npotencian esta app:",
             "__epic_comment_lol": "here says one because its a note relative to a specific project. the previous note just says 'note' because it affects the whole section.",
             "librariesNoteOne": "*Usamos nuestra propia bifurcación, no la librería en sí."
         },
@@ -532,18 +543,8 @@
             "disclaimer": "Básicamente: Los experimentos son funciones chulas en las que estoy trabajando PERO que no he terminado. ¡Puedes probarlas anticipadamente! Pero puede que tengan errores, así que no prometo que no causen problemas.\n\nSi encuentras cualquier fallo o tienes cualquier sugerencia, házmela saber*—¡todo ayuda a que la app sea mejor!\n\n*Desde la página 'Sobre' tienes el Instagram oficial, puedes mandar un mensaje ahí.",
             "realHeader": "Experimentos",
             "realSubheader": "Funciones experimentales de PersonaPlus",
-            "status": {
-                "enabled": "Este experimento está habilitado.",
-                "disabled": "Este experimento está deshabilitado."
-            },
-            "toggle": {
-                "enable": "Activar experimento",
-                "disable": "Desactivar experimento",
-                "hint": "Alterna el estado de este experimento. Si está desactivado, lo activa, y viceversa.",
-                "warning": "De nuevo, los experimentos están chulos, pero también son inestables. ¡Procede bajo tu propio riesgo!",
-                "enabledFeedback": "{{exp}} habilitado. ¡Diviértete!",
-                "disabledFeedback": "{{exp}} deshabilitado. Vuelta a la normalidad."
-            },
+            "test": "Probar experimento",
+            "hint": "Lanza una página desde la que puedes probar el experimento",
             "exp_tracker": "PersonaPlus te pregunta 'a que velocidad vas a correr' para calcular las calorías quemadas tras una sesión de correr. Estúpido, lo sé, para eso es este experimento: un tracker de movimiento (parecido a apps como 'Adidas Running')."
         }
     },

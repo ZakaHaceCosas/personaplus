@@ -1,3 +1,4 @@
+// TODO - review this, something feels off
 // src/hooks/useNotification.ts
 // A hook to send reminder notifications for users to do what they have to do.
 
@@ -5,21 +6,31 @@ import { Platform } from "react-native";
 import {
     AndroidImportance,
     cancelScheduledNotificationAsync,
-    ExpoPushToken,
+    type ExpoPushToken,
     getAllScheduledNotificationsAsync,
     getExpoPushTokenAsync,
     getPermissionsAsync,
-    NotificationRequest,
-    PermissionStatus,
+    // type NotificationBehavior,
+    type NotificationRequest,
+    type PermissionStatus,
     requestPermissionsAsync,
     SchedulableTriggerInputTypes,
     scheduleNotificationAsync,
     setNotificationChannelAsync,
+    // setNotificationHandler
 } from "expo-notifications";
 import Constants from "expo-constants";
 import { TFunction } from "i18next";
 import { ShowToast } from "@/toolkit/android";
 import { GenerateRandomMessage } from "@/toolkit/strings";
+
+// setNotificationHandler({
+//     handleNotification: async (): Promise<NotificationBehavior> => ({
+//         shouldShowAlert: true,
+//         shouldPlaySound: true,
+//         shouldSetBadge: true,
+//     })
+// })
 
 /**
  * Function to register for using the push notifications.
@@ -27,68 +38,58 @@ import { GenerateRandomMessage } from "@/toolkit/strings";
  * @async
  * @returns {ExpoPushToken | undefined} An `ExpoPushToken`, or `undefined` if an error happened.
  */
-async function registerForPushNotificationsAsync(
+async function registerForPushNotifications(
     channel: string,
 ): Promise<ExpoPushToken | undefined> {
-    try {
-        let token;
+    let token;
 
-        if (Platform.OS === "android") {
-            await setNotificationChannelAsync(channel, {
-                name: channel,
-                importance: AndroidImportance.HIGH,
-                vibrationPattern: [0, 250, 250, 250],
-                lightColor: "#FF231F7C",
-            });
-        }
-
-        const { status: existingStatus } = await getPermissionsAsync();
-        let finalStatus: PermissionStatus = existingStatus;
-        if (existingStatus !== "granted") {
-            const { status } = await requestPermissionsAsync();
-            finalStatus = status;
-        }
-        if (finalStatus !== "granted") {
-            console.error(
-                "Failed to get push token for push notification!",
-                "error",
-            );
-            return;
-        }
-
-        // Learn more about projectId:
-        // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
-        // EAS projectId is used here.
-        try {
-            const projectId: string =
-                Constants?.expoConfig?.extra?.eas?.projectId ??
-                Constants?.easConfig?.projectId;
-            if (!projectId) {
-                console.error("Project ID not found");
-                return;
-            }
-            token = (
-                await getExpoPushTokenAsync({
-                    projectId,
-                })
-            ).data;
-            if (!token) {
-                console.error(
-                    "No ExpoPushToken! Cannot register notifications",
-                );
-                return;
-            }
-            const response: ExpoPushToken = {
-                type: "expo",
-                data: token,
-            };
-            return response;
-        } catch (e) {
-            throw new Error(`Error getting Expo Push token: ${e}`);
-        }
-    } catch (e) {
-        throw new Error(`Error registering for push notifications: ${e}`);
+    if (Platform.OS === "android") {
+        await setNotificationChannelAsync(channel, {
+            name: channel,
+            importance: AndroidImportance.HIGH,
+            vibrationPattern: [0, 250, 250, 250],
+            lightColor: "#FF231F7C",
+        });
     }
+
+    const { status: existingStatus } = await getPermissionsAsync();
+    let finalStatus: PermissionStatus = existingStatus;
+    if (existingStatus !== "granted") {
+        const { status } = await requestPermissionsAsync();
+        finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+        console.error(
+            "Failed to get push token for push notification!",
+            "error",
+        );
+        return;
+    }
+
+    // Learn more about projectId:
+    // https://docs.expo.dev/push-notifications/push-notifications-setup/#configure-projectid
+    // EAS projectId is used here.
+    const projectId: string =
+        Constants?.expoConfig?.extra?.eas?.projectId ??
+        Constants?.easConfig?.projectId;
+    if (!projectId) {
+        console.error("Project ID not found");
+        return;
+    }
+    token = (
+        await getExpoPushTokenAsync({
+            projectId,
+        })
+    ).data;
+    if (!token) {
+        console.error("No ExpoPushToken! Cannot register notifications");
+        return;
+    }
+    const response: ExpoPushToken = {
+        type: "expo",
+        data: token,
+    };
+    return response;
 }
 
 /**
@@ -96,12 +97,10 @@ async function registerForPushNotificationsAsync(
  *
  * @returns {string} The Expo push token
  */
-export async function handleNotificationsAsync(
-    channel: string,
-): Promise<string> {
+export async function handleNotifications(channel: string): Promise<string> {
     try {
         const token: ExpoPushToken | undefined =
-            await registerForPushNotificationsAsync(channel);
+            await registerForPushNotifications(channel);
 
         if (!token || !token.data)
             throw new Error(
@@ -186,10 +185,7 @@ export async function cancelScheduledNotifications(
     try {
         const identifiers: NotificationRequest[] =
             await getAllScheduledNotificationsAsync();
-        if (identifiers.length === 0) {
-            console.debug("No notifications to disable");
-            return true;
-        }
+        if (identifiers.length === 0) return true;
         if (shouldTell)
             ShowToast(
                 t("pages.settings.preferences.notifications.flow.disabling"),
@@ -197,7 +193,6 @@ export async function cancelScheduledNotifications(
         for (const identifier of identifiers) {
             await cancelScheduledNotificationAsync(identifier.identifier);
         }
-        console.debug("Scheduled Notifications DISABLED");
         if (!shouldTell) return true;
         ShowToast(t("pages.settings.preferences.notifications.flow.disabled"));
         return true;
@@ -215,12 +210,8 @@ export async function cancelScheduledNotifications(
  * @returns {Promise<boolean>} `true` if there are notifications already scheduled for today, `false` if otherwise.
  */
 export async function areNotificationsScheduledForToday(): Promise<boolean> {
-    try {
-        const notifications: NotificationRequest[] =
-            await getAllScheduledNotificationsAsync(); // get notifications
+    const notifications: NotificationRequest[] =
+        await getAllScheduledNotificationsAsync(); // get notifications
 
-        return notifications.length > 0;
-    } catch (e) {
-        throw new Error(`Error checking for scheduled notifications: ${e}`);
-    }
+    return notifications.length > 0;
 }

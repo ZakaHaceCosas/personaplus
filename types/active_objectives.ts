@@ -24,12 +24,7 @@ import {
  *
  * @export
  */
-export type SupportedActiveObjectives =
-    | ""
-    | "Push Ups"
-    | "Lifting"
-    | "Running"
-    | "Walking";
+export type SupportedActiveObjectives = "" | "Push Ups" | "Lifting" | "Running";
 // | "Biking"; (coming soon)
 
 /**
@@ -41,7 +36,6 @@ export const SupportedActiveObjectivesList: string[] = [
     "Push Ups",
     "Lifting",
     "Running",
-    "Walking",
     // "Biking",
 ];
 
@@ -70,24 +64,6 @@ type ActiveObjectiveInfo = {
      * @type {WeekTuple}
      */
     days: WeekTuple;
-    /**
-     * Duration in minutes of the objective.
-     *
-     * @type {number}
-     */
-    durationMinutes: number;
-    /**
-     * Rests.
-     *
-     * @type {number}
-     */
-    rests: number;
-    /**
-     * If there are rests, how long should they last.
-     *
-     * @type {number}
-     */
-    restDurationMinutes: number;
 };
 
 /**
@@ -177,20 +153,6 @@ export function ValidateActiveObjective(
         ) {
             return false; // if all days are disabled, invalid
         }
-        if (
-            typeof info.durationMinutes !== "number" ||
-            info.durationMinutes <= 0
-        ) {
-            return false; // if eq or lower than 0, invalid
-        }
-        if (typeof info.rests !== "number" || info.rests < 0) return false; // if not present, invalid. can be 0
-        if (
-            info.rests > 0 &&
-            (typeof info.restDurationMinutes !== "number" ||
-                info.restDurationMinutes <= 0)
-        ) {
-            return false; // if not present, or eq / lower than 0 WHILE HAVING rests, invalid
-        }
         if (!obj.specificData) return false;
         const specificData = obj.specificData as ActiveObjectiveSpecificData;
         const exercise = obj.exercise as SupportedActiveObjectives;
@@ -204,7 +166,7 @@ export function ValidateActiveObjective(
                 (specificData?.reps || 0) > 0;
         } else if (exercise === "Push Ups") {
             isSpecificDataValid = specificData?.amountOfPushUps > 0;
-        } else if (exercise === "Running" || exercise === "Walking") {
+        } else if (exercise === "Running") {
             isSpecificDataValid = true; // mo additional validation required
             // in reality i should validate the estimateSpeed thingy but i don't care about it, as soon as i get the tracker to work it's getting removed anyway
         } else if (exercise === "") {

@@ -1,81 +1,44 @@
-import React, { ReactElement, useCallback } from "react";
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/components/ui/pages/timer.tsx
+ * Basically: A countdown timer. Used by early versions of Active Objectives, it's now only used for extra tools, like the focus train feature.
+ *
+ * <=============================================================================>
+ */
+
+import React, { ReactElement } from "react";
 import BetterText from "@/components/text/better_text";
 import Colors from "@/constants/colors";
-import { CalculateSessionFragmentsDuration } from "@/toolkit/objectives/active_objectives";
-import { ActiveObjective } from "@/types/active_objectives";
 import { HexColorString } from "@/types/color";
 import { CountdownCircleTimer, TimeProps } from "rn-countdown-timer";
 
 interface SessionTimerProps {
-    objective: ActiveObjective;
+    durationSeconds: number;
     running: boolean;
     timerColor: HexColorString;
-    restingStateHandler: (state: boolean) => void;
     onComplete: () => void;
 }
 
 export default function SessionTimer({
-    objective,
     running,
     timerColor,
-    restingStateHandler,
+    durationSeconds,
     onComplete,
 }: SessionTimerProps): ReactElement {
-    const { rests, restDurationMinutes, durationMinutes } = objective.info;
-    const totalDuration: number = durationMinutes * 60;
-    const fragmentDuration: number = CalculateSessionFragmentsDuration(
-        totalDuration,
-        rests,
-    );
-
-    const restingHandler: (timeLeft: number) => void = useCallback(
-        (timeLeft: number): void => {
-            if (rests === 0) return;
-            const elapsedTime: number = totalDuration - timeLeft; // Elapsed time. The circle timer is supposed to call this thing each second, so it should work
-            const currentFragment: number = Math.floor(
-                elapsedTime / fragmentDuration,
-            );
-
-            /*
-            i'll try to explain what's up
-            sessions get divided in equally lasting "fragments", one division per rest
-            1 session (60 seconds) + 1 rest = 1 division = 2 fragments (30 seconds)
-            alright?
-            */
-
-            if (
-                elapsedTime > 0 &&
-                elapsedTime % fragmentDuration === 0 &&
-                currentFragment <= rests
-            ) {
-                restingStateHandler(true); // Pauses
-                setTimeout(
-                    (): void => restingStateHandler(false), // Plays, after the time has passed
-                    restDurationMinutes * 60 * 1000, // Convert seconds to milliseconds
-                );
-            }
-        },
-        [
-            fragmentDuration,
-            restDurationMinutes,
-            restingStateHandler,
-            rests,
-            totalDuration,
-        ],
-    );
-
     return (
         <CountdownCircleTimer
-            duration={totalDuration}
+            duration={durationSeconds}
             size={180}
             isPlaying={running}
             colors={[timerColor, timerColor]}
             colorsTime={[15, 5]}
             isSmoothColorTransition={true}
             onComplete={onComplete}
-            onUpdate={(remainingTime: number): void =>
-                restingHandler(remainingTime)
-            }
             isGrowing={true}
             trailColor={Colors.MAIN.DIVISION}
             strokeLinecap="round"

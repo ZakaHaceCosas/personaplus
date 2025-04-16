@@ -62,23 +62,25 @@ export default function Results(): ReactElement {
     if (
         !originalParams.burntCalories ||
         !originalParams.elapsedTime ||
-        !originalParams.identifier
+        !originalParams.id
     ) {
         console.error(
-            `Missing required parameters. Params: BURNT CALORIES ${originalParams.burntCalories}, ELAPSED TIME ${originalParams.elapsedTime}, ID ${originalParams.identifier}`,
+            `Missing required parameters. Params: BURNT CALORIES ${originalParams.burntCalories}, ELAPSED TIME ${originalParams.elapsedTime}, ID ${originalParams.id}`,
             {
                 location: "@/app/(tabs)/objectives/Results.tsx",
                 function: "useGlobalSearchParams()",
                 isHandler: false,
             },
         );
-        throw new Error("Missing required parameters");
+        throw new Error(
+            `Missing required parameters. Params: BURNT CALORIES ${originalParams.burntCalories}, ELAPSED TIME ${originalParams.elapsedTime}, ID ${originalParams.id}`,
+        );
     }
 
     const params: SessionParams = {
         burntCalories: parseNumber(originalParams.burntCalories),
         elapsedTime: parseNumber(originalParams.elapsedTime),
-        id: parseNumber(originalParams.identifier),
+        id: parseNumber(originalParams.id),
     };
 
     useEffect((): void => {
@@ -113,7 +115,9 @@ export default function Results(): ReactElement {
             />
             <Section kind="HowYouAreDoing">
                 <Division
-                    preHeader={t("pages.results.actualResults.burntCalories")}
+                    preHeader={t(
+                        "pages.results.actualResults.burntCalories",
+                    ).toUpperCase()}
                     header={parseFloat(
                         params.burntCalories.toFixed(2),
                     ).toString()}

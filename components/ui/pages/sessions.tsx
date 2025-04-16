@@ -18,7 +18,6 @@ import Colors from "@/constants/colors";
 import { useTranslation } from "react-i18next";
 import IconView from "@/components/ui/icon_view";
 import { PluralOrNot } from "@/toolkit/strings";
-import { StringifyMinutes } from "@/toolkit/today";
 import BetterText from "@/components/text/better_text";
 import GapView from "@/components/ui/gap_view";
 import BetterButton from "@/components/interaction/better_button";
@@ -28,7 +27,7 @@ import {
 } from "@/components/text/better_text_presets";
 import IslandDivision from "../sections/island_division";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import { OrchestrateUserData } from "@/toolkit/user";
+import { ErrorUserData, OrchestrateUserData } from "@/toolkit/user";
 import { FullProfile } from "@/types/user";
 
 const styles = StyleSheet.create({
@@ -142,7 +141,7 @@ function InfoIcons({
     objective: ActiveObjective;
 }): ReactElement {
     const { t } = useTranslation();
-    const [user, setUser] = useState<FullProfile | null>(null);
+    const [user, setUser] = useState<FullProfile>(ErrorUserData);
 
     useEffect((): void => {
         async function handle(): Promise<void> {
@@ -151,8 +150,6 @@ function InfoIcons({
         }
         handle();
     }, []);
-
-    if (!user) throw new Error("No user data.");
 
     /**
      * @deprecated Only use until the tracker experiment fully rolls out.
@@ -172,14 +169,6 @@ function InfoIcons({
         [t("Maximum Speed"), t("more than 16.1 km/h")],
     ];
 
-    const restsString: string = PluralOrNot(
-        t("pages.sessions.rests", {
-            rests: objective.info.rests,
-        }),
-        objective.info.rests,
-        user.language,
-    );
-
     const handsString: string = PluralOrNot(
         t("pages.sessions.hands", {
             hands: objective.specificData.amountOfHands,
@@ -198,19 +187,6 @@ function InfoIcons({
 
     return (
         <>
-            <View style={styles.iconContainer}>
-                <IconView
-                    name="snooze"
-                    size={15}
-                    color={Colors.BASIC.WHITE}
-                    text={
-                        objective.info.rests === 0
-                            ? t("globals.interaction.none")
-                            : `${restsString} (${StringifyMinutes(objective.info.restDurationMinutes)})`
-                    }
-                />
-            </View>
-
             <View style={styles.secondIconContainer}>
                 {objective.exercise === "Running" && (
                     <IconView
@@ -322,7 +298,6 @@ export function TopView({
                 <BetterText fontWeight="Bold" fontSize={25} textAlign="center">
                     {verbalName}
                 </BetterText>
-                <GapView height={10} />
                 <InfoIcons objective={objective} />
             </IslandDivision>
         </>

@@ -23,14 +23,24 @@ import GapView from "@/components/ui/gap_view";
 import { useTranslation } from "react-i18next";
 import BetterButton from "@/components/interaction/better_button";
 import PageEnd from "@/components/static/page_end";
-import { router } from "expo-router";
+import {
+    router,
+    UnknownOutputParams,
+    useGlobalSearchParams,
+} from "expo-router";
 import { Routes } from "@/constants/routes";
 import TopBar from "@/components/navigation/top_bar";
 import { GenerateRandomMessage } from "@/toolkit/strings";
-import { CreatePassiveObjective } from "@/toolkit/objectives/passive_objectives";
+import {
+    CreatePassiveObjective,
+    EditPassiveObjective,
+    GetPassiveObjective,
+} from "@/toolkit/objectives/passive_objectives";
 import { GetCurrentDateCorrectly } from "@/toolkit/today";
 import BetterInputField from "@/components/interaction/better_input_field";
 import { TextInput } from "react-native";
+import { HandleEditObjective } from "@/toolkit/objectives/common";
+import { ShowToast } from "@/toolkit/android";
 
 // We create the function
 export default function CreatePassiveObjectivePage(): ReactElement {
@@ -47,6 +57,50 @@ export default function CreatePassiveObjectivePage(): ReactElement {
         [t],
     );
 
+    // edit handler
+    const params: UnknownOutputParams = useGlobalSearchParams();
+
+    const [edit, setEdit] = useState<{
+        enable: boolean;
+        id: number | null;
+    }>({
+        enable: false,
+        id: null,
+    });
+
+    useEffect((): void => {
+        const edit: number | "invalidData" | "noEdit" = HandleEditObjective(
+            params,
+            "passive",
+        );
+        if (edit === "invalidData") {
+            ShowToast(t("errors.activeObjectives.invalidData"));
+            router.navigate(Routes.MAIN.HOME);
+            return;
+        }
+        if (edit === "noEdit") return;
+        setEdit({
+            enable: true,
+            id: edit,
+        });
+    }, [params, t]);
+
+    useEffect(() => {
+        if (edit.enable === false) return;
+        async function handler() {
+            if (!edit.id) return;
+            const o = await GetPassiveObjective(edit.id);
+            if (!o) {
+                console.error(
+                    "Impossible: attempted to edit null objective after verifying it's not null",
+                );
+                return;
+            }
+            updateGoalToCreate(o.goal);
+        }
+        handler();
+    }, [edit]);
+
     useEffect((): void => {
         setCanCreateGoal(
             goalToCreate.trim().length === 0
@@ -60,17 +114,33 @@ export default function CreatePassiveObjectivePage(): ReactElement {
         try {
             if (!canCreateGoal) return;
 
-            await CreatePassiveObjective(
-                {
-                    goal: goalToCreate,
-                    createdAt: GetCurrentDateCorrectly().string,
-                },
-                t,
-            );
-
+            if (edit.enable && edit.id) {
+                await EditPassiveObjective(
+                    {
+                        goal: goalToCreate,
+                        createdAt: GetCurrentDateCorrectly().string,
+                    },
+                    edit.id,
+                    t,
+                );
+            } else {
+                await CreatePassiveObjective(
+                    {
+                        goal: goalToCreate,
+                        createdAt: GetCurrentDateCorrectly().string,
+                    },
+                    t,
+                );
+            }
             router.replace(Routes.MAIN.HOME);
         } catch (e) {
-            console.error(`Error with CreatePassiveObjective()\n${e}`);
+            throw new Error(
+                `Error with ${
+                    edit.enable
+                        ? "EditPassiveObjective()"
+                        : "CreatePassiveObjective()"
+                }:\n${e}`,
+            );
         }
         return;
     }

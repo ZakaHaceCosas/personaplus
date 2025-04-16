@@ -1,3 +1,4 @@
+// TODO - figure this thing out
 import React, { ReactElement, useCallback, useEffect, useState } from "react";
 import * as Location from "expo-location";
 import { StyleSheet, View } from "react-native";
@@ -6,12 +7,10 @@ import GapView from "@/components/ui/gap_view";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
 import BetterButton from "@/components/interaction/better_button";
 import TopBar from "@/components/navigation/top_bar";
-import SessionTimer from "@/components/ui/pages/timer";
 import { ActiveObjective } from "@/types/active_objectives";
 import { useGlobalSearchParams } from "expo-router/build/hooks";
 import { UnknownOutputParams } from "expo-router";
 import { GetActiveObjective } from "@/toolkit/objectives/active_objectives";
-import Colors from "@/constants/colors";
 import { TopView } from "@/components/ui/pages/sessions";
 
 /** Settings for this thingy */
@@ -212,14 +211,6 @@ export default function PersonaPlusRunningTracker(): ReactElement {
             <TopView
                 objective={objective}
                 verbalName={isTracking ? "Running" : "(PAUSED)"}
-            />
-            <GapView height={10} />
-            <SessionTimer
-                objective={objective}
-                running={isTracking}
-                timerColor={Colors.PRIMARIES.ACE.ACE}
-                restingStateHandler={(): void => {}}
-                onComplete={(): void => {}}
             />
             <GapView height={10} />
             <View style={styles.buttonContainer}>

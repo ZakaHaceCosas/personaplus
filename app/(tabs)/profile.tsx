@@ -38,18 +38,9 @@ export default function HomeScreen(): ReactElement {
 
     useEffect((): void => {
         async function handler(): Promise<void> {
-            try {
-                const profile: FullProfile = await OrchestrateUserData();
-                if (!profile) {
-                    setUserData(ErrorUserData);
-                    return;
-                }
-                setUserData(profile);
-            } catch (e) {
-                console.error(`Error orchestrating user data: ${e}`);
-            } finally {
-                setLoading(false);
-            }
+            const profile: FullProfile = await OrchestrateUserData();
+            setUserData(profile);
+            setLoading(false);
         }
 
         handler();
@@ -73,9 +64,10 @@ export default function HomeScreen(): ReactElement {
             ShowToast(t("pages.profile.divisions.update.updateFlow.checking"));
             const response = await fetch(URLs.releasesApi);
             if (!response.ok) {
-                throw new Error(
+                console.error(
                     `Failed to fetch releases (status ${response.status})`,
                 );
+                return;
             }
             const releases: Release[] = await response.json(); // gets releases
 
@@ -88,10 +80,14 @@ export default function HomeScreen(): ReactElement {
                     semver.compare(b.tag_name, a.tag_name),
                 )[0];
 
-            if (!latestRelease) throw new Error("No latest release.");
+            if (!latestRelease || !latestRelease.assets[0]) {
+                console.error("No latest release.");
+                return;
+            }
 
             const latestVersion: string = latestRelease.tag_name; // gets the tagname
-            console.debug(`Latest version: ${latestVersion}`);
+            const latestUrl: string =
+                latestRelease.assets[0].browser_download_url;
 
             if (semver.gt(latestVersion, currentVersion)) {
                 // if it's not the same as your current version, you're not up to date!
@@ -112,10 +108,7 @@ export default function HomeScreen(): ReactElement {
                             ),
                             style: "default",
                             onPress: async (): Promise<void> =>
-                                await SafelyOpenUrl(
-                                    latestRelease.assets[0]
-                                        .browser_download_url,
-                                ), // update will download the APK from the browser
+                                await SafelyOpenUrl(latestUrl), // update will download the APK from the browser
                         },
                         {
                             text: t(

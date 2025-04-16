@@ -52,16 +52,12 @@ const config: ExpoConfig.ExpoConfig = {
             "android.permission.WAKE_LOCK",
             "android.permission.ACCESS_FINE_LOCATION",
         ],
-        versionCode: 30,
+        versionCode: 31,
         backgroundColor: "#0E1013",
     },
     ios: {
         // apple is not supported and wont ever be, this is for some dude who's testing from an iphone
         backgroundColor: "#0E1013",
-    },
-    web: {
-        favicon: "./assets/resources/favicon.png",
-        bundler: "metro",
     },
     androidStatusBar: {
         barStyle: "light-content",

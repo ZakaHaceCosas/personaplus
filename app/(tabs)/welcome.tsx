@@ -50,7 +50,6 @@ import { TimeStringUtilities } from "@/toolkit/today";
 import { Routes } from "@/constants/routes";
 import GetStuffForUserDataQuestion from "@/constants/user_data";
 import URLs from "@/constants/urls";
-import { DEFAULT_EXPERIMENTS } from "@/constants/experiments";
 import { SafelyOpenUrl } from "@/toolkit/routing";
 import BetterAlert from "@/components/ui/better_alert";
 import { UniversalItemStyle } from "@/constants/ui/pressables";
@@ -254,10 +253,6 @@ export default function WelcomePage(): ReactElement {
                 await AsyncStorage.setItem(
                     StoredItemNames.userData,
                     stringData,
-                );
-                await AsyncStorage.setItem(
-                    StoredItemNames.experiments,
-                    JSON.stringify(DEFAULT_EXPERIMENTS),
                 );
                 await AsyncStorage.setItem(
                     StoredItemNames.activeObjectives,
