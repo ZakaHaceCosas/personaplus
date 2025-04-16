@@ -50,7 +50,7 @@ export default function EpicExperiments(): ReactElement {
                     buttonText={t("pages.experiments.test")}
                     buttonHint={t("pages.experiments.toggle.hint")}
                     action={(): void => {
-                        router.navigate(page);
+                        router.push(page);
                     }}
                 />
             </Division>
