@@ -25,7 +25,7 @@
 ### Download the app
 
 > [!CAUTION]
-> Note that as the app is still a work in progress, we may change how data is stored from update to update, making you **loose your data** from one preapp release to another. Don't use (just yet :wink:) PersonaPlus as your daily companion app.
+> Note that as the app is still a work in progress, we may change how data is stored from update to update, making you **loose your data** from one release to another. Don't use (just yet :wink:) PersonaPlus as your daily companion app.
 
 PersonaPlus is still under early development. You can try out the app downloading a pre-release version from the [releases page](https://github.com/ZakaHaceCosas/personaplus/releases). **No version is stable / finished**, so expect issues & missing features. As an early app, we kindly ask you to [report here any issue you find](https://github.com/ZakaHaceCosas/personaplus/issues). Thank you!
 
@@ -78,6 +78,6 @@ Make sure that any third-party software used that is under different licenses (s
 
 [![YouTube button](https://img.shields.io/badge/YouTube-PersonaPlus-%23fb100a?style=for-the-badge&labelColor=%23000&logo=youtube)](https://www.youtube.com/playlist?list=PLdif1flfmG__g_a1QSmBNnSh_6pAeRizW)
 [![Discord button](https://img.shields.io/badge/Discord-Discord_server-%235a68ed?style=for-the-badge&labelColor=%23000&logo=discord&logoColor=white)](https://discord.gg/wwzddK4Zpc)
-[![Instagram button](https://img.shields.io/badge/Instagram-Instagram-%23f71464?style=for-the-badge&labelColor=%23000&logo=instagram&logoColor=white)](https://www.instagram.com/giveitaplus/)
+[![Instagram button](https://img.shields.io/badge/Instagram-giveitaplus-%23f71464?style=for-the-badge&labelColor=%23000&logo=instagram&logoColor=white)](https://www.instagram.com/giveitaplus/)
 
 </div>
