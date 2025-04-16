@@ -39,7 +39,7 @@ Many features we promised are in development and either:
 - Hidden behind the "Experiments" tab on the app's settings.
 - Available, but with limited functionality or known bugs.
 
-You can see everything that's planned and our progress on it via our tracking issues & [roadmap GitHub project](https://github.com/users/ZakaHaceCosas/projects/1/views/1).
+You can see everything that's planned on our [TODO.md](https://github.com/ZakaHaceCosas/personaplus/blob/main/TODO.md) file. For important features / updates, you can see our progress on them via our tracking issues ([the ones labeled as "Roadmap" issues](https://github.com/ZakaHaceCosas/personaplus/issues?q=is%3Aissue%20state%3Aopen%20label%3Aroadmap)).
 
 ## How to contribute?
 
