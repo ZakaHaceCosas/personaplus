@@ -29,6 +29,9 @@ import type {
 } from "@/types/passive_objectives";
 import { TodaysDate, ValidateTodaysDateString } from "@/types/today";
 import { GetCurrentDateCorrectly, JavaScriptifyTodaysDate } from "../today";
+import { ShowToast } from "../android";
+import AsyncStorage from "expo-sqlite/kv-store";
+import StoredItemNames from "@/constants/stored_item_names";
 
 /**
  * Creates a passive objective and saves it. You need to provide all the data for it (except the ID) as an `PassiveObjectiveWithoutId` object.
@@ -43,6 +46,77 @@ async function CreatePassiveObjective(
     t: TFunction,
 ): Promise<void> {
     return await CreateObjective(target, "passive", t);
+}
+
+/**
+ * Edits a Passive Objective, overwriting it's data.
+ *
+ * @async
+ * @param {PassiveObjectiveWithoutId} obj Data WITHOUT ID of the new objective (what content you'll use for overwriting).
+ * @param {number} id ID of the objective to overwrite.
+ * @param {TFunction} t Pass here the translate function, please.
+ * @returns {Promise<void>} 0 if success, 1 if failure.
+ */
+async function EditPassiveObjective(
+    obj: PassiveObjectiveWithoutId,
+    id: number,
+    t: TFunction,
+): Promise<void> {
+    try {
+        const oldObj: PassiveObjective | null = await GetObjective(
+            id,
+            "passive",
+        );
+
+        if (!oldObj) throw new Error(`No active objective with ID ${id}`);
+
+        const newObjective: PassiveObjective = {
+            ...oldObj, // 1st go the oldies
+            ...obj, // 2nd go the overrides
+            identifier: id, // 3rd goes the ID override
+        };
+
+        let objs: PassiveObjective[] | null = await GetAllObjectives("passive");
+        if (!objs || objs.length === 0) objs = [];
+
+        const index: number = objs.findIndex(
+            (o: PassiveObjective): boolean => o.identifier === id,
+        );
+
+        if (index !== -1) {
+            // overwrite
+            objs[index] = newObjective;
+        } else {
+            // this shouldn't happen
+            throw new Error(
+                `Objective with ID ${id} not found in the objectives list!`,
+            );
+        }
+
+        try {
+            await AsyncStorage.setItem(
+                StoredItemNames.activeObjectives,
+                JSON.stringify(objs),
+            );
+            ShowToast(
+                t("pages.createActiveObjective.doneFeedback", {
+                    obj: newObjective.goal,
+                }),
+            );
+            console.log(
+                `Edited ${newObjective.goal} objective with ID ${newObjective.identifier} successfully!\nFull JSON of the new objective:\n${JSON.stringify(
+                    newObjective,
+                )}"`,
+            );
+        } catch (e) {
+            throw new Error(`Failed to save objectives! ${e}`);
+        }
+    } catch (e) {
+        ShowToast("Error :c");
+        throw new Error(
+            `Something went wrong editing passive objective ${id}.\n\nError: ${e}`,
+        );
+    }
 }
 
 /**
@@ -226,6 +300,7 @@ export {
     CreatePassiveObjective,
     DeletePassiveObjective,
     GetPassiveObjective,
+    EditPassiveObjective,
     GetAllPassiveObjectives,
     GetPassiveObjectiveStreak,
     GetPendingPassiveObjectives,

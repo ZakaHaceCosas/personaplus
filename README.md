@@ -1,4 +1,4 @@
-<!--markdownlint-disable md033-->
+<!--markdownlint-disable md033 md026-->
 <h1 align="center">PersonaPlus</h1>
 
 ![PersonaPlus banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/design/PP_BANNER.webp)
@@ -18,16 +18,16 @@
 
 </div>
 
-## Give yourself a plus
+## Give yourself a plus!
 
 **PersonaPlus** is a free and open source Android app to help you create healthy routines & habits, so you give yourself a better life, or "_give yourself a plus_" as we like to say.
 
 ### Download the app
 
 > [!CAUTION]
-> Note that as the app is still a work in progress, we may change how data is stored, making you **loose your data** from one preapp release to another. Don't use (just yet :wink:) PersonaPlus as your daily companion app.
+> Note that as the app is still a work in progress, we may change how data is stored from update to update, making you **loose your data** from one preapp release to another. Don't use (just yet :wink:) PersonaPlus as your daily companion app.
 
-PersonaPlus is still under development (CURRENT STAGE: "PRE-APP"). You can try out the app downloading a pre-release version from the [releases page](https://github.com/ZakaHaceCosas/personaplus/releases). **No version is stable / finished**, so expect issues & missing features. As an early app, we kindly ask you to [report here any issue you find](https://github.com/ZakaHaceCosas/personaplus/issues). Thank you!
+PersonaPlus is still under early development. You can try out the app downloading a pre-release version from the [releases page](https://github.com/ZakaHaceCosas/personaplus/releases). **No version is stable / finished**, so expect issues & missing features. As an early app, we kindly ask you to [report here any issue you find](https://github.com/ZakaHaceCosas/personaplus/issues). Thank you!
 
 PersonaPlus' interface is available in English and Spanish.
 
@@ -41,23 +41,19 @@ Many features we promised are in development and either:
 
 You can see everything that's planned and our progress on it via our tracking issues & [roadmap GitHub project](https://github.com/users/ZakaHaceCosas/projects/1/views/1).
 
-We also use GitHub milestones to mark stages of development, from "PRE-APP" to "ALPHA" to "BETA"... all the way until a stable release. New issues made by users will be added to one milestone or another based on the priority we give them.
-
 ## How to contribute?
 
 PersonaPlus is a 100% free an open source app, and as such, accepts contributions from anyone. [Simply follow the steps here!](https://github.com/ZakaHaceCosas/personaplus/blob/main/CONTRIBUTING.md) We're really thankful for all contributions.
 
-## Credits and license
+## Credits
 
-### Credits
-
-#### Creators and contributors
+### Creators and contributors
 
 Created by [@ZakaHaceCosas](https://zakahacecosas.github.io).
 
 [All mighty contributors are shown in this page.](https://github.com/zakaHaceCosas/personaplus/graphs/contributors). Those who make significant contributions will also be featured here. Thanks for the help!
 
-#### Free software
+### Free software
 
 Thanks to all this wonderful open source software, PersonaPlus was possible. Thank you!
 
@@ -65,16 +61,17 @@ Thanks to all this wonderful open source software, PersonaPlus was possible. Tha
 - [The Expo framework](https://expo.dev/)
 - [i18next](https://github.com/i18next/i18next)
 - [React Native Countdown Circle Timer](https://github.com/vydimitrov/react-countdown-circle-timer/)\*
+- [React Native Animated Stopwatch Timer](https://github.com/rgommezz/react-native-animated-stopwatch-timer/)
 - [React Native Picker](https://github.com/react-native-picker/picker)
 
 \* We're using a fork by us, not the package itself.
 
-### License
+## License
 
 PersonaPlus is under the GPL-3.0-only license. In short: You are free to use the application for any purpose, freely browse, download, reuse, modify and redistribute the source code and modified versions. However, any redistribution or modification must be under the same GPL-3.0-only license. This means that your redistribution must be open source, include clear access to the source code, and provide credit to both the original creator and any other contributors under GPL-3.0 or other licenses requiring attribution.
 
 Make sure that any third-party software used that is under different licenses (such as MIT) is also handled appropriately under their specific terms.
-<!--markdownlint-disable-next-line-->
+
 ## Join the club of the ones who give themselves a plus!
 
 <div align="center">

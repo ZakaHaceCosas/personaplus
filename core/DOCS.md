@@ -92,7 +92,6 @@ Now, let's move onto the reference manual: a list of all available functions, ca
 > This reference is only for the `calculate()` function of each utility, as `getLastUpdated()` and `getSources()` are always the same.
 
 <!--markdownlint-disable-next-line-->
-
 # CoreLibrary reference manual
 
 `CoreLibrary.physicalHealth`

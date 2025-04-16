@@ -282,7 +282,6 @@ export async function updateBrm5(
                 StoredItemNames.dailyLog,
                 StoredItemNames.passiveDailyLog,
                 StoredItemNames.colorTheme,
-                StoredItemNames.experiments,
             ]);
             router.replace(Routes.MAIN.WELCOME_SCREEN);
             return 0;

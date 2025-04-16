@@ -4,7 +4,11 @@ import PageEnd from "@/components/static/page_end";
 import Section from "@/components/ui/sections/section";
 import { Routes } from "@/constants/routes";
 import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
-import { GetPendingActiveObjectives } from "@/toolkit/objectives/active_objectives";
+import {
+    GetActiveObjective,
+    GetPendingActiveObjectives,
+    LaunchActiveObjective,
+} from "@/toolkit/objectives/active_objectives";
 import { FullProfile } from "@/types/user";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
@@ -18,18 +22,28 @@ import {
 } from "@/hooks/use_notification";
 import {
     FailGenericObjectivesNotDoneYesterday,
-    GenericDisplayHandler,
     PendingReturn,
 } from "@/toolkit/objectives/common";
-import { DisplayObjectives } from "@/toolkit/objectives/common_ui";
 import GapView from "@/components/ui/gap_view";
-import { GetPendingPassiveObjectives } from "@/toolkit/objectives/passive_objectives";
+import {
+    GetPassiveObjective,
+    GetPassiveObjectiveStreak,
+    GetPendingPassiveObjectives,
+    SavePassiveObjectiveToDailyLog,
+} from "@/toolkit/objectives/passive_objectives";
+import { PassiveObjective } from "@/types/passive_objectives";
+import BetterButton from "@/components/interaction/better_button";
+import Division from "@/components/ui/sections/division";
+import { ActiveObjective } from "@/types/active_objectives";
+import { ObjectiveDescriptiveIcons } from "@/toolkit/objectives/active_objectives_ui";
+import { IsActiveObjective } from "@/types/common_objectives";
+import { HandlePendingReturn } from "@/toolkit/objectives/common_ui";
 
 setNotificationHandler({
     handleNotification: async () => ({
         shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
     }),
 });
 
@@ -41,6 +55,12 @@ export default function HomeScreen(): ReactElement {
         useState<PendingReturn>("noneExists");
     const [passiveObjectiveIdentifiers, setPassiveObjectiveIdentifiers] =
         useState<PendingReturn>("noneExists");
+    const [activeObjectivesToRender, setActiveObjectivesToRender] = useState<
+        ActiveObjective[]
+    >([]);
+    const [passiveObjectivesToRender, setPassiveObjectivesToRender] = useState<
+        { obj: PassiveObjective; streak: number }[]
+    >([]);
     const [identifiersLoaded, setIdentifiersLoaded] = useState<boolean>(false);
     const [notificationsHandled, setNotificationsHandled] =
         useState<boolean>(false);
@@ -72,6 +92,31 @@ export default function HomeScreen(): ReactElement {
                 const pendingPassive: PendingReturn =
                     await GetPendingPassiveObjectives();
                 setPassiveObjectiveIdentifiers(pendingPassive);
+
+                if (Array.isArray(pendingActive)) {
+                    const arr = await Promise.all(
+                        pendingActive.map(GetActiveObjective),
+                    );
+                    setActiveObjectivesToRender(arr.filter((o) => o !== null));
+                }
+                if (Array.isArray(pendingPassive)) {
+                    const arr = (
+                        await Promise.all(
+                            pendingPassive.map(GetPassiveObjective),
+                        )
+                    ).filter((o) => o !== null);
+                    const objectivesWithStreak = await Promise.all(
+                        arr.map(async (o) => ({
+                            obj: o,
+                            streak: await GetPassiveObjectiveStreak(
+                                o.identifier,
+                            ),
+                        })),
+                    );
+
+                    // await GetPassiveObjectiveStreak(obj.identifier)
+                    setPassiveObjectivesToRender(objectivesWithStreak);
+                }
             } catch (e) {
                 console.error(`Error fetching data: ${e}`);
                 router.replace(Routes.MAIN.WELCOME_SCREEN);
@@ -99,7 +144,9 @@ export default function HomeScreen(): ReactElement {
                     userData.wantsNotifications !== false &&
                     !isRegistered &&
                     Array.isArray(activeObjectiveIdentifiers) &&
-                    activeObjectiveIdentifiers.length > 0
+                    activeObjectiveIdentifiers.length > 0 &&
+                    Array.isArray(passiveObjectiveIdentifiers) &&
+                    passiveObjectiveIdentifiers.length > 0
                 ) {
                     await scheduleRandomNotifications(t);
                 }
@@ -114,24 +161,11 @@ export default function HomeScreen(): ReactElement {
     }, [
         userData,
         activeObjectiveIdentifiers,
+        passiveObjectiveIdentifiers,
         identifiersLoaded,
         notificationsHandled,
         t,
     ]);
-
-    async function handler(
-        id: number,
-        act: "deleting" | "editing" | "launching",
-        cat: "active" | "passive",
-    ): Promise<void> {
-        if (act === "launching") {
-            console.error(
-                "who passed 'launching' to the GenericDisplayHandler?",
-            );
-            return;
-        }
-        await GenericDisplayHandler(id, act, cat, t);
-    }
 
     // render stuff
     if (loading || !userData || !identifiersLoaded) {
@@ -148,25 +182,87 @@ export default function HomeScreen(): ReactElement {
                 subHeader={t("pages.home.subheader")}
             />
             <Section width="total" kind="ActiveObjectives">
-                <DisplayObjectives
-                    handler={{
-                        act: "launching",
-                        callback: handler,
-                    }}
-                    category="active"
-                    identifiers={activeObjectiveIdentifiers}
-                />
+                {activeObjectivesToRender.length === 0 && (
+                    <HandlePendingReturn
+                        renderer={
+                            Array.isArray(activeObjectiveIdentifiers)
+                                ? "allDone"
+                                : activeObjectiveIdentifiers
+                        }
+                    />
+                )}
+                {activeObjectivesToRender.map(
+                    (obj: ActiveObjective): ReactElement => (
+                        <Division
+                            key={obj.identifier}
+                            header={t(
+                                `globals.supportedActiveObjectives.${obj.exercise}.name`,
+                            )}
+                            preHeader={t(`objectives.active.allCapsSingular`)}
+                            direction="vertical"
+                        >
+                            <ObjectiveDescriptiveIcons obj={obj} />
+                            <BetterButton
+                                buttonText={t(
+                                    IsActiveObjective(obj)
+                                        ? "globals.interaction.goAheadGood"
+                                        : "objectives.passive.log.text",
+                                )}
+                                buttonHint={t(
+                                    `objectives.${IsActiveObjective(obj) ? "active.start.hint" : "passive.log.hint"}`,
+                                )}
+                                style="ACE"
+                                action={async (): Promise<void> =>
+                                    await LaunchActiveObjective(obj.identifier)
+                                }
+                            />
+                        </Division>
+                    ),
+                )}
             </Section>
             <GapView height={20} />
             <Section width="total" kind="PassiveObjectives">
-                <DisplayObjectives
-                    handler={{
-                        act: "launching",
-                        callback: handler,
-                    }}
-                    category="passive"
-                    identifiers={passiveObjectiveIdentifiers}
-                />
+                {passiveObjectivesToRender.length === 0 && (
+                    <HandlePendingReturn
+                        renderer={
+                            Array.isArray(passiveObjectiveIdentifiers)
+                                ? "allDone"
+                                : passiveObjectiveIdentifiers
+                        }
+                    />
+                )}
+                {passiveObjectivesToRender.map(
+                    (o: {
+                        obj: PassiveObjective;
+                        streak: number;
+                    }): ReactElement => (
+                        <Division
+                            key={o.obj.identifier}
+                            header={`${o.obj.goal} · ${o.streak}`}
+                            preHeader={t(`objectives.passive.allCapsSingular`)}
+                            direction="vertical"
+                        >
+                            <BetterButton
+                                buttonText={t("objectives.passive.log.text")}
+                                buttonHint={t(`objectives.passive.log.hint`)}
+                                style="ACE"
+                                action={async (): Promise<void> => {
+                                    await SavePassiveObjectiveToDailyLog(
+                                        o.obj.identifier,
+                                        true,
+                                    );
+                                    setPassiveObjectivesToRender(
+                                        passiveObjectivesToRender.filter(
+                                            (ob) =>
+                                                ob.obj.identifier !==
+                                                o.obj.identifier,
+                                        ),
+                                    );
+                                }}
+                            />
+                        </Division>
+                    ),
+                )}
             </Section>
             <PageEnd includeText={true} />
         </>

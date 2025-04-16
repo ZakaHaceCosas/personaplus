@@ -93,6 +93,14 @@ const libraries: OpenSourceLibrary[] = [
         url: "https://github.com/vydimitrov/react-countdown-circle-timer/",
     },
     {
+        name: "React Native Animated Stopwatch Timer",
+        author: "Raúl Gómez Acuña",
+        license: "MIT License",
+        description:
+            "Stopwatch & Timer component that smoothly animate the digits change, with all layout animations running on the UI thread.",
+        url: "https://github.com/rgommezz/react-native-animated-stopwatch-timer/",
+    },
+    {
         name: "i18next",
         author: "i18next contributors",
         license: "MIT License",
@@ -126,12 +134,6 @@ interface Contributor {
      */
     contribution: string;
     /**
-     * A bio about them. Optional.
-     *
-     * @type {string}
-     */
-    bio?: string;
-    /**
      * A relevant link, like their GitHub profile, personal website, or whatever.
      *
      * @type {string}
@@ -142,13 +144,13 @@ interface Contributor {
 /** Cool contributors! I manually add them. Once added, they're free to make as many changes as they want. I add them without all optional fields, they're up to them. */
 const contributors: Contributor[] = [
     {
+        name: "Álvaro",
         username: "Alvaro842DEV",
         contribution: "Contributed code & gave ideas that are base to the app.",
         // ^used to be "Committing ideas like constant sizing and scaling values, memos & callbacks, and other coding features now used by the app." but that's too fu- long, so from now on i'll just use "code" / "design" / "security fix" / whatever
         url: "https://github.com/Alvaro842DEV",
     },
-    // missing
-    // - del
+    // there's one person missing, who I don't know how to credit yet
 ];
 
 export default function OpenSourceCredits(): ReactElement {
@@ -191,15 +193,6 @@ export default function OpenSourceCredits(): ReactElement {
                                 fontSize={FontSizes.LARGE}
                             >
                                 @{contributor.username}
-                            </BetterText>
-                        )}
-                        {contributor.bio && (
-                            <BetterText
-                                textColor={Colors.LABELS.SDD}
-                                fontWeight="SemiBold"
-                                fontSize={14}
-                            >
-                                {contributor.bio}
                             </BetterText>
                         )}
                         <GapView height={5} />

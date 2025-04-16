@@ -11,7 +11,13 @@
  * <=============================================================================>
  */
 
-import React, { ReactElement, useCallback, useEffect, useState } from "react";
+import React, {
+    ReactElement,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import {
     CalculateSessionPerformance,
@@ -28,19 +34,20 @@ import { useTranslation } from "react-i18next";
 import BetterButton from "@/components/interaction/better_button";
 import Colors from "@/constants/colors";
 import Loading from "@/components/static/loading";
-import { ActiveObjective, SessionParams } from "@/types/active_objectives";
+import { ActiveObjective } from "@/types/active_objectives";
 import { GetCommonScreenSize } from "@/constants/screen";
 import IslandDivision from "@/components/ui/sections/island_division";
 import { Routes } from "@/constants/routes";
-import { HexColorString } from "@/types/color";
 import { BasicUserHealthData } from "@/types/user";
 import { OrchestrateUserData } from "@/toolkit/user";
 import { ShowToast } from "@/toolkit/android";
-import SessionTimer from "@/components/ui/pages/timer";
-import { StringifyMinutes } from "@/toolkit/today";
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
 import { GenerateRandomMessage } from "@/toolkit/strings";
 import { HelpView, TopView } from "@/components/ui/pages/sessions";
+import StopwatchTimer, {
+    StopwatchTimerMethods,
+} from "react-native-animated-stopwatch-timer";
+import { BetterTextSmallText } from "@/components/text/better_text_presets";
 
 const styles = StyleSheet.create({
     mainView: {
@@ -55,21 +62,20 @@ const styles = StyleSheet.create({
 });
 
 export default function Sessions(): ReactElement {
-    // Stateful values and stuff
     const { t } = useTranslation();
 
     // data
     const params: UnknownOutputParams = useGlobalSearchParams();
     const objectiveIdentifier: number = Number(params.id);
+
+    // stateful values and stuff
     const [loading, setLoading] = useState<boolean>(true);
     const [objective, setObjective] = useState<ActiveObjective | null>(null);
     const [userData, setUserData] = useState<BasicUserHealthData>();
 
     // session itself
-    const [isTimerRunning, setTimerStatus] = useState(true);
+    const [isTimerRunning, setTimerStatus] = useState(false);
     const [isUserCheckingHelp, setIsUserCheckingHelp] = useState(false);
-    const [isUserResting, setIsUserResting] = useState(false);
-    const [totalTime, setTotalTime] = useState<number>(0);
 
     // the verbal version of the objective name (i don't know how to call it)
     // like if the exercise is "Push ups" this variable is "Pushing up" (or "Doing pushups"? i don't remember)
@@ -78,16 +84,11 @@ export default function Sessions(): ReactElement {
 
     useEffect((): void => {
         if (!objective) return;
-        const { durationMinutes } = objective.info;
-        const result: string = !isUserResting
-            ? t(
-                  `globals.supportedActiveObjectives.${objective.exercise}.doing`,
-                  { duration: StringifyMinutes(durationMinutes) },
-              )
-            : t("pages.sessions.resting");
 
-        setObjectiveVerbalName(result);
-    }, [isUserResting, objective, t]);
+        setObjectiveVerbalName(
+            t(`globals.supportedActiveObjectives.${objective.exercise}.doing`),
+        );
+    }, [objective, t]);
 
     useEffect((): void => {
         async function handler(): Promise<void> {
@@ -122,13 +123,9 @@ export default function Sessions(): ReactElement {
         handler();
     }, [objectiveIdentifier]);
 
-    // the color of the timer
-    const timerColor: HexColorString = isTimerRunning
-        ? Colors.PRIMARIES.ACE.ACE
-        : Colors.PRIMARIES.HMM.HMM;
-
     // give up function
     function GiveUp(): void {
+        pause();
         Alert.alert(
             t("globals.interaction.areYouSure"),
             t("pages.sessions.giveUpDescription"),
@@ -159,26 +156,6 @@ export default function Sessions(): ReactElement {
         [],
     );
 
-    // total duration of the session, including rests
-    const calculateTotalTime: () => number = useCallback((): number => {
-        if (!objective) return 0;
-        const { durationMinutes, rests, restDurationMinutes } = objective.info;
-        return durationMinutes + (rests ?? 0) * restDurationMinutes;
-    }, [objective]);
-
-    useEffect((): void => {
-        setTotalTime(calculateTotalTime());
-    }, [calculateTotalTime]);
-
-    // handle the state changes for resting
-    const handleRestState: (isResting: boolean) => void = useCallback(
-        (isResting: boolean): void => {
-            toggleTimerStatus(!isResting); // if resting, pause; if not, play
-            setIsUserResting(isResting);
-        },
-        [toggleTimerStatus],
-    );
-
     function toggleHelpMenu(status: boolean): void {
         setIsUserCheckingHelp(status);
         toggleTimerStatus(!status); // Pause if checking help, play otherwise
@@ -187,6 +164,7 @@ export default function Sessions(): ReactElement {
     // this function is basically to finish the session
     // will mark the obj as done, save it, and head to the results page
     const FinishSession: () => void = useCallback((): void => {
+        pause();
         async function handle(): Promise<void> {
             try {
                 if (!objective || !userData) return; // i mean if we finished we can asume we already have both things, but typescript disagrees
@@ -194,7 +172,11 @@ export default function Sessions(): ReactElement {
                 ShowToast(GenerateRandomMessage("sessionCompleted", t));
 
                 const response: CoreLibraryResponse =
-                    CalculateSessionPerformance(objective, userData, totalTime);
+                    CalculateSessionPerformance(
+                        objective,
+                        userData,
+                        getTimeInMinutes(),
+                    );
                 if (!response) throw new Error("Response is null or undefined");
 
                 await SaveActiveObjectiveToDailyLog(
@@ -203,15 +185,13 @@ export default function Sessions(): ReactElement {
                     response,
                 );
 
-                const params: SessionParams = {
-                    burntCalories: response.result,
-                    elapsedTime: totalTime ?? 0,
-                    id: objective.identifier,
-                };
-
                 router.replace({
                     pathname: Routes.OBJECTIVES.RESULTS,
-                    params: params,
+                    params: {
+                        burntCalories: response.result,
+                        elapsedTime: getTimeInMinutes(),
+                        id: objective.identifier,
+                    },
                 });
             } catch (e) {
                 console.error(
@@ -223,7 +203,34 @@ export default function Sessions(): ReactElement {
             }
         }
         handle();
-    }, [objective, userData, totalTime, t, objectiveIdentifier]);
+    }, [objective, userData, t, objectiveIdentifier]);
+
+    // NEW TIMER METHODS
+    const stopwatchTimerRef = useRef<StopwatchTimerMethods>(null);
+
+    function play(): void {
+        stopwatchTimerRef.current?.play();
+    }
+
+    function pause(): void {
+        stopwatchTimerRef.current?.pause();
+    }
+
+    function getTimeInMinutes(): number {
+        // in milliseconds
+        const snap: number | undefined =
+            stopwatchTimerRef.current?.getSnapshot();
+        if (!snap) return 0;
+        return snap / 1000 / 60;
+    }
+
+    useEffect((): void => {
+        if (isTimerRunning) {
+            play();
+        } else {
+            pause();
+        }
+    }, [isTimerRunning]);
 
     if (loading || !objective) {
         return <Loading />;
@@ -236,13 +243,39 @@ export default function Sessions(): ReactElement {
                 verbalName={currentObjectiveVerbalName}
             />
             <GapView height={20} />
-            <SessionTimer
-                objective={objective}
-                onComplete={FinishSession}
-                timerColor={timerColor}
-                running={isTimerRunning}
-                restingStateHandler={handleRestState}
+            <StopwatchTimer
+                mode="stopwatch"
+                ref={stopwatchTimerRef}
+                trailingZeros={0}
+                leadingZeros={2}
+                enterAnimationType="slide-in-up"
+                containerStyle={{
+                    height: 90,
+                    width: GetCommonScreenSize("width"),
+                    alignItems: "center",
+                    justifyContent: "center",
+                    backgroundColor: Colors.MAIN.SECTION,
+                    borderRadius: 20,
+                }}
+                digitStyle={{
+                    color: isTimerRunning
+                        ? Colors.PRIMARIES.ACE.ACE
+                        : Colors.PRIMARIES.HMM.HMM,
+                }}
+                textCharStyle={{
+                    fontSize: 40,
+                    color: Colors.MAIN.DEFAULT_ITEM.TEXT,
+                    fontFamily: "BeVietnamPro-SemiBold",
+                }}
             />
+            {isTimerRunning === false && getTimeInMinutes() === 0 && (
+                <>
+                    <GapView height={20} />
+                    <BetterTextSmallText>
+                        Hit the Play button to begin! (todo:translate)
+                    </BetterTextSmallText>
+                </>
+            )}
             <GapView height={20} />
             <IslandDivision alignment="center" direction="horizontal">
                 <BetterButton
@@ -252,7 +285,7 @@ export default function Sessions(): ReactElement {
                             : t("pages.sessions.toggleTimer.hintPlay")
                     }
                     buttonText={null}
-                    style={isTimerRunning ? "ACE" : "HMM"}
+                    style={isTimerRunning ? "DEFAULT" : "HMM"}
                     action={(): void =>
                         setTimerStatus((prev: boolean): boolean => !prev)
                     }
@@ -267,8 +300,16 @@ export default function Sessions(): ReactElement {
                 />
                 <GapView width={10} />
                 <BetterButton
+                    buttonHint={t("pages.sessions.doneHint")}
+                    style="ACE"
+                    buttonText={t("globals.interaction.done")}
+                    action={(): void => FinishSession()}
+                    layout="normal"
+                />
+                <GapView width={10} />
+                <BetterButton
                     buttonHint={t("pages.sessions.helpHint")}
-                    style="HMM"
+                    style="DEFAULT"
                     buttonText={t("globals.interaction.help")}
                     action={(): void => toggleHelpMenu(true)}
                     layout="normal"
@@ -276,10 +317,15 @@ export default function Sessions(): ReactElement {
                 <GapView width={10} />
                 <BetterButton
                     buttonHint={t("pages.sessions.giveUpHint")}
-                    style="WOR"
-                    buttonText={t("globals.interaction.giveUp")}
+                    buttonText={null}
+                    style={"WOR"}
                     action={(): void => GiveUp()}
-                    layout="normal"
+                    layout="box"
+                    icon={{
+                        name: "exit-to-app",
+                        size: 18,
+                        color: Colors.BASIC.WHITE,
+                    }}
                 />
             </IslandDivision>
             {isUserCheckingHelp && (

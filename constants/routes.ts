@@ -6,8 +6,9 @@ export const Routes = {
         HOME: "/",
         PROFILE: "/profile",
         DASHBOARD: "/dashboard",
-        WELCOME_SCREEN: "/welcome",
+        TOOLKIT: "/toolkit",
         REPORT: "/report",
+        WELCOME_SCREEN: "/welcome",
         SETTINGS: {
             UPDATE_PROFILE: "/update_profile",
             SETTINGS_PAGE: "/settings",

@@ -6,31 +6,26 @@
  * <=============================================================================>
  *
  * You are in: @/app/(tabs)/developer/DevExperiments.tsx
- * Basically: A page from where the user can enable experimental features.
+ * Basically: A page from where the user can access experimental features.
  *
  * <=============================================================================>
  */
 
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement } from "react";
 import BetterButton from "@/components/interaction/better_button";
-import Loading from "@/components/static/loading";
 import PageEnd from "@/components/static/page_end";
 import {
     BetterTextHeader,
-    BetterTextNormalText,
     BetterTextSmallerText,
 } from "@/components/text/better_text_presets";
 import BetterAlert from "@/components/ui/better_alert";
 import GapView from "@/components/ui/gap_view";
 import Division from "@/components/ui/sections/division";
 import Section from "@/components/ui/sections/section";
-import { GetExperiments, ToggleExperiment } from "@/toolkit/experiments";
-import { SafelyGoBack } from "@/toolkit/routing";
-import { Experiment, Experiments } from "@/types/user";
-import { Alert } from "react-native";
 import TopBar from "@/components/navigation/top_bar";
-import { ShowToast } from "@/toolkit/android";
 import { useTranslation } from "react-i18next";
+import { router } from "expo-router";
+import { Routes } from "@/constants/routes";
 
 // i gave myself the freedom to write in an informal way on this page.
 export default function EpicExperiments(): ReactElement {
@@ -38,10 +33,10 @@ export default function EpicExperiments(): ReactElement {
 
     function ExperimentDivision({
         id,
-        isEnabled,
+        page,
     }: {
-        id: Experiment;
-        isEnabled: boolean;
+        id: string;
+        page: string;
     }): ReactElement {
         return (
             <Division
@@ -50,82 +45,24 @@ export default function EpicExperiments(): ReactElement {
                 subHeader={t(`pages.experiments.${id}`)}
                 direction="vertical"
             >
-                <BetterTextNormalText>
-                    {isEnabled
-                        ? t("pages.experiments.status.enabled")
-                        : t("pages.experiments.status.disabled")}
-                </BetterTextNormalText>
                 <BetterButton
-                    style={isEnabled ? "HMM" : "DEFAULT"}
-                    buttonText={
-                        isEnabled
-                            ? t("pages.experiments.toggle.disable")
-                            : t("pages.experiments.toggle.enable")
-                    }
+                    style={"HMM"}
+                    buttonText={t("pages.experiments.test")}
                     buttonHint={t("pages.experiments.toggle.hint")}
                     action={(): void => {
-                        HandleExperiment(id, !isEnabled);
+                        router.navigate(page);
                     }}
                 />
             </Division>
         );
     }
 
-    const [loading, setLoading] = useState<boolean>(true);
-    const [experiments, setExperiments] = useState<Experiments>();
-
-    useEffect((): void => {
-        async function handler(): Promise<void> {
-            try {
-                const theExperiments: Experiments = await GetExperiments();
-                setExperiments(theExperiments);
-            } catch (e) {
-                console.error(`Error getting experiments: ${e}`);
-            } finally {
-                setLoading(false);
-            }
-        }
-        handler();
-    }, []);
-
-    function HandleExperiment(experiment: Experiment, value: boolean): void {
-        if (value === true) {
-            Alert.alert(
-                t("globals.interaction.areYouSure"),
-                t("pages.experiments.toggle.warning"),
-                [
-                    {
-                        text: t("globals.interaction.goAheadBad"),
-                        onPress: () => {
-                            ToggleExperiment(experiment, value);
-                            ShowToast(
-                                t("pages.experiments.toggle.enabledFeedback", {
-                                    exp: experiment,
-                                }),
-                            );
-                            // router.reload();
-                            SafelyGoBack();
-                        },
-                    },
-                    {
-                        text: t("globals.interaction.nevermind"),
-                        onPress: (): void => {},
-                    },
-                ],
-            );
-        } else {
-            ToggleExperiment(experiment, value);
-            ShowToast(
-                t("pages.experiments.toggle.disabledFeedback", {
-                    exp: experiment,
-                }),
-            );
-            // router.reload();
-            SafelyGoBack();
-        }
-    }
-
-    if (loading) return <Loading />;
+    const experiments = [
+        {
+            id: "exp_tracker",
+            page: Routes.EXPERIMENTS.TRACKER,
+        },
+    ];
 
     return (
         <>
@@ -150,12 +87,12 @@ export default function EpicExperiments(): ReactElement {
             <GapView height={10} />
             <Section kind="Experiments">
                 {experiments &&
-                    Object.entries(experiments).map(
-                        ([id, isEnabled]: [string, boolean]): ReactElement => (
+                    experiments.map(
+                        (e: { id: string; page: string }): ReactElement => (
                             <ExperimentDivision
-                                key={id}
-                                id={id as Experiment}
-                                isEnabled={isEnabled}
+                                key={e.id}
+                                id={e.id}
+                                page={e.page}
                             />
                         ),
                     )}

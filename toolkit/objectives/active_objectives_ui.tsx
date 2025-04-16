@@ -6,7 +6,6 @@ import { StyleSheet, View } from "react-native";
 import GapView from "@/components/ui/gap_view";
 import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";
-import { StringifyMinutes } from "../today";
 import IconView from "@/components/ui/icon_view";
 
 const styles = StyleSheet.create({
@@ -108,9 +107,6 @@ function ObjectiveDescriptiveIcons({
                 </>
             );
             break;
-        case "Walking":
-            icons = <></>; // lol
-            break;
         default:
             icons = (
                 <>
@@ -121,18 +117,7 @@ function ObjectiveDescriptiveIcons({
             );
     }
 
-    return (
-        <View style={styles.view}>
-            <IconView
-                name="timer"
-                size={FontSizes.REGULAR}
-                color={Colors.LABELS.SDD}
-                text={StringifyMinutes(obj.info.durationMinutes)}
-            />
-            <GapView width={10} />
-            {icons}
-        </View>
-    );
+    return <View style={styles.view}>{icons}</View>;
 }
 
 export { ObjectiveDescriptiveIcons };

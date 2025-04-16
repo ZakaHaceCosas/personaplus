@@ -21,7 +21,6 @@ const StoredItemNames = {
     dailyLog: "activeObjectiveDailyLog",
     passiveDailyLog: "passiveObjectiveDailyLog",
     colorTheme: "colorTheme",
-    experiments: "experimentalFeatures",
 };
 
 export default StoredItemNames;

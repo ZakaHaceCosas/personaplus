@@ -25,18 +25,9 @@ export default function Settings() {
 
     useEffect((): void => {
         async function handler(): Promise<void> {
-            try {
-                const profile: FullProfile = await OrchestrateUserData();
-                if (!profile) {
-                    setUserData(ErrorUserData);
-                    return;
-                }
-                setUserData(profile);
-            } catch (e) {
-                console.error(`Error orchestrating user data: ${e}`);
-            } finally {
-                setLoading(false);
-            }
+            const profile: FullProfile = await OrchestrateUserData();
+            setUserData(profile);
+            setLoading(false);
         }
 
         handler();

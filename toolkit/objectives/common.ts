@@ -17,12 +17,15 @@ import {
     ActiveObjectiveDailyLog,
     ActiveObjectiveWithoutId,
     EditObjectiveParams,
+    RealEditObjectiveParams,
+    ValidateActiveObjective,
     WeekTuple,
 } from "@/types/active_objectives";
 import {
     PassiveObjective,
     PassiveObjectiveDailyLog,
     PassiveObjectiveWithoutId,
+    ValidatePassiveObjective,
 } from "@/types/passive_objectives";
 import AsyncStorage from "expo-sqlite/kv-store";
 import { TFunction } from "i18next";
@@ -43,8 +46,6 @@ import {
     ValidateTodaysDateString,
 } from "@/types/today";
 import { StrUtils } from "../glue_fix";
-import { Routes } from "@/constants/routes";
-import { router } from "expo-router";
 
 /**
  * Returns all objectives from AsyncStorage as an `ActiveObjective[]` or a `PassiveObjective[]` (depending on chosen category), or `null` if there aren't any objectives.
@@ -550,13 +551,15 @@ async function GetPendingGenericObjectives(
         // okay i think i finally know what's going on in here:
 
         // this function runs for each objective, checks if it's pending,
-        // and returns its status (pending or not) and ID
+        // and returns its status (TRUE if it IS pending) and ID
         async function callbackfn(
             obj: ActiveObjective | PassiveObjective,
         ): Promise<thing | null> {
             const status: boolean = await IsGenericObjectivePending(obj);
             return { identifier: obj.identifier, status };
         }
+
+        // NOTE: i should review this code, again...
 
         // we get the values of the objectives and run the callbackfn for all of them
         const dueTodayObjectives: thing[] = (
@@ -565,106 +568,60 @@ async function GetPendingGenericObjectives(
             // we filter out null entries
             .filter((obj: thing | null): obj is thing => obj !== null);
 
-        if (dueTodayObjectives.length === 0) return "noneDueToday"; // there are objectives, but none are due today
-
         // if all objectives have FALSE status (NOT DUE TODAY) (thus !obj.status)
-        // return "allDone"
-        if (dueTodayObjectives.every((obj: thing): boolean => !obj.status))
-            return "allDone"; // all objectives for today are done
+        // return "noneDueToday"
+        if (
+            dueTodayObjectives.every(
+                (obj: thing): boolean => obj.status === false,
+            )
+        )
+            return "noneDueToday";
+
+        // if no objective returned, none is pending, so all is done
+        if (dueTodayObjectives.length === 0) return "allDone";
 
         // get the identifiers of objectives that are not done yet
-        const pendingObjectives: number[] = dueTodayObjectives.map(
-            (obj: thing): number => obj.identifier,
-        );
+        const pendingObjectives: number[] = dueTodayObjectives
+            .filter((obj: thing): boolean => obj.status === true)
+            .map((obj: thing): number => obj.identifier);
 
         // return pending objectives
         // because of the earlier .every(), we know there's at least one
         return pendingObjectives;
     } catch (e) {
-        throw new Error(`Failed to get all pending objectives: ${e}`);
+        throw new Error(`Failed to get pending ${category} objectives: ${e}`);
     }
 }
 
 /**
- * A generic handler for `<DisplayObjectives />`. You should wrap it into a no-argument function that runs it with the required params and then pass it over to the display component.
+ * Handles `?url=params` for editing of objectives.
  *
- * @async
- * @param {number} identifier Identifier of the given objective.
- * @param {("deleting" | "editing")} action Possible actions for the handler.
- * @param {("active" | "passive")} category Category of the given objective.
- * @param {{
- *         setActiveCallback: (arg: ActiveObjective[] | null) => void,
- *         activeToSet: ActiveObjective[] | null,
- *         setPassiveCallback: (arg: PassiveObjective[] | null) => void,
- *         passiveToSet: PassiveObjective[] | null,
- *     }} statefulParams Stateful values and setters.
- * @param {TFunction} t TFunctions
- * @returns {Promise<void>} No return value
+ * @param {*} params URL parameters.
+ * @returns {("noEdit" | "invalidData" | number)} The ID of the objective to edit, or a string representing why no edit will be handled.
  */
-async function GenericDisplayHandler(
-    identifier: number,
-    action: "deleting" | "editing",
+function HandleEditObjective(
+    params: any,
     category: "active" | "passive",
-    t: TFunction,
-    statefulParams?: {
-        setActiveCallback: (arg: ActiveObjective[]) => void;
-        activeToSet: ActiveObjective[] | null;
-        setPassiveCallback: (arg: PassiveObjective[]) => void;
-        passiveToSet: PassiveObjective[] | null;
-    },
-): Promise<void> {
-    const params = statefulParams ?? {
-        setActiveCallback: () => {},
-        activeToSet: [],
-        setPassiveCallback: () => {},
-        passiveToSet: [],
+): "noEdit" | "invalidData" | number {
+    const typedParams: EditObjectiveParams = params as EditObjectiveParams;
+    const realParams: RealEditObjectiveParams = {
+        edit: typedParams.edit === "true" ? true : false,
+        objective:
+            typedParams.edit === "true"
+                ? JSON.parse(typedParams.objective)
+                : null,
     };
-
-    const { setActiveCallback, activeToSet, setPassiveCallback, passiveToSet } =
-        params;
-
-    try {
-        if (action === "deleting") {
-            await DeleteObjective(identifier, category);
-            // update & redraw without re-fetching everything upon update.
-            if (category === "active") {
-                setActiveCallback(
-                    activeToSet?.filter(
-                        (obj: ActiveObjective): boolean =>
-                            obj.identifier !== identifier,
-                    ) || [],
-                );
-            } else {
-                setPassiveCallback(
-                    passiveToSet?.filter(
-                        (obj: PassiveObjective): boolean =>
-                            obj.identifier !== identifier,
-                    ) || [],
-                );
-            }
-            return;
-        } else if (action === "editing") {
-            // TODO - support editing passive objectives
-            const obj: ActiveObjective | null = await GetObjective(
-                identifier,
-                "active",
-            );
-            if (!obj) {
-                ShowToast(t("errors.objectiveNotExists", { id: identifier }));
-                return;
-            }
-            const params: EditObjectiveParams = {
-                edit: "true",
-                objective: JSON.stringify(obj),
-            };
-            router.push({
-                pathname: Routes.OBJECTIVES.CREATE_ACTIVE,
-                params,
-            });
-        }
-    } catch (e) {
-        console.error(`Error ${action} objective ${identifier}: ${e}`);
-    }
+    if (realParams.edit === false) return "noEdit";
+    console.warn(category);
+    console.debug(realParams.objective);
+    if (
+        (category === "active" &&
+            !ValidateActiveObjective(realParams.objective)) ||
+        (category === "passive" &&
+            !ValidatePassiveObjective(realParams.objective))
+    )
+        return "invalidData";
+    return realParams.objective.identifier;
 }
 
 // function exports
@@ -673,7 +630,7 @@ export {
     DeleteObjective,
     CreateObjective,
     GetAllObjectives,
-    GenericDisplayHandler,
+    HandleEditObjective,
     CleanupGenericDailyLog,
     IsGenericObjectivePending,
     GetPendingGenericObjectives,

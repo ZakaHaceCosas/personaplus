@@ -15,7 +15,6 @@ import React, { ReactElement, useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, TextInput, View } from "react-native";
 import {
     BetterTextNormalText,
-    BetterTextSmallerText,
     BetterTextSmallHeader,
     BetterTextSmallText,
 } from "@/components/text/better_text_presets";
@@ -23,8 +22,6 @@ import GapView from "@/components/ui/gap_view";
 import { useTranslation } from "react-i18next";
 import {
     ActiveObjectiveWithoutId,
-    EditObjectiveParams,
-    RealEditObjectiveParams,
     SupportedActiveObjectives,
     SupportedActiveObjectivesList,
     ValidateActiveObjective,
@@ -42,6 +39,7 @@ import {
     CreateActiveObjective,
     DEFAULT_ACTIVE_OBJECTIVE,
     EditActiveObjective,
+    GetActiveObjective,
 } from "@/toolkit/objectives/active_objectives";
 import {
     router,
@@ -49,11 +47,10 @@ import {
     useGlobalSearchParams,
 } from "expo-router";
 import { Routes } from "@/constants/routes";
-import { Experiments } from "@/types/user";
-import { GetExperiments } from "@/toolkit/experiments";
 import TopBar from "@/components/navigation/top_bar";
 import { ShowToast } from "@/toolkit/android";
 import { GenerateRandomMessage } from "@/toolkit/strings";
+import { HandleEditObjective } from "@/toolkit/objectives/common";
 
 const styles = StyleSheet.create({
     dayContainer: {
@@ -113,40 +110,47 @@ export default function CreateActiveObjectivePage(): ReactElement {
 
     // edit handler
     const params: UnknownOutputParams = useGlobalSearchParams();
-    interface EditData {
-        enable: boolean;
-        id: number | undefined;
-    }
 
-    // edit state handling
-    const [edit, setEdit] = useState<EditData>({
+    const [edit, setEdit] = useState<{
+        enable: boolean;
+        id: number | null;
+    }>({
         enable: false,
-        id: undefined,
+        id: null,
     });
 
     useEffect((): void => {
-        const typedParams: EditObjectiveParams = params as EditObjectiveParams;
-        const realParams: RealEditObjectiveParams = {
-            edit: typedParams.edit === "true" ? true : false,
-            objective:
-                typedParams.edit === "true"
-                    ? JSON.parse(typedParams.objective)
-                    : "",
-        };
-        const typedRealParams: RealEditObjectiveParams =
-            realParams as RealEditObjectiveParams;
-        if (typedRealParams.edit === true) {
-            if (ValidateActiveObjective(realParams.objective)) {
-                updateObjectiveToCreate(realParams.objective);
-                setEdit({
-                    enable: true,
-                    id: realParams.objective.identifier,
-                });
-            } else {
-                ShowToast(t("errors.activeObjectives.invalidData"));
-            }
+        const edit: number | "invalidData" | "noEdit" = HandleEditObjective(
+            params,
+            "active",
+        );
+        if (edit === "invalidData") {
+            ShowToast(t("errors.activeObjectives.invalidData"));
+            router.navigate(Routes.MAIN.HOME);
+            return;
         }
+        if (edit === "noEdit") return;
+        setEdit({
+            enable: true,
+            id: edit,
+        });
     }, [params, t]);
+
+    useEffect(() => {
+        if (edit.enable === false) return;
+        async function handler() {
+            if (!edit.id) return;
+            const o = await GetActiveObjective(edit.id);
+            if (!o) {
+                console.error(
+                    "Impossible: attempted to edit null objective after verifying it's not null",
+                );
+                return;
+            }
+            updateObjectiveToCreate(o);
+        }
+        handler();
+    }, [edit]);
 
     // random message
     const randomMessage: string = useMemo(
@@ -154,24 +158,13 @@ export default function CreateActiveObjectivePage(): ReactElement {
         [t],
     );
 
-    // some types to avoid duplication
-    type InfoValue = "durationMinutes" | "rests" | "restDurationMinutes";
-    type SpecificDataValue =
+    // type to avoid duplication
+    type Value =
         | "dumbbellWeight"
         | "reps"
         | "amountOfHands"
         | "estimateSpeed"
         | "amountOfPushUps";
-    type Value = InfoValue | SpecificDataValue;
-
-    // experiments
-    const [experiments, setExperiments] = useState<Experiments>();
-    useEffect((): void => {
-        async function handle(): Promise<void> {
-            setExperiments(await GetExperiments());
-        }
-        handle();
-    }, []);
 
     function handleToggle(
         operation: "increase" | "decrease",
@@ -180,7 +173,6 @@ export default function CreateActiveObjectivePage(): ReactElement {
         updateObjectiveToCreate(
             (prev: ActiveObjectiveWithoutId): ActiveObjectiveWithoutId => {
                 const delta: 1 | -1 = operation === "increase" ? 1 : -1;
-                let { durationMinutes, rests, restDurationMinutes } = prev.info;
                 let {
                     reps,
                     amountOfHands,
@@ -194,17 +186,6 @@ export default function CreateActiveObjectivePage(): ReactElement {
                 }
 
                 switch (value) {
-                    case "durationMinutes":
-                        durationMinutes = op(durationMinutes);
-                        break;
-                    case "rests":
-                        rests = op(rests);
-                        /* restDurationMinutes =
-                        rests === 0 ? 0 : restDurationMinutes || 1; */
-                        break;
-                    case "restDurationMinutes":
-                        restDurationMinutes = op(restDurationMinutes);
-                        break;
                     case "amountOfPushUps":
                         amountOfPushUps = op(amountOfPushUps);
                         break;
@@ -238,9 +219,6 @@ export default function CreateActiveObjectivePage(): ReactElement {
                     ...prev,
                     info: {
                         days: prev.info.days, // (glue stick fix)
-                        durationMinutes,
-                        rests,
-                        restDurationMinutes,
                     },
                     specificData: {
                         reps,
@@ -274,44 +252,17 @@ export default function CreateActiveObjectivePage(): ReactElement {
     ];
 
     function handleChange(associatedValue: Value, value: number): void {
-        switch (associatedValue) {
-            case "rests":
-            case "restDurationMinutes":
-            case "durationMinutes":
-                updateObjectiveToCreate(
-                    (
-                        prev: ActiveObjectiveWithoutId,
-                    ): ActiveObjectiveWithoutId => {
-                        return {
-                            ...prev,
-                            info: {
-                                ...prev.info,
-                                [associatedValue]: value,
-                            },
-                        };
+        updateObjectiveToCreate(
+            (prev: ActiveObjectiveWithoutId): ActiveObjectiveWithoutId => {
+                return {
+                    ...prev,
+                    specificData: {
+                        ...prev.specificData,
+                        [associatedValue]: value,
                     },
-                );
-                break;
-            case "amountOfHands":
-            case "amountOfPushUps":
-            case "dumbbellWeight":
-            case "estimateSpeed":
-            case "reps":
-                updateObjectiveToCreate(
-                    (
-                        prev: ActiveObjectiveWithoutId,
-                    ): ActiveObjectiveWithoutId => {
-                        return {
-                            ...prev,
-                            specificData: {
-                                ...prev.specificData,
-                                [associatedValue]: value,
-                            },
-                        };
-                    },
-                );
-                break;
-        }
+                };
+            },
+        );
     }
 
     function spawnToggle(associatedValue: Value): ReactElement {
@@ -332,11 +283,6 @@ export default function CreateActiveObjectivePage(): ReactElement {
         };
 
         switch (associatedValue) {
-            case "rests":
-            case "restDurationMinutes":
-            case "durationMinutes":
-                target = objectiveToCreate.info[associatedValue];
-                break;
             case "amountOfHands":
             case "amountOfPushUps":
             case "dumbbellWeight":
@@ -409,7 +355,7 @@ export default function CreateActiveObjectivePage(): ReactElement {
         try {
             if (!canCreateObjective) return;
 
-            if (edit.enable && edit.id !== undefined) {
+            if (edit.enable && edit.id) {
                 await EditActiveObjective(objectiveToCreate, edit.id, t);
             } else {
                 await CreateActiveObjective(objectiveToCreate, t);
@@ -560,10 +506,6 @@ export default function CreateActiveObjectivePage(): ReactElement {
                 )}
             </View>
             <GapView height={20} />
-            {spawnToggle("durationMinutes")}
-            {spawnToggle("rests")}
-            {objectiveToCreate.info.rests > 0 &&
-                spawnToggle("restDurationMinutes")}
             {objectiveToCreate.exercise === "Push Ups" &&
                 spawnToggle("amountOfPushUps")}
             {objectiveToCreate.exercise === "Lifting" && spawnToggle("reps")}
@@ -625,14 +567,6 @@ export default function CreateActiveObjectivePage(): ReactElement {
                         />
                     </View>
                     <GapView height={10} />
-                    {experiments?.exp_tracker && (
-                        <>
-                            <BetterTextSmallerText>
-                                {t("experimentNotes.exp_tracker")}
-                            </BetterTextSmallerText>
-                            <GapView height={10} />
-                        </>
-                    )}
                 </>
             )}
 

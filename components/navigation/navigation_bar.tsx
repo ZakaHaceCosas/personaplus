@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import Colors from "@/constants/colors";
 import FontSizes from "@/constants/font_sizes";
 import { Routes } from "@/constants/routes";
+import { HexColorString } from "@/types/color";
 
 // TypeScript, supongo
 /**
@@ -41,9 +42,9 @@ interface NavItemProps {
     /**
      * Name of the icon.
      *
-     * @type {("home" | "dashboard" | "person" | "auto-graph")}
+     * @type {("home" | "dashboard" | "person" | "auto-graph" | "build")}
      */
-    iconName: "home" | "dashboard" | "person" | "auto-graph";
+    iconName: "home" | "dashboard" | "person" | "auto-graph" | "build";
     /**
      * Label to be shown.
      *
@@ -98,13 +99,13 @@ function NavItem({
     label,
     isSelected,
 }: NavItemProps): ReactElement {
-    const color = isSelected
+    const color: HexColorString = isSelected
         ? Colors.MAIN.FOOTER.FOOTER_SEL
         : Colors.MAIN.FOOTER.FOOTER_UNS;
 
-    const handlePress = () => {
+    function handlePress(): void {
         if (!isSelected) router.push(href);
-    };
+    }
 
     return (
         <Pressable onPress={handlePress} style={styles.navItem}>
@@ -154,6 +155,12 @@ export default function NavigationBar({
                 iconName="auto-graph"
                 label={t("globals.navbar.report")}
                 isSelected={currentLocation === Routes.MAIN.REPORT}
+            />
+            <NavItem
+                href={Routes.MAIN.TOOLKIT}
+                iconName="build"
+                label={t("globals.navbar.toolkit")}
+                isSelected={currentLocation === Routes.MAIN.TOOLKIT}
             />
             <NavItem
                 href={Routes.MAIN.PROFILE}
