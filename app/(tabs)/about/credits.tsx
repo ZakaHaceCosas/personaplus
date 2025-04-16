@@ -128,7 +128,7 @@ interface Contributor {
      */
     username: string;
     /**
-     * Why they are a cool contributor.
+     * Why they are a cool contributor. Use the translation key, e.g. `alvaro` for `pages.credits.contributions.alvaro`.
      *
      * @type {string}
      */
@@ -146,7 +146,7 @@ const contributors: Contributor[] = [
     {
         name: "Álvaro",
         username: "Alvaro842DEV",
-        contribution: "Contributed code & gave ideas that are base to the app.",
+        contribution: "alvaro",
         // ^used to be "Committing ideas like constant sizing and scaling values, memos & callbacks, and other coding features now used by the app." but that's too fu- long, so from now on i'll just use "code" / "design" / "security fix" / whatever
         url: "https://github.com/Alvaro842DEV",
     },
@@ -197,7 +197,9 @@ export default function OpenSourceCredits(): ReactElement {
                         )}
                         <GapView height={5} />
                         <BetterText fontWeight="Light" fontSize={15}>
-                            {contributor.contribution}
+                            {t(
+                                `pages.credits.contributions.${contributor.contribution}`,
+                            )}
                         </BetterText>
                         <GapView height={5} />
                         <BetterText
@@ -247,7 +249,21 @@ export default function OpenSourceCredits(): ReactElement {
                         </BetterText>
                         <GapView height={5} />
                         <BetterText fontWeight="Light" fontSize={15}>
+                            <BetterText
+                                fontWeight="Light"
+                                fontSize={16}
+                                textColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
+                            >
+                                "
+                            </BetterText>
                             {library.description}
+                            <BetterText
+                                fontWeight="Light"
+                                fontSize={16}
+                                textColor={Colors.MAIN.DEFAULT_ITEM.TEXT}
+                            >
+                                "
+                            </BetterText>
                         </BetterText>
                         <GapView height={5} />
                         <BetterText

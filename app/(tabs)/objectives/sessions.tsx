@@ -272,7 +272,7 @@ export default function Sessions(): ReactElement {
                 <>
                     <GapView height={20} />
                     <BetterTextSmallText>
-                        Hit the Play button to begin! (todo:translate)
+                        {t("pages.sessions.hitStart")}
                     </BetterTextSmallText>
                 </>
             )}
