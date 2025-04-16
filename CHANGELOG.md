@@ -18,6 +18,7 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 
 - We've settled on **green** for both the app's accent and branding. Until this update, the app mixed blue & green as two "accent colors", making the UI a bit _too_ colorful.
 - Active Objectives now work the opposite way; they're now a stopwatch instead of a timer.
+- Did some minor tweaks to improve the look of the app.
 
 ### Fixed
 
@@ -27,6 +28,7 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 - Fixed the dashboard not updating the UI when an objective was deleted.
 - Fixed Active Objectives not launching for whatever reason.
 - Fixed results calculations not working because of a variable mismatch (asking for `identifier` instead of `id`).
+- Fixed box-like buttons being slightly shorter and visually off compared to others.
 
 ### Removed
 

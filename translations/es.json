@@ -305,7 +305,9 @@
             "header": "¡Construyamos una rutina!",
             "subHeader": "¿Cuál es tu meta? Escribe cualquier cosa que te gustaría hacer a diario.",
             "doneFeedback": "\"{{obj}}\", ¡allá vamos!",
-            "createButtonHint": "Crea el objetivo. Si faltan campos por rellenar o son inválidos, el botón no hará nada."
+            "createButtonHint": "Crea el objetivo. Si faltan campos por rellenar o son inválidos, el botón no hará nada.",
+            "placeholder": "p. ej. \"No fumar\"",
+            "validator": "Escribe entre 3 y 120 caracteres"
         },
         "welcome": {
             "beginning": {
@@ -488,13 +490,15 @@
                 "pauseHint": "Pausa el temporizador.",
                 "playHint": "Reanuda el temporizador."
             },
-            "resting": "Descansando ;)",
+            "hitStart": "¡Dale al botón de Play (flecha) para comenzar!",
             "helpHint": "Abre un menú con ayuda básica sobre lo que deberías estar haciendo ahora mismo.",
             "helpTimerPaused": "Psst... No te preocupes, hemos pausado el temporizador para que puedas leer a tu ritmo.",
             "giveUpHint": "Abandona la sesión actual sin guardar tu progreso.",
             "giveUpDescription": "Si te rindes, ¡todo tu progreso se perderá! ¿No puedes aguantar un rato más?",
             "rests": "{{rests}} descanso",
             "hands": "{{hands}} mano",
+            "weight": "{{weight}} kg",
+            "reps": "{{reps}} rep",
             "pushUps": "{{pushUps}} flexión"
         },
         "results": {
@@ -535,7 +539,10 @@
             "contributorsNote": "Puedes ver la lista de contribuidores completa en GitHub, aquí se muestran los más importantes.",
             "libraries": "Librerías épicas que\npotencian esta app:",
             "__epic_comment_lol": "here says one because its a note relative to a specific project. the previous note just says 'note' because it affects the whole section.",
-            "librariesNoteOne": "*Usamos nuestra propia bifurcación, no la librería en sí."
+            "librariesNoteOne": "*Usamos nuestra propia bifurcación, no la librería en sí.",
+            "contributions": {
+                "alvaro": "Contribuyó códigos e ideas base de la app."
+            }
         },
         "experiments": {
             "header": "LEE ESTO O VAS A EXPLOTAR!!",
@@ -574,7 +581,7 @@
             }
         },
         "passive": {
-            "allCapsSingular": "PASSIVE OBJECTIVE",
+            "allCapsSingular": "OBJETIVO PASIVO",
             "create": {
                 "text": "Crear objetivo pasivo",
                 "hint": "Abre una página desde la que puedes crear un objetivo pasivo."

@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         alignSelf: "stretch",
+        height: UniversalItemStyle.height,
     },
 });
 
@@ -109,7 +110,6 @@ export default function BetterButton({
     let backgroundColor: string;
     let textColor: string;
     let buttonWidth: DimensionValue;
-    let buttonHeight: DimensionValue;
     let flexValue: 0 | 1;
 
     switch (style) {
@@ -137,13 +137,11 @@ export default function BetterButton({
 
     switch (layout) {
         case "box":
-            buttonWidth = 50;
-            buttonHeight = 50;
+            buttonWidth = UniversalItemStyle.height;
             flexValue = 0;
             break;
         case "normal":
             buttonWidth = "100%";
-            buttonHeight = UniversalItemStyle.height;
             flexValue = 1;
             break;
     }
@@ -179,7 +177,6 @@ export default function BetterButton({
                     opacity: opacityValue,
                     flexShrink: flexValue,
                     width: buttonWidth,
-                    height: buttonHeight,
                     borderColor: borderColor,
                     backgroundColor: backgroundColor,
                 },

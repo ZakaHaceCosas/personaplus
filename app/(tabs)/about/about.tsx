@@ -105,7 +105,7 @@ export default function About(): ReactElement {
                 <BetterButton
                     buttonHint={t("pages.about.grid.privacy.hint")}
                     buttonText={t("pages.about.grid.privacy.text")}
-                    style="ACE"
+                    style="DEFAULT"
                     action={async (): Promise<void> => {
                         await SafelyOpenUrl(URLs.privacy);
                     }}
@@ -114,7 +114,7 @@ export default function About(): ReactElement {
                 <BetterButton
                     buttonHint={t("pages.about.grid.openSource.hint")}
                     buttonText={t("pages.about.grid.openSource.text")}
-                    style="ACE"
+                    style="DEFAULT"
                     action={async (): Promise<void> => {
                         await SafelyOpenUrl(URLs.repo);
                     }}

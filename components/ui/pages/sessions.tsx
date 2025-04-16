@@ -177,6 +177,22 @@ function InfoIcons({
         user.language,
     );
 
+    const weightString: string = PluralOrNot(
+        t("pages.sessions.weight", {
+            weight: objective.specificData.dumbbellWeight,
+        }),
+        objective.specificData.dumbbellWeight,
+        user.language,
+    );
+
+    const repsString: string = PluralOrNot(
+        t("pages.sessions.reps", {
+            reps: objective.specificData.reps,
+        }),
+        objective.specificData.reps,
+        user.language,
+    );
+
     const pushUpsString: string = PluralOrNot(
         t("pages.sessions.pushUps", {
             pushUps: objective.specificData.amountOfPushUps,
@@ -209,12 +225,28 @@ function InfoIcons({
                     />
                 )}
                 {objective.exercise === "Lifting" && (
-                    <IconView
-                        name="keyboard-double-arrow-down"
-                        size={15}
-                        color={Colors.BASIC.WHITE}
-                        text={handsString ?? "N/A"}
-                    />
+                    <>
+                        <IconView
+                            name="front-hand"
+                            size={15}
+                            color={Colors.BASIC.WHITE}
+                            text={handsString ?? "N/A"}
+                        />
+                        <GapView width={10} />
+                        <IconView
+                            name="scale"
+                            size={15}
+                            color={Colors.BASIC.WHITE}
+                            text={weightString ?? "N/A"}
+                        />
+                        <GapView width={10} />
+                        <IconView
+                            name="loop"
+                            size={15}
+                            color={Colors.BASIC.WHITE}
+                            text={repsString ?? "N/A"}
+                        />
+                    </>
                 )}
                 {objective.exercise === "Push Ups" && (
                     <>

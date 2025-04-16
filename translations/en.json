@@ -311,7 +311,9 @@
             "header": "Let's build a routine!",
             "subHeader": "What's your goal? Write anything you'd like to do daily.",
             "doneFeedback": "\"{{obj}}\", let's go!",
-            "createButtonHint": "Creates the objective. If there are empty or invalid fields, the button won't do anything."
+            "createButtonHint": "Creates the objective. If there are empty or invalid fields, the button won't do anything.",
+            "placeholder": "e.g. \"Don't smoke\"",
+            "validator": "Write between 3 and 120 characters"
         },
         "welcome": {
             "beginning": {
@@ -494,13 +496,14 @@
                 "pauseHint": "Pause the timer.",
                 "playHint": "Resume the timer."
             },
-            "resting": "Resting ;)",
+            "hitStart": "Hit the Play (arrow) button to begin!",
             "helpHint": "Opens a menu with basic help on what you should be doing right now.",
             "helpTimerPaused": "Psst... Don't worry, we'e stopped the timer so you can read.",
             "giveUpHint": "Leaves the current session without saving your progress.",
             "giveUpDescription": "If you give up, all your progress will be lost! Can't you last a little longer?",
-            "rests": "{{rests}} rest",
             "hands": "{{hands}} hand",
+            "weight": "{{weight}} kg",
+            "reps": "{{reps}} rep",
             "pushUps": "{{pushUps}} push up"
         },
         "results": {
@@ -541,7 +544,10 @@
             "contributorsNote": "You can see the full list of contributors on GitHub, here the most important ones are shown.",
             "libraries": "Epic libraries\npowering this app:",
             "__epic_comment_lol": "here says one because its a note relative to a specific project. the previous note just says 'note' because it affects the whole section.",
-            "librariesNoteOne": "*We use our own fork, not the library itself."
+            "librariesNoteOne": "*We use our own fork, not the library itself.",
+            "contributions": {
+                "alvaro": "Contributed code and ideas that are base to the app."
+            }
         },
         "experiments": {
             "header": "READ THIS OR YOU WILL EXPLODE!!",

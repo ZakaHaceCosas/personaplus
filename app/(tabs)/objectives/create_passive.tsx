@@ -155,7 +155,7 @@ export default function CreatePassiveObjectivePage(): ReactElement {
             />
             <BetterInputField
                 label={t("pages.createPassiveObjective.subHeader")}
-                placeholder="e.g. 'Don't smoke'"
+                placeholder={t("pages.createPassiveObjective.placeholder")}
                 value={goalToCreate}
                 name="goalToCreateInput"
                 refIndex={0}
@@ -170,7 +170,7 @@ export default function CreatePassiveObjectivePage(): ReactElement {
                 isValid={
                     goalToCreate.trim().length === 0 ? true : canCreateGoal
                 }
-                validatorMessage={"Write at least 3 characters."}
+                validatorMessage={t("pages.createPassiveObjective.validator")}
             />
             <GapView height={10} />
             <BetterButton
