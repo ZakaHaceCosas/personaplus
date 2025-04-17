@@ -22,6 +22,11 @@ import { CoreLibraryResponse } from "@/core/types/core_library_response";
 import { FullProfile } from "@/types/user";
 import { StyleSheet, View } from "react-native";
 import Colors from "@/constants/colors";
+import { PassiveObjective } from "@/types/passive_objectives";
+import {
+    GetAllPassiveObjectives,
+    GetPassiveObjectiveStreak,
+} from "@/toolkit/objectives/passive_objectives";
 
 /**
  * Returns a view that represents the BMI context in a traffic light-like style.
@@ -110,62 +115,71 @@ function BMIView({
 export default function Report(): ReactElement {
     const { t } = useTranslation();
     const [loading, setLoading] = useState<boolean>(true);
-    const [report, setReport] = useState<any>();
+    const [report, setReport] = useState<{
+        BMI: { value: string; context: string };
+    }>();
     const [dailyLog, setDailyLog] = useState<ActiveObjectiveDailyLog | null>(
         null,
     );
 
-    async function handler(): Promise<void> {
-        try {
-            const data: FullProfile = await OrchestrateUserData();
-            const BMISource: CoreLibraryResponse =
-                CoreLibrary.physicalHealth.BodyMassIndex.calculate(
-                    data.age,
-                    data.gender,
-                    data.weight,
-                    data.height,
-                );
-            const BMI: number = BMISource.result;
-            const BMIContext: string | undefined = BMISource.context;
+    const [streaks, setStreaks] = useState<
+        { obj: PassiveObjective; streak: number }[]
+    >([]);
 
-            const TDEESource: CoreLibraryResponse =
-                CoreLibrary.physicalHealth.TotalDailyEnergyExpenditure.calculate(
-                    data.age,
-                    data.gender,
-                    data.weight,
-                    data.height,
-                    data.activeness,
-                );
-            const TDEE: number = TDEESource.result;
-            const TDEEContext: string | undefined = TDEESource.context;
-
-            setReport({
-                BMI: {
-                    value: BMI.toPrecision(4),
-                    context: BMIContext,
-                },
-                TDEE: {
-                    value: TDEE.toPrecision(4),
-                    context: TDEEContext,
-                },
-            });
-
-            const dailyLog: ActiveObjectiveDailyLog | null =
-                await GetActiveObjectiveDailyLog();
-            setDailyLog(dailyLog);
-        } catch (e) {
-            console.error(`Error handling your report! ${e}`, {
-                location: "@/app/(tabs)/Report.tsx",
-                function: "fetchUserData()",
-                isHandler: true,
-                handlerName: "handler()",
-            });
-        } finally {
-            setLoading(false);
-        }
-    }
+    const hasDailyLog: boolean =
+        dailyLog !== null && Object.values(dailyLog).length > 0;
 
     useEffect((): void => {
+        async function handler(): Promise<void> {
+            try {
+                // BMI data
+                const data: FullProfile = await OrchestrateUserData();
+                const BMISource: CoreLibraryResponse =
+                    CoreLibrary.physicalHealth.BodyMassIndex.calculate(
+                        data.age,
+                        data.gender,
+                        data.weight,
+                        data.height,
+                    );
+                const BMI: number = BMISource.result;
+                const BMIContext: string | undefined = BMISource.context;
+
+                setReport({
+                    BMI: {
+                        value: BMI.toPrecision(4),
+                        context: BMIContext,
+                    },
+                });
+
+                const dailyLog: ActiveObjectiveDailyLog | null =
+                    await GetActiveObjectiveDailyLog();
+                setDailyLog(dailyLog);
+
+                const passiveObjs = await GetAllPassiveObjectives();
+                if (Array.isArray(passiveObjs)) {
+                    const objectivesWithStreak = await Promise.all(
+                        passiveObjs.map(async (o) => ({
+                            obj: o,
+                            streak: await GetPassiveObjectiveStreak(
+                                o.identifier,
+                            ),
+                        })),
+                    );
+
+                    setStreaks(objectivesWithStreak);
+                }
+                // streak data
+            } catch (e) {
+                console.error(`Error handling your report! ${e}`, {
+                    location: "@/app/(tabs)/Report.tsx",
+                    function: "fetchUserData()",
+                    isHandler: true,
+                    handlerName: "handler()",
+                });
+            } finally {
+                setLoading(false);
+            }
+        }
         handler();
     }, []);
 
@@ -188,24 +202,16 @@ export default function Report(): ReactElement {
             />
             <Section kind="YourHealth">
                 {report ? (
-                    <>
-                        <Division
-                            preHeader="BMI"
-                            header={report.BMI.value}
-                            subHeader={t(
-                                `pages.report.yourHealth.BMI.${report.BMI.context}`,
-                            )}
-                        >
-                            <BMIView context={report.BMI.context} />
-                        </Division>
-                        <Division
-                            preHeader="TDEE"
-                            header={report.TDEE.value}
-                            subHeader={t("pages.report.yourHealth.TDEE", {
-                                cal: report.TDEE.value,
-                            })}
-                        />
-                    </>
+                    <Division
+                        preHeader="BMI"
+                        header={report.BMI.value}
+                        subHeader={t(
+                            `pages.report.yourHealth.BMI.${report.BMI.context}`,
+                        )}
+                    >
+                        {/* @ts-expect-error TypeError */}
+                        <BMIView context={report.BMI.context} />
+                    </Division>
                 ) : (
                     <BetterTextSmallText>
                         Oh, wow. An error happened loading your report. Sorry!
@@ -213,17 +219,29 @@ export default function Report(): ReactElement {
                 )}
             </Section>
             <GapView height={20} />
+            {streaks.length > 0 && (
+                <>
+                    <Section kind="HowYouAreDoing">
+                        {streaks.map((i) => (
+                            <Division
+                                key={i.obj.identifier}
+                                header={`${i.obj.goal} · ${i.streak}d`}
+                                subHeader={`Created ${i.obj.createdAt}`}
+                            />
+                        ))}
+                    </Section>
+                    <GapView height={20} />
+                </>
+            )}
             <Section kind="HowYouAreDoing">
-                {dailyLog && Object.values(dailyLog).length > 0 ? (
-                    Object.entries(dailyLog)
-                        .sort(
-                            (
-                                [dateA]: dateComparisonType,
-                                [dateB]: dateComparisonType,
-                            ): number =>
-                                new Date(dateB).getMilliseconds() -
-                                new Date(dateA).getMilliseconds(),
-                        ) // sort by date
+                {!hasDailyLog && (
+                    <Division
+                        header={t("pages.report.dailyLog.header")}
+                        subHeader={t("pages.report.dailyLog.subheader")}
+                    />
+                )}
+                {hasDailyLog &&
+                    Object.entries(dailyLog!)
                         .slice(0, 7) // get the latest 7
                         .map(
                             ([
@@ -274,13 +292,7 @@ export default function Report(): ReactElement {
                                     )}
                                 </Division>
                             ),
-                        )
-                ) : (
-                    <Division
-                        header={t("pages.report.dailyLog.header")}
-                        subHeader={t("pages.report.dailyLog.subheader")}
-                    />
-                )}
+                        )}
             </Section>
             <PageEnd includeText={true} />
         </>

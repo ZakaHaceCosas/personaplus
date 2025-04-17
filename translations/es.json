@@ -460,8 +460,7 @@
                     "healthy weight": "¡Estupendo! Estás exactamente donde debes estar, ¡sigue así y te mantendrás saludable!",
                     "overweight": "¿Te sientes un poco gordo? ¡Estamos muy cerca de la perfección, solo unos kilos menos!",
                     "obesity": "Joder, hermano. Necesitas deshacerte de algunos kilos para recuperar tu salud. No te preocupes, ¡lo lograremos!"
-                },
-                "TDEE": "Tu ingesta diaria recomendada es de {{cal}}cal."
+                }
             },
             "dailyLog": {
                 "header": "Here'll go your daily log",
