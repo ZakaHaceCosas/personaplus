@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+
+- Fixed up the IBW formula.
+
 ## 0.3.0
 
 - Changed how pushing up performance is calculated.
