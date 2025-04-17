@@ -18,7 +18,7 @@ const StoredItemNames = {
     userData: "userData",
     activeObjectives: "objectives",
     passiveObjectives: "passiveObjectives",
-    dailyLog: "activeObjectiveDailyLog",
+    activeDailyLog: "activeObjectiveDailyLog",
     passiveDailyLog: "passiveObjectiveDailyLog",
     colorTheme: "colorTheme",
 };

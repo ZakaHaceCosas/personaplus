@@ -22,7 +22,6 @@ export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
  * @param height The height of the subject in centimeters (CM).
  * @returns A standard `CoreLibraryResponse` with the desired results.
  */
-
 export default function calculateIdealBodyWeight(
     age: number,
     gender: "male" | "female",
@@ -33,21 +32,15 @@ export default function calculateIdealBodyWeight(
     /*
     NOTE: ORIGINAL FORMULA IN AMERICAN: IBW [lb] = 5 × BMI + ((BMI ÷ 5) × (height − 60 [in]))
     Converted by myself (@ZakaHaceCosas) to American't - will check if it's correct.
-    IBW [kg]=2.204625×BMI+(5BMI x (height [cm]−60×2.54)))
+    IBW [kg] = (5 × BMI + ((BMI ÷ 5) × (height − 152.4)))
     */
-    const bmi: CoreLibraryResponse = calculateBodyMassIndex(
-        age,
-        gender,
-        weight,
-        height,
-    );
+    const { result: bmi } = calculateBodyMassIndex(age, gender, weight, height);
 
-    const firstStep = 60 * 2.54;
-    const secondStep = height - firstStep;
-    const thirdStep = Number(bmi) / 5;
-    const fourthStep = thirdStep * secondStep;
-    const fifthStep = fourthStep / 2.20462;
-    const ibw: number = fifthStep;
+    const firstStep: number = 5 * bmi;
+    const secondStep: number = bmi / 5;
+    const thirdStep: number = height - 152.4;
+    const fourthStep: number = thirdStep * secondStep;
+    const ibw: number = firstStep + fourthStep;
 
     const context: string = `The IBW for the given profile would be of ${ibw} kg.`;
 

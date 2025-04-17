@@ -184,8 +184,8 @@ export default function Settings() {
                             "pages.settings.dangerous.resetApp.action.hint",
                         )}
                         style="WOR"
-                        action={async () => {
-                            await updateBrm5(true, t);
+                        action={async (): Promise<void> => {
+                            await updateBrm5(t);
                         }}
                     />
                 </Division>

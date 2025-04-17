@@ -10,7 +10,7 @@ const config: ExpoConfig.ExpoConfig = {
     scheme: "personaplus",
     description: "Give yourself a plus!",
     owner: "zakahacecosas",
-    version: actualVersion, // SemVer-compliant 0.0.1-R6-bX equivalent
+    version: actualVersion,
     orientation: "portrait",
     githubUrl: "https://github.com/ZakaHaceCosas/personaplus",
     icon: "./assets/resources/icon.png",
@@ -167,7 +167,7 @@ const config: ExpoConfig.ExpoConfig = {
             origin: false,
         },
         eas: {
-            projectId: process.env.PID,
+            projectId: process.env.EXPO_PROJECT_ID,
         },
     },
     newArchEnabled: true,

@@ -296,13 +296,13 @@ async function GetGenericObjectiveDailyLog(
     try {
         const response: string | null = await AsyncStorage.getItem(
             category === "active"
-                ? StoredItemNames.dailyLog
+                ? StoredItemNames.activeDailyLog
                 : StoredItemNames.passiveDailyLog,
         );
         if (!StrUtils.validate(response)) {
             await AsyncStorage.setItem(
                 category === "active"
-                    ? StoredItemNames.dailyLog
+                    ? StoredItemNames.activeDailyLog
                     : StoredItemNames.passiveDailyLog,
                 "{}",
             );
@@ -362,7 +362,7 @@ async function SaveGenericObjectiveDailyLog(
     try {
         await AsyncStorage.setItem(
             category === "active"
-                ? StoredItemNames.dailyLog
+                ? StoredItemNames.activeDailyLog
                 : StoredItemNames.passiveDailyLog,
             JSON.stringify(CleanupGenericDailyLog(log)),
         );
@@ -559,7 +559,7 @@ async function GetPendingGenericObjectives(
             return { identifier: obj.identifier, status };
         }
 
-        // NOTE: i should review this code, again...
+        // TODO: i should review this code, again...
 
         // we get the values of the objectives and run the callbackfn for all of them
         const dueTodayObjectives: thing[] = (
