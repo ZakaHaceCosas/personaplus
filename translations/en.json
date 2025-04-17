@@ -466,8 +466,7 @@
                     "healthy weight": "Great! You're exactly where you should, keep it like that and you'll stay healthy!",
                     "overweight": "Feel a bit fat? We're so close to perfection, just a few kilograms less!",
                     "obesity": "Damn, bro. You need to get rid of some kilos to restore your health. Don't worry, we'll make it!"
-                },
-                "TDEE": "Your recommended daily ingest is of {{cal}}cal."
+                }
             },
             "dailyLog": {
                 "header": "Here'll go your daily log",

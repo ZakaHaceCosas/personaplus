@@ -9,7 +9,7 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 
 ### Added
 
-- Passive Objectives! Type anything you'd like to do daily and you'll be able to log your daily progress, seeing a nice streak number next to your goal.
+- Passive Objectives! Type anything you'd like to do daily and you'll be able to log your daily progress, seeing a nice streak number next to your goal and on your report tab.
 - Added a toolkit page. It's meant to hold small tools for a _specific_ case where a _specific_ tool might come in handy. (A real example I had was having to manually calculate the avg speed I had by running with a timer).
   - For now it includes a speedometer and a "focus training" kind of timer.
   - Suggestions are obviously accepted.
@@ -36,6 +36,7 @@ The format is <!--mostly--> based on [Keep a Changelog](https://keepachangelog.c
 - Setting duration and rests for objectives. Duration is now determined by yourself - we replaced the timer with a stopwatch. Having you to predict how much it'd take you to do an exercise was certainly stupid, we've realized. This makes more sense and makes health calculations more accurate.
 - (Just partially removed) Experiments. They're still present, but not in an Enable/Disable way. They've been simplified to a "Launch {x} page" approach. The classic concept of experiments is funnier, but not necessary and a bit of a waste of time.
 - The ability to view developer logs from inside the app. They were _a bit_ useful, but not that much, and gave issues because of simultaneous DB writing, as well as creating overcomplicated code and taking up a lot of space - specially for unaware users.
+- Showing `TDEE` in the report page. It wasn't really practical. This and other medical calculations will be added to the Toolkit tab in next updates.
 
 ## [0.0.6-preapp.29] - 26-01-2024
 

@@ -612,8 +612,6 @@ function HandleEditObjective(
                 : null,
     };
     if (realParams.edit === false) return "noEdit";
-    console.warn(category);
-    console.debug(realParams.objective);
     if (
         (category === "active" &&
             !ValidateActiveObjective(realParams.objective)) ||

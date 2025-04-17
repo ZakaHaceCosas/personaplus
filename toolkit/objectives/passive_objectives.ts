@@ -223,8 +223,9 @@ async function GetPassiveObjectiveStreak(identifier: number): Promise<number> {
     // no log no streak
     if (!log) return 0;
 
-    const currentDate: TodaysDate = GetCurrentDateCorrectly().string;
-    const lastDate: Date = JavaScriptifyTodaysDate(currentDate);
+    let currentDate: Date = new Date();
+    currentDate.setUTCHours(23, 59, 0, 0);
+    // 00:00:00:00 is also an option, consider it in case this fails
 
     type entry = [string, { [identifier: number]: { wasDone: boolean } }];
 
@@ -251,42 +252,31 @@ async function GetPassiveObjectiveStreak(identifier: number): Promise<number> {
     // sort logs by date
     userLogs.sort(
         (a: { date: TodaysDate }, b: { date: TodaysDate }): number =>
-            JavaScriptifyTodaysDate(b.date).getTime() -
-            JavaScriptifyTodaysDate(a.date).getTime(),
+            JavaScriptifyTodaysDate(a.date).getTime() -
+            JavaScriptifyTodaysDate(b.date).getTime(),
     );
 
     let streak: number = 0;
 
-    // if there's only one entry, today, and true, return 1 day instead of zero
-    if (
-        userLogs.length === 1 &&
-        userLogs[0] &&
-        userLogs[0].date === currentDate &&
-        userLogs[0].wasDone
-    )
-        return 1;
-
     // loop thru all entries
-    for (let i: number = 0; i < userLogs.length; i++) {
+    for (let i: number = userLogs.length - 1; i >= 0; i--) {
         const currentLog: { date: TodaysDate; wasDone: boolean } | undefined =
             userLogs[i];
         if (!currentLog) break;
         const logDate: Date = JavaScriptifyTodaysDate(currentLog.date);
+        logDate.setUTCHours(23, 59, 0, 0);
 
         // check if the log is from yesterday
-        // .abs to avoid negative diffs in case the order's messed up somehow
         // .floor to obviously get 1 or 2 days streak and not 1.42
-        const diffDays: number = Math.abs(
-            Math.floor(
-                (lastDate.getTime() - logDate.getTime()) / (1000 * 3600 * 24),
-            ),
+        const diffDays: number = Math.ceil(
+            (currentDate.getTime() - logDate.getTime()) / (1000 * 60 * 60 * 24),
         );
 
         if (diffDays === 1 && currentLog.wasDone) {
-            streak++;
-            lastDate.setTime(logDate.getTime()); // update last verified day
+            streak += 1;
+            currentDate = logDate;
         } else if (diffDays === 0) {
-            break; // we reached today, we're done
+            continue; // we reached today, we can ignore
         } else {
             streak = 0;
             break; // if they failed, reset streak
