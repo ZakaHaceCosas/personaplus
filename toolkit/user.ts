@@ -260,13 +260,9 @@ export async function OrchestrateUserData(
  *
  * @async
  * @export
- * @param {boolean} careAboutTheUser Whether you care about the user or not in the specific context you're calling this. Basically: if `true`, a confirmation modal is shown, otherwise (`false`) data's just deleted without asking.
  * @param {TFunction} t Pass here the translate function, please.
  */
-export async function updateBrm5(
-    careAboutTheUser: boolean,
-    t: TFunction,
-): Promise<void> {
+export async function updateBrm5(t: TFunction): Promise<void> {
     /**
      * Handles the removal.
      *
@@ -279,7 +275,7 @@ export async function updateBrm5(
                 StoredItemNames.userData,
                 StoredItemNames.activeObjectives,
                 StoredItemNames.passiveObjectives,
-                StoredItemNames.dailyLog,
+                StoredItemNames.activeDailyLog,
                 StoredItemNames.passiveDailyLog,
                 StoredItemNames.colorTheme,
             ]);
@@ -300,33 +296,26 @@ export async function updateBrm5(
         }
     }
 
-    if (careAboutTheUser) {
-        Alert.alert(
-            t("pages.settings.dangerous.resetApp.flow.areYouSure"),
-            t("pages.settings.dangerous.resetApp.flow.areYouSureText"),
-            [
-                {
-                    isPreferred: false,
-                    text: t("globals.interaction.goAheadBad"),
-                    style: "destructive",
-                    onPress: async (): Promise<void> => {
-                        await releaseOperationResurgence();
-                    },
+    Alert.alert(
+        t("pages.settings.dangerous.resetApp.flow.areYouSure"),
+        t("pages.settings.dangerous.resetApp.flow.areYouSureText"),
+        [
+            {
+                isPreferred: false,
+                text: t("globals.interaction.goAheadBad"),
+                style: "destructive",
+                onPress: async (): Promise<void> => {
+                    await releaseOperationResurgence();
                 },
-                {
-                    isPreferred: true,
-                    text: t("globals.interaction.nevermind"),
-                    style: "cancel",
-                    onPress: () => {},
-                },
-            ],
-        );
-    } else {
-        console.warn(
-            "WATCHOUT! BAD PRACTICE SUMMONED!! (someone called `updateBrm5` with param `careAboutTheUser` set to `false`)",
-        );
-        await releaseOperationResurgence();
-    }
+            },
+            {
+                isPreferred: true,
+                text: t("globals.interaction.nevermind"),
+                style: "cancel",
+                onPress: (): void => {},
+            },
+        ],
+    );
 }
 
 /**

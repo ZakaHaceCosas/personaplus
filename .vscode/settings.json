@@ -52,13 +52,6 @@
             "other": "on"
         }
     },
-    "[yaml]": {
-        "editor.insertSpaces": true,
-        "editor.tabSize": 2,
-        "editor.autoIndent": "advanced",
-        "diffEditor.ignoreTrimWhitespace": false,
-        "editor.formatOnSave": false
-    },
     "editor.formatOnSaveMode": "file",
     "workbench.editor.customLabels.patterns": {
         "**/core/**": "Core Library @ ${dirname}, ${filename}.${extname} ",

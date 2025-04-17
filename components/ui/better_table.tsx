@@ -84,10 +84,7 @@ const styles = StyleSheet.create({
 });
 
 /**
- * A simple table. Note two things:
- *
- * - It's meant to get more complex over time, as the table I have in mind is different (and better but harder) than this.
- * - For now it relies on good usage - you _should_ have only two headers as it only supports two columns per row (`item` and `value`).
+ * A simple table. Note it relies on good usage - you _should_ have only two headers as it only supports two columns per row (`item` and `value`).
  * @export
  * @param {BetterTableProps} p
  * @param {string[]} p.headers

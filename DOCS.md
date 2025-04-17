@@ -119,7 +119,7 @@ _Active Objectives_ can be considered routines, while _Passive Objectives_ can b
 
 Passive Objectives, on the other side, are more like goals. Ever seen any of those tracking apps where each day you don't smoke you note that so a "score" is bumped and you feel better? Basically that.
 
-> That's it as of now. Other mentioned ideas aren't listed because there is no progress (YET) on their implementations. You can track progress from our tracking issues / project.
+> That's it as of now, other mentioned ideas aren't listed because there is no progress (YET) on their implementations.
 
 ## 3. Writing (cool) code
 
@@ -418,14 +418,11 @@ Okay, so you did write some cool code, right? That's awesome! Now, here are a fe
 
 ### Organize your commits by topic
 
-**Don't make a single commit for all of your changes**, unless they're small enough. Divide your contribution into many commits, one for each change. It's better understood when I tell you the next step:
-
-**Name your commits accordingly.** Okay, everyone has failed with that twice, even I. But try to name your commits in a simple & descriptive way. For that, we enforce the usage of labels or "categories" that describe your commit -- that's also helpful for knowing how to group your changes. You can combine labels.
+**Name your commits accordingly based on topic.** Okay, everyone has failed with that twice, even I. But try to name your commits in a simple & descriptive way. For that, we enforce the usage of labels or "categories" that describe your commit -- that's also helpful for knowing how to group your changes. You can combine labels.
 
 > [!TIP]
 > This repo uses the following labels:
 >
-> - `(page:PageName)` for in-app pages
 > - `(fix)` for bug fixes
 > - `(new)` for new features
 > - `(better)` for enhancements to existing features
@@ -437,9 +434,11 @@ Okay, so you did write some cool code, right? That's awesome! Now, here are a fe
 
 Here are some sample valid (and good) commits:
 
-- `(page:WelcomeScreen)(ui): Remove unneeded spacing below headers`
-- `(chore): Rename variables in User toolkit for consistency`
-- `(ui): Update regular font size`
-- `(fix): Fix a typo ("are n't" -> "aren't")`
+- `(ui) Remove unneeded spacing below Welcome screen headers`
+- `(chore) Rename variables in User toolkit for consistency`
+- `(ui) Update regular font size`
+- `(dev) Update to Expo SDK 53`
+- `(fix)(ui) Fix a bunch of typos`
+- `(new)(CL) Add two new active objectives`
 
 And that's it for now. Keep in mind these docs are subject to future expansions.
