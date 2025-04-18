@@ -406,7 +406,7 @@
                 },
                 "notifications": {
                     "header": "Notifications",
-                    "subheader": "PersonaPlus sends several reminders at random times (but not weird times like 3am) by default. You can disable (or re-enable) them here.",
+                    "subheader": "PersonaPlus sends several reminders at random times (but not weird ones like 3am). You can disable (or re-enable) them here.",
                     "action": {
                         "__epic_comment_lol": "the true / false thingy before is used to append ${userData.wantsNotifications}. 'true' should show disable, and 'false' should show enable",
                         "trueText": "Disable",

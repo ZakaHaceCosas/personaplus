@@ -9,6 +9,46 @@ import { PassiveObjectiveDailyLog } from "@/types/passive_objectives";
 import React, { useEffect } from "react";
 import { ReactElement, useState } from "react";
 
+function render(
+    dailyLog: ActiveObjectiveDailyLog | PassiveObjectiveDailyLog,
+): ReactElement {
+    return (
+        <>
+            {Object.entries(dailyLog).map((i) => {
+                return (
+                    <>
+                        <BetterTextSmallText key={i[0]}>
+                            {i[0]}
+                            {"\n"}
+                        </BetterTextSmallText>
+                        {Object.entries(i[1]).map((i) => {
+                            return (
+                                <>
+                                    <BetterTextSmallText key={i[0]}>
+                                        {"  > "}
+                                        {i[0]}
+                                        {"\n"}
+                                    </BetterTextSmallText>
+                                    {/* @ts-expect-error (idk why it shows an error, it works) */}
+                                    {Object.entries(i[1]).map((i) => (
+                                        <BetterTextSmallText key={i[0]}>
+                                            {"    > "}
+                                            {JSON.stringify(i[1])
+                                                .split(',"')[0]
+                                                ?.trim()}
+                                            {"\n"}
+                                        </BetterTextSmallText>
+                                    ))}
+                                </>
+                            );
+                        })}
+                    </>
+                );
+            })}
+        </>
+    );
+}
+
 export default function ViewerDailyLog(): ReactElement {
     const [loading, setLoading] = useState<boolean>(true);
     const [activeDailyLog, setActiveDailyLog] =
@@ -51,7 +91,7 @@ export default function ViewerDailyLog(): ReactElement {
                 </BetterTextSmallText>
             ) : (
                 <BetterTextSmallText>
-                    {JSON.stringify(activeDailyLog, undefined, 2)}
+                    {render(activeDailyLog)}
                 </BetterTextSmallText>
             )}
             {!passiveDailyLog ? (
@@ -60,7 +100,7 @@ export default function ViewerDailyLog(): ReactElement {
                 </BetterTextSmallText>
             ) : (
                 <BetterTextSmallText>
-                    {JSON.stringify(passiveDailyLog, undefined, 2)}
+                    {render(passiveDailyLog)}
                 </BetterTextSmallText>
             )}
             <PageEnd size="normal" includeText={false} />

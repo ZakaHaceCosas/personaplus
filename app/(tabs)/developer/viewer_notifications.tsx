@@ -54,7 +54,7 @@ export default function ViewerNotifications(): ReactElement {
                             (
                                 notification: NotificationRequest,
                             ): ReactElement => {
-                                const { title, body, sound } =
+                                const { title, body, data } =
                                     notification.content;
 
                                 return (
@@ -66,7 +66,13 @@ export default function ViewerNotifications(): ReactElement {
                                             {/* if we add more types of notifications, do here an if (title === t("whatever")) return "x" */}
                                         </BetterTextSmallHeader>
                                         <BetterTextSmallText>
-                                            {`BODY:\n${body}\nID:\n${notification.identifier}\nTITLE:\n${title}\nSOUND: ${sound}`}
+                                            {[
+                                                `BODY: ${body}`,
+                                                `ID: ${notification.identifier}`,
+                                                `TITLE: ${title}`,
+                                                `DATA: ${JSON.stringify(data)}`,
+                                                `TRIGGER: ${JSON.stringify(notification.trigger)}`,
+                                            ].join("\n")}
                                         </BetterTextSmallText>
                                         <GapView height={5} />
                                     </React.Fragment>

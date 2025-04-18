@@ -16,7 +16,7 @@ import BetterButton from "@/components/interaction/better_button";
 import { Routes } from "@/constants/routes";
 import { SessionParams } from "@/types/active_objectives";
 import TopBar from "@/components/navigation/top_bar";
-import { OrchestrateUserData, ValidateUserData } from "@/toolkit/user";
+import { OrchestrateUserData } from "@/toolkit/user";
 import { FullProfile } from "@/types/user";
 import {
     areNotificationsScheduledForToday,
@@ -46,10 +46,6 @@ export default function Results(): ReactElement {
             try {
                 // fetch user
                 const userData: FullProfile = await OrchestrateUserData();
-                if (!ValidateUserData(userData, "Full")) {
-                    router.replace(Routes.MAIN.WELCOME_SCREEN);
-                    return;
-                }
                 setUserData(userData);
             } finally {
                 // setLoading(false);

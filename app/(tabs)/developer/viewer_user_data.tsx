@@ -24,7 +24,7 @@ export default function ViewerUserData(): ReactElement {
                     ([key, value]: [string, string]): BetterTableItem =>
                         ({
                             name: key,
-                            value: String(value),
+                            value: JSON.stringify(value),
                         }) as BetterTableItem,
                 );
                 setUserData(mappedArray);

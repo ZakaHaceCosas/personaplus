@@ -186,7 +186,7 @@ export function ValidateUserData(
 type Filter = "basic" | "health";
 
 /**
- * Fetches and orchestrates all of the user's data onto a `FullProfile` object. Returns `ErrorUserData` if an error happens.
+ * Fetches and orchestrates all of the user's data onto a `FullProfile` object. Returns `ErrorUserData` if an error happens - it shouldn't do that however. The home page validates user data, so you should assume data is valid.
  *
  * @export
  * @async

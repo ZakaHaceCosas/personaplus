@@ -5,6 +5,19 @@ All notable changes will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Dates use the DD-MM-YYYY format.
 
+## Unreleased
+
+### Changed
+
+- Minor changes to UI texts.
+- Minor visual tweaks.
+- Improved dev viewers.
+
+### Fixed
+
+- Fixed the app randomly showing the welcome screen, forcing into a data reset. It did this upon any error with data handling.
+- Fixed the app packaging unused fonts. That's not an error per se, but it took extra space and memory for nothing.
+
 ## [0.1.0] - 17/04/2025
 
 Switch from "PreAPP" to "ALPHA" state.

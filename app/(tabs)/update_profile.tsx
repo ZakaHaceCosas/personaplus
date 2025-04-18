@@ -65,10 +65,6 @@ export default function UpdateProfile(): ReactElement {
         async function handle(): Promise<void> {
             try {
                 const data: BasicUserData = await OrchestrateUserData("basic");
-                if (!data) {
-                    router.replace(Routes.MAIN.WELCOME_SCREEN);
-                    throw new Error("no work data");
-                }
                 setWorkingData(data);
             } catch (e) {
                 console.error(`Error handling user data: ${e}`);

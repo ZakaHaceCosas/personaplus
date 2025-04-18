@@ -400,7 +400,7 @@
                 },
                 "notifications": {
                     "header": "Notificaciones",
-                    "subheader": "PersonaPlus manda varios recordatorios a horas aleatorias (pero no a horas raras como las 3am) por defecto. Puedes desactivarlas (o reactivarlas) aquí.",
+                    "subheader": "PersonaPlus manda varios recordatorios a horas aleatorias (pero no raras, como las 3am). Puedes desactivarlas (o reactivarlas) aquí.",
                     "action": {
                         "__epic_comment_lol": "the true / false thingy before is used to append ${userData.wantsNotifications}. 'true' should show disable, and 'false' should show enable",
                         "trueText": "Desactivar",

@@ -1,3 +1,16 @@
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/app/(tabs)/settings.tsx
+ * Basically: Settings, for users to tweak the app to their liking.
+ *
+ * <=============================================================================>
+ */
+
 import BetterButton from "@/components/interaction/better_button";
 import Loading from "@/components/static/loading";
 import Division from "@/components/ui/sections/division";

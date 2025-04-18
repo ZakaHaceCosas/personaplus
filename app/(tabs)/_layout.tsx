@@ -63,9 +63,8 @@ export default function Layout(): ReactElement {
 
     const noNavigationRoutes: string[] = [
         Routes.MAIN.WELCOME_SCREEN,
-        Routes.MAIN.SETTINGS.UPDATE_PROFILE,
-        Routes.MAIN.SETTINGS.SETTINGS_PAGE,
         Routes.EXPERIMENTS.TRACKER,
+        ...Object.values(Routes.MAIN.SETTINGS),
         ...Object.values(Routes.OBJECTIVES),
         ...Object.values(Routes.DEV_INTERFACE),
         ...Object.values(Routes.ABOUT),

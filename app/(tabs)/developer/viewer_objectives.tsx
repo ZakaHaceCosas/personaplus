@@ -31,12 +31,7 @@ export default function ViewerObjectives(): ReactElement {
                 value: string;
             } => ({
                 name: key,
-                value:
-                    typeof value === "object"
-                        ? JSON.stringify(value)
-                        : Array.isArray(value)
-                          ? value.toString()
-                          : String(value),
+                value: JSON.stringify(value),
             }),
         );
     }
@@ -122,7 +117,7 @@ export default function ViewerObjectives(): ReactElement {
             {activeObjectives &&
                 activeObjectives.map(
                     (obj: ActiveObjective, index: number): ReactElement => (
-                        <>
+                        <React.Fragment key={obj.identifier}>
                             <BetterTextSmallHeader>
                                 {obj.identifier} - {obj.exercise}
                             </BetterTextSmallHeader>
@@ -136,7 +131,7 @@ export default function ViewerObjectives(): ReactElement {
                                         value: string;
                                     } => ({
                                         name: key,
-                                        value: String(value),
+                                        value: JSON.stringify(value),
                                     }),
                                 )}
                             />
@@ -162,7 +157,7 @@ export default function ViewerObjectives(): ReactElement {
                                     obj.specificData,
                                 )}
                             />
-                        </>
+                        </React.Fragment>
                     ),
                 )}
             <PageEnd includeText={false} size="tiny" />

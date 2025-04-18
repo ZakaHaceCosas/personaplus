@@ -38,6 +38,7 @@ import { ActiveObjective } from "@/types/active_objectives";
 import { ObjectiveDescriptiveIcons } from "@/toolkit/objectives/active_objectives_ui";
 import { IsActiveObjective } from "@/types/common_objectives";
 import { HandlePendingReturn } from "@/toolkit/objectives/common_ui";
+import { ShowToast } from "@/toolkit/android";
 
 setNotificationHandler({
     handleNotification: async () => ({
@@ -118,8 +119,8 @@ export default function HomeScreen(): ReactElement {
                     setPassiveObjectivesToRender(objectivesWithStreak);
                 }
             } catch (e) {
+                ShowToast(e as string);
                 console.error(`Error fetching data: ${e}`);
-                router.replace(Routes.MAIN.WELCOME_SCREEN);
             } finally {
                 setIdentifiersLoaded(true);
                 setLoading(false);
@@ -168,9 +169,7 @@ export default function HomeScreen(): ReactElement {
     ]);
 
     // render stuff
-    if (loading || !userData || !identifiersLoaded) {
-        return <Loading />;
-    }
+    if (loading || !userData || !identifiersLoaded) return <Loading />;
 
     return (
         <>

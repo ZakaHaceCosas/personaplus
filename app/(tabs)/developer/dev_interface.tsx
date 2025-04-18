@@ -20,8 +20,20 @@ export default function DevInterface(): ReactElement {
             <BetterAlert
                 style="DEFAULT"
                 preTitle="Generic info from your device"
-                title={`Client details`}
-                bodyText={`Manufacturer: ${Device.manufacturer}\nBrand: ${Device.brand}\nCodename: ${Device.designName}\nDevice name: ${Device.deviceName}\nYear: ${Device.deviceYearClass}\nModel name: ${Device.modelName}\nOS BUILD ID: ${Device.osBuildId}\nOS NAME + VERSION: ${Device.osName} ${Device.osVersion}\nANDROID API LEVEL: ${Device.platformApiLevel}\nProduct name: ${Device.productName}\nTotal memory: ${Device.totalMemory} (in bytes)`}
+                title="Client details"
+                bodyText={[
+                    `Manufacturer: ${Device.manufacturer}`,
+                    `Brand: ${Device.brand}`,
+                    `Codename: ${Device.designName}`,
+                    `Device name: ${Device.deviceName}`,
+                    `Year: ${Device.deviceYearClass}`,
+                    `Model name: ${Device.modelName}`,
+                    `OS BUILD ID: ${Device.osBuildId}`,
+                    `OS NAME + VERSION: ${Device.osName} ${Device.osVersion}`,
+                    `ANDROID API LEVEL: ${Device.platformApiLevel}`,
+                    `Product name: ${Device.productName}`,
+                    `Total memory: ${(Device.totalMemory! / 1048576).toFixed(2)} MB`,
+                ].join("\n")}
                 layout="alert"
             />
             <GapView height={20} />

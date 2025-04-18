@@ -1,3 +1,16 @@
+/* <=============================================================================>
+ *  PersonaPlus - Give yourself a plus!
+ *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Distributed under the terms of the GNU General Public License version 3.0.
+ *  See the LICENSE file in the root of this for more details.
+ * <=============================================================================>
+ *
+ * You are in: @/app/(tabs)/toolkit.tsx
+ * Basically: A toolkit with some random but useful tools for users.
+ *
+ * <=============================================================================>
+ */
+
 import TopBar from "@/components/navigation/top_bar";
 import {
     BetterTextHeader,
