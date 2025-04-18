@@ -11,12 +11,13 @@
  * <=============================================================================>
 ]]
 
-local directory = "./"  -- current dir
-local output_file_path = "ParsedFonts.txt"  -- output here
+local directory = "./"                     -- current dir
+local output_file_path = "ParsedFonts.txt" -- output here
 
 local file_dict = {}
 
-local p = io.popen('dir "' .. directory .. '" /b')  -- use window's dir script
+-- local p = io.popen('dir "' .. directory .. '" /b') -- use window's dir script
+local p = io.popen('ls -1 "' .. directory .. '"') -- use lin's script
 if p then
     for filename in p:lines() do
         local name, ext = filename:match("(.+)%.(.+)")
@@ -27,13 +28,20 @@ if p then
     p:close()
 end
 
+local function endsWith(str, suffix)
+    return string.sub(str, - #suffix) == suffix
+end
+
+local function startsWith(str, prefix)
+    return string.sub(str, 1, #prefix) == prefix
+end
+
 local output_file = io.open(output_file_path, "w")
 if output_file then
     for name, full_filename in pairs(file_dict) do
-        output_file:write("\"" .. name .. "\"" .. ': require("../assets/fonts/' .. full_filename .. '"),\n') -- writes the file
+        if not startsWith(name, "OFL") and not endsWith(name, "Parser") then
+            output_file:write("\"" .. name .. "\"" .. ': require("../assets/fonts/' .. full_filename .. '"),\n') -- writes the file
+        end
     end
     output_file:close()
 end
-
--- NOTE: it will write everything, INCLUDING the OFL files, FontParser.lua, etc...
--- copy-paste without caution will lead to errors!

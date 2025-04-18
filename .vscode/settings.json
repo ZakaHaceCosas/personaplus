@@ -207,5 +207,8 @@
     ],
     "[ignore]": {
         "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
+    "[lua]": {
+        "editor.defaultFormatter": "sumneko.lua"
     }
 }
