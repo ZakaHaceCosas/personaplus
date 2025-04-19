@@ -10,8 +10,8 @@ type CoreLibraryComponentData = {
  * Creates the functions to get component data from a CoreLibrary function. **See docs for more info (Component Data).**
  *
  * @export
- * @param {string} updated - The date of the last update in DD/MM/YYYY format.
- * @param {string} sources - The sources of information used.
+ * @param {string} updated The date of the last update in DD/MM/YYYY format.
+ * @param {string} sources The sources of information used.
  * @returns {{ getSources: () => string; getLastUpdate: () => `${string}/${string}/${string}`; }}
  */
 export default function CreateComponentDataUtilities(

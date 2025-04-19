@@ -7,7 +7,7 @@ import calculateBodyMassIndex from "@/core/physical_health/bmi";
 import CreateComponentDataUtilities from "@/core/tools/core_library_data_builder";
 
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
-    "26/06/2024",
+    "17/04/2025",
     [
         "https://www.inchcalculator.com/body-fat-calculator/",
         "https://pubmed.ncbi.nlm.nih.gov/27030535/",

@@ -10,6 +10,7 @@ import * as IdealBodyWeight from "@/core/physical_health/ibw";
 import * as BasalMetabolicRate from "@/core/physical_health/bmr";
 import * as MetabolicEquivalentOfTask from "@/core/physical_health/met";
 import * as OneRepMax from "@/core/physical_health/one_rep_max";
+import * as USNavyBodyFatPercentage from "@/core/physical_health/us-bfp";
 
 // PERFORMANCE
 import * as RunningPerformance from "@/core/performance/running";
@@ -50,6 +51,7 @@ const CoreLibrary = {
         TotalDailyEnergyExpenditure: CreateModule(TotalDailyEnergyExpenditure),
         getMetabolicEquivalentOfTask: CreateModule(MetabolicEquivalentOfTask),
         OneRepetitionMax: CreateModule(OneRepMax),
+        USNavyBodyFatPercentage: CreateModule(USNavyBodyFatPercentage),
     },
     performance: {
         RunningPerformance: CreateModule(RunningPerformance),

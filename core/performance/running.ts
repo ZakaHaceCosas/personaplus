@@ -9,7 +9,7 @@ export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
     "06/12/2024",
     [
         "https://downhilltodowntown.com/how-to-calculate-your-caloric-burn-while-running/",
-        // "https://www.topendsports.com/weight-loss/energy-met.htm andhttps://journals.lww.com/acsm-msse/fulltext/2000/09001/compendium_of_physical_activities__an_update_of.9.aspx",
+        // "https://www.topendsports.com/weight-loss/energy-met.htm and https://journals.lww.com/acsm-msse/fulltext/2000/09001/compendium_of_physical_activities__an_update_of.9.aspx",
     ],
 );
 
@@ -26,7 +26,7 @@ export default function calculateRunningPerformance(
     speed: number,
     time: number,
 ): CoreLibraryResponse {
-    let METs: number | null; // MET - Metabolic Equivalent of Task
+    let METs: number; // MET - Metabolic Equivalent of Task
 
     // Assign METs based on speed in km/h
     if (speed > 1.6092 && speed < 3.2181) {
@@ -51,24 +51,16 @@ export default function calculateRunningPerformance(
         METs = 11.5;
     } else if (speed > 14.48 && speed <= 16.09) {
         METs = 12.5;
-    } else if (speed > 16.09) {
-        METs = 16;
     } else {
-        METs = null;
+        METs = 16;
     }
 
     // Calculate calories burnt
-    let caloriesBurnt: number;
-
-    if (METs) {
-        caloriesBurnt = METs * weight * (time * 60);
-    } else {
-        caloriesBurnt = 0; // if the MET is not calculable, it returns 0.
-    }
+    const result: number = METs * weight * (time * 60);
 
     const response: CoreLibraryResponse = {
-        result: caloriesBurnt,
-        context: `Estimated ${caloriesBurnt} cal burnt for this session.`,
+        result,
+        context: `Estimated ${result}cal burnt for this session (MET: ${METs}).`,
         explanation:
             "The 'performance' of a running session can be measured in burnt calories, which are obtained calculating the MET value (based on avg. speed) and multiplying by the person's weight and by the duration in hours of the session.",
     };

@@ -6,7 +6,7 @@ import calculateBodyMassIndex from "@/core/physical_health/bmi";
 import CreateComponentDataUtilities from "@/core/tools/core_library_data_builder";
 
 export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
-    "26/06/2024",
+    "17/04/2025",
     [
         "https://www.inchcalculator.com/body-fat-calculator/",
         "https://pubmed.ncbi.nlm.nih.gov/10966886/",
@@ -14,14 +14,13 @@ export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
 );
 
 /**
- * Calculate Body Fat Percentage (BFP) based on given parameters.
+ * Calculate Body Fat Percentage (BFP) based on given parameters. It's not fully accurate as it's BMI based. The US Navy method would be more reliable, but requires more specific data to implement. See us-bfp.ts on this file's directory for that method.
  * @param age The age of the subject.
  * @param gender The gender of the subject (either "male" or "female").
  * @param weight The weight of the subject in kilograms (KG).
  * @param height The height of the subject in centimeters (CM).
  * @returns A standard `CoreLibraryResponse` with the desired results.
  */
-
 export default function calculateBodyFatPercentage(
     age: number,
     gender: "male" | "female",
@@ -29,66 +28,49 @@ export default function calculateBodyFatPercentage(
     height: number,
 ): CoreLibraryResponse {
     // This is calculated using the BMI method, so the BMI is required.
-    const bmi: CoreLibraryResponse = calculateBodyMassIndex(
+    const bmi: number = calculateBodyMassIndex(
         age,
         gender,
         weight,
         height,
-    );
+    ).result;
+
     let bfp: number;
 
-    if (gender === "male") {
-        // male
-        const firstStep = 1.2 * Number(bmi);
-        const secondStep = 0.23 * age;
-        const thirdStep = firstStep + secondStep;
-        const fourthStep = thirdStep - 16.2;
-        bfp = fourthStep;
-    } else {
-        // female
-        const firstStep = 1.2 * Number(bmi);
-        const secondStep = 0.23 * age;
-        const thirdStep = firstStep + secondStep;
-        const fourthStep = thirdStep - 5.4;
-        bfp = fourthStep;
-    }
+    const firstStep = 1.2 * bmi + 0.23 * age;
 
-    let context: string | undefined;
+    bfp = gender === "male" ? firstStep - 16.2 : firstStep - 5.4;
+    console.debug("BMI", bmi);
+    console.debug("CALC1", firstStep, "BFP", bfp);
+    let context: string;
 
-    if (gender === "male") {
-        if (bfp >= 0 || bfp <= 2) {
-            context = "extremely low";
-        } else if (bfp >= 2 || bfp <= 6) {
-            context = "essential fat";
-        } else if (bfp >= 6 || bfp <= 13) {
-            context = "athlete";
-        } else if (bfp >= 13 || bfp <= 17) {
-            context = "fitness";
-        } else if (bfp >= 18 || bfp <= 25) {
-            context = "average";
-        } else if (bfp > 25) {
-            context = "obesity";
-        }
+    const thresholds = {
+        low: gender === "male" ? 2 : 10,
+        essential: gender === "male" ? 6 : 14,
+        athlete: gender === "male" ? 13 : 21,
+        fitness: gender === "male" ? 17 : 25,
+        average: gender === "male" ? 25 : 31,
+    };
+
+    if (bfp >= 0 && bfp <= thresholds.low) {
+        context = "extremely low";
+    } else if (bfp > thresholds.low && bfp <= thresholds.essential) {
+        context = "essential fat";
+    } else if (bfp > thresholds.essential && bfp <= thresholds.athlete) {
+        context = "athlete";
+    } else if (bfp > thresholds.athlete && bfp <= thresholds.fitness) {
+        context = "fitness";
+    } else if (bfp > thresholds.fitness && bfp <= thresholds.average) {
+        context = "average";
+    } else if (bfp > thresholds.average) {
+        context = "obesity";
     } else {
-        // female
-        if (bfp >= 0 || bfp <= 10) {
-            context = "extremely low";
-        } else if (bfp >= 10 || bfp <= 14) {
-            context = "essential fat";
-        } else if (bfp >= 14 || bfp <= 21) {
-            context = "athlete";
-        } else if (bfp >= 21 || bfp <= 25) {
-            context = "fitness";
-        } else if (bfp >= 25 || bfp <= 31) {
-            context = "average";
-        } else if (bfp > 32) {
-            context = "obesity";
-        }
+        throw new Error("Below 0 BFP");
     }
 
     const response: CoreLibraryResponse = {
         result: bfp,
-        context: `Based on BFP, context is ${context}`,
+        context,
         explanation:
             "Body Fat Percentage, usually calculated as a percentage of body weight. There are several methods for measuring it, and based on the percentage, it's possible to estimate whether the subject has normal weight, overweight, or underweight.",
     };

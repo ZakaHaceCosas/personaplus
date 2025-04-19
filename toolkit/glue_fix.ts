@@ -15,6 +15,7 @@ import type {
     INormalizeOptions,
     UnknownString,
 } from "../node_modules/@zakahacecosas/string-utils/mod";
+import * as n from "../node_modules/@zakahacecosas/number-utils/mod";
 
 /**
  * Use this to extend type interfaces for URL params when passing data from page to page.
@@ -80,3 +81,10 @@ export const StrUtils = {
         return true;
     },
 };
+
+/**
+ * [My own string utilities package.](https://jsr.io/@zakahacecosas/number-utils)
+ *
+ * This export is a glue fix. The package is from JSR and not npm, and Metro dislikes that.
+ */
+export const NumUtils = n.NumberUtils;

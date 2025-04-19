@@ -1,8 +1,13 @@
 # Changelog
 
-## 0.3.1
+## 0.4.0
+
+- Added US Navy formula for BFP as a separate function.
+
+- Wrote some tests to help identify issues.
 
 - Fixed up the IBW formula.
+- Fixed up TS code not properly calculating the BFP formula (`Number(CoreLibraryResponse)`?).
 
 ## 0.3.0
 

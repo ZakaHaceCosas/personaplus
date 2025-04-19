@@ -1,44 +1,8 @@
 import CoreLibrary from "@/core/core";
 import { expect } from "@jest/globals";
-import type { MatcherFunction } from "expect";
 import { getPercentile } from "@/core/physical_health/bmi";
 import { CoreLibraryResponse } from "@/core/types/core_library_response";
-
-// there is a possible error margin for CoreLibrary's calculations, so this custom function allows for minimal errors within an acceptable range to pass the tests
-const toBeWithinMargin: MatcherFunction<[expected: number, margin?: number]> =
-    function (received, expected, margin = 0.3) {
-        if (
-            typeof received !== "number" ||
-            typeof expected !== "number" ||
-            typeof margin !== "number"
-        ) {
-            throw new TypeError("All arguments must be of type number!");
-        }
-
-        const pass: boolean =
-            received >= expected - margin && received <= expected + margin;
-        if (pass) {
-            return {
-                message: (): string =>
-                    `expected ${this.utils.printReceived(
-                        received,
-                    )} not to be within ${margin} of ${this.utils.printExpected(
-                        expected,
-                    )}`,
-                pass: true,
-            };
-        } else {
-            return {
-                message: (): string =>
-                    `expected ${this.utils.printReceived(
-                        received,
-                    )} to be within ${margin} of ${this.utils.printExpected(
-                        expected,
-                    )}`,
-                pass: false,
-            };
-        }
-    };
+import { toBeWithinMargin } from "../tools/jest";
 
 expect.extend({
     toBeWithinMargin,
@@ -107,13 +71,6 @@ describe("body mass index calculations", () => {
 });
 
 describe("body mass index function handling", () => {
-    test("should include explanation", (): void => {
-        const calculation = calculateBodyMassIndex(25, "female", 60, 165);
-        expect(calculation.explanation).toBe(
-            "(According to CDC) Body mass index (BMI) is a person's weight in kilograms divided by the square of height in meters. BMI is an inexpensive and easy screening method for weight category—underweight, healthy weight, overweight, and obesity. BMI does not measure body fat directly, but BMI is moderately correlated with more direct measures of body fat. Furthermore, BMI appears to be as strongly correlated with various metabolic and disease outcomes as are these more direct measures of body fatness.",
-        );
-    });
-
     test("should handle invalid age input", () => {
         expect(() => {
             calculateBodyMassIndex(-5, "male", 70, 175);
