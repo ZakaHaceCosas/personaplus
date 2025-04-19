@@ -1,8 +1,8 @@
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2023-2025 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
- *  See the LICENSE file in the root of this for more details.
+ *  See the LICENSE file in the root of this repository for more details.
  * <=============================================================================>
  *
  * You are in: @/toolkit/objectives/common.ts
@@ -30,7 +30,12 @@ import {
 import AsyncStorage from "expo-sqlite/kv-store";
 import { TFunction } from "i18next";
 import { ShowToast } from "../android";
-import { GenericDailyLog, IsActiveObjective } from "@/types/common_objectives";
+import {
+    IsActiveObjective,
+    AllObjectivesPendingReturn,
+    UncheckedDailyLog,
+    SingleObjectivePendingReturn,
+} from "@/types/common_objectives";
 import {
     ADJUSTED_TODAY_INDEX,
     AlterDate,
@@ -275,8 +280,6 @@ async function CreateObjective(
     }
 }
 
-type UncheckedDailyLog = GenericDailyLog<any>;
-
 /**
  * Handles saving the daily log, sorting stuff by date.
  *
@@ -473,11 +476,11 @@ async function FailGenericObjectivesNotDoneYesterday(
  *
  * @async
  * @param {ActiveObjective | PassiveObjective} objective The objective.
- * @returns {Promise<boolean>} Returns **true** if the objective IS NOT done and NEEDS TO BE DONE. Returns **false** if otherwise (DOES NOT NEED to be done today).
+ * @returns {Promise<SingleObjectivePendingReturn>} Returns a string indicating status. `noneDueToday` is an Active Objective-only string.
  */
 async function IsGenericObjectivePending(
     objective: ActiveObjective | PassiveObjective,
-): Promise<boolean> {
+): Promise<SingleObjectivePendingReturn> {
     try {
         const { identifier } = objective;
 
@@ -486,28 +489,26 @@ async function IsGenericObjectivePending(
                 ? await GetGenericObjectiveDailyLog("active")
                 : await GetGenericObjectiveDailyLog("passive");
 
-        // NOTE - if something's wrong with pending objectives, try removing the "!"
-        // from the .days thing. if that makes it work, this officially needs to be
-        // remade from scratch, as I've added, then removed, then added it again for
-        // fixing bugs
-
-        // remove this note if no issues happen over the next 15 days or so, i guess
+        // not due today
         if (
             IsActiveObjective(objective) &&
-            !objective.info.days[ADJUSTED_TODAY_INDEX]
+            objective.info.days[ADJUSTED_TODAY_INDEX] === false
         )
-            return false; // not due today
+            return "notDueToday";
 
-        if (Object.keys(dailyLog).length === 0) return true; // log does not exist, so the objective is due today.
+        // log does not exist, so the objective is due today.
+        if (Object.keys(dailyLog).length === 0) return "pending";
 
         const date: TodaysDate = GetCurrentDateCorrectly().string;
 
+        if (!dailyLog[date]) return "pending";
+
         const entry: { wasDone: boolean } | undefined =
-            dailyLog[date]![identifier];
+            dailyLog[date][identifier];
 
-        if (entry) return !entry.wasDone; // if it IS done, it IS NOT due today
+        if (entry) return entry.wasDone === true ? "done" : "pending"; // if it IS done, it IS NOT due today
 
-        return true; // no interaction with the objective means no data logged.
+        return "pending"; // no interaction with the objective means no data logged.
     } catch (e) {
         throw new Error(
             `Error checking if the ${objective.identifier} objective is due today: ${e}`,
@@ -515,19 +516,16 @@ async function IsGenericObjectivePending(
     }
 }
 
-/** Either an array of the IDs of pending objectives, or a self-descriptive status code. IDs should not be mixed up - either an active objective ID array or a passive objective one. */
-type PendingReturn = number[] | "allDone" | "noneDueToday" | "noneExists";
-
 /**
  * Tells you if the user has any pending objective or not. If he does, returns all of them, as an `number[]` being each number the ID of each active objective.
  *
  * @async
  * @param {"active" | "passive"} category Category to read from.
- * @returns {Promise<PendingReturn>} Either an array with pending objective identifiers _only_ or a text-based code indicating context.
+ * @returns {Promise<AllObjectivesPendingReturn>} Either an array with pending objective identifiers _only_ or a text-based code indicating context.
  */
 async function GetPendingGenericObjectives(
     category: "active" | "passive",
-): Promise<PendingReturn> {
+): Promise<AllObjectivesPendingReturn> {
     try {
         const nullishObjectives: ActiveObjective[] | PassiveObjective[] | null =
             category === "active"
@@ -545,7 +543,7 @@ async function GetPendingGenericObjectives(
         // there are only two hard things in computer science, cache invalidation and naming things
         type thing = {
             identifier: number;
-            status: boolean;
+            status: SingleObjectivePendingReturn;
         };
 
         // okay i think i finally know what's going on in here:
@@ -555,7 +553,8 @@ async function GetPendingGenericObjectives(
         async function callbackfn(
             obj: ActiveObjective | PassiveObjective,
         ): Promise<thing | null> {
-            const status: boolean = await IsGenericObjectivePending(obj);
+            const status: SingleObjectivePendingReturn =
+                await IsGenericObjectivePending(obj);
             return { identifier: obj.identifier, status };
         }
 
@@ -568,21 +567,23 @@ async function GetPendingGenericObjectives(
             // we filter out null entries
             .filter((obj: thing | null): obj is thing => obj !== null);
 
-        // if all objectives have FALSE status (NOT DUE TODAY) (thus !obj.status)
-        // return "noneDueToday"
         if (
             dueTodayObjectives.every(
-                (obj: thing): boolean => obj.status === false,
+                (obj: thing): boolean => obj.status === "done",
+            )
+        )
+            return "allDone";
+
+        if (
+            dueTodayObjectives.every(
+                (obj: thing): boolean => obj.status === "notDueToday",
             )
         )
             return "noneDueToday";
 
-        // if no objective returned, none is pending, so all is done
-        if (dueTodayObjectives.length === 0) return "allDone";
-
         // get the identifiers of objectives that are not done yet
         const pendingObjectives: number[] = dueTodayObjectives
-            .filter((obj: thing): boolean => obj.status === true)
+            .filter((obj: thing): boolean => obj.status === "pending")
             .map((obj: thing): number => obj.identifier);
 
         // return pending objectives
@@ -622,7 +623,6 @@ function HandleEditObjective(
     return realParams.objective.identifier;
 }
 
-// function exports
 export {
     GetObjective,
     DeleteObjective,
@@ -636,6 +636,3 @@ export {
     SaveGenericObjectiveDailyLog,
     FailGenericObjectivesNotDoneYesterday,
 };
-
-// type exports
-export { PendingReturn };

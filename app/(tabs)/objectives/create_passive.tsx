@@ -1,8 +1,8 @@
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2023-2025 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
- *  See the LICENSE file in the root of this for more details.
+ *  See the LICENSE file in the root of this repository for more details.
  * <=============================================================================>
  *
  * You are in: @/app/(tabs)/objectives/create_passive.tsx
@@ -106,42 +106,33 @@ export default function CreatePassiveObjectivePage(): ReactElement {
             goalToCreate.trim().length === 0
                 ? false
                 : goalToCreate.trim().length >= 3 &&
-                      goalToCreate.trim().length < 120,
+                goalToCreate.trim().length < 120,
         );
     }, [goalToCreate]);
 
     async function handleCreation(): Promise<void> {
-        try {
-            if (!canCreateGoal) return;
+        if (!canCreateGoal) return;
 
-            if (edit.enable && edit.id) {
-                await EditPassiveObjective(
-                    {
-                        goal: goalToCreate,
-                        createdAt: GetCurrentDateCorrectly().string,
-                    },
-                    edit.id,
-                    t,
-                );
-            } else {
-                await CreatePassiveObjective(
-                    {
-                        goal: goalToCreate,
-                        createdAt: GetCurrentDateCorrectly().string,
-                    },
-                    t,
-                );
-            }
-            router.replace(Routes.MAIN.HOME);
-        } catch (e) {
-            throw new Error(
-                `Error with ${
-                    edit.enable
-                        ? "EditPassiveObjective()"
-                        : "CreatePassiveObjective()"
-                }:\n${e}`,
+        if (edit.enable && edit.id) {
+            await EditPassiveObjective(
+                {
+                    goal: goalToCreate,
+                    createdAt: GetCurrentDateCorrectly().string,
+                },
+                edit.id,
+                t,
+            );
+        } else {
+            await CreatePassiveObjective(
+                {
+                    goal: goalToCreate,
+                    createdAt: GetCurrentDateCorrectly().string,
+                },
+                t,
             );
         }
+        router.replace(Routes.MAIN.HOME);
+
         return;
     }
     const inputRef: MutableRefObject<TextInput[]> = useRef<TextInput[]>([]);

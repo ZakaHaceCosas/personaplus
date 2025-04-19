@@ -1,20 +1,27 @@
+# We've moved our repository
+
+> [!IMPORTANT]
+> **PersonaPlus now lives [at this repository](https://github.com/GiveItAPlus/personaplus).**
+
+---
+
 <!--markdownlint-disable md033 md026-->
 <h1 align="center">PersonaPlus</h1>
 
-![PersonaPlus banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/design/PP_BANNER.webp)
+![PersonaPlus banner](https://raw.githubusercontent.com/GiveItAPlus/personaplus/main/assets/design/PP_BANNER.webp)
 
 <div align="center">
 
 <!--Se destacará el vídeo que a mi me parezca :v-->
 <!--[![YouTube Video Views](https://img.shields.io/youtube/views/cPSmVmsvkeY?style=for-the-badge&logo=youtube)](https://www.youtube.com/watch?v=H2_0d-hLiMw)-->
 
-[![GitHub last commit](https://img.shields.io/github/last-commit/ZakaHaceCosas/personaplus?style=for-the-badge&labelColor=%23000&logo=github&color=white)](https://github.com/ZakaHaceCosas/personaplus/commits/)
-[![GitHub Repo size](https://img.shields.io/github/repo-size/ZakaHaceCosas/personaplus?style=for-the-badge&labelColor=%23000&color=%23f54&logo=webpack&logoColor=white)](https://github.com/ZakaHaceCosas/personaplus/tree/main/app)
-[![GitHub Repo stars](https://img.shields.io/github/stars/ZakaHaceCosas/personaplus?style=for-the-badge&labelColor=%23000&logo=github&color=%23ff0)](https://github.com/ZakaHaceCosas/personaplus/stargazers)
-[![Created at](https://img.shields.io/github/created-at/ZakaHaceCosas/personaplus?style=for-the-badge&color=white&logo=github&labelColor=%23000)](https://personaplus.vercel.app)
-[![GitHub License](https://img.shields.io/github/license/zakahacecosas/personaplus?style=for-the-badge&labelColor=%23000&color=%23d52e35)](https://github.com/ZakaHaceCosas/personaplus/blob/main/LICENSE.md)
+[![GitHub last commit](https://img.shields.io/github/last-commit/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&logo=github&color=white)](https://github.com/GiveItAPlus/personaplus/commits/)
+[![GitHub Repo size](https://img.shields.io/github/repo-size/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&color=%23f54&logo=webpack&logoColor=white)](https://github.com/GiveItAPlus/personaplus/tree/main/app)
+[![GitHub Repo stars](https://img.shields.io/github/stars/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&logo=github&color=%23ff0)](https://github.com/GiveItAPlus/personaplus/stargazers)
+[![Created at](https://img.shields.io/github/created-at/GiveItAPlus/personaplus?style=for-the-badge&color=white&logo=github&labelColor=%23000)](https://personaplus.vercel.app)
+[![GitHub License](https://img.shields.io/github/license/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&color=%23d52e35)](https://github.com/GiveItAPlus/personaplus/blob/main/LICENSE.md)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fpersonaplus.vercel.app&up_message=WORKING%20%3A%5D&up_color=%2332FF80&down_message=NOT%20WORKING%20%3A%5B&down_color=%23FF3232&style=for-the-badge&labelColor=%23000)](https://personaplus.vercel.app)
-[![App version](https://img.shields.io/github/package-json/v/zakahacecosas/personaplus?style=for-the-badge&labelColor=%23000&color=%23fff)](https://github.com/ZakaHaceCosas/personaplus/blob/main/package.json#L3)
+[![App version](https://img.shields.io/github/package-json/v/GiveItAPlus/personaplus?style=for-the-badge&labelColor=%23000&color=%23fff)](https://github.com/GiveItAPlus/personaplus/blob/main/package.json#L3)
 
 </div>
 
@@ -27,7 +34,7 @@
 > [!CAUTION]
 > Note that as the app is still a work in progress, we may change how data is stored from update to update, making you **loose your data** from one release to another. Don't use (just yet :wink:) PersonaPlus as your daily companion app.
 
-PersonaPlus is still under early development. You can try out the app downloading a pre-release version from the [releases page](https://github.com/ZakaHaceCosas/personaplus/releases). **No version is stable / finished**, so expect issues & missing features. As an early app, we kindly ask you to [report here any issue you find](https://github.com/ZakaHaceCosas/personaplus/issues). Thank you!
+PersonaPlus is still under early development. You can try out the app downloading a pre-release version from the [releases page](https://github.com/GiveItAPlus/personaplus/releases). **No version is stable / finished**, so expect issues & missing features. As an early app, we kindly ask you to [report here any issue you find](https://github.com/GiveItAPlus/personaplus/issues). Thank you!
 
 PersonaPlus' interface is available in English and Spanish.
 
@@ -39,11 +46,11 @@ Many features we promised are in development and either:
 - Hidden behind the "Experiments" tab on the app's settings.
 - Available, but with limited functionality or known bugs.
 
-You can see everything that's planned on our [TODO.md](https://github.com/ZakaHaceCosas/personaplus/blob/main/TODO.md) file. For important features / updates, you can see our progress on them via our tracking issues ([the ones labeled as "Roadmap" issues](https://github.com/ZakaHaceCosas/personaplus/issues?q=is%3Aissue%20state%3Aopen%20label%3Aroadmap)).
+You can see everything that's planned on our [TODO.md](https://github.com/GiveItAPlus/personaplus/blob/main/TODO.md) file. For important features / updates, you can see our progress on them via our tracking issues ([the ones labeled as "Roadmap" issues](https://github.com/GiveItAPlus/personaplus/issues?q=is%3Aissue%20state%3Aopen%20label%3Aroadmap)).
 
 ## How to contribute?
 
-PersonaPlus is a 100% free an open source app, and as such, accepts contributions from anyone. [Simply follow the steps here!](https://github.com/ZakaHaceCosas/personaplus/blob/main/CONTRIBUTING.md) We're really thankful for all contributions.
+PersonaPlus is a 100% free an open source app, and as such, accepts contributions from anyone. [Simply follow the steps here!](https://github.com/GiveItAPlus/personaplus/blob/main/CONTRIBUTING.md) We're really thankful for all contributions.
 
 ## Credits
 
@@ -51,7 +58,7 @@ PersonaPlus is a 100% free an open source app, and as such, accepts contribution
 
 Created by [@ZakaHaceCosas](https://zakahacecosas.github.io).
 
-[All mighty contributors are shown in this page.](https://github.com/zakaHaceCosas/personaplus/graphs/contributors). Those who make significant contributions will also be featured here. Thanks for the help!
+[All mighty contributors are shown in this page.](https://github.com/GiveItAPlus/personaplus/graphs/contributors). Those who make significant contributions will also be featured here. Thanks for the help!
 
 ### Free software
 

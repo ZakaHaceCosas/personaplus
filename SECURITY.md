@@ -12,7 +12,7 @@ Found a security vulnerability reading code or testing the app? This is what to 
    - Potential impact (AKA what is the real risk of the vulnerability).
    - Optionally, if you know how we could fix it, tell us.
 
-We also recommend that you [submit a report to our repository here](https://github.com/ZakaHaceCosas/personaplus/security/advisories/new) (replacing the default description with the content described before).
+We also recommend that you [submit a report to our repository here](https://github.com/GiveItAPlus/personaplus/security/advisories/new) (replacing the default description with the content described before).
 3. If you think you can fix it yourself, **explain us your solution in your message and DO NOT create a pull request whatsoever with your fix.**
 
 We really acknowledge your help and we will try our best to develop a solution ASAP.

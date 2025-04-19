@@ -1,8 +1,8 @@
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2023-2025 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
- *  See the LICENSE file in the root of this for more details.
+ *  See the LICENSE file in the root of this repository for more details.
  * <=============================================================================>
  *
  * You are in: @/toolkit/objectives/active_objectives.ts
@@ -35,8 +35,8 @@ import {
     GetObjective,
     GetPendingGenericObjectives,
     SaveGenericObjectiveDailyLog,
-    type PendingReturn,
 } from "./common";
+import type { AllObjectivesPendingReturn } from "@/types/common_objectives";
 
 /**
  * Returns the objectives from AsyncStorage as an `ActiveObjective[]`, or `null` if there aren't any objectives.
@@ -109,9 +109,9 @@ async function SaveActiveObjectiveToDailyLog(
  * Tells you if the user has any active objective due today or not. If he does, returns all of them, as an `number[]` being each number the ID of each active objective.
  *
  * @async
- * @returns {Promise<PendingReturn>} Either an array with pending objective identifiers _only_ or a text-based code indicating context.
+ * @returns {Promise<AllObjectivesPendingReturn>} Either an array with pending objective identifiers _only_ or a text-based code indicating context.
  */
-async function GetPendingActiveObjectives(): Promise<PendingReturn> {
+async function GetPendingActiveObjectives(): Promise<AllObjectivesPendingReturn> {
     return await GetPendingGenericObjectives("active");
 }
 

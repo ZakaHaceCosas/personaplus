@@ -14,11 +14,11 @@ Every kind of contribution is valued and taken into account. Here you'll find so
 ---
 
 > [!NOTE]
-> Please ensure to follow the [Code of Conduct](https://github.com/ZakaHaceCosas/personaplus/blob/main/CODE_OF_CONDUCT.md) at all time.
+> Please ensure to follow the [Code of Conduct](https://github.com/GiveItAPlus/personaplus/blob/main/CODE_OF_CONDUCT.md) at all time.
 
 ## Reporting issues
 
-If you find an error, please [open up an issue](https://github.com/ZakaHaceCosas/personaplus/issues) on GitHub. Make sure to include:
+If you find an error, please [open up an issue](https://github.com/GiveItAPlus/personaplus/issues) on GitHub. Make sure to include:
 
 - A clear description of the error.
 - Steps to reproduce (find) the error.
@@ -26,11 +26,11 @@ If you find an error, please [open up an issue](https://github.com/ZakaHaceCosas
 - Environment info (app version, phone and OS details, ...).
 
 > [!WARNING]
-> **If it's a** _**security**_ **issue what we're talking about, DO NOT make a public issue, report it privately instead**. See [SECURITY.md](https://github.com/ZakaHaceCosas/personaplus/blob/main/SECURITY.md) for more info. **Thank you.**
+> **If it's a** _**security**_ **issue what we're talking about, DO NOT make a public issue, report it privately instead**. See [SECURITY.md](https://github.com/GiveItAPlus/personaplus/blob/main/SECURITY.md) for more info. **Thank you.**
 
 ## Suggestions
 
-If you got an idea for a new feature or an enhancement, open up an [issue](https://github.com/ZakaHaceCosas/personaplus/issues) and describe:
+If you got an idea for a new feature or an enhancement, open up an [issue](https://github.com/GiveItAPlus/personaplus/issues) and describe:
 
 - The reason for your suggestion (what does it improve / add?).
 - The suggestion itself.
@@ -40,7 +40,7 @@ If you got an idea for a new feature or an enhancement, open up an [issue](https
 
 ### 0. Make a fork
 
-Open [https://github.com/ZakaHaceCosas/personaplus/fork](https://github.com/ZakaHaceCosas/personaplus/fork) and create your fork.
+Open [https://github.com/GiveItAPlus/personaplus/fork](https://github.com/GiveItAPlus/personaplus/fork) and create your fork.
 
 ### 1. Clone it
 

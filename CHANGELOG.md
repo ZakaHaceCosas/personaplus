@@ -5,7 +5,7 @@ All notable changes will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html). Dates use the DD-MM-YYYY format.
 
-## Unreleased
+## [0.1.1] - Unreleased
 
 ### Changed
 
@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Fixed the app randomly showing the welcome screen, forcing into a data reset. It did this upon any error with data handling.
 - Fixed the app packaging unused fonts. That's not an error per se, but it took extra space and memory for nothing.
+- Fixed objectives showing "No objectives for today" instead of "All done" when all objectives of a category were done.
 
 ## [0.1.0] - 17/04/2025
 
@@ -176,6 +177,6 @@ Keep in mind there have been many visual and functional changes due to the R6 re
 
 ---
 
-> For versions prior to 0.0.6, see [the deprecated changelog](CHANGELOG.deprecated.md).
+> For versions prior to 0.0.6 (quite many), see [the deprecated changelog](https://github.com/ZakahaceCosas/personaplus/blob/main/CHANGELOG.deprecated.md).
 >
 > P.S. Versions prior to 0.0.6 are not SemVer compliant and follow a different format.

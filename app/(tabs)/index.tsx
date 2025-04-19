@@ -20,10 +20,7 @@ import {
     cancelScheduledNotifications,
     scheduleRandomNotifications,
 } from "@/hooks/use_notification";
-import {
-    FailGenericObjectivesNotDoneYesterday,
-    PendingReturn,
-} from "@/toolkit/objectives/common";
+import { FailGenericObjectivesNotDoneYesterday } from "@/toolkit/objectives/common";
 import GapView from "@/components/ui/gap_view";
 import {
     GetPassiveObjective,
@@ -36,7 +33,10 @@ import BetterButton from "@/components/interaction/better_button";
 import Division from "@/components/ui/sections/division";
 import { ActiveObjective } from "@/types/active_objectives";
 import { ObjectiveDescriptiveIcons } from "@/toolkit/objectives/active_objectives_ui";
-import { IsActiveObjective } from "@/types/common_objectives";
+import {
+    AllObjectivesPendingReturn,
+    IsActiveObjective,
+} from "@/types/common_objectives";
 import { HandlePendingReturn } from "@/toolkit/objectives/common_ui";
 import { ShowToast } from "@/toolkit/android";
 
@@ -53,9 +53,9 @@ export default function HomeScreen(): ReactElement {
     const [userData, setUserData] = useState<FullProfile>();
     const [loading, setLoading] = useState<boolean>(true);
     const [activeObjectiveIdentifiers, setActiveObjectiveIdentifiers] =
-        useState<PendingReturn>("noneExists");
+        useState<AllObjectivesPendingReturn>("noneExists");
     const [passiveObjectiveIdentifiers, setPassiveObjectiveIdentifiers] =
-        useState<PendingReturn>("noneExists");
+        useState<AllObjectivesPendingReturn>("noneExists");
     const [activeObjectivesToRender, setActiveObjectivesToRender] = useState<
         ActiveObjective[]
     >([]);
@@ -80,6 +80,7 @@ export default function HomeScreen(): ReactElement {
             try {
                 // fetch user
                 const userData: FullProfile = await OrchestrateUserData();
+
                 if (!ValidateUserData(userData, "Full")) {
                     router.replace(Routes.MAIN.WELCOME_SCREEN);
                     return;
@@ -87,10 +88,11 @@ export default function HomeScreen(): ReactElement {
                 setUserData(userData);
 
                 // fetch IDs
-                const pendingActive: PendingReturn =
+                const pendingActive: AllObjectivesPendingReturn =
                     await GetPendingActiveObjectives();
                 setActiveObjectiveIdentifiers(pendingActive);
-                const pendingPassive: PendingReturn =
+
+                const pendingPassive: AllObjectivesPendingReturn =
                     await GetPendingPassiveObjectives();
                 setPassiveObjectiveIdentifiers(pendingPassive);
 
@@ -115,7 +117,6 @@ export default function HomeScreen(): ReactElement {
                         })),
                     );
 
-                    // await GetPassiveObjectiveStreak(obj.identifier)
                     setPassiveObjectivesToRender(objectivesWithStreak);
                 }
             } catch (e) {

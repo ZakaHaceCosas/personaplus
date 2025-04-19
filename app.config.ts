@@ -12,7 +12,7 @@ const config: ExpoConfig.ExpoConfig = {
     owner: "zakahacecosas",
     version: actualVersion,
     orientation: "portrait",
-    githubUrl: "https://github.com/ZakaHaceCosas/personaplus",
+    githubUrl: "https://github.com/GiveItAPlus/personaplus",
     icon: "./assets/resources/icon.png",
     userInterfaceStyle: "dark",
     platforms: ["android"],
@@ -52,7 +52,7 @@ const config: ExpoConfig.ExpoConfig = {
             "android.permission.WAKE_LOCK",
             "android.permission.ACCESS_FINE_LOCATION",
         ],
-        versionCode: 31,
+        versionCode: 32,
         backgroundColor: "#0E1013",
     },
     ios: {

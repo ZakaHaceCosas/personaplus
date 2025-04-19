@@ -1,8 +1,8 @@
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2023-2025 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
- *  See the LICENSE file in the root of this for more details.
+ *  See the LICENSE file in the root of this repository for more details.
  * <=============================================================================>
  *
  * You are in: @/types/common_objectives.ts
@@ -81,6 +81,13 @@ export type GenericDailyLog<T> = {
     };
 };
 
+/**
+ * A daily log that may be both Active or Passive - it uses `unknown` to avoid type checking.
+ *
+ * @export
+ */
+export type UncheckedDailyLog = GenericDailyLog<unknown>;
+
 /** Since only `ActiveObjective`s have the `exercise` key, this type guard checks for it, so TS knows what are you working with, instead of throwing type errors all the time. */
 export function IsActiveObjective(
     obj: ActiveObjective | PassiveObjective,
@@ -92,3 +99,13 @@ export function IsActiveObjective(
         return true;
     return false;
 }
+
+/** String indicating the status of a single objective. */
+export type SingleObjectivePendingReturn = "done" | "pending" | "notDueToday";
+
+/** Either an array of the IDs of pending objectives, or a self-descriptive status code. IDs should not be mixed up - either an active objective ID array or a passive objective one. */
+export type AllObjectivesPendingReturn =
+    | number[]
+    | "allDone"
+    | "noneDueToday"
+    | "noneExists";

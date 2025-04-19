@@ -1,10 +1,5 @@
 # CoreLibrary documentation
 
-> [!CAUTION]
-> This is absolutely outdated, CoreLibrary has undergone some big refactoring and I am a bit lazy to take care of this right now. I'll do it shortly after merging the R6 rewrite.
-
----
-
 > [!TIP]
 > También disponible en [Español (Spanish)](DOCS.es.md)
 
@@ -30,7 +25,6 @@ Currently, these are all the categories available:
 | ---------------- | --------------------------------------------------------------------------- |
 | `physicalHealth` | Physical health related functions and calculations.                         |
 | `performance`    | Sport & activity performance related functions and calculations.            |
-| `mentalHealth`   | **(Not yet implemented)** Mental health related functions and calculations. |
 
 ## Now, how do functions work?
 
@@ -65,15 +59,13 @@ interface CoreLibraryResponse {
 
 `result` is the result of the calculation itself you've just done.
 
-`context` gives a small context (sometimes just a word) about how the result should be interpreted. E.g., in the BMI (Body Mass Index) function, `context` would a string saying if the result value does represent "healthy weight", "underweight", "obesity", and so on.
+`context` gives a small context (sometimes just a word) about how the result should be interpreted. E.g., in the BMI (Body Mass Index) function, `context` would a string saying if the result value does represent "healthy weight", "underweight", "obesity", and so on. In cases where it doesn't apply, it returns a sentence-ish description of the `result`.
 
 `explanation` gives a small explanation of what the calculation means. For example, in the BMI function it returns the following:
 
 ```tsx
-"(According to CDC) Body mass index (BMI) is a person's weight in kilograms divided by the square of height in meters. BMI is an inexpensive and easy screening method for weight category—underweight, healthy weight, overweight, and obesity. BMI does not measure body fat directly, but BMI is moderately correlated with more direct measures of body fat. Furthermore, BMI appears to be as strongly correlated with various metabolic and disease outcomes as are these more direct measures of body fatness.";
+"(According to CDC) Body mass index (BMI) is a person's weight in kilograms divided by the square of height in meters. BMI is an inexpensive and easy screening method for weight category—underweight, healthy weight, overweight, and obesity. BMI does not measure body fat directly, but BMI is moderately correlated with more direct measures of body fat. Furthermore, BMI appears to be as strongly correlated with various metabolic and disease outcomes as are these more direct measures of body fatness."
 ```
-
-In some cases, like the OneRM calculation, you can opt in to get an additional (`alternate`) result. OneRM offers the boolean param `providePercentage`, and when set to true, the return will also include the `alternate` prop, being its value the OneRM percentage in this case.
 
 ## What to expect from the other functions?
 
@@ -91,6 +83,68 @@ Now, let's move onto the reference manual: a list of all available functions, ca
 > [!TIP]
 > This reference is only for the `calculate()` function of each utility, as `getLastUpdated()` and `getSources()` are always the same.
 
+## How should I create a function?
+
+That's basically how CL works in the end, it's just a lot of functions that do a bunch of calculations.
+
+A CoreLibrary function is designed like this:
+
+```ts
+// First, the imports. More onto this later.
+import CreateComponentDataUtilities from "@/core/tools/CoreLibraryDataBuilder";
+import { CoreLibraryResponse } from "@/core/types/CoreLibraryResponse";
+
+// Then, construct the data function. More onto this later.
+export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
+    "date",
+    [
+        "source1",
+        "source2",
+    ],
+);
+
+/**
+ JSDoc
+*/
+export default function calculateYourWhatever(
+    age: number,
+    gender: "male" | "female",
+    height: number,
+    weight: number,
+    // additional params (if needed)
+): CoreLibraryResponse {
+    // your stuff here :D
+
+    const result = 24;
+    const alternate = gender === "male" ? result + 1 : result - 0.2;
+
+    return {
+        result,
+        alternate, // only if needed
+        context: "good",
+        explanation: "Some technical explanation of what does this mean.",
+    };
+}
+```
+
+You define a function normally and write whatever you need, nothing different from any other code. Only difference is that you need to define the data utilities. Let me explain:
+
+`CreateComponentDataUtilities(updated, source)` accepts two `string` params. First param is the last update date, and _yes, you have got to update it manually_. Note it refers to actual updates - I mean - trivial / code QL / performance changes do _not_ count as updates for this date. Only changes that alter the context, explanation, result, params, or any other kind of data in any way (by adding, modifying, removing, etc...) will be considered as _actual updates_. You must pass it as a XX/XX/XXXX format or an error will be thrown. **Please** be sure it's DD/MM/YYYY.
+
+Then there's source, a string array with all the sources you've used. Think of it as school work, where you must link your sources so we can ensure your info is valid and calculations are correct.
+
+Just `export const { getSources, getLastUpdate }` the data utilities function and they will work out of the box.
+
+Then, you just need to create your main function and make it the **default** export. Be sure to give it the correct params and return one of the three valid CoreLibrary Responses. You can just copy & paste from other functions for that.
+
+Whatever you choose as a response, though, you should note that you'll have to define `context` and `explanation`, being both explanatory texts. `context` briefly explaining the received result and `explanation` explaining what does the calculation by itself mean.
+
+> You can always just write "FIXME" or "TODO" as a value, and let someone else (like me) take care of it.
+
+From here, you're now free to go make your contribution - thank you, by the way!
+
+And one more thing: Use JSDoc and descriptive variable / function naming, so everyone gets what's up.
+
 <!--markdownlint-disable-next-line-->
 # CoreLibrary reference manual
 
@@ -107,8 +161,6 @@ In an easier vocabulary: BMR is used to calculate the amount of energy the human
 **What purpose does the function serve?**
 
 You use it by passing the data needed to calculate the BMR plus the activeness of the subject, to calculate (based on the Harris-Benedict equation) the estimated amount of kilocalories the subject should get in a daily basis.
-
-For extra info about how this should be used within PersonaPlus' scope, see [USAGE.md](USAGE.md#basalMetabolicRate).
 
 | Parameter    | Type                                                      | Explanation                                                                                                                                                                                                                                                                                                  |
 | ------------ | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -131,8 +183,6 @@ In an easier vocabulary: MET is used to calculate the metabolic work rate of an 
 **What purpose does this function serve?**
 
 Other functions that are pretty useful require of a MET value to resolve the equation, therefore this function.
-
-For extra info about how this should be used within PersonaPlus' scope, see [USAGE.md](USAGE.md#MetabolicEquivalentOfTask) (TL;DR: basically the main usage is getting it's value to complete the equation of other functions).
 
 | Parameter   | Type                                                                                                                                                                                                                                                                         | Explanation                         |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
@@ -174,8 +224,6 @@ In an easier vocabulary: BMI is a number that creates a relationship between an 
 
 You use it by passing the data needed to calculate the BMI, to calculate (based on the CDC's formula and their percentiles) the estimated Body Mass Index, and whether that BMI represents a healthy weight or an unhealthy one, either by underweight or overweight / obesity.
 
-For extra info about how this should be used within PersonaPlus' scope, see [USAGE.md](USAGE.md#BodyMassIndex).
-
 | Parameter | Type               | Explanation                                  |
 | --------- | ------------------ | -------------------------------------------- |
 | `age`     | Number             | The **age** of the subject in years          |
@@ -194,8 +242,6 @@ In an easier vocabulary: BFP gives you the percentage of your body's weight that
 **What purpose does the function serve?**
 
 You use it by passing the data needed to calculate the BFP, to calculate the estimated percentage of your weight that's fat, and whether that BFP represents a healthy weight or an unhealthy one, either by underweight or overweight / obesity.
-
-For extra info about how this should be used within PersonaPlus' scope, see [USAGE.md](USAGE.md#BodyFatPercentage).
 
 | Parameter | Type               | Explanation                                  |
 | --------- | ------------------ | -------------------------------------------- |

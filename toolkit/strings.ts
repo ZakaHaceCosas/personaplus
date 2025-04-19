@@ -1,8 +1,8 @@
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2023-2025 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
- *  See the LICENSE file in the root of this for more details.
+ *  See the LICENSE file in the root of this repository for more details.
  * <=============================================================================>
  *
  * You are in: @/toolkit/strings
@@ -14,8 +14,7 @@
 import { TFunction } from "i18next";
 
 /**
- * Handles pluralization of strings.
- * @author ZakaHaceCosas (Borrowed from [here](https://github.com/SokoraDesu/Sokora/blob/dev/src/utils/pluralOrNot.ts) ngl)
+ * Handles pluralization of strings. Borrowed from [here](https://github.com/SokoraDesu/Sokora/blob/dev/src/utils/pluralOrNot.ts), ngl.
  *
  * @export
  * @param {string} word The word itself.

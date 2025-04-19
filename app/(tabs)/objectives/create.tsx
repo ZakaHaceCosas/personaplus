@@ -1,8 +1,8 @@
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2023-2025 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
- *  See the LICENSE file in the root of this for more details.
+ *  See the LICENSE file in the root of this repository for more details.
  * <=============================================================================>
  *
  * You are in: @/app/(tabs)/objectives/create.tsx
@@ -352,24 +352,15 @@ export default function CreateActiveObjectivePage(): ReactElement {
     }, [objectiveToCreate]);
 
     async function handleCreation(): Promise<void> {
-        try {
-            if (!canCreateObjective) return;
+        if (!canCreateObjective) return;
 
-            if (edit.enable && edit.id) {
-                await EditActiveObjective(objectiveToCreate, edit.id, t);
-            } else {
-                await CreateActiveObjective(objectiveToCreate, t);
-            }
-            router.replace(Routes.MAIN.HOME);
-        } catch (e) {
-            throw new Error(
-                `Error with ${
-                    edit.enable
-                        ? "EditActiveObjective()"
-                        : "CreateActiveObjective()"
-                }:\n${e}`,
-            );
+        if (edit.enable && edit.id) {
+            await EditActiveObjective(objectiveToCreate, edit.id, t);
+        } else {
+            await CreateActiveObjective(objectiveToCreate, t);
         }
+        router.replace(Routes.MAIN.HOME);
+
         return;
     }
 
@@ -393,30 +384,21 @@ export default function CreateActiveObjectivePage(): ReactElement {
                 selectOptions={exerciseOptions}
                 changeAction={(value: string | number): void => {
                     if (
-                        SupportedActiveObjectivesList.includes(
+                        !SupportedActiveObjectivesList.includes(
                             value as SupportedActiveObjectives,
                         )
-                    ) {
-                        updateObjectiveToCreate(
-                            (
-                                prev: ActiveObjectiveWithoutId,
-                            ): ActiveObjectiveWithoutId => {
-                                return {
-                                    ...prev,
-                                    exercise:
-                                        value as SupportedActiveObjectives,
-                                };
-                            },
-                        );
-                    } else if (value === "") {
-                        console.warn(
-                            t(
-                                "errors.pages.createActiveObjective.chooseAnOptionIsNotValid",
-                            ),
-                        );
-                    } else {
-                        console.error(`Invalid exercise value: ${value}`);
-                    }
+                    )
+                        return;
+                    updateObjectiveToCreate(
+                        (
+                            prev: ActiveObjectiveWithoutId,
+                        ): ActiveObjectiveWithoutId => {
+                            return {
+                                ...prev,
+                                exercise: value as SupportedActiveObjectives,
+                            };
+                        },
+                    );
                 }}
                 t={t}
             />
@@ -454,13 +436,13 @@ export default function CreateActiveObjectivePage(): ReactElement {
                                         {
                                             borderColor: day
                                                 ? Colors.PRIMARIES.ACE
-                                                      .ACE_STROKE
+                                                    .ACE_STROKE
                                                 : Colors.MAIN.DEFAULT_ITEM
-                                                      .STROKE,
+                                                    .STROKE,
                                             backgroundColor: day
                                                 ? Colors.PRIMARIES.ACE.ACE
                                                 : Colors.MAIN.DEFAULT_ITEM
-                                                      .BACKGROUND,
+                                                    .BACKGROUND,
                                         },
                                     ]}
                                 >
@@ -542,16 +524,16 @@ export default function CreateActiveObjectivePage(): ReactElement {
                             <BetterTextNormalText>
                                 {
                                     speedOptions[
-                                        objectiveToCreate.specificData
-                                            .estimateSpeed
+                                    objectiveToCreate.specificData
+                                        .estimateSpeed
                                     ]![0]
                                 }
                             </BetterTextNormalText>
                             <BetterTextSmallText>
                                 {
                                     speedOptions[
-                                        objectiveToCreate.specificData
-                                            .estimateSpeed
+                                    objectiveToCreate.specificData
+                                        .estimateSpeed
                                     ]![1]
                                 }
                             </BetterTextSmallText>

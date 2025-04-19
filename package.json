@@ -1,7 +1,7 @@
 {
   "name": "personaplus",
   "main": "expo-router/entry",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "start": "expo start --go",
     "start:clear": "expo start --go --clear",
@@ -30,12 +30,12 @@
     }
   ],
   "bugs": {
-    "url": "https://github.com/ZakaHaceCosas/personaplus/issues"
+    "url": "https://github.com/GiveItAPlus/personaplus/issues"
   },
-  "homepage": "https://github.com/ZakaHaceCosas/personaplus#readme",
+  "homepage": "https://github.com/GiveItAPlus/personaplus#readme",
   "license": "GPL-3.0-only",
   "description": "Give yourself a plus!",
-  "repository": "https://github.com/ZakaHaceCosas/personaplus",
+  "repository": "https://github.com/GiveItAPlus/personaplus",
   "dependencies": {
     "@expo/vector-icons": "^14.0.3",
     "@react-native-picker/picker": "2.9.0",
@@ -100,7 +100,8 @@
           "expo-doctor",
           "i18next",
           "rn-countdown-timer",
-          "@zakahacecosas/string-utils"
+          "@zakahacecosas/string-utils",
+          "@zakahacecosas/number-utils"
         ]
       }
     }

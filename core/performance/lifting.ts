@@ -65,7 +65,7 @@ export default function calculateLiftingPerformance(
     };
 
     const weightLifted = dumbbellWeight * scales;
-    const oneRepMax = OneRepetitionMax(weightLifted, repetitions, true).result;
+    const oneRepMax = OneRepetitionMax(weightLifted, repetitions).result;
 
     const metabolicEquivOfTask = calculateMET(
         weightLifted,

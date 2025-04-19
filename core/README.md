@@ -1,6 +1,6 @@
 # PersonaPlus CoreLibrary
 
-> También disponible en [Español (Spanish)](https://github.com/ZakaHaceCosas/personaplus/blob/main/core/README.es.md)
+> También disponible en [Español (Spanish)](https://github.com/GiveItAPlus/personaplus/blob/main/core/README.es.md)
 
 The PersonaPlus CoreLibrary (formerly "_OpenHealth_") is, as the name implies, the core of the app - a "library" of TS code designed to make health related calculations and to provide detailed insights about various aspects related to personal health & wellbeing. From calculation of different indexes to detailed explanations of medical terms, CoreLibrary is designed to be a versatile, educational, useful, and open tool.
 

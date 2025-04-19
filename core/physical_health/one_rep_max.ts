@@ -14,14 +14,12 @@ export const { getSources, getLastUpdate } = CreateComponentDataUtilities(
  * Calculate the One-Repetition Maximum (1RM) for weight lifting sessions.
  * @param {number} weightLiftedPerRep The total weight lifted per repetition (in kilograms or pounds).
  * @param {number} amountOfReps The number of repetitions performed.
- * @param {boolean} providePercentage Whether to provide the One-Repetition Maximum percentage, an extra calculation helpful to determine the Metabolic Equivalent of Task for weightlifting.
- * @returns A standard `CoreLibraryResponse` with the desired results.
+ * @returns A standard `CoreLibraryResponse` with the desired results. Includes `alternate`; the One-Repetition Maximum percentage, an extra calculation helpful to determine the Metabolic Equivalent of Task for weightlifting.
  */
 
 export default function calculateOneRepetitionMax(
     weightLiftedPerRep: number,
     amountOfReps: number,
-    providePercentage?: boolean,
 ): CoreLibraryResponse {
     const repsTimesThirty: number = amountOfReps / 30;
 
@@ -35,23 +33,21 @@ export default function calculateOneRepetitionMax(
 
     const result: number = firstOperation();
 
-    const response: CoreLibraryResponse = {
-        result: result,
+    function secondOperation(): number {
+        const firstStep: number = repsTimesThirty;
+        const secondStep: number = 1 / firstStep;
+        const result: number = secondStep * 100;
+
+        return result;
+    }
+
+    const alternate: number = secondOperation();
+
+    return {
+        result,
+        alternate,
         context: `The one rep max would be of ${result} for this context.`,
         explanation:
             "The One Repetition Maximum is the maximum amount of weight a person can lift. It can also be considered the max amount of force a person can apply in one maximal contraction. While the most precise method of measuring would be just trial and error testing with the person, it can be estimated mathematically using one of the many possible formulas, e.g., Epley's formula.",
     };
-
-    if (providePercentage) {
-        function secondOperation(): number {
-            const firstStep: number = repsTimesThirty;
-            const secondStep: number = 1 / firstStep;
-            const result: number = secondStep * 100;
-
-            return result;
-        }
-        response.alternate = secondOperation();
-    }
-
-    return response;
 }

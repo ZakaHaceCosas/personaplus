@@ -40,8 +40,7 @@ export default function calculateBodyFatPercentage(
     const firstStep = 1.2 * bmi + 0.23 * age;
 
     bfp = gender === "male" ? firstStep - 16.2 : firstStep - 5.4;
-    console.debug("BMI", bmi);
-    console.debug("CALC1", firstStep, "BFP", bfp);
+
     let context: string;
 
     const thresholds = {

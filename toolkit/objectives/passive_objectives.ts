@@ -1,8 +1,8 @@
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2023-2025 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
- *  See the LICENSE file in the root of this for more details.
+ *  See the LICENSE file in the root of this repository for more details.
  * <=============================================================================>
  *
  * You are in: @/toolkit/objectives/passive_objectives.ts
@@ -19,7 +19,6 @@ import {
     GetGenericObjectiveDailyLog,
     GetObjective,
     GetPendingGenericObjectives,
-    PendingReturn,
     SaveGenericObjectiveDailyLog,
 } from "@/toolkit/objectives/common";
 import type {
@@ -32,6 +31,7 @@ import { GetCurrentDateCorrectly, JavaScriptifyTodaysDate } from "../today";
 import { ShowToast } from "../android";
 import AsyncStorage from "expo-sqlite/kv-store";
 import StoredItemNames from "@/constants/stored_item_names";
+import { AllObjectivesPendingReturn } from "@/types/common_objectives";
 
 /**
  * Creates a passive objective and saves it. You need to provide all the data for it (except the ID) as an `PassiveObjectiveWithoutId` object.
@@ -205,9 +205,9 @@ async function SavePassiveObjectiveToDailyLog(
  * Tells you if the user has any passive objective due today or not. If he does, returns all of them, as an `number[]` being each number the ID of each active objective.
  *
  * @async
- * @returns {Promise<PendingReturn>} Either an array with pending objective identifiers _only_ or a text-based code indicating context.
+ * @returns {Promise<AllObjectivesPendingReturn>} Either an array with pending objective identifiers _only_ or a text-based code indicating context.
  */
-async function GetPendingPassiveObjectives(): Promise<PendingReturn> {
+async function GetPendingPassiveObjectives(): Promise<AllObjectivesPendingReturn> {
     return await GetPendingGenericObjectives("passive");
 }
 

@@ -1,7 +1,7 @@
 import Division from "@/components/ui/sections/division";
+import { AllObjectivesPendingReturn } from "@/types/common_objectives";
 import { ReactElement } from "react";
 import { useTranslation } from "react-i18next";
-import { PendingReturn } from "./common";
 
 // extracted this one because it's used twice from the same DisplayObjectives function
 // so no need to duplicate code
@@ -14,7 +14,7 @@ function NoObjectivesExist(): ReactElement {
 export function HandlePendingReturn({
     renderer,
 }: {
-    renderer: PendingReturn;
+    renderer: AllObjectivesPendingReturn;
 }): ReactElement {
     const { t } = useTranslation();
 

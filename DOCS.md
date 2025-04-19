@@ -2,7 +2,7 @@
 
 _Dale un PLUS a tu Persona_ <!-- fun fact, this is the OG slogan -->
 
-![Banner](https://raw.githubusercontent.com/ZakaHaceCosas/personaplus/main/assets/design/PP_BANNER_DEV.webp)
+![Banner](https://raw.githubusercontent.com/GiveItAPlus/personaplus/main/assets/design/PP_BANNER_DEV.webp)
 
 <!-- these badges are useless but pretty :3 -->
 <!--markdownlint-disable-next-line-->
@@ -107,7 +107,7 @@ You also should have an overall idea of how the app is really meant to work, so 
 
 ### The foundation - What does this exactly do?
 
-Just as with code, sometimes it's a bit hard to get the purpose of a project. PersonaPlus currently has a [public version](https://github.com/ZakaHaceCosas/personaplus/releases/latest) with a few features here and there, but not a clear "purpose".
+Just as with code, sometimes it's a bit hard to get the purpose of a project. PersonaPlus currently has a [public version](https://github.com/GiveItAPlus/personaplus/releases/latest) with a few features here and there, but not a clear "purpose".
 
 What I really want this app to be is an all in one replacement to three items: exercising, diet, and wellbeing apps. A single app that supports all needed features for taking care of yourself.
 
@@ -140,9 +140,9 @@ Before your actual code, care to place this comment at the beginning.
 ```ts
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2023-2025 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
- *  See the LICENSE file in the root of this for more details.
+ *  See the LICENSE file in the root of this repository for more details.
  * <=============================================================================>
  *
  * You are in: {LOCATION}

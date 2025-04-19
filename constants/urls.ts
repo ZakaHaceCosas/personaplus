@@ -1,8 +1,8 @@
 /* <=============================================================================>
  *  PersonaPlus - Give yourself a plus!
- *  Copyright (C) 2025 ZakaHaceCosas and the PersonaPlus contributors. All rights reserved.
+ *  Copyright (C) 2023-2025 The "Give It A Plus" organization and the PersonaPlus contributors. All rights reserved.
  *  Distributed under the terms of the GNU General Public License version 3.0.
- *  See the LICENSE file in the root of this for more details.
+ *  See the LICENSE file in the root of this repository for more details.
  * <=============================================================================>
  *
  * You are in: @/constants/urls.ts
@@ -16,15 +16,14 @@
  */
 const URLs = {
     website: "https://personaplus.vercel.app/",
-    privacy:
-        "https://github.com/ZakaHaceCosas/personaplus/blob/main/PRIVACY.md",
+    privacy: "https://github.com/GiveItAPlus/personaplus/blob/main/PRIVACY.md",
     license: "https://www.gnu.org/licenses/gpl-3.0.html#license-text",
     discord: "https://discord.gg/wwzddK4Zpc",
-    repo: "https://github.com/ZakaHaceCosas/personaplus",
+    repo: "https://github.com/GiveItAPlus/personaplus",
     releasesApi:
-        "https://api.github.com/repos/ZakaHaceCosas/personaplus/releases",
+        "https://api.github.com/repos/GiveItAPlus/personaplus/releases",
     latestChangelog:
-        "https://github.com/ZakaHaceCosas/personaplus/releases/latest",
+        "https://github.com/GiveItAPlus/personaplus/releases/latest",
     instagram: "https://www.instagram.com/giveitaplus/",
     yt: "https://youtube.com/playlist?list=PLdif1flfmG__g_a1QSmBNnSh_6pAeRizW",
 } as const;
